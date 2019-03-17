@@ -44,7 +44,6 @@ std::string Parser::remove_spaces(const std::string & line)
 	}
 }
 
-//not steady
 std::string Parser::cut_off_string(const std::string & line, size_t start_position, size_t end_position)
 {
 	std::string str1{ line }, str2{ line };
@@ -71,9 +70,9 @@ std::vector<std::string> Parser::parser_v0(const std::string & str)
 	std::stringstream sentences(str);
 	std::string line;
 	std::string pharse1{ "<span class=\"ex-sent t no-aq sents\">" };
-	//<span class=\"mw_t_wi\">
 	std::string pharse2{ "<span class=\"ex-sent t has-aq sents\">" };
 	std::string pharse3{ "<span class=\"dtText\"><strong class=\"mw_t_bc\">: </strong>" };
+	std::string pharse4{ "<span class=\"t has-aq\">" };
 
 	bool check_next_line = false;
 
@@ -82,6 +81,8 @@ std::vector<std::string> Parser::parser_v0(const std::string & str)
 		bool is_pharse1 = (line.find(pharse1) != std::string::npos);
 		bool is_pharse2 = (line.find(pharse2) != std::string::npos);
 		bool is_pharse3 = (line.find(pharse3) != std::string::npos);
+		bool is_pharse4 = (line.find(pharse4) != std::string::npos);
+
 
 		if (is_pharse1)
 		{
@@ -95,7 +96,6 @@ std::vector<std::string> Parser::parser_v0(const std::string & str)
 		if (is_pharse1 || is_pharse2 || is_pharse3)
 		{
 			parsed_sentences.push_back(clean_line(line));
-			//std::cout << clean_line(line) << std::endl << std::endl;
 			continue;
 		}
 
@@ -103,10 +103,16 @@ std::vector<std::string> Parser::parser_v0(const std::string & str)
 		{
 			line += "~sentence";
 			parsed_sentences.push_back(clean_line(line));
-			//std::cout << clean_line(line) << std::endl << std::endl;
 			check_next_line = false;
 			continue;
 		}
+
+		if (is_pharse4)
+		{
+			line += "~sentence";
+			parsed_sentences.push_back(clean_line(line));
+		}
+
 	}
 
 
