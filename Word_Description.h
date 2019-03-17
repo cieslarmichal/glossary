@@ -16,7 +16,7 @@ private:
 	bool add_defition_example(const std::string & def, const std::string & eg);
 	bool add_sentence(const std::string & sentence);
 	private:
-	enum class Max_Amount { sentences = 2, definitions = 5 };
+	enum class Max_Amount { sentences = 2, definitions = 7 };
 	static const std::vector<std::string> key_words;
 };
 
