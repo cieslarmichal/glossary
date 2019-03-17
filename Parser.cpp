@@ -29,19 +29,43 @@ std::string Parser::clean_line(const std::string & str)
 
 std::string Parser::remove_spaces(const std::string & line)
 {
+	std::string cleared_line{ line };
+	size_t space_position = -1;
 	size_t index = 0;
+	size_t size_to_cut = 0;
 
-	for (; (index<line.size() && isspace(line.at(index))); ++index);
-
-	if (index>0 )
+	for (index = 0; index < cleared_line.size(); ++index)
 	{
-		return cut_off_string(line, 0, index - 1);
+		if (isspace(cleared_line.at(index)))
+		{
+			if (size_to_cut == 0)
+			{
+				space_position = index;
+			}
+			size_to_cut++;
+		}
+		else if ((size_to_cut > 1) && (space_position != -1))
+		{
+			if (space_position == 0)
+			{
+				cleared_line = cut_off_string(cleared_line, space_position, space_position + size_to_cut - 1);
+			}
+			else
+			{
+				cleared_line = cut_off_string(cleared_line, space_position + 1, space_position + size_to_cut - 1);
+			}
+			index = -1;
+			size_to_cut = 0;
+			space_position = -1;
+		}
+		else
+		{
+			space_position = -1;
+			size_to_cut = 0;
+		}
+	}
 
-	}
-	else
-	{
-		return line;
-	}
+	return cleared_line;
 }
 
 std::string Parser::cut_off_string(const std::string & line, size_t start_position, size_t end_position)
@@ -114,8 +138,6 @@ std::vector<std::string> Parser::parser_v0(const std::string & str)
 		}
 
 	}
-
-
 
 	return parsed_sentences;
 }

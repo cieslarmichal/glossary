@@ -65,7 +65,7 @@ void Word_Description::split_input(const std::vector<std::string> & inp)
 
 	for (auto def_eg : definitions_examples)
 	{
-		std::cout << "def" << def_eg.first << std::endl;
+		std::cout << "def " << def_eg.first << std::endl;
 		std::cout << "e.g. " << def_eg.second << std::endl;
 		std::cout << std::endl;
 	}
