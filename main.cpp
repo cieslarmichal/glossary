@@ -1,27 +1,13 @@
 #include "HTML_Reader.h"
 #include "Parser.h"
-#include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
-
+#include "Word_Description.h"
 
 
 int main()
 {
-	std::fstream file;
-	file.open("code_to_parse.txt", std::ios::out);
-	if (!file.good())
-	{
-		std::cout << "chujnia z txt\n";
-	}
+	Word_Description wd(Parser::parser_v0((HTML_Reader::read_html("https://www.merriam-webster.com/dictionary/keyboard"))));
+	
 
-	//parser_v0(content);
-
-	for (auto x : Parser::parser_v0((HTML_Reader::read_html("https://www.merriam-webster.com/dictionary/fetch"))))
-	{
-		//std::cout << x << std::endl << std::endl;
-	}
 
 	std::cin.get();
 	return 0;
