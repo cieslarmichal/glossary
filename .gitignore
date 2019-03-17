@@ -1,0 +1,9 @@
+Debug/
+Release/
+include/
+x64/
+Glossary.vcxproj
+Glossary.vcxproj.filters
+Glossary.vcxproj.user
+libcurl_a.lib
+code_to_parse.txt
