@@ -1,14 +1,16 @@
-#include "HTML_Reader.h"
-#include "Parser.h"
-#include "Word_Description.h"
-
+#include "Word.h"
+#include <iostream>
+#include "Txt_File.h"
 
 int main()
 {
-	Word_Description wd(Parser::parser_v0((HTML_Reader::read_html("https://www.merriam-webster.com/dictionary/keyboard"))));
-	
+	//Word w1("hence", "kostka");
+	Txt_File file("dictionary.txt");
 
-
+	for (auto x : file.getLines())
+	{
+		std::cout << x<<std::endl;
+	}
 	std::cin.get();
 	return 0;
 }

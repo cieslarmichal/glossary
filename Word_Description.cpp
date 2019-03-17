@@ -6,10 +6,6 @@ const std::vector<std::string> Word_Description::key_words{ "~eg" ,"~sentence"};
 Word_Description::Word_Description(std::vector<std::string> inp)
 {
 	clean_input(inp);
-	//for (auto x : inp)
-	//{
-	//	std::cout << x << std::endl;
-	//}
 	split_input(inp);
 }
 
