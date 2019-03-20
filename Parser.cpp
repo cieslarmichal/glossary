@@ -16,10 +16,18 @@ std::string Parser::clean_line(const std::string & str)
 	}
 
 	open_sign_pos = result.find("&mdash;");
-	if (open_sign_pos != std::string::npos)
+	while (open_sign_pos != std::string::npos)
 	{
-		result = cut_off_string(result, open_sign_pos, open_sign_pos + 7);
+		result = cut_off_string(result, open_sign_pos, open_sign_pos + 6);
+		open_sign_pos = result.find("&mdash;");
+	}
 
+	open_sign_pos = result.find("&quot;");
+	while (open_sign_pos != std::string::npos)
+	{
+		result.at(open_sign_pos) = '\"';
+		result = cut_off_string(result, open_sign_pos + 1, open_sign_pos + 5);
+		open_sign_pos = result.find("&quot;");
 	}
 
 	result = remove_spaces(result);

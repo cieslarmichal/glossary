@@ -1,18 +1,7 @@
 #include "Txt_File.h"
 
 
-
 Txt_File::Txt_File(const std::string & dir) : directory(dir)
-{
-	open();
-}
-
-Txt_File::~Txt_File()
-{
-	close();
-}
-
-std::vector<std::string> Txt_File::getLines()
 {
 	try
 	{
@@ -21,9 +10,23 @@ std::vector<std::string> Txt_File::getLines()
 	catch (std::string error)
 	{
 		std::cerr << error << std::endl;
-		return std::vector<std::string>();
 	}
+}
 
+Txt_File::~Txt_File()
+{
+	try
+	{
+		close();
+	}
+	catch (std::string error)
+	{
+		std::cerr << error << std::endl;
+	}
+}
+
+std::vector<std::string> Txt_File::get_lines()
+{
 	std::vector<std::string> lines;
 	std::string line = "";
 
@@ -32,20 +35,24 @@ std::vector<std::string> Txt_File::getLines()
 		lines.push_back(line);
 	}
 
-	close();
 	return lines;
+}
+
+std::fstream * Txt_File::get_file()
+{
+	return file;
 }
 
 bool Txt_File::open()
 {
-	file = new std::fstream(directory.c_str(), std::ios::in| std::ios::out);
+	file = new std::fstream(directory.c_str(), std::ios::in| std::ios::app);
 
 	if (!file->is_open())
 	{
 		throw ("Cant open file: " + directory);
 	}
 
-	if (file->fail())
+	if (file->bad())
 	{
 		throw ("File is failing" + directory);
 	}
@@ -55,6 +62,14 @@ bool Txt_File::open()
 
 void Txt_File::close()
 {
-	file->close();
-	delete file;
+	if (file->bad())
+	{
+		throw ("bad file in closure " + directory);
+
+	}
+	if (file)
+	{
+		file->close();
+		delete file;
+	}
 }

@@ -7,6 +7,8 @@
 class Word_Description
 {
 public:
+	Word_Description();
+	Word_Description(const Word_Description &);
 	Word_Description(std::vector<std::string>);
 	std::vector<std::pair<std::string, std::string>> definitions_examples;
 	std::vector<std::string> sentences;

@@ -3,6 +3,23 @@
 const std::vector<std::string> Word_Description::key_words{ "~eg" ,"~sentence"};
 
 
+Word_Description::Word_Description()
+{
+}
+
+Word_Description::Word_Description(const Word_Description & wd)
+{
+	for (auto def_eg : wd.definitions_examples)
+	{
+		definitions_examples.push_back(def_eg);
+	}
+
+	for (auto s : wd.sentences)
+	{
+		sentences.push_back(s);
+	}
+}
+
 Word_Description::Word_Description(std::vector<std::string> inp)
 {
 	clean_input(inp);
@@ -57,19 +74,6 @@ void Word_Description::split_input(const std::vector<std::string> & inp)
 			example_flag = true;
 		}
 
-	}
-
-	for (auto def_eg : definitions_examples)
-	{
-		std::cout << "def " << def_eg.first << std::endl;
-		std::cout << "e.g. " << def_eg.second << std::endl;
-		std::cout << std::endl;
-	}
-
-	for (auto s : sentences)
-	{
-		std::cout << "sentence: " << s << std::endl;
-		std::cout << std::endl;
 	}
 }
 
