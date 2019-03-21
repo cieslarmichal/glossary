@@ -1,7 +1,5 @@
 #pragma once
 #include "Word_Description.h"
-#include "Parser.h"
-#include "HTML_Reader.h"
 #include <memory>
 
 class Word

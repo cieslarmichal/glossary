@@ -1,6 +1,9 @@
-ankle;kostka
-key;klucz
-bottle;butelka
-fetch;sprowadzać
-notebook;zeszyt
-ferry;prom
+﻿ankle		kostka
+key		klucz
+bottle		butelka
+fetch		sprowadzać
+notebook	zeszyt
+ferry		prom
+cup		kubek
+mouse 		mysz
+couch		kanapa

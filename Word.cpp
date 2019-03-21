@@ -4,9 +4,7 @@
 Word::Word(const std::string & english_word, const std::string & polish_trans, const Word_Description & wd) 
 	:english(english_word), polish(polish_trans)
 {
-	std::cout << "x" << std::endl;
 	word_descr = std::make_unique<Word_Description>(Word_Description(wd));
-	std::cout << "x" << std::endl;
 
 }
 

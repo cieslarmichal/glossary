@@ -80,6 +80,15 @@ std::string Parser::cut_off_string(const std::string & line, size_t start_positi
 {
 	std::string str1{ line }, str2{ line };
 
+	if (start_position > line.size() - 1)
+	{
+		throw "cut_off_string: wrong start_position";
+	}
+
+	if (str2.size() - end_position < 0)
+	{
+		throw "cut_off_string: wrong end_position";
+	}
 	str1 = str1.substr(0, start_position);
 	str2 = str2.substr(end_position + 1, str2.size() - end_position);
 
@@ -88,25 +97,15 @@ std::string Parser::cut_off_string(const std::string & line, size_t start_positi
 
 std::vector<std::string> Parser::parser_v0(const std::string & str)
 {
-	std::fstream file;
-	file.open("code_to_parse.txt", std::ios::out);
-
-	if (!file.good())
-	{
-		std::cout << "chujowy plik txt \n";
-	}
-	file << str;
-	file.close();
-
 	std::vector<std::string> parsed_sentences;
 	std::stringstream sentences(str);
-	std::string line;
 	std::string pharse1{ "<span class=\"ex-sent t no-aq sents\">" };
 	std::string pharse2{ "<span class=\"ex-sent t has-aq sents\">" };
 	std::string pharse3{ "<span class=\"dtText\"><strong class=\"mw_t_bc\">: </strong>" };
 	std::string pharse4{ "<span class=\"t has-aq\">" };
 
 	bool check_next_line = false;
+	std::string line;
 
 	while (std::getline(sentences, line))
 	{
