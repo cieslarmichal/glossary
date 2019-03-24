@@ -1,4 +1,195 @@
-﻿
+$ankle
+: the joint between the foot and the leg                                      
+~eg
+: the region of this joint                                      
+~eg
+: the joint between the cannon bone and pastern (as in the horse)                                      
+~eg
+: the joint where the foot joins the leg                                      
+~eg
+: the joint between the foot and the leg                                      
+~egI broke my ankle. 
+: the area containing the ankle joint                                      
+~eg
+: the joint between the foot and the leg that constitutes in humans a ginglymus joint between the tibia and fibula above and the talus below                                      
+~eg
+: the region of the ankle joint                                      
+~eg
+~stNot too tight, straight, not see through, and cut just at the ankle.
+~stEnter the emblem sock: colored hosiery with a subtle insignia embroidered or printed at the ankle.
+~stSome skinny jeans — the kind that are rolled up at the ankles.
+~stWhat instantly drew me to the Orion—other than the price—was the measured slit on either leg, right at the ankle.
+~stAnd a pro styling tip: ballerina tie your laces above the ankle for a little something extra.
+
+$key
+: a usually metal instrument by which the bolt of a lock is turned                                      
+~eg
+: any of various devices having the form or function of such a key                                      
+~ega key for winding a clock 
+: a means of gaining or preventing entrance, possession, or control                                      
+~eg
+: an instrumental or deciding factor                                      
+~egthe key to her success 
+: something that gives an explanation or identification or provides a solution                                      
+~egthe key to a riddle 
+: a list of words or phrases giving an explanation of symbols or abbreviations                                      
+~ega pronunciation key in a dictionary 
+: an aid to interpretation or identification : clue                                      
+~ega key to understanding their motivation 
+: an arrangement of the salient characters of a group of plants or animals or of taxa designed to facilitate identification                                      
+~eg
+: a map legend                                      
+~eg
+: a part to be depressed by a finger that serves as one unit of a keyboard                                      
+~eg
+: a representation of such a key (such as a space delineated on a touch screen)                                       
+~egTiny keys on your iPhone's screen can be difficult to hit accurately. Cherlynn Low 
+: one of the levers of a keyboard musical instrument that actuates the mechanism and produces the tones                                      
+~eg
+: a lever that controls a vent in the side of a woodwind instrument or a valve in a brass instrument                                      
+~eg
+: a system of tones and harmonies generated from a hierarchical scale of seven tones based on a tonic                                      
+~egthe key of G major 
+: characteristic style or tone                                      
+~eg
+: the tone or pitch of a voice                                      
+~eg
+: the predominant tone of a photograph with respect to its lightness or darkness                                      
+~eg
+: a decoration or charm resembling a key                                      
+~eg
+: a small switch for opening or closing an electric circuit                                      
+~ega telegraph key 
+: the set of instructions governing the encipherment and decipherment of messages                                      
+~egan encryption key 
+: a free-throw area in basketball : free throw lane                                      
+~ega jump shot from the top of the key 
+: cotter pin                                      
+~eg
+: cotter                                      
+~eg
+: a keystone in an arch                                      
+~eg
+: a small piece of wood or metal used as a wedge or for preventing motion between parts                                      
+~eg
+: samara                                      
+~eg
+: extremely or crucially important                                      
+~egkey issues a key moment in the game a key member of the staff 
+: to lock or secure with or as if with a key : fasten: such as                                      
+~eg
+: to secure (something, as a pulley on a shaft) by a key                                      
+~eg
+: to finish off (an arch) by inserting a keystone                                      
+~eg
+: to regulate the musical pitch of                                      
+~egkey the strings 
+: to bring into harmony or conformity : make appropriate : attune                                      
+~egremarks keyed to a situation 
+: to identify (a biological specimen) by a key (see key entry 1 sense 3d)                                      
+~eg
+: to provide with identifying or explanatory cross-references                                      
+~eginstructions keyed to accompanying drawings John Gartner 
+: to make nervous, tense, or excited                                      
+~egusually used with up was too keyed up to sleep
+: to enter or input (text or data) by using a keyboard                                      
+~egkeying changes to a manuscript 
+: to be essential to : play the most important part in                                      
+~egdefense keyed the victory 
+: to vandalize by scratching with a key                                      
+~egsomeone keyed my car door 
+: to use a key                                      
+~eg
+: to observe the position or movement of an opposing player in football in order to anticipate the play                                      
+~egusually used with on The middle linebacker was keying on the halfback.
+: to operate a machine by means of a keyboard : keyboard                                      
+~eg
+: a low island or reef                                      
+~eg
+: any of the coral islets off the southern coast of Florida                                       
+~egthe Florida Keys 
+: a kilogram especially of marijuana or heroin                                      
+~eg
+: extremely important                                      
+~eg
+: to enter (information) by using the keys of a computer, typewriter, etc.                                      
+~eg
+: to have the most important part in (something)                                      
+~eg
+: an instrument by which the bolt of a lock (as on a door) is turned or by which an engine is started                                      
+~eg
+: a device having the form or function of a key                                      
+~egCan you wind the clock with the key? 
+: the thing that is necessary or most important in doing something                                      
+~egTo learn a skill, practice is the key. 
+: something (as a map legend) that gives an explanation : solution                                      
+~eg
+: one of the levers with a flat surface that is pressed with a finger to activate a mechanism of a machine or instrument                                      
+~egcomputer keys 
+: a system of seven musical tones arranged in relation to a keynote from which the system is named                                      
+~eg
+: to regulate the musical pitch of                                      
+~eg
+: to bring into harmony                                      
+~eg
+: to record or enter by operating the keys of a machine                                      
+~eg
+: of great importance : most important                                      
+~egShe is one of our key players. 
+: a low island or reef                                      
+~egthe Florida Keys 
+: of vital importance (as in a business organization) especially so as to be specially insured to the benefit of an employer                                      
+~egkey man key employee insurance 
+~stHe's a key player in the organization. 
+~stThe key question is “Can we afford it?”. 
+~stUnderline key words and phrases as you read. 
+~stTheir votes were key in getting the bill passed. 
+~stThe changes to the manuscript are being keyed by the typist. 
+
+$bottle
+: a rigid or semirigid container typically of glass or plastic having a comparatively narrow neck or mouth and usually no handle                                      
+~eg
+: a usually bottle-shaped container made of skin for storing a liquid                                      
+~eg
+: the quantity held by a bottle                                      
+~eg
+: intoxicating drink : the practice of drinking                                      
+~egslipped deeper and deeper into the bottle Anne Bernays 
+: liquid food (such as milk) used in place of mother's milk                                      
+~eg
+: mettle, courage                                      
+~eg
+: to confine as if in a bottle : restrain                                      
+~egusually used with up bottling up their anger
+: to put or keep in a position or situation that makes free activity, progress, or escape difficult or impossible                                      
+~egusually used with up bottle up legislation in committee
+: to put into or as if into a bottle                                      
+~egwished she could bottle their energy 
+: a glass or plastic container that has a narrow neck and usually has no handle                                      
+~eg
+: the amount contained in a bottle                                      
+~eg
+: alcoholic drink                                      
+~eg
+: to put (something) into a bottle so that it can be sold or so that it is easier to use                                      
+~eg
+: to put (fruit or vegetables) in a jar using a special procedure that preserves them                                      
+~eg
+: a container (as of glass or plastic) usually having a narrow neck and mouth and no handle                                      
+~eg
+: the quantity held by a bottle                                      
+~eg
+: to put into a bottle                                      
+~eg
+: to shut up as if in a bottle                                      
+~egShe bottles up her feelings. 
+: a rigid or semirigid container typically of glass or plastic having a comparatively narrow neck or mouth and usually no handle — see wash bottle                                      
+~eg
+~stWe drank a bottle of wine. 
+~stHe says he's lost too many years to the bottle, and that he's giving up alcohol. 
+~stHer struggles with the bottle affected her entire family. 
+~stHas the baby finished her bottle yet? 
+~straised on a bottle instead of breast milk 
 
 $fetch
 : to go or come after and bring or take back                                      
@@ -15,6 +206,265 @@ $fetch
 ~egfetch him a clip on the chin 
 : bring about, accomplish                                      
 ~eg
+: to take in : draw                                      
+~egsat fetching her breath in dry sobs Ngaio Marsh 
+: to bring forth : heave                                      
+~egfetch a sigh 
+: to reach by sailing especially against the wind or tide                                      
+~egfetch the harbor before the storm breaks 
+: to arrive at : reach                                      
+~egfetched home after a long ride 
+: to get and bring something                                      
+~eg
+: to retrieve killed game                                      
+~eg
+: to take a roundabout way : circle                                      
+~eg
+: to hold a course on a body of water                                      
+~egfetch to windward 
+: veer                                      
+~eg
+: trick, stratagem                                      
+~eg
+: an act or instance of fetching                                      
+~eg
+: the distance along open water or land over which the wind blows                                      
+~eg
+: the distance traversed by waves without obstruction                                      
+~eg
+: doppelgänger sense 2                                      
+~eg
+: to go after and bring back (someone or something)                                      
+~eg
+: to be sold for (an amount of money)                                      
+~eg
+: to go after and bring back                                      
+~eg
+: to bring as a price : sell for                                      
+~egThe artwork will fetch a high price. 
 ~stIf you throw the ball the dog will fetch it. 
 ~stHunting dogs are trained to fetch. 
+~stThis table should fetch quite a bit at auction. 
+~stThe house fetched more than we expected. 
+
+$notebook
+: a book for notes or memoranda                                      
+~eg
+: laptop entry 2                                      
+~eg
+: a particularly small or light laptop                                       
+~eg… have been selling smaller, lighter, cheaper and more powerful notebooks for two years. Peter H. Lewis 
+: a book with blank pages that is used for writing notes                                      
+~eg
+: a small computer that is designed to be easily carried                                      
+~eg
+~stTake out your notebook and write down some of your ideas. 
+~stShe kept a notebook for her poetry. 
+~stThe obsession that comes from a crush manifests in the best ways: posters decorating our bedroom walls, the name of the crush written repeatedly in notebooks with hearts, the crush’s image as a cell phone screensaver, their music on repeat.
+~stBut the investigating prosecutor has said the information in the notebooks has been corroborated with other evidence.
+~stThe signature was penned in mirror writing, just like the backwards script that fills the artist’s notebooks.
+
+$ferry
+: to carry by boat over a body of water                                      
+~eg
+: to cross by a ferry                                      
+~eg
+: to convey (as by aircraft or motor vehicle) from one place to another : transport                                      
+~eg
+: to fly (an airplane) from the factory or other shipping point to a designated delivery point or from one base to another                                      
+~eg
+: to cross water in a boat                                      
+~eg
+: a place where persons or things are carried across a body of water (such as a river) in a boat                                      
+~eg
+: ferryboat                                      
+~eg
+: a franchise or right to operate a ferry service across a body of water                                      
+~eg
+: an organized service and route for flying airplanes especially across a sea or continent for delivery to the user                                      
+~eg
+: to carry or move (someone or something) on a vehicle (such as a boat or a car) usually for a short distance between two places                                      
+~eg
+: a place where a ferryboat operates                                      
+~eg
+: to carry by boat over a body of water                                      
+~eg
+: to cross a body of water by a ferryboat                                      
+~eg
+: to transport for a short distance                                      
+~eg
+: ferryboat                                      
+~eg
+~stThe cars were ferried across the river. 
+~stThey ferry supplies to the island. 
+~stFerries to both islands depart daily. 
+~stYou can get there by ferry. 
+~stWe'll meet you at the ferry. 
+
+$cup
+: an open usually bowl-shaped drinking vessel                                      
+~eg
+: a drinking vessel and its contents                                      
+~eg
+: the consecrated wine of the Communion                                      
+~eg
+: something that falls to one's lot                                      
+~eg
+: an ornamental cup offered as a prize (as in a championship)                                      
+~eg
+: something resembling a cup: such as                                      
+~eg
+: a cup-shaped plant organ                                      
+~eg
+: an athletic supporter reinforced usually with plastic to provide extra protection to the wearer                                      
+~eg
+: either of two parts of a brassiere that are shaped like and fit over the breasts                                      
+~eg
+: the metal case inside a hole in golf                                      
+~eg
+: the hole itself                                      
+~eg
+: a usually iced beverage resembling punch but served from a pitcher rather than a bowl                                      
+~eg
+: a half pint : eight fluid ounces                                      
+~eg
+: a food served in a cup-shaped usually footed vessel                                      
+~ega fruit cup 
+: the symbol ∪ indicating the union of two sets — compare cap sense 7                                      
+~eg
+: drunk                                      
+~eg
+: to treat by cupping                                      
+~eg
+: to curve into the shape of a cup                                      
+~egcupped his hands around his mouth 
+: to place in or as if in a cup                                      
+~eg
+: a small round container that often has a handle and that is used for drinking liquids (such as tea and coffee)                                      
+~eg
+: the liquid that is contained in a cup                                      
+~eg
+: a unit of measurement that is used when you are cooking                                      
+~eg
+: to curve (your hand) into the shape of a cup                                      
+~eg
+: to put your hand in a curved shape around (something)                                      
+~eg
+: a container to drink out of in the shape of a small bowl usually with a handle                                      
+~eg
+: the contents of a small drinking container : cupful                                      
+~egI drank a cup of tea. 
+: a unit of measure that equals half a pint or eight fluid ounces                                      
+~eg
+: a trophy in the shape of a cup with two handles                                      
+~eg
+: something like a small bowl in shape or use                                      
+~egI picked her up in the cup of my hands … Jean Craighead George, My Side of the Mountain 
+: to curve the hand or hands into the shape of a small bowl                                      
+~eg
+: to put the hands in a curved shape around                                      
+~egShe cupped my face. 
+: a usually open bowl-shaped drinking vessel often having a handle and a stem and base and sometimes a lid                                      
+~eg
+: a drinking vessel and its contents : the beverage or food contained in a cup                                      
+~ega second cup of coffee 
+: something resembling a cup                                      
+~eginvagination of the blastula to form a multilayered cellular cup 
+: an athletic supporter reinforced for providing extra protection to the wearer in certain strenuous sports (as boxing, hockey, or football)                                      
+~eg
+: either of the two parts of a brassiere that are shaped like and fit over the breasts                                      
+~eg
+: a small bell-shaped glass formerly used in cupping                                      
+~eg
+: a cap of metal or plastic shaped like the femoral head and used in plastic reconstruction of the hip joint                                      
+~eg
+: to treat by cupping                                      
+~eg
+~stWould you like another cup of tea? 
+~stThe winner will take home the cup. 
+~stHe cupped his hands around his mouth and shouted at us. 
+~stI had to cup my hand to my ear in order to hear him. 
+~stHe cupped his mouth with his hands and shouted at us. 
+
+$mouse
+: any of numerous small rodents (as of the genus Mus) with pointed snout, rather small ears, elongated body, and slender tail                                      
+~eg
+: a timid person                                      
+~eg
+: a dark-colored swelling caused by a blow                                      
+~eg
+: black eye                                      
+~eg
+: a small mobile manual device that controls movement of the cursor and selection of functions on a computer display                                      
+~eg
+: to hunt for mice                                      
+~eg
+: to search or move stealthily or slowly                                      
+~eg
+: bite, gnaw                                      
+~eg
+: to toy with roughly                                      
+~eg
+: to search for carefully                                      
+~eg
+: to use a mouse to position a cursor over (a specific location or element on a computer screen) without clicking the mouse's button                                      
+~egRich media is pretty much anything that moves when you interact with it. It can be a Flash animation, or a streaming video clip, or an image rotator that changes when you mouse over it. Ariel Bleicher 
+: a very small animal that has a pointed nose and a long, thin tail                                      
+~eg
+: a small device that is connected to a computer and that you move with your hand to control the movement of a pointer on the computer screen                                      
+~eg
+: a very small furry gnawing animal that is a rodent with a pointed snout and long slender tail                                      
+~eg
+: a person without spirit or courage                                      
+~eg
+: a small movable device that is connected to a computer and used to move the cursor and select functions on the screen                                      
+~eg
+: any of numerous small rodents with pointed snout, rather small ears, elongated body, and slender hairless or sparsely haired tail, including all the smaller members of the genus Mus (as the medically significant house mouse, M. musculus) and many members of other rodent genera and families having little more in common than their relatively small size                                      
+~eg
+: a dark-colored swelling caused by a blow                                      
+~eg
+~stThe house was infested with mice and rats. 
+~stHe moved the mouse to click on the icon. 
+~sta cat mousing along in the shadows of the garden 
+~stNewsletter Sign-up Sean Ryder, a professor at the University of Massachusetts Medical School in Worcester, said that according to the data on the slides, the gene mutations made in the mice weren’t the same as those made in the children.
+~stThe researchers developed a method to cure sepsis—at least in mice—using small molecules called F12 and F19 to block the bacteria from doing any damage, which doesn’t require any antibiotics at all.
+
+$couch
+: to lay (oneself) down for rest or sleep                                      
+~egThe lion couched himself by a tree. 
+: to embroider (a design) by laying down a thread and fastening it with small stitches at regular intervals                                      
+~eg
+: to place or hold level and pointed forward ready for use                                      
+~egCouching his lance, he seated himself firmly in his saddle … W. Somerset Maugham 
+: to phrase or express in a specified manner                                      
+~egThe comments were couched in strong terms. 
+: to lie down or recline for sleep or rest                                      
+~egthe odd way a camel couches 
+: to lie in ambush                                      
+~egThe tiger couches in the thick grass, watching its prey move closer. 
+: an article of furniture for sitting or reclining                                      
+~eg
+: a couch on which a patient reclines when undergoing psychoanalysis                                      
+~eg
+: the den of an animal (such as an otter)                                      
+~eg
+: receiving psychoanalytic treatment                                      
+~eg
+: to say or express (something) in a particular way                                      
+~eg
+: a long piece of furniture on which a person can sit or lie down                                      
+~eg
+: a piece of furniture for a patient to lie on at a doctor's office                                      
+~eg
+: a long piece of furniture that a person can sit or lie on                                      
+~eg
+: to treat (a cataract or a person who has a cataract) by displacing the lens of the eye into the vitreous body                                      
+~eg
+: an article of furniture used (as by a patient undergoing psychoanalysis) for sitting or reclining                                      
+~eg
+~stI'm trying to couch this delicately: I don't think we should date anymore. 
+~stI couched behind the partition so as to avoid an awkward situation with my ex. 
+~stfind yourself a place on the couch and make yourself at home 
+~stThere was no caveating, couching, or restraint on the part of Rick Scott and Donald Trump when the Florida Senate election headed to a recount.
+~stPhoto: Drew Angerer/Getty Images Economic development is frequently a secret affair, and the secrecy is often couched as helping local government to retain a competitive advantage.
 

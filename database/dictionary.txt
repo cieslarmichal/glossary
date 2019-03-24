@@ -1,7 +1,7 @@
-﻿ankle		kostka
+ankle		kostka
 key		klucz
 bottle		butelka
-fetch		sprowadzać
+fetch		sprowadzac
 notebook	zeszyt
 ferry		prom
 cup		kubek

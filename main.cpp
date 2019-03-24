@@ -2,17 +2,21 @@
 
 int main()
 {
-	try 
+	try
 	{
 		Word_Factory wf;
-		Word w = wf.make_word(std::make_pair("fetch", "przyprowadzic"));
 
-
-		for (auto x : w.get_description().definitions_examples)
+		for (auto & x : wf.generate_words())
 		{
-			std::cout << x.first<<std::endl;
-			std::cout << x.second << std::endl;
+			std::cout << x.get_english()<<std::endl;
+			for (auto x : x.get_description().get_definitions_examples())
+			{
+				std::cout << "def: " << x.first << std::endl;
+				std::cout << "e.g. " << x.second << std::endl;
+			}
+			std::cout << std::endl << std::endl;
 		}
+
 	}
 	catch (std::exception& e) {
 		std::cout << "exception: " << e.what() << std::endl;

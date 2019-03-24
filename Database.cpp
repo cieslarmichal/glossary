@@ -56,8 +56,9 @@ std::pair<std::string, std::string> Database::read_word() const
 	std::stringstream line(dictionary_words.at(current_word));
 	std::string english, polish;
 
-	line >> english >> polish;
 
+	line >> english >> polish;
+	std::cout << "x"<<english<<"x"<<std::endl;
 	current_word++;
 
 	return std::make_pair(english, polish);
@@ -65,7 +66,23 @@ std::pair<std::string, std::string> Database::read_word() const
 
 bool Database::is_next_word() const
 {
-	return (current_word < dictionary->get_lines().size());
+	while ((current_word < dictionary_words.size()) && !is_line_word(dictionary_words.at(current_word)))
+	{
+		current_word++;
+	}
+	return (current_word < dictionary_words.size());
+}
+
+bool Database::is_line_word(const std::string & line) const
+{
+	for (auto c : line)
+	{
+		if (!isspace(c))
+		{
+			return true;
+		}
+	}
+	return false;
 }
 
 Word_Description Database::read_description(const std::string & english_word) const
@@ -102,14 +119,14 @@ Word_Description Database::read_description(const std::string & english_word) co
 
 		if (allow_read && (line.size() >= 3) && (line.substr(0, 3) == "~eg"))
 		{
-			eg = Parser::cut_off_string(line, 0, 2);
-			description.definitions_examples.push_back(std::make_pair(def, eg));
+			eg = String_Additives::cut_off_string(line, 0, 2);
+			description.add_defition_example(def, eg);
 		}
 
 		if (allow_read && (line.size() >= 3) && (line.substr(0, 3) == "~st"))
 		{
-			sentc = Parser::cut_off_string(line, 0, 2);
-			description.sentences.push_back(sentc);
+			sentc = String_Additives::cut_off_string(line, 0, 2);
+			description.add_sentence(sentc);
 		}
 	}
 
@@ -121,13 +138,13 @@ void Database::write_to_glossary(const std::string & english_word, const Word_De
 
 	*glossary << "$" << english_word << "\n";
 
-	for (auto def_eg :description.definitions_examples)
+	for (auto def_eg :description.get_definitions_examples())
 	{
 		*glossary << def_eg.first << "\n";
 		*glossary << "~eg" << def_eg.second << "\n";
 	}
 
-	for (auto sentc : description.sentences)
+	for (auto sentc : description.get_sentences())
 	{
 		*glossary << "~st" << sentc << "\n";
 	}

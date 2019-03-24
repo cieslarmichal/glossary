@@ -1,6 +1,6 @@
 #include "Word_Description.h"
 
-const std::vector<std::string> Word_Description::key_words{ "~eg" ,"~sentence"};
+const std::vector<std::string> Word_Description::key_words{ "~eg" ,"~sentence" };
 
 
 Word_Description::Word_Description()
@@ -20,7 +20,17 @@ Word_Description::Word_Description(const Word_Description & wd)
 	}
 }
 
-Word_Description::Word_Description(std::vector<std::string> inp)
+std::vector<std::pair<std::string, std::string>> Word_Description::get_definitions_examples() const
+{
+	return definitions_examples;
+}
+
+std::vector<std::string> Word_Description::get_sentences() const
+{
+	return sentences;
+}
+
+Word_Description::Word_Description(std::vector<std::string> & inp)
 {
 	clean_input(inp);
 	split_input(inp);
@@ -36,7 +46,7 @@ void Word_Description::split_input(const std::vector<std::string> & inp)
 {
 	bool example_flag = false;
 
-	std::string definition, example,sentence;
+	std::string definition, example, sentence;
 
 	for (auto line : inp)
 	{
@@ -73,16 +83,16 @@ void Word_Description::split_input(const std::vector<std::string> & inp)
 			definition = line;
 			example_flag = true;
 		}
-
 	}
 }
 
 bool Word_Description::add_defition_example(const std::string & def, const std::string & eg)
 {
-	if (definitions_examples.size() < (int)Max_Amount::definitions)
+	if (sentences.size() < (int)Max_Amount::definitions)
 	{
-		definitions_examples.push_back(std::make_pair(def, eg));
-		return true;
+	definitions_examples.push_back(std::make_pair(def, eg));
+	return true;
+
 	}
 	return false;
 }
@@ -95,4 +105,6 @@ bool Word_Description::add_sentence(const std::string & sentc)
 		return true;
 	}
 	return false;
+
 }
+

@@ -1,18 +1,17 @@
 #include "Txt_File.h"
 
 
-Txt_File::Txt_File(const std::string & dir) : directory(dir), file(nullptr)
+Txt_File::Txt_File(const std::string & path) : access_path(path), file(nullptr)
 {
-
 }
 
 std::vector<std::string> Txt_File::get_lines()
 {
 	open();
 	std::vector<std::string> lines;
-	std::string line = "";
+	std::string line;
 
-	while (*file && file->good() && std::getline(*file, line))
+	while (file->good() && std::getline(*file, line))
 	{
 		lines.push_back(line);
 	}
@@ -25,12 +24,12 @@ std::vector<std::string> Txt_File::get_lines()
 	return lines;
 }
 
-void Txt_File::write(const std::string & inp)
+void Txt_File::write(const std::string & data)
 {
 	open();
 	if (file->good())
 	{
-		*file << inp;
+		*file << data;
 	}
 	else
 	{
@@ -41,16 +40,16 @@ void Txt_File::write(const std::string & inp)
 
 bool Txt_File::open()
 {
-	file = std::make_unique<std::fstream>(std::fstream(directory.c_str(), std::ios::in| std::ios::app));
+	file = std::make_unique<std::fstream>(std::fstream(access_path.c_str(), std::ios::in| std::ios::app));
 
 	if (!file->is_open())
 	{
-		throw ("Cant open file: " + directory);
+		throw ("Cant open file: " + access_path);
 	}
 
 	if (file->fail())
 	{
-		throw ("File is failing" + directory);
+		throw ("File is failing" + access_path);
 	}
 
 	return true;
@@ -64,24 +63,23 @@ void Txt_File::close()
 	}
 }
 
-Txt_File & operator<<(Txt_File & tf, const std::string & inp)
+Txt_File & Txt_File::operator<<(const std::string & data)
 {
-	tf.open();
+	open();
 
-
-	if (!tf.file)
+	if (!file)
 	{
 		throw "nullpointer file";
 	}
 
-	if (tf.file->bad())
+	if (file->bad())
 	{
 		throw "bad file";
 	}
 
-	*(tf.file) << inp;
+	*(file) << data;
 
-	tf.close();
+	close();
 
-	return tf;
+	return *this;
 }
