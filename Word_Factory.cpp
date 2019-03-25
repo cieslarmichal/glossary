@@ -1,12 +1,6 @@
 #include "Word_Factory.h"
-#include "Database.h"
-#include "Word.h"
 
-
-Word_Factory::Word_Factory()
-{
-	database = std::make_unique<Database>(Database());
-}
+std::unique_ptr<Database> Word_Factory::database(std::make_unique<Database>(Database()));
 
 std::vector<Word> Word_Factory::generate_words()
 {
@@ -41,7 +35,6 @@ Word Word_Factory::make_word(const std::pair<std::string, std::string> & eng_pl)
 		{
 			//default constructor
 			std::cout << "E ND" << std::endl;
-
 		}
 	}
 	else
@@ -53,7 +46,6 @@ Word Word_Factory::make_word(const std::pair<std::string, std::string> & eng_pl)
 			description = Word_Description(descr_test);
 			database->write_to_list(eng_pl.first, true);
 			database->write_to_glossary(eng_pl.first, description);
-
 		}
 		else
 		{
