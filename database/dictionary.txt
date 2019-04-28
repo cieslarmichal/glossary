@@ -1,0 +1,9 @@
+ankle		kostka
+key		klucz
+bottle		butelka
+fetch		sprowadzac
+notebook	zeszyt
+ferry		prom
+cup		kubek
+mouse 		mysz
+couch		kanapa

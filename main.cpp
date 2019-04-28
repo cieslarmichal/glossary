@@ -1,37 +1,34 @@
-#include "Word.h"
-#include <iostream>
-#include "Txt_File.h"
+#include "Word_Factory.h"
 
 int main()
 {
-	//Word w1("hence", "kostka");
-	Txt_File file("dictionary.txt");
-
-	for (auto x : file.getLines())
+	try
 	{
-		std::cout << x<<std::endl;
+		Word_Factory wf;
+
+		for (auto & x : wf.generate_words())
+		{
+			std::cout << x.get_english()<<std::endl;
+			for (auto x : x.get_description().get_definitions_examples())
+			{
+				std::cout << "def: " << x.first << std::endl;
+				std::cout << "e.g. " << x.second << std::endl;
+			}
+			std::cout << std::endl << std::endl;
+		}
+
+	}
+	catch (std::exception& e) {
+		std::cout << "exception: " << e.what() << std::endl;
+	}
+	catch (std::string & s)
+	{
+		std::cout << "exception: " << s << std::endl;
+	}
+	catch (const char * c)
+	{
+		std::cout << c << std::endl;
 	}
 	std::cin.get();
 	return 0;
 }
-
-
-
-	//std::regex reg("(<meta property=\"og:desc([^ ]+)?)");
-
-	//print_matches(content, reg);
-//void print_matches(std::string & str, std::regex reg)
-//{
-//	std::smatch matches;
-//	std::cout << std::boolalpha;
-//
-//	while (std::regex_search(str, matches, reg))
-//	{
-//		std::cout << matches.ready() << std::endl;
-//		std::cout << matches.str(1);
-//		str = matches.suffix().str();
-//		std::cout << std::endl;
-//	}
-//}
-
-

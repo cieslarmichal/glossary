@@ -1,6 +1,0 @@
-ankle;kostka
-key;klucz
-bottle;butelka
-fetch;sprowadzać
-notebook;zeszyt
-ferry;prom

@@ -1,0 +1,9 @@
+ankle 1
+key 1
+bottle 1
+fetch 1
+notebook 1
+ferry 1
+cup 1
+mouse 1
+couch 1

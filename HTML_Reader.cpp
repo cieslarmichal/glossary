@@ -1,5 +1,6 @@
 #include "HTML_Reader.h"
 
+
 std::string HTML_Reader::read_html(const std::string & url_address)
 {
 	std::string content;
@@ -17,16 +18,16 @@ std::string HTML_Reader::read_html(const std::string & url_address)
 		curl_easy_cleanup(curl);
 	}
 	curl_global_cleanup();
-
-	//std::cout << content;
-
+	
 	return content;
 }
 
 int HTML_Reader::writer(char * data, size_t size, size_t nmemb, std::string * writerData)
 {
 	if (writerData == NULL)
+	{
 		return 0;
+	}
 
 	writerData->append(data, size*nmemb);
 
