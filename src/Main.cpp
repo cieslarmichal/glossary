@@ -4,9 +4,7 @@ int main()
 {
 	try
 	{
-		Word_Factory wf;
-
-		for (auto & x : wf.generate_words())
+		for (auto & x : Word_Factory::generate_words())
 		{
 			std::cout << x.get_english()<<std::endl;
 			for (auto x : x.get_description().get_definitions_examples())
@@ -29,6 +27,5 @@ int main()
 	{
 		std::cout << c << std::endl;
 	}
-	std::cin.get();
 	return 0;
 }

@@ -1,6 +1,7 @@
 #pragma once
 #pragma comment(lib, "libcurl_a.lib")
-#include "include/curl.h"
+
+#include "curl.h"
 #include <string>
 
 class HTML_Reader

@@ -10,7 +10,8 @@ void Glossary::read_words()
 	std::vector<Word> temp_words = Word_Factory::generate_words();
 	for (auto & word : temp_words)
 	{
-		words.push_back(std::make_unique<Word>(word));
+	    //error
+		//words.push_back(std::make_unique<Word>(word));
 	}
 }
 

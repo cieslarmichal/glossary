@@ -4,9 +4,9 @@ int Database::current_word{ 0 };
 
 const std::vector<std::string> Database::file_names
 {
-	"database/list.txt",
-	"database/glossary.txt",
-	"database/dictionary.txt"
+	"../database/list.txt",
+	"../database/glossary.txt",
+	"../database/dictionary.txt"
 };
 
 Database::Database()
