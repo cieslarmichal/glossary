@@ -6,7 +6,7 @@ const std::string HTML_Parser::prefix_url = "https://www.merriam-webster.com/dic
 
 std::vector<std::string> HTML_Parser::filter_lines(const std::string & english_word)
 {
-	std::string html_content = HTML_Reader::read_html(prefix_url + english_word);
+	std::string html_content = english_word; //= HtmlFileReader::read_html(prefix_url + english_word);
 
 	if (html_content.find("The word you've entered isn't in the dictionary") != std::string::npos)
 	{
@@ -16,6 +16,8 @@ std::vector<std::string> HTML_Parser::filter_lines(const std::string & english_w
 	std::vector<std::string> filtered_lines;
 	std::stringstream sentences(html_content);
 
+    //update examples code
+    //<span class="ex-sent first-child t no-aq sents">blackberry <span class="mw_t_wi">wine</span></span>    itp
 	std::string pharse1{ "<span class=\"ex-sent t no-aq sents\">" };
 	std::string pharse2{ "<span class=\"ex-sent t has-aq sents\">" };
 	std::string pharse3{ "<span class=\"dtText\"><strong class=\"mw_t_bc\">: </strong>" };
@@ -38,6 +40,7 @@ std::vector<std::string> HTML_Parser::filter_lines(const std::string & english_w
 
 		if ((is_pharse1 || is_pharse2) && line != pharse1 && line != pharse2)
 		{
+		    std::cerr<<"XxxxxxX"<<std::endl;
 			line += "~eg";
 		}
 		if (is_pharse1 || is_pharse2 || is_pharse3)

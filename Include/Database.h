@@ -1,5 +1,5 @@
 #pragma once
-#include "Txt_File.h"
+#include "TextFileReader.h"
 #include "String_Additives.h"
 #include "Word.h"
 #include <vector>
@@ -60,7 +60,7 @@ public:
 	bool is_next_word() const;
 
 private:
-	std::unique_ptr<Txt_File> list, glossary, dictionary;
+	std::unique_ptr<TextFileReader> list, glossary, dictionary;
 
 	static const std::vector<std::string> file_names;
 

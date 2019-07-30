@@ -6,30 +6,45 @@ project( ${PROJECT_NAME} )
 set( CMAKE_BUILD_TYPE Debug )
 
 find_package(CURL REQUIRED)
+find_package(GTest REQUIRED)
+
+include_directories(${GTEST_INCLUDE_DIRS})
 
 set(CURL_INCLUDE_DIR "/usr/local/include/curl")
-
 set(CURL_LIBRARY_DIR "/usr/local/lib")
 
 
 set(SOURCES
-        ${CMAKE_SOURCE_DIR}/src/Main.cpp
-        ${CMAKE_SOURCE_DIR}/src/Database.cpp
-        ${CMAKE_SOURCE_DIR}/src/Glossary.cpp
-        ${CMAKE_SOURCE_DIR}/src/HTML_Parser.cpp
-        ${CMAKE_SOURCE_DIR}/src/HTML_Reader.cpp
-        ${CMAKE_SOURCE_DIR}/src/Random.cpp
-        ${CMAKE_SOURCE_DIR}/src/Txt_File.cpp
-        ${CMAKE_SOURCE_DIR}/src/Word.cpp
-        ${CMAKE_SOURCE_DIR}/src/Word_Description.cpp
-        ${CMAKE_SOURCE_DIR}/src/Word_Factory.cpp
-        ${CMAKE_SOURCE_DIR}/src/Word_Viewer.cpp
+        Source/Database.cpp
+        Source/Glossary.cpp
+        Source/HTML_Parser.cpp
+        Source/HtmlFileReader.cpp
+        Source/Random.cpp
+        Source/TextFileReader.cpp
+        Source/Word.cpp
+        Source/Word_Description.cpp
+        Source/Word_Factory.cpp
+        Source/Word_Viewer.cpp
+        Source/HtmlParserImpl.cpp
+        Source/TextFileWriter.cpp
         )
 
-add_executable( ${PROJECT_NAME} ${SOURCES})
+set(UT
+        UT/Source/TestMain.cpp
+        UT/Source/TextFileReaderTest.cpp
+        UT/Source/HtmlFileReaderTest.cpp
+        UT/Source/HtmlParserImplTest.cpp
+        UT/Source/TextFileWriterTest.cpp
+        )
 
-target_include_directories(${PROJECT_NAME} PUBLIC "./include" ${CURL_INCLUDE_DIR})
+add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
+add_executable(executeTests ${UT} ${SOURCES})
+
+target_include_directories(${PROJECT_NAME} PUBLIC "Include" "UT/Include/Doubles" ${CURL_INCLUDE_DIR})
+
+target_include_directories(executeTests PUBLIC "Include" "UT/Include/Doubles")
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${CURL_LIBRARY_DIR})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC -lcurl)
+target_link_libraries(executeTests PUBLIC -lcurl ${GTEST_LIBRARIES} pthread)
