@@ -17,7 +17,6 @@ set(CURL_LIBRARY_DIR "/usr/local/lib")
 set(SOURCES
         Source/Database.cpp
         Source/Glossary.cpp
-        Source/HTML_Parser.cpp
         Source/HtmlFileReader.cpp
         Source/Random.cpp
         Source/TextFileReader.cpp

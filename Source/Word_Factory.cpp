@@ -38,20 +38,20 @@ Word Word_Factory::make_word(const std::pair<std::string, std::string> & eng_pl)
 		}
 	}
 	else
-	{
-		std::cout << "NE" << std::endl;
-		std::vector<std::string> descr_test = HTML_Parser::filter_lines(eng_pl.first);
-		if ((descr_test.size() > 0) && (descr_test.at(0) != "not found"))
-		{
-			description = Word_Description(descr_test);
-			database->write_to_list(eng_pl.first, true);
-			database->write_to_glossary(eng_pl.first, description);
-		}
-		else
-		{
-			database->write_to_list(eng_pl.first, false);
-		}
-	}
-
+    {
+//		std::cout << "NE" << std::endl;
+//		std::vector<std::string> descr_test = HTML_Parser::filter_lines(eng_pl.first);
+//		if ((descr_test.size() > 0) && (descr_test.at(0) != "not found"))
+//		{
+//			description = Word_Description(descr_test);
+//			database->write_to_list(eng_pl.first, true);
+//			database->write_to_glossary(eng_pl.first, description);
+//		}
+//		else
+//		{
+//			database->write_to_list(eng_pl.first, false);
+//		}
+//	}
+    }
 	return Word(eng_pl.first, eng_pl.second, description);
 }

@@ -1,6 +1,5 @@
 #pragma once
 #include "Database.h"
-#include "HTML_Parser.h"
 
 class Word_Factory
 {

@@ -1,7 +1,6 @@
 #include "Word_Factory.h"
 #include "TextFileReader.h"
 #include "HtmlFileReader.h"
-#include "HTML_Parser.h"
 #include "TextFileWriter.h"
 #include "HtmlParserImpl.h"
 
@@ -35,7 +34,7 @@ int main()
 
 
     HtmlFileReader htmlFileReader;
-    auto htmlContent = (htmlFileReader.read("https://www.merriam-webster.com/dictionary/fetch"));
+    auto htmlContent = (htmlFileReader.read("https://www.merriam-webster.com/dictionary/wine"));
 
     TextFileWriter textFileWriter;
     textFileWriter.write("../xxx", htmlContent);
