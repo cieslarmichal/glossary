@@ -2,7 +2,13 @@
 
 #include "curl/curl.h"
 
-int curlWriter(char *data, size_t size, size_t nmemb, std::string *writerData);
+namespace
+{
+int curlWriter(char *data, size_t size, size_t nmemb, std::string *);
+const std::string fileNotFoundMessage{"File not found: "};
+const std::string connectionErrorMessage{"Error while connecting to: "};
+
+}
 
 std::string HtmlFileReader::read(const std::string & urlAddress) const
 {
@@ -19,7 +25,7 @@ std::string HtmlFileReader::read(const std::string & urlAddress) const
 
         while ((curl_easy_perform(curl) != CURLE_OK))
         {
-            throw ConnectionFailed("Error while connecting to: " + urlAddress);
+            throw ConnectionFailed(connectionErrorMessage + urlAddress);
         }
 
         curl_easy_cleanup(curl);
@@ -28,7 +34,7 @@ std::string HtmlFileReader::read(const std::string & urlAddress) const
 
     if(content.size() == 0)
     {
-        throw FileNotFound("Could not read: " + urlAddress);
+        throw FileNotFound(fileNotFoundMessage + urlAddress);
     }
 
     return content;

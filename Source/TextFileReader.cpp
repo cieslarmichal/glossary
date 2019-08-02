@@ -4,6 +4,11 @@
 #include <sstream>
 #include <fstream>
 
+namespace
+{
+const std::string endOfLine{"\n"};
+const std::string fileNotFoundMessage{"File not found: "};
+}
 
 std::string TextFileReader::read(const std::string &filePath) const
 {
@@ -13,9 +18,10 @@ std::string TextFileReader::read(const std::string &filePath) const
     if (fileStream.is_open())
     {
         buffer << fileStream.rdbuf();
-    } else
+    }
+    else
     {
-        throw FileNotFound("File not found: " + filePath);
+        throw FileNotFound(fileNotFoundMessage + filePath);
     }
 
     return buffer.str();
@@ -23,11 +29,11 @@ std::string TextFileReader::read(const std::string &filePath) const
 
 std::vector<std::string> TextFileReader::readAndSplitLines(const std::string &filePath) const
 {
-    std::vector<std::string> splittedLines;
-
     std::string fileContent = read(filePath);
 
-    boost::split(splittedLines, fileContent, boost::is_any_of("\n"));
+    std::vector<std::string> splittedLines;
+
+    boost::split(splittedLines, fileContent, boost::is_any_of(endOfLine));
 
     return splittedLines;
 }

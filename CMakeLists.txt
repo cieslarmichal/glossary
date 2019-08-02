@@ -5,6 +5,10 @@ project( ${PROJECT_NAME} )
 
 set( CMAKE_BUILD_TYPE Debug )
 
+
+set( CMAKE_CXX_FLAGS_DEBUG "-std=c++17 -Wall -g3 -fsanitize=address -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion" )
+# -Werror
+
 find_package(CURL REQUIRED)
 find_package(GTest REQUIRED)
 

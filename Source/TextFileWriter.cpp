@@ -2,6 +2,11 @@
 
 #include <fstream>
 
+namespace
+{
+const std::string fileNotFoundMessage{"File not found: "};
+}
+
 void TextFileWriter::write(const std::string & filePath, const std::string & dataToWrite) const
 {
     std::ofstream fileStream{filePath};
@@ -12,6 +17,6 @@ void TextFileWriter::write(const std::string & filePath, const std::string & dat
     }
     else
     {
-        throw FileNotFound("File not found: " + filePath);
+        throw FileNotFound(fileNotFoundMessage + filePath);
     }
 }
