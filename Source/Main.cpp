@@ -36,6 +36,9 @@ int main()
     HtmlFileReader htmlFileReader;
     auto htmlContent = (htmlFileReader.read("https://www.merriam-webster.com/dictionary/wine"));
 
+    TextFileWriter textFileWriter{"../xxx"};
+    textFileWriter.write(htmlContent);
+
     HtmlParserImpl htmlParser;
     for( auto x: htmlParser.parse(htmlContent))
     {

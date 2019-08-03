@@ -40,6 +40,9 @@ std::string HtmlFileReader::read(const std::string & urlAddress) const
     return content;
 }
 
+namespace
+{
+
 int curlWriter(char *data, size_t size, size_t nmemb, std::string *writerData)
 {
     if (writerData == nullptr)
@@ -51,5 +54,9 @@ int curlWriter(char *data, size_t size, size_t nmemb, std::string *writerData)
 
     return size * nmemb;
 }
+
+}
+
+
 
 

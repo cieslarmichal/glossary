@@ -1,6 +1,5 @@
 #pragma once
 #include "TextFileReader.h"
-#include "String_Additives.h"
 #include "Word.h"
 #include <vector>
 #include <iostream>

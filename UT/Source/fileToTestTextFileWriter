@@ -1,1 +1,4 @@
-this is example text written to check/n/n TextFileWriter class
+Hello this text should be written
+by write method
+and this text should be written
+by append method

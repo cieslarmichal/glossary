@@ -29,6 +29,7 @@ set(SOURCES
         Source/Word_Factory.cpp
         Source/Word_Viewer.cpp
         Source/HtmlParserImpl.cpp
+        Source/DefaultHtmlParser.cpp
         Source/TextFileWriter.cpp
         )
 
@@ -37,6 +38,7 @@ set(UT
         UT/Source/TextFileReaderTest.cpp
         UT/Source/HtmlFileReaderTest.cpp
         UT/Source/HtmlParserImplTest.cpp
+        UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/TextFileWriterTest.cpp
         )
 
