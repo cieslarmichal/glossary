@@ -27,7 +27,7 @@ set(SOURCES
         Source/Word_Description.cpp
         Source/Word_Factory.cpp
         Source/Word_Viewer.cpp
-        Source/HtmlParserImpl.cpp
+        Source/HtmlParserImplGlossary.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
         )
@@ -35,7 +35,7 @@ set(SOURCES
 set(UT
         UT/Source/TestMain.cpp
         UT/Source/HtmlReaderImplTest.cpp
-        UT/Source/HtmlParserImplTest.cpp
+        UT/Source/HtmlParserImplGlossaryTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
         )

@@ -1,4 +1,4 @@
-#include "HtmlParserImpl.h"
+#include "HtmlParserImplGlossary.h"
 
 #include "gtest/gtest.h"
 
@@ -31,13 +31,13 @@ const std::string exampleWithoutTags{exampleMark + "blackberry wine"};
 
 }
 
-class HtmlParserImplTest : public Test
+class HtmlParserImplGlossaryTest : public Test
 {
 public:
-    HtmlParserImpl htmlParser;
+    HtmlParserImplGlossary htmlParser;
 };
 
-TEST_F(HtmlParserImplTest, givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
+TEST_F(HtmlParserImplGlossaryTest, givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
 {
     const std::string testHtmlContent{taggedDefinition + taggedSentence + taggedExample};
     const std::vector<std::string> testParsedContent{definitionWithoutTags, sentenceWithoutTags, exampleWithoutTags};
@@ -47,7 +47,7 @@ TEST_F(HtmlParserImplTest, givenHtmlContentWithDefinitionSequenceAndExample_shou
     ASSERT_EQ(parsedHtmlContent, testParsedContent);
 }
 
-TEST_F(HtmlParserImplTest, givenHtmlContentWithoutImportantLines_shouldReturnEmptyVector)
+TEST_F(HtmlParserImplGlossaryTest, givenHtmlContentWithoutImportantLines_shouldReturnEmptyVector)
 {
     const std::string contentWithoutImportantLines{"<div class=\"s-term-cnt border-box\">\n"
                                                    "<span class=\"search-bar-submit\"></span>\n"

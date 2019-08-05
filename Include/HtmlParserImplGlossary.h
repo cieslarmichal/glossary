@@ -2,7 +2,7 @@
 
 #include "DefaultHtmlParser.h"
 
-class HtmlParserImpl : public DefaultHtmlParser
+class HtmlParserImplGlossary : public DefaultHtmlParser
 {
 public:
     std::vector<std::string> parse(const std::string &) const override;

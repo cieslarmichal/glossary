@@ -1,8 +1,8 @@
 #include "Word_Factory.h"
-#include "TextFileReader.h"
-#include "HtmlFileReader.h"
-#include "TextFileWriter.h"
-#include "HtmlParserImpl.h"
+
+#include "HtmlReaderImpl.h"
+#include "HtmlParserImplGlossary.h"
+#include "FileAccessImpl.h"
 
 int main()
 {
@@ -33,13 +33,13 @@ int main()
 //	}
 
 
-    HtmlFileReader htmlFileReader;
-    auto htmlContent = (htmlFileReader.read("https://www.merriam-webster.com/dictionary/wine"));
+    HtmlReaderImpl htmlReader;
+    auto htmlContent = (htmlReader.read("https://www.merriam-webster.com/dictionary/wine"));
 
-    TextFileWriter textFileWriter{"../xxx"};
-    textFileWriter.write(htmlContent);
+    FileAccessImpl fileAccess;
+    fileAccess.write("../xxx", htmlContent);
 
-    HtmlParserImpl htmlParser;
+    HtmlParserImplGlossary htmlParser;
     for( auto x: htmlParser.parse(htmlContent))
     {
         std::cout<<x<<std::endl;
