@@ -1,19 +1,13 @@
 #pragma once
 
-#include "FileReader.h"
+#include "HtmlReader.h"
 
-#include <string>
 #include <stdexcept>
 
-class HtmlFileReader : public FileReader
+class HtmlReaderImpl : public HtmlReader
 {
 public:
     struct ConnectionFailed : std::runtime_error
-    {
-        using std::runtime_error::runtime_error;
-    };
-
-    struct FileNotFound : std::runtime_error
     {
         using std::runtime_error::runtime_error;
     };

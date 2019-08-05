@@ -21,25 +21,23 @@ set(CURL_LIBRARY_DIR "/usr/local/lib")
 set(SOURCES
         Source/Database.cpp
         Source/Glossary.cpp
-        Source/HtmlFileReader.cpp
+        Source/HtmlReaderImpl.cpp
         Source/Random.cpp
-        Source/TextFileReader.cpp
         Source/Word.cpp
         Source/Word_Description.cpp
         Source/Word_Factory.cpp
         Source/Word_Viewer.cpp
         Source/HtmlParserImpl.cpp
         Source/DefaultHtmlParser.cpp
-        Source/TextFileWriter.cpp
+        Source/FileAccessImpl.cpp
         )
 
 set(UT
         UT/Source/TestMain.cpp
-        UT/Source/TextFileReaderTest.cpp
-        UT/Source/HtmlFileReaderTest.cpp
+        UT/Source/HtmlReaderImplTest.cpp
         UT/Source/HtmlParserImplTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
-        UT/Source/TextFileWriterTest.cpp
+        UT/Source/FileAccessImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

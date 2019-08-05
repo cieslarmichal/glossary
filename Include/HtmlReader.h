@@ -2,10 +2,10 @@
 
 #include <string>
 
-class FileReader
+class HtmlReader
 {
 public:
-    virtual ~FileReader() = default;
+    virtual ~HtmlReader() = default;
 
     virtual std::string read(const std::string &) const = 0;
 };

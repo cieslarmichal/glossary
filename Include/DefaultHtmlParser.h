@@ -13,5 +13,4 @@ protected:
 private:
     void removeHtmlStrings(std::vector<std::string> &) const;
     void removeExtraLines(std::vector<std::string> &) const;
-
 };

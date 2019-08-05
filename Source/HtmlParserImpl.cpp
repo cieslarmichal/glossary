@@ -15,7 +15,6 @@ bool isSentence(const std::string &);
 
 std::string joinLines(const std::vector<std::string> &);
 
-
 const std::string htmlDefinitionTag{"<span class=\"dtText\"><strong class=\"mw_t_bc\">: </strong>"};
 const std::string htmlSentenceTag{"<span class=\"t has-aq\">"};
 const std::string htmlExampleTag1{"<span class=\"ex-sent first-child t no-aq sents\">"};
@@ -64,10 +63,6 @@ std::vector<std::string> HtmlParserImpl::selectImportantLines(const std::vector<
         }
     }
 
-    for(auto x: importantLines)
-    {
-        std::cerr<<x<<std::endl;
-    }
     return importantLines;
 }
 
