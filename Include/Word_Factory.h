@@ -1,5 +1,5 @@
 #pragma once
-#include "Database.h"
+#include "DatabaseImpl.h"
 
 class Word_Factory
 {
@@ -20,7 +20,7 @@ private:
 	// respectively english, polish word
 	static Word make_word(const std::pair<std::string, std::string> &);
 
-	static std::unique_ptr<Database> database;
+	static std::unique_ptr<DatabaseImpl> database;
 };
 
 

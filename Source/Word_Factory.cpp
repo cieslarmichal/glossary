@@ -1,6 +1,6 @@
 #include "Word_Factory.h"
 
-std::unique_ptr<Database> Word_Factory::database(std::make_unique<Database>(Database()));
+std::unique_ptr<DatabaseImpl> Word_Factory::database(std::make_unique<DatabaseImpl>(DatabaseImpl()));
 
 std::vector<Word> Word_Factory::generate_words()
 {

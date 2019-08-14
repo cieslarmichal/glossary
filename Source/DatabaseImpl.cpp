@@ -1,25 +1,31 @@
-#include "Database.h"
+#include "DatabaseImpl.h"
 
-int Database::current_word{ 0 };
+int DatabaseImpl::current_word{ 0 };
 
-const std::vector<std::string> Database::file_names
+const std::vector<std::string> DatabaseImpl::file_names
 {
 	"../database/list.txt",
 	"../database/glossary.txt",
 	"../database/dictionary.txt"
 };
 
-Database::Database()
+
+DatabaseImpl::DatabaseImpl(FileAccess & access) :fileAccess(access)
 {
-//	list = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)Database::File_Name::list)));
-//	glossary = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)Database::File_Name::glossary)));
-//	dictionary = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)Database::File_Name::dictionary)));
-//
-//	dictionary_words = dictionary->get_lines();
+
 }
 
+//DatabaseImpl::DatabaseImpl()
+//{
+//	list = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)DatabaseImpl::File_Name::list)));
+//	glossary = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)DatabaseImpl::File_Name::glossary)));
+//	dictionary = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)DatabaseImpl::File_Name::dictionary)));
+//
+//	dictionary_words = dictionary->get_lines();
+//}
 
-std::pair<bool, bool> Database::word_in_list(const std::string & english_word) const
+
+std::pair<bool, bool> DatabaseImpl::word_in_list(const std::string & english_word) const
 {
 	bool is_in_database = false;
 	bool has_description = false;
@@ -41,12 +47,12 @@ std::pair<bool, bool> Database::word_in_list(const std::string & english_word) c
 	return std::make_pair(is_in_database, has_description);
 }
 
-void Database::write_to_list(const std::string & word, bool has_descr)
+void DatabaseImpl::write_to_list(const std::string & word, bool has_descr)
 {
 	//*list << word << " " << std::to_string(has_descr) << "\n";
 }
 
-std::pair<std::string, std::string> Database::read_word() const
+std::pair<std::string, std::string> DatabaseImpl::read_word() const
 {
 	if (current_word >= dictionary_words.size())
 	{
@@ -64,7 +70,7 @@ std::pair<std::string, std::string> Database::read_word() const
 	return std::make_pair(english, polish);
 }
 
-bool Database::is_next_word() const
+bool DatabaseImpl::is_next_word() const
 {
 	while ((current_word < dictionary_words.size()) && !is_line_word(dictionary_words.at(current_word)))
 	{
@@ -73,7 +79,7 @@ bool Database::is_next_word() const
 	return (current_word < dictionary_words.size());
 }
 
-bool Database::is_line_word(const std::string & line) const
+bool DatabaseImpl::is_line_word(const std::string & line) const
 {
 	for (auto c : line)
 	{
@@ -85,7 +91,7 @@ bool Database::is_line_word(const std::string & line) const
 	return false;
 }
 
-Word_Description Database::read_description(const std::string & english_word) const
+Word_Description DatabaseImpl::read_description(const std::string & english_word) const
 {
 	Word_Description description;
 //	std::string def, eg, sentc;
@@ -133,7 +139,7 @@ Word_Description Database::read_description(const std::string & english_word) co
 	return description;
 }
 
-void Database::write_to_glossary(const std::string & english_word, const Word_Description & description)
+void DatabaseImpl::write_to_glossary(const std::string & english_word, const Word_Description & description)
 {
 
 //	*glossary << "$" << english_word << "\n";
@@ -151,4 +157,6 @@ void Database::write_to_glossary(const std::string & english_word, const Word_De
 //
 //	*glossary << "\n";
 }
+
+
 

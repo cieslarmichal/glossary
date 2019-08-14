@@ -1,4 +1,4 @@
-#include "HtmlParserImplGlossary.h"
+#include "GlossaryHtmlParser.h"
 
 #include "boost/algorithm/string.hpp"
 #include <iostream>
@@ -26,7 +26,7 @@ const std::vector<std::string> sequencesToDelete{"&mdash;", "&quot;"};
 
 }
 
-std::vector<std::string> HtmlParserImplGlossary::parse(const std::string &htmlContent) const
+std::vector<std::string> GlossaryHtmlParser::parse(const std::string &htmlContent) const
 {
     auto htmlContentLines = splitLines(htmlContent);
 
@@ -40,7 +40,7 @@ std::vector<std::string> HtmlParserImplGlossary::parse(const std::string &htmlCo
 }
 
 
-std::vector<std::string> HtmlParserImplGlossary::selectImportantLines(const std::vector<std::string> &htmlContent) const
+std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vector<std::string> &htmlContent) const
 {
     std::vector<std::string> importantLines;
 
@@ -66,7 +66,7 @@ std::vector<std::string> HtmlParserImplGlossary::selectImportantLines(const std:
     return importantLines;
 }
 
-void HtmlParserImplGlossary::removeHtmlStrings(std::vector<std::string> & htmlContent) const
+void GlossaryHtmlParser::removeHtmlStrings(std::vector<std::string> & htmlContent) const
 {
     for (auto & line : htmlContent)
     {

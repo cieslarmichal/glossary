@@ -1,7 +1,7 @@
 #include "Word_Factory.h"
 
 #include "HtmlReaderImpl.h"
-#include "HtmlParserImplGlossary.h"
+#include "GlossaryHtmlParser.h"
 #include "FileAccessImpl.h"
 
 int main()
@@ -39,7 +39,7 @@ int main()
     FileAccessImpl fileAccess;
     fileAccess.write("../xxx", htmlContent);
 
-    HtmlParserImplGlossary htmlParser;
+    GlossaryHtmlParser htmlParser;
     for( auto x: htmlParser.parse(htmlContent))
     {
         std::cout<<x<<std::endl;

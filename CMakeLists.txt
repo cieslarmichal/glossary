@@ -19,7 +19,7 @@ set(CURL_LIBRARY_DIR "/usr/local/lib")
 
 
 set(SOURCES
-        Source/Database.cpp
+        Source/DatabaseImpl.cpp
         Source/Glossary.cpp
         Source/HtmlReaderImpl.cpp
         Source/Random.cpp
@@ -27,7 +27,7 @@ set(SOURCES
         Source/Word_Description.cpp
         Source/Word_Factory.cpp
         Source/Word_Viewer.cpp
-        Source/HtmlParserImplGlossary.cpp
+        Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
         )
@@ -35,7 +35,7 @@ set(SOURCES
 set(UT
         UT/Source/TestMain.cpp
         UT/Source/HtmlReaderImplTest.cpp
-        UT/Source/HtmlParserImplGlossaryTest.cpp
+        UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
         )
@@ -43,9 +43,9 @@ set(UT
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
 add_executable(executeTests ${UT} ${SOURCES})
 
-target_include_directories(${PROJECT_NAME} PUBLIC "Include" "UT/Include/Doubles" ${CURL_INCLUDE_DIR})
+target_include_directories(${PROJECT_NAME} PUBLIC "Include" "UT/Doubles" ${CURL_INCLUDE_DIR})
 
-target_include_directories(executeTests PUBLIC "Include" "UT/Include/Doubles")
+target_include_directories(executeTests PUBLIC "Include" "UT/Doubles")
 
 target_link_directories(${PROJECT_NAME} PUBLIC ${CURL_LIBRARY_DIR})
 
