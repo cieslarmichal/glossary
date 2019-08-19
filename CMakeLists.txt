@@ -38,6 +38,7 @@ set(UT
         UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
+        UT/Source/DatabaseImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

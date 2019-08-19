@@ -1,162 +1,143 @@
 #include "DatabaseImpl.h"
 
-int DatabaseImpl::current_word{ 0 };
+#include "StringHelper.h"
+#include <sstream>
 
-const std::vector<std::string> DatabaseImpl::file_names
+
+namespace
 {
-	"../database/list.txt",
-	"../database/glossary.txt",
-	"../database/dictionary.txt"
-};
-
-
-DatabaseImpl::DatabaseImpl(FileAccess & access) :fileAccess(access)
-{
+const std::string dictionaryFilePath{"../database/dictionary.txt"};
+const std::string glossaryFilePath{"../database/glossary.txt"};
+const std::string existanceInformationsFilePath{"../database/list.txt"};
+const std::string definitionMark{":"};
+const std::string exampleMark{"//"};
+const std::string sentenceMark{"\""};
 
 }
 
-//DatabaseImpl::DatabaseImpl()
+
+DatabaseImpl::DatabaseImpl(FileAccess & access) :fileAccess(access), currentWordIndex{0}
+{
+    std::string dictionaryContent = fileAccess.readContent(dictionaryFilePath);
+	dictionaryWords = getSplitLines(dictionaryContent);
+}
+
+//bool DatabaseImpl::is_line_word(const std::string & line) const
 //{
-//	list = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)DatabaseImpl::File_Name::list)));
-//	glossary = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)DatabaseImpl::File_Name::glossary)));
-//	dictionary = std::make_unique<TextFileReader>(TextFileReader(file_names.at((int)DatabaseImpl::File_Name::dictionary)));
-//
-//	dictionary_words = dictionary->get_lines();
+//	for (auto c : line)
+//	{
+//		if (!isspace(c))
+//		{
+//			return true;
+//		}
+//	}
+//	return false;
 //}
 
-
-std::pair<bool, bool> DatabaseImpl::word_in_list(const std::string & english_word) const
+boost::optional<WordWithTranslation> DatabaseImpl::readNextWord() const
 {
-	bool is_in_database = false;
-	bool has_description = false;
+    if(!nextWordExists())
+    {
+        return boost::none;
+    }
 
-//	std::string word;
-//
-//	for (auto line : list->get_lines())
-//	{
-//		std::stringstream ss(line);
-//		ss >> word;
-//		if (word == english_word)
-//		{
-//			is_in_database = true;
-//			ss >> has_description;
-//			break;
-//		}
-//	}
+    std::stringstream line(dictionaryWords.at(currentWordIndex));
+    std::string english, polish;
 
-	return std::make_pair(is_in_database, has_description);
+    line >> english >> polish;
+    currentWordIndex++;
+
+    return WordWithTranslation{english, polish};
 }
 
-void DatabaseImpl::write_to_list(const std::string & word, bool has_descr)
+bool DatabaseImpl::nextWordExists() const
 {
-	//*list << word << " " << std::to_string(has_descr) << "\n";
+    return (currentWordIndex < dictionaryWords.size() &&
+            !dictionaryWords.at(currentWordIndex).empty());
 }
 
-std::pair<std::string, std::string> DatabaseImpl::read_word() const
+boost::optional<WordExistenceInfo> DatabaseImpl::getWordExistenceInfo(const std::string & expectedEnglishWord) const
 {
-	if (current_word >= dictionary_words.size())
-	{
-		throw "no more words in dictionary file";
-	}
+    bool descriptionExists = false;
 
-	std::stringstream line(dictionary_words.at(current_word));
-	std::string english, polish;
+    std::string existanceInformations = fileAccess.readContent(existanceInformationsFilePath);
 
+    for (auto line: getSplitLines(existanceInformations))
+    {
+        std::stringstream lineStream{line};
+        std::string word;
+        lineStream >> word;
+        if(word == expectedEnglishWord)
+        {
+			lineStream >> descriptionExists;
+            return WordExistenceInfo({expectedEnglishWord, descriptionExists});
+        }
+    }
 
-	line >> english >> polish;
-	std::cout << "x"<<english<<"x"<<std::endl;
-	current_word++;
-
-	return std::make_pair(english, polish);
+    return WordExistenceInfo({boost::none, descriptionExists});
 }
 
-bool DatabaseImpl::is_next_word() const
+void DatabaseImpl::appendWordExistenceInfo(const WordExistenceInfo & wordExistenceInfo) const
 {
-	while ((current_word < dictionary_words.size()) && !is_line_word(dictionary_words.at(current_word)))
-	{
-		current_word++;
-	}
-	return (current_word < dictionary_words.size());
+    fileAccess.append(existanceInformationsFilePath, wordExistenceInfo.toString());
 }
 
-bool DatabaseImpl::is_line_word(const std::string & line) const
+boost::optional<WordDescription> DatabaseImpl::readWordDescription(const std::string & englishWord) const
 {
-	for (auto c : line)
-	{
-		if (!isspace(c))
-		{
-			return true;
-		}
-	}
-	return false;
+    WordDescription wordDescription;
+	std::string def, eg, sentc;
+	std::string line;
+
+	bool allow_read = false;
+	bool eg_next = false;
+
+	std::string glossaryContent = fileAccess.readContent(glossaryFilePath);
+	for (auto line : getSplitLines(glossaryContent))
+    {
+	    std::cout<<line<<std::endl;
+        if (line == ("$" + englishWord))
+        {
+            allow_read = true;
+            continue;
+        }
+
+        if(!allow_read) continue;
+
+        if ((line.size() >= definitionMark.size()) && (line.substr(0, 1) == definitionMark))
+        {
+            def = line;
+            //eg_next = true;
+        }
+
+        if ((line.size() >= exampleMark.size()) && (line.substr(0, 2) == exampleMark))
+        {
+            //eg = cutOffFromString(line, 0, 2);
+            wordDescription.definitionsWithExamples.emplace_back(std::make_pair(def, line));
+        }
+
+        if ((line.size() >= sentenceMark.size()) && (line.substr(0, 1) == sentenceMark))
+        {
+            //sentc = cutOffFromString(line, 0, 2);
+            wordDescription.sentences.push_back(sentc);
+        }
+    }
+
+    return wordDescription;
 }
 
-Word_Description DatabaseImpl::read_description(const std::string & english_word) const
+void DatabaseImpl::writeWordDescription(const std::string & englishWord, const WordDescription & description) const
 {
-	Word_Description description;
-//	std::string def, eg, sentc;
-//	std::string line;
-//
-//	bool allow_read = false;
-//	bool eg_next = false;
-//
-//	std::vector<std::string> lines(glossary->get_lines());
-//
-//	for (int index = 0; index < lines.size(); ++index)
-//	{
-//		line = lines.at(index);
-//
-//		if ((line.size() >= 1) && (line.at(0) == '$') && allow_read)
-//		{
-//			break;
-//		}
-//
-//		if ((line.size() > english_word.size()) && line == ("$" + english_word))
-//		{
-//			allow_read = true;
-//			continue;
-//		}
-//
-//		if (allow_read && (line.size() >= 1) && (line.at(0) == ':'))
-//		{
-//			def = line;
-//			eg_next = true;
-//		}
-//
-//		if (allow_read && (line.size() >= 3) && (line.substr(0, 3) == "~eg"))
-//		{
-//			eg = String_Additives::cut_off_string(line, 0, 2);
-//			description.add_defition_example(def, eg);
-//		}
-//
-//		if (allow_read && (line.size() >= 3) && (line.substr(0, 3) == "~st"))
-//		{
-//			sentc = String_Additives::cut_off_string(line, 0, 2);
-//			description.add_sentence(sentc);
-//		}
-//	}
-
-	return description;
+    std::string contentToWrite = "$" + englishWord + "\n" + description.toString();
+    fileAccess.append(glossaryFilePath, contentToWrite);
 }
 
-void DatabaseImpl::write_to_glossary(const std::string & english_word, const Word_Description & description)
+namespace
 {
 
-//	*glossary << "$" << english_word << "\n";
-//
-//	for (auto def_eg :description.get_definitions_examples())
-//	{
-//		*glossary << def_eg.first << "\n";
-//		*glossary << "~eg" << def_eg.second << "\n";
-//	}
-//
-//	for (auto sentc : description.get_sentences())
-//	{
-//		*glossary << "~st" << sentc << "\n";
-//	}
-//
-//	*glossary << "\n";
+
 }
+
+
 
 
 

@@ -1,7 +1,9 @@
 #include "GlossaryHtmlParser.h"
 
-#include "boost/algorithm/string.hpp"
 #include <iostream>
+
+#include "StringHelper.h"
+
 
 namespace
 {
@@ -13,26 +15,23 @@ bool isExample(const std::string &);
 
 bool isSentence(const std::string &);
 
-std::string joinLines(const std::vector<std::string> &);
-
 const std::string htmlDefinitionTag{"<span class=\"dtText\"><strong class=\"mw_t_bc\">: </strong>"};
 const std::string htmlSentenceTag{"<span class=\"t has-aq\">"};
 const std::string htmlExampleTag1{"<span class=\"ex-sent first-child t no-aq sents\">"};
 const std::string htmlExampleTag2{"<span class=\"ex-sent first-child t has-aq sents\">"};
 const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
-const std::string endOfLine("\n");
 const std::vector<std::string> sequencesToDelete{"&mdash;", "&quot;"};
 
 }
 
 std::vector<std::string> GlossaryHtmlParser::parse(const std::string &htmlContent) const
 {
-    auto htmlContentLines = splitLines(htmlContent);
+    auto htmlContentLines = getSplitLines(htmlContent);
 
     auto importantLines = selectImportantLines(htmlContentLines);
 
-    auto parsedContent = DefaultHtmlParser::parse(joinLines(importantLines));
+    auto parsedContent = DefaultHtmlParser::parse(getJoinedLines(importantLines));
 
     removeHtmlStrings(parsedContent);
 
@@ -99,12 +98,6 @@ bool isSentence(const std::string &line)
 {
     return (line.find(htmlSentenceTag) != std::string::npos);
 }
-
-std::string joinLines(const std::vector<std::string> &htmlContentLines)
-{
-    return boost::algorithm::join(htmlContentLines, endOfLine);
-}
-
 
 }
 

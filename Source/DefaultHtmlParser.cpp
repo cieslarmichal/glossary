@@ -1,8 +1,9 @@
 #include "DefaultHtmlParser.h"
 
-#include "boost/algorithm/string.hpp"
 #include <iostream>
 #include <algorithm>
+
+#include "StringHelper.h"
 
 namespace
 {
@@ -20,25 +21,17 @@ std::string cutOffFromString(const std::string &, size_t, size_t);
 
 const std::string openHtmlTag{"<"};
 const std::string closeHtmlTag{">"};
-const std::string endOfLine{"\n"};
 }
 
 std::vector<std::string> DefaultHtmlParser::parse(const std::string &htmlContent) const
 {
-    auto parsedContent = splitLines(htmlContent);
+    auto parsedContent = getSplitLines(htmlContent);
 
     removeHtmlStrings(parsedContent);
 
     removeExtraLines(parsedContent);
 
     return parsedContent;
-}
-
-std::vector<std::string> DefaultHtmlParser::splitLines(const std::string &htmlContent) const
-{
-    std::vector<std::string> htmlContentLines;
-    boost::split(htmlContentLines, htmlContent, boost::is_any_of(endOfLine));
-    return htmlContentLines;
 }
 
 void DefaultHtmlParser::removeHtmlStrings(std::vector<std::string> &htmlContent) const
@@ -86,16 +79,6 @@ size_t findOpenHtmlTag(const std::string &line)
 size_t findCloseHtmlTag(const std::string &line)
 {
     return line.find(closeHtmlTag);
-}
-
-std::string cutOffFromString(const std::string &line, size_t startIndexToCut, size_t endIndexToCut)
-{
-    auto sizeOfLine = line.size();
-
-    auto head = line.substr(0, startIndexToCut);
-    auto tail = line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut);
-
-    return head + tail;
 }
 
 }

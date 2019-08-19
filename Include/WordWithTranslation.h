@@ -1,6 +1,6 @@
 #pragma once
 
-struct WordTranslation
+struct WordWithTranslation
 {
     std::string englishWord;
     std::string polishTranslation;

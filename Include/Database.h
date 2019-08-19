@@ -1,18 +1,17 @@
 #pragma once
+
 #include <string>
-#include "WordInfo.h"
+#include "boost/optional.hpp"
+#include "WordExistenceInfo.h"
 #include "WordDescription.h"
-#include "WordTranslation.h"
+#include "WordWithTranslation.h"
 
 class Database
 {
 public:
-    WordInfo getWordInformation(const std::string &) const;
-    void appendWordInformation(const WordInfo &) const;
-
-    WordDescription readWordDescription(const std::string &) const;
-    void writeWordDescription(const WordDescription &) const;
-
-    WordTranslation readWord(const WordTranslation &) const;
-    bool isNextWord() const;
+    virtual boost::optional<WordWithTranslation> readNextWord() const = 0;
+    virtual boost::optional<WordExistenceInfo> getWordExistenceInfo(const std::string &) const = 0;
+    virtual void appendWordExistenceInfo(const WordExistenceInfo &) const = 0;
+    virtual boost::optional<WordDescription> readWordDescription(const std::string &) const = 0;
+    virtual void writeWordDescription(const std::string &, const WordDescription &) const = 0;
 };
