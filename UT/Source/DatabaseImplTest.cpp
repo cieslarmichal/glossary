@@ -8,7 +8,7 @@ using namespace ::testing;
 class DatabaseImplTest : public Test
 {
 public:
-    StrictMock<FileAccessMock> fileAccess;
+    FileAccessMock fileAccess;
     DatabaseImpl database{fileAccess};
 };
 

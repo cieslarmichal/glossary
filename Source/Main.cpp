@@ -4,23 +4,27 @@
 #include "GlossaryHtmlParser.h"
 #include "FileAccessImpl.h"
 #include "DatabaseImpl.h"
+#include "StringHelper.h"
+#include "WordDescription.h"
+
+#include <iostream>
 
 int main()
 {
     FileAccessImpl fileAccess;
     DatabaseImpl database{fileAccess};
-    auto x = database.readWordDescription("key");
-    std::cout<<x->toString();
-//    HtmlReaderImpl htmlReader;
-//    auto htmlContent = (htmlReader.read("https://www.merriam-webster.com/dictionary/wine"));
-//
-//    fileAccess.write("../xxx", htmlContent);
-//
-//    GlossaryHtmlParser htmlParser;
-//    for( auto x: htmlParser.parse(htmlContent))
-//    {
-//        std::cout<<x<<std::endl;
-//    }
+    HtmlReaderImpl htmlReader;
+    auto htmlContent = (htmlReader.read("https://www.merriam-webster.com/dictionary/wine"));
+
+
+    GlossaryHtmlParser htmlParser;
+    auto parsedContent = htmlParser.parse(htmlContent);
+    fileAccess.write("../xxx", stringHelper::getJoinedLines(parsedContent));
+
+    WordDescription wd(parsedContent);
+
+    std::cout<<wd.toString();
+
 
 	return 0;
 }

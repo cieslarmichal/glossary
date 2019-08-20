@@ -17,15 +17,13 @@ size_t findOpenHtmlTag(const std::string &);
 
 size_t findCloseHtmlTag(const std::string &);
 
-std::string cutOffFromString(const std::string &, size_t, size_t);
-
 const std::string openHtmlTag{"<"};
 const std::string closeHtmlTag{">"};
 }
 
 std::vector<std::string> DefaultHtmlParser::parse(const std::string &htmlContent) const
 {
-    auto parsedContent = getSplitLines(htmlContent);
+    auto parsedContent = stringHelper::getSplitLines(htmlContent);
 
     removeHtmlStrings(parsedContent);
 
@@ -57,7 +55,7 @@ void removeHtmlTags(std::string &line)
     {
         auto openSignPosition = findOpenHtmlTag(line);
         auto closeSignPosition = findCloseHtmlTag(line);
-        line = cutOffFromString(line, openSignPosition, closeSignPosition);
+        line = stringHelper::cutOffFromString(line, openSignPosition, closeSignPosition);
     }
 }
 

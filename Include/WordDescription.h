@@ -1,23 +1,14 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 struct WordDescription
 {
-    std::string toString() const
-    {
-        std::string wordDescription;
-        for (auto definitionAndExample : definitionsWithExamples)
-        {
-            wordDescription += definitionAndExample.first + "\n";
-            wordDescription += definitionAndExample.second + "\n";
-        }
+    WordDescription() = default;
+    explicit WordDescription(const std::vector<std::string> &);
 
-        for (auto sentence : sentences)
-        {
-            wordDescription += sentence + "\n";
-        }
-
-        wordDescription += "\n";
-    }
+    std::string toString() const;
 
     std::vector<std::pair<std::string, std::string>> definitionsWithExamples;
     std::vector<std::string> sentences;

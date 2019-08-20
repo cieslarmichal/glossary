@@ -3,6 +3,8 @@
 #include <iostream>
 
 #include "StringHelper.h"
+#include "boost/algorithm/string.hpp"
+
 
 
 namespace
@@ -27,11 +29,11 @@ const std::vector<std::string> sequencesToDelete{"&mdash;", "&quot;"};
 
 std::vector<std::string> GlossaryHtmlParser::parse(const std::string &htmlContent) const
 {
-    auto htmlContentLines = getSplitLines(htmlContent);
+    auto htmlContentLines = stringHelper::getSplitLines(htmlContent);
 
     auto importantLines = selectImportantLines(htmlContentLines);
 
-    auto parsedContent = DefaultHtmlParser::parse(getJoinedLines(importantLines));
+    auto parsedContent = DefaultHtmlParser::parse(stringHelper::getJoinedLines(importantLines));
 
     removeHtmlStrings(parsedContent);
 

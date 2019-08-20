@@ -23,13 +23,12 @@ set(SOURCES
         Source/Glossary.cpp
         Source/HtmlReaderImpl.cpp
         Source/Random.cpp
-        Source/Word.cpp
-        Source/Word_Description.cpp
+        Source/WordDescription.cpp
         Source/Word_Factory.cpp
-        Source/Word_Viewer.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
+        Source/StringHelper.cpp
         )
 
 set(UT
@@ -51,4 +50,6 @@ target_include_directories(executeTests PUBLIC "Include" "UT/Doubles")
 target_link_directories(${PROJECT_NAME} PUBLIC ${CURL_LIBRARY_DIR})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC -lcurl)
-target_link_libraries(executeTests PUBLIC -lcurl ${GTEST_LIBRARIES} pthread)
+target_link_libraries(executeTests PUBLIC -lcurl ${GTEST_LIBRARIES} gmock
+        gtest
+        gtest_main pthread)
