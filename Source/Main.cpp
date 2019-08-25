@@ -21,7 +21,7 @@ int main()
     auto parsedContent = htmlParser.parse(htmlContent);
     fileAccess.write("../xxx", stringHelper::getJoinedLines(parsedContent));
 
-    WordDescription wd(parsedContent);
+    WordDescription wd("wine", parsedContent);
 
     std::cout<<wd.toString();
 

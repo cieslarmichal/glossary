@@ -14,14 +14,17 @@ const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
 }
 
+WordDescription::WordDescription(const std::string &wordName) : name{wordName}
+{
+}
 
-WordDescription::WordDescription(const std::vector<std::string> &lines)
+WordDescription::WordDescription(const std::string &wordName, const std::vector<std::string> &lines) : name{wordName}
 {
     bool example_flag = false;
 
     std::string definition;
 
-    for (auto line : lines)
+    for (const auto & line : lines)
     {
         if (example_flag && !isExample(line))
         {
@@ -51,21 +54,27 @@ WordDescription::WordDescription(const std::vector<std::string> &lines)
 
 std::string WordDescription::toString() const
 {
-    std::string wordDescription;
-    for (const auto & definitionAndExample : definitionsWithExamples)
+    std::string wordDescriptionAsString = "$" + name + "\n";
+
+    for (const auto &definitionAndExample : definitionsWithExamples)
     {
-        wordDescription += definitionAndExample.first + "\n";
-        wordDescription += definitionAndExample.second + "\n";
+        wordDescriptionAsString += definitionAndExample.first + "\n";
+        wordDescriptionAsString += definitionAndExample.second + "\n";
     }
 
-    for (const auto & sentence : sentences)
+    for (const auto &sentence : sentences)
     {
-        wordDescription += sentence + "\n";
+        wordDescriptionAsString += sentence + "\n";
     }
 
-    wordDescription += "\n";
+    wordDescriptionAsString += "\n";
 
-    return wordDescription;
+    return wordDescriptionAsString;
+}
+
+bool WordDescription::operator==(const WordDescription & rhs)
+{
+    return (name == rhs.name && definitionsWithExamples == rhs.definitionsWithExamples && sentences == rhs.sentences);
 }
 
 
@@ -88,3 +97,8 @@ bool isSentence(const std::string &line)
 
 }
 
+std::ostream &operator<<(std::ostream & os, const WordDescription & wordDescription)
+{
+    os<<wordDescription.toString();
+    return os;
+}

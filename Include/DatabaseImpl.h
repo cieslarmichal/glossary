@@ -4,7 +4,6 @@
 #include "FileAccess.h"
 #include "Database.h"
 
-
 class DatabaseImpl :  public Database
 {
 public:
@@ -12,16 +11,15 @@ public:
 
     boost::optional<WordWithTranslation> readNextWord() const override;
     boost::optional<WordExistenceInfo> getWordExistenceInfo(const std::string &) const override;
-    void appendWordExistenceInfo(const WordExistenceInfo &) const override;
-    boost::optional<WordDescription> readWordDescription(const std::string &) const override;
-    void writeWordDescription(const std::string &, const WordDescription &) const override;
+    boost::optional<WordDescription> getWordDescription(const std::string &) const override;
+    void writeWordExistenceInfo(const WordExistenceInfo &) const override;
+    void writeWordDescription(const WordDescription &) const override;
 
 private:
+    bool nextWordExists() const;
+
     FileAccess & fileAccess;
     std::vector<std::string> dictionaryWords;
     mutable std::vector<std::string>::size_type currentWordIndex;
-
-    bool nextWordExists() const;
-
 };
 

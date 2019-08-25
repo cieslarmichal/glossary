@@ -4,7 +4,6 @@
 #include <sstream>
 #include <iostream>
 
-
 namespace
 {
 bool isDefinition(const std::string &);
@@ -13,20 +12,18 @@ bool isExample(const std::string &);
 
 bool isSentence(const std::string &);
 
-const std::string dictionaryFilePath{"../database/dictionary.txt"};
-const std::string glossaryFilePath{"../database/glossary.txt"};
-const std::string existanceInformationsFilePath{"../database/list.txt"};
+const std::string wordTranslationsFilePath{"../database/dictionary.txt"};
+const std::string wordDescriptionsFilePath{"../database/glossary.txt"};
+const std::string wordExistenceInformationsFilePath{"../database/list.txt"};
 const std::string definitionMark{":"};
 const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
-
-
 }
 
 
 DatabaseImpl::DatabaseImpl(FileAccess &access) : fileAccess(access), currentWordIndex{0}
 {
-    std::string dictionaryContent = fileAccess.readContent(dictionaryFilePath);
+    std::string dictionaryContent = fileAccess.readContent(wordTranslationsFilePath);
     dictionaryWords = stringHelper::getSplitLines(dictionaryContent);
 }
 
@@ -57,9 +54,9 @@ boost::optional<WordExistenceInfo> DatabaseImpl::getWordExistenceInfo(const std:
 {
     bool descriptionExists = false;
 
-    std::string existanceInformations = fileAccess.readContent(existanceInformationsFilePath);
+    std::string existenceInformations = fileAccess.readContent(wordExistenceInformationsFilePath);
 
-    for (const auto & line: stringHelper::getSplitLines(existanceInformations))
+    for (const auto &line: stringHelper::getSplitLines(existenceInformations))
     {
         std::stringstream lineStream{line};
         std::string word;
@@ -71,26 +68,21 @@ boost::optional<WordExistenceInfo> DatabaseImpl::getWordExistenceInfo(const std:
         }
     }
 
-    return WordExistenceInfo({boost::none, descriptionExists});
+    return boost::none;
 }
 
-void DatabaseImpl::appendWordExistenceInfo(const WordExistenceInfo &wordExistenceInfo) const
+boost::optional<WordDescription> DatabaseImpl::getWordDescription(const std::string &englishWord) const
 {
-    fileAccess.append(existanceInformationsFilePath, wordExistenceInfo.toString());
-}
+    WordDescription wordDescription{englishWord};
 
-boost::optional<WordDescription> DatabaseImpl::readWordDescription(const std::string &englishWord) const
-{
-    WordDescription wordDescription;
+    std::string glossaryContent = fileAccess.readContent(wordDescriptionsFilePath);
+
+
     std::string definition;
-    std::string line;
-
     bool allowRead = false;
 
-    std::string glossaryContent = fileAccess.readContent(glossaryFilePath);
-    for (const auto & line : stringHelper::getSplitLines(glossaryContent))
+    for (const auto &line : stringHelper::getSplitLines(glossaryContent))
     {
-        std::cout << line << std::endl;
         if (line == ("$" + englishWord))
         {
             allowRead = true;
@@ -102,30 +94,42 @@ boost::optional<WordDescription> DatabaseImpl::readWordDescription(const std::st
             continue;
         }
 
+        if (!line.empty() && line.at(0) == '$' && allowRead)
+        {
+            break;
+        }
+
         if (isDefinition(line))
         {
             definition = line;
         }
 
-        if(isExample(line))
+        if (isExample(line))
         {
             wordDescription.definitionsWithExamples.emplace_back(std::make_pair(definition, line));
         }
 
-        if(isSentence(line))
+        if (isSentence(line))
         {
             wordDescription.sentences.push_back(line);
         }
     }
 
-    return wordDescription;
+    return (!wordDescription.definitionsWithExamples.empty()) ? boost::optional<WordDescription>(wordDescription)
+                                                              : boost::none;
 }
 
-void DatabaseImpl::writeWordDescription(const std::string &englishWord, const WordDescription &description) const
+void DatabaseImpl::writeWordExistenceInfo(const WordExistenceInfo &wordExistenceInfo) const
 {
-    std::string contentToWrite = "$" + englishWord + "\n" + description.toString();
-    fileAccess.append(glossaryFilePath, contentToWrite);
+    fileAccess.append(wordExistenceInformationsFilePath, wordExistenceInfo.toString());
 }
+
+
+void DatabaseImpl::writeWordDescription(const WordDescription &description) const
+{
+    fileAccess.append(wordDescriptionsFilePath, description.toString());
+}
+
 
 namespace
 {
