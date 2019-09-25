@@ -2,10 +2,11 @@
 
 #include "curl/curl.h"
 
+#include "Exceptions/ConnectionFailed.h"
+
 namespace
 {
 size_t curlWriter(char *data, size_t size, size_t nmemb, std::string *);
-const std::string connectionErrorMessage{"Error while connecting to: "};
 }
 
 std::string HtmlReaderImpl::read(const std::string & urlAddress) const
@@ -24,7 +25,7 @@ std::string HtmlReaderImpl::read(const std::string & urlAddress) const
         if ((curl_easy_perform(curl) != CURLE_OK) || (content.empty()))
         {
             curl_easy_cleanup(curl);
-            throw ConnectionFailed(connectionErrorMessage + urlAddress);
+            throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
         }
 
         curl_easy_cleanup(curl);

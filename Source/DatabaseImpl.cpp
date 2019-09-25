@@ -6,12 +6,6 @@
 
 namespace
 {
-bool isDefinition(const std::string &);
-
-bool isExample(const std::string &);
-
-bool isSentence(const std::string &);
-
 const std::string wordTranslationsFilePath{"../database/dictionary.txt"};
 const std::string wordDescriptionsFilePath{"../database/glossary.txt"};
 const std::string wordExistenceInformationsFilePath{"../database/list.txt"};
@@ -50,7 +44,7 @@ bool DatabaseImpl::nextWordExists() const
             !dictionaryWords.at(currentWordIndex).empty());
 }
 
-boost::optional<WordExistenceInfo> DatabaseImpl::getWordExistenceInfo(const std::string &expectedEnglishWord) const
+boost::optional<WordExistenceInfo> DatabaseImpl::getWordExistenceInfo(const EnglishWord &expectedEnglishWord) const
 {
     bool descriptionExists = false;
 
@@ -71,16 +65,18 @@ boost::optional<WordExistenceInfo> DatabaseImpl::getWordExistenceInfo(const std:
     return boost::none;
 }
 
-boost::optional<WordDescription> DatabaseImpl::getWordDescription(const std::string &englishWord) const
+boost::optional<WordDescription> DatabaseImpl::getWordDescription(const EnglishWord &englishWord) const
 {
-    WordDescription wordDescription{englishWord};
-
     std::string glossaryContent = fileAccess.readContent(wordDescriptionsFilePath);
 
-
-    std::string definition;
+    auto startIndex = glossaryContent.find("$" + englishWord);
+    if(startIndex!=std::string::npos)
+    {
+        auto endIndex = glossaryContent.find("$")
+    }
     bool allowRead = false;
 
+    std::vector<std::string> lines;
     for (const auto &line : stringHelper::getSplitLines(glossaryContent))
     {
         if (line == ("$" + englishWord))
@@ -89,34 +85,18 @@ boost::optional<WordDescription> DatabaseImpl::getWordDescription(const std::str
             continue;
         }
 
-        if (!allowRead)
+        if (allowRead)
         {
-            continue;
-        }
-
-        if (!line.empty() && line.at(0) == '$' && allowRead)
-        {
-            break;
-        }
-
-        if (isDefinition(line))
-        {
-            definition = line;
-        }
-
-        if (isExample(line))
-        {
-            wordDescription.definitionsWithExamples.emplace_back(std::make_pair(definition, line));
-        }
-
-        if (isSentence(line))
-        {
-            wordDescription.sentences.push_back(line);
+            lines.push_back(line);
         }
     }
 
-    return (!wordDescription.definitionsWithExamples.empty()) ? boost::optional<WordDescription>(wordDescription)
-                                                              : boost::none;
+
+    if(not lines.empty())
+    {
+        return wordDescriptionParser.parse(lines);
+    }
+    return boost::none;
 }
 
 void DatabaseImpl::writeWordExistenceInfo(const WordExistenceInfo &wordExistenceInfo) const
@@ -129,30 +109,3 @@ void DatabaseImpl::writeWordDescription(const WordDescription &description) cons
 {
     fileAccess.append(wordDescriptionsFilePath, description.toString());
 }
-
-
-namespace
-{
-
-bool isDefinition(const std::string &line)
-{
-    return ((line.size() >= definitionMark.size()) && (line.substr(0, 1) == definitionMark));
-}
-
-bool isExample(const std::string &line)
-{
-    return ((line.size() >= exampleMark.size()) && (line.substr(0, 2) == exampleMark));
-}
-
-bool isSentence(const std::string &line)
-{
-    return ((line.size() >= sentenceMark.size()) && (line.substr(0, 1) == sentenceMark));
-
-}
-
-}
-
-
-
-
-

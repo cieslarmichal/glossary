@@ -50,9 +50,9 @@ class DatabaseImplTest : public DatabaseImplSetup
 public:
     WordDescription createWordDescription()
     {
-        WordDescription wordDescription{existingInFileEnglishWord};
+        WordDescription wordDescription;
         std::vector<std::string> wordSentences{sentence};
-        std::vector<std::pair<std::string,std::string>> wordDefinitionsAndExamples{{definition, example}};
+        std::vector<DefinitionWIthExample> wordDefinitionsAndExamples{{definition, example}};
         wordDescription.definitionsWithExamples = wordDefinitionsAndExamples;
         wordDescription.sentences = wordSentences;
         return wordDescription;
@@ -108,6 +108,8 @@ TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordDescription)
     auto actualWordDescription = database.getWordDescription(existingInFileEnglishWord);
 
     ASSERT_TRUE(actualWordDescription.is_initialized());
+    std::cout<< *actualWordDescription<<"\n";
+    std::cerr<<wordDescription;
     ASSERT_TRUE(*actualWordDescription == wordDescription);
 }
 

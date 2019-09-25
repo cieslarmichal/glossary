@@ -3,21 +3,42 @@
 #include <string>
 #include <vector>
 #include <ostream>
+#include "DefinitionWithExample.h"
+
 
 struct WordDescription
 {
-    WordDescription() = default;
-    explicit WordDescription(const std::string &);
-    //TODO: bad constructor
-    explicit WordDescription(const std::string &, const std::vector<std::string> &);
+    bool operator==(const WordDescription& rhs)
+    {
+        return (definitionsWithExamples == rhs.definitionsWithExamples && sentences == rhs.sentences);
+    }
 
-    bool operator==(const WordDescription&);
+    std::string toString() const
+    {
+        std::string wordDescriptionAsString;//= "$" + name + "\n";
 
-    std::string toString() const;
+        for (const auto &definitionAndExample : definitionsWithExamples)
+        {
+            wordDescriptionAsString += definitionAndExample.definition + "\n";
+            wordDescriptionAsString += definitionAndExample.example + "\n";
+        }
 
-    std::string name;
-    std::vector<std::pair<std::string, std::string>> definitionsWithExamples;
+        for (const auto &sentence : sentences)
+        {
+            wordDescriptionAsString += sentence + "\n";
+        }
+
+        wordDescriptionAsString += "\n";
+
+        return wordDescriptionAsString;
+    }
+
+    std::vector<DefinitionWIthExample> definitionsWithExamples;
     std::vector<std::string> sentences;
 };
 
-std::ostream & operator<<(std::ostream &,const WordDescription&);
+inline std::ostream & operator<<(std::ostream & os, const WordDescription& wordDescription)
+{
+    os << wordDescription.toString();
+    return os;
+}

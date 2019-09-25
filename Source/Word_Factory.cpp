@@ -40,7 +40,7 @@
 //	else
 //    {
 ////		std::cout << "NE" << std::endl;
-////		std::vector<std::string> descr_test = HTML_Parser::filter_lines(eng_pl.first);
+////		std::vector<std::string> descr_test = HTxML_Parser::filter_lines(eng_pl.first);
 ////		if ((descr_test.size() > 0) && (descr_test.at(0) != "not found"))
 ////		{
 ////			description = Word_Description(descr_test);

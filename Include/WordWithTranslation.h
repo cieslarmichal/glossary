@@ -1,6 +1,7 @@
 #pragma once
 
-#include <string>
+#include "EnglishWord.h"
+#include "PolishWord.h"
 
 struct WordWithTranslation
 {
@@ -9,7 +10,7 @@ struct WordWithTranslation
         return (englishWord == rhs.englishWord && polishTranslation == rhs.polishTranslation);
     }
 
-    std::string englishWord;
-    std::string polishTranslation;
+    EnglishWord englishWord;
+    PolishWord polishTranslation;
 };
 

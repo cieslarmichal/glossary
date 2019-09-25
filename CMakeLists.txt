@@ -21,15 +21,16 @@ set(SOURCES
         Source/Glossary.cpp
         Source/HtmlReaderImpl.cpp
         Source/Random.cpp
-        Source/WordDescription.cpp
         Source/Word_Factory.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
+        Source/WordFactory.cpp
+        Source/WordDescriptionParser.cpp
         )
 
-set(UT
+set(UT_SOURCES
         UT/Source/TestMain.cpp
         UT/Source/HtmlReaderImplTest.cpp
         UT/Source/GlossaryHtmlParserTest.cpp
@@ -39,7 +40,7 @@ set(UT
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
-add_executable(executeTests ${UT} ${SOURCES})
+add_executable(executeTests ${UT_SOURCES} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "Include" "UT/Doubles" ${CURL_INCLUDE_DIR})
 target_include_directories(executeTests PUBLIC "Include" "UT/Doubles" ${GTEST_INCLUDE_DIRS})

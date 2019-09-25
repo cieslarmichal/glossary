@@ -2,6 +2,8 @@
 
 #include "gtest/gtest.h"
 
+#include "Exceptions/ConnectionFailed.h"
+
 using namespace ::testing;
 
 class HtmlReaderImplTest : public Test
@@ -23,5 +25,5 @@ TEST_F(HtmlReaderImplTest, givenIncorrectUrlAddress_shouldThrowConnectionFailed)
 {
     std::string inaccessibleUrlAddress = ".xh111ttps://aazzz.com";
 
-    ASSERT_THROW(htmlReader.read(inaccessibleUrlAddress), HtmlReaderImpl::ConnectionFailed);
+    ASSERT_THROW(htmlReader.read(inaccessibleUrlAddress), exceptions::ConnectionFailed);
 }
