@@ -15,7 +15,7 @@ struct WordDescription
 
     std::string toString() const
     {
-        std::string wordDescriptionAsString;//= "$" + name + "\n";
+        std::string wordDescriptionAsString;
 
         for (const auto &definitionAndExample : definitionsWithExamples)
         {

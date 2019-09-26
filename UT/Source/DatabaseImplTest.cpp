@@ -26,10 +26,12 @@ const std::string definition{definitionMark + "definition"};
 const std::string example{exampleMark + "example"};
 const std::string sentence{sentenceMark + "some sentence" + sentenceMark};
 const std::string descriptionFromFile{
-    "$"+existingInFileEnglishWord + "\n"+
+     existingInFileEnglishWord + "\n"+
+     "{" + "\n" +
      definition + "\n"+
      example +"\n" +
-     sentence +"\n"
+     sentence +"\n" +
+     "}"
 };
 }
 
@@ -133,8 +135,10 @@ TEST_F(DatabaseImplTest, givenWordExistenceInfo_shouldWriteIntoFile)
 TEST_F(DatabaseImplTest, givenWordDescription_shouldWriteIntoFile)
 {
     auto wordDescription = createWordDescription();
-    EXPECT_CALL(fileAccess, append(wordDescriptionsFilePath, wordDescription.toString()));
+    auto word = EnglishWordWithDescription{existingInFileEnglishWord, wordDescription};
+    std::string expectedWordWithDescription = existingInFileEnglishWord+"\n{\n"+wordDescription.toString()+"}\n";
+    EXPECT_CALL(fileAccess, append(wordDescriptionsFilePath, expectedWordWithDescription));
 
-    database.writeWordDescription(wordDescription);
+    database.writeWordWithDescription(word);
 }
 

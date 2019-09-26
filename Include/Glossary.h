@@ -1,9 +1,11 @@
 //#pragma once
 //#include "Word_Factory.h"
 //
+
+// Serializer, Deserializer, think about Database as connector to html and accessor to memory which keeps words
+
 ////check internet connection
 ////prints 5 def ang eg, option to display more, 2 sentences or more
-////fix cleaning line from spaces (after word)
 ////thread printing processing word at the moment, while downlaoding
 ////probability stuff
 //

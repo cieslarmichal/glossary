@@ -69,34 +69,15 @@ boost::optional<WordDescription> DatabaseImpl::getWordDescription(const EnglishW
 {
     std::string glossaryContent = fileAccess.readContent(wordDescriptionsFilePath);
 
-    auto startIndex = glossaryContent.find("$" + englishWord);
-    if(startIndex!=std::string::npos)
+    auto startIndex = glossaryContent.find(englishWord +"\n{\n");
+    if(startIndex==std::string::npos)
     {
-        auto endIndex = glossaryContent.find("$")
+        return boost::none;
     }
-    bool allowRead = false;
+    auto endIndex = glossaryContent.find("}");
 
-    std::vector<std::string> lines;
-    for (const auto &line : stringHelper::getSplitLines(glossaryContent))
-    {
-        if (line == ("$" + englishWord))
-        {
-            allowRead = true;
-            continue;
-        }
-
-        if (allowRead)
-        {
-            lines.push_back(line);
-        }
-    }
-
-
-    if(not lines.empty())
-    {
-        return wordDescriptionParser.parse(lines);
-    }
-    return boost::none;
+    auto lines = stringHelper::getSplitLines(stringHelper::substring(glossaryContent, startIndex, endIndex));
+    return wordDescriptionParser.parse(lines);
 }
 
 void DatabaseImpl::writeWordExistenceInfo(const WordExistenceInfo &wordExistenceInfo) const
@@ -105,7 +86,9 @@ void DatabaseImpl::writeWordExistenceInfo(const WordExistenceInfo &wordExistence
 }
 
 
-void DatabaseImpl::writeWordDescription(const WordDescription &description) const
+void DatabaseImpl::writeWordWithDescription(const EnglishWordWithDescription &word) const
 {
-    fileAccess.append(wordDescriptionsFilePath, description.toString());
+    std::string toFile =  word.englishWord + "\n{\n";
+    toFile+=word.wordDescription.toString() + "}\n";
+    fileAccess.append(wordDescriptionsFilePath, toFile);
 }

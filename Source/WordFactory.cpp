@@ -2,10 +2,13 @@
 
 #include <iostream>
 #include "Exceptions/ConnectionFailed.h"
+#include "HtmlReaderImpl.h"
+#include "GlossaryHtmlParser.h"
 
-WordFactory::WordFactory(std::shared_ptr<Database> db) : database(db)
+WordFactory::WordFactory(std::shared_ptr<Database> db) : database{std::move(db)}
 {
-
+    htmlReader = std::make_unique<HtmlReaderImpl>(HtmlReaderImpl{});
+    htmlParser = std::make_unique<GlossaryHtmlParser>(GlossaryHtmlParser{});
 }
 
 std::unique_ptr<Word> WordFactory::createWord(const WordWithTranslation &wordWithTranslation)
@@ -46,7 +49,7 @@ std::unique_ptr<Word> WordFactory::createWord(const WordWithTranslation &wordWit
 
         auto parsedHtmlContent = htmlParser->parse(htmlContent);
         wordDescription = wordDescriptionParser.parse(parsedHtmlContent);
-        database->writeWordDescription(wordDescription);
+        database->writeWordWithDescription(EnglishWordWithDescription{wordWithTranslation.englishWord, wordDescription});
         database->writeWordExistenceInfo({wordWithTranslation.englishWord, true});
         std::cout << "2";
         return std::make_unique<Word>(wordWithTranslation.englishWord, wordWithTranslation.polishTranslation,

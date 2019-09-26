@@ -14,12 +14,12 @@ class WordFactory
 public:
     explicit WordFactory(std::shared_ptr<Database>);
 
-private:
     std::unique_ptr<Word> createWord(const WordWithTranslation &);
+private:
 
 	std::shared_ptr<Database> database;
-	std::shared_ptr<HtmlReader> htmlReader;
-	std::shared_ptr<HtmlParser> htmlParser;
+	std::unique_ptr<HtmlReader> htmlReader;
+	std::unique_ptr<HtmlParser> htmlParser;
 	WordDescriptionParser wordDescriptionParser;
 };
 
