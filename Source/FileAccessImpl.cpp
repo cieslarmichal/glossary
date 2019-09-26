@@ -2,6 +2,7 @@
 
 #include <fstream>
 #include <sstream>
+#include "Exceptions/FileNotFound.h"
 
 namespace
 {
@@ -17,7 +18,7 @@ void FileAccessImpl::write(const std::string & path, const std::string & content
 
     if(tryToWrite(fileStream, content) == Result::Failure)
     {
-        throw FileNotFound(fileNotFoundMessage + path);
+        throw exceptions::FileNotFound(fileNotFoundMessage + path);
     }
 }
 
@@ -27,7 +28,7 @@ void FileAccessImpl::append(const std::string & path, const std::string & conten
 
     if(tryToWrite(fileStream, content) == Result::Failure)
     {
-        throw FileNotFound(fileNotFoundMessage + path);
+        throw exceptions::FileNotFound(fileNotFoundMessage + path);
     }
 }
 
@@ -42,7 +43,7 @@ std::string FileAccessImpl::readContent(const std::string & path) const
     }
     else
     {
-        throw FileNotFound(fileNotFoundMessage + path);
+        throw exceptions::FileNotFound(fileNotFoundMessage + path);
     }
 
     return buffer.str();

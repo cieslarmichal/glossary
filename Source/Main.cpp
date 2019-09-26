@@ -1,26 +1,23 @@
-#include "Word_Factory.h"
-
-#include "HtmlReaderImpl.h"
-#include "GlossaryHtmlParser.h"
-#include "FileAccessImpl.h"
+#include "WordFactory.h"
 #include "DatabaseImpl.h"
+#include "FileAccessImpl.h"
+
+#include <iostream>
 
 int main()
 {
-    FileAccessImpl fileAccess;
-    DatabaseImpl database{fileAccess};
-    auto x = database.readWordDescription("key");
-    std::cout<<x->toString();
-//    HtmlReaderImpl htmlReader;
-//    auto htmlContent = (htmlReader.read("https://www.merriam-webster.com/dictionary/wine"));
-//
-//    fileAccess.write("../xxx", htmlContent);
-//
-//    GlossaryHtmlParser htmlParser;
-//    for( auto x: htmlParser.parse(htmlContent))
-//    {
-//        std::cout<<x<<std::endl;
-//    }
+    FileAccessImpl fa;
+    std::shared_ptr<Database> db = std::make_shared<DatabaseImpl>(DatabaseImpl{fa});
+    WordFactory factory{db};
+    auto word = factory.createWord({"voice","glos"});
+    if(word)
+    {
+        std::cout<< *word;
+    }
+    else
+    {
+        std::cerr<<"ERROR";
+    }
 
 	return 0;
 }

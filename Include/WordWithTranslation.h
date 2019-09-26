@@ -1,7 +1,16 @@
 #pragma once
 
+#include "EnglishWord.h"
+#include "PolishWord.h"
+
 struct WordWithTranslation
 {
-    std::string englishWord;
-    std::string polishTranslation;
+    bool operator==(const WordWithTranslation& rhs)
+    {
+        return (englishWord == rhs.englishWord && polishTranslation == rhs.polishTranslation);
+    }
+
+    EnglishWord englishWord;
+    PolishWord polishTranslation;
 };
+

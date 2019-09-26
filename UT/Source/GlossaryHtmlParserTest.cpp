@@ -61,6 +61,6 @@ TEST_F(GlossaryHtmlParserTest, givenHtmlContentWithoutImportantLines_shouldRetur
         std::cout<<x<<std::endl;
     }
 
-    ASSERT_EQ(parsedHtmlContent.size(), 0);
+    ASSERT_EQ(parsedHtmlContent.size(), std::vector<std::string>::size_type(0));
 }
 

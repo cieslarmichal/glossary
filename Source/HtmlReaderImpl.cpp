@@ -2,10 +2,11 @@
 
 #include "curl/curl.h"
 
+#include "Exceptions/ConnectionFailed.h"
+
 namespace
 {
-int curlWriter(char *data, size_t size, size_t nmemb, std::string *);
-const std::string connectionErrorMessage{"Error while connecting to: "};
+size_t curlWriter(char *data, size_t size, size_t nmemb, std::string *);
 }
 
 std::string HtmlReaderImpl::read(const std::string & urlAddress) const
@@ -21,10 +22,10 @@ std::string HtmlReaderImpl::read(const std::string & urlAddress) const
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &content);
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriter);
 
-        while ((curl_easy_perform(curl) != CURLE_OK) || (content.size() == 0))
+        if ((curl_easy_perform(curl) != CURLE_OK) || (content.empty()))
         {
             curl_easy_cleanup(curl);
-            throw ConnectionFailed(connectionErrorMessage + urlAddress);
+            throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
         }
 
         curl_easy_cleanup(curl);
@@ -37,7 +38,7 @@ std::string HtmlReaderImpl::read(const std::string & urlAddress) const
 namespace
 {
 
-int curlWriter(char *data, size_t size, size_t nmemb, std::string *writerData)
+size_t curlWriter(char *data, size_t size, size_t nmemb, std::string *writerData)
 {
     if (writerData == nullptr)
     {

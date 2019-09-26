@@ -3,7 +3,7 @@
 #include <vector>
 #include "FileAccess.h"
 #include "Database.h"
-
+#include "WordDescriptionParser.h"
 
 class DatabaseImpl :  public Database
 {
@@ -11,17 +11,17 @@ public:
     explicit DatabaseImpl(FileAccess &);
 
     boost::optional<WordWithTranslation> readNextWord() const override;
-    boost::optional<WordExistenceInfo> getWordExistenceInfo(const std::string &) const override;
-    void appendWordExistenceInfo(const WordExistenceInfo &) const override;
-    boost::optional<WordDescription> readWordDescription(const std::string &) const override;
-    void writeWordDescription(const std::string &, const WordDescription &) const override;
+    boost::optional<WordExistenceInfo> getWordExistenceInfo(const EnglishWord &) const override;
+    boost::optional<WordDescription> getWordDescription(const EnglishWord &) const override;
+    void writeWordExistenceInfo(const WordExistenceInfo &) const override;
+    void writeWordWithDescription(const EnglishWordWithDescription &) const override;
 
 private:
-    FileAccess & fileAccess;
-    std::vector<std::string> dictionaryWords;
-    mutable std::vector<std::string>::size_type currentWordIndex;
-
     bool nextWordExists() const;
 
+    FileAccess & fileAccess;
+    std::vector<std::string> dictionaryWords;
+    mutable size_t currentWordIndex; //storage
+    WordDescriptionParser wordDescriptionParser;
 };
 
