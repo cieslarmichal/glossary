@@ -84,7 +84,7 @@ TEST_F(DatabaseImplTest, givenNoMoreRemainingWords_shouldNotReturnNextWord)
 
 TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordExistenceInfo)
 {
-    WordExistenceInfo expectedExistenceInfo{existingInFileEnglishWord, hasDescription};
+    WordAvailability expectedExistenceInfo{existingInFileEnglishWord, hasDescription};
     EXPECT_CALL(fileAccess, readContent(wordExistenceInformationsFilePath)).WillOnce(Return(existenceFromFile));
 
     auto actualWordExistenceInfo = database.getWordExistenceInfo(existingInFileEnglishWord);
@@ -126,10 +126,10 @@ TEST_F(DatabaseImplTest, givenNotExistingWord_shouldNotReturnWordDescription)
 
 TEST_F(DatabaseImplTest, givenWordExistenceInfo_shouldWriteIntoFile)
 {
-    WordExistenceInfo existenceInfo{existingInFileEnglishWord, hasDescription};
+    WordAvailability existenceInfo{existingInFileEnglishWord, hasDescription};
     EXPECT_CALL(fileAccess, append(wordExistenceInformationsFilePath, existenceInfo.toString()));
 
-    database.writeWordExistenceInfo(existenceInfo);
+    database.saveWordExistenceInfo(existenceInfo);
 }
 
 TEST_F(DatabaseImplTest, givenWordDescription_shouldWriteIntoFile)

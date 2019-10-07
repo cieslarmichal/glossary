@@ -1,19 +1,20 @@
 #pragma once
 
 #include <string>
+#include "EnglishWord.h"
 
-struct WordExistenceInfo
+struct WordAvailability
 {
     std::string toString() const
     {
         return name + " " + std::to_string(descriptionExists) + "\n";
     }
 
-    bool operator==(const WordExistenceInfo& rhs)
+    bool operator==(const WordAvailability& rhs)
     {
         return (name == rhs.name && descriptionExists == rhs.descriptionExists);
     }
 
-    std::string name;
+    EnglishWord name;
     bool descriptionExists;
 };

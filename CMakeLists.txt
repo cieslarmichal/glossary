@@ -29,6 +29,8 @@ set(SOURCES
         Source/WordDescriptionParser.cpp
         Source/Storage.cpp
         Source/StorageInstances.cpp
+        Source/DictionaryReader.cpp
+        Source/DictionaryAvailabilityHandler.cpp
         )
 
 set(UT_SOURCES
@@ -39,6 +41,8 @@ set(UT_SOURCES
         UT/Source/FileAccessImplTest.cpp
         UT/Source/DatabaseImplTest.cpp
         UT/Source/StorageTest.cpp
+        UT/Source/DictionaryReaderTest.cpp
+        UT/Source/DictionaryAvailabilityHandlerTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
