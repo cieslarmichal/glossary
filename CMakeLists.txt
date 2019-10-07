@@ -21,13 +21,14 @@ set(SOURCES
         Source/Glossary.cpp
         Source/HtmlReaderImpl.cpp
         Source/Random.cpp
-        Source/Word_Factory.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
         Source/WordFactory.cpp
         Source/WordDescriptionParser.cpp
+        Source/Storage.cpp
+        Source/StorageInstances.cpp
         )
 
 set(UT_SOURCES
@@ -37,6 +38,7 @@ set(UT_SOURCES
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
         UT/Source/DatabaseImplTest.cpp
+        UT/Source/StorageTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
