@@ -43,14 +43,14 @@ std::unique_ptr<Word> WordFactory::createWord(const WordWithTranslation &wordWit
         catch (const exceptions::ConnectionFailed &err)
         {
             std::cerr << err.what();
-            database->writeWordExistenceInfo({wordWithTranslation.englishWord, false});
+            database->saveWordExistenceInfo({wordWithTranslation.englishWord, false});
             return {};
         }
 
         auto parsedHtmlContent = htmlParser->parse(htmlContent);
         wordDescription = wordDescriptionParser.parse(parsedHtmlContent);
         database->writeWordWithDescription(EnglishWordWithDescription{wordWithTranslation.englishWord, wordDescription});
-        database->writeWordExistenceInfo({wordWithTranslation.englishWord, true});
+        database->saveWordExistenceInfo({wordWithTranslation.englishWord, true});
         std::cout << "2";
         return std::make_unique<Word>(wordWithTranslation.englishWord, wordWithTranslation.polishTranslation,
                                       wordDescription);
