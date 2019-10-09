@@ -6,7 +6,8 @@
 
 struct Word
 {
-    Word(EnglishWord e, PolishWord p , WordDescription wd): englishWord{e}, polishWord{p}, wordDescription{wd} {}
+    Word(EnglishWord e, PolishWord p, WordDescription wd) : englishWord{e}, polishWord{p}, wordDescription{wd}
+    {}
 
     std::string toString() const
     {
@@ -18,7 +19,13 @@ struct Word
     WordDescription wordDescription;
 };
 
-inline std::ostream & operator<<(std::ostream & os, const Word& word)
+inline bool operator==(const Word& lhs, const Word& rhs)
+{
+    return (lhs.englishWord == rhs.englishWord && lhs.polishWord == rhs.polishWord &&
+            lhs.wordDescription == rhs.wordDescription);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Word& word)
 {
     os << word.toString();
     return os;

@@ -27,10 +27,11 @@ set(SOURCES
         Source/StringHelper.cpp
         Source/WordFactory.cpp
         Source/WordDescriptionParser.cpp
-        Source/Storage.cpp
-        Source/StorageInstances.cpp
-        Source/DictionaryReader.cpp
-        Source/DictionaryAvailabilityHandler.cpp
+        Source/StorageImpl.cpp
+        Source/DictionaryReaderImpl.cpp
+        Source/DictionaryAvailabilityHandlerImpl.cpp
+        Source/WordSerializerImpl.cpp
+        Source/WordsDeserializerImpl.cpp
         )
 
 set(UT_SOURCES
@@ -40,9 +41,11 @@ set(UT_SOURCES
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
         UT/Source/DatabaseImplTest.cpp
-        UT/Source/StorageTest.cpp
-        UT/Source/DictionaryReaderTest.cpp
-        UT/Source/DictionaryAvailabilityHandlerTest.cpp
+        UT/Source/DictionaryReaderImplTest.cpp
+        UT/Source/DictionaryAvailabilityHandlerImplTest.cpp
+        UT/Source/StorageImplTest.cpp
+        UT/Source/WordSerializerImplTest.cpp
+        UT/Source/WordsDeserializerImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

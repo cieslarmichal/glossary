@@ -1,25 +1,23 @@
 #include "DatabaseImpl.h"
 
 #include "StringHelper.h"
-#include <iostream>
 
 namespace
 {
-const std::string wordDescriptionsFilePath{"../database/glossary.txt"};
+const std::string wordDescriptionsFilePath{"../database/words.txt"};
 const std::string definitionMark{":"};
 const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
 }
 
-DatabaseImpl::DatabaseImpl(FileAccess &access, Storage<EnglishWord, Word>& storageInit) : fileAccess(access), storage{storageInit}
+DatabaseImpl::DatabaseImpl(FileAccess &access, Storage& storageInit) : fileAccess(access), storage{storageInit}
 {
 }
 
 boost::optional<WordDescription> DatabaseImpl::getWordDescription(const EnglishWord &englishWord) const
 {
     //Word deserializer
-    std::string glossaryContent = fileAccess.readContent(wordDescriptionsFilePath);
-
+    auto glossaryContent = fileAccess.readContent(wordDescriptionsFilePath);
     auto startIndex = glossaryContent.find(englishWord +"\n{\n");
     if(startIndex==std::string::npos)
     {
@@ -31,7 +29,7 @@ boost::optional<WordDescription> DatabaseImpl::getWordDescription(const EnglishW
     return wordDescriptionParser.parse(lines);
 }
 
-void DatabaseImpl::writeWordWithDescription(const EnglishWordWithDescription &word) const
+void DatabaseImpl::saveWord(const EnglishWordWithDescription &word) const
 {
     //WordSerializer
     std::string toFile =  word.englishWord + "\n{\n";

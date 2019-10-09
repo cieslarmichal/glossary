@@ -2,15 +2,21 @@
 
 #include "EnglishWord.h"
 #include "PolishWord.h"
+#include <ostream>
 
 struct WordWithTranslation
 {
-    bool operator==(const WordWithTranslation& rhs)
-    {
-        return (englishWord == rhs.englishWord && polishTranslation == rhs.polishTranslation);
-    }
-
     EnglishWord englishWord;
     PolishWord polishTranslation;
 };
 
+inline bool operator==(const WordWithTranslation& lhs, const WordWithTranslation& rhs)
+{
+    return (lhs.englishWord == rhs.englishWord && lhs.polishTranslation == rhs.polishTranslation);
+}
+
+inline std::ostream & operator<<(std::ostream & os, const WordWithTranslation& wordWithTranslation)
+{
+    os << wordWithTranslation.englishWord<<" "<< wordWithTranslation.polishTranslation;
+    return os;
+}

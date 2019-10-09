@@ -6,18 +6,17 @@
 #include "WordDescriptionParser.h"
 #include "Storage.h"
 
+
 class DatabaseImpl :  public Database
 {
 public:
-    explicit DatabaseImpl(FileAccess &, Storage<EnglishWord, Word>&);
+    explicit DatabaseImpl(FileAccess &, Storage&);
 
     boost::optional<WordDescription> getWordDescription(const EnglishWord &) const override;
-    void writeWordWithDescription(const EnglishWordWithDescription &) const override;
+    void saveWord(const EnglishWordWithDescription &) const override;
 
 private:
-
     FileAccess & fileAccess;
-    Storage<EnglishWord, Word> & storage; //unique pointer
+    Storage & storage; //unique pointer
     WordDescriptionParser wordDescriptionParser;
 };
-

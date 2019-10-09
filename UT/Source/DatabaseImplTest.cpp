@@ -3,14 +3,13 @@
 #include "gtest/gtest.h"
 #include "FileAccessMock.h"
 #include "StringHelper.h"
-#include <iostream>
+#include "StorageMock.h"
 
 using namespace ::testing;
 
 namespace
 {
-const std::string wordTranslationsFilePath{"../database/dictionary.txt"};
-const std::string wordDescriptionsFilePath{"../database/glossary.txt"};
+const std::string wordDescriptionsFilePath{"../database/words.txt"};
 const std::string wordExistenceInformationsFilePath{"../database/list.txt"};
 const std::string existingInFileEnglishWord{"blanket"};
 const std::string existingInFilePolishTranslation{"koc"};
@@ -35,19 +34,7 @@ const std::string descriptionFromFile{
 };
 }
 
-
-class DatabaseImplSetup : public Test
-{
-public:
-    DatabaseImplSetup()
-    {
-        EXPECT_CALL(fileAccess, readContent(wordTranslationsFilePath)).WillOnce(Return(translationsFromFile));
-    }
-
-    StrictMock<FileAccessMock> fileAccess;
-};
-
-class DatabaseImplTest : public DatabaseImplSetup
+class DatabaseImplTest : public Test
 {
 public:
     WordDescription createWordDescription()
@@ -60,47 +47,10 @@ public:
         return wordDescription;
     }
 
-    DatabaseImpl database{fileAccess};
+    StrictMock<FileAccessMock> fileAccess;
+    StorageMock storage;
+    DatabaseImpl database{fileAccess, storage};
 };
-
-TEST_F(DatabaseImplTest, givenRemainingWords_shouldReturnNextWord)
-{
-    WordWithTranslation expectedNextWord{existingInFileEnglishWord, existingInFilePolishTranslation};
-
-    auto actualNextWord = database.readNextWord();
-
-    ASSERT_TRUE(actualNextWord.is_initialized());
-    ASSERT_TRUE(*actualNextWord == expectedNextWord);
-}
-
-TEST_F(DatabaseImplTest, givenNoMoreRemainingWords_shouldNotReturnNextWord)
-{
-    database.readNextWord();
-
-    auto actualNextWord = database.readNextWord();
-
-    ASSERT_TRUE(actualNextWord == boost::none);
-}
-
-TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordExistenceInfo)
-{
-    WordAvailability expectedExistenceInfo{existingInFileEnglishWord, hasDescription};
-    EXPECT_CALL(fileAccess, readContent(wordExistenceInformationsFilePath)).WillOnce(Return(existenceFromFile));
-
-    auto actualWordExistenceInfo = database.getWordExistenceInfo(existingInFileEnglishWord);
-
-    ASSERT_TRUE(actualWordExistenceInfo.is_initialized());
-    ASSERT_TRUE(*actualWordExistenceInfo == expectedExistenceInfo);
-}
-
-TEST_F(DatabaseImplTest, givenNotExistingWord_shouldNotReturnWordExistenceInfo)
-{
-    EXPECT_CALL(fileAccess, readContent(wordExistenceInformationsFilePath)).WillOnce(Return(existenceFromFile));
-
-    auto actualWordExistenceInfo = database.getWordExistenceInfo(nonExistingInFileEnglishWord);
-
-    ASSERT_TRUE(actualWordExistenceInfo == boost::none);
-}
 
 TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordDescription)
 {
@@ -110,8 +60,6 @@ TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordDescription)
     auto actualWordDescription = database.getWordDescription(existingInFileEnglishWord);
 
     ASSERT_TRUE(actualWordDescription.is_initialized());
-    std::cout<< *actualWordDescription<<"\n";
-    std::cerr<<wordDescription;
     ASSERT_TRUE(*actualWordDescription == wordDescription);
 }
 
@@ -124,14 +72,6 @@ TEST_F(DatabaseImplTest, givenNotExistingWord_shouldNotReturnWordDescription)
     ASSERT_TRUE(actualWordDescription == boost::none);
 }
 
-TEST_F(DatabaseImplTest, givenWordExistenceInfo_shouldWriteIntoFile)
-{
-    WordAvailability existenceInfo{existingInFileEnglishWord, hasDescription};
-    EXPECT_CALL(fileAccess, append(wordExistenceInformationsFilePath, existenceInfo.toString()));
-
-    database.saveWordExistenceInfo(existenceInfo);
-}
-
 TEST_F(DatabaseImplTest, givenWordDescription_shouldWriteIntoFile)
 {
     auto wordDescription = createWordDescription();
@@ -139,6 +79,6 @@ TEST_F(DatabaseImplTest, givenWordDescription_shouldWriteIntoFile)
     std::string expectedWordWithDescription = existingInFileEnglishWord+"\n{\n"+wordDescription.toString()+"}\n";
     EXPECT_CALL(fileAccess, append(wordDescriptionsFilePath, expectedWordWithDescription));
 
-    database.writeWordWithDescription(word);
+    database.saveWord(word);
 }
 

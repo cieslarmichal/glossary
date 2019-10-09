@@ -8,11 +8,6 @@
 
 struct WordDescription
 {
-    bool operator==(const WordDescription& rhs)
-    {
-        return (definitionsWithExamples == rhs.definitionsWithExamples && sentences == rhs.sentences);
-    }
-
     std::string toString() const
     {
         std::string wordDescriptionAsString;
@@ -36,6 +31,11 @@ struct WordDescription
     std::vector<DefinitionWIthExample> definitionsWithExamples;
     std::vector<std::string> sentences;
 };
+
+inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
+{
+    return (lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
+}
 
 inline std::ostream & operator<<(std::ostream & os, const WordDescription& wordDescription)
 {

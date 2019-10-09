@@ -9,5 +9,3 @@ public:
 
     virtual std::string read(const std::string &) const = 0;
 };
-
-

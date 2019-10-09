@@ -63,4 +63,3 @@ Result tryToWrite(std::ofstream &fileStream, const std::string &data)
 }
 
 }
-

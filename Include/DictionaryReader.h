@@ -1,18 +1,10 @@
 #pragma once
-#include "WordWithTranslation.h"
-#include <vector>
-#include "FileAccess.h"
+#include "Dictionary.h"
 
 class DictionaryReader
 {
 public:
-    explicit DictionaryReader(FileAccess &);
+    virtual ~DictionaryReader() = default;
 
-    std::vector<WordWithTranslation> read() const;
-
-private:
-    std::vector<WordWithTranslation> processDictionaryContent(const std::string&) const;
-    WordWithTranslation getWordWithTranslation(const std::string&) const;
-
-    FileAccess & fileAccess;
+    virtual Dictionary read() const = 0;
 };

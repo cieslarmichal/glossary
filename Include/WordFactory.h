@@ -22,4 +22,3 @@ private:
 	std::unique_ptr<HtmlParser> htmlParser;
 	WordDescriptionParser wordDescriptionParser;
 };
-
