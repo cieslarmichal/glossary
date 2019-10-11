@@ -1,15 +1,15 @@
 #include "WordFactory.h"
-#include "DatabaseImpl.h"
+#include "WordsDatabase.h"
 #include "FileAccessImpl.h"
-#include "StorageImpl.h"
+#include "MemoryStorage.h"
 
 #include <iostream>
 
 int main()
 {
     FileAccessImpl fa;
-    StorageImpl storage;
-    std::shared_ptr<Database> db = std::make_shared<DatabaseImpl>(DatabaseImpl{fa, storage});
+    MemoryStorage storage;
+    std::shared_ptr<Database> db = std::make_shared<WordsDatabase>(WordsDatabase{fa, storage});
     WordFactory factory{db};
     auto word = factory.createWord({"voice","glos"});
     if(word)

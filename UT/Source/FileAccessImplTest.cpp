@@ -11,8 +11,8 @@ namespace
 const std::string textToWrite{"Hello this text should be written\nby write method"};
 const std::string textToAppend{"\nand this text should be written\nby append method"};
 const std::string textAfterWriteAndAppend{textToWrite + textToAppend};
-const std::string correctPathForWriting = "../UT/Source/TestTextFiles/testFileForWriting.txt";
-const std::string correctPathForReading = "../UT/Source/TestTextFiles/testFileForReading.txt";
+const std::string correctPathForWriting = "../UT/TestTextFiles/testFileForWriting.txt";
+const std::string correctPathForReading = "../UT/TestTextFiles/testFileForReading.txt";
 const std::string incorrectPath = "433\\UTzxxxx/fi123xtF";
 const std::string exampleContent{"this is example file created\nin order to check readContent\nmethod"};
 

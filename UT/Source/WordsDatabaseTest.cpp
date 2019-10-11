@@ -1,4 +1,4 @@
-#include "DatabaseImpl.h"
+#include "WordsDatabase.h"
 
 #include "gtest/gtest.h"
 #include "FileAccessMock.h"
@@ -41,7 +41,7 @@ public:
     {
         WordDescription wordDescription;
         std::vector<std::string> wordSentences{sentence};
-        std::vector<DefinitionWIthExample> wordDefinitionsAndExamples{{definition, example}};
+        std::vector<DefinitionWithExample> wordDefinitionsAndExamples{{definition, example}};
         wordDescription.definitionsWithExamples = wordDefinitionsAndExamples;
         wordDescription.sentences = wordSentences;
         return wordDescription;
@@ -49,7 +49,7 @@ public:
 
     StrictMock<FileAccessMock> fileAccess;
     StorageMock storage;
-    DatabaseImpl database{fileAccess, storage};
+    WordsDatabase database{fileAccess, storage};
 };
 
 TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordDescription)

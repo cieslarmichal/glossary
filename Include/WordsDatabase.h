@@ -7,10 +7,10 @@
 #include "Storage.h"
 
 
-class DatabaseImpl :  public Database
+class WordsDatabase : public Database
 {
 public:
-    explicit DatabaseImpl(FileAccess &, Storage&);
+    explicit WordsDatabase(FileAccess &, Storage&);
 
     boost::optional<WordDescription> getWordDescription(const EnglishWord &) const override;
     void saveWord(const EnglishWordWithDescription &) const override;

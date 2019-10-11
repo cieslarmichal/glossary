@@ -2,13 +2,13 @@
 
 #include <string>
 
-struct DefinitionWIthExample
+struct DefinitionWithExample
 {
     std::string definition;
     std::string example;
 };
 
-inline bool operator==(const DefinitionWIthExample& lhs, const DefinitionWIthExample & rhs)
+inline bool operator==(const DefinitionWithExample& lhs, const DefinitionWithExample & rhs)
 {
     return (lhs.definition == rhs.definition && lhs.example == rhs.example);
 }

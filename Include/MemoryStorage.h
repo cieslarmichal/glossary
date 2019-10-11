@@ -3,12 +3,9 @@
 #include "Storage.h"
 #include "boost/optional.hpp"
 
-class StorageImpl : public Storage
+class MemoryStorage : public Storage
 {
 public:
-    explicit StorageImpl(const std::vector<Word> &);
-    StorageImpl() = default;
-
     void addWord(const Word &) override;
     boost::optional<Word> getWord(const EnglishWord &) const override;
     Words getWords() const override;
@@ -18,7 +15,7 @@ public:
     Words::const_iterator end() const override;
 
 private:
-    bool wordExists(const Word &) const;
+    bool contains(const Word &) const;
 
     std::vector<Word> words;
 };

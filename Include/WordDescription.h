@@ -23,12 +23,10 @@ struct WordDescription
             wordDescriptionAsString += sentence + "\n";
         }
 
-        wordDescriptionAsString += "\n";
-
         return wordDescriptionAsString;
     }
 
-    std::vector<DefinitionWIthExample> definitionsWithExamples;
+    std::vector<DefinitionWithExample> definitionsWithExamples;
     std::vector<std::string> sentences;
 };
 
