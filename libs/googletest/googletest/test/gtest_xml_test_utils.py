@@ -34,7 +34,7 @@
 __author__ = 'eefacm@gmail.com (Sean Mcafee)'
 
 import re
-from xml.dom import minidom, Node
+from xml.dom import Node
 
 import gtest_test_utils
 

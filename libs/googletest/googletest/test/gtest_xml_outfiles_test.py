@@ -34,7 +34,7 @@
 __author__ = "keith.ray@gmail.com (Keith Ray)"
 
 import os
-from xml.dom import minidom, Node
+from xml.dom import minidom
 
 import gtest_test_utils
 import gtest_xml_test_utils

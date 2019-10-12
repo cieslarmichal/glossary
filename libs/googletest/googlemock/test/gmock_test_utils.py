@@ -48,7 +48,7 @@ else:
   GTEST_TESTS_UTIL_DIR = os.path.join(SCRIPT_DIR, '../../gtest/test')
 
 sys.path.append(GTEST_TESTS_UTIL_DIR)
-import gtest_test_utils  # pylint: disable-msg=C6204
+from libs.googletest.googletest.test import gtest_test_utils
 
 
 def GetSourceDir():

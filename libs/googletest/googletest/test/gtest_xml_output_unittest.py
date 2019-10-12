@@ -38,7 +38,7 @@ import errno
 import os
 import re
 import sys
-from xml.dom import minidom, Node
+from xml.dom import minidom
 
 import gtest_test_utils
 import gtest_xml_test_utils

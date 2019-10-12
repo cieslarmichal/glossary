@@ -52,26 +52,6 @@ public:
     WordsDatabase database{fileAccess, storage};
 };
 
-TEST_F(DatabaseImplTest, givenExistingWord_shouldReturnWordDescription)
-{
-    auto wordDescription = createWordDescription();
-    EXPECT_CALL(fileAccess, readContent(wordDescriptionsFilePath)).WillOnce(Return(descriptionFromFile));
-
-    auto actualWordDescription = database.getWordDescription(existingInFileEnglishWord);
-
-    ASSERT_TRUE(actualWordDescription.is_initialized());
-    ASSERT_TRUE(*actualWordDescription == wordDescription);
-}
-
-TEST_F(DatabaseImplTest, givenNotExistingWord_shouldNotReturnWordDescription)
-{
-    EXPECT_CALL(fileAccess, readContent(wordDescriptionsFilePath)).WillOnce(Return(descriptionFromFile));
-
-    auto actualWordDescription = database.getWordDescription(nonExistingInFileEnglishWord);
-
-    ASSERT_TRUE(actualWordDescription == boost::none);
-}
-
 TEST_F(DatabaseImplTest, givenWordDescription_shouldWriteIntoFile)
 {
     auto wordDescription = createWordDescription();
