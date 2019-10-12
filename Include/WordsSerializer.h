@@ -5,7 +5,6 @@
 class WordsSerializer
 {
 public:
-    //TODO: JsonCpp
     virtual ~WordsSerializer() = default;
 
     virtual std::string serialize(const Words&) const = 0;

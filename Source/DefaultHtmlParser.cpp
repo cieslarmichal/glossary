@@ -43,7 +43,7 @@ void DefaultHtmlParser::removeHtmlStrings(std::vector<std::string> &htmlContent)
 void DefaultHtmlParser::removeExtraLines(std::vector<std::string> &htmlContent) const
 {
     htmlContent.erase(std::remove_if(htmlContent.begin(), htmlContent.end(),
-            [](std::string &line) { return (line.size() == 0); }), htmlContent.end());
+            [](std::string &line) { return line.empty(); }), htmlContent.end());
 }
 
 namespace

@@ -1,47 +1,98 @@
+#include <iostream>
 #include "WordsSerializerImpl.h"
-#include "nlohmann/json.hpp"
+#include "boost/algorithm/cxx11/any_of.hpp"
 
 namespace
 {
-
-nlohmann::json getJsonFromWord(const Word& word);
-
-const auto specialCharacter = "~";
-const std::string newLine = "\n";
-const auto openBraces = "{";
-const auto closeBraces = "}";
+constexpr auto wordsField = "words";
+constexpr auto englishWordField = "englishWord";
+constexpr auto polishWordField = "polishWord";
+constexpr auto wordDescriptionField = "wordDescription";
 }
 
 std::string WordsSerializerImpl::serialize(const Words& words) const
 {
     nlohmann::json serialized;
-    for(const auto& word : words)
+    for (const auto& word : words)
     {
-        serialized["words"].push_back(getJsonFromWord(word));
+        serialized[wordsField].push_back(getJsonFromWord(word));
     }
-
-//    serializedWord += specialCharacter + word.englishWord;
-//    serializedWord += newLine + openBraces;
-//    serializedWord += newLine + word.wordDescription.toString();
-//    serializedWord += closeBraces + newLine;
-//    return serializedWord;
     return serialized.dump();
 }
 
-Words WordsSerializerImpl::deserialize(const std::string&) const
+Words WordsSerializerImpl::deserialize(const std::string& jsonText) const
 {
-    return Words();
+    if (jsonText.empty())
+    {
+        return {};
+    }
+
+    try
+    {
+        const auto json = nlohmann::json::parse(jsonText);
+        return readWords(json);
+    }
+    catch (const std::exception& e)
+    {
+        std::cerr << "Unable to parse Words:" << e.what();
+    }
+    return {};
 }
 
-namespace
-{
-
-nlohmann::json getJsonFromWord(const Word& word)
+nlohmann::json WordsSerializerImpl::getJsonFromWord(const Word& word) const
 {
     nlohmann::json val = nlohmann::json::object();
-    val["englishWord"] = word.englishWord;
-    val["polishWord"] = word.polishWord;
-    val["wordDescription"] = word.wordDescription.toString();
+    val[englishWordField] = word.englishWord;
+    val[polishWordField] = word.polishWord;
+    val[wordDescriptionField] = wordDescriptionSerializer.serialize(word.wordDescription);
     return val;
 }
+
+Words WordsSerializerImpl::readWords(const nlohmann::json& json) const
+{
+    if (json.find(wordsField) != json.end())
+    {
+        return parseWords(json[wordsField]);
+    }
+    std::cerr << "There are no words stored\n";
+    return {};
 }
+
+Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
+{
+    Words words;
+    for (const auto& wordData : wordsJson)
+    {
+        if (!isWordValid(wordData))
+        {
+            try
+            {
+                const EnglishWord englishWord{wordData[englishWordField]};
+                const PolishWord polishWord{wordData[polishWordField]};
+                const WordDescription wordDescription{wordDescriptionSerializer.deserialize(wordData[wordDescriptionField])};
+                words.push_back({englishWord, polishWord, wordDescription});
+            }
+            catch (const std::exception& e)
+            {
+                std::cerr << "Unable to read word:" << e.what() << "\n";
+            }
+        }
+        else
+        {
+            std::cerr << "Word does not contain all required data\n";
+        }
+    }
+    return words;
+}
+
+bool WordsSerializerImpl::isWordValid(const nlohmann::json& wordData) const
+{
+    const auto requiredFields = {englishWordField, polishWordField, wordDescriptionField};
+    auto wordInvalid = boost::algorithm::any_of(
+            requiredFields, [&](const auto& fieldName)
+            { return wordData.find(fieldName) == wordData.end(); });
+    return wordInvalid;
+}
+
+
+

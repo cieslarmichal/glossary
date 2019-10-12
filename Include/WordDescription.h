@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 #include <ostream>
-#include "DefinitionWithExample.h"
+#include "DefinitionsWithExamples.h"
+#include "Sentences.h"
 
 
 struct WordDescription
@@ -12,13 +13,12 @@ struct WordDescription
     {
         std::string wordDescriptionAsString;
 
-        for (const auto &definitionAndExample : definitionsWithExamples)
+        for (const auto& definitionAndExample : definitionsWithExamples)
         {
-            wordDescriptionAsString += definitionAndExample.definition + "\n";
-            wordDescriptionAsString += definitionAndExample.example + "\n";
+            wordDescriptionAsString += definitionAndExample.toString() + "\n";
         }
 
-        for (const auto &sentence : sentences)
+        for (const auto& sentence : sentences)
         {
             wordDescriptionAsString += sentence + "\n";
         }
@@ -26,8 +26,8 @@ struct WordDescription
         return wordDescriptionAsString;
     }
 
-    std::vector<DefinitionWithExample> definitionsWithExamples;
-    std::vector<std::string> sentences;
+    DefinitionsWithExamples definitionsWithExamples;
+    Sentences sentences;
 };
 
 inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
@@ -35,8 +35,9 @@ inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
     return (lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
 }
 
-inline std::ostream & operator<<(std::ostream & os, const WordDescription& wordDescription)
+inline std::ostream& operator<<(std::ostream& os, const WordDescription& wordDescription)
 {
     os << wordDescription.toString();
     return os;
 }
+

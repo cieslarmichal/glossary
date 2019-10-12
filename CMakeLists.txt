@@ -8,13 +8,7 @@ set( CMAKE_BUILD_TYPE Debug )
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
 
-find_package(Boost REQUIRED)
-
-set(JSON_BuildTests OFF CACHE INTERNAL "")
-
-add_subdirectory(googletest)
-add_subdirectory(json)
-add_subdirectory(curl)
+add_subdirectory(libs)
 
 set(SOURCES
         Source/WordsDatabase.cpp
@@ -32,6 +26,7 @@ set(SOURCES
         Source/DictionaryReaderImpl.cpp
         Source/DictionaryAvailabilityHandlerImpl.cpp
         Source/WordsSerializerImpl.cpp
+        Source/WordDescriptionSerializer.cpp
         )
 
 set(UT_SOURCES
@@ -46,6 +41,8 @@ set(UT_SOURCES
         UT/Source/MemoryStorageTest.cpp
         UT/Source/PersistentStorageTest.cpp
         UT/Source/WordsSerializerImplTest.cpp
+        UT/Source/WordDescriptionSerializerTest.cpp
+        UT/Source/WordDescriptionParserTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

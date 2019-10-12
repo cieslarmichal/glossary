@@ -33,6 +33,11 @@ std::string cutOffFromString(const std::string &line, size_t startIndexToCut, si
     return head + tail;
 }
 
+void cutOffString(std::string& line, size_t startIndexToCut, size_t endIndexToCut)
+{
+    line = cutOffFromString(line, startIndexToCut, endIndexToCut);
+}
+
 std::string substring(const std::string &line, size_t startIndex, size_t endIndex)
 {
     return line.substr(startIndex, endIndex - startIndex);
