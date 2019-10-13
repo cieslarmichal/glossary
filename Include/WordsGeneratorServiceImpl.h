@@ -2,8 +2,8 @@
 
 #include "WordsGeneratorService.h"
 
-#include "DictionaryReader.h"
 #include "Database.h"
+#include "DictionaryReader.h"
 #include "HtmlWordsCreator.h"
 
 #include <memory>

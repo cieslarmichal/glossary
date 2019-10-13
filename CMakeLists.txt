@@ -27,6 +27,8 @@ set(SOURCES
         Source/WordDescriptionSerializer.cpp
         Source/HtmlWordsCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
+        Source/PersistentAnswerCounter.cpp
+        Source/AnswersStatisticsSerializerImpl.cpp
         )
 
 set(UT_SOURCES
@@ -43,6 +45,8 @@ set(UT_SOURCES
         UT/Source/WordDescriptionSerializerTest.cpp
         UT/Source/WordDescriptionParserTest.cpp
         UT/Source/HtmlWordsCreatorImplTest.cpp
+        UT/Source/PersistentAnswerCounterTest.cpp
+        UT/Source/AnswersStatisticsSerializerImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

@@ -53,7 +53,7 @@ Words::const_iterator PersistentStorage::end() const
     return storage.end();
 }
 
-void PersistentStorage::serialize()
+void PersistentStorage::serialize() const
 {
     try
     {

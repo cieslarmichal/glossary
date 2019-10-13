@@ -49,6 +49,7 @@ Words WordsGeneratorServiceImpl::generateWords() const
 
 Word WordsGeneratorServiceImpl::generateWord(const WordWithTranslation& wordWithTranslation) const
 {
+//TODO: if word have empty description check with html once more
     if(const auto wordFromDatabase = getWordFromDatabase(wordWithTranslation.englishWord))
     {
         return *wordFromDatabase;

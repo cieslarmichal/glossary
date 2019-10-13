@@ -63,7 +63,7 @@ Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
     Words words;
     for (const auto& wordData : wordsJson)
     {
-        if (!isWordValid(wordData))
+        if (isWordValid(wordData))
         {
             try
             {
@@ -91,7 +91,7 @@ bool WordsSerializerImpl::isWordValid(const nlohmann::json& wordData) const
     auto wordInvalid = boost::algorithm::any_of(
             requiredFields, [&](const auto& fieldName)
             { return wordData.find(fieldName) == wordData.end(); });
-    return wordInvalid;
+    return !wordInvalid;
 }
 
 

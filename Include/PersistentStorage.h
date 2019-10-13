@@ -22,7 +22,7 @@ public:
 
 private:
     void loadFile();
-    void serialize();
+    void serialize() const;
 
     std::shared_ptr<const FileAccess> fileAccess;
     std::shared_ptr<const WordsSerializer> serializer;
