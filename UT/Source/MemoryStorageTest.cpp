@@ -17,13 +17,6 @@ public:
     MemoryStorage storage{};
 };
 
-TEST_F(MemoryStorageTest, givenEmptyStorage_getShouldReturnNone)
-{
-    auto result = storage.getWord("someword");
-
-    ASSERT_EQ(result, boost::none);
-}
-
 TEST_F(MemoryStorageTest, givenWordAddition_shouldAddWord)
 {
     storage.addWord(word1);
@@ -32,21 +25,12 @@ TEST_F(MemoryStorageTest, givenWordAddition_shouldAddWord)
     ASSERT_EQ(storage.size(), Words::size_type{1});
 }
 
-TEST_F(MemoryStorageTest, givenStorageWithWord_shouldReturnWord)
-{
-    storage.addWord(word1);
-
-    auto actualWord = storage.getWord("xxx");
-
-    ASSERT_EQ(actualWord, word1);
-}
-
 TEST_F(MemoryStorageTest, addTwoDifferentWords_shouldAddTwoWords)
 {
     storage.addWord(word1);
     storage.addWord(word2);
 
-    auto actualWords = storage.getWords();
+    const auto actualWords = storage.getWords();
 
     ASSERT_EQ(actualWords, words);
 }
@@ -59,9 +43,20 @@ TEST_F(MemoryStorageTest, addTwoSameWords_shouldAddOnlyOne)
     ASSERT_EQ(storage.size(), Words::size_type{1});
 }
 
-TEST_F(MemoryStorageTest, givenEmptyStorage_shouldBeEmpty)
+TEST_F(MemoryStorageTest, givenEmptyStorage_getShouldNotReturnWord)
 {
-    ASSERT_TRUE(storage.empty());
+    const auto result = storage.getWord("someword");
+
+    ASSERT_EQ(result, boost::none);
+}
+
+TEST_F(MemoryStorageTest, givenStorageWithExactWord_shouldReturnWord)
+{
+    storage.addWord(word1);
+
+    const auto actualWord = storage.getWord("xxx");
+
+    ASSERT_EQ(actualWord, word1);
 }
 
 TEST_F(MemoryStorageTest, givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
@@ -69,7 +64,29 @@ TEST_F(MemoryStorageTest, givenStorageWithTwoWords_shouldReturnTwoElementsBasing
     storage.addWord(word1);
     storage.addWord(word2);
 
-    auto amountOfWords = std::distance(storage.begin(), storage.end());
+    const auto amountOfWords = std::distance(storage.begin(), storage.end());
 
     ASSERT_EQ(amountOfWords, 2);
 }
+
+TEST_F(MemoryStorageTest, givenEmptyStorage_shouldBeEmpty)
+{
+    ASSERT_TRUE(storage.empty());
+}
+
+TEST_F(MemoryStorageTest, givenWordNotExistingInStorage_getShouldNotContainThisWord)
+{
+    const auto contains = storage.contains("someword");
+
+    ASSERT_FALSE(contains);
+}
+
+TEST_F(MemoryStorageTest, givenWordExistingInStorage_getShouldContainThisWord)
+{
+    storage.addWord(word1);
+
+    const auto contains = storage.contains(word1.englishWord);
+
+    ASSERT_TRUE(contains);
+}
+

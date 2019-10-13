@@ -10,6 +10,7 @@ public:
     MOCK_METHOD1(addWord, void(const Word&));
     MOCK_CONST_METHOD1(getWord, boost::optional<Word>(const EnglishWord&));
     MOCK_CONST_METHOD0(getWords, Words());
+    MOCK_CONST_METHOD1(contains, bool(const EnglishWord&));
     MOCK_CONST_METHOD0(size, Words::size_type());
     MOCK_CONST_METHOD0(empty, bool());
     MOCK_CONST_METHOD0(begin, Words::const_iterator());

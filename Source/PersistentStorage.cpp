@@ -28,6 +28,11 @@ Words PersistentStorage::getWords() const
     return storage.getWords();
 }
 
+bool PersistentStorage::contains(const EnglishWord& englishWord) const
+{
+    return storage.contains(englishWord);
+}
+
 Words::size_type PersistentStorage::size() const
 {
     return storage.size();

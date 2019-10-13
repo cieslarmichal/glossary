@@ -17,7 +17,7 @@ TEST_F(DefaultHtmlParserTest, givenHtmlContent_shouldReturnParsedContent)
              "blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n"};
     const std::vector<std::string> exampleWithoutTags{"blackberry wine"};
 
-    auto parsedHtmlContent = defaultHtmlParser.parse(taggedExample);
+    const auto parsedHtmlContent = defaultHtmlParser.parse(taggedExample);
 
     ASSERT_EQ(parsedHtmlContent, exampleWithoutTags);
 }

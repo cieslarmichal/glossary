@@ -25,14 +25,14 @@ public:
 
 TEST_F(WordsSerializerImplTest, givenWords_shouldReturnSerializedWords)
 {
-    auto actualSerializedWords = serializer.serialize(words);
+    const auto actualSerializedWords = serializer.serialize(words);
 
     EXPECT_EQ(actualSerializedWords, expectedSerializedWords);
 }
 
 TEST_F(WordsSerializerImplTest, givenSerializedWords_shouldReturnWords)
 {
-    auto actualWords = serializer.deserialize(expectedSerializedWords);
+    const auto actualWords = serializer.deserialize(expectedSerializedWords);
 
     EXPECT_EQ(actualWords, words);
 }

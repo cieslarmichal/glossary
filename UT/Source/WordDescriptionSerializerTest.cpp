@@ -8,14 +8,15 @@ using namespace ::testing;
 
 namespace
 {
-DefinitionWithExample definitionWithExample1{"definition1", boost::none};
-DefinitionWithExample definitionWithExample2{"definition2", std::string{"example"}};
-DefinitionsWithExamples definitionsWithExamples{definitionWithExample1, definitionWithExample2};
-Sentence sentence1{"sentence1"};
-Sentence sentence2{"sentence2"};
-Sentences sentences{sentence1, sentence2};
-WordDescription wordDescription{definitionsWithExamples, sentences};
-const auto expectedSerializedWordDescription{R"({"definitionsWithExamples":["definition1","definition2:example"],"sentences":["sentence1","sentence2"]})"};
+const DefinitionWithExample definitionWithExample1{"definition1", boost::none};
+const DefinitionWithExample definitionWithExample2{"definition2", std::string{"example"}};
+const DefinitionsWithExamples definitionsWithExamples{definitionWithExample1, definitionWithExample2};
+const Sentence sentence1{"sentence1"};
+const Sentence sentence2{"sentence2"};
+const Sentences sentences{sentence1, sentence2};
+const WordDescription wordDescription{definitionsWithExamples, sentences};
+const auto expectedSerializedWordDescription{
+        R"({"definitionsWithExamples":["definition1","definition2:example"],"sentences":["sentence1","sentence2"]})"};
 constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
 constexpr auto sentencesField = "sentences";
 }

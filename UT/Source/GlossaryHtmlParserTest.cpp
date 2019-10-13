@@ -52,7 +52,7 @@ TEST_F(GlossaryHtmlParserTest, givenHtmlContentWithDefinitionSequenceAndExample_
     const std::string testHtmlContent{taggedDefinition + taggedSentence + taggedExample};
     const std::vector<std::string> testParsedContent{definitionWithoutTags, sentenceWithoutTags, exampleWithoutTags};
 
-    auto actualParsedHtmlContent = htmlParser.parse(testHtmlContent);
+    const auto actualParsedHtmlContent = htmlParser.parse(testHtmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedContent);
 }

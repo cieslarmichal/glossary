@@ -4,6 +4,7 @@
 #include "gmock/gmock.h"
 #include "FileAccessMock.h"
 #include "WordsSerializerMock.h"
+#include "Exceptions/FileNotFound.h"
 
 using namespace ::testing;
 
@@ -30,7 +31,7 @@ TEST_F(PersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadA
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(Words{}));
     PersistentStorage persistentStorage{fileAccess, serializer};
 
-    auto actualWords = persistentStorage.getWords();
+    const auto actualWords = persistentStorage.getWords();
 
     ASSERT_TRUE(actualWords.empty());
 }
@@ -41,8 +42,17 @@ TEST_F(PersistentStorageTest, givenPersistentStorageWithFileWithWords_shouldNotL
     EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(words));
     PersistentStorage persistentStorage{fileAccess, serializer};
 
-    auto actualWords = persistentStorage.getWords();
+    const auto actualWords = persistentStorage.getWords();
 
     ASSERT_EQ(actualWords, words);
 }
-////////////////////////////////////////////////////////
+
+TEST_F(PersistentStorageTest, givenInvalidFile_shouldReturnNoWords)
+{
+    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Throw(exceptions::FileNotFound{""}));
+    PersistentStorage persistentStorage{fileAccess, serializer};
+
+    const auto actualWords = persistentStorage.getWords();
+
+    EXPECT_TRUE(actualWords.empty());
+}

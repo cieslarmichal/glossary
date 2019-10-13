@@ -23,11 +23,10 @@ set(SOURCES
         Source/MemoryStorage.cpp
         Source/PersistentStorage.cpp
         Source/DictionaryReaderImpl.cpp
-        Source/DictionaryAvailabilityHandlerImpl.cpp
         Source/WordsSerializerImpl.cpp
         Source/WordDescriptionSerializer.cpp
         Source/HtmlWordsCreatorImpl.cpp
-        Source/WordsCreatorServiceImpl.cpp
+        Source/WordsGeneratorServiceImpl.cpp
         )
 
 set(UT_SOURCES
@@ -38,7 +37,6 @@ set(UT_SOURCES
         UT/Source/FileAccessImplTest.cpp
         UT/Source/WordsDatabaseTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
-        UT/Source/DictionaryAvailabilityHandlerImplTest.cpp
         UT/Source/MemoryStorageTest.cpp
         UT/Source/PersistentStorageTest.cpp
         UT/Source/WordsSerializerImplTest.cpp

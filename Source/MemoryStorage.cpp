@@ -3,7 +3,7 @@
 
 void MemoryStorage::addWord(const Word& word)
 {
-    if(not contains(word))
+    if(not contains(word.englishWord))
     {
        words.push_back(word);
     }
@@ -11,7 +11,7 @@ void MemoryStorage::addWord(const Word& word)
 
 boost::optional<Word> MemoryStorage::getWord(const EnglishWord& englishWord) const
 {
-    auto word = std::find_if(words.begin(), words.end(), [englishWord](const Word& word)
+    const auto word = std::find_if(words.begin(), words.end(), [englishWord](const Word& word)
     { return word.englishWord == englishWord; });
 
     if (word != words.end())
@@ -24,6 +24,14 @@ boost::optional<Word> MemoryStorage::getWord(const EnglishWord& englishWord) con
 Words MemoryStorage::getWords() const
 {
     return words;
+}
+
+bool MemoryStorage::contains(const EnglishWord& wordToFind) const
+{
+    const auto found = std::find_if(
+            words.begin(), words.end(),
+            [wordToFind](const Word& word) { return word.englishWord == wordToFind;});
+    return found != words.end();
 }
 
 Words::size_type MemoryStorage::size() const
@@ -44,15 +52,5 @@ Words::const_iterator MemoryStorage::begin() const
 Words::const_iterator MemoryStorage::end() const
 {
     return words.cend();
-}
-
-bool MemoryStorage::contains(const Word& wordToFind) const
-{
-    if(std::find(words.begin(), words.end(), wordToFind) != words.end())
-    {
-        //syslog
-        return true;
-    }
-    return false;
 }
 

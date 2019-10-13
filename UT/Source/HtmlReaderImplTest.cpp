@@ -16,14 +16,14 @@ TEST_F(HtmlReaderImplTest, givenCorrectUrlAddress_shouldReturnContentOfTheHtmlFi
 {
     const std::string correctUrlAddress = "https://www.merriam-webster.com";
 
-    std::string htmlContent = htmlReader.read(correctUrlAddress);
+    const auto htmlContent = htmlReader.read(correctUrlAddress);
 
     ASSERT_TRUE(htmlContent.find("<!DOCTYPE html>") || htmlContent.find("<!doctype html>"));
 }
 
 TEST_F(HtmlReaderImplTest, givenIncorrectUrlAddress_shouldThrowConnectionFailed)
 {
-    std::string inaccessibleUrlAddress = ".xh111ttps://aazzz.com";
+    const auto inaccessibleUrlAddress = ".xh111ttps://aazzz.com";
 
     ASSERT_THROW(htmlReader.read(inaccessibleUrlAddress), exceptions::ConnectionFailed);
 }

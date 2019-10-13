@@ -28,9 +28,9 @@ TEST_F(FileAccessImplTest, givenCorrectPath_shouldWriteToFile)
 {
     fileAccess.write(correctPathForWriting, textToWrite);
 
-    auto fileContent = fileAccess.readContent(correctPathForWriting);
-    ASSERT_EQ(textToWrite, fileContent);
+    const auto fileContent = fileAccess.readContent(correctPathForWriting);
 
+    ASSERT_EQ(textToWrite, fileContent);
 }
 
 TEST_F(FileAccessImplTest, givenIncorrectPath_shouldThrowFileNotFoundForWritingAppendingAndReading)
@@ -44,14 +44,15 @@ TEST_F(FileAccessImplTest, givenCorrectPath_shouldAppendToFile)
 {
     fileAccess.write(correctPathForWriting, textToWrite);
     fileAccess.append(correctPathForWriting, textToAppend);
-    auto fileContent = fileAccess.readContent(correctPathForWriting);
+
+    const auto fileContent = fileAccess.readContent(correctPathForWriting);
 
     ASSERT_EQ(textAfterWriteAndAppend, fileContent);
 }
 
 TEST_F(FileAccessImplTest, givenCorrectPath_shouldReturnContentOfFile)
 {
-    auto fileContent = fileAccess.readContent(correctPathForReading);
+    const auto fileContent = fileAccess.readContent(correctPathForReading);
 
     ASSERT_EQ(fileContent, exampleContent);
 }

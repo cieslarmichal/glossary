@@ -7,8 +7,8 @@ using namespace ::testing;
 
 namespace
 {
-EnglishWord englishWord{"englishWord"};
-Word word(englishWord, "polishTranslation", {});
+const EnglishWord englishWord{"englishWord"};
+const Word word(englishWord, "polishTranslation", {});
 }
 
 class WordsDatabaseTest : public Test
@@ -42,4 +42,22 @@ TEST_F(WordsDatabaseTest, givenEnglishWordExistingInStorage_shouldReturnWord)
     const auto actualWord = database.getWord(englishWord);
 
     ASSERT_EQ(actualWord, word);
+}
+
+TEST_F(WordsDatabaseTest, givenEnglishWordExistingInStorage_shouldContainThisWord)
+{
+    EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
+
+    const auto contains = database.contains(englishWord);
+
+    ASSERT_TRUE(contains);
+}
+
+TEST_F(WordsDatabaseTest, givenEnglishWordNotExistingInStorage_shouldNotContainThisWord)
+{
+    EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(false));
+
+    const auto contains = database.contains(englishWord);
+
+    ASSERT_FALSE(contains);
 }

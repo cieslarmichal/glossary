@@ -16,9 +16,9 @@ using namespace ::testing;
 namespace
 {
 const std::string urlAddress{"https://www.merriam-webster.com/dictionary/wine"};
-WordWithTranslation wordWithTranslation{"wine", "wino"};
+const WordWithTranslation wordWithTranslation{"wine", "wino"};
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
-Word expectedWord{wordWithTranslation.englishWord, wordWithTranslation.polishTranslation, wordDescriptionFromParser};
+const Word expectedWord{wordWithTranslation.englishWord, wordWithTranslation.polishTranslation, wordDescriptionFromParser};
 }
 
 class HtmlWordsCreatorImplTest : public Test
@@ -40,11 +40,11 @@ public:
 
 TEST_F(HtmlWordsCreatorImplTest, givenWordWithTranslation_shouldCreateWord)
 {
-    auto htmlContent = prepareHtmlContent();
+    const auto htmlContent = prepareHtmlContent();
     EXPECT_CALL(*htmlReader, read(urlAddress)).WillOnce(Return(htmlContent));
     EXPECT_CALL(*htmlParser, parse(htmlContent)).WillOnce(Return(testParsedHtmlContent));
 
-    auto actualWord = creator.createWord(wordWithTranslation);
+    const auto actualWord = creator.createWord(wordWithTranslation);
 
     ASSERT_EQ(actualWord, expectedWord);
 }

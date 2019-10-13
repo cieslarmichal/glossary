@@ -12,6 +12,7 @@ public:
 
     void addWord(const Word &) const override;
     boost::optional<Word> getWord(const EnglishWord &) const override;
+    bool contains(const EnglishWord&) const override;
 
 private:
     std::unique_ptr<Storage> storage;

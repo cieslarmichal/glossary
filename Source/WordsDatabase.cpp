@@ -14,3 +14,8 @@ boost::optional<Word> WordsDatabase::getWord(const EnglishWord& englishWord) con
     return storage->getWord(englishWord);
 }
 
+bool WordsDatabase::contains(const EnglishWord& englishWord) const
+{
+    return storage->contains(englishWord);
+}
+
