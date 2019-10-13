@@ -3,16 +3,32 @@
 
 #include "StringHelper.h"
 #include <sstream>
+#include <iostream>
+#include "Exceptions/FileNotFound.h"
 
-const std::string dictionaryAvailabilityFilePath{"../database/dictionaryAvailability.txt"};
 
-DictionaryAvailabilityHandlerImpl::DictionaryAvailabilityHandlerImpl(FileAccess& access) : fileAccess{access}
+const std::string DictionaryAvailabilityHandlerImpl::dictionaryAvailabilityFilePath{
+        "../database/dictionaryAvailability.txt"};
+
+DictionaryAvailabilityHandlerImpl::DictionaryAvailabilityHandlerImpl(std::shared_ptr<const FileAccess> access)
+        : fileAccess{access}
 {
 }
 
 std::map<EnglishWord, WordAvailability> DictionaryAvailabilityHandlerImpl::read() const
 {
-    auto dictionaryAvailabilityContent = fileAccess.readContent(dictionaryAvailabilityFilePath);
+    std::string dictionaryAvailabilityContent;
+    try
+    {
+        dictionaryAvailabilityContent = fileAccess->readContent(dictionaryAvailabilityFilePath);
+
+    }
+    catch (const exceptions::FileNotFound& e)
+    {
+        std::cerr << e.what();
+        return {};
+    }
+
     return processDictionaryAvailabilityContent(dictionaryAvailabilityContent);
 }
 
@@ -23,7 +39,7 @@ DictionaryAvailabilityHandlerImpl::processDictionaryAvailabilityContent(const st
 
     for (const auto& line : stringHelper::getSplitLines(availabilityContent))
     {
-        if(not line.empty())
+        if (not line.empty())
         {
             auto wordAvailability = getWordAvailability(line);
             wordsAvailability[wordAvailability.name] = wordAvailability;
@@ -45,5 +61,12 @@ WordAvailability DictionaryAvailabilityHandlerImpl::getWordAvailability(const st
 
 void DictionaryAvailabilityHandlerImpl::add(const WordAvailability& wordAvailability) const
 {
-    fileAccess.append(dictionaryAvailabilityFilePath, wordAvailability.toString() + "\n");
+    try
+    {
+        fileAccess->append(dictionaryAvailabilityFilePath, wordAvailability.toString() + "\n");
+    }
+    catch (const exceptions::FileNotFound& e)
+    {
+        std::cerr << e.what();
+    }
 }

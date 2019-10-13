@@ -2,30 +2,39 @@
 
 #include "StringHelper.h"
 #include <sstream>
+#include <iostream>
+#include "Exceptions/FileNotFound.h"
 
+const std::string DictionaryReaderImpl::dictionaryFilePath{"../database/dictionary.txt"};
 
-namespace
-{
-const std::string dictionaryFilePath{"../database/dictionary.txt"};
-}
-
-
-DictionaryReaderImpl::DictionaryReaderImpl(FileAccess & access) : fileAccess{access}
+DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const FileAccess> access) : fileAccess{access}
 {
 }
 
 std::vector<WordWithTranslation> DictionaryReaderImpl::read() const
 {
-    auto dictionaryContent = fileAccess.readContent(dictionaryFilePath);
+    std::string dictionaryContent;
+    try
+    {
+        dictionaryContent = fileAccess->readContent(dictionaryFilePath);
+
+    }
+    catch (const exceptions::FileNotFound& e)
+    {
+        std::cerr << e.what();
+        return {};
+    }
+
     return processDictionaryContent(dictionaryContent);
 }
 
-std::vector<WordWithTranslation> DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryContent) const
+std::vector<WordWithTranslation>
+DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryContent) const
 {
     std::vector<WordWithTranslation> wordsWithTranslation;
-    for (const auto &line : stringHelper::getSplitLines(dictionaryContent))
+    for (const auto& line : stringHelper::getSplitLines(dictionaryContent))
     {
-        if(not line.empty())
+        if (not line.empty())
         {
             wordsWithTranslation.push_back(getWordWithTranslation(line));
         }
@@ -33,7 +42,7 @@ std::vector<WordWithTranslation> DictionaryReaderImpl::processDictionaryContent(
     return wordsWithTranslation;
 }
 
-WordWithTranslation DictionaryReaderImpl::getWordWithTranslation(const std::string & line) const
+WordWithTranslation DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
 {
     std::stringstream lineStream{line};
     EnglishWord englishWord;

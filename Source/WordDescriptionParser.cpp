@@ -1,3 +1,4 @@
+#include <iostream>
 #include "WordDescriptionParser.h"
 
 #include "boost/algorithm/string.hpp"
@@ -26,16 +27,16 @@ const std::string sentenceMark{"\""};
 WordDescription WordDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
     WordDescription wordDescription;
-    bool previousLineIsExample = false;
+    bool previousLineIsDefinition = false;
 
     Definition definition;
 
     for (const auto& line : lines)
     {
-        if (previousLineIsExample && !isExample(line))
+        if (previousLineIsDefinition && !isExample(line))
         {
             wordDescription.definitionsWithExamples.push_back({definition, boost::none});
-            previousLineIsExample = false;
+            previousLineIsDefinition = false;
         }
 
         if (isSentence(line))
@@ -43,16 +44,20 @@ WordDescription WordDescriptionParser::parse(const std::vector<std::string>& lin
             wordDescription.sentences.push_back(line);
         }
 
-        if (previousLineIsExample && isExample(line))
+        if (previousLineIsDefinition && isExample(line))
         {
             wordDescription.definitionsWithExamples.push_back({definition, line});
-            previousLineIsExample = false;
+            previousLineIsDefinition = false;
         }
 
         if (isDefinition(line))
         {
             definition = line;
-            previousLineIsExample = true;
+            previousLineIsDefinition = true;
+            if(line == lines.back())
+            {
+                wordDescription.definitionsWithExamples.push_back({definition, boost::none});
+            }
         }
     }
 

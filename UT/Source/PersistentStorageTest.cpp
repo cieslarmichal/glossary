@@ -20,8 +20,8 @@ const Words words{word1, word2};
 class PersistentStorageTest : public Test
 {
 public:
-    std::shared_ptr<FileAccessMock> fileAccess = std::make_shared<NiceMock<FileAccessMock>>();
-    std::shared_ptr<WordsSerializerMock> serializer = std::make_shared<NiceMock<WordsSerializerMock>>();
+    std::shared_ptr<FileAccessMock> fileAccess = std::make_shared<StrictMock<FileAccessMock>>();
+    std::shared_ptr<WordsSerializerMock> serializer = std::make_shared<StrictMock<WordsSerializerMock>>();
 };
 
 TEST_F(PersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyWords)
@@ -45,3 +45,4 @@ TEST_F(PersistentStorageTest, givenPersistentStorageWithFileWithWords_shouldNotL
 
     ASSERT_EQ(actualWords, words);
 }
+////////////////////////////////////////////////////////

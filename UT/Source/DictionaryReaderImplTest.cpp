@@ -18,13 +18,13 @@ namespace
 class DictionaryReaderImplTest : public Test
 {
 public:
-    StrictMock<FileAccessMock> fileAccess;
+    std::shared_ptr<FileAccessMock> fileAccess = std::make_shared<StrictMock<FileAccessMock>>();
     DictionaryReaderImpl reader{fileAccess};
 };
 
 TEST_F(DictionaryReaderImplTest,  givenEmptyDictionaryContent_shouldReturnEmptyDictionary)
 {
-    EXPECT_CALL(fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(emptyContent));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(emptyContent));
 
     auto dictionary = reader.read();
 
@@ -33,7 +33,7 @@ TEST_F(DictionaryReaderImplTest,  givenEmptyDictionaryContent_shouldReturnEmptyD
 
 TEST_F(DictionaryReaderImplTest,  givenDictionaryContent_shouldReadDictionary)
 {
-    EXPECT_CALL(fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(content));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(content));
 
     auto actualDictionary = reader.read();
 

@@ -29,4 +29,5 @@ private:
 
     static const std::string fileDirectory;
     static const std::string fileName;
+    static const std::string filePath;
 };

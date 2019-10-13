@@ -1,22 +1,18 @@
 #pragma once
-#include "Word.h"
-#include <vector>
-#include "FileAccess.h"
+
 #include "Database.h"
-#include "WordDescriptionParser.h"
 #include "Storage.h"
+#include <memory>
 
 
 class WordsDatabase : public Database
 {
 public:
-    explicit WordsDatabase(FileAccess &, Storage&);
+    explicit WordsDatabase(std::unique_ptr<Storage>);
 
-    boost::optional<WordDescription> getWordDescription(const EnglishWord &) const override;
-    void saveWord(const EnglishWordWithDescription &) const override;
+    void addWord(const Word &) const override;
+    boost::optional<Word> getWord(const EnglishWord &) const override;
 
 private:
-    FileAccess & fileAccess;
-    Storage & storage; //unique pointer
-    WordDescriptionParser wordDescriptionParser;
+    std::unique_ptr<Storage> storage;
 };

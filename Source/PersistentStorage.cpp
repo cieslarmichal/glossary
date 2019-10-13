@@ -1,8 +1,10 @@
 #include <iostream>
 #include "PersistentStorage.h"
+#include "Exceptions/FileNotFound.h"
 
 const std::string PersistentStorage::fileDirectory{"../database"};
 const std::string PersistentStorage::fileName{"/words.txt"};
+const std::string PersistentStorage::filePath{fileDirectory + fileName};
 
 PersistentStorage::PersistentStorage(std::shared_ptr<const FileAccess> fileAccessInit,
                                      std::shared_ptr<const WordsSerializer> serializerInit)
@@ -48,13 +50,30 @@ Words::const_iterator PersistentStorage::end() const
 
 void PersistentStorage::serialize()
 {
-    serializer->serialize(storage.getWords());
+    try
+    {
+        fileAccess->write(filePath, serializer->serialize(storage.getWords()));
+    }
+    catch (const exceptions::FileNotFound& e)
+    {
+        std::cerr << e.what();
+    }
 }
 
 void PersistentStorage::loadFile()
 {
-    const auto filePath = fileDirectory + fileName;
-    for(const auto & word : serializer->deserialize(fileAccess->readContent(filePath)))
+    Words words;
+    try
+    {
+        words = serializer->deserialize(fileAccess->readContent(filePath));
+    }
+    catch (const exceptions::FileNotFound& e)
+    {
+        std::cerr << e.what();
+        return;
+    }
+
+    for (const auto& word : words)
     {
         storage.addWord(word);
     }

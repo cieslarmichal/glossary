@@ -6,6 +6,7 @@
 
 class DatabaseMock : public Database
 {
-    MOCK_CONST_METHOD1(getWordDescription, boost::optional<WordDescription>(const EnglishWord &));
-    MOCK_CONST_METHOD1(saveWord, void(const EnglishWordWithDescription &));
+public:
+    MOCK_CONST_METHOD1(addWord, void(const Word &));
+    MOCK_CONST_METHOD1(getWord, boost::optional<Word>(const EnglishWord &));
 };

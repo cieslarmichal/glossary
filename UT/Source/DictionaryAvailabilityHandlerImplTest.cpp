@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 #include "boost/assign.hpp"
 
+
 using namespace ::testing;
 
 namespace
@@ -22,13 +23,13 @@ WordAvailability wordAvailability{"car", true};
 class DictionaryAvailabilityHandlerImplTest : public Test
 {
 public:
-    StrictMock<FileAccessMock> fileAccess;
+    std::shared_ptr<FileAccessMock> fileAccess = std::make_shared<StrictMock<FileAccessMock>>();
     DictionaryAvailabilityHandlerImpl handler{fileAccess};
 };
 
 TEST_F(DictionaryAvailabilityHandlerImplTest, givenEmptyContent_shouldReturnEmptyDictionaryAvailability)
 {
-    EXPECT_CALL(fileAccess, readContent(dictionaryAvailabilityFilePath)).WillOnce(Return(emptyContent));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryAvailabilityFilePath)).WillOnce(Return(emptyContent));
 
     auto actualDictionaryAvailability = handler.read();
 
@@ -37,7 +38,7 @@ TEST_F(DictionaryAvailabilityHandlerImplTest, givenEmptyContent_shouldReturnEmpt
 
 TEST_F(DictionaryAvailabilityHandlerImplTest, givenAvailabilityContent_shouldReadDictionaryAvailability)
 {
-    EXPECT_CALL(fileAccess, readContent(dictionaryAvailabilityFilePath)).WillOnce(Return(content));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryAvailabilityFilePath)).WillOnce(Return(content));
 
     auto actualDictionaryAvailability = handler.read();
 
@@ -46,7 +47,7 @@ TEST_F(DictionaryAvailabilityHandlerImplTest, givenAvailabilityContent_shouldRea
 
 TEST_F(DictionaryAvailabilityHandlerImplTest, givenWordAvailability_shouldAppendToFileWithDictionaryAvailability)
 {
-    EXPECT_CALL(fileAccess, append(dictionaryAvailabilityFilePath, wordAvailability.toString() + "\n"));
+    EXPECT_CALL(*fileAccess, append(dictionaryAvailabilityFilePath, wordAvailability.toString() + "\n"));
 
     handler.add(wordAvailability);
 }

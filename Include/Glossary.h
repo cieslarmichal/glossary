@@ -1,8 +1,16 @@
-//#pragma once
-//#include "Word_Factory.h"
-//
+#pragma once
 
-// Serializer, Deserializer, think about Database as connector to html and accessor to memory which keeps words
+
+//databse interface change extends storage
+// html handler keeping all htmls ...
+//database with storage
+//database having service keeping all handlers for files
+//some service creating words wrapping all over
+//handling words, displaying, randomizing, counting good, threading while downloading etc
+//logs
+//QT maybe in future
+//serialization with json other 2 files
+//add FileSystem users test for exceptions.....
 
 ////check internet connection
 ////prints 5 def ang eg, option to display more, 2 sentences or more

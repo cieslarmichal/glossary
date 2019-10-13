@@ -1,6 +1,9 @@
 #include "GlossaryHtmlParser.h"
 
 #include "gtest/gtest.h"
+#include "FileAccessImpl.h"
+#include "TestVariables/ParsedHtmlContent.h"
+#include "TestVariables/WordDescriptionFromParser.h"
 
 using namespace ::testing;
 
@@ -29,11 +32,18 @@ const std::string sentenceWithoutTags{sentenceMark + "Several bottles of wine we
                                       sentenceMark};
 const std::string exampleWithoutTags{exampleMark + "blackberry wine"};
 
+const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
 }
 
 class GlossaryHtmlParserTest : public Test
 {
 public:
+    std::string prepareHtmlContent()
+    {
+        const FileAccessImpl fileAccess{};
+        return fileAccess.readContent(htmlContentFilePath);
+    }
+
     GlossaryHtmlParser htmlParser;
 };
 
@@ -42,9 +52,18 @@ TEST_F(GlossaryHtmlParserTest, givenHtmlContentWithDefinitionSequenceAndExample_
     const std::string testHtmlContent{taggedDefinition + taggedSentence + taggedExample};
     const std::vector<std::string> testParsedContent{definitionWithoutTags, sentenceWithoutTags, exampleWithoutTags};
 
-    auto parsedHtmlContent = htmlParser.parse(testHtmlContent);
+    auto actualParsedHtmlContent = htmlParser.parse(testHtmlContent);
 
-    ASSERT_EQ(parsedHtmlContent, testParsedContent);
+    ASSERT_EQ(actualParsedHtmlContent, testParsedContent);
+}
+
+TEST_F(GlossaryHtmlParserTest, givenRealHtmlContent_shouldReturnParsedContent)
+{
+    const auto realHtmlContent = prepareHtmlContent();
+
+    const auto actualParsedHtmlContent = htmlParser.parse(realHtmlContent);
+
+    ASSERT_EQ(actualParsedHtmlContent, testParsedHtmlContent);
 }
 
 TEST_F(GlossaryHtmlParserTest, givenHtmlContentWithoutImportantLines_shouldReturnEmptyVector)
@@ -54,13 +73,8 @@ TEST_F(GlossaryHtmlParserTest, givenHtmlContentWithoutImportantLines_shouldRetur
                                                    "\n does not contain definitions, sentences\n"
                                                    "nor examples"};
 
-    auto parsedHtmlContent = htmlParser.parse(contentWithoutImportantLines);
+    const auto actualParsedHtmlContent = htmlParser.parse(contentWithoutImportantLines);
 
-    for(auto x : parsedHtmlContent)
-    {
-        std::cout<<x<<std::endl;
-    }
-
-    ASSERT_EQ(parsedHtmlContent.size(), std::vector<std::string>::size_type(0));
+    ASSERT_TRUE(actualParsedHtmlContent.empty());
 }
 

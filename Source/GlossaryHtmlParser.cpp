@@ -17,7 +17,7 @@ bool isExample(const std::string &);
 
 bool isSentence(const std::string &);
 
-const std::string htmlDefinitionTag{"<span class=\"dtText\"><strong class=\"mw_t_bc\">: </strong>"};
+const std::string htmlDefinitionTag{R"(<span class="dtText"><strong class="mw_t_bc">: </strong>)"};
 const std::string htmlSentenceTag{"<span class=\"t has-aq\">"};
 const std::string htmlExampleTag1{"<span class=\"ex-sent first-child t no-aq sents\">"};
 const std::string htmlExampleTag2{"<span class=\"ex-sent first-child t has-aq sents\">"};

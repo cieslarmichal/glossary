@@ -19,7 +19,6 @@ set(SOURCES
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
-        Source/WordFactory.cpp
         Source/WordDescriptionParser.cpp
         Source/MemoryStorage.cpp
         Source/PersistentStorage.cpp
@@ -27,6 +26,8 @@ set(SOURCES
         Source/DictionaryAvailabilityHandlerImpl.cpp
         Source/WordsSerializerImpl.cpp
         Source/WordDescriptionSerializer.cpp
+        Source/HtmlWordsCreatorImpl.cpp
+        Source/WordsCreatorServiceImpl.cpp
         )
 
 set(UT_SOURCES
@@ -43,13 +44,14 @@ set(UT_SOURCES
         UT/Source/WordsSerializerImplTest.cpp
         UT/Source/WordDescriptionSerializerTest.cpp
         UT/Source/WordDescriptionParserTest.cpp
+        UT/Source/HtmlWordsCreatorImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
 add_executable(executeTests ${UT_SOURCES} ${SOURCES})
 
 target_include_directories(${PROJECT_NAME} PUBLIC "Include" "UT/Doubles" )
-target_include_directories(executeTests PUBLIC "Include" "UT/Doubles")
+target_include_directories(executeTests PUBLIC "Include" "UT/Doubles" "UT/")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC -lcurl ${Boost_LIBRARIES} nlohmann_json)
 target_link_libraries(executeTests PUBLIC -lcurl gtest gmock pthread nlohmann_json)
