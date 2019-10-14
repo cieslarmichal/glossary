@@ -1,7 +1,8 @@
 #pragma once
 
 #include "WordsGeneratorService.h"
-#include <memory>
+#include "AnswersCounter.h"
+#include "WordViewer.h"
 
 class Application
 {
@@ -10,7 +11,7 @@ public:
 
 private:
     std::unique_ptr<WordsGeneratorService> wordsGenerator;
-    //words counter good answers
-    //words randomizer
-    //words displayer
+    std::unique_ptr<AnswersCounter> answersCounter;
+    std::unique_ptr<WordViewer> viewer;
+    //prompt
 };

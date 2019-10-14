@@ -17,7 +17,7 @@ std::string AnswersStatisticsSerializerImpl::serialize(const AnswersStatistics& 
     nlohmann::json serialized;
     for (const auto& wordAnswersStatistics : answersStatistics)
     {
-        serialized[answersStatisticsField].push_back(getJsonFromWordAnswersStatistics(wordAnswersStatistics));
+        serialized[answersStatisticsField].push_back(getJsonFromWordAnswersStatistics(wordAnswersStatistics.second));
     }
     return serialized.dump();
 }
@@ -42,7 +42,7 @@ AnswersStatistics AnswersStatisticsSerializerImpl::deserialize(const std::string
 }
 
 nlohmann::json AnswersStatisticsSerializerImpl::getJsonFromWordAnswersStatistics(
-        const WordAnswersStatistics& wordAnswersStatistics) const
+        const AnswersStatisticsPerWord& wordAnswersStatistics) const
 {
     nlohmann::json val = nlohmann::json::object();
     val[englishWordField] = wordAnswersStatistics.englishWord;
@@ -72,9 +72,10 @@ AnswersStatisticsSerializerImpl::parseAnswersStatistics(const nlohmann::json& an
         {
             try
             {
-                answersStatistics.push_back(
-                        {answersStatisticsData[englishWordField], answersStatisticsData[correctAnswersField],
-                         answersStatisticsData[incorrectAnswersField]});
+                const auto englishWord = answersStatisticsData[englishWordField];
+                answersStatistics[englishWord] = AnswersStatisticsPerWord{answersStatisticsData[englishWordField],
+                                                                          answersStatisticsData[correctAnswersField],
+                                                                          answersStatisticsData[incorrectAnswersField]};
             }
             catch (const std::exception& e)
             {

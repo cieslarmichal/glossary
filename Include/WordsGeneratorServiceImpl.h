@@ -5,6 +5,7 @@
 #include "Database.h"
 #include "DictionaryReader.h"
 #include "HtmlWordsCreator.h"
+#include "WordsRandomizer.h"
 
 #include <memory>
 
@@ -27,5 +28,7 @@ private:
     std::unique_ptr<const Database> wordsDb;
     std::unique_ptr<const HtmlWordsCreator> htmlWordCreator;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
+    std::unique_ptr<const WordsRandomizer> wordsRandomizer;
+
     Dictionary dictionary;
 };

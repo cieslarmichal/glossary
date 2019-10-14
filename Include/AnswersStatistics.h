@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
-#include "WordAnswersStatistics.h"
+#include <map>
+#include "AnswersStatisticsPerWord.h"
 
-using AnswersStatistics = std::vector<WordAnswersStatistics>;
+using AnswersStatistics = std::map<EnglishWord, AnswersStatisticsPerWord>;

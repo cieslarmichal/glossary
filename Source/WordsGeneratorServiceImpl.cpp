@@ -9,6 +9,7 @@
 #include "WordsSerializerImpl.h"
 #include "HtmlReaderImpl.h"
 #include "GlossaryHtmlParser.h"
+#include "WordsRandomizerImpl.h"
 #include "Exceptions/ConnectionFailed.h"
 
 
@@ -30,6 +31,8 @@ void WordsGeneratorServiceImpl::initializeWordsCreatorService()
     htmlWordCreator = std::make_unique<HtmlWordsCreatorImpl>(std::move(htmlReader), std::move(htmlParser));
 
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
+
+    wordsRandomizer = std::make_unique<WordsRandomizerImpl>();
 }
 
 void WordsGeneratorServiceImpl::initializeDictionary()
@@ -44,7 +47,8 @@ Words WordsGeneratorServiceImpl::generateWords() const
     {
         words.push_back(generateWord(wordWithTranslation));
     }
-    return words;
+
+    return wordsRandomizer->randomize(words);
 }
 
 Word WordsGeneratorServiceImpl::generateWord(const WordWithTranslation& wordWithTranslation) const

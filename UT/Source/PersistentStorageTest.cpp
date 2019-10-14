@@ -1,7 +1,6 @@
 #include "PersistentStorage.h"
 
 #include "gtest/gtest.h"
-#include "gmock/gmock.h"
 #include "FileAccessMock.h"
 #include "WordsSerializerMock.h"
 #include "Exceptions/FileNotFound.h"
@@ -10,9 +9,8 @@ using namespace ::testing;
 
 namespace
 {
-const std::string fileDirectory{"../database"};
-const std::string fileName{"/words.txt"};
-const std::string filePath{fileDirectory + fileName};
+const std::string filePath{"../database/words.txt"};
+const std::string invalidFilePath{"invalidFilePath"};
 const Word word1("xxx", {}, {});
 const Word word2("yyy", {}, {});
 const Words words{word1, word2};
@@ -36,7 +34,7 @@ TEST_F(PersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadA
     ASSERT_TRUE(actualWords.empty());
 }
 
-TEST_F(PersistentStorageTest, givenPersistentStorageWithFileWithWords_shouldNotLoadAnyWords)
+TEST_F(PersistentStorageTest, givenPersistentStorageWithFileWithWords_shouldLoadWords)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return("some content"));
     EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(words));

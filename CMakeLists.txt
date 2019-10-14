@@ -14,7 +14,6 @@ set(SOURCES
         Source/WordsDatabase.cpp
         Source/Glossary.cpp
         Source/HtmlReaderImpl.cpp
-        Source/Random.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
@@ -27,8 +26,10 @@ set(SOURCES
         Source/WordDescriptionSerializer.cpp
         Source/HtmlWordsCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
-        Source/PersistentAnswerCounter.cpp
+        Source/PersistentAnswersCounter.cpp
         Source/AnswersStatisticsSerializerImpl.cpp
+        Source/WordsRandomizerImpl.cpp
+        Source/WordViewerImpl.cpp
         )
 
 set(UT_SOURCES
@@ -45,8 +46,10 @@ set(UT_SOURCES
         UT/Source/WordDescriptionSerializerTest.cpp
         UT/Source/WordDescriptionParserTest.cpp
         UT/Source/HtmlWordsCreatorImplTest.cpp
-        UT/Source/PersistentAnswerCounterTest.cpp
+        UT/Source/PersistentAnswersCounterTest.cpp
         UT/Source/AnswersStatisticsSerializerImplTest.cpp
+        UT/Source/WordsRandomizerImplTest.cpp
+        UT/Source/WordViewerImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
