@@ -1,8 +1,3 @@
-<a href="https://scan.coverity.com/projects/michalovsky-glossary">
-  <img alt="Coverity Scan Build Status"
-       src="https://scan.coverity.com/projects/19420/badge.svg"/>
-</a>
-
 [![CodeFactor](https://www.codefactor.io/repository/github/michalovsky/glossary/badge)](https://www.codefactor.io/repository/github/michalovsky/glossary)
 
 # Glossary
