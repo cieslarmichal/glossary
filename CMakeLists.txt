@@ -60,4 +60,4 @@ target_link_libraries(executeTests PUBLIC -lcurl gtest gmock pthread nlohmann_js
 target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 target_compile_options(executeTests PUBLIC -Wall -Wextra -Wpedantic -Werror)
 
-add_test(executeTests ${CMAKE_BINARY_DIR}/bin/executeTests --gtest_color=yes)
+add_test(executeTests ${CMAKE_BINARY_DIR}/executeTests --gtest_color=yes)
