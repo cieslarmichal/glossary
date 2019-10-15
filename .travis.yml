@@ -21,21 +21,13 @@ matrix:
       env:
       - C_COMPILER=gcc-8
       - CXX_COMPILER=g++-8
-install:
-  - mkdir sfml-dl; cd sfml-dl
-  - wget https://www.sfml-dev.org/files/SFML-2.5.1-linux-gcc-64-bit.tar.gz
-  - tar xzf SFML-2.5.1-linux-gcc-64-bit.tar.gz
 
 script:
-  - cd ../
-  - export SFML=`pwd`/sfml-dl/SFML-2.5.1
-  - echo "sflm $SFML"
   - mkdir build
   - cd build
-  - env CC=${C_COMPILER} CXX=${CXX_COMPILER} cmake .. -DENABLE_COVERAGE:BOOL=TRUE -DSFML_ROOT=$SFML
+  - env CC=${C_COMPILER} CXX=${CXX_COMPILER} cmake .. -DENABLE_COVERAGE:BOOL=TRUE -DCMAKE_BUILD_TYPE=DEBUG
   - echo "We have" `nproc` "cores here"
   - make -j `nproc`
-  - export DISPLAY=':99.0'
   - ctest -j `nproc` -V
 
 after_success:

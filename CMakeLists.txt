@@ -6,7 +6,6 @@ project( ${PROJECT_NAME} )
 add_subdirectory(externals)
 
 set(CMAKE_CXX_STANDARD 17)
-set( CMAKE_BUILD_TYPE Debug )
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
 
