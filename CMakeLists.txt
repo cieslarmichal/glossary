@@ -1,14 +1,15 @@
-cmake_minimum_required( VERSION 3.14 )
+cmake_minimum_required( VERSION 3.12.4 )
 
 set( PROJECT_NAME glossary  )
 project( ${PROJECT_NAME} )
 
+enable_testing()
+
+add_subdirectory(externals)
+
 set(CMAKE_CXX_STANDARD 17)
-set( CMAKE_BUILD_TYPE Debug )
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
-
-add_subdirectory(libs)
 
 set(SOURCES
         Source/WordsDatabase.cpp
@@ -63,3 +64,5 @@ target_link_libraries(executeTests PUBLIC -lcurl gtest gmock pthread nlohmann_js
 
 target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 target_compile_options(executeTests PUBLIC -Wall -Wextra -Wpedantic -Werror)
+
+add_test(executeTests ${CMAKE_BINARY_DIR}/executeTests --gtest_color=yes)
