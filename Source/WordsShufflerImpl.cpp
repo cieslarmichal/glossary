@@ -1,10 +1,10 @@
-#include "WordsRandomizerImpl.h"
+#include "WordsShufflerImpl.h"
 
 #include <algorithm>
 #include <chrono>
 #include <random>
 
-Words WordsRandomizerImpl::randomize(const Words& words) const
+Words WordsShufflerImpl::shuffle(const Words& words) const
 {
     if(not needToShuffle(words))
     {
@@ -14,7 +14,7 @@ Words WordsRandomizerImpl::randomize(const Words& words) const
     return shuffleWords(words);
 }
 
-Words WordsRandomizerImpl::shuffleWords(const Words& words) const
+Words WordsShufflerImpl::shuffleWords(const Words& words) const
 {
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
     auto randomEngine = std::default_random_engine(seed);
@@ -28,7 +28,7 @@ Words WordsRandomizerImpl::shuffleWords(const Words& words) const
     return shuffledWords;
 }
 
-bool WordsRandomizerImpl::needToShuffle(const Words& words) const
+bool WordsShufflerImpl::needToShuffle(const Words& words) const
 {
     return words.size() >= 2;
 }

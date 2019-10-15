@@ -29,8 +29,12 @@ set(SOURCES
         Source/WordsGeneratorServiceImpl.cpp
         Source/PersistentAnswersCounter.cpp
         Source/AnswersStatisticsSerializerImpl.cpp
-        Source/WordsRandomizerImpl.cpp
+        Source/WordsShufflerImpl.cpp
         Source/WordViewerImpl.cpp
+        Source/UserPromptImpl.cpp
+        Source/AnswerCheckerImpl.cpp
+        Source/GlossaryApplication.cpp
+        Source/WordRandomizerImpl.cpp
         )
 
 set(UT_SOURCES
@@ -49,8 +53,10 @@ set(UT_SOURCES
         UT/Source/HtmlWordsCreatorImplTest.cpp
         UT/Source/PersistentAnswersCounterTest.cpp
         UT/Source/AnswersStatisticsSerializerImplTest.cpp
-        UT/Source/WordsRandomizerImplTest.cpp
+        UT/Source/WordsShufflerImplTest.cpp
         UT/Source/WordViewerImplTest.cpp
+        UT/Source/UserPromptImplTest.cpp
+        UT/Source/AnswerCheckerImplTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)
