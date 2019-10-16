@@ -2,12 +2,9 @@
 
 #include "AnswerChecker.h"
 
-
 class AnswerCheckerImpl : public AnswerChecker
 {
 public:
-    bool checkAnswer(const UserInput&, const EnglishWord&) const override;
-
-private:
-    bool areEqual(const UserInput&, const EnglishWord&) const;
+    bool correctWordAnswer(const UserInput&, const EnglishWord&) const override;
+    bool yesAnswer(const UserInput&) const override;
 };

@@ -8,13 +8,14 @@
 #include "AnswersStatisticsSerializerImpl.h"
 #include "FileAccessImpl.h"
 #include "WordRandomizerImpl.h"
+#include <iostream>
 
 GlossaryApplication::GlossaryApplication()
 {
     initialize();
 }
 
-//TODO: make FileAccessImpl only one shared_ptr not two
+//TODO: make FileAccessImpl only one shared_ptr not two (persistentAnswersCounter and WordService)
 void GlossaryApplication::initialize()
 {
     wordsGenerator = std::make_unique<WordsGeneratorServiceImpl>();
@@ -34,5 +35,33 @@ void GlossaryApplication::initialize()
 
 void GlossaryApplication::run()
 {
+    glossaryWords = wordsGenerator->generateWords();
+
+    loop();
+}
+
+void GlossaryApplication::loop()
+{
+    auto userWantToContinue = true;
+
+    while(userWantToContinue)
+    {
+        const auto word = wordsRandomizer->randomizeWord(glossaryWords);
+        std::cout << viewer->viewEnglishWord(word.englishWord);
+
+        if(answerChecker->correctWordAnswer(userPrompt->getInput(), word.englishWord))
+        {
+            answersCounter->addCorrectAnswer(word.englishWord);
+        }
+        else
+        {
+            answersCounter->addIncorrectAnswer(word.englishWord);
+        }
+
+        std::cout<<viewer->viewWord(word);
+
+        userWantToContinue = answerChecker->yesAnswer(userPrompt->yesPrompt());
+    }
+
 
 }

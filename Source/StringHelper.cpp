@@ -43,4 +43,9 @@ std::string substring(const std::string &line, size_t startIndex, size_t endInde
     return line.substr(startIndex, endIndex - startIndex);
 }
 
+std::string getCaseInsensitive(const std::string& input)
+{
+    return boost::algorithm::to_lower_copy(input);
+}
+
 }

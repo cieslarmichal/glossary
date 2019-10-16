@@ -1,7 +1,8 @@
 #pragma once
 
+#include "Application.h"
+#include <memory>
 
-//TODO: prompt
 //TODO: logs
 //TODO: QT maybe in future
 //TODO: filepaths with filesystem
@@ -10,5 +11,10 @@
 class Glossary
 {
 public:
+    Glossary();
 
+    void run();
+
+private:
+    std::unique_ptr<Application> application;
 };

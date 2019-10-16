@@ -1,16 +1,25 @@
 #include "AnswerCheckerImpl.h"
 
+#include "StringHelper.h"
 #include "boost/algorithm/string.hpp"
 
-bool AnswerCheckerImpl::checkAnswer(const UserInput& input, const EnglishWord& englishWord) const
+namespace
 {
-    return areEqual(input, englishWord);
+std::vector<std::string> correctYesAnswers{{"y"}, {"yes"}};
+
 }
 
-bool AnswerCheckerImpl::areEqual(const UserInput& input, const EnglishWord& englishWord) const
+bool AnswerCheckerImpl::correctWordAnswer(const UserInput& userInput, const EnglishWord& englishWord) const
 {
-    const auto inputCaseInsensitive = boost::algorithm::to_lower_copy(input);
-    const auto englishWordCaseInsensitive = boost::algorithm::to_lower_copy(englishWord);
+    return stringHelper::getCaseInsensitive(userInput) == stringHelper::getCaseInsensitive(englishWord);
+}
 
-    return inputCaseInsensitive == englishWordCaseInsensitive;
+bool AnswerCheckerImpl::yesAnswer(const UserInput& userInput) const
+{
+    const auto isYesAnswer = std::any_of(correctYesAnswers.begin(), correctYesAnswers.end(),
+                                         [userInput](const auto& yes)
+                                         { return yes == stringHelper::getCaseInsensitive(userInput); });
+
+    return isYesAnswer;
+
 }

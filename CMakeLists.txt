@@ -38,7 +38,6 @@ set(SOURCES
         )
 
 set(UT_SOURCES
-        UT/Source/TestMain.cpp
         UT/Source/HtmlReaderImplTest.cpp
         UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
@@ -66,7 +65,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC "Include" "UT/Doubles" )
 target_include_directories(executeTests PUBLIC "Include" "UT/Doubles" "UT/")
 
 target_link_libraries(${PROJECT_NAME} PUBLIC -lcurl ${Boost_LIBRARIES} nlohmann_json)
-target_link_libraries(executeTests PUBLIC -lcurl gtest gmock pthread nlohmann_json)
+target_link_libraries(executeTests PUBLIC -lcurl gtest_main gmock pthread nlohmann_json)
 
 target_compile_options(${PROJECT_NAME} PUBLIC ${FLAGS})
 target_compile_options(executeTests PUBLIC -Wall -Wextra -Wpedantic -Werror)
