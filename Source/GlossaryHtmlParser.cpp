@@ -1,21 +1,17 @@
 #include "GlossaryHtmlParser.h"
 
-#include <iostream>
-
 #include "StringHelper.h"
 #include "boost/algorithm/string.hpp"
 
-
-
 namespace
 {
-void removeSpecialHtmlSequences(std::string &);
+void removeSpecialHtmlSequences(std::string&);
 
-bool isDefinition(const std::string &);
+bool isDefinition(const std::string&);
 
-bool isExample(const std::string &);
+bool isExample(const std::string&);
 
-bool isSentence(const std::string &);
+bool isSentence(const std::string&);
 
 const std::string htmlDefinitionTag{R"(<span class="dtText"><strong class="mw_t_bc">: </strong>)"};
 const std::string htmlSentenceTag{"<span class=\"t has-aq\">"};
@@ -27,7 +23,7 @@ const std::vector<std::string> sequencesToDelete{"&mdash;", "&quot;"};
 
 }
 
-std::vector<std::string> GlossaryHtmlParser::parse(const std::string &htmlContent) const
+std::vector<std::string> GlossaryHtmlParser::parse(const std::string& htmlContent) const
 {
     auto htmlContentLines = stringHelper::getSplitLines(htmlContent);
 
@@ -41,7 +37,7 @@ std::vector<std::string> GlossaryHtmlParser::parse(const std::string &htmlConten
 }
 
 
-std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vector<std::string> &htmlContent) const
+std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vector<std::string>& htmlContent) const
 {
     std::vector<std::string> importantLines;
 
@@ -67,9 +63,9 @@ std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vec
     return importantLines;
 }
 
-void GlossaryHtmlParser::removeHtmlStrings(std::vector<std::string> & htmlContent) const
+void GlossaryHtmlParser::removeHtmlStrings(std::vector<std::string>& htmlContent) const
 {
-    for (auto & line : htmlContent)
+    for (auto& line : htmlContent)
     {
         removeSpecialHtmlSequences(line);
     }
@@ -78,25 +74,25 @@ void GlossaryHtmlParser::removeHtmlStrings(std::vector<std::string> & htmlConten
 namespace
 {
 
-void removeSpecialHtmlSequences(std::string &line)
+void removeSpecialHtmlSequences(std::string& line)
 {
-    for (const auto &sequenceToDelete : sequencesToDelete)
+    for (const auto& sequenceToDelete : sequencesToDelete)
     {
         boost::erase_all(line, sequenceToDelete);
     }
 }
 
-bool isDefinition(const std::string &line)
+bool isDefinition(const std::string& line)
 {
     return (line.find(htmlDefinitionTag) != std::string::npos);
 }
 
-bool isExample(const std::string &line)
+bool isExample(const std::string& line)
 {
     return ((line.find(htmlExampleTag1) != std::string::npos) || (line.find(htmlExampleTag2) != std::string::npos));
 }
 
-bool isSentence(const std::string &line)
+bool isSentence(const std::string& line)
 {
     return (line.find(htmlSentenceTag) != std::string::npos);
 }

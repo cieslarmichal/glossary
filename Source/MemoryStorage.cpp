@@ -3,9 +3,9 @@
 
 void MemoryStorage::addWord(const Word& word)
 {
-    if(not contains(word.englishWord))
+    if (not contains(word.englishWord))
     {
-       words.push_back(word);
+        words.push_back(word);
     }
 }
 
@@ -30,7 +30,8 @@ bool MemoryStorage::contains(const EnglishWord& wordToFind) const
 {
     const auto found = std::find_if(
             words.begin(), words.end(),
-            [wordToFind](const Word& word) { return word.englishWord == wordToFind;});
+            [wordToFind](const Word& word)
+            { return word.englishWord == wordToFind; });
     return found != words.end();
 }
 

@@ -6,8 +6,8 @@ using namespace ::testing;
 
 namespace
 {
-const EnglishWord englishWord{"curtains"};
-const auto englishWordView{"English word: curtains\n"};
+const EnglishWord polishWord{"zaslony"};
+const auto polishWordView{"Polish word: zaslony\n"};
 const Word word("computer", "komputer",
                 {{{"definition", std::string{"example"}}, {"definition2", std::string{"example2"}}},
                  {"sentence"}});
@@ -31,9 +31,9 @@ public:
 
 TEST_F(WordViewerImplTest, givenEnglishWord_shouldReturnEnglishWordView)
 {
-    const auto actualEnglishWordView = wordViewer.viewEnglishWord(englishWord);
+    const auto actualEnglishWordView = wordViewer.viewPolishWord(polishWord);
 
-    ASSERT_EQ(actualEnglishWordView, englishWordView);
+    ASSERT_EQ(actualEnglishWordView, polishWordView);
 }
 
 TEST_F(WordViewerImplTest, givenWord_shoulReturnWordView)

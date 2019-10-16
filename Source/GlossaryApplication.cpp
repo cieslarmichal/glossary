@@ -44,24 +44,34 @@ void GlossaryApplication::loop()
 {
     auto userWantToContinue = true;
 
-    while(userWantToContinue)
+    while (userWantToContinue)
     {
-        const auto word = wordsRandomizer->randomizeWord(glossaryWords);
-        std::cout << viewer->viewEnglishWord(word.englishWord);
-
-        if(answerChecker->correctWordAnswer(userPrompt->getInput(), word.englishWord))
+        Word word;
+        try
         {
+            word = wordsRandomizer->randomizeWord(glossaryWords);
+        }
+        catch (const std::runtime_error& e)
+        {
+            std::cerr << e.what();
+            break;
+        }
+        std::cout << viewer->viewPolishWord(word.polishWord);
+
+        if (answerChecker->correctWordAnswer(userPrompt->getInput(), word.englishWord))
+        {
+            std::cout << "Correct answer!\n";
             answersCounter->addCorrectAnswer(word.englishWord);
         }
         else
         {
+            std::cout << "Inorrect answer :(\n";
             answersCounter->addIncorrectAnswer(word.englishWord);
         }
 
-        std::cout<<viewer->viewWord(word);
+        std::cout << viewer->viewWord(word);
 
+        std::cout << "Do you want to continue? yes/no\n";
         userWantToContinue = answerChecker->yesAnswer(userPrompt->yesPrompt());
     }
-
-
 }

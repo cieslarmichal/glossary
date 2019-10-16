@@ -1,4 +1,5 @@
 #pragma once
+
 #include "DictionaryReader.h"
 #include "FileAccess.h"
 #include <memory>

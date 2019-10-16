@@ -1,0 +1,1 @@
+{"answersStatistics":[{"correctAnswers":0,"englishWord":"ankle","incorrectAnswers":3},{"correctAnswers":1,"englishWord":"fetch","incorrectAnswers":1},{"correctAnswers":0,"englishWord":"mouse","incorrectAnswers":2},{"correctAnswers":1,"englishWord":"notebook","incorrectAnswers":1}]}

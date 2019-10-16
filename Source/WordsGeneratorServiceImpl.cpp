@@ -43,9 +43,11 @@ void WordsGeneratorServiceImpl::initializeDictionary()
 Words WordsGeneratorServiceImpl::generateWords() const
 {
     Words words;
-    for(const auto& wordWithTranslation: dictionary)
+    int wordsCounter = 0;
+    for (const auto& wordWithTranslation: dictionary)
     {
         words.push_back(generateWord(wordWithTranslation));
+        std::cout << "Downloading " << ++wordsCounter << "/" << dictionary.size() << "\n";
     }
 
     return wordsShuffler->shuffle(words);
@@ -54,13 +56,13 @@ Words WordsGeneratorServiceImpl::generateWords() const
 Word WordsGeneratorServiceImpl::generateWord(const WordWithTranslation& wordWithTranslation) const
 {
 //TODO: if word have empty description check with html once more
-    if(const auto wordFromDatabase = getWordFromDatabase(wordWithTranslation.englishWord))
+    if (const auto wordFromDatabase = getWordFromDatabase(wordWithTranslation.englishWord))
     {
         return *wordFromDatabase;
     }
     else
     {
-        if(const auto wordFromHtml = getWordFromHtml(wordWithTranslation))
+        if (const auto wordFromHtml = getWordFromHtml(wordWithTranslation))
         {
             addWordToStorage(*wordFromHtml);
             return *wordFromHtml;
@@ -76,6 +78,7 @@ boost::optional<Word> WordsGeneratorServiceImpl::getWordFromDatabase(const Engli
 {
     if (wordIsInStorage(englishWord))
     {
+        std::cerr << "WORD IN STORAGE!!!!!!\n";
         return *wordsDb->getWord(englishWord);
     }
     return boost::none;

@@ -18,7 +18,7 @@ nlohmann::json WordDescriptionSerializer::serialize(const WordDescription& wordD
 
 WordDescription WordDescriptionSerializer::deserialize(const nlohmann::json& json) const
 {
-    if(json.empty())
+    if (json.empty())
     {
         return {};
     }
@@ -28,7 +28,7 @@ WordDescription WordDescriptionSerializer::deserialize(const nlohmann::json& jso
     }
     catch (const std::exception& e)
     {
-        std::cerr<< "Unable to parse wordDescription\n";
+        std::cerr << "Unable to parse wordDescription\n";
     }
     return {};
 }
@@ -40,12 +40,12 @@ nlohmann::json getJsonFromWord(const WordDescription& wordDescription)
 {
     nlohmann::json val = nlohmann::json::object();
 
-    for(const auto & defExample : wordDescription.definitionsWithExamples)
+    for (const auto& defExample : wordDescription.definitionsWithExamples)
     {
         val[definitionsWithExamplesField].push_back(defExample.toString());
     }
 
-    for(const auto & sentence : wordDescription.sentences)
+    for (const auto& sentence : wordDescription.sentences)
     {
         val[sentencesField].push_back(sentence);
     }
@@ -58,14 +58,20 @@ WordDescription readWordDescription(const nlohmann::json& jsonText)
     DefinitionsWithExamples definitionsWithExamples;
     Sentences sentences;
 
-    for(const auto& definitionWithExample : jsonText[definitionsWithExamplesField])
+    if (jsonText.find(definitionsWithExamplesField) != jsonText.end())
     {
-        definitionsWithExamples.push_back(toDefinitionWithExample(definitionWithExample));
+        for (const auto& definitionWithExample : jsonText[definitionsWithExamplesField])
+        {
+            definitionsWithExamples.push_back(toDefinitionWithExample(definitionWithExample));
+        }
     }
 
-    for(const auto& sentence : jsonText[sentencesField])
+    if (jsonText.find(sentencesField) != jsonText.end())
     {
-        sentences.push_back(sentence);
+        for (const auto& sentence : jsonText[sentencesField])
+        {
+            sentences.push_back(sentence);
+        }
     }
 
     return WordDescription{definitionsWithExamples, sentences};

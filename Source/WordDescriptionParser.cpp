@@ -54,7 +54,7 @@ WordDescription WordDescriptionParser::parse(const std::vector<std::string>& lin
         {
             definition = line;
             previousLineIsDefinition = true;
-            if(line == lines.back())
+            if (line == lines.back())
             {
                 wordDescription.definitionsWithExamples.push_back({definition, boost::none});
             }

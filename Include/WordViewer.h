@@ -8,6 +8,5 @@ public:
     virtual ~WordViewer() = default;
 
     virtual std::string viewWord(const Word&) const = 0;
-    virtual std::string viewEnglishWord(const EnglishWord&) const = 0;
-
+    virtual std::string viewPolishWord(const PolishWord&) const = 0;
 };

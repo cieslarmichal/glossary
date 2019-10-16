@@ -19,15 +19,16 @@ std::string WordViewerImpl::viewWord(const Word& word) const
     return wordView.str();
 }
 
-std::string WordViewerImpl::viewEnglishWord(const EnglishWord& englishWord) const
+std::string WordViewerImpl::viewPolishWord(const PolishWord& polishWord) const
 {
     std::stringstream wordView;
-    wordView << "English word: " << englishWord << "\n";
+    wordView << "Polish word: " << polishWord << "\n";
     return wordView.str();
 }
 
 std::string WordViewerImpl::getWordDescription(const WordDescription& wordDescription) const
 {
+//TODO: improve viewing: once definitions: and something like ":", examples: "//", sentences: "sentence"
     std::stringstream wordDescriptionView;
 
     const auto& defsAndExmpls = wordDescription.definitionsWithExamples;

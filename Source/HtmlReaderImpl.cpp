@@ -9,7 +9,7 @@ namespace
 size_t curlWriter(char *data, size_t size, size_t nmemb, std::string *);
 }
 
-std::string HtmlReaderImpl::read(const std::string & urlAddress) const
+std::string HtmlReaderImpl::read(const std::string& urlAddress) const
 {
     std::string content;
 

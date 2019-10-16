@@ -6,9 +6,9 @@ using namespace ::testing;
 
 namespace
 {
-const EnglishWord word{"elephant"};
-const UserInput userWordInput{"elephant"};
-const UserInput userWordInputWithDifferentCaseSizes{"ElEPhanT"};
+const PolishWord word{"slon"};
+const UserInput userWordInput{"slon"};
+const UserInput userWordInputWithDifferentCaseSizes{"sLoN"};
 const UserInput userWordInputDifferentThanWord{"xxxxxxx"};
 const UserInput userYesInput1{"yes"};
 const UserInput userYesInput2{"y"};

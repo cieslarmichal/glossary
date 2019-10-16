@@ -11,19 +11,19 @@ const std::string endOfLine{"\n"};
 namespace stringHelper
 {
 
-std::string getJoinedLines(const std::vector<std::string> &contentWithLines)
+std::string getJoinedLines(const std::vector<std::string>& contentWithLines)
 {
     return boost::algorithm::join(contentWithLines, endOfLine);
 }
 
-std::vector<std::string> getSplitLines(const std::string &content)
+std::vector<std::string> getSplitLines(const std::string& content)
 {
     std::vector<std::string> contentWithLines;
     boost::split(contentWithLines, content, boost::is_any_of(endOfLine));
     return contentWithLines;
 }
 
-std::string cutOffFromString(const std::string &line, size_t startIndexToCut, size_t endIndexToCut)
+std::string cutOffFromString(const std::string& line, size_t startIndexToCut, size_t endIndexToCut)
 {
     auto sizeOfLine = line.size();
 
@@ -38,7 +38,7 @@ void cutOffString(std::string& line, size_t startIndexToCut, size_t endIndexToCu
     line = cutOffFromString(line, startIndexToCut, endIndexToCut);
 }
 
-std::string substring(const std::string &line, size_t startIndex, size_t endIndex)
+std::string substring(const std::string& line, size_t startIndex, size_t endIndex)
 {
     return line.substr(startIndex, endIndex - startIndex);
 }

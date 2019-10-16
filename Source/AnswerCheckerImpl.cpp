@@ -2,16 +2,18 @@
 
 #include "StringHelper.h"
 #include "boost/algorithm/string.hpp"
+#include <PolishWord.h>
 
 namespace
 {
-std::vector<std::string> correctYesAnswers{{"y"}, {"yes"}};
+std::vector<std::string> correctYesAnswers{{"y"},
+                                           {"yes"}};
 
 }
 
-bool AnswerCheckerImpl::correctWordAnswer(const UserInput& userInput, const EnglishWord& englishWord) const
+bool AnswerCheckerImpl::correctWordAnswer(const UserInput& userInput, const PolishWord& polishWord) const
 {
-    return stringHelper::getCaseInsensitive(userInput) == stringHelper::getCaseInsensitive(englishWord);
+    return stringHelper::getCaseInsensitive(userInput) == stringHelper::getCaseInsensitive(polishWord);
 }
 
 bool AnswerCheckerImpl::yesAnswer(const UserInput& userInput) const

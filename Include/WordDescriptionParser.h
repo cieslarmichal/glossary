@@ -5,5 +5,5 @@
 class WordDescriptionParser
 {
 public:
-    WordDescription parse(const std::vector<std::string> &) const;
+    WordDescription parse(const std::vector<std::string>&) const;
 };

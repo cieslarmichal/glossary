@@ -6,7 +6,7 @@
 
 Words WordsShufflerImpl::shuffle(const Words& words) const
 {
-    if(not needToShuffle(words))
+    if (not needToShuffle(words))
     {
         return words;
     }
@@ -20,7 +20,7 @@ Words WordsShufflerImpl::shuffleWords(const Words& words) const
     auto randomEngine = std::default_random_engine(seed);
     auto shuffledWords{words};
 
-    while(shuffledWords == words)
+    while (shuffledWords == words)
     {
         std::shuffle(shuffledWords.begin(), shuffledWords.end(), randomEngine);
     }

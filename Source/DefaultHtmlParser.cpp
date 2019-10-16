@@ -7,21 +7,21 @@
 
 namespace
 {
-void removeHtmlTags(std::string &);
+void removeHtmlTags(std::string&);
 
-bool containsOpenHtmlTag(const std::string &);
+bool containsOpenHtmlTag(const std::string&);
 
-bool containsCloseHtmlTag(const std::string &);
+bool containsCloseHtmlTag(const std::string&);
 
-size_t findOpenHtmlTag(const std::string &);
+size_t findOpenHtmlTag(const std::string&);
 
-size_t findCloseHtmlTag(const std::string &);
+size_t findCloseHtmlTag(const std::string&);
 
 const std::string openHtmlTag{"<"};
 const std::string closeHtmlTag{">"};
 }
 
-std::vector<std::string> DefaultHtmlParser::parse(const std::string &htmlContent) const
+std::vector<std::string> DefaultHtmlParser::parse(const std::string& htmlContent) const
 {
     auto parsedContent = stringHelper::getSplitLines(htmlContent);
 
@@ -32,24 +32,25 @@ std::vector<std::string> DefaultHtmlParser::parse(const std::string &htmlContent
     return parsedContent;
 }
 
-void DefaultHtmlParser::removeHtmlStrings(std::vector<std::string> &htmlContent) const
+void DefaultHtmlParser::removeHtmlStrings(std::vector<std::string>& htmlContent) const
 {
-    for (auto &line : htmlContent)
+    for (auto& line : htmlContent)
     {
         removeHtmlTags(line);
     }
 }
 
-void DefaultHtmlParser::removeExtraLines(std::vector<std::string> &htmlContent) const
+void DefaultHtmlParser::removeExtraLines(std::vector<std::string>& htmlContent) const
 {
     htmlContent.erase(std::remove_if(htmlContent.begin(), htmlContent.end(),
-            [](std::string &line) { return line.empty(); }), htmlContent.end());
+                                     [](std::string& line)
+                                     { return line.empty(); }), htmlContent.end());
 }
 
 namespace
 {
 
-void removeHtmlTags(std::string &line)
+void removeHtmlTags(std::string& line)
 {
     while (containsOpenHtmlTag(line) && containsCloseHtmlTag(line))
     {
@@ -59,22 +60,22 @@ void removeHtmlTags(std::string &line)
     }
 }
 
-bool containsOpenHtmlTag(const std::string &line)
+bool containsOpenHtmlTag(const std::string& line)
 {
     return (line.find(openHtmlTag) != std::string::npos);
 }
 
-bool containsCloseHtmlTag(const std::string &line)
+bool containsCloseHtmlTag(const std::string& line)
 {
     return (line.find(closeHtmlTag) != std::string::npos);
 }
 
-size_t findOpenHtmlTag(const std::string &line)
+size_t findOpenHtmlTag(const std::string& line)
 {
     return line.find(openHtmlTag);
 }
 
-size_t findCloseHtmlTag(const std::string &line)
+size_t findCloseHtmlTag(const std::string& line)
 {
     return line.find(closeHtmlTag);
 }

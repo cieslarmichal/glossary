@@ -1,6 +1,11 @@
 #include <iostream>
 
+#include "Glossary.h"
+
 int main()
 {
-	return 0;
+    Glossary app;
+    app.run();
+
+    return 0;
 }

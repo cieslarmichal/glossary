@@ -8,5 +8,5 @@ class HtmlParser
 public:
     virtual ~HtmlParser() = default;
 
-    virtual std::vector<std::string> parse(const std::string &) const = 0;
+    virtual std::vector<std::string> parse(const std::string&) const = 0;
 };

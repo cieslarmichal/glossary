@@ -16,6 +16,7 @@ PersistentStorage::PersistentStorage(std::shared_ptr<const FileAccess> fileAcces
 void PersistentStorage::addWord(const Word& word)
 {
     storage.addWord(word);
+    serialize();
 }
 
 boost::optional<Word> PersistentStorage::getWord(const EnglishWord& englishName) const

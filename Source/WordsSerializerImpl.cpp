@@ -67,9 +67,10 @@ Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
         {
             try
             {
-                const EnglishWord englishWord{wordData[englishWordField]};
-                const PolishWord polishWord{wordData[polishWordField]};
-                const WordDescription wordDescription{wordDescriptionSerializer.deserialize(wordData[wordDescriptionField])};
+                const EnglishWord englishWord{std::string(wordData[englishWordField])};
+                const PolishWord polishWord{std::string(wordData[polishWordField])};
+                const WordDescription wordDescription{
+                        wordDescriptionSerializer.deserialize(wordData[wordDescriptionField])};
                 words.push_back({englishWord, polishWord, wordDescription});
             }
             catch (const std::exception& e)

@@ -18,4 +18,3 @@ bool WordsDatabase::contains(const EnglishWord& englishWord) const
 {
     return storage->contains(englishWord);
 }
-

@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Dictionary.h"
 
 class DictionaryReader

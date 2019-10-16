@@ -1,5 +1,4 @@
 #include "HtmlWordsCreatorImpl.h"
-#include <iostream>
 
 #include "HtmlReaderImpl.h"
 #include "GlossaryHtmlParser.h"

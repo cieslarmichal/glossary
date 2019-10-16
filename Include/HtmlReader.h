@@ -7,5 +7,5 @@ class HtmlReader
 public:
     virtual ~HtmlReader() = default;
 
-    virtual std::string read(const std::string &) const = 0;
+    virtual std::string read(const std::string&) const = 0;
 };

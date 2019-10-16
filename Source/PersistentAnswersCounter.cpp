@@ -1,6 +1,6 @@
+#include "PersistentAnswersCounter.h"
 #include <Exceptions/FileNotFound.h>
 #include <iostream>
-#include "PersistentAnswersCounter.h"
 
 const std::string PersistentAnswersCounter::fileDirectory{"../database"};
 const std::string PersistentAnswersCounter::fileName{"/answersStatistics.txt"};

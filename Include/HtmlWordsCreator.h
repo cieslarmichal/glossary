@@ -1,4 +1,5 @@
 #pragma once
+
 #include "Word.h"
 #include "WordWithTranslation.h"
 

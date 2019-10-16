@@ -1,4 +1,5 @@
 #pragma once
+
 #include "WordWithTranslation.h"
 #include <vector>
 

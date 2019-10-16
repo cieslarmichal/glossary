@@ -7,5 +7,5 @@
 class HtmlReaderImpl : public HtmlReader
 {
 public:
-    std::string read(const std::string &) const override;
+    std::string read(const std::string&) const override;
 };
