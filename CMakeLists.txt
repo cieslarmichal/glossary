@@ -11,6 +11,11 @@ set(CMAKE_CXX_STANDARD 17)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
 
+if(${ENABLE_COVERAGE})
+  add_compile_options(--coverage -O0)
+  link_libraries(--coverage)
+endif()
+
 set(SOURCES
         Source/WordsDatabase.cpp
         Source/Glossary.cpp
