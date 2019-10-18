@@ -26,16 +26,13 @@ install:
       mkdir %DEPS_DIR% &&
       cd %DEPS_DIR% &&
       appveyor DownloadFile %NINJA_URL% -FileName ninja.zip &&
-      appveyor DownloadFile %SFML_URL% -FileName sfml.zip &&
-      7z x ninja.zip -o%DEPS_DIR%\ninja > nul &&
-      7z x sfml.zip -o%DEPS_DIR%\sfml > nul)
+      7z x ninja.zip -o%DEPS_DIR%\ninja > nul)
 
   - set BOOST_ROOT=C:\Libraries\boost_1_69_0
 
   - set NINJA_BIN=%DEPS_DIR%\ninja
 
   - set PATH=%NINJA_BIN%;%PATH%
-  - set PATH=%SFML_BIN%;%PATH%
 
   - ninja --version
   - clang-cl -v
