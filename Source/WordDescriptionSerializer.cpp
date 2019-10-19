@@ -5,6 +5,7 @@
 namespace
 {
 nlohmann::json getJsonFromWord(const WordDescription&);
+
 WordDescription readWordDescription(const nlohmann::json&);
 
 constexpr auto definitionsWithExamplesField = "definitionsWithExamples";

@@ -5,7 +5,9 @@
 #include <iostream>
 #include "Exceptions/FileNotFound.h"
 
-const std::string DictionaryReaderImpl::dictionaryFilePath{"../database/dictionary.txt"};
+const std::string DictionaryReaderImpl::fileDirectory{"../database"};
+const std::string DictionaryReaderImpl::fileName{"/dictionary.txt"};
+const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
 DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const FileAccess> access) : fileAccess{access}
 {
@@ -16,7 +18,7 @@ std::vector<WordWithTranslation> DictionaryReaderImpl::read() const
     std::string dictionaryContent;
     try
     {
-        dictionaryContent = fileAccess->readContent(dictionaryFilePath);
+        dictionaryContent = fileAccess->readContent(filePath);
 
     }
     catch (const exceptions::FileNotFound& e)
@@ -36,17 +38,24 @@ DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryCont
     {
         if (not line.empty())
         {
-            wordsWithTranslation.push_back(getWordWithTranslation(line));
+            if (const auto wordWithTranslation = getWordWithTranslation(line))
+            {
+                wordsWithTranslation.push_back(*wordWithTranslation);
+            }
         }
     }
     return wordsWithTranslation;
 }
 
-WordWithTranslation DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
+boost::optional<WordWithTranslation> DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
 {
     std::stringstream lineStream{line};
     EnglishWord englishWord;
     PolishWord polishWord;
     lineStream >> englishWord >> polishWord;
-    return WordWithTranslation{englishWord, polishWord};
+    if (!englishWord.empty() && !polishWord.empty())
+    {
+        return WordWithTranslation{englishWord, polishWord};
+    }
+    return boost::none;
 }

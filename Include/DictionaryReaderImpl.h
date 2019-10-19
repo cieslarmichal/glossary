@@ -2,6 +2,7 @@
 
 #include "DictionaryReader.h"
 #include "FileAccess.h"
+#include "boost/optional.hpp"
 #include <memory>
 
 class DictionaryReaderImpl : public DictionaryReader
@@ -13,9 +14,11 @@ public:
 
 private:
     Dictionary processDictionaryContent(const std::string&) const;
-    WordWithTranslation getWordWithTranslation(const std::string&) const;
+    boost::optional<WordWithTranslation> getWordWithTranslation(const std::string&) const;
 
     std::shared_ptr<const FileAccess> fileAccess;
 
-    static const std::string dictionaryFilePath;
+    static const std::string fileDirectory;
+    static const std::string fileName;
+    static const std::string filePath;
 };

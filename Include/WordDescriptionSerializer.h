@@ -9,5 +9,3 @@ public:
     nlohmann::json serialize(const WordDescription&) const;
     WordDescription deserialize(const nlohmann::json &) const;
 };
-
-

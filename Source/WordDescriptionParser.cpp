@@ -24,7 +24,7 @@ const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
 }
 
-WordDescription WordDescriptionParser::parse(const std::vector<std::string>& lines) const
+boost::optional<WordDescription> WordDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
     WordDescription wordDescription;
     bool previousLineIsDefinition = false;
@@ -61,8 +61,12 @@ WordDescription WordDescriptionParser::parse(const std::vector<std::string>& lin
         }
     }
 
-    removeMarks(wordDescription);
+    if(wordDescription.empty())
+    {
+        return boost::none;
+    }
 
+    removeMarks(wordDescription);
     return wordDescription;
 }
 

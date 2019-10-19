@@ -3,7 +3,6 @@
 #include "gtest/gtest.h"
 #include "FileAccessImpl.h"
 #include "TestVariables/ParsedHtmlContent.h"
-#include "TestVariables/WordDescriptionFromParser.h"
 
 using namespace ::testing;
 
@@ -33,6 +32,7 @@ const std::string sentenceWithoutTags{sentenceMark + "Several bottles of wine we
 const std::string exampleWithoutTags{exampleMark + "blackberry wine"};
 
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
+const std::string emptyHtmlContent{};
 }
 
 class GlossaryHtmlParserTest : public Test
@@ -46,6 +46,13 @@ public:
 
     GlossaryHtmlParser htmlParser;
 };
+
+TEST_F(GlossaryHtmlParserTest, givenEmptyHtmlContent_shouldEmptyString)
+{
+    const auto actualParsedHtmlContent = htmlParser.parse(emptyHtmlContent);
+
+    ASSERT_TRUE(actualParsedHtmlContent.empty());
+}
 
 TEST_F(GlossaryHtmlParserTest, givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
 {

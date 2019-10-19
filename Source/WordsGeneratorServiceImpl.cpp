@@ -10,8 +10,6 @@
 #include "HtmlReaderImpl.h"
 #include "GlossaryHtmlParser.h"
 #include "WordsShufflerImpl.h"
-#include "Exceptions/ConnectionFailed.h"
-
 
 WordsGeneratorServiceImpl::WordsGeneratorServiceImpl()
 {
@@ -47,7 +45,7 @@ Words WordsGeneratorServiceImpl::generateWords() const
     for (const auto& wordWithTranslation: dictionary)
     {
         words.push_back(generateWord(wordWithTranslation));
-        std::cout << "Downloading " << ++wordsCounter << "/" << dictionary.size() << "\n";
+        std::cout << "Downloading words " << ++wordsCounter << "/" << dictionary.size() << "\n";
     }
 
     return wordsShuffler->shuffle(words);
@@ -78,7 +76,6 @@ boost::optional<Word> WordsGeneratorServiceImpl::getWordFromDatabase(const Engli
 {
     if (wordIsInStorage(englishWord))
     {
-        std::cerr << "WORD IN STORAGE!!!!!!\n";
         return *wordsDb->getWord(englishWord);
     }
     return boost::none;
@@ -86,15 +83,7 @@ boost::optional<Word> WordsGeneratorServiceImpl::getWordFromDatabase(const Engli
 
 boost::optional<Word> WordsGeneratorServiceImpl::getWordFromHtml(const WordWithTranslation& wordWithTranslation) const
 {
-    try
-    {
-        return htmlWordCreator->createWord(wordWithTranslation);
-    }
-    catch (const exceptions::ConnectionFailed& e)
-    {
-        std::cerr << e.what();
-        return boost::none;
-    }
+    return htmlWordCreator->createWord(wordWithTranslation);
 }
 
 void WordsGeneratorServiceImpl::addWordToStorage(const Word& word) const

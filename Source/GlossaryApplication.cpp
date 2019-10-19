@@ -56,7 +56,8 @@ void GlossaryApplication::loop()
             std::cerr << e.what();
             break;
         }
-        std::cout << viewer->viewPolishWord(word.polishWord);
+        std::cout <<viewer->viewPolishWord(word.polishWord);
+        std::cout<<"Insert english translation:\n";
 
         if (answerChecker->correctWordAnswer(userPrompt->getInput(), word.englishWord))
         {
@@ -71,7 +72,7 @@ void GlossaryApplication::loop()
 
         std::cout << viewer->viewWord(word);
 
-        std::cout << "Do you want to continue? yes/no\n";
+        std::cout << "Do you want to continue? (yes/no, y/n)\n";
         userWantToContinue = answerChecker->yesAnswer(userPrompt->yesPrompt());
     }
 }

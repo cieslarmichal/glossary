@@ -11,7 +11,6 @@ using namespace ::testing;
 namespace
 {
 const std::string filePath{"../database/answersStatistics.txt"};
-const std::string invalidFilePath{"invalidFilePath"};
 const AnswersStatisticsPerWord statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const AnswersStatisticsPerWord statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const AnswersStatistics answersStatistics = boost::assign::map_list_of
@@ -27,7 +26,6 @@ const std::string serializedStatisticsAfterCorrectAddition{
         R"({"answersStatistics":[{"correctAnswers":8,"englishWord":"cat","incorrectAnswers":0}]})"};
 const std::string serializedStatisticsAfterIncorrectAddition{
         R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":1}]})"};
-
 }
 
 class PersistentAnswersCounterTest : public Test

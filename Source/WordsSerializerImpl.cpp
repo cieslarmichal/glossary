@@ -17,6 +17,10 @@ std::string WordsSerializerImpl::serialize(const Words& words) const
     {
         serialized[wordsField].push_back(getJsonFromWord(word));
     }
+    if(serialized.empty())
+    {
+        return {};
+    }
     return serialized.dump();
 }
 

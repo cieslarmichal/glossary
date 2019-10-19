@@ -19,6 +19,10 @@ std::string AnswersStatisticsSerializerImpl::serialize(const AnswersStatistics& 
     {
         serialized[answersStatisticsField].push_back(getJsonFromWordAnswersStatistics(wordAnswersStatistics.second));
     }
+    if(serialized.empty())
+    {
+        return {};
+    }
     return serialized.dump();
 }
 

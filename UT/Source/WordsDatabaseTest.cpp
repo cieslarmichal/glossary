@@ -19,7 +19,7 @@ public:
     WordsDatabase database{std::move(storageInit)};
 };
 
-TEST_F(WordsDatabaseTest, givenWord_shouldAddWordToStorage)
+TEST_F(WordsDatabaseTest, givenWordAddition_shouldAddWordToStorage)
 {
     EXPECT_CALL(*storage, addWord(word));
 
@@ -32,7 +32,7 @@ TEST_F(WordsDatabaseTest, givenEnglishWordNotExistingInStorage_shouldReturnNone)
 
     const auto actualWord = database.getWord(englishWord);
 
-    ASSERT_EQ(actualWord, boost::none);
+    ASSERT_FALSE(actualWord);
 }
 
 TEST_F(WordsDatabaseTest, givenEnglishWordExistingInStorage_shouldReturnWord)

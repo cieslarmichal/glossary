@@ -7,3 +7,5 @@ ferry		prom
 cup		    kubek
 mouse 		mysz
 couch		kanapa
+pillow      poduszka
+beer        piwo

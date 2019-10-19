@@ -11,7 +11,7 @@ class HtmlWordsCreatorImpl : public HtmlWordsCreator
 public:
     explicit HtmlWordsCreatorImpl(std::unique_ptr<const HtmlReader>, std::unique_ptr<const HtmlParser>);
 
-    Word createWord(const WordWithTranslation&) const override;
+    boost::optional<Word> createWord(const WordWithTranslation&) const override;
 
 private:
     std::unique_ptr<const HtmlReader> htmlReader;

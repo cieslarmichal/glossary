@@ -10,9 +10,12 @@ namespace
 const std::string dictionaryFilePath{"../database/dictionary.txt"};
 const std::string content{"car samochod\n"
                           "air powietrze\n"};
+const std::string contentWithTwoWordsAndOneIncorrect{"car samochod\n"
+                                                     "     powietrze\n"};
+const Dictionary expectedDictionaryWithOneWord{{"car", "samochod"}};
 const std::string emptyContent{};
 const Dictionary expectedDictionary{{"car", "samochod"},
-                              {"air", "powietrze"}};
+                                    {"air", "powietrze"}};
 }
 
 
@@ -30,6 +33,16 @@ TEST_F(DictionaryReaderImplTest, givenEmptyDictionaryContent_shouldReturnEmptyDi
     const auto dictionary = reader.read();
 
     EXPECT_TRUE(dictionary.empty());
+}
+
+
+TEST_F(DictionaryReaderImplTest, givenyDictionaryContentWithTwoWordsAndOneOfThemIsIncorrect_shouldReturnDictWithOneWord)
+{
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(contentWithTwoWordsAndOneIncorrect));
+
+    const auto dictionary = reader.read();
+
+    EXPECT_EQ(dictionary, expectedDictionaryWithOneWord);
 }
 
 TEST_F(DictionaryReaderImplTest, givenDictionaryContent_shouldReadDictionary)

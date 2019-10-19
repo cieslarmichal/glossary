@@ -26,6 +26,11 @@ struct WordDescription
         return wordDescriptionAsString;
     }
 
+    bool empty() const
+    {
+        return definitionsWithExamples.empty() && sentences.empty();
+    }
+
     DefinitionsWithExamples definitionsWithExamples;
     Sentences sentences;
 };
