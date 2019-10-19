@@ -1,9 +1,10 @@
 #pragma once
 
+#include <memory>
+
 #include "DictionaryReader.h"
 #include "FileAccess.h"
 #include "boost/optional.hpp"
-#include <memory>
 
 class DictionaryReaderImpl : public DictionaryReader
 {
@@ -14,7 +15,8 @@ public:
 
 private:
     Dictionary processDictionaryContent(const std::string&) const;
-    boost::optional<WordWithTranslation> getWordWithTranslation(const std::string&) const;
+    boost::optional<WordWithTranslation>
+    getWordWithTranslation(const std::string&) const;
 
     std::shared_ptr<const FileAccess> fileAccess;
 

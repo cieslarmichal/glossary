@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ostream>
+
 #include "EnglishWord.h"
 
 struct AnswersStatisticsPerWord
@@ -20,15 +21,20 @@ struct AnswersStatisticsPerWord
     int incorrectAnswers{0};
 };
 
-inline bool operator==(const AnswersStatisticsPerWord& lhs, const AnswersStatisticsPerWord& rhs)
+inline bool operator==(const AnswersStatisticsPerWord& lhs,
+                       const AnswersStatisticsPerWord& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord && lhs.correctAnswers == rhs.correctAnswers &&
+    return (lhs.englishWord == rhs.englishWord &&
+            lhs.correctAnswers == rhs.correctAnswers &&
             lhs.incorrectAnswers == rhs.incorrectAnswers);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const AnswersStatisticsPerWord& wordAnswersStatistics)
+inline std::ostream&
+operator<<(std::ostream& os,
+           const AnswersStatisticsPerWord& wordAnswersStatistics)
 {
-    os << wordAnswersStatistics.englishWord << " " << wordAnswersStatistics.correctAnswers << " "
+    os << wordAnswersStatistics.englishWord << " "
+       << wordAnswersStatistics.correctAnswers << " "
        << wordAnswersStatistics.incorrectAnswers;
     return os;
 }

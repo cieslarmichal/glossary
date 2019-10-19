@@ -1,13 +1,12 @@
 #pragma once
 
-#include "WordsGeneratorService.h"
+#include <memory>
 
 #include "Database.h"
 #include "DictionaryReader.h"
 #include "HtmlWordsCreator.h"
+#include "WordsGeneratorService.h"
 #include "WordsShuffler.h"
-
-#include <memory>
 
 class WordsGeneratorServiceImpl : public WordsGeneratorService
 {

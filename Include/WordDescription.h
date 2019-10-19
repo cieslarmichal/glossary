@@ -1,11 +1,11 @@
 #pragma once
 
+#include <ostream>
 #include <string>
 #include <vector>
-#include <ostream>
+
 #include "DefinitionsWithExamples.h"
 #include "Sentences.h"
-
 
 struct WordDescription
 {
@@ -37,12 +37,13 @@ struct WordDescription
 
 inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
 {
-    return (lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
+    return (lhs.definitionsWithExamples == rhs.definitionsWithExamples &&
+            lhs.sentences == rhs.sentences);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const WordDescription& wordDescription)
+inline std::ostream& operator<<(std::ostream& os,
+                                const WordDescription& wordDescription)
 {
     os << wordDescription.toString();
     return os;
 }
-

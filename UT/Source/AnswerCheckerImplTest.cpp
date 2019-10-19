@@ -29,14 +29,18 @@ TEST_F(AnswerCheckerImplTest, givenUserInputSameAsEnglishWord_shouldReturnEqual)
     ASSERT_TRUE(checker.correctWordAnswer(userWordInput, word));
 }
 
-TEST_F(AnswerCheckerImplTest, givenUserInputSameAsEnglishWordButDifferentCaseSizes_shouldReturnEqual)
+TEST_F(AnswerCheckerImplTest,
+       givenUserInputSameAsEnglishWordButDifferentCaseSizes_shouldReturnEqual)
 {
-    ASSERT_TRUE(checker.correctWordAnswer(userWordInputWithDifferentCaseSizes, word));
+    ASSERT_TRUE(
+        checker.correctWordAnswer(userWordInputWithDifferentCaseSizes, word));
 }
 
-TEST_F(AnswerCheckerImplTest, givenUserInputDifferentThanEnglishWord_shouldReturnNotEqual)
+TEST_F(AnswerCheckerImplTest,
+       givenUserInputDifferentThanEnglishWord_shouldReturnNotEqual)
 {
-    ASSERT_FALSE(checker.correctWordAnswer(userWordInputDifferentThanWord, word));
+    ASSERT_FALSE(
+        checker.correctWordAnswer(userWordInputDifferentThanWord, word));
 }
 
 TEST_F(AnswerCheckerImplTest, givenUserInputWithYes_shouldReturnYesAnswerTrue)
@@ -45,13 +49,15 @@ TEST_F(AnswerCheckerImplTest, givenUserInputWithYes_shouldReturnYesAnswerTrue)
     ASSERT_TRUE(checker.yesAnswer(userYesInput2));
 }
 
-TEST_F(AnswerCheckerImplTest, givenUserInputWithYesButDifferentCaseSizes_shouldReturnYesAnswerTrue)
+TEST_F(AnswerCheckerImplTest,
+       givenUserInputWithYesButDifferentCaseSizes_shouldReturnYesAnswerTrue)
 {
     ASSERT_TRUE(checker.yesAnswer(userYesInput1WithDifferentCaseSizes));
     ASSERT_TRUE(checker.yesAnswer(userYesInput2WithDifferentCaseSizes));
 }
 
-TEST_F(AnswerCheckerImplTest, givenUserInputDifferentThanYes_shouldReturYesAnswerFalse)
+TEST_F(AnswerCheckerImplTest,
+       givenUserInputDifferentThanYes_shouldReturYesAnswerFalse)
 {
     ASSERT_FALSE(checker.yesAnswer(userInputOtherThanYes));
 }

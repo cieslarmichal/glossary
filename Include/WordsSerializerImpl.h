@@ -1,7 +1,7 @@
 #pragma once
 
-#include "WordsSerializer.h"
 #include "WordDescriptionSerializer.h"
+#include "WordsSerializer.h"
 #include "nlohmann/json.hpp"
 
 class WordsSerializerImpl : public WordsSerializer

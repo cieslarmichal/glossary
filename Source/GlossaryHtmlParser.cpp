@@ -13,31 +13,36 @@ bool isExample(const std::string&);
 
 bool isSentence(const std::string&);
 
-const std::string htmlDefinitionTag{R"(<span class="dtText"><strong class="mw_t_bc">: </strong>)"};
+const std::string htmlDefinitionTag{
+    R"(<span class="dtText"><strong class="mw_t_bc">: </strong>)"};
 const std::string htmlSentenceTag{"<span class=\"t has-aq\">"};
-const std::string htmlExampleTag1{"<span class=\"ex-sent first-child t no-aq sents\">"};
-const std::string htmlExampleTag2{"<span class=\"ex-sent first-child t has-aq sents\">"};
+const std::string htmlExampleTag1{
+    "<span class=\"ex-sent first-child t no-aq sents\">"};
+const std::string htmlExampleTag2{
+    "<span class=\"ex-sent first-child t has-aq sents\">"};
 const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
 const std::vector<std::string> sequencesToDelete{"&mdash;", "&quot;"};
 
 }
 
-std::vector<std::string> GlossaryHtmlParser::parse(const std::string& htmlContent) const
+std::vector<std::string>
+GlossaryHtmlParser::parse(const std::string& htmlContent) const
 {
     auto htmlContentLines = stringHelper::getSplitLines(htmlContent);
 
     auto importantLines = selectImportantLines(htmlContentLines);
 
-    auto parsedContent = DefaultHtmlParser::parse(stringHelper::getJoinedLines(importantLines));
+    auto parsedContent =
+        DefaultHtmlParser::parse(stringHelper::getJoinedLines(importantLines));
 
     removeHtmlStrings(parsedContent);
 
     return parsedContent;
 }
 
-
-std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vector<std::string>& htmlContent) const
+std::vector<std::string> GlossaryHtmlParser::selectImportantLines(
+    const std::vector<std::string>& htmlContent) const
 {
     std::vector<std::string> importantLines;
 
@@ -55,7 +60,8 @@ std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vec
         }
         else if (isSentence(line))
         {
-            line = sentenceMark + boost::algorithm::trim_copy(line) + sentenceMark;
+            line =
+                sentenceMark + boost::algorithm::trim_copy(line) + sentenceMark;
             importantLines.push_back(line);
         }
     }
@@ -63,7 +69,8 @@ std::vector<std::string> GlossaryHtmlParser::selectImportantLines(const std::vec
     return importantLines;
 }
 
-void GlossaryHtmlParser::removeHtmlStrings(std::vector<std::string>& htmlContent) const
+void GlossaryHtmlParser::removeHtmlStrings(
+    std::vector<std::string>& htmlContent) const
 {
     for (auto& line : htmlContent)
     {
@@ -89,7 +96,8 @@ bool isDefinition(const std::string& line)
 
 bool isExample(const std::string& line)
 {
-    return ((line.find(htmlExampleTag1) != std::string::npos) || (line.find(htmlExampleTag2) != std::string::npos));
+    return ((line.find(htmlExampleTag1) != std::string::npos) ||
+            (line.find(htmlExampleTag2) != std::string::npos));
 }
 
 bool isSentence(const std::string& line)
@@ -98,10 +106,3 @@ bool isSentence(const std::string& line)
 }
 
 }
-
-
-
-
-
-
-

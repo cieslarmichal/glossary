@@ -1,20 +1,25 @@
 #pragma once
 
-#include "AnswersCounter.h"
-#include "FileAccess.h"
-#include "AnswersStatisticsSerializer.h"
 #include <memory>
 
-//TODO: add statistics to internal storage as PersistentStorage (maybe template somehow)
+#include "AnswersCounter.h"
+#include "AnswersStatisticsSerializer.h"
+#include "FileAccess.h"
+
+// TODO: add statistics to internal storage as PersistentStorage (maybe template
+// somehow)
 
 class PersistentAnswersCounter : public AnswersCounter
 {
 public:
-    PersistentAnswersCounter(std::shared_ptr<const FileAccess>, std::shared_ptr<const AnswersStatisticsSerializer>);
+    PersistentAnswersCounter(
+        std::shared_ptr<const FileAccess>,
+        std::shared_ptr<const AnswersStatisticsSerializer>);
 
     void addCorrectAnswer(const EnglishWord&) override;
     void addIncorrectAnswer(const EnglishWord&) override;
-    boost::optional<AnswersStatisticsPerWord> getAnswersStatisticsPerWord(const EnglishWord&) const override;
+    boost::optional<AnswersStatisticsPerWord>
+    getAnswersStatisticsPerWord(const EnglishWord&) const override;
     AnswersStatistics getAnswersStatistics() const override;
 
 private:

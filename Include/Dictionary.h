@@ -1,6 +1,7 @@
 #pragma once
 
-#include "WordWithTranslation.h"
 #include <vector>
+
+#include "WordWithTranslation.h"
 
 using Dictionary = std::vector<WordWithTranslation>;

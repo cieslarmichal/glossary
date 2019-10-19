@@ -1,5 +1,3 @@
-#include <iostream>
-
 #include "Glossary.h"
 
 int main()

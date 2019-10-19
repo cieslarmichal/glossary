@@ -6,8 +6,8 @@
 class MemoryStorage : public Storage
 {
 public:
-    void addWord(const Word &) override;
-    boost::optional<Word> getWord(const EnglishWord &) const override;
+    void addWord(const Word&) override;
+    boost::optional<Word> getWord(const EnglishWord&) const override;
     Words getWords() const override;
     bool contains(const EnglishWord&) const override;
     Words::size_type size() const override;

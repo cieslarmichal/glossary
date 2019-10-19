@@ -7,9 +7,9 @@ using namespace ::testing;
 namespace
 {
 const std::string emptyHtmlContent{};
-const std::string htmlContent
-        {"\n\n<span class=\"ex-sent first-child t no-aq sents\">"
-         "blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n"};
+const std::string htmlContent{
+    "\n\n<span class=\"ex-sent first-child t no-aq sents\">"
+    "blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n"};
 const std::vector<std::string> expectedHtmlParsedContent{"blackberry wine"};
 }
 
@@ -32,4 +32,3 @@ TEST_F(DefaultHtmlParserTest, givenHtmlContent_shouldReturnParsedContent)
 
     ASSERT_EQ(parsedHtmlContent, expectedHtmlParsedContent);
 }
-

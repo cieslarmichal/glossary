@@ -1,5 +1,7 @@
-#include <iostream>
 #include "WordDescriptionSerializer.h"
+
+#include <iostream>
+
 #include "nlohmann/json.hpp"
 
 namespace
@@ -12,12 +14,14 @@ constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
 constexpr auto sentencesField = "sentences";
 }
 
-nlohmann::json WordDescriptionSerializer::serialize(const WordDescription& wordDescription) const
+nlohmann::json WordDescriptionSerializer::serialize(
+    const WordDescription& wordDescription) const
 {
     return getJsonFromWord(wordDescription);
 }
 
-WordDescription WordDescriptionSerializer::deserialize(const nlohmann::json& json) const
+WordDescription
+WordDescriptionSerializer::deserialize(const nlohmann::json& json) const
 {
     if (json.empty())
     {
@@ -61,9 +65,11 @@ WordDescription readWordDescription(const nlohmann::json& jsonText)
 
     if (jsonText.find(definitionsWithExamplesField) != jsonText.end())
     {
-        for (const auto& definitionWithExample : jsonText[definitionsWithExamplesField])
+        for (const auto& definitionWithExample :
+             jsonText[definitionsWithExamplesField])
         {
-            definitionsWithExamples.push_back(toDefinitionWithExample(definitionWithExample));
+            definitionsWithExamples.push_back(
+                toDefinitionWithExample(definitionWithExample));
         }
     }
 

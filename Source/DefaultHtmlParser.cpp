@@ -1,6 +1,5 @@
 #include "DefaultHtmlParser.h"
 
-#include <iostream>
 #include <algorithm>
 
 #include "StringHelper.h"
@@ -21,7 +20,8 @@ const std::string openHtmlTag{"<"};
 const std::string closeHtmlTag{">"};
 }
 
-std::vector<std::string> DefaultHtmlParser::parse(const std::string& htmlContent) const
+std::vector<std::string>
+DefaultHtmlParser::parse(const std::string& htmlContent) const
 {
     auto parsedContent = stringHelper::getSplitLines(htmlContent);
 
@@ -32,7 +32,8 @@ std::vector<std::string> DefaultHtmlParser::parse(const std::string& htmlContent
     return parsedContent;
 }
 
-void DefaultHtmlParser::removeHtmlStrings(std::vector<std::string>& htmlContent) const
+void DefaultHtmlParser::removeHtmlStrings(
+    std::vector<std::string>& htmlContent) const
 {
     for (auto& line : htmlContent)
     {
@@ -40,11 +41,13 @@ void DefaultHtmlParser::removeHtmlStrings(std::vector<std::string>& htmlContent)
     }
 }
 
-void DefaultHtmlParser::removeExtraLines(std::vector<std::string>& htmlContent) const
+void DefaultHtmlParser::removeExtraLines(
+    std::vector<std::string>& htmlContent) const
 {
-    htmlContent.erase(std::remove_if(htmlContent.begin(), htmlContent.end(),
-                                     [](std::string& line)
-                                     { return line.empty(); }), htmlContent.end());
+    htmlContent.erase(
+        std::remove_if(htmlContent.begin(), htmlContent.end(),
+                       [](std::string& line) { return line.empty(); }),
+        htmlContent.end());
 }
 
 namespace
@@ -56,7 +59,8 @@ void removeHtmlTags(std::string& line)
     {
         auto openSignPosition = findOpenHtmlTag(line);
         auto closeSignPosition = findCloseHtmlTag(line);
-        line = stringHelper::cutOffFromString(line, openSignPosition, closeSignPosition);
+        line = stringHelper::cutOffFromString(line, openSignPosition,
+                                              closeSignPosition);
     }
 }
 

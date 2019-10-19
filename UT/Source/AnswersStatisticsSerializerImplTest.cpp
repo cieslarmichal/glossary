@@ -1,26 +1,27 @@
 #include "AnswersStatisticsSerializerImpl.h"
 
-#include "gtest/gtest.h"
 #include "boost/assign.hpp"
+#include "gtest/gtest.h"
 
 using namespace ::testing;
-
 
 namespace
 {
 const AnswersStatisticsPerWord statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const AnswersStatisticsPerWord statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
-const AnswersStatistics answersStatisticsWithOneWord = boost::assign::map_list_of(statisticsPerWord1.englishWord, statisticsPerWord1);
-const AnswersStatistics answersStatistics = boost::assign::map_list_of
-        (statisticsPerWord1.englishWord, statisticsPerWord1)
-        (statisticsPerWord2.englishWord, statisticsPerWord2);
+const AnswersStatistics answersStatisticsWithOneWord =
+    boost::assign::map_list_of(statisticsPerWord1.englishWord,
+                               statisticsPerWord1);
+const AnswersStatistics answersStatistics = boost::assign::map_list_of(
+    statisticsPerWord1.englishWord,
+    statisticsPerWord1)(statisticsPerWord2.englishWord, statisticsPerWord2);
 const AnswersStatistics emptyAnswersStatistics{};
 const std::string serializedAnswersStatistics{
-        R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"englishWord":"dog","incorrectAnswers":1}]})"};
+    R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"englishWord":"dog","incorrectAnswers":1}]})"};
 const std::string twoSerializedAnswersStatistics{
-        R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"incorrectAnswers":1}]})"};
+    R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"incorrectAnswers":1}]})"};
 const std::string serializedAnswersStatisticsWithoutRequiredFields{
-        R"({"answersStatistics":[{"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"incorrectAnswers":1}]})"};
+    R"({"answersStatistics":[{"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"incorrectAnswers":1}]})"};
 const std::string emptySerializedAnswersStatistics{};
 }
 
@@ -30,45 +31,58 @@ public:
     AnswersStatisticsSerializerImpl serializer;
 };
 
-TEST_F(AnswersStatisticsSerializerImplTest, givenNoStatistics_shouldReturnEmptyString)
+TEST_F(AnswersStatisticsSerializerImplTest,
+       givenNoStatistics_shouldReturnEmptyString)
 {
-    const auto actualSerializedStatistics = serializer.serialize(emptyAnswersStatistics);
+    const auto actualSerializedStatistics =
+        serializer.serialize(emptyAnswersStatistics);
 
     EXPECT_TRUE(actualSerializedStatistics.empty());
 }
 
-TEST_F(AnswersStatisticsSerializerImplTest, givenStatistics_shouldReturnSerializedStatistics)
+TEST_F(AnswersStatisticsSerializerImplTest,
+       givenStatistics_shouldReturnSerializedStatistics)
 {
-    const auto actualSerializedStatistics = serializer.serialize(answersStatistics);
+    const auto actualSerializedStatistics =
+        serializer.serialize(answersStatistics);
 
     EXPECT_EQ(actualSerializedStatistics, serializedAnswersStatistics);
 }
 
-TEST_F(AnswersStatisticsSerializerImplTest, givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
+TEST_F(AnswersStatisticsSerializerImplTest,
+       givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
 {
-    const auto actualStatistics = serializer.deserialize(serializedAnswersStatistics);
+    const auto actualStatistics =
+        serializer.deserialize(serializedAnswersStatistics);
 
     EXPECT_EQ(actualStatistics, answersStatistics);
 }
 
-TEST_F(AnswersStatisticsSerializerImplTest, givenSerializedStatistics_shouldReturnStatistics)
-{
-    const auto actualStatistics = serializer.deserialize(emptySerializedAnswersStatistics);
-
-    EXPECT_TRUE(actualStatistics.empty());
-}
-
-TEST_F(AnswersStatisticsSerializerImplTest, givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
-{
-    const auto actualStatistics = serializer.deserialize(serializedAnswersStatisticsWithoutRequiredFields);
-
-    EXPECT_TRUE(actualStatistics.empty());
-}
-
 TEST_F(AnswersStatisticsSerializerImplTest,
-       givenTwoSerializedStatssAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
+       givenSerializedStatistics_shouldReturnStatistics)
 {
-    const auto actualStatistics = serializer.deserialize(twoSerializedAnswersStatistics);
+    const auto actualStatistics =
+        serializer.deserialize(emptySerializedAnswersStatistics);
+
+    EXPECT_TRUE(actualStatistics.empty());
+}
+
+TEST_F(
+    AnswersStatisticsSerializerImplTest,
+    givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
+{
+    const auto actualStatistics = serializer.deserialize(
+        serializedAnswersStatisticsWithoutRequiredFields);
+
+    EXPECT_TRUE(actualStatistics.empty());
+}
+
+TEST_F(
+    AnswersStatisticsSerializerImplTest,
+    givenTwoSerializedStatssAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
+{
+    const auto actualStatistics =
+        serializer.deserialize(twoSerializedAnswersStatistics);
 
     EXPECT_EQ(actualStatistics, answersStatisticsWithOneWord);
 }

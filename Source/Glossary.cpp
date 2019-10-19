@@ -10,5 +10,3 @@ void Glossary::run()
 {
     application->run();
 }
-
-

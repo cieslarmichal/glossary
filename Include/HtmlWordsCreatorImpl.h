@@ -1,15 +1,17 @@
 #pragma once
 
-#include "HtmlWordsCreator.h"
-#include "HtmlReader.h"
-#include "HtmlParser.h"
-#include "WordDescriptionParser.h"
 #include <memory>
+
+#include "HtmlParser.h"
+#include "HtmlReader.h"
+#include "HtmlWordsCreator.h"
+#include "WordDescriptionParser.h"
 
 class HtmlWordsCreatorImpl : public HtmlWordsCreator
 {
 public:
-    explicit HtmlWordsCreatorImpl(std::unique_ptr<const HtmlReader>, std::unique_ptr<const HtmlParser>);
+    explicit HtmlWordsCreatorImpl(std::unique_ptr<const HtmlReader>,
+                                  std::unique_ptr<const HtmlParser>);
 
     boost::optional<Word> createWord(const WordWithTranslation&) const override;
 

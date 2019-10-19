@@ -26,15 +26,20 @@ std::string WordViewerImpl::viewPolishWord(const PolishWord& polishWord) const
     return wordView.str();
 }
 
-std::string WordViewerImpl::getWordDescription(const WordDescription& wordDescription) const
+std::string
+WordViewerImpl::getWordDescription(const WordDescription& wordDescription) const
 {
-//TODO: improve viewing: once definitions: and something like ":", examples: "//", sentences: "sentence"
+    // TODO: improve viewing: once definitions: and something like ":",
+    // examples: "//", sentences: "sentence"
     std::stringstream wordDescriptionView;
 
     const auto& defsAndExmpls = wordDescription.definitionsWithExamples;
-    for (size_t index = 0; index < defsAndExmpls.size() and index <= amountOfDefinitionsToView; ++index)
+    for (size_t index = 0;
+         index < defsAndExmpls.size() and index <= amountOfDefinitionsToView;
+         ++index)
     {
-        wordDescriptionView << "Definition: " << defsAndExmpls[index].definition << "\n";
+        wordDescriptionView << "Definition: " << defsAndExmpls[index].definition
+                            << "\n";
         if (const auto example = defsAndExmpls[index].example)
         {
             wordDescriptionView << "Example: " << *example << "\n";
@@ -42,10 +47,10 @@ std::string WordViewerImpl::getWordDescription(const WordDescription& wordDescri
     }
 
     const auto& sentences = wordDescription.sentences;
-    for (size_t index = 0; index < sentences.size() and index <= amountOfSentencesToView; ++index)
+    for (size_t index = 0;
+         index < sentences.size() and index <= amountOfSentencesToView; ++index)
     {
         wordDescriptionView << "Sentence: " << sentences[index] << "\n";
-
     }
 
     return wordDescriptionView.str();

@@ -1,5 +1,6 @@
-#include <iostream>
 #include "MemoryStorage.h"
+
+#include <iostream>
 
 void MemoryStorage::addWord(const Word& word)
 {
@@ -9,10 +10,13 @@ void MemoryStorage::addWord(const Word& word)
     }
 }
 
-boost::optional<Word> MemoryStorage::getWord(const EnglishWord& englishWord) const
+boost::optional<Word>
+MemoryStorage::getWord(const EnglishWord& englishWord) const
 {
-    const auto word = std::find_if(words.begin(), words.end(), [englishWord](const Word& word)
-    { return word.englishWord == englishWord; });
+    const auto word = std::find_if(words.begin(), words.end(),
+                                   [englishWord](const Word& word) {
+                                       return word.englishWord == englishWord;
+                                   });
 
     if (word != words.end())
     {
@@ -28,10 +32,10 @@ Words MemoryStorage::getWords() const
 
 bool MemoryStorage::contains(const EnglishWord& wordToFind) const
 {
-    const auto found = std::find_if(
-            words.begin(), words.end(),
-            [wordToFind](const Word& word)
-            { return word.englishWord == wordToFind; });
+    const auto found = std::find_if(words.begin(), words.end(),
+                                    [wordToFind](const Word& word) {
+                                        return word.englishWord == wordToFind;
+                                    });
     return found != words.end();
 }
 
@@ -54,4 +58,3 @@ Words::const_iterator MemoryStorage::end() const
 {
     return words.cend();
 }
-

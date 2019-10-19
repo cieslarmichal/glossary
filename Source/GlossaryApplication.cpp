@@ -1,28 +1,33 @@
 #include "GlossaryApplication.h"
 
-#include "WordsGeneratorServiceImpl.h"
-#include "PersistentAnswersCounter.h"
-#include "WordViewerImpl.h"
+#include <iostream>
+
 #include "AnswerCheckerImpl.h"
-#include "UserPromptImpl.h"
 #include "AnswersStatisticsSerializerImpl.h"
 #include "FileAccessImpl.h"
+#include "PersistentAnswersCounter.h"
+#include "UserPromptImpl.h"
 #include "WordRandomizerImpl.h"
-#include <iostream>
+#include "WordViewerImpl.h"
+#include "WordsGeneratorServiceImpl.h"
 
 GlossaryApplication::GlossaryApplication()
 {
     initialize();
 }
 
-//TODO: make FileAccessImpl only one shared_ptr not two (persistentAnswersCounter and WordService)
+// TODO: make FileAccessImpl only one shared_ptr not two
+// (persistentAnswersCounter and WordService)
 void GlossaryApplication::initialize()
 {
     wordsGenerator = std::make_unique<WordsGeneratorServiceImpl>();
 
-    std::shared_ptr<const FileAccess> fileAccess = std::make_shared<const FileAccessImpl>();
-    std::shared_ptr<const AnswersStatisticsSerializer> serializer = std::make_shared<const AnswersStatisticsSerializerImpl>();
-    answersCounter = std::make_unique<PersistentAnswersCounter>(fileAccess, serializer);
+    std::shared_ptr<const FileAccess> fileAccess =
+        std::make_shared<const FileAccessImpl>();
+    std::shared_ptr<const AnswersStatisticsSerializer> serializer =
+        std::make_shared<const AnswersStatisticsSerializerImpl>();
+    answersCounter =
+        std::make_unique<PersistentAnswersCounter>(fileAccess, serializer);
 
     answerChecker = std::make_unique<AnswerCheckerImpl>();
 
@@ -56,10 +61,11 @@ void GlossaryApplication::loop()
             std::cerr << e.what();
             break;
         }
-        std::cout <<viewer->viewPolishWord(word.polishWord);
-        std::cout<<"Insert english translation:\n";
+        std::cout << viewer->viewPolishWord(word.polishWord);
+        std::cout << "Insert english translation:\n";
 
-        if (answerChecker->correctWordAnswer(userPrompt->getInput(), word.englishWord))
+        if (answerChecker->correctWordAnswer(userPrompt->getInput(),
+                                             word.englishWord))
         {
             std::cout << "Correct answer!\n";
             answersCounter->addCorrectAnswer(word.englishWord);

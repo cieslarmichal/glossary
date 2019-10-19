@@ -1,6 +1,7 @@
 #include "UserPromptImpl.h"
 
 #include <iostream>
+
 #include "StringHelper.h"
 #include "boost/algorithm/string.hpp"
 
@@ -42,9 +43,11 @@ std::string UserPromptImpl::getValidString() const
 
 bool UserPromptImpl::yesNoAnswerIsInvalid(const std::string& input) const
 {
-    const auto isValid = std::any_of(correctYesNoAnswers.begin(), correctYesNoAnswers.end(),
-                                     [input](const auto& yesNo)
-                                     { return yesNo == stringHelper::getCaseInsensitive(input); });
+    const auto isValid =
+        std::any_of(correctYesNoAnswers.begin(), correctYesNoAnswers.end(),
+                    [input](const auto& yesNo) {
+                        return yesNo == stringHelper::getCaseInsensitive(input);
+                    });
 
     return !isValid;
 }
@@ -53,5 +56,6 @@ void UserPromptImpl::clearInputBuffer() const
 {
     std::cin.clear();
     while (std::cin.get() != newLine)
-    {}
+    {
+    }
 }

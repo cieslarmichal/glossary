@@ -1,5 +1,7 @@
-#include <iostream>
 #include "WordsSerializerImpl.h"
+
+#include <iostream>
+
 #include "boost/algorithm/cxx11/any_of.hpp"
 
 namespace
@@ -17,7 +19,7 @@ std::string WordsSerializerImpl::serialize(const Words& words) const
     {
         serialized[wordsField].push_back(getJsonFromWord(word));
     }
-    if(serialized.empty())
+    if (serialized.empty())
     {
         return {};
     }
@@ -48,7 +50,8 @@ nlohmann::json WordsSerializerImpl::getJsonFromWord(const Word& word) const
     nlohmann::json val = nlohmann::json::object();
     val[englishWordField] = word.englishWord;
     val[polishWordField] = word.polishWord;
-    val[wordDescriptionField] = wordDescriptionSerializer.serialize(word.wordDescription);
+    val[wordDescriptionField] =
+        wordDescriptionSerializer.serialize(word.wordDescription);
     return val;
 }
 
@@ -71,10 +74,13 @@ Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
         {
             try
             {
-                const EnglishWord englishWord{std::string(wordData[englishWordField])};
-                const PolishWord polishWord{std::string(wordData[polishWordField])};
+                const EnglishWord englishWord{
+                    std::string(wordData[englishWordField])};
+                const PolishWord polishWord{
+                    std::string(wordData[polishWordField])};
                 const WordDescription wordDescription{
-                        wordDescriptionSerializer.deserialize(wordData[wordDescriptionField])};
+                    wordDescriptionSerializer.deserialize(
+                        wordData[wordDescriptionField])};
                 words.push_back({englishWord, polishWord, wordDescription});
             }
             catch (const std::exception& e)
@@ -92,12 +98,11 @@ Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
 
 bool WordsSerializerImpl::isWordValid(const nlohmann::json& wordData) const
 {
-    const auto requiredFields = {englishWordField, polishWordField, wordDescriptionField};
-    auto wordInvalid = boost::algorithm::any_of(
-            requiredFields, [&](const auto& fieldName)
-            { return wordData.find(fieldName) == wordData.end(); });
+    const auto requiredFields = {englishWordField, polishWordField,
+                                 wordDescriptionField};
+    auto wordInvalid =
+        boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
+            return wordData.find(fieldName) == wordData.end();
+        });
     return !wordInvalid;
 }
-
-
-

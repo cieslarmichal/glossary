@@ -1,8 +1,9 @@
 #pragma once
 
+#include <ostream>
+
 #include "EnglishWord.h"
 #include "PolishWord.h"
-#include <ostream>
 
 struct WordWithTranslation
 {
@@ -10,13 +11,17 @@ struct WordWithTranslation
     PolishWord polishTranslation;
 };
 
-inline bool operator==(const WordWithTranslation& lhs, const WordWithTranslation& rhs)
+inline bool operator==(const WordWithTranslation& lhs,
+                       const WordWithTranslation& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord && lhs.polishTranslation == rhs.polishTranslation);
+    return (lhs.englishWord == rhs.englishWord &&
+            lhs.polishTranslation == rhs.polishTranslation);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const WordWithTranslation& wordWithTranslation)
+inline std::ostream& operator<<(std::ostream& os,
+                                const WordWithTranslation& wordWithTranslation)
 {
-    os << wordWithTranslation.englishWord << " " << wordWithTranslation.polishTranslation;
+    os << wordWithTranslation.englishWord << " "
+       << wordWithTranslation.polishTranslation;
     return os;
 }

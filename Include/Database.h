@@ -6,7 +6,7 @@
 class Database
 {
 public:
-    virtual void addWord(const Word &) const = 0;
-    virtual boost::optional<Word> getWord(const EnglishWord &) const = 0;
+    virtual void addWord(const Word&) const = 0;
+    virtual boost::optional<Word> getWord(const EnglishWord&) const = 0;
     virtual bool contains(const EnglishWord&) const = 0;
 };

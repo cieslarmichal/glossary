@@ -1,15 +1,18 @@
 #include "DictionaryReaderImpl.h"
 
-#include "StringHelper.h"
-#include <sstream>
 #include <iostream>
+#include <sstream>
+
 #include "Exceptions/FileNotFound.h"
+#include "StringHelper.h"
 
 const std::string DictionaryReaderImpl::fileDirectory{"../database"};
 const std::string DictionaryReaderImpl::fileName{"/dictionary.txt"};
 const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
-DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const FileAccess> access) : fileAccess{access}
+DictionaryReaderImpl::DictionaryReaderImpl(
+    std::shared_ptr<const FileAccess> access)
+    : fileAccess{access}
 {
 }
 
@@ -19,7 +22,6 @@ std::vector<WordWithTranslation> DictionaryReaderImpl::read() const
     try
     {
         dictionaryContent = fileAccess->readContent(filePath);
-
     }
     catch (const exceptions::FileNotFound& e)
     {
@@ -30,8 +32,8 @@ std::vector<WordWithTranslation> DictionaryReaderImpl::read() const
     return processDictionaryContent(dictionaryContent);
 }
 
-std::vector<WordWithTranslation>
-DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryContent) const
+std::vector<WordWithTranslation> DictionaryReaderImpl::processDictionaryContent(
+    const std::string& dictionaryContent) const
 {
     std::vector<WordWithTranslation> wordsWithTranslation;
     for (const auto& line : stringHelper::getSplitLines(dictionaryContent))
@@ -47,7 +49,8 @@ DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryCont
     return wordsWithTranslation;
 }
 
-boost::optional<WordWithTranslation> DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
+boost::optional<WordWithTranslation>
+DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
 {
     std::stringstream lineStream{line};
     EnglishWord englishWord;

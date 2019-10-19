@@ -6,5 +6,6 @@
 class WordDescriptionParser
 {
 public:
-    boost::optional<WordDescription> parse(const std::vector<std::string>&) const;
+    boost::optional<WordDescription>
+    parse(const std::vector<std::string>&) const;
 };

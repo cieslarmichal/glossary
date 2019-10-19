@@ -7,7 +7,8 @@ using namespace ::testing;
 namespace
 {
 const Word word1("computer", "komputer",
-                 {{{"definition", std::string{"example"}}, {"definition2", std::string{"example2"}}},
+                 {{{"definition", std::string{"example"}},
+                   {"definition2", std::string{"example2"}}},
                   {"sentence"}});
 const Word word2("tea", "herbata", {});
 const Word word3("headphones", "sluchawki", {});

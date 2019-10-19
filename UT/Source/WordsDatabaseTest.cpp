@@ -1,7 +1,8 @@
 #include "WordsDatabase.h"
 
-#include "gtest/gtest.h"
 #include "StorageMock.h"
+
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 
@@ -14,8 +15,9 @@ const Word word(englishWord, "polishTranslation", {});
 class WordsDatabaseTest : public Test
 {
 public:
-    std::unique_ptr<StorageMock> storageInit = std::make_unique<StrictMock<StorageMock>>();
-    StorageMock * storage = storageInit.get();
+    std::unique_ptr<StorageMock> storageInit =
+        std::make_unique<StrictMock<StorageMock>>();
+    StorageMock* storage = storageInit.get();
     WordsDatabase database{std::move(storageInit)};
 };
 
@@ -44,7 +46,8 @@ TEST_F(WordsDatabaseTest, givenEnglishWordExistingInStorage_shouldReturnWord)
     ASSERT_EQ(actualWord, word);
 }
 
-TEST_F(WordsDatabaseTest, givenEnglishWordExistingInStorage_shouldContainThisWord)
+TEST_F(WordsDatabaseTest,
+       givenEnglishWordExistingInStorage_shouldContainThisWord)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
 
@@ -53,7 +56,8 @@ TEST_F(WordsDatabaseTest, givenEnglishWordExistingInStorage_shouldContainThisWor
     ASSERT_TRUE(contains);
 }
 
-TEST_F(WordsDatabaseTest, givenEnglishWordNotExistingInStorage_shouldNotContainThisWord)
+TEST_F(WordsDatabaseTest,
+       givenEnglishWordNotExistingInStorage_shouldNotContainThisWord)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(false));
 

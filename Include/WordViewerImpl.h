@@ -6,7 +6,7 @@ class WordViewerImpl : public WordViewer
 {
 public:
     std::string viewWord(const Word&) const override;
-    std::string viewPolishWord(const EnglishWord &) const override;
+    std::string viewPolishWord(const EnglishWord&) const override;
 
 private:
     std::string getWordDescription(const WordDescription&) const;

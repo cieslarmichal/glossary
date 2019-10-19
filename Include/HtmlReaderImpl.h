@@ -1,8 +1,8 @@
 #pragma once
 
-#include "HtmlReader.h"
-
 #include <stdexcept>
+
+#include "HtmlReader.h"
 
 class HtmlReaderImpl : public HtmlReader
 {

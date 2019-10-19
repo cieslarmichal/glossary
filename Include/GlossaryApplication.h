@@ -1,16 +1,16 @@
 #pragma once
 
-#include "Application.h"
-
-#include "WordsGeneratorService.h"
-#include "AnswersCounter.h"
-#include "WordViewer.h"
-#include "AnswerChecker.h"
-#include "UserPrompt.h"
-#include "WordRandomizer.h"
 #include <memory>
 
-//TODO: move std::cin from UserPrompt to application
+#include "AnswerChecker.h"
+#include "AnswersCounter.h"
+#include "Application.h"
+#include "UserPrompt.h"
+#include "WordRandomizer.h"
+#include "WordViewer.h"
+#include "WordsGeneratorService.h"
+
+// TODO: move std::cin from UserPrompt to application
 
 class GlossaryApplication : public Application
 {
@@ -23,7 +23,7 @@ private:
     void initialize();
     void loop();
 
-    //TODO: add const into unique_ptr if possible
+    // TODO: add const into unique_ptr if possible
     std::unique_ptr<WordsGeneratorService> wordsGenerator;
     std::unique_ptr<AnswersCounter> answersCounter;
     std::unique_ptr<AnswerChecker> answerChecker;
@@ -32,4 +32,3 @@ private:
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     Words glossaryWords;
 };
-

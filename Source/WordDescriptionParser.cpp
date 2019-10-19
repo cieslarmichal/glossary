@@ -1,5 +1,6 @@
-#include <iostream>
 #include "WordDescriptionParser.h"
+
+#include <iostream>
 
 #include "boost/algorithm/string.hpp"
 
@@ -24,7 +25,8 @@ const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
 }
 
-boost::optional<WordDescription> WordDescriptionParser::parse(const std::vector<std::string>& lines) const
+boost::optional<WordDescription>
+WordDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
     WordDescription wordDescription;
     bool previousLineIsDefinition = false;
@@ -35,7 +37,8 @@ boost::optional<WordDescription> WordDescriptionParser::parse(const std::vector<
     {
         if (previousLineIsDefinition && !isExample(line))
         {
-            wordDescription.definitionsWithExamples.push_back({definition, boost::none});
+            wordDescription.definitionsWithExamples.push_back(
+                {definition, boost::none});
             previousLineIsDefinition = false;
         }
 
@@ -46,7 +49,8 @@ boost::optional<WordDescription> WordDescriptionParser::parse(const std::vector<
 
         if (previousLineIsDefinition && isExample(line))
         {
-            wordDescription.definitionsWithExamples.push_back({definition, line});
+            wordDescription.definitionsWithExamples.push_back(
+                {definition, line});
             previousLineIsDefinition = false;
         }
 
@@ -56,12 +60,13 @@ boost::optional<WordDescription> WordDescriptionParser::parse(const std::vector<
             previousLineIsDefinition = true;
             if (line == lines.back())
             {
-                wordDescription.definitionsWithExamples.push_back({definition, boost::none});
+                wordDescription.definitionsWithExamples.push_back(
+                    {definition, boost::none});
             }
         }
     }
 
-    if(wordDescription.empty())
+    if (wordDescription.empty())
     {
         return boost::none;
     }
@@ -119,7 +124,8 @@ bool isExample(const std::string& line)
 
 bool isSentence(const std::string& line)
 {
-    return (line.size() >= 2 && line.substr(0, 1) == sentenceMark && line.substr(line.size() - 1, 1) == sentenceMark);
+    return (line.size() >= 2 && line.substr(0, 1) == sentenceMark &&
+            line.substr(line.size() - 1, 1) == sentenceMark);
 }
 
 }

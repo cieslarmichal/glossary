@@ -1,5 +1,7 @@
 #include "DictionaryReaderImpl.h"
+
 #include "FileAccessMock.h"
+
 #include "Exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
@@ -14,31 +16,34 @@ const std::string contentWithTwoWordsAndOneIncorrect{"car samochod\n"
                                                      "     powietrze\n"};
 const Dictionary expectedDictionaryWithOneWord{{"car", "samochod"}};
 const std::string emptyContent{};
-const Dictionary expectedDictionary{{"car", "samochod"},
-                                    {"air", "powietrze"}};
+const Dictionary expectedDictionary{{"car", "samochod"}, {"air", "powietrze"}};
 }
-
 
 class DictionaryReaderImplTest : public Test
 {
 public:
-    std::shared_ptr<FileAccessMock> fileAccess = std::make_shared<StrictMock<FileAccessMock>>();
+    std::shared_ptr<FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<FileAccessMock>>();
     DictionaryReaderImpl reader{fileAccess};
 };
 
-TEST_F(DictionaryReaderImplTest, givenEmptyDictionaryContent_shouldReturnEmptyDictionary)
+TEST_F(DictionaryReaderImplTest,
+       givenEmptyDictionaryContent_shouldReturnEmptyDictionary)
 {
-    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(emptyContent));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
+        .WillOnce(Return(emptyContent));
 
     const auto dictionary = reader.read();
 
     EXPECT_TRUE(dictionary.empty());
 }
 
-
-TEST_F(DictionaryReaderImplTest, givenyDictionaryContentWithTwoWordsAndOneOfThemIsIncorrect_shouldReturnDictWithOneWord)
+TEST_F(
+    DictionaryReaderImplTest,
+    givenyDictionaryContentWithTwoWordsAndOneOfThemIsIncorrect_shouldReturnDictWithOneWord)
 {
-    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(contentWithTwoWordsAndOneIncorrect));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
+        .WillOnce(Return(contentWithTwoWordsAndOneIncorrect));
 
     const auto dictionary = reader.read();
 
@@ -47,7 +52,8 @@ TEST_F(DictionaryReaderImplTest, givenyDictionaryContentWithTwoWordsAndOneOfThem
 
 TEST_F(DictionaryReaderImplTest, givenDictionaryContent_shouldReadDictionary)
 {
-    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(content));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
+        .WillOnce(Return(content));
 
     const auto actualDictionary = reader.read();
 
@@ -56,7 +62,8 @@ TEST_F(DictionaryReaderImplTest, givenDictionaryContent_shouldReadDictionary)
 
 TEST_F(DictionaryReaderImplTest, givenInvalidFile_shouldReturnEmptyDictionary)
 {
-    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Throw(exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
+        .WillOnce(Throw(exceptions::FileNotFound{""}));
 
     const auto dictionary = reader.read();
 

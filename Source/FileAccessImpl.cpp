@@ -2,13 +2,15 @@
 
 #include <fstream>
 #include <sstream>
+
 #include "Exceptions/FileNotFound.h"
 
 namespace
 {
 enum class Result
 {
-    Success, Failure
+    Success,
+    Failure
 };
 
 Result tryToWrite(std::ofstream& fileStream, const std::string& data);
@@ -17,7 +19,8 @@ const std::string fileNotFoundMessage{"File not found: "};
 const std::string endOfLine{"\n"};
 }
 
-void FileAccessImpl::write(const std::string& path, const std::string& content) const
+void FileAccessImpl::write(const std::string& path,
+                           const std::string& content) const
 {
     std::ofstream fileStream{path};
 
@@ -27,7 +30,8 @@ void FileAccessImpl::write(const std::string& path, const std::string& content) 
     }
 }
 
-void FileAccessImpl::append(const std::string& path, const std::string& content) const
+void FileAccessImpl::append(const std::string& path,
+                            const std::string& content) const
 {
     std::ofstream fileStream{path, std::ofstream::app};
 

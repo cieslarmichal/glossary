@@ -59,7 +59,8 @@ TEST_F(MemoryStorageTest, givenStorageWithExactWord_shouldReturnWord)
     ASSERT_EQ(actualWord, word1);
 }
 
-TEST_F(MemoryStorageTest, givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
+TEST_F(MemoryStorageTest,
+       givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
 {
     storage.addWord(word1);
     storage.addWord(word2);
@@ -74,7 +75,8 @@ TEST_F(MemoryStorageTest, givenEmptyStorage_shouldBeEmpty)
     ASSERT_TRUE(storage.empty());
 }
 
-TEST_F(MemoryStorageTest, givenWordNotExistingInStorage_getShouldNotContainThisWord)
+TEST_F(MemoryStorageTest,
+       givenWordNotExistingInStorage_getShouldNotContainThisWord)
 {
     const auto contains = storage.contains("someword");
 
@@ -89,4 +91,3 @@ TEST_F(MemoryStorageTest, givenWordExistingInStorage_getShouldContainThisWord)
 
     ASSERT_TRUE(contains);
 }
-

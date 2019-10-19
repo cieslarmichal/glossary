@@ -10,7 +10,8 @@ public:
     AnswersStatistics deserialize(const std::string&) const override;
 
 private:
-    nlohmann::json getJsonFromWordAnswersStatistics(const AnswersStatisticsPerWord&) const;
+    nlohmann::json
+    getJsonFromWordAnswersStatistics(const AnswersStatisticsPerWord&) const;
     AnswersStatistics readAnswersStatistics(const nlohmann::json&) const;
     AnswersStatistics parseAnswersStatistics(const nlohmann::json&) const;
     bool isWordAnswersStatisticsValid(const nlohmann::json&) const;

@@ -1,4 +1,5 @@
 #include "PersistentAnswersCounter.h"
+
 #include <Exceptions/FileNotFound.h>
 #include <iostream>
 
@@ -6,9 +7,10 @@ const std::string PersistentAnswersCounter::fileDirectory{"../database"};
 const std::string PersistentAnswersCounter::fileName{"/answersStatistics.txt"};
 const std::string PersistentAnswersCounter::filePath{fileDirectory + fileName};
 
-PersistentAnswersCounter::PersistentAnswersCounter(std::shared_ptr<const FileAccess> fileAccessInit,
-                                                   std::shared_ptr<const AnswersStatisticsSerializer> serializerInit)
-        : fileAccess{fileAccessInit}, serializer{serializerInit}
+PersistentAnswersCounter::PersistentAnswersCounter(
+    std::shared_ptr<const FileAccess> fileAccessInit,
+    std::shared_ptr<const AnswersStatisticsSerializer> serializerInit)
+    : fileAccess{fileAccessInit}, serializer{serializerInit}
 {
     loadFile();
 }
@@ -24,8 +26,8 @@ void PersistentAnswersCounter::addCorrectAnswer(const EnglishWord& englishWord)
     serialize();
 }
 
-
-void PersistentAnswersCounter::addIncorrectAnswer(const EnglishWord& englishWord)
+void PersistentAnswersCounter::addIncorrectAnswer(
+    const EnglishWord& englishWord)
 {
     if (not containsWord(englishWord))
     {
@@ -37,7 +39,8 @@ void PersistentAnswersCounter::addIncorrectAnswer(const EnglishWord& englishWord
 }
 
 boost::optional<AnswersStatisticsPerWord>
-PersistentAnswersCounter::getAnswersStatisticsPerWord(const EnglishWord& englishWord) const
+PersistentAnswersCounter::getAnswersStatisticsPerWord(
+    const EnglishWord& englishWord) const
 {
     if (containsWord(englishWord))
     {
@@ -76,13 +79,14 @@ void PersistentAnswersCounter::serialize() const
     }
 }
 
-bool PersistentAnswersCounter::containsWord(const EnglishWord& englishWord) const
+bool PersistentAnswersCounter::containsWord(
+    const EnglishWord& englishWord) const
 {
     return statistics.count(englishWord);
 }
 
-void PersistentAnswersCounter::addEmptyStatisticsPerWord(const EnglishWord& englishWord)
+void PersistentAnswersCounter::addEmptyStatisticsPerWord(
+    const EnglishWord& englishWord)
 {
     statistics[englishWord] = AnswersStatisticsPerWord{englishWord};
 }
-

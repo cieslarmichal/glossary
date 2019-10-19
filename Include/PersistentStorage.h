@@ -1,18 +1,20 @@
 #pragma once
 
-#include "Storage.h"
-#include "MemoryStorage.h"
-#include "FileAccess.h"
-#include "WordsSerializer.h"
 #include <memory>
+
+#include "FileAccess.h"
+#include "MemoryStorage.h"
+#include "Storage.h"
+#include "WordsSerializer.h"
 
 class PersistentStorage : public Storage
 {
 public:
-    PersistentStorage(std::shared_ptr<const FileAccess>, std::shared_ptr<const WordsSerializer>);
+    PersistentStorage(std::shared_ptr<const FileAccess>,
+                      std::shared_ptr<const WordsSerializer>);
 
-    void addWord(const Word &) override;
-    boost::optional<Word> getWord(const EnglishWord &) const override;
+    void addWord(const Word&) override;
+    boost::optional<Word> getWord(const EnglishWord&) const override;
     Words getWords() const override;
     bool contains(const EnglishWord&) const override;
     Words::size_type size() const override;
