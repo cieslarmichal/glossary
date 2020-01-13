@@ -5,9 +5,9 @@
 #include "DictionaryReaderImpl.h"
 #include "FileAccessImpl.h"
 #include "GlossaryHtmlParser.h"
-#include "HtmlReaderImpl.h"
 #include "HtmlWordsCreatorImpl.h"
 #include "PersistentStorage.h"
+#include "webConnection/HttpRequestHandlerImpl.h"
 #include "WordsDatabase.h"
 #include "WordsSerializerImpl.h"
 #include "WordsShufflerImpl.h"
@@ -28,12 +28,12 @@ void WordsGeneratorServiceImpl::initializeWordsCreatorService()
         std::make_unique<PersistentStorage>(fileAccess, wordsSerializer);
     wordsDb = std::make_unique<WordsDatabase>(std::move(storage));
 
-    std::unique_ptr<const HtmlReader> htmlReader =
-        std::make_unique<HtmlReaderImpl>();
+    std::unique_ptr<const webConnection::HttpRequestHandler> httpHandler =
+        std::make_unique<webConnection::HttpRequestHandlerImpl>();
     std::unique_ptr<const HtmlParser> htmlParser =
         std::make_unique<GlossaryHtmlParser>();
     htmlWordCreator = std::make_unique<HtmlWordsCreatorImpl>(
-        std::move(htmlReader), std::move(htmlParser));
+        std::move(httpHandler), std::move(htmlParser));
 
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
 

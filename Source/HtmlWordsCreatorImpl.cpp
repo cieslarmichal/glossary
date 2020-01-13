@@ -2,17 +2,17 @@
 
 #include <iostream>
 
-#include "Exceptions/ConnectionFailed.h"
+#include "exceptions/ConnectionFailed.h"
 #include "GlossaryHtmlParser.h"
-#include "HtmlReaderImpl.h"
+#include "webConnection/HttpRequestHandlerImpl.h"
 
 const std::string HtmlWordsCreatorImpl::urlAddress{
     "https://www.merriam-webster.com/dictionary/"};
 
 HtmlWordsCreatorImpl::HtmlWordsCreatorImpl(
-    std::unique_ptr<const HtmlReader> htmlReaderInit,
+    std::unique_ptr<const webConnection::HttpRequestHandler> htmlReaderInit,
     std::unique_ptr<const HtmlParser> htmlParserInit)
-    : htmlReader{std::move(htmlReaderInit)}, htmlParser{
+    : httpHandler{std::move(htmlReaderInit)}, htmlParser{
                                                  std::move(htmlParserInit)}
 {
 }
@@ -23,8 +23,8 @@ boost::optional<Word> HtmlWordsCreatorImpl::createWord(
     std::string htmlContent;
     try
     {
-        htmlContent =
-            htmlReader->read(urlAddress + wordWithTranslation.englishWord);
+        const auto response = httpHandler->get(urlAddress + wordWithTranslation.englishWord);
+        htmlContent = response.content;
     }
     catch (const exceptions::ConnectionFailed& e)
     {

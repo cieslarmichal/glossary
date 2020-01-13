@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "Exceptions/FileNotFound.h"
+#include "exceptions/FileNotFound.h"
 #include "StringHelper.h"
 
 const std::string DictionaryReaderImpl::fileDirectory{"../database"};

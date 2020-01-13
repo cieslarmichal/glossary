@@ -1,6 +1,6 @@
 #include "FileAccessImpl.h"
 
-#include "Exceptions/FileNotFound.h"
+#include "exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;

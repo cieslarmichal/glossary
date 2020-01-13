@@ -13,12 +13,12 @@ class WordsGeneratorServiceImpl : public WordsGeneratorService
 public:
     WordsGeneratorServiceImpl();
 
+    Word generateWord(const WordWithTranslation&) const override;
     Words generateWords() const override;
 
 private:
     void initializeWordsCreatorService();
     void initializeDictionary();
-    Word generateWord(const WordWithTranslation&) const;
     boost::optional<Word> getWordFromDatabase(const EnglishWord&) const;
     boost::optional<Word> getWordFromHtml(const WordWithTranslation&) const;
     void addWordToStorage(const Word&) const;

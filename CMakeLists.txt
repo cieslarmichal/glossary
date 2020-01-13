@@ -13,20 +13,6 @@ set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
 
-#if(${WIN32})
-#  include(${CMAKE_SOURCE_DIR}/cmake/platforms/Windows.cmake)
-#else()
-#  include(${CMAKE_SOURCE_DIR}/cmake/platforms/Linux.cmake)
-#endif()
-#
-#if(${CMAKE_CXX_COMPILER_ID} STREQUAL "Clang")
-#  include(${CMAKE_SOURCE_DIR}/cmake/compilators/Clang.cmake)
-#elseif(${CMAKE_CXX_COMPILER_ID} STREQUAL "MSVC")
-#  include(${CMAKE_SOURCE_DIR}/cmake/compilators/Msvc.cmake)
-#else()
-#  include(${CMAKE_SOURCE_DIR}/cmake/compilators/Gcc.cmake)
-#endif()
-
 if(${ENABLE_COVERAGE})
   add_compile_options(--coverage -O0 -g)
   link_libraries(--coverage)
@@ -35,7 +21,9 @@ endif()
 set(SOURCES
         Source/WordsDatabase.cpp
         Source/Glossary.cpp
-        Source/HtmlReaderImpl.cpp
+        Source/webConnection/HttpRequestHandlerImpl.cpp
+        Source/translation/TranslatorImpl.cpp
+        Source/translation/TranslationDeserializerImpl.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
@@ -59,7 +47,9 @@ set(SOURCES
         )
 
 set(UT_SOURCES
-        UT/Source/HtmlReaderImplTest.cpp
+        UT/Source/translation/TranslatorImplTest.cpp
+        UT/Source/translation/TranslationDeserializerImplTest.cpp
+        UT/Source/webConnection/HttpRequestHandlerTest.cpp
         UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp

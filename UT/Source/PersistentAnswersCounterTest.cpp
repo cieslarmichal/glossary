@@ -3,7 +3,7 @@
 #include "AnswersStatisticsSerializerMock.h"
 #include "FileAccessMock.h"
 
-#include "Exceptions/FileNotFound.h"
+#include "exceptions/FileNotFound.h"
 #include "boost/assign.hpp"
 #include "gtest/gtest.h"
 

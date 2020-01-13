@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "Exceptions/FileNotFound.h"
+#include "exceptions/FileNotFound.h"
 
 const std::string PersistentStorage::fileDirectory{"../database"};
 const std::string PersistentStorage::fileName{"/words.txt"};
