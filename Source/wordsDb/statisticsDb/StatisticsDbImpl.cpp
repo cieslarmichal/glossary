@@ -1,21 +1,22 @@
-#include "PersistentAnswersCounter.h"
+#include "wordsDb/statisticsDb/StatisticsDbImpl.h"
 
-#include "exceptions/FileNotFound.h"
 #include <iostream>
 
-const std::string PersistentAnswersCounter::fileDirectory{"../database"};
-const std::string PersistentAnswersCounter::fileName{"/answersStatistics.txt"};
-const std::string PersistentAnswersCounter::filePath{fileDirectory + fileName};
+#include "exceptions/FileNotFound.h"
 
-PersistentAnswersCounter::PersistentAnswersCounter(
+const std::string StatisticsDbImpl::fileDirectory{"../database"};
+const std::string StatisticsDbImpl::fileName{"/answersStatistics.txt"};
+const std::string StatisticsDbImpl::filePath{fileDirectory + fileName};
+
+StatisticsDbImpl::StatisticsDbImpl(
     std::shared_ptr<const FileAccess> fileAccessInit,
-    std::shared_ptr<const AnswersStatisticsSerializer> serializerInit)
+    std::shared_ptr<const StatisticsSerializer> serializerInit)
     : fileAccess{fileAccessInit}, serializer{serializerInit}
 {
     loadFile();
 }
 
-void PersistentAnswersCounter::addCorrectAnswer(const EnglishWord& englishWord)
+void StatisticsDbImpl::addCorrectAnswer(const EnglishWord& englishWord)
 {
     if (not containsWord(englishWord))
     {
@@ -26,7 +27,7 @@ void PersistentAnswersCounter::addCorrectAnswer(const EnglishWord& englishWord)
     serialize();
 }
 
-void PersistentAnswersCounter::addIncorrectAnswer(
+void StatisticsDbImpl::addIncorrectAnswer(
     const EnglishWord& englishWord)
 {
     if (not containsWord(englishWord))
@@ -39,7 +40,7 @@ void PersistentAnswersCounter::addIncorrectAnswer(
 }
 
 boost::optional<AnswersStatisticsPerWord>
-PersistentAnswersCounter::getAnswersStatisticsPerWord(
+StatisticsDbImpl::getAnswersStatisticsPerWord(
     const EnglishWord& englishWord) const
 {
     if (containsWord(englishWord))
@@ -49,12 +50,12 @@ PersistentAnswersCounter::getAnswersStatisticsPerWord(
     return boost::none;
 }
 
-AnswersStatistics PersistentAnswersCounter::getAnswersStatistics() const
+AnswersStatistics StatisticsDbImpl::getAnswersStatistics() const
 {
     return statistics;
 }
 
-void PersistentAnswersCounter::loadFile()
+void StatisticsDbImpl::loadFile()
 {
     try
     {
@@ -67,7 +68,7 @@ void PersistentAnswersCounter::loadFile()
     }
 }
 
-void PersistentAnswersCounter::serialize() const
+void StatisticsDbImpl::serialize() const
 {
     try
     {
@@ -79,13 +80,13 @@ void PersistentAnswersCounter::serialize() const
     }
 }
 
-bool PersistentAnswersCounter::containsWord(
+bool StatisticsDbImpl::containsWord(
     const EnglishWord& englishWord) const
 {
     return statistics.count(englishWord);
 }
 
-void PersistentAnswersCounter::addEmptyStatisticsPerWord(
+void StatisticsDbImpl::addEmptyStatisticsPerWord(
     const EnglishWord& englishWord)
 {
     statistics[englishWord] = AnswersStatisticsPerWord{englishWord};

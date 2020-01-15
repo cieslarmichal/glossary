@@ -2,7 +2,7 @@
 
 #include "gmock/gmock.h"
 
-#include "Storage.h"
+#include "wordsDb/Storage.h"
 
 class StorageMock : public Storage
 {

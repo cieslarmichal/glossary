@@ -2,7 +2,7 @@
 
 #include "gmock/gmock.h"
 
-#include "Database.h"
+#include "wordsDb/descriptionsDb/Database.h"
 
 class DatabaseMock : public Database
 {

@@ -3,9 +3,9 @@
 #include <memory>
 
 #include "FileAccess.h"
-#include "MemoryStorage.h"
 #include "Storage.h"
-#include "WordsSerializer.h"
+#include "wordsDb/MemoryStorage.h"
+#include "wordsDb/descriptionsDb/WordsSerializer.h"
 
 class PersistentStorage : public Storage
 {

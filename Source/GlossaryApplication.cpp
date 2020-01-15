@@ -3,13 +3,13 @@
 #include <iostream>
 
 #include "AnswerCheckerImpl.h"
-#include "AnswersStatisticsSerializerImpl.h"
 #include "FileAccessImpl.h"
-#include "PersistentAnswersCounter.h"
 #include "UserPromptImpl.h"
 #include "WordRandomizerImpl.h"
 #include "WordViewerImpl.h"
 #include "WordsGeneratorServiceImpl.h"
+#include "wordsDb/statisticsDb/StatisticsDbImpl.h"
+#include "wordsDb/statisticsDb/StatisticsSerializerImpl.h"
 
 GlossaryApplication::GlossaryApplication()
 {
@@ -24,10 +24,10 @@ void GlossaryApplication::initialize()
 
     std::shared_ptr<const FileAccess> fileAccess =
         std::make_shared<const FileAccessImpl>();
-    std::shared_ptr<const AnswersStatisticsSerializer> serializer =
-        std::make_shared<const AnswersStatisticsSerializerImpl>();
+    std::shared_ptr<const StatisticsSerializer> serializer =
+        std::make_shared<const StatisticsSerializerImpl>();
     answersCounter =
-        std::make_unique<PersistentAnswersCounter>(fileAccess, serializer);
+        std::make_unique<StatisticsDbImpl>(fileAccess, serializer);
 
     answerChecker = std::make_unique<AnswerCheckerImpl>();
 

@@ -1,4 +1,4 @@
-#include "AnswersStatisticsSerializerImpl.h"
+#include "wordsDb/statisticsDb/StatisticsSerializerImpl.h"
 
 #include <iostream>
 
@@ -12,7 +12,7 @@ constexpr auto correctAnswersField = "correctAnswers";
 constexpr auto incorrectAnswersField = "incorrectAnswers";
 }
 
-std::string AnswersStatisticsSerializerImpl::serialize(
+std::string StatisticsSerializerImpl::serialize(
     const AnswersStatistics& answersStatistics) const
 {
     nlohmann::json serialized;
@@ -29,7 +29,7 @@ std::string AnswersStatisticsSerializerImpl::serialize(
 }
 
 AnswersStatistics
-AnswersStatisticsSerializerImpl::deserialize(const std::string& jsonText) const
+StatisticsSerializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
     {
@@ -48,8 +48,7 @@ AnswersStatisticsSerializerImpl::deserialize(const std::string& jsonText) const
     return {};
 }
 
-nlohmann::json
-AnswersStatisticsSerializerImpl::getJsonFromWordAnswersStatistics(
+nlohmann::json StatisticsSerializerImpl::getJsonFromWordAnswersStatistics(
     const AnswersStatisticsPerWord& wordAnswersStatistics) const
 {
     nlohmann::json val = nlohmann::json::object();
@@ -59,7 +58,7 @@ AnswersStatisticsSerializerImpl::getJsonFromWordAnswersStatistics(
     return val;
 }
 
-AnswersStatistics AnswersStatisticsSerializerImpl::readAnswersStatistics(
+AnswersStatistics StatisticsSerializerImpl::readAnswersStatistics(
     const nlohmann::json& json) const
 {
     if (json.find(answersStatisticsField) != json.end())
@@ -71,7 +70,7 @@ AnswersStatistics AnswersStatisticsSerializerImpl::readAnswersStatistics(
     return {};
 }
 
-AnswersStatistics AnswersStatisticsSerializerImpl::parseAnswersStatistics(
+AnswersStatistics StatisticsSerializerImpl::parseAnswersStatistics(
     const nlohmann::json& answersStatisticsJson) const
 {
     AnswersStatistics answersStatistics;
@@ -103,7 +102,7 @@ AnswersStatistics AnswersStatisticsSerializerImpl::parseAnswersStatistics(
     return answersStatistics;
 }
 
-bool AnswersStatisticsSerializerImpl::isWordAnswersStatisticsValid(
+bool StatisticsSerializerImpl::isWordAnswersStatisticsValid(
     const nlohmann::json& wordAnswersStatistics) const
 {
     const auto requiredFields = {englishWordField, correctAnswersField,

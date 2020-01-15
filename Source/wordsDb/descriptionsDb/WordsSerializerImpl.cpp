@@ -1,4 +1,4 @@
-#include "WordsSerializerImpl.h"
+#include "wordsDb/descriptionsDb/WordsSerializerImpl.h"
 
 #include <iostream>
 

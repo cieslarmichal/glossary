@@ -6,11 +6,11 @@
 #include "FileAccessImpl.h"
 #include "GlossaryHtmlParser.h"
 #include "HtmlWordsCreatorImpl.h"
-#include "PersistentStorage.h"
-#include "webConnection/HttpRequestHandlerImpl.h"
-#include "WordsDatabase.h"
-#include "WordsSerializerImpl.h"
 #include "WordsShufflerImpl.h"
+#include "webConnection/HttpRequestHandlerImpl.h"
+#include "wordsDb/PersistentStorage.h"
+#include "wordsDb/descriptionsDb/WordsDatabase.h"
+#include "wordsDb/descriptionsDb/WordsSerializerImpl.h"
 
 WordsGeneratorServiceImpl::WordsGeneratorServiceImpl()
 {

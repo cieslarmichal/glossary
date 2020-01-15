@@ -2,19 +2,19 @@
 
 #include <memory>
 
-#include "AnswersCounter.h"
-#include "AnswersStatisticsSerializer.h"
 #include "FileAccess.h"
+#include "StatisticsDb.h"
+#include "StatisticsSerializer.h"
 
 // TODO: add statistics to internal storage as PersistentStorage (maybe template
 // somehow)
 
-class PersistentAnswersCounter : public AnswersCounter
+class StatisticsDbImpl : public StatisticsDb
 {
 public:
-    PersistentAnswersCounter(
+    StatisticsDbImpl(
         std::shared_ptr<const FileAccess>,
-        std::shared_ptr<const AnswersStatisticsSerializer>);
+        std::shared_ptr<const StatisticsSerializer>);
 
     void addCorrectAnswer(const EnglishWord&) override;
     void addIncorrectAnswer(const EnglishWord&) override;
@@ -29,7 +29,7 @@ private:
     void addEmptyStatisticsPerWord(const EnglishWord&);
 
     std::shared_ptr<const FileAccess> fileAccess;
-    std::shared_ptr<const AnswersStatisticsSerializer> serializer;
+    std::shared_ptr<const StatisticsSerializer> serializer;
     AnswersStatistics statistics;
 
     static const std::string fileDirectory;

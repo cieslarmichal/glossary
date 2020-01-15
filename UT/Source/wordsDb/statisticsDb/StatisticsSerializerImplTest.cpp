@@ -1,4 +1,4 @@
-#include "AnswersStatisticsSerializerImpl.h"
+#include "wordsDb/statisticsDb/StatisticsSerializerImpl.h"
 
 #include "boost/assign.hpp"
 #include "gtest/gtest.h"
@@ -25,13 +25,13 @@ const std::string serializedAnswersStatisticsWithoutRequiredFields{
 const std::string emptySerializedAnswersStatistics{};
 }
 
-class AnswersStatisticsSerializerImplTest : public Test
+class StatisticsSerializerImplTest : public Test
 {
 public:
-    AnswersStatisticsSerializerImpl serializer;
+    StatisticsSerializerImpl serializer;
 };
 
-TEST_F(AnswersStatisticsSerializerImplTest,
+TEST_F(StatisticsSerializerImplTest,
        givenNoStatistics_shouldReturnEmptyString)
 {
     const auto actualSerializedStatistics =
@@ -40,7 +40,7 @@ TEST_F(AnswersStatisticsSerializerImplTest,
     EXPECT_TRUE(actualSerializedStatistics.empty());
 }
 
-TEST_F(AnswersStatisticsSerializerImplTest,
+TEST_F(StatisticsSerializerImplTest,
        givenStatistics_shouldReturnSerializedStatistics)
 {
     const auto actualSerializedStatistics =
@@ -49,7 +49,7 @@ TEST_F(AnswersStatisticsSerializerImplTest,
     EXPECT_EQ(actualSerializedStatistics, serializedAnswersStatistics);
 }
 
-TEST_F(AnswersStatisticsSerializerImplTest,
+TEST_F(StatisticsSerializerImplTest,
        givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
 {
     const auto actualStatistics =
@@ -58,7 +58,7 @@ TEST_F(AnswersStatisticsSerializerImplTest,
     EXPECT_EQ(actualStatistics, answersStatistics);
 }
 
-TEST_F(AnswersStatisticsSerializerImplTest,
+TEST_F(StatisticsSerializerImplTest,
        givenSerializedStatistics_shouldReturnStatistics)
 {
     const auto actualStatistics =
@@ -68,7 +68,7 @@ TEST_F(AnswersStatisticsSerializerImplTest,
 }
 
 TEST_F(
-    AnswersStatisticsSerializerImplTest,
+    StatisticsSerializerImplTest,
     givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
 {
     const auto actualStatistics = serializer.deserialize(
@@ -78,7 +78,7 @@ TEST_F(
 }
 
 TEST_F(
-    AnswersStatisticsSerializerImplTest,
+    StatisticsSerializerImplTest,
     givenTwoSerializedStatssAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
 {
     const auto actualStatistics =

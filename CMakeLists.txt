@@ -19,7 +19,7 @@ if(${ENABLE_COVERAGE})
 endif()
 
 set(SOURCES
-        Source/WordsDatabase.cpp
+        Source/wordsDb/descriptionsDb/WordsDatabase.cpp
         Source/Glossary.cpp
         Source/webConnection/HttpRequestHandlerImpl.cpp
         Source/translation/TranslatorImpl.cpp
@@ -29,15 +29,15 @@ set(SOURCES
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
         Source/WordDescriptionParser.cpp
-        Source/MemoryStorage.cpp
-        Source/PersistentStorage.cpp
+        Source/wordsDb/MemoryStorage.cpp
+        Source/wordsDb/PersistentStorage.cpp
         Source/DictionaryReaderImpl.cpp
-        Source/WordsSerializerImpl.cpp
+        Source/wordsDb/descriptionsDb/WordsSerializerImpl.cpp
         Source/WordDescriptionSerializer.cpp
         Source/HtmlWordsCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
-        Source/PersistentAnswersCounter.cpp
-        Source/AnswersStatisticsSerializerImpl.cpp
+        Source/wordsDb/statisticsDb/StatisticsDbImpl.cpp
+        Source/wordsDb/statisticsDb/StatisticsSerializerImpl.cpp
         Source/WordsShufflerImpl.cpp
         Source/WordViewerImpl.cpp
         Source/UserPromptImpl.cpp
@@ -53,16 +53,16 @@ set(UT_SOURCES
         UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
-        UT/Source/WordsDatabaseTest.cpp
+        UT/Source/wordsDb/descriptionsDb/WordsDatabaseTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
-        UT/Source/MemoryStorageTest.cpp
-        UT/Source/PersistentStorageTest.cpp
-        UT/Source/WordsSerializerImplTest.cpp
+        UT/Source/wordsDb/MemoryStorageTest.cpp
+        UT/Source/wordsDb/PersistentStorageTest.cpp
+        UT/Source/wordsDb/descriptionsDb/WordsSerializerImplTest.cpp
         UT/Source/WordDescriptionSerializerTest.cpp
         UT/Source/WordDescriptionParserTest.cpp
         UT/Source/HtmlWordsCreatorImplTest.cpp
-        UT/Source/PersistentAnswersCounterTest.cpp
-        UT/Source/AnswersStatisticsSerializerImplTest.cpp
+        UT/Source/wordsDb/statisticsDb/StatisticsDbImplTest.cpp
+        UT/Source/wordsDb/statisticsDb/StatisticsSerializerImplTest.cpp
         UT/Source/WordsShufflerImplTest.cpp
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp

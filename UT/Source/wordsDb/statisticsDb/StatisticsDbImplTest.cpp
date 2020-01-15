@@ -1,11 +1,10 @@
-#include "PersistentAnswersCounter.h"
-
-#include "AnswersStatisticsSerializerMock.h"
 #include "FileAccessMock.h"
+#include "wordsDb/statisticsDb/StatisticsSerializerMock.h"
 
-#include "exceptions/FileNotFound.h"
 #include "boost/assign.hpp"
+#include "exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
+#include "wordsDb/statisticsDb/StatisticsDbImpl.h"
 
 using namespace ::testing;
 
@@ -35,46 +34,46 @@ const std::string serializedStatisticsAfterIncorrectAddition{
     R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":1}]})"};
 }
 
-class PersistentAnswersCounterTest : public Test
+class StatisticsDbImplTest : public Test
 {
 public:
     std::shared_ptr<FileAccessMock> fileAccess =
         std::make_shared<StrictMock<FileAccessMock>>();
-    std::shared_ptr<AnswersStatisticsSerializerMock> serializer =
-        std::make_shared<StrictMock<AnswersStatisticsSerializerMock>>();
+    std::shared_ptr<StatisticsSerializerMock> serializer =
+        std::make_shared<StrictMock<StatisticsSerializerMock>>();
 };
 
-TEST_F(PersistentAnswersCounterTest, givenEmptyFile_shouldNotLoadAnyStatistics)
+TEST_F(StatisticsDbImplTest, givenEmptyFile_shouldNotLoadAnyStatistics)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize(""))
         .WillOnce(Return(AnswersStatistics{}));
-    PersistentAnswersCounter answersCounter{fileAccess, serializer};
+    StatisticsDbImpl answersCounter{fileAccess, serializer};
 
     const auto actualStatistics = answersCounter.getAnswersStatistics();
 
     ASSERT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(PersistentAnswersCounterTest,
+TEST_F(StatisticsDbImplTest,
        givenPersistentStorageWithFileWithWords_shouldLoadWords)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath))
         .WillOnce(Return("some content"));
     EXPECT_CALL(*serializer, deserialize("some content"))
         .WillOnce(Return(answersStatistics));
-    PersistentAnswersCounter answersCounter{fileAccess, serializer};
+    StatisticsDbImpl answersCounter{fileAccess, serializer};
 
     const auto actualStatistics = answersCounter.getAnswersStatistics();
 
     ASSERT_EQ(actualStatistics, answersStatistics);
 }
 
-TEST_F(PersistentAnswersCounterTest, givenInvalidFile_shouldReturnNoStatictics)
+TEST_F(StatisticsDbImplTest, givenInvalidFile_shouldReturnNoStatictics)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath))
         .WillOnce(Throw(exceptions::FileNotFound{""}));
-    PersistentAnswersCounter answersCounter{fileAccess, serializer};
+    StatisticsDbImpl answersCounter{fileAccess, serializer};
 
     const auto actualStatistics = answersCounter.getAnswersStatistics();
 
@@ -82,14 +81,14 @@ TEST_F(PersistentAnswersCounterTest, givenInvalidFile_shouldReturnNoStatictics)
 }
 
 TEST_F(
-    PersistentAnswersCounterTest,
+    StatisticsDbImplTest,
     givenCorrectAnswer_shouldIncreaseCorrectAnswersInStatisticsAndSerializeToFile)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath))
         .WillOnce(Return("some content"));
     EXPECT_CALL(*serializer, deserialize("some content"))
         .WillOnce(Return(answersStatisticsWithWord1));
-    PersistentAnswersCounter answersCounter{fileAccess, serializer};
+    StatisticsDbImpl answersCounter{fileAccess, serializer};
 
     EXPECT_CALL(*serializer,
                 serialize(answersStatisticsWithWord1AfterCorrectAnswer))
@@ -106,14 +105,14 @@ TEST_F(
 }
 
 TEST_F(
-    PersistentAnswersCounterTest,
+    StatisticsDbImplTest,
     givenIncorrectAnswer_shouldIncreaseIncorrectAnswersInStatisticsAndSerializeToFile)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath))
         .WillOnce(Return("some content"));
     EXPECT_CALL(*serializer, deserialize("some content"))
         .WillOnce(Return(answersStatisticsWithWord1));
-    PersistentAnswersCounter answersCounter{fileAccess, serializer};
+    StatisticsDbImpl answersCounter{fileAccess, serializer};
 
     EXPECT_CALL(*serializer,
                 serialize(answersStatisticsWithWord1AfterIncorrectAnswer))

@@ -1,7 +1,7 @@
-#include "PersistentStorage.h"
+#include "wordsDb/PersistentStorage.h"
 
 #include "FileAccessMock.h"
-#include "WordsSerializerMock.h"
+#include "wordsDb/descriptionsDb/WordsSerializerMock.h"
 
 #include "exceptions/FileNotFound.h"
 #include "gtest/gtest.h"

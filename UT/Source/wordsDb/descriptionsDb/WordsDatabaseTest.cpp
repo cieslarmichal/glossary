@@ -1,6 +1,6 @@
-#include "WordsDatabase.h"
+#include "wordsDb/descriptionsDb/WordsDatabase.h"
 
-#include "StorageMock.h"
+#include "wordsDb/StorageMock.h"
 
 #include "gtest/gtest.h"
 

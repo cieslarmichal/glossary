@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "Database.h"
-#include "Storage.h"
+#include "wordsDb/Storage.h"
 
 class WordsDatabase : public Database
 {

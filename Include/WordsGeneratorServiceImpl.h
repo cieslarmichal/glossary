@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include "Database.h"
 #include "DictionaryReader.h"
 #include "HtmlWordsCreator.h"
 #include "WordsGeneratorService.h"
 #include "WordsShuffler.h"
+#include "wordsDb/descriptionsDb/Database.h"
 
 class WordsGeneratorServiceImpl : public WordsGeneratorService
 {

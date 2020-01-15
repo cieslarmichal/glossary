@@ -1,4 +1,4 @@
-#include "WordsDatabase.h"
+#include "wordsDb/descriptionsDb/WordsDatabase.h"
 
 WordsDatabase::WordsDatabase(std::unique_ptr<Storage> storageInit)
     : storage{std::move(storageInit)}

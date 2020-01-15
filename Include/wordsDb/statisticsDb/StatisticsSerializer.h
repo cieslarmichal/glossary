@@ -4,10 +4,10 @@
 
 #include "AnswersStatistics.h"
 
-class AnswersStatisticsSerializer
+class StatisticsSerializer
 {
 public:
-    virtual ~AnswersStatisticsSerializer() = default;
+    virtual ~StatisticsSerializer() = default;
 
     virtual std::string serialize(const AnswersStatistics&) const = 0;
     virtual AnswersStatistics deserialize(const std::string&) const = 0;

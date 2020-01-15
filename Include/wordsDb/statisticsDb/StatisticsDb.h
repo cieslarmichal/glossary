@@ -4,10 +4,10 @@
 #include "EnglishWord.h"
 #include "boost/optional.hpp"
 
-class AnswersCounter
+class StatisticsDb
 {
 public:
-    virtual ~AnswersCounter() = default;
+    virtual ~StatisticsDb() = default;
 
     virtual void addCorrectAnswer(const EnglishWord&) = 0;
     virtual void addIncorrectAnswer(const EnglishWord&) = 0;

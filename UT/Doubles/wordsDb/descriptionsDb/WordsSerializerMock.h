@@ -1,8 +1,8 @@
 #pragma once
 
-#include "gmock/gmock.h"
+#include "../../../../externals/googletest/googlemock/include/gmock/gmock.h"
 
-#include "WordsSerializer.h"
+#include "wordsDb/descriptionsDb/WordsSerializer.h"
 
 class WordsSerializerMock : public WordsSerializer
 {

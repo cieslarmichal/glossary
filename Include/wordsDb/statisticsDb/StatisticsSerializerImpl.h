@@ -1,9 +1,9 @@
 #pragma once
 
-#include "AnswersStatisticsSerializer.h"
+#include "StatisticsSerializer.h"
 #include "nlohmann/json.hpp"
 
-class AnswersStatisticsSerializerImpl : public AnswersStatisticsSerializer
+class StatisticsSerializerImpl : public StatisticsSerializer
 {
 public:
     std::string serialize(const AnswersStatistics&) const override;
