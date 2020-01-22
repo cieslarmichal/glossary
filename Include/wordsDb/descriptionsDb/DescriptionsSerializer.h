@@ -1,12 +1,15 @@
 #pragma once
 
-#include "Words.h"
+#include "WordsDescriptions.h"
 
-class WordsSerializer
+namespace wordsDb::descriptionsDb
+{
+class DescriptionsSerializer
 {
 public:
-    virtual ~WordsSerializer() = default;
+    virtual ~DescriptionsSerializer() = default;
 
     virtual std::string serialize(const Words&) const = 0;
     virtual Words deserialize(const std::string&) const = 0;
 };
+}

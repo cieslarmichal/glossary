@@ -3,6 +3,9 @@
 #include "StatisticsSerializer.h"
 #include "nlohmann/json.hpp"
 
+namespace wordsDb::statisticsDb
+{
+
 class StatisticsSerializerImpl : public StatisticsSerializer
 {
 public:
@@ -16,3 +19,4 @@ private:
     AnswersStatistics parseAnswersStatistics(const nlohmann::json&) const;
     bool isWordAnswersStatisticsValid(const nlohmann::json&) const;
 };
+}

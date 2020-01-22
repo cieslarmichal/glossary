@@ -12,6 +12,8 @@ constexpr auto correctAnswersField = "correctAnswers";
 constexpr auto incorrectAnswersField = "incorrectAnswers";
 }
 
+namespace wordsDb::statisticsDb
+{
 std::string StatisticsSerializerImpl::serialize(
     const AnswersStatistics& answersStatistics) const
 {
@@ -113,4 +115,5 @@ bool StatisticsSerializerImpl::isWordAnswersStatisticsValid(
                    wordAnswersStatistics.end();
         });
     return !wordInvalid;
+}
 }

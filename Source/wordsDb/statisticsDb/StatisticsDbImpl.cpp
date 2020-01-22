@@ -4,6 +4,9 @@
 
 #include "exceptions/FileNotFound.h"
 
+namespace wordsDb::statisticsDb
+{
+
 const std::string StatisticsDbImpl::fileDirectory{"../database"};
 const std::string StatisticsDbImpl::fileName{"/answersStatistics.txt"};
 const std::string StatisticsDbImpl::filePath{fileDirectory + fileName};
@@ -27,8 +30,7 @@ void StatisticsDbImpl::addCorrectAnswer(const EnglishWord& englishWord)
     serialize();
 }
 
-void StatisticsDbImpl::addIncorrectAnswer(
-    const EnglishWord& englishWord)
+void StatisticsDbImpl::addIncorrectAnswer(const EnglishWord& englishWord)
 {
     if (not containsWord(englishWord))
     {
@@ -80,14 +82,13 @@ void StatisticsDbImpl::serialize() const
     }
 }
 
-bool StatisticsDbImpl::containsWord(
-    const EnglishWord& englishWord) const
+bool StatisticsDbImpl::containsWord(const EnglishWord& englishWord) const
 {
     return statistics.count(englishWord);
 }
 
-void StatisticsDbImpl::addEmptyStatisticsPerWord(
-    const EnglishWord& englishWord)
+void StatisticsDbImpl::addEmptyStatisticsPerWord(const EnglishWord& englishWord)
 {
     statistics[englishWord] = AnswersStatisticsPerWord{englishWord};
+}
 }

@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Words.h"
+#include "wordsDb/descriptionsDb/WordsDescriptions.h"
 
 class WordRandomizer
 {
 public:
     virtual ~WordRandomizer() = default;
 
-    virtual Word randomizeWord(const Words&) const = 0;
+    virtual WordDescription randomizeWord(const Words&) const = 0;
 };

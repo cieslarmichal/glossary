@@ -1,17 +1,18 @@
-#include "wordsDb/descriptionsDb/WordsSerializerImpl.h"
+#include "wordsDb/descriptionsDb/DescriptionsSerializerImpl.h"
 
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace wordsDb::descriptionsDb;
 
 namespace
 {
-const Word word1("computer", "komputer",
+const WordDescription word1("computer", "komputer",
                  {{{"definition", std::string{"example"}},
                    {"definition2", std::string{"example2"}}},
                   {"sentence"}});
-const Word word2("tea", "herbata", {});
-const Word word3("headphones", "sluchawki", {});
+const WordDescription word2("tea", "herbata", {});
+const WordDescription word3("headphones", "sluchawki", {});
 const Words words{word1, word2, word3};
 const Words emptyWords{};
 const std::string expectedSerializedWords{
@@ -25,41 +26,42 @@ const std::string serializedWordsWithoutWordDescriptionField{
 const std::string emptySerializedWords{};
 }
 
-class WordsSerializerImplTest : public Test
+class DescriptionsSerializerImplTest : public Test
 {
 public:
-    WordsSerializerImpl serializer;
+    DescriptionsSerializerImpl serializer;
 };
 
-TEST_F(WordsSerializerImplTest, giveNonWords_shouldReturnEmptyString)
+TEST_F(DescriptionsSerializerImplTest, giveNonWords_shouldReturnEmptyString)
 {
     const auto actualSerializedWords = serializer.serialize(emptyWords);
 
     EXPECT_TRUE(actualSerializedWords.empty());
 }
 
-TEST_F(WordsSerializerImplTest, givenWords_shouldReturnSerializedWords)
+TEST_F(DescriptionsSerializerImplTest, givenWords_shouldReturnSerializedWords)
 {
     const auto actualSerializedWords = serializer.serialize(words);
 
     EXPECT_EQ(actualSerializedWords, expectedSerializedWords);
 }
 
-TEST_F(WordsSerializerImplTest, giveEmptySerializedWords_shouldReturnEmptyWords)
+TEST_F(DescriptionsSerializerImplTest,
+       giveEmptySerializedWords_shouldReturnEmptyWords)
 {
     const auto actualWords = serializer.deserialize(emptySerializedWords);
 
     EXPECT_TRUE(actualWords.empty());
 }
 
-TEST_F(WordsSerializerImplTest, givenSerializedWords_shouldReturnWords)
+TEST_F(DescriptionsSerializerImplTest, givenSerializedWords_shouldReturnWords)
 {
     const auto actualWords = serializer.deserialize(expectedSerializedWords);
 
     EXPECT_EQ(actualWords, words);
 }
 
-TEST_F(WordsSerializerImplTest,
+TEST_F(DescriptionsSerializerImplTest,
        givenSerializedWordsWithoutEnglishWordField_shouldReturnNoWords)
 {
     const auto actualWords =
@@ -68,7 +70,7 @@ TEST_F(WordsSerializerImplTest,
     EXPECT_TRUE(actualWords.empty());
 }
 
-TEST_F(WordsSerializerImplTest,
+TEST_F(DescriptionsSerializerImplTest,
        givenSerializedWordsWithoutPolishWordField_shouldReturnNoWords)
 {
     const auto actualWords =
@@ -77,7 +79,7 @@ TEST_F(WordsSerializerImplTest,
     EXPECT_TRUE(actualWords.empty());
 }
 
-TEST_F(WordsSerializerImplTest,
+TEST_F(DescriptionsSerializerImplTest,
        givenSerializedWordsWithoutWordDescriptionField_shouldReturnNoWords)
 {
     const auto actualWords =

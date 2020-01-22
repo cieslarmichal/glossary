@@ -1,11 +1,11 @@
 #pragma once
 
-#include "WordDescription.h"
+#include "Description.h"
 #include "boost/optional.hpp"
 
 class WordDescriptionParser
 {
 public:
-    boost::optional<WordDescription>
+    boost::optional<Description>
     parse(const std::vector<std::string>&) const;
 };

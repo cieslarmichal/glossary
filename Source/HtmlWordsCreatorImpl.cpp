@@ -17,8 +17,8 @@ HtmlWordsCreatorImpl::HtmlWordsCreatorImpl(
 {
 }
 
-boost::optional<Word> HtmlWordsCreatorImpl::createWord(
-    const WordWithTranslation& wordWithTranslation) const
+boost::optional<WordDescription> HtmlWordsCreatorImpl::createWord(
+    const wordsDb::translationsDb::Translation& wordWithTranslation) const
 {
     std::string htmlContent;
     try
@@ -37,7 +37,7 @@ boost::optional<Word> HtmlWordsCreatorImpl::createWord(
     if (const auto wordDescription =
             wordDescriptionParser.parse(parsedHtmlContent))
     {
-        return Word{wordWithTranslation.englishWord,
+        return WordDescription{wordWithTranslation.englishWord,
                     wordWithTranslation.polishTranslation, *wordDescription};
     }
     return boost::none;

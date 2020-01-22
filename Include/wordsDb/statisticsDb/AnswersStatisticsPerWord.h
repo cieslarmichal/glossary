@@ -4,6 +4,8 @@
 
 #include "EnglishWord.h"
 
+namespace wordsDb::statisticsDb
+{
 struct AnswersStatisticsPerWord
 {
     void addCorrectAnswer()
@@ -37,4 +39,5 @@ operator<<(std::ostream& os,
        << wordAnswersStatistics.correctAnswers << " "
        << wordAnswersStatistics.incorrectAnswers;
     return os;
+}
 }

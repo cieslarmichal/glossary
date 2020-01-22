@@ -7,7 +7,7 @@
 #include "DefinitionsWithExamples.h"
 #include "Sentences.h"
 
-struct WordDescription
+struct Description
 {
     std::string toString() const
     {
@@ -35,14 +35,14 @@ struct WordDescription
     Sentences sentences;
 };
 
-inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
+inline bool operator==(const Description& lhs, const Description& rhs)
 {
     return (lhs.definitionsWithExamples == rhs.definitionsWithExamples &&
             lhs.sentences == rhs.sentences);
 }
 
 inline std::ostream& operator<<(std::ostream& os,
-                                const WordDescription& wordDescription)
+                                const Description& wordDescription)
 {
     os << wordDescription.toString();
     return os;

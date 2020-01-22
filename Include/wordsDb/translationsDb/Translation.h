@@ -5,23 +5,25 @@
 #include "EnglishWord.h"
 #include "PolishWord.h"
 
-struct WordWithTranslation
+namespace wordsDb::translationsDb
+{
+
+struct Translation
 {
     EnglishWord englishWord;
     PolishWord polishTranslation;
 };
 
-inline bool operator==(const WordWithTranslation& lhs,
-                       const WordWithTranslation& rhs)
+inline bool operator==(const Translation& lhs, const Translation& rhs)
 {
     return (lhs.englishWord == rhs.englishWord &&
             lhs.polishTranslation == rhs.polishTranslation);
 }
 
 inline std::ostream& operator<<(std::ostream& os,
-                                const WordWithTranslation& wordWithTranslation)
+                                const Translation& translation)
 {
-    os << wordWithTranslation.englishWord << " "
-       << wordWithTranslation.polishTranslation;
+    os << translation.englishWord << " " << translation.polishTranslation;
     return os;
+}
 }

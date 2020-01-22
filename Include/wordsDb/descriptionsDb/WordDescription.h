@@ -1,37 +1,38 @@
 #pragma once
 
+#include "Description.h"
 #include "EnglishWord.h"
 #include "PolishWord.h"
-#include "WordDescription.h"
 
-struct Word
+struct WordDescription
 {
-    Word() = default;
+    // TODO: change to WordWithDescription and remove polishWord
+    WordDescription() = default;
 
-    Word(EnglishWord e, PolishWord p, WordDescription wd)
+    WordDescription(EnglishWord e, PolishWord p, Description wd)
         : englishWord{e}, polishWord{p}, wordDescription{wd}
     {
     }
 
     std::string toString() const
     {
-        return "Word{" + englishWord + " " + polishWord + "\n" +
+        return "WordDescription{" + englishWord + " " + polishWord + "\n" +
                wordDescription.toString();
     }
 
     EnglishWord englishWord;
     PolishWord polishWord;
-    WordDescription wordDescription;
+    Description wordDescription;
 };
 
-inline bool operator==(const Word& lhs, const Word& rhs)
+inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
 {
     return (lhs.englishWord == rhs.englishWord &&
             lhs.polishWord == rhs.polishWord &&
             lhs.wordDescription == rhs.wordDescription);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const Word& word)
+inline std::ostream& operator<<(std::ostream& os, const WordDescription& word)
 {
     os << "\n"
        << "englishWord: " << word.englishWord << "\n"

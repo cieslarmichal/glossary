@@ -1,4 +1,4 @@
-#include "WordDescriptionSerializer.h"
+#include "wordsDb/descriptionsDb/WordDescriptionSerializer.h"
 
 #include <iostream>
 
@@ -6,21 +6,21 @@
 
 namespace
 {
-nlohmann::json getJsonFromWord(const WordDescription&);
+nlohmann::json getJsonFromWord(const Description&);
 
-WordDescription readWordDescription(const nlohmann::json&);
+Description readWordDescription(const nlohmann::json&);
 
 constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
 constexpr auto sentencesField = "sentences";
 }
 
 nlohmann::json WordDescriptionSerializer::serialize(
-    const WordDescription& wordDescription) const
+    const Description& wordDescription) const
 {
     return getJsonFromWord(wordDescription);
 }
 
-WordDescription
+Description
 WordDescriptionSerializer::deserialize(const nlohmann::json& json) const
 {
     if (json.empty())
@@ -41,7 +41,7 @@ WordDescriptionSerializer::deserialize(const nlohmann::json& json) const
 namespace
 {
 
-nlohmann::json getJsonFromWord(const WordDescription& wordDescription)
+nlohmann::json getJsonFromWord(const Description& wordDescription)
 {
     nlohmann::json val = nlohmann::json::object();
 
@@ -58,7 +58,7 @@ nlohmann::json getJsonFromWord(const WordDescription& wordDescription)
     return val;
 }
 
-WordDescription readWordDescription(const nlohmann::json& jsonText)
+Description readWordDescription(const nlohmann::json& jsonText)
 {
     DefinitionsWithExamples definitionsWithExamples;
     Sentences sentences;
@@ -81,7 +81,7 @@ WordDescription readWordDescription(const nlohmann::json& jsonText)
         }
     }
 
-    return WordDescription{definitionsWithExamples, sentences};
+    return Description{definitionsWithExamples, sentences};
 }
 
 }

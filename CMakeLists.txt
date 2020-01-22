@@ -19,7 +19,7 @@ if(${ENABLE_COVERAGE})
 endif()
 
 set(SOURCES
-        Source/wordsDb/descriptionsDb/WordsDatabase.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsDbImpl.cpp
         Source/Glossary.cpp
         Source/webConnection/HttpRequestHandlerImpl.cpp
         Source/translation/TranslatorImpl.cpp
@@ -29,10 +29,10 @@ set(SOURCES
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
         Source/WordDescriptionParser.cpp
-        Source/wordsDb/MemoryStorage.cpp
-        Source/wordsDb/PersistentStorage.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsMemoryStorage.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsPersistentStorage.cpp
         Source/DictionaryReaderImpl.cpp
-        Source/wordsDb/descriptionsDb/WordsSerializerImpl.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsSerializerImpl.cpp
         Source/WordDescriptionSerializer.cpp
         Source/HtmlWordsCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
@@ -53,11 +53,11 @@ set(UT_SOURCES
         UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp
-        UT/Source/wordsDb/descriptionsDb/WordsDatabaseTest.cpp
+        UT/Source/wordsDb/descriptionsDb/DescriptionsDbImplTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
-        UT/Source/wordsDb/MemoryStorageTest.cpp
-        UT/Source/wordsDb/PersistentStorageTest.cpp
-        UT/Source/wordsDb/descriptionsDb/WordsSerializerImplTest.cpp
+        UT/Source/wordsDb/descriptionsDb/DescriptionsMemoryStorageTest.cpp
+        UT/Source/wordsDb/descriptionsDb/DescriptionsPersistentStorageTest.cpp
+        UT/Source/wordsDb/descriptionsDb/DescriptionsSerializerImplTest.cpp
         UT/Source/WordDescriptionSerializerTest.cpp
         UT/Source/WordDescriptionParserTest.cpp
         UT/Source/HtmlWordsCreatorImplTest.cpp

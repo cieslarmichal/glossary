@@ -3,7 +3,7 @@
 #include <random>
 #include <stdexcept>
 
-Word WordRandomizerImpl::randomizeWord(const Words& words) const
+WordDescription WordRandomizerImpl::randomizeWord(const Words& words) const
 {
     if (words.empty())
     {

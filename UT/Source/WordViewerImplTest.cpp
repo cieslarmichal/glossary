@@ -8,11 +8,11 @@ namespace
 {
 const EnglishWord polishWord{"zaslony"};
 const auto polishWordView{"Polish word: zaslony\n"};
-const Word word("computer", "komputer",
+const WordDescription word("computer", "komputer",
                 {{{"definition", std::string{"example"}},
                   {"definition2", std::string{"example2"}}},
                  {"sentence"}});
-const Word wordWithoutDescription{"computer", "komputer", {}};
+const WordDescription wordWithoutDescription{"computer", "komputer", {}};
 const auto wordViewWithoutDescription{"English word: computer\n"
                                       "Polish translation: komputer\n"};
 const auto wordView{"English word: computer\n"

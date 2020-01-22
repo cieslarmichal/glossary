@@ -1,4 +1,4 @@
-#include "WordDescriptionParser.h"
+#include "wordsDb/descriptionsDb/WordDescriptionParser.h"
 
 #include <iostream>
 
@@ -6,7 +6,7 @@
 
 namespace
 {
-void removeMarks(WordDescription&);
+void removeMarks(Description&);
 
 void removeDefinitionMarks(Definition&);
 
@@ -25,10 +25,10 @@ const std::string exampleMark{"//"};
 const std::string sentenceMark{"\""};
 }
 
-boost::optional<WordDescription>
+boost::optional<Description>
 WordDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
-    WordDescription wordDescription;
+    Description wordDescription;
     bool previousLineIsDefinition = false;
 
     Definition definition;
@@ -77,7 +77,7 @@ WordDescriptionParser::parse(const std::vector<std::string>& lines) const
 
 namespace
 {
-void removeMarks(WordDescription& wordDescription)
+void removeMarks(Description& wordDescription)
 {
     for (auto& definitionAndExample : wordDescription.definitionsWithExamples)
     {

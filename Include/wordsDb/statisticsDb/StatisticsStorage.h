@@ -1,9 +1,12 @@
 #pragma once
 
-#include "Words.h"
 #include "boost/optional.hpp"
+#include "wordsDb/descriptionsDb/WordsDescriptions.h"
 
-class Storage
+namespace wordsDb::statisticsDb
+{
+
+class StatisticsStorage
 {
 public:
     virtual ~Storage() = default;
@@ -17,3 +20,4 @@ public:
     virtual Words::const_iterator begin() const = 0;
     virtual Words::const_iterator end() const = 0;
 };
+}

@@ -1,13 +1,16 @@
 #pragma once
 
-#include "Storage.h"
+#include "DescriptionsStorage.h"
 #include "boost/optional.hpp"
 
-class MemoryStorage : public Storage
+namespace wordsDb::descriptionsDb
+{
+
+class DescriptionsMemoryStorage : public DescriptionsStorage
 {
 public:
-    void addWord(const Word&) override;
-    boost::optional<Word> getWord(const EnglishWord&) const override;
+    void addWord(const WordDescription&) override;
+    boost::optional<WordDescription> getWord(const EnglishWord&) const override;
     Words getWords() const override;
     bool contains(const EnglishWord&) const override;
     Words::size_type size() const override;
@@ -18,3 +21,4 @@ public:
 private:
     Words words;
 };
+}

@@ -14,9 +14,9 @@ using namespace ::testing;
 namespace
 {
 const std::string urlAddress{"https://www.merriam-webster.com/dictionary/wine"};
-const WordWithTranslation wordWithTranslation{"wine", "wino"};
+const wordsDb::translationsDb::Translation wordWithTranslation{"wine", "wino"};
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
-const Word expectedWord{wordWithTranslation.englishWord,
+const WordDescription expectedWord{wordWithTranslation.englishWord,
                         wordWithTranslation.polishTranslation,
                         wordDescriptionFromParser};
 const webConnection::Response emptyHtmlResponse{};

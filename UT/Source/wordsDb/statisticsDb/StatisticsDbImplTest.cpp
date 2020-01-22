@@ -7,6 +7,7 @@
 #include "wordsDb/statisticsDb/StatisticsDbImpl.h"
 
 using namespace ::testing;
+using namespace wordsDb::statisticsDb;
 
 namespace
 {

@@ -25,7 +25,7 @@ private:
 
     // TODO: add const into unique_ptr if possible
     std::unique_ptr<WordsGeneratorService> wordsGenerator;
-    std::unique_ptr<StatisticsDb> answersCounter;
+    std::unique_ptr<wordsDb::statisticsDb::StatisticsDb> answersCounter;
     std::unique_ptr<AnswerChecker> answerChecker;
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewer> viewer;

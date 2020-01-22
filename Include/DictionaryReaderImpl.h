@@ -15,7 +15,7 @@ public:
 
 private:
     Dictionary processDictionaryContent(const std::string&) const;
-    boost::optional<WordWithTranslation>
+    boost::optional<Translation>
     getWordWithTranslation(const std::string&) const;
 
     std::shared_ptr<const FileAccess> fileAccess;

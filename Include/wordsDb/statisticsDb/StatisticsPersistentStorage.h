@@ -3,12 +3,15 @@
 #include <memory>
 
 #include "FileAccess.h"
-#include "Storage.h"
-#include "wordsDb/MemoryStorage.h"
-#include "wordsDb/descriptionsDb/WordsSerializer.h"
+#include "StatisticsStorage.h"
+#include "wordsDb/descriptionsDb/DescriptionsSerializer.h"
+#include "wordsDb/translationsDb/TranslationsMemoryStorage.h"
 
-class PersistentStorage : public Storage
+namespace wordsDb::statisticsDb
 {
+class StatisticsPersistentStorage : public StatisticsStorage
+{
+
 public:
     PersistentStorage(std::shared_ptr<const FileAccess>,
                       std::shared_ptr<const WordsSerializer>);
@@ -34,3 +37,4 @@ private:
     static const std::string fileName;
     static const std::string filePath;
 };
+}

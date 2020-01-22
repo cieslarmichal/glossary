@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace wordsDb::statisticsDb;
 
 namespace
 {

@@ -6,15 +6,13 @@
 #include "StatisticsDb.h"
 #include "StatisticsSerializer.h"
 
-// TODO: add statistics to internal storage as PersistentStorage (maybe template
-// somehow)
-
+namespace wordsDb::statisticsDb
+{
 class StatisticsDbImpl : public StatisticsDb
 {
 public:
-    StatisticsDbImpl(
-        std::shared_ptr<const FileAccess>,
-        std::shared_ptr<const StatisticsSerializer>);
+    StatisticsDbImpl(std::shared_ptr<const FileAccess>,
+                     std::shared_ptr<const StatisticsSerializer>);
 
     void addCorrectAnswer(const EnglishWord&) override;
     void addIncorrectAnswer(const EnglishWord&) override;
@@ -32,7 +30,9 @@ private:
     std::shared_ptr<const StatisticsSerializer> serializer;
     AnswersStatistics statistics;
 
+// TODO: reduce filenames to dirc and full name(dirc+name)
+    static const std::string filePath;
     static const std::string fileDirectory;
     static const std::string fileName;
-    static const std::string filePath;
 };
+}

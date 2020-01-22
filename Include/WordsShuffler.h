@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Words.h"
+#include "wordsDb/descriptionsDb/WordsDescriptions.h"
 
 class WordsShuffler
 {

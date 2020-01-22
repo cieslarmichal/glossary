@@ -1,24 +1,24 @@
-#include "wordsDb/descriptionsDb/WordsDatabase.h"
-
-#include "wordsDb/StorageMock.h"
+#include "wordsDb/descriptionsDb/DescriptionsStorageMock.h"
 
 #include "gtest/gtest.h"
+#include "wordsDb/descriptionsDb/DescriptionsDbImpl.h"
 
 using namespace ::testing;
+using namespace wordsDb::descriptionsDb;
 
 namespace
 {
 const EnglishWord englishWord{"englishWord"};
-const Word word(englishWord, "polishTranslation", {});
+const WordDescription word(englishWord, "polishTranslation", {});
 }
 
 class WordsDatabaseTest : public Test
 {
 public:
-    std::unique_ptr<StorageMock> storageInit =
-        std::make_unique<StrictMock<StorageMock>>();
-    StorageMock* storage = storageInit.get();
-    WordsDatabase database{std::move(storageInit)};
+    std::unique_ptr<DescriptionsStorageMock> storageInit =
+        std::make_unique<StrictMock<DescriptionsStorageMock>>();
+    DescriptionsStorageMock* storage = storageInit.get();
+    DescriptionsDbImpl database{std::move(storageInit)};
 };
 
 TEST_F(WordsDatabaseTest, givenWordAddition_shouldAddWordToStorage)

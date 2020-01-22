@@ -1,9 +1,11 @@
 #pragma once
 
-#include "AnswersStatistics.h"
 #include "EnglishWord.h"
+#include "Statistics.h"
 #include "boost/optional.hpp"
 
+namespace wordsDb::statisticsDb
+{
 class StatisticsDb
 {
 public:
@@ -15,3 +17,4 @@ public:
     getAnswersStatisticsPerWord(const EnglishWord&) const = 0;
     virtual AnswersStatistics getAnswersStatistics() const = 0;
 };
+}

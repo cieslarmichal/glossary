@@ -1,4 +1,4 @@
-#include "WordDescriptionParser.h"
+#include "wordsDb/descriptionsDb/WordDescriptionParser.h"
 
 #include "StringHelper.h"
 #include "gtest/gtest.h"
@@ -29,7 +29,7 @@ const Sentences sentences{
     {"In addition to beer, a selection of local and national wines will be "
      "offered.."},
     {"Who doesn't love delicious food paired with your favorite wine?"}};
-const WordDescription expectedWordDescription{definitionsWithExamples,
+const Description expectedWordDescription{definitionsWithExamples,
                                               sentences};
 
 const auto exampleContentPartlyWithoutMarks{
@@ -46,12 +46,12 @@ const DefinitionsWithExamples someDefinitionsAndExamples{
      boost::none}};
 const Sentences someSentences{
     {"Who doesn't love delicious food paired with your favorite wine?"}};
-const WordDescription wordDescriptionPartlyComplete{someDefinitionsAndExamples,
+const Description wordDescriptionPartlyComplete{someDefinitionsAndExamples,
                                                     someSentences};
 
 const std::vector<std::string> emptyContent{};
 
-const WordDescription emptyWordDescription{};
+const Description emptyWordDescription{};
 }
 
 class WordDescriptionParserTest : public Test

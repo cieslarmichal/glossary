@@ -2,8 +2,10 @@
 
 #include <string>
 
-#include "AnswersStatistics.h"
+#include "Statistics.h"
 
+namespace wordsDb::statisticsDb
+{
 class StatisticsSerializer
 {
 public:
@@ -12,3 +14,4 @@ public:
     virtual std::string serialize(const AnswersStatistics&) const = 0;
     virtual AnswersStatistics deserialize(const std::string&) const = 0;
 };
+}

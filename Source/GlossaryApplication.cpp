@@ -24,10 +24,10 @@ void GlossaryApplication::initialize()
 
     std::shared_ptr<const FileAccess> fileAccess =
         std::make_shared<const FileAccessImpl>();
-    std::shared_ptr<const StatisticsSerializer> serializer =
-        std::make_shared<const StatisticsSerializerImpl>();
+    std::shared_ptr<const wordsDb::statisticsDb::StatisticsSerializer> serializer =
+        std::make_shared<const wordsDb::statisticsDb::StatisticsSerializerImpl>();
     answersCounter =
-        std::make_unique<StatisticsDbImpl>(fileAccess, serializer);
+        std::make_unique<wordsDb::statisticsDb::StatisticsDbImpl>(fileAccess, serializer);
 
     answerChecker = std::make_unique<AnswerCheckerImpl>();
 
@@ -51,7 +51,7 @@ void GlossaryApplication::loop()
 
     while (userWantToContinue)
     {
-        Word word;
+        WordDescription word;
         try
         {
             word = wordsRandomizer->randomizeWord(glossaryWords);

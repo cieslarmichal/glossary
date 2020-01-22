@@ -8,9 +8,9 @@
 #include "HtmlWordsCreatorImpl.h"
 #include "WordsShufflerImpl.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
-#include "wordsDb/PersistentStorage.h"
-#include "wordsDb/descriptionsDb/WordsDatabase.h"
-#include "wordsDb/descriptionsDb/WordsSerializerImpl.h"
+#include "wordsDb/descriptionsDb/DescriptionsDbImpl.h"
+#include "wordsDb/descriptionsDb/DescriptionsSerializerImpl.h"
+#include "wordsDb/descriptionsDb/DescriptionsPersistentStorage.h"
 
 WordsGeneratorServiceImpl::WordsGeneratorServiceImpl()
 {
@@ -22,11 +22,11 @@ void WordsGeneratorServiceImpl::initializeWordsCreatorService()
 {
     std::shared_ptr<const FileAccess> fileAccess =
         std::make_shared<const FileAccessImpl>();
-    std::shared_ptr<const WordsSerializer> wordsSerializer =
-        std::make_shared<const WordsSerializerImpl>();
-    std::unique_ptr<Storage> storage =
-        std::make_unique<PersistentStorage>(fileAccess, wordsSerializer);
-    wordsDb = std::make_unique<WordsDatabase>(std::move(storage));
+    std::shared_ptr<const wordsDb::descriptionsDb::DescriptionsSerializer> wordsSerializer =
+        std::make_shared<const wordsDb::descriptionsDb::DescriptionsSerializerImpl>();
+    std::unique_ptr<wordsDb::descriptionsDb::DescriptionsStorage> storage =
+        std::make_unique<wordsDb::descriptionsDb::DescriptionsPersistentStorage>(fileAccess, wordsSerializer);
+    wordsDb = std::make_unique<wordsDb::descriptionsDb::DescriptionsDbImpl>(std::move(storage));
 
     std::unique_ptr<const webConnection::HttpRequestHandler> httpHandler =
         std::make_unique<webConnection::HttpRequestHandlerImpl>();
@@ -59,8 +59,8 @@ Words WordsGeneratorServiceImpl::generateWords() const
     return wordsShuffler->shuffle(words);
 }
 
-Word WordsGeneratorServiceImpl::generateWord(
-    const WordWithTranslation& wordWithTranslation) const
+WordDescription WordsGeneratorServiceImpl::generateWord(
+    const Translation& wordWithTranslation) const
 {
     // TODO: if word have empty description check with html once more
     if (const auto wordFromDatabase =
@@ -77,13 +77,13 @@ Word WordsGeneratorServiceImpl::generateWord(
         }
         else
         {
-            return Word(wordWithTranslation.englishWord,
+            return WordDescription(wordWithTranslation.englishWord,
                         wordWithTranslation.polishTranslation, {});
         }
     }
 }
 
-boost::optional<Word> WordsGeneratorServiceImpl::getWordFromDatabase(
+boost::optional<WordDescription> WordsGeneratorServiceImpl::getWordFromDatabase(
     const EnglishWord& englishWord) const
 {
     if (wordIsInStorage(englishWord))
@@ -93,13 +93,13 @@ boost::optional<Word> WordsGeneratorServiceImpl::getWordFromDatabase(
     return boost::none;
 }
 
-boost::optional<Word> WordsGeneratorServiceImpl::getWordFromHtml(
-    const WordWithTranslation& wordWithTranslation) const
+boost::optional<WordDescription> WordsGeneratorServiceImpl::getWordFromHtml(
+    const Translation& wordWithTranslation) const
 {
     return htmlWordCreator->createWord(wordWithTranslation);
 }
 
-void WordsGeneratorServiceImpl::addWordToStorage(const Word& word) const
+void WordsGeneratorServiceImpl::addWordToStorage(const WordDescription& word) const
 {
     wordsDb->addWord(word);
 }

@@ -1,4 +1,4 @@
-#include "wordsDb/descriptionsDb/WordsSerializerImpl.h"
+#include "wordsDb/descriptionsDb/DescriptionsSerializerImpl.h"
 
 #include <iostream>
 
@@ -12,7 +12,9 @@ constexpr auto polishWordField = "polishWord";
 constexpr auto wordDescriptionField = "wordDescription";
 }
 
-std::string WordsSerializerImpl::serialize(const Words& words) const
+namespace wordsDb::descriptionsDb
+{
+std::string DescriptionsSerializerImpl::serialize(const Words& words) const
 {
     nlohmann::json serialized;
     for (const auto& word : words)
@@ -26,7 +28,7 @@ std::string WordsSerializerImpl::serialize(const Words& words) const
     return serialized.dump();
 }
 
-Words WordsSerializerImpl::deserialize(const std::string& jsonText) const
+Words DescriptionsSerializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
     {
@@ -45,7 +47,8 @@ Words WordsSerializerImpl::deserialize(const std::string& jsonText) const
     return {};
 }
 
-nlohmann::json WordsSerializerImpl::getJsonFromWord(const Word& word) const
+nlohmann::json
+DescriptionsSerializerImpl::getJsonFromWord(const WordDescription& word) const
 {
     nlohmann::json val = nlohmann::json::object();
     val[englishWordField] = word.englishWord;
@@ -55,7 +58,7 @@ nlohmann::json WordsSerializerImpl::getJsonFromWord(const Word& word) const
     return val;
 }
 
-Words WordsSerializerImpl::readWords(const nlohmann::json& json) const
+Words DescriptionsSerializerImpl::readWords(const nlohmann::json& json) const
 {
     if (json.find(wordsField) != json.end())
     {
@@ -65,8 +68,10 @@ Words WordsSerializerImpl::readWords(const nlohmann::json& json) const
     return {};
 }
 
-Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
+Words DescriptionsSerializerImpl::parseWords(
+    const nlohmann::json& wordsJson) const
 {
+    //TODO: split to functions
     Words words;
     for (const auto& wordData : wordsJson)
     {
@@ -78,7 +83,7 @@ Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
                     std::string(wordData[englishWordField])};
                 const PolishWord polishWord{
                     std::string(wordData[polishWordField])};
-                const WordDescription wordDescription{
+                const Description wordDescription{
                     wordDescriptionSerializer.deserialize(
                         wordData[wordDescriptionField])};
                 words.push_back({englishWord, polishWord, wordDescription});
@@ -90,13 +95,14 @@ Words WordsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
         }
         else
         {
-            std::cerr << "Word does not contain all required data\n";
+            std::cerr << "WordDescription does not contain all required data\n";
         }
     }
     return words;
 }
 
-bool WordsSerializerImpl::isWordValid(const nlohmann::json& wordData) const
+bool DescriptionsSerializerImpl::isWordValid(
+    const nlohmann::json& wordData) const
 {
     const auto requiredFields = {englishWordField, polishWordField,
                                  wordDescriptionField};
@@ -105,4 +111,5 @@ bool WordsSerializerImpl::isWordValid(const nlohmann::json& wordData) const
             return wordData.find(fieldName) == wordData.end();
         });
     return !wordInvalid;
+}
 }

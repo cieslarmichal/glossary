@@ -1,8 +1,8 @@
-#include "WordDescriptionSerializer.h"
+#include "wordsDb/descriptionsDb/WordDescriptionSerializer.h"
 
-#include "DefinitionsWithExamples.h"
-#include "Sentences.h"
 #include "gtest/gtest.h"
+#include "wordsDb/descriptionsDb/DefinitionsWithExamples.h"
+#include "wordsDb/descriptionsDb/Sentences.h"
 
 using namespace ::testing;
 
@@ -16,7 +16,7 @@ const DefinitionsWithExamples definitionsWithExamples{definitionWithExample1,
 const Sentence sentence1{"sentence1"};
 const Sentence sentence2{"sentence2"};
 const Sentences sentences{sentence1, sentence2};
-const WordDescription wordDescription{definitionsWithExamples, sentences};
+const Description wordDescription{definitionsWithExamples, sentences};
 const auto expectedSerializedWordDescription{
     R"({"definitionsWithExamples":["definition1","definition2:example"],"sentences":["sentence1","sentence2"]})"};
 const auto expectedSerializedWordDescriptionWithoutDefinitionsAndExamples{
@@ -27,11 +27,11 @@ constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
 constexpr auto sentencesField = "sentences";
 const DefinitionsWithExamples emptyDefinitionsWithExamples{};
 const Sentences emptySentences{};
-const WordDescription wordDescriptionWithoutDefinitionsAndExamples{
+const Description wordDescriptionWithoutDefinitionsAndExamples{
     emptyDefinitionsWithExamples, sentences};
-const WordDescription wordDescriptionWithoutSentences{definitionsWithExamples,
+const Description wordDescriptionWithoutSentences{definitionsWithExamples,
                                                       emptySentences};
-const WordDescription emptyWordDescription{emptyDefinitionsWithExamples,
+const Description emptyWordDescription{emptyDefinitionsWithExamples,
                                            emptySentences};
 }
 

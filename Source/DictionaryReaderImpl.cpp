@@ -16,7 +16,7 @@ DictionaryReaderImpl::DictionaryReaderImpl(
 {
 }
 
-std::vector<WordWithTranslation> DictionaryReaderImpl::read() const
+std::vector<Translation> DictionaryReaderImpl::read() const
 {
     std::string dictionaryContent;
     try
@@ -32,10 +32,10 @@ std::vector<WordWithTranslation> DictionaryReaderImpl::read() const
     return processDictionaryContent(dictionaryContent);
 }
 
-std::vector<WordWithTranslation> DictionaryReaderImpl::processDictionaryContent(
+std::vector<Translation> DictionaryReaderImpl::processDictionaryContent(
     const std::string& dictionaryContent) const
 {
-    std::vector<WordWithTranslation> wordsWithTranslation;
+    std::vector<Translation> wordsWithTranslation;
     for (const auto& line : stringHelper::getSplitLines(dictionaryContent))
     {
         if (not line.empty())
@@ -49,7 +49,7 @@ std::vector<WordWithTranslation> DictionaryReaderImpl::processDictionaryContent(
     return wordsWithTranslation;
 }
 
-boost::optional<WordWithTranslation>
+boost::optional<Translation>
 DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
 {
     std::stringstream lineStream{line};
@@ -58,7 +58,7 @@ DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
     lineStream >> englishWord >> polishWord;
     if (!englishWord.empty() && !polishWord.empty())
     {
-        return WordWithTranslation{englishWord, polishWord};
+        return Translation{englishWord, polishWord};
     }
     return boost::none;
 }

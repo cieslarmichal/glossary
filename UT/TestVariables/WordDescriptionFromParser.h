@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WordDescription.h"
+#include "wordsDb/descriptionsDb/Description.h"
 
 const DefinitionsWithExamples definitionsWithExamples{
         {"the alcoholic fermented juice of fresh grapes used as a beverage", boost::none},
@@ -39,4 +39,4 @@ const Sentences sentences{
         "Pence\xE2\x80\x99s press secretary\xE2\x80\x99s comment comes after the Times reported last week that the vice president has been wineing and dining influential Republican donors at the Naval Observatory.",
         "SANTA ROSA, Calif. \xE2\x80\x94 In the heart of Northern California\xE2\x80\x99s wine country, a civil engineer turned marijuana entrepreneur is adding a new dimension to the art of matching fine wines with gourmet food: cannabis and wine pairing dinners."
 };
-const WordDescription wordDescriptionFromParser{definitionsWithExamples, sentences};
+const Description wordDescriptionFromParser{definitionsWithExamples, sentences};
