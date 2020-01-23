@@ -1,13 +1,15 @@
-#include "gtest/gtest.h"
 #include "wordsDb/descriptionsDb/DescriptionsMemoryStorage.h"
 
+#include "gtest/gtest.h"
+
 using namespace ::testing;
+using namespace wordsDb::descriptionsDb;
 
 namespace
 {
 const WordDescription word1("xxx", {}, {});
 const WordDescription word2("yyy", {}, {});
-const Words words{word1, word2};
+const WordsDescriptions words{word1, word2};
 }
 
 using namespace wordsDb::descriptionsDb;
@@ -20,42 +22,43 @@ public:
 
 TEST_F(DescriptionsMemoryStorageTest, givenWordAddition_shouldAddWord)
 {
-    storage.addWord(word1);
+    storage.addWordDescription(word1);
 
     ASSERT_FALSE(storage.empty());
-    ASSERT_EQ(storage.size(), Words::size_type{1});
+    ASSERT_EQ(storage.size(), WordsDescriptions::size_type{1});
 }
 
 TEST_F(DescriptionsMemoryStorageTest, addTwoDifferentWords_shouldAddTwoWords)
 {
-    storage.addWord(word1);
-    storage.addWord(word2);
+    storage.addWordDescription(word1);
+    storage.addWordDescription(word2);
 
-    const auto actualWords = storage.getWords();
+    const auto actualWords = storage.getWordsDescriptions();
 
     ASSERT_EQ(actualWords, words);
 }
 
 TEST_F(DescriptionsMemoryStorageTest, addTwoSameWords_shouldAddOnlyOne)
 {
-    storage.addWord(word1);
-    storage.addWord(word1);
+    storage.addWordDescription(word1);
+    storage.addWordDescription(word1);
 
-    ASSERT_EQ(storage.size(), Words::size_type{1});
+    ASSERT_EQ(storage.size(), WordsDescriptions::size_type{1});
 }
 
 TEST_F(DescriptionsMemoryStorageTest, givenEmptyStorage_getShouldNotReturnWord)
 {
-    const auto result = storage.getWord("someword");
+    const auto result = storage.getWordDescription("someword");
 
     ASSERT_EQ(result, boost::none);
 }
 
-TEST_F(DescriptionsMemoryStorageTest, givenStorageWithExactWord_shouldReturnWord)
+TEST_F(DescriptionsMemoryStorageTest,
+       givenStorageWithExactWord_shouldReturnWord)
 {
-    storage.addWord(word1);
+    storage.addWordDescription(word1);
 
-    const auto actualWord = storage.getWord("xxx");
+    const auto actualWord = storage.getWordDescription("xxx");
 
     ASSERT_EQ(actualWord, word1);
 }
@@ -63,8 +66,8 @@ TEST_F(DescriptionsMemoryStorageTest, givenStorageWithExactWord_shouldReturnWord
 TEST_F(DescriptionsMemoryStorageTest,
        givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
 {
-    storage.addWord(word1);
-    storage.addWord(word2);
+    storage.addWordDescription(word1);
+    storage.addWordDescription(word2);
 
     const auto amountOfWords = std::distance(storage.begin(), storage.end());
 
@@ -79,14 +82,13 @@ TEST_F(DescriptionsMemoryStorageTest, givenEmptyStorage_shouldBeEmpty)
 TEST_F(DescriptionsMemoryStorageTest,
        givenWordNotExistingInStorage_getShouldNotContainThisWord)
 {
-    const auto contains = storage.contains("someword");
-
-    ASSERT_FALSE(contains);
+    ASSERT_FALSE(storage.contains("someword"));
 }
 
-TEST_F(DescriptionsMemoryStorageTest, givenWordExistingInStorage_getShouldContainThisWord)
+TEST_F(DescriptionsMemoryStorageTest,
+       givenWordExistingInStorage_getShouldContainThisWord)
 {
-    storage.addWord(word1);
+    storage.addWordDescription(word1);
 
     const auto contains = storage.contains(word1.englishWord);
 

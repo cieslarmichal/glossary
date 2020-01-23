@@ -3,7 +3,8 @@
 #include <random>
 #include <stdexcept>
 
-WordDescription WordRandomizerImpl::randomizeWord(const Words& words) const
+WordDescription
+WordRandomizerImpl::randomizeWord(const WordsDescriptions& words) const
 {
     if (words.empty())
     {
@@ -13,10 +14,11 @@ WordDescription WordRandomizerImpl::randomizeWord(const Words& words) const
     return words.at(getRandomIndex(words.size()));
 }
 
-Words::size_type WordRandomizerImpl::getRandomIndex(Words::size_type size) const
+WordsDescriptions::size_type
+WordRandomizerImpl::getRandomIndex(WordsDescriptions::size_type size) const
 {
     std::random_device rd;
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, int(size) - 1);
-    return Words::size_type(dist(mt));
+    return WordsDescriptions::size_type(dist(mt));
 }

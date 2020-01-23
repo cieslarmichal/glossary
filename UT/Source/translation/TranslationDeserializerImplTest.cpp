@@ -1,4 +1,5 @@
 #include "translation/TranslationDeserializerImpl.h"
+
 #include "gtest/gtest.h"
 
 using namespace ::testing;
@@ -6,7 +7,8 @@ using namespace translation;
 
 namespace
 {
-const auto jsonContentWithText = R"({"code":200,"lang":"pl-en","text":["beer"]})";
+const auto jsonContentWithText =
+    R"({"code":200,"lang":"pl-en","text":["beer"]})";
 const auto expectedText = "beer";
 const auto jsonContentWithoutText = R"({"code":403,"lang":"pl-en"})";
 const auto emptyJson = "";
@@ -25,7 +27,8 @@ TEST_F(TranslationDeserializerImplTest, givenEmpyJson_shouldReturnEmptyText)
     ASSERT_TRUE(result.empty());
 }
 
-TEST_F(TranslationDeserializerImplTest, givenJsonWithoutTextField_shouldReturnEmptyText)
+TEST_F(TranslationDeserializerImplTest,
+       givenJsonWithoutTextField_shouldReturnEmptyText)
 {
     const auto result = deserializer.deserialize(jsonContentWithoutText);
 
@@ -38,5 +41,3 @@ TEST_F(TranslationDeserializerImplTest, givenJsonWithTextField_shouldReturnText)
 
     ASSERT_EQ(result, expectedText);
 }
-
-

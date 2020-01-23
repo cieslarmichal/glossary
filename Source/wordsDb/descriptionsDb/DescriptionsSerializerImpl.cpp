@@ -14,7 +14,8 @@ constexpr auto wordDescriptionField = "wordDescription";
 
 namespace wordsDb::descriptionsDb
 {
-std::string DescriptionsSerializerImpl::serialize(const Words& words) const
+std::string
+DescriptionsSerializerImpl::serialize(const WordsDescriptions& words) const
 {
     nlohmann::json serialized;
     for (const auto& word : words)
@@ -28,7 +29,8 @@ std::string DescriptionsSerializerImpl::serialize(const Words& words) const
     return serialized.dump();
 }
 
-Words DescriptionsSerializerImpl::deserialize(const std::string& jsonText) const
+WordsDescriptions
+DescriptionsSerializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
     {
@@ -58,7 +60,8 @@ DescriptionsSerializerImpl::getJsonFromWord(const WordDescription& word) const
     return val;
 }
 
-Words DescriptionsSerializerImpl::readWords(const nlohmann::json& json) const
+WordsDescriptions
+DescriptionsSerializerImpl::readWords(const nlohmann::json& json) const
 {
     if (json.find(wordsField) != json.end())
     {
@@ -68,11 +71,11 @@ Words DescriptionsSerializerImpl::readWords(const nlohmann::json& json) const
     return {};
 }
 
-Words DescriptionsSerializerImpl::parseWords(
-    const nlohmann::json& wordsJson) const
+WordsDescriptions
+DescriptionsSerializerImpl::parseWords(const nlohmann::json& wordsJson) const
 {
-    //TODO: split to functions
-    Words words;
+    // TODO: split to functions
+    WordsDescriptions words;
     for (const auto& wordData : wordsJson)
     {
         if (isWordValid(wordData))

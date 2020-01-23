@@ -11,7 +11,7 @@ class Translator
 public:
     virtual ~Translator() = default;
 
-    virtual boost::optional<std::string> translate(const std::string&, SourceLanguage,
-                                  TargetLanguage) const = 0;
+    virtual boost::optional<std::string>
+    translate(const std::string&, SourceLanguage, TargetLanguage) const = 0;
 };
 }

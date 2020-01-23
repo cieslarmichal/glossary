@@ -9,14 +9,13 @@ namespace wordsDb::statisticsDb
 class StatisticsSerializerImpl : public StatisticsSerializer
 {
 public:
-    std::string serialize(const AnswersStatistics&) const override;
-    AnswersStatistics deserialize(const std::string&) const override;
+    std::string serialize(const Statistics&) const override;
+    Statistics deserialize(const std::string&) const override;
 
 private:
-    nlohmann::json
-    getJsonFromWordAnswersStatistics(const AnswersStatisticsPerWord&) const;
-    AnswersStatistics readAnswersStatistics(const nlohmann::json&) const;
-    AnswersStatistics parseAnswersStatistics(const nlohmann::json&) const;
-    bool isWordAnswersStatisticsValid(const nlohmann::json&) const;
+    nlohmann::json getJsonFromWordStatistics(const WordStatistics&) const;
+    Statistics readStatistics(const nlohmann::json&) const;
+    Statistics parseStatistics(const nlohmann::json&) const;
+    bool isWordStatisticsValid(const nlohmann::json&) const;
 };
 }

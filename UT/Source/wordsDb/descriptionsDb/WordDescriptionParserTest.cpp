@@ -4,6 +4,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace wordsDb::descriptionsDb;
 
 namespace
 {
@@ -29,8 +30,7 @@ const Sentences sentences{
     {"In addition to beer, a selection of local and national wines will be "
      "offered.."},
     {"Who doesn't love delicious food paired with your favorite wine?"}};
-const Description expectedWordDescription{definitionsWithExamples,
-                                              sentences};
+const Description expectedWordDescription{definitionsWithExamples, sentences};
 
 const auto exampleContentPartlyWithoutMarks{
     ": the alcoholic fermented juice of fresh grapes used as a beverage\n"
@@ -47,7 +47,7 @@ const DefinitionsWithExamples someDefinitionsAndExamples{
 const Sentences someSentences{
     {"Who doesn't love delicious food paired with your favorite wine?"}};
 const Description wordDescriptionPartlyComplete{someDefinitionsAndExamples,
-                                                    someSentences};
+                                                someSentences};
 
 const std::vector<std::string> emptyContent{};
 

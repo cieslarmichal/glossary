@@ -5,6 +5,7 @@
 #include "wordsDb/descriptionsDb/Sentences.h"
 
 using namespace ::testing;
+using namespace wordsDb::descriptionsDb;
 
 namespace
 {
@@ -30,9 +31,9 @@ const Sentences emptySentences{};
 const Description wordDescriptionWithoutDefinitionsAndExamples{
     emptyDefinitionsWithExamples, sentences};
 const Description wordDescriptionWithoutSentences{definitionsWithExamples,
-                                                      emptySentences};
+                                                  emptySentences};
 const Description emptyWordDescription{emptyDefinitionsWithExamples,
-                                           emptySentences};
+                                       emptySentences};
 }
 
 class WordDescriptionSerializerTest : public Test

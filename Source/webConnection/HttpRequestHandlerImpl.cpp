@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "exceptions/ConnectionFailed.h"
 #include "curl/curl.h"
+#include "exceptions/ConnectionFailed.h"
 
 namespace webConnection
 {

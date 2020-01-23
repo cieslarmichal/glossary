@@ -4,8 +4,8 @@
 
 #include "FileAccess.h"
 #include "StatisticsStorage.h"
-#include "wordsDb/descriptionsDb/DescriptionsSerializer.h"
-#include "wordsDb/translationsDb/TranslationsMemoryStorage.h"
+#include "wordsDb/statisticsDb/StatisticsMemoryStorage.h"
+#include "wordsDb/statisticsDb/StatisticsSerializer.h"
 
 namespace wordsDb::statisticsDb
 {
@@ -13,28 +13,31 @@ class StatisticsPersistentStorage : public StatisticsStorage
 {
 
 public:
-    PersistentStorage(std::shared_ptr<const FileAccess>,
-                      std::shared_ptr<const WordsSerializer>);
+    StatisticsPersistentStorage(std::shared_ptr<const FileAccess>,
+                                std::shared_ptr<const StatisticsSerializer>);
 
-    void addWord(const Word&) override;
-    boost::optional<Word> getWord(const EnglishWord&) const override;
-    Words getWords() const override;
+    boost::optional<WordStatistics>
+    getWordStatistics(const EnglishWord&) const override;
+    Statistics getStatistics() const override;
+    void addWordStatistics(WordStatistics) override;
+    void addCorrectAnswer(const EnglishWord&) override;
+    void addIncorrectAnswer(const EnglishWord&) override;
+    void resetStatistics() override;
     bool contains(const EnglishWord&) const override;
-    Words::size_type size() const override;
+    Statistics::size_type size() const override;
     bool empty() const override;
-    Words::const_iterator begin() const override;
-    Words::const_iterator end() const override;
+    Statistics::const_iterator begin() const override;
+    Statistics::const_iterator end() const override;
 
 private:
     void loadFile();
     void serialize() const;
 
     std::shared_ptr<const FileAccess> fileAccess;
-    std::shared_ptr<const WordsSerializer> serializer;
-    MemoryStorage storage;
+    std::shared_ptr<const StatisticsSerializer> serializer;
+    StatisticsMemoryStorage storage;
 
-    static const std::string fileDirectory;
-    static const std::string fileName;
-    static const std::string filePath;
+    static const std::string directory;
+    static const std::string filename;
 };
 }

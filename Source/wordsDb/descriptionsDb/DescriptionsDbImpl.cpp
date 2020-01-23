@@ -8,19 +8,25 @@ DescriptionsDbImpl::DescriptionsDbImpl(
 {
 }
 
-void DescriptionsDbImpl::addWord(const WordDescription& word) const
+void DescriptionsDbImpl::addWordDescription(const WordDescription& word) const
 {
-    storage->addWord(word);
+    storage->addWordDescription(word);
 }
 
 boost::optional<WordDescription>
-DescriptionsDbImpl::getWord(const EnglishWord& englishWord) const
+DescriptionsDbImpl::getWordDescription(const EnglishWord& englishWord) const
 {
-    return storage->getWord(englishWord);
+    return storage->getWordDescription(englishWord);
+}
+
+WordsDescriptions DescriptionsDbImpl::getWordsDescriptions() const
+{
+    return storage->getWordsDescriptions();
 }
 
 bool DescriptionsDbImpl::contains(const EnglishWord& englishWord) const
 {
     return storage->contains(englishWord);
 }
+
 }

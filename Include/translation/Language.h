@@ -13,11 +13,11 @@ enum class Language
 
 inline std::string toLanguageCode(Language language)
 {
-    if(language == Language::Polish)
+    if (language == Language::Polish)
     {
         return "pl";
     }
-    else if(language == Language::English)
+    else if (language == Language::English)
     {
         return "en";
     }

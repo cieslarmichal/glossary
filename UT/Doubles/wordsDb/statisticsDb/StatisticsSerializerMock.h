@@ -10,7 +10,7 @@ namespace wordsDb::statisticsDb
 class StatisticsSerializerMock : public StatisticsSerializer
 {
 public:
-    MOCK_CONST_METHOD1(serialize, std::string(const AnswersStatistics&));
-    MOCK_CONST_METHOD1(deserialize, AnswersStatistics(const std::string&));
+    MOCK_CONST_METHOD1(serialize, std::string(const Statistics&));
+    MOCK_CONST_METHOD1(deserialize, Statistics(const std::string&));
 };
 }

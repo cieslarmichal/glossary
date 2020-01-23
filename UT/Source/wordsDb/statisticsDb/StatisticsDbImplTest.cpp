@@ -1,129 +1,104 @@
-#include "FileAccessMock.h"
-#include "wordsDb/statisticsDb/StatisticsSerializerMock.h"
-
-#include "boost/assign.hpp"
-#include "exceptions/FileNotFound.h"
-#include "gtest/gtest.h"
 #include "wordsDb/statisticsDb/StatisticsDbImpl.h"
+
+#include "wordsDb/statisticsDb/StatisticsStorageMock.h"
+
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace wordsDb::statisticsDb;
 
 namespace
 {
-const std::string filePath{"../database/answersStatistics.txt"};
-const AnswersStatisticsPerWord statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
-const AnswersStatisticsPerWord statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
-const AnswersStatistics answersStatistics = boost::assign::map_list_of(
-    statisticsPerWord1.englishWord,
-    statisticsPerWord1)(statisticsPerWord2.englishWord, statisticsPerWord2);
-const AnswersStatistics answersStatisticsWithWord1 = boost::assign::map_list_of(
-    statisticsPerWord1.englishWord, statisticsPerWord1);
-const AnswersStatisticsPerWord statisticsPerWord1AfterCorrectAnswer{
-    EnglishWord{"cat"}, 8, 0};
-const AnswersStatisticsPerWord statisticsPerWord1AfterIncorrectAnswer{
-    EnglishWord{"cat"}, 7, 1};
-const AnswersStatistics answersStatisticsWithWord1AfterCorrectAnswer{
-    {statisticsPerWord1AfterCorrectAnswer.englishWord,
-     statisticsPerWord1AfterCorrectAnswer}};
-const AnswersStatistics answersStatisticsWithWord1AfterIncorrectAnswer{
-    {statisticsPerWord1AfterIncorrectAnswer.englishWord,
-     statisticsPerWord1AfterIncorrectAnswer}};
-const std::string serializedStatisticsAfterCorrectAddition{
-    R"({"answersStatistics":[{"correctAnswers":8,"englishWord":"cat","incorrectAnswers":0}]})"};
-const std::string serializedStatisticsAfterIncorrectAddition{
-    R"({"answersStatistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":1}]})"};
+const EnglishWord englishWord1{"englishWord1"};
+const EnglishWord englishWord2{"englishWord2"};
+const EnglishWord nonExistingWord{"nonExistingWord"};
+const WordStatistics wordStats1{englishWord1, 7, 0};
+const WordStatistics wordStats2{englishWord2, 8, 0};
+const Statistics oneWordStatistics{wordStats1};
+const Statistics twoWordsStatistics{wordStats1, wordStats2};
 }
 
 class StatisticsDbImplTest : public Test
 {
 public:
-    std::shared_ptr<FileAccessMock> fileAccess =
-        std::make_shared<StrictMock<FileAccessMock>>();
-    std::shared_ptr<StatisticsSerializerMock> serializer =
-        std::make_shared<StrictMock<StatisticsSerializerMock>>();
+    std::unique_ptr<StatisticsStorageMock> storageInit =
+        std::make_unique<StrictMock<StatisticsStorageMock>>();
+    StatisticsStorageMock* storage = storageInit.get();
+    StatisticsDbImpl database{std::move(storageInit)};
+
+//    void resetWordStatistics(const EnglishWord&) override;
 };
 
-TEST_F(StatisticsDbImplTest, givenEmptyFile_shouldNotLoadAnyStatistics)
+TEST_F(StatisticsDbImplTest, addWordStatistics)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
-    EXPECT_CALL(*serializer, deserialize(""))
-        .WillOnce(Return(AnswersStatistics{}));
-    StatisticsDbImpl answersCounter{fileAccess, serializer};
+    EXPECT_CALL(*storage, addWordStatistics(wordStats1));
 
-    const auto actualStatistics = answersCounter.getAnswersStatistics();
-
-    ASSERT_TRUE(actualStatistics.empty());
+    database.addWordStatistics(wordStats1);
 }
 
 TEST_F(StatisticsDbImplTest,
-       givenPersistentStorageWithFileWithWords_shouldLoadWords)
+       getWordStatistics)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath))
-        .WillOnce(Return("some content"));
-    EXPECT_CALL(*serializer, deserialize("some content"))
-        .WillOnce(Return(answersStatistics));
-    StatisticsDbImpl answersCounter{fileAccess, serializer};
+    EXPECT_CALL(*storage, getWordStatistics(englishWord1))
+        .WillOnce(Return(wordStats1));
 
-    const auto actualStatistics = answersCounter.getAnswersStatistics();
+    const auto actualWordStats = database.getWordStatistics(englishWord1);
 
-    ASSERT_EQ(actualStatistics, answersStatistics);
+    ASSERT_EQ(actualWordStats, wordStats1);
 }
 
-TEST_F(StatisticsDbImplTest, givenInvalidFile_shouldReturnNoStatictics)
+TEST_F(StatisticsDbImplTest, getStatistics)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath))
-        .WillOnce(Throw(exceptions::FileNotFound{""}));
-    StatisticsDbImpl answersCounter{fileAccess, serializer};
+    EXPECT_CALL(*storage, getStatistics())
+        .WillOnce(Return(twoWordsStatistics));
 
-    const auto actualStatistics = answersCounter.getAnswersStatistics();
+    const auto statistics = database.getStatistics();
 
-    EXPECT_TRUE(actualStatistics.empty());
+    ASSERT_EQ(statistics, twoWordsStatistics);
 }
 
-TEST_F(
-    StatisticsDbImplTest,
-    givenCorrectAnswer_shouldIncreaseCorrectAnswersInStatisticsAndSerializeToFile)
+TEST_F(StatisticsDbImplTest, englishWordInStorage_shouldAddCorrectAnswer)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath))
-        .WillOnce(Return("some content"));
-    EXPECT_CALL(*serializer, deserialize("some content"))
-        .WillOnce(Return(answersStatisticsWithWord1));
-    StatisticsDbImpl answersCounter{fileAccess, serializer};
+    EXPECT_CALL(*storage, contains(englishWord1))
+        .WillOnce(Return(true));
+    EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
-    EXPECT_CALL(*serializer,
-                serialize(answersStatisticsWithWord1AfterCorrectAnswer))
-        .WillOnce(Return(serializedStatisticsAfterCorrectAddition));
-    EXPECT_CALL(*fileAccess,
-                write(filePath, serializedStatisticsAfterCorrectAddition));
-
-    answersCounter.addCorrectAnswer(statisticsPerWord1.englishWord);
-
-    const auto actualStatisticsPerWord1 =
-        answersCounter.getAnswersStatisticsPerWord(
-            statisticsPerWord1.englishWord);
-    ASSERT_EQ(actualStatisticsPerWord1, statisticsPerWord1AfterCorrectAnswer);
+    database.addCorrectAnswer(englishWord1);
 }
 
-TEST_F(
-    StatisticsDbImplTest,
-    givenIncorrectAnswer_shouldIncreaseIncorrectAnswersInStatisticsAndSerializeToFile)
+TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddCorrectAnswer)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath))
-        .WillOnce(Return("some content"));
-    EXPECT_CALL(*serializer, deserialize("some content"))
-        .WillOnce(Return(answersStatisticsWithWord1));
-    StatisticsDbImpl answersCounter{fileAccess, serializer};
+    EXPECT_CALL(*storage, contains(englishWord1))
+        .WillOnce(Return(false));
+    EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
+    EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
-    EXPECT_CALL(*serializer,
-                serialize(answersStatisticsWithWord1AfterIncorrectAnswer))
-        .WillOnce(Return(serializedStatisticsAfterIncorrectAddition));
-    EXPECT_CALL(*fileAccess,
-                write(filePath, serializedStatisticsAfterIncorrectAddition));
-    answersCounter.addIncorrectAnswer(statisticsPerWord1.englishWord);
-
-    const auto actualStatisticsPerWord1 =
-        answersCounter.getAnswersStatisticsPerWord(
-            statisticsPerWord1.englishWord);
-    ASSERT_EQ(actualStatisticsPerWord1, statisticsPerWord1AfterIncorrectAnswer);
+    database.addCorrectAnswer(englishWord1);
 }
+
+TEST_F(StatisticsDbImplTest, englishWordInStorage_shouldAddIncorrectAnswer)
+{
+    EXPECT_CALL(*storage, contains(englishWord1))
+        .WillOnce(Return(true));
+    EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
+
+    database.addIncorrectAnswer(englishWord1);
+}
+
+TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddIncorrectAnswer)
+{
+    EXPECT_CALL(*storage, contains(englishWord1))
+        .WillOnce(Return(false));
+    EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
+    EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
+
+    database.addIncorrectAnswer(englishWord1);
+}
+
+TEST_F(StatisticsDbImplTest, resetStatistics)
+{
+    EXPECT_CALL(*storage, resetStatistics());
+
+    database.resetStatistics();
+}
+

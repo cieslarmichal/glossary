@@ -6,7 +6,7 @@
 
 namespace
 {
-constexpr auto answersStatisticsField = "answersStatistics";
+constexpr auto statisticsField = "statistics";
 constexpr auto englishWordField = "englishWord";
 constexpr auto correctAnswersField = "correctAnswers";
 constexpr auto incorrectAnswersField = "incorrectAnswers";
@@ -14,14 +14,14 @@ constexpr auto incorrectAnswersField = "incorrectAnswers";
 
 namespace wordsDb::statisticsDb
 {
-std::string StatisticsSerializerImpl::serialize(
-    const AnswersStatistics& answersStatistics) const
+std::string
+StatisticsSerializerImpl::serialize(const Statistics& answersStatistics) const
 {
     nlohmann::json serialized;
     for (const auto& wordAnswersStatistics : answersStatistics)
     {
-        serialized[answersStatisticsField].push_back(
-            getJsonFromWordAnswersStatistics(wordAnswersStatistics.second));
+        serialized[statisticsField].push_back(
+            getJsonFromWordStatistics(wordAnswersStatistics));
     }
     if (serialized.empty())
     {
@@ -30,7 +30,7 @@ std::string StatisticsSerializerImpl::serialize(
     return serialized.dump();
 }
 
-AnswersStatistics
+Statistics
 StatisticsSerializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
@@ -41,78 +41,73 @@ StatisticsSerializerImpl::deserialize(const std::string& jsonText) const
     try
     {
         const auto json = nlohmann::json::parse(jsonText);
-        return readAnswersStatistics(json);
+        return readStatistics(json);
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unable to parse AnswersStatistics:" << e.what();
+        std::cerr << "Unable to parse Statistics:" << e.what();
     }
     return {};
 }
 
-nlohmann::json StatisticsSerializerImpl::getJsonFromWordAnswersStatistics(
-    const AnswersStatisticsPerWord& wordAnswersStatistics) const
+nlohmann::json StatisticsSerializerImpl::getJsonFromWordStatistics(
+    const WordStatistics& wordStatistics) const
 {
     nlohmann::json val = nlohmann::json::object();
-    val[englishWordField] = wordAnswersStatistics.englishWord;
-    val[correctAnswersField] = wordAnswersStatistics.correctAnswers;
-    val[incorrectAnswersField] = wordAnswersStatistics.incorrectAnswers;
+    val[englishWordField] = wordStatistics.englishWord;
+    val[correctAnswersField] = wordStatistics.correctAnswers;
+    val[incorrectAnswersField] = wordStatistics.incorrectAnswers;
     return val;
 }
 
-AnswersStatistics StatisticsSerializerImpl::readAnswersStatistics(
-    const nlohmann::json& json) const
+Statistics
+StatisticsSerializerImpl::readStatistics(const nlohmann::json& json) const
 {
-    if (json.find(answersStatisticsField) != json.end())
+    if (json.find(statisticsField) != json.end())
     {
-        return parseAnswersStatistics(json[answersStatisticsField]);
+        return parseStatistics(json[statisticsField]);
     }
-    // info
     std::cerr << "There are no statistics stored\n";
     return {};
 }
 
-AnswersStatistics StatisticsSerializerImpl::parseAnswersStatistics(
-    const nlohmann::json& answersStatisticsJson) const
+Statistics StatisticsSerializerImpl::parseStatistics(
+    const nlohmann::json& statisticsJson) const
 {
-    AnswersStatistics answersStatistics;
-    for (const auto& answersStatisticsData : answersStatisticsJson)
+    Statistics statistics;
+    for (const auto& wordStatisticsData : statisticsJson)
     {
-        if (isWordAnswersStatisticsValid(answersStatisticsData))
+        if (isWordStatisticsValid(wordStatisticsData))
         {
             try
             {
-                const auto englishWord =
-                    answersStatisticsData[englishWordField];
-                answersStatistics[englishWord] = AnswersStatisticsPerWord{
-                    answersStatisticsData[englishWordField],
-                    answersStatisticsData[correctAnswersField],
-                    answersStatisticsData[incorrectAnswersField]};
+                statistics.emplace_back(
+                    WordStatistics{wordStatisticsData[englishWordField],
+                                   wordStatisticsData[correctAnswersField],
+                                   wordStatisticsData[incorrectAnswersField]});
             }
             catch (const std::exception& e)
             {
-                std::cerr << "Unable to read wordAnswerStatistics:" << e.what()
+                std::cerr << "Unable to read wordStatistics:" << e.what()
                           << "\n";
             }
         }
         else
         {
-            std::cerr
-                << "wordAnswersStatistics does not contain all required data\n";
+            std::cerr << "statistics does not contain all required data\n";
         }
     }
-    return answersStatistics;
+    return statistics;
 }
 
-bool StatisticsSerializerImpl::isWordAnswersStatisticsValid(
-    const nlohmann::json& wordAnswersStatistics) const
+bool StatisticsSerializerImpl::isWordStatisticsValid(
+    const nlohmann::json& wordStatistics) const
 {
     const auto requiredFields = {englishWordField, correctAnswersField,
                                  incorrectAnswersField};
     auto wordInvalid =
         boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
-            return wordAnswersStatistics.find(fieldName) ==
-                   wordAnswersStatistics.end();
+            return wordStatistics.find(fieldName) == wordStatistics.end();
         });
     return !wordInvalid;
 }

@@ -8,7 +8,8 @@ class WordsGeneratorService
 public:
     virtual ~WordsGeneratorService() = default;
 
-    virtual WordDescription
+    virtual wordsDb::descriptionsDb::WordDescription
     generateWord(const wordsDb::translationsDb::Translation&) const = 0;
-    virtual Words generateWords() const = 0;
+    virtual wordsDb::descriptionsDb::WordsDescriptions
+    generateWords() const = 0;
 };

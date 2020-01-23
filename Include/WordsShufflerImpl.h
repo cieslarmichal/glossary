@@ -5,9 +5,9 @@
 class WordsShufflerImpl : public WordsShuffler
 {
 public:
-    Words shuffle(const Words&) const override;
+    WordsDescriptions shuffle(const WordsDescriptions&) const override;
 
 private:
-    bool needToShuffle(const Words&) const;
-    Words shuffleWords(const Words&) const;
+    bool needToShuffle(const WordsDescriptions&) const;
+    WordsDescriptions shuffleWords(const WordsDescriptions&) const;
 };

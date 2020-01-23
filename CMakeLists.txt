@@ -7,7 +7,7 @@ enable_testing()
 
 add_subdirectory(externals)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
 
@@ -19,25 +19,27 @@ if(${ENABLE_COVERAGE})
 endif()
 
 set(SOURCES
-        Source/wordsDb/descriptionsDb/DescriptionsDbImpl.cpp
-        Source/Glossary.cpp
-        Source/webConnection/HttpRequestHandlerImpl.cpp
         Source/translation/TranslatorImpl.cpp
         Source/translation/TranslationDeserializerImpl.cpp
+        Source/webConnection/HttpRequestHandlerImpl.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsDbImpl.cpp
+        Source/wordsDb/descriptionsDb/WordDescriptionParser.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsMemoryStorage.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsPersistentStorage.cpp
+        Source/wordsDb/descriptionsDb/DescriptionsSerializerImpl.cpp
+        Source/wordsDb/descriptionsDb/WordDescriptionSerializer.cpp
+        Source/wordsDb/statisticsDb/StatisticsDbImpl.cpp
+        Source/wordsDb/statisticsDb/StatisticsSerializerImpl.cpp
+        Source/wordsDb/statisticsDb/StatisticsMemoryStorage.cpp
+        Source/wordsDb/statisticsDb/StatisticsPersistentStorage.cpp
+        Source/Glossary.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
-        Source/WordDescriptionParser.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsMemoryStorage.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsPersistentStorage.cpp
         Source/DictionaryReaderImpl.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsSerializerImpl.cpp
-        Source/WordDescriptionSerializer.cpp
         Source/HtmlWordsCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
-        Source/wordsDb/statisticsDb/StatisticsDbImpl.cpp
-        Source/wordsDb/statisticsDb/StatisticsSerializerImpl.cpp
         Source/WordsShufflerImpl.cpp
         Source/WordViewerImpl.cpp
         Source/UserPromptImpl.cpp
@@ -50,19 +52,21 @@ set(UT_SOURCES
         UT/Source/translation/TranslatorImplTest.cpp
         UT/Source/translation/TranslationDeserializerImplTest.cpp
         UT/Source/webConnection/HttpRequestHandlerTest.cpp
-        UT/Source/GlossaryHtmlParserTest.cpp
-        UT/Source/DefaultHtmlParserTest.cpp
-        UT/Source/FileAccessImplTest.cpp
         UT/Source/wordsDb/descriptionsDb/DescriptionsDbImplTest.cpp
-        UT/Source/DictionaryReaderImplTest.cpp
         UT/Source/wordsDb/descriptionsDb/DescriptionsMemoryStorageTest.cpp
         UT/Source/wordsDb/descriptionsDb/DescriptionsPersistentStorageTest.cpp
         UT/Source/wordsDb/descriptionsDb/DescriptionsSerializerImplTest.cpp
-        UT/Source/WordDescriptionSerializerTest.cpp
-        UT/Source/WordDescriptionParserTest.cpp
-        UT/Source/HtmlWordsCreatorImplTest.cpp
+        UT/Source/wordsDb/descriptionsDb/WordDescriptionSerializerTest.cpp
+        UT/Source/wordsDb/descriptionsDb/WordDescriptionParserTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsDbImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsSerializerImplTest.cpp
+        UT/Source/wordsDb/statisticsDb/StatisticsMemoryStorageTest.cpp
+        UT/Source/wordsDb/statisticsDb/StatisticsPersistentStorageTest.cpp
+        UT/Source/GlossaryHtmlParserTest.cpp
+        UT/Source/DefaultHtmlParserTest.cpp
+        UT/Source/FileAccessImplTest.cpp
+        UT/Source/DictionaryReaderImplTest.cpp
+        UT/Source/HtmlWordsCreatorImplTest.cpp
         UT/Source/WordsShufflerImplTest.cpp
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp

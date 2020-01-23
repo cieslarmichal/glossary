@@ -6,7 +6,7 @@
 
 namespace wordsDb::statisticsDb
 {
-struct AnswersStatisticsPerWord
+struct WordStatistics
 {
     void addCorrectAnswer()
     {
@@ -18,26 +18,29 @@ struct AnswersStatisticsPerWord
         incorrectAnswers++;
     }
 
+    void resetAnswers()
+    {
+        correctAnswers = 0;
+        incorrectAnswers = 0;
+    }
+
     EnglishWord englishWord;
     int correctAnswers{0};
     int incorrectAnswers{0};
 };
 
-inline bool operator==(const AnswersStatisticsPerWord& lhs,
-                       const AnswersStatisticsPerWord& rhs)
+inline bool operator==(const WordStatistics& lhs, const WordStatistics& rhs)
 {
     return (lhs.englishWord == rhs.englishWord &&
             lhs.correctAnswers == rhs.correctAnswers &&
             lhs.incorrectAnswers == rhs.incorrectAnswers);
 }
 
-inline std::ostream&
-operator<<(std::ostream& os,
-           const AnswersStatisticsPerWord& wordAnswersStatistics)
+inline std::ostream& operator<<(std::ostream& os,
+                                const WordStatistics& wordStatistics)
 {
-    os << wordAnswersStatistics.englishWord << " "
-       << wordAnswersStatistics.correctAnswers << " "
-       << wordAnswersStatistics.incorrectAnswers;
+    os << wordStatistics.englishWord << " " << wordStatistics.correctAnswers
+       << " " << wordStatistics.incorrectAnswers;
     return os;
 }
 }

@@ -2,15 +2,11 @@
 
 #include <sstream>
 
-namespace
-{
-
-}
-
 size_t WordViewerImpl::amountOfDefinitionsToView{5};
 size_t WordViewerImpl::amountOfSentencesToView{2};
 
-std::string WordViewerImpl::viewWord(const WordDescription& word) const
+std::string WordViewerImpl::viewWord(
+    const wordsDb::descriptionsDb::WordDescription& word) const
 {
     std::stringstream wordView;
     wordView << "English word: " << word.englishWord << "\n";
@@ -26,8 +22,8 @@ std::string WordViewerImpl::viewPolishWord(const PolishWord& polishWord) const
     return wordView.str();
 }
 
-std::string
-WordViewerImpl::getWordDescription(const Description& wordDescription) const
+std::string WordViewerImpl::getWordDescription(
+    const wordsDb::descriptionsDb::Description& wordDescription) const
 {
     // TODO: improve viewing: once definitions: and something like ":",
     // examples: "//", sentences: "sentence"

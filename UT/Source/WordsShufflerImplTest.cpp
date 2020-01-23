@@ -7,14 +7,14 @@ using namespace ::testing;
 namespace
 {
 const WordDescription word1("computer", "komputer",
-                 {{{"definition", std::string{"example"}},
-                   {"definition2", std::string{"example2"}}},
-                  {"sentence"}});
+                            {{{"definition", std::string{"example"}},
+                              {"definition2", std::string{"example2"}}},
+                             {"sentence"}});
 const WordDescription word2("tea", "herbata", {});
 const WordDescription word3("headphones", "sluchawki", {});
-const Words words{word1, word2, word3};
-const Words wordsWithOneWord{word1};
-const Words emptyWords{};
+const WordsDescriptions words{word1, word2, word3};
+const WordsDescriptions wordsWithOneWord{word1};
+const WordsDescriptions emptyWords{};
 }
 
 class WordsShufflerImplTest : public Test

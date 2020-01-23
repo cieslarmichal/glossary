@@ -8,6 +8,6 @@ class HtmlWordsCreator
 public:
     virtual ~HtmlWordsCreator() = default;
 
-    virtual boost::optional<WordDescription>
+    virtual boost::optional<wordsDb::descriptionsDb::WordDescription>
     createWord(const wordsDb::translationsDb::Translation&) const = 0;
 };

@@ -3,15 +3,16 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace wordsDb::descriptionsDb;
 
 namespace
 {
 const EnglishWord polishWord{"zaslony"};
 const auto polishWordView{"Polish word: zaslony\n"};
 const WordDescription word("computer", "komputer",
-                {{{"definition", std::string{"example"}},
-                  {"definition2", std::string{"example2"}}},
-                 {"sentence"}});
+                           {{{"definition", std::string{"example"}},
+                             {"definition2", std::string{"example2"}}},
+                            {"sentence"}});
 const WordDescription wordWithoutDescription{"computer", "komputer", {}};
 const auto wordViewWithoutDescription{"English word: computer\n"
                                       "Polish translation: komputer\n"};

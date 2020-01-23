@@ -4,6 +4,8 @@
 #include "EnglishWord.h"
 #include "PolishWord.h"
 
+namespace wordsDb::descriptionsDb
+{
 struct WordDescription
 {
     // TODO: change to WordWithDescription and remove polishWord
@@ -39,4 +41,5 @@ inline std::ostream& operator<<(std::ostream& os, const WordDescription& word)
        << "polishWord: " << word.polishWord << "\n"
        << "wordDescription:" << word.wordDescription << "\n";
     return os;
+}
 }

@@ -5,8 +5,9 @@
 class WordRandomizerImpl : public WordRandomizer
 {
 public:
-    WordDescription randomizeWord(const Words&) const override;
+    WordDescription randomizeWord(const WordsDescriptions&) const override;
 
 private:
-    Words::size_type getRandomIndex(Words::size_type) const;
+    WordsDescriptions::size_type
+        getRandomIndex(WordsDescriptions::size_type) const;
 };

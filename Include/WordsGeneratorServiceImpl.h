@@ -15,12 +15,13 @@ public:
 
     WordDescription
     generateWord(const wordsDb::translationsDb::Translation&) const override;
-    Words generateWords() const override;
+    WordsDescriptions generateWords() const override;
 
 private:
     void initializeWordsCreatorService();
     void initializeDictionary();
-    boost::optional<WordDescription> getWordFromDatabase(const EnglishWord&) const;
+    boost::optional<WordDescription>
+    getWordFromDatabase(const EnglishWord&) const;
     boost::optional<WordDescription> getWordFromHtml(const Translation&) const;
     void addWordToStorage(const WordDescription&) const;
     bool wordIsInStorage(const EnglishWord&) const;

@@ -1,13 +1,14 @@
+#include "wordsDb/descriptionsDb/DescriptionsPersistentStorage.h"
+
 #include <iostream>
 
 #include "exceptions/FileNotFound.h"
-#include "wordsDb/descriptionsDb/DescriptionsPersistentStorage.h"
 
 namespace wordsDb::descriptionsDb
 {
-const std::string DescriptionsPersistentStorage::fileDirectory{"../database"};
-const std::string DescriptionsPersistentStorage::fileName{"/words.txt"};
-const std::string DescriptionsPersistentStorage::filePath{fileDirectory + fileName};
+const std::string DescriptionsPersistentStorage::directory{"../database"};
+const std::string DescriptionsPersistentStorage::filename{directory +
+                                                          "/words.txt"};
 
 DescriptionsPersistentStorage::DescriptionsPersistentStorage(
     std::shared_ptr<const FileAccess> fileAccessInit,
@@ -18,21 +19,23 @@ DescriptionsPersistentStorage::DescriptionsPersistentStorage(
     loadFile();
 }
 
-void DescriptionsPersistentStorage::addWord(const WordDescription& word)
+void DescriptionsPersistentStorage::addWordDescription(
+    const WordDescription& word)
 {
-    storage.addWord(word);
+    storage.addWordDescription(word);
     serialize();
 }
 
 boost::optional<WordDescription>
-DescriptionsPersistentStorage::getWord(const EnglishWord& englishName) const
+DescriptionsPersistentStorage::getWordDescription(
+    const EnglishWord& englishName) const
 {
-    return storage.getWord(englishName);
+    return storage.getWordDescription(englishName);
 }
 
-Words DescriptionsPersistentStorage::getWords() const
+WordsDescriptions DescriptionsPersistentStorage::getWordsDescriptions() const
 {
-    return storage.getWords();
+    return storage.getWordsDescriptions();
 }
 
 bool DescriptionsPersistentStorage::contains(
@@ -41,7 +44,7 @@ bool DescriptionsPersistentStorage::contains(
     return storage.contains(englishWord);
 }
 
-Words::size_type DescriptionsPersistentStorage::size() const
+WordsDescriptions::size_type DescriptionsPersistentStorage::size() const
 {
     return storage.size();
 }
@@ -51,12 +54,12 @@ bool DescriptionsPersistentStorage::empty() const
     return storage.empty();
 }
 
-Words::const_iterator DescriptionsPersistentStorage::begin() const
+WordsDescriptions::const_iterator DescriptionsPersistentStorage::begin() const
 {
     return storage.begin();
 }
 
-Words::const_iterator DescriptionsPersistentStorage::end() const
+WordsDescriptions::const_iterator DescriptionsPersistentStorage::end() const
 {
     return storage.end();
 }
@@ -65,7 +68,8 @@ void DescriptionsPersistentStorage::serialize() const
 {
     try
     {
-        fileAccess->write(filePath, serializer->serialize(storage.getWords()));
+        fileAccess->write(
+            filename, serializer->serialize(storage.getWordsDescriptions()));
     }
     catch (const exceptions::FileNotFound& e)
     {
@@ -75,10 +79,10 @@ void DescriptionsPersistentStorage::serialize() const
 
 void DescriptionsPersistentStorage::loadFile()
 {
-    Words words;
+    WordsDescriptions words;
     try
     {
-        words = serializer->deserialize(fileAccess->readContent(filePath));
+        words = serializer->deserialize(fileAccess->readContent(filename));
     }
     catch (const exceptions::FileNotFound& e)
     {
@@ -88,7 +92,7 @@ void DescriptionsPersistentStorage::loadFile()
 
     for (const auto& word : words)
     {
-        storage.addWord(word);
+        storage.addWordDescription(word);
     }
 }
 }

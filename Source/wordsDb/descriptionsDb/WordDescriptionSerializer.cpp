@@ -4,6 +4,9 @@
 
 #include "nlohmann/json.hpp"
 
+namespace wordsDb::descriptionsDb
+{
+
 namespace
 {
 nlohmann::json getJsonFromWord(const Description&);
@@ -14,8 +17,8 @@ constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
 constexpr auto sentencesField = "sentences";
 }
 
-nlohmann::json WordDescriptionSerializer::serialize(
-    const Description& wordDescription) const
+nlohmann::json
+WordDescriptionSerializer::serialize(const Description& wordDescription) const
 {
     return getJsonFromWord(wordDescription);
 }
@@ -84,4 +87,5 @@ Description readWordDescription(const nlohmann::json& jsonText)
     return Description{definitionsWithExamples, sentences};
 }
 
+}
 }

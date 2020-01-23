@@ -1,8 +1,9 @@
 #pragma once
 
+#include <ostream>
+
 #include "ResponseCode.h"
 #include "ResponseContent.h"
-#include <ostream>
 
 namespace webConnection
 {
@@ -12,18 +13,14 @@ struct Response
     ResponseContent content;
 };
 
-inline bool operator==(const Response& lhs,
-                       const Response& rhs)
+inline bool operator==(const Response& lhs, const Response& rhs)
 {
-    return (lhs.code == rhs.code &&
-            lhs.content == rhs.content);
+    return (lhs.code == rhs.code && lhs.content == rhs.content);
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const Response& response)
+inline std::ostream& operator<<(std::ostream& os, const Response& response)
 {
-    os << response.code << " "
-       << response.content;
+    os << response.code << " " << response.content;
     return os;
 }
 

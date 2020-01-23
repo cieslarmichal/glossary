@@ -10,15 +10,17 @@
 class HtmlWordsCreatorImpl : public HtmlWordsCreator
 {
 public:
-    explicit HtmlWordsCreatorImpl(std::unique_ptr<const webConnection::HttpRequestHandler>,
-                                  std::unique_ptr<const HtmlParser>);
+    explicit HtmlWordsCreatorImpl(
+        std::unique_ptr<const webConnection::HttpRequestHandler>,
+        std::unique_ptr<const HtmlParser>);
 
-    boost::optional<WordDescription> createWord(const wordsDb::translationsDb::Translation&) const override;
+    boost::optional<wordsDb::descriptionsDb::WordDescription>
+    createWord(const wordsDb::translationsDb::Translation&) const override;
 
 private:
     std::unique_ptr<const webConnection::HttpRequestHandler> httpHandler;
     std::unique_ptr<const HtmlParser> htmlParser;
-    WordDescriptionParser wordDescriptionParser;
+    wordsDb::descriptionsDb::WordDescriptionParser wordDescriptionParser;
 
     static const std::string urlAddress;
 };

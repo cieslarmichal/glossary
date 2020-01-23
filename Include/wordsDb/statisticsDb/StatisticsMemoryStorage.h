@@ -9,16 +9,23 @@ namespace wordsDb::statisticsDb
 class StatisticsMemoryStorage : public StatisticsStorage
 {
 public:
-    void addWord(const Word&) override;
-    boost::optional<Word> getWord(const EnglishWord&) const override;
-    Words getWords() const override;
+    boost::optional<WordStatistics>
+    getWordStatistics(const EnglishWord&) const override;
+    Statistics getStatistics() const override;
+    void addWordStatistics(WordStatistics) override;
+    void addCorrectAnswer(const EnglishWord&) override;
+    void addIncorrectAnswer(const EnglishWord&) override;
+    void resetStatistics() override;
     bool contains(const EnglishWord&) const override;
-    Words::size_type size() const override;
+    Statistics::size_type size() const override;
     bool empty() const override;
-    Words::const_iterator begin() const override;
-    Words::const_iterator end() const override;
+    Statistics::const_iterator begin() const override;
+    Statistics::const_iterator end() const override;
 
 private:
-    Words words;
+    Statistics::const_iterator
+    findWordStatisticsPosition(const EnglishWord&) const;
+
+    Statistics statistics;
 };
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "WordDescription.h"
+#include "WordsDescriptions.h"
 #include "boost/optional.hpp"
 
 namespace wordsDb::descriptionsDb
@@ -11,8 +11,10 @@ class DescriptionsDb
 public:
     virtual ~DescriptionsDb() = default;
 
-    virtual void addWord(const WordDescription&) const = 0;
-    virtual boost::optional<WordDescription> getWord(const EnglishWord&) const = 0;
+    virtual void addWordDescription(const WordDescription&) const = 0;
+    virtual boost::optional<WordDescription>
+    getWordDescription(const EnglishWord&) const = 0;
+    virtual WordsDescriptions getWordsDescriptions() const = 0;
     virtual bool contains(const EnglishWord&) const = 0;
 };
 }

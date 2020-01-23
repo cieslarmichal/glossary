@@ -7,6 +7,8 @@
 #include "DefinitionsWithExamples.h"
 #include "Sentences.h"
 
+namespace wordsDb::descriptionsDb
+{
 struct Description
 {
     std::string toString() const
@@ -46,4 +48,5 @@ inline std::ostream& operator<<(std::ostream& os,
 {
     os << wordDescription.toString();
     return os;
+}
 }

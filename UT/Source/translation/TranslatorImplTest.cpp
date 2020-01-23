@@ -1,7 +1,8 @@
 #include "translation/TranslatorImpl.h"
 
-#include "webConnection/HttpRequestHandlerMock.h"
 #include "translation/TranslationDeserializerMock.h"
+#include "webConnection/HttpRequestHandlerMock.h"
+
 #include "exceptions/ConnectionFailed.h"
 #include "gtest/gtest.h"
 
@@ -22,37 +23,45 @@ const auto englishText = "beer";
 class TranslatorImplTest : public Test
 {
 public:
-    std::shared_ptr<webConnection::HttpRequestHandlerMock> handler = std::make_shared<webConnection::HttpRequestHandlerMock>();
+    std::shared_ptr<webConnection::HttpRequestHandlerMock> handler =
+        std::make_shared<webConnection::HttpRequestHandlerMock>();
     std::unique_ptr<TranslationDeserializerMock> deserializerInit =
         std::make_unique<StrictMock<TranslationDeserializerMock>>();
     TranslationDeserializerMock* deserializer = deserializerInit.get();
-    TranslatorImpl translator {handler, std::move(deserializerInit)};
+    TranslatorImpl translator{handler, std::move(deserializerInit)};
 };
 
 TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
 {
-    EXPECT_CALL(*handler, get(request)).WillOnce(Throw(exceptions::ConnectionFailed{""}));
+    EXPECT_CALL(*handler, get(request))
+        .WillOnce(Throw(exceptions::ConnectionFailed{""}));
 
-    const auto translation = translator.translate(polishText, SourceLanguage::Polish, TargetLanguage::English);
+    const auto translation = translator.translate(
+        polishText, SourceLanguage::Polish, TargetLanguage::English);
 
     ASSERT_EQ(translation, boost::none);
 }
 
-TEST_F(TranslatorImplTest, givenFailureResponseFromTranslationApi_shouldReturnNone)
+TEST_F(TranslatorImplTest,
+       givenFailureResponseFromTranslationApi_shouldReturnNone)
 {
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(failureResponse));
 
-    const auto translation = translator.translate(polishText, SourceLanguage::Polish, TargetLanguage::English);
+    const auto translation = translator.translate(
+        polishText, SourceLanguage::Polish, TargetLanguage::English);
 
     ASSERT_EQ(translation, boost::none);
 }
 
-TEST_F(TranslatorImplTest, givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
+TEST_F(TranslatorImplTest,
+       givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
 {
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(successResponse));
-    EXPECT_CALL(*deserializer, deserialize(responseContent)).WillOnce(Return(englishText));
+    EXPECT_CALL(*deserializer, deserialize(responseContent))
+        .WillOnce(Return(englishText));
 
-    const auto translation = translator.translate(polishText, SourceLanguage::Polish, TargetLanguage::English);
+    const auto translation = translator.translate(
+        polishText, SourceLanguage::Polish, TargetLanguage::English);
 
     ASSERT_EQ(*translation, englishText);
 }

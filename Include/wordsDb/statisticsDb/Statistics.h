@@ -1,10 +1,10 @@
 #pragma once
 
-#include <map>
+#include <vector>
 
-#include "AnswersStatisticsPerWord.h"
+#include "WordStatistics.h"
 
 namespace wordsDb::statisticsDb
 {
-using AnswersStatistics = std::map<EnglishWord, AnswersStatisticsPerWord>;
+using Statistics = std::vector<WordStatistics>;
 }

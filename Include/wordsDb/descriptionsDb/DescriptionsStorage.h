@@ -11,13 +11,14 @@ class DescriptionsStorage
 public:
     virtual ~DescriptionsStorage() = default;
 
-    virtual void addWord(const WordDescription&) = 0;
-    virtual boost::optional<WordDescription> getWord(const EnglishWord&) const = 0;
-    virtual Words getWords() const = 0;
+    virtual void addWordDescription(const WordDescription&) = 0;
+    virtual boost::optional<WordDescription>
+    getWordDescription(const EnglishWord&) const = 0;
+    virtual WordsDescriptions getWordsDescriptions() const = 0;
     virtual bool contains(const EnglishWord&) const = 0;
-    virtual Words::size_type size() const = 0;
+    virtual WordsDescriptions::size_type size() const = 0;
     virtual bool empty() const = 0;
-    virtual Words::const_iterator begin() const = 0;
-    virtual Words::const_iterator end() const = 0;
+    virtual WordsDescriptions::const_iterator begin() const = 0;
+    virtual WordsDescriptions::const_iterator end() const = 0;
 };
 }

@@ -1,7 +1,7 @@
-#include "exceptions/ConnectionFailed.h"
 #include "FileAccessImpl.h"
-#include "webConnection/HttpRequestHandlerImpl.h"
+#include "exceptions/ConnectionFailed.h"
 #include "gtest/gtest.h"
+#include "webConnection/HttpRequestHandlerImpl.h"
 
 using namespace ::testing;
 using namespace webConnection;
@@ -22,14 +22,14 @@ TEST_F(HttpRequestHandlerTest,
 
     ASSERT_EQ(response.code, 200);
     ASSERT_TRUE(response.content.find("<!DOCTYPE html>") ||
-                    response.content.find("<!doctype html>"));
+                response.content.find("<!doctype html>"));
 }
 
-TEST_F(HttpRequestHandlerTest, givenIncorrectUrlAddress_shouldThrowConnectionFailed)
+TEST_F(HttpRequestHandlerTest,
+       givenIncorrectUrlAddress_shouldThrowConnectionFailed)
 {
     const auto inaccessibleUrlAddress = ".xh111ttps://aazzz.com";
 
     ASSERT_THROW(httpHandler.get(inaccessibleUrlAddress),
                  exceptions::ConnectionFailed);
 }
-

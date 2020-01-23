@@ -8,13 +8,13 @@ using namespace wordsDb::descriptionsDb;
 namespace
 {
 const WordDescription word1("computer", "komputer",
-                 {{{"definition", std::string{"example"}},
-                   {"definition2", std::string{"example2"}}},
-                  {"sentence"}});
+                            {{{"definition", std::string{"example"}},
+                              {"definition2", std::string{"example2"}}},
+                             {"sentence"}});
 const WordDescription word2("tea", "herbata", {});
 const WordDescription word3("headphones", "sluchawki", {});
-const Words words{word1, word2, word3};
-const Words emptyWords{};
+const WordsDescriptions words{word1, word2, word3};
+const WordsDescriptions emptyWords{};
 const std::string expectedSerializedWords{
     R"({"words":[{"englishWord":"computer","polishWord":"komputer","wordDescription":{"definitionsWithExamples":["definition:example","definition2:example2"],"sentences":["sentence"]}},{"englishWord":"tea","polishWord":"herbata","wordDescription":{}},{"englishWord":"headphones","polishWord":"sluchawki","wordDescription":{}}]})"};
 const std::string serializedWordsWithoutEnglishWordField{

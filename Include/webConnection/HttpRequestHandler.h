@@ -14,4 +14,3 @@ public:
     virtual Response get(const Request&) const = 0;
 };
 }
-

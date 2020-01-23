@@ -4,20 +4,16 @@
 
 #include "boost/algorithm/string.hpp"
 
+namespace wordsDb::descriptionsDb
+{
 namespace
 {
 void removeMarks(Description&);
-
 void removeDefinitionMarks(Definition&);
-
 void removeExampleMarks(Example&);
-
 void removeSentenceMarks(Sentence&);
-
 bool isDefinition(const std::string&);
-
 bool isExample(const std::string&);
-
 bool isSentence(const std::string&);
 
 const std::string definitionMark{":"};
@@ -128,4 +124,5 @@ bool isSentence(const std::string& line)
             line.substr(line.size() - 1, 1) == sentenceMark);
 }
 
+}
 }

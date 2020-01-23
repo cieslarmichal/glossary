@@ -1,5 +1,8 @@
 #pragma once
 
-#include "wordsDb/descriptionsDb/WordDescription.h"
+#include "WordDescription.h"
 
-using Words = std::vector<WordDescription>;
+namespace wordsDb::descriptionsDb
+{
+using WordsDescriptions = std::vector<WordDescription>;
+}

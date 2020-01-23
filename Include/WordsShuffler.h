@@ -2,10 +2,12 @@
 
 #include "wordsDb/descriptionsDb/WordsDescriptions.h"
 
+using namespace wordsDb::descriptionsDb;
+
 class WordsShuffler
 {
 public:
     virtual ~WordsShuffler() = default;
 
-    virtual Words shuffle(const Words&) const = 0;
+    virtual WordsDescriptions shuffle(const WordsDescriptions&) const = 0;
 };

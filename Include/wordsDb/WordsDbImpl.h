@@ -8,7 +8,6 @@ namespace wordsDb
 class WordsDbImpl : public WordsDb
 {
 public:
-
 };
 
 }

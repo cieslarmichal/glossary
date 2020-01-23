@@ -2,6 +2,8 @@
 
 #include "wordsDb/descriptionsDb/Description.h"
 
+using namespace wordsDb::descriptionsDb;
+
 const DefinitionsWithExamples definitionsWithExamples{
         {"the alcoholic fermented juice of fresh grapes used as a beverage", boost::none},
         {"wine or a substitute used in Christian communion services", boost::none},

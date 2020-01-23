@@ -30,5 +30,5 @@ private:
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewer> viewer;
     std::unique_ptr<WordRandomizer> wordsRandomizer;
-    Words glossaryWords;
+    WordsDescriptions glossaryWords;
 };

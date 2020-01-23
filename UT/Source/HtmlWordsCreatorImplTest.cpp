@@ -1,8 +1,8 @@
 #include "HtmlWordsCreatorImpl.h"
 
 #include "HtmlParserMock.h"
-#include "webConnection/HttpRequestHandlerMock.h"
 #include "gmock/gmock.h"
+#include "webConnection/HttpRequestHandlerMock.h"
 
 #include "FileAccessImpl.h"
 #include "TestVariables/ParsedHtmlContent.h"
@@ -17,8 +17,8 @@ const std::string urlAddress{"https://www.merriam-webster.com/dictionary/wine"};
 const wordsDb::translationsDb::Translation wordWithTranslation{"wine", "wino"};
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
 const WordDescription expectedWord{wordWithTranslation.englishWord,
-                        wordWithTranslation.polishTranslation,
-                        wordDescriptionFromParser};
+                                   wordWithTranslation.polishTranslation,
+                                   wordDescriptionFromParser};
 const webConnection::Response emptyHtmlResponse{};
 const std::vector<std::string> emptyParsedHtmlContent{};
 }

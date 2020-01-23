@@ -1,6 +1,7 @@
 #include "GlossaryApplication.h"
 
 #include <iostream>
+#include <wordsDb/statisticsDb/StatisticsPersistentStorage.h>
 
 #include "AnswerCheckerImpl.h"
 #include "FileAccessImpl.h"
@@ -24,10 +25,14 @@ void GlossaryApplication::initialize()
 
     std::shared_ptr<const FileAccess> fileAccess =
         std::make_shared<const FileAccessImpl>();
-    std::shared_ptr<const wordsDb::statisticsDb::StatisticsSerializer> serializer =
-        std::make_shared<const wordsDb::statisticsDb::StatisticsSerializerImpl>();
-    answersCounter =
-        std::make_unique<wordsDb::statisticsDb::StatisticsDbImpl>(fileAccess, serializer);
+    std::shared_ptr<const wordsDb::statisticsDb::StatisticsSerializer>
+        serializer = std::make_shared<
+            const wordsDb::statisticsDb::StatisticsSerializerImpl>();
+    std::unique_ptr<wordsDb::statisticsDb::StatisticsStorage> storage =
+        std::make_unique<wordsDb::statisticsDb::StatisticsPersistentStorage>(
+            fileAccess, serializer);
+    answersCounter = std::make_unique<wordsDb::statisticsDb::StatisticsDbImpl>(
+        std::move(storage));
 
     answerChecker = std::make_unique<AnswerCheckerImpl>();
 

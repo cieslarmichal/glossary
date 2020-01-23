@@ -11,7 +11,7 @@ class StatisticsSerializer
 public:
     virtual ~StatisticsSerializer() = default;
 
-    virtual std::string serialize(const AnswersStatistics&) const = 0;
-    virtual AnswersStatistics deserialize(const std::string&) const = 0;
+    virtual std::string serialize(const Statistics&) const = 0;
+    virtual Statistics deserialize(const std::string&) const = 0;
 };
 }

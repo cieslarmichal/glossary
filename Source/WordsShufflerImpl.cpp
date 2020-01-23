@@ -4,7 +4,8 @@
 #include <chrono>
 #include <random>
 
-Words WordsShufflerImpl::shuffle(const Words& words) const
+WordsDescriptions
+WordsShufflerImpl::shuffle(const WordsDescriptions& words) const
 {
     if (not needToShuffle(words))
     {
@@ -14,7 +15,8 @@ Words WordsShufflerImpl::shuffle(const Words& words) const
     return shuffleWords(words);
 }
 
-Words WordsShufflerImpl::shuffleWords(const Words& words) const
+WordsDescriptions
+WordsShufflerImpl::shuffleWords(const WordsDescriptions& words) const
 {
     auto seed = std::chrono::system_clock::now().time_since_epoch().count();
     auto randomEngine = std::default_random_engine(seed);
@@ -28,7 +30,7 @@ Words WordsShufflerImpl::shuffleWords(const Words& words) const
     return shuffledWords;
 }
 
-bool WordsShufflerImpl::needToShuffle(const Words& words) const
+bool WordsShufflerImpl::needToShuffle(const WordsDescriptions& words) const
 {
     return words.size() >= 2;
 }

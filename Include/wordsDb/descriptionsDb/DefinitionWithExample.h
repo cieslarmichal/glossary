@@ -12,6 +12,8 @@ namespace
 const std::string separator = ":";
 }
 
+namespace wordsDb::descriptionsDb
+{
 struct DefinitionWithExample
 {
     std::string toString() const
@@ -60,4 +62,5 @@ inline DefinitionWithExample toDefinitionWithExample(const std::string& text)
     {
         return (DefinitionWithExample{text, boost::none});
     }
+}
 }
