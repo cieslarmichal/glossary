@@ -69,7 +69,7 @@ TEST_F(StatisticsMemoryStorageTest,
 }
 
 TEST_F(StatisticsMemoryStorageTest,
-       givenNonExistingInStorageEnglishWord_shouldReturnWordStats)
+       givenNonExistingInStorageEnglishWord_shouldReturnNone)
 {
     const auto wordStatistics = storage.getWordStatistics(englishWord1);
 

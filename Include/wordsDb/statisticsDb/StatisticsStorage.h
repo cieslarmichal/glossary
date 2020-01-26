@@ -6,6 +6,8 @@
 namespace wordsDb::statisticsDb
 {
 
+//TODO: add return type const ref
+
 class StatisticsStorage
 {
 public:

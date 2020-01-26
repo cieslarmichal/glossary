@@ -41,7 +41,7 @@ HtmlWordsCreatorImpl::createWord(
     {
         return wordsDb::descriptionsDb::WordDescription{
             wordWithTranslation.englishWord,
-            wordWithTranslation.polishTranslation, *wordDescription};
+            wordWithTranslation.polishWord, *wordDescription};
     }
     return boost::none;
 }

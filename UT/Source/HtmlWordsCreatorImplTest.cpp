@@ -14,10 +14,10 @@ using namespace ::testing;
 namespace
 {
 const std::string urlAddress{"https://www.merriam-webster.com/dictionary/wine"};
-const wordsDb::translationsDb::Translation wordWithTranslation{"wine", "wino"};
+const wordsDb::translationsDb::Translation wordWithTranslation{"wino", "wine"};
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
 const WordDescription expectedWord{wordWithTranslation.englishWord,
-                                   wordWithTranslation.polishTranslation,
+                                   wordWithTranslation.polishWord,
                                    wordDescriptionFromParser};
 const webConnection::Response emptyHtmlResponse{};
 const std::vector<std::string> emptyParsedHtmlContent{};

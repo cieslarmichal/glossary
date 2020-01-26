@@ -12,11 +12,11 @@ const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statisticsWithOneWord{statisticsPerWord1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
 const Statistics emptyStatistics{};
-const std::string serializedStatistics{
+const std::string serializedTranslations{
     R"({"statistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"englishWord":"dog","incorrectAnswers":1}]})"};
-const std::string twoSerializedStatistics{
+const std::string twoSerializedTranslationsOneWithouRequiredField{
     R"({"statistics":[{"correctAnswers":7,"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"incorrectAnswers":1}]})"};
-const std::string serializedStatisticsWithoutRequiredFields{
+const std::string serializedTranslationsWithoutRequiredFields{
     R"({"statistics":[{"englishWord":"cat","incorrectAnswers":0},{"correctAnswers":2,"incorrectAnswers":1}]})"};
 const std::string emptySerializedStatistics{};
 }
@@ -40,19 +40,19 @@ TEST_F(StatisticsSerializerImplTest,
 {
     const auto actualSerializedStatistics = serializer.serialize(statistics);
 
-    EXPECT_EQ(actualSerializedStatistics, serializedStatistics);
+    EXPECT_EQ(actualSerializedStatistics, serializedTranslations);
 }
 
 TEST_F(StatisticsSerializerImplTest,
-       givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
+       givenSerializedStatisticsString_shouldReturnStatistics)
 {
-    const auto actualStatistics = serializer.deserialize(serializedStatistics);
+    const auto actualStatistics = serializer.deserialize(serializedTranslations);
 
     EXPECT_EQ(actualStatistics, statistics);
 }
 
 TEST_F(StatisticsSerializerImplTest,
-       givenSerializedStatistics_shouldReturnStatistics)
+       givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
 {
     const auto actualStatistics =
         serializer.deserialize(emptySerializedStatistics);
@@ -65,17 +65,17 @@ TEST_F(
     givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
 {
     const auto actualStatistics =
-        serializer.deserialize(serializedStatisticsWithoutRequiredFields);
+        serializer.deserialize(serializedTranslationsWithoutRequiredFields);
 
     EXPECT_TRUE(actualStatistics.empty());
 }
 
 TEST_F(
     StatisticsSerializerImplTest,
-    givenTwoSerializedStatssAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
+    givenTwoSerializedStatsAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
 {
     const auto actualStatistics =
-        serializer.deserialize(twoSerializedStatistics);
+        serializer.deserialize(twoSerializedTranslationsOneWithouRequiredField);
 
     EXPECT_EQ(actualStatistics, statisticsWithOneWord);
 }

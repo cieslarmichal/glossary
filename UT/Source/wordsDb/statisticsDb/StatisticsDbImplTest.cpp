@@ -25,8 +25,6 @@ public:
         std::make_unique<StrictMock<StatisticsStorageMock>>();
     StatisticsStorageMock* storage = storageInit.get();
     StatisticsDbImpl database{std::move(storageInit)};
-
-//    void resetWordStatistics(const EnglishWord&) override;
 };
 
 TEST_F(StatisticsDbImplTest, addWordStatistics)

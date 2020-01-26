@@ -10,7 +10,7 @@ using namespace wordsDb::descriptionsDb;
 namespace
 {
 const EnglishWord englishWord{"englishWord"};
-const WordDescription word(englishWord, "polishTranslation", {});
+const WordDescription word(englishWord, "polishWord", {});
 const WordsDescriptions words{word};
 }
 

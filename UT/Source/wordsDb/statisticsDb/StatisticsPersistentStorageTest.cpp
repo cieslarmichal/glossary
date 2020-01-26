@@ -163,7 +163,7 @@ TEST_F(StatisticsPersistentStorageTest,
 }
 
 TEST_F(StatisticsPersistentStorageTest,
-       given_TwoWordStats_shouldDistanceOfTwoBetweenBeginAndEnd)
+       givenTwoWordStats_shouldDistanceOfTwoBetweenBeginAndEnd)
 {
     expectTwoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
@@ -197,7 +197,7 @@ TEST_F(StatisticsPersistentStorageTest,
     persistentStorage.addIncorrectAnswer(englishWord1);
 }
 
-TEST_F(StatisticsPersistentStorageTest, shouldResetStatistics)
+TEST_F(StatisticsPersistentStorageTest, shouldResetStatisticsAndSerialize)
 {
     expectTwoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};

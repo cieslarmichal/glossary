@@ -9,16 +9,20 @@ namespace wordsDb::translationsDb
 class TranslationsMemoryStorage : public TranslationsStorage
 {
 public:
-    void addWord(const Word&) override;
-    boost::optional<Word> getWord(const EnglishWord&) const override;
-    Words getWords() const override;
-    bool contains(const EnglishWord&) const override;
-    Words::size_type size() const override;
+    void addTranslation(Translation) override;
+    boost::optional<Translation>
+    getTranslation(const PolishWord&) const override;
+    Translations getTranslations() const override;
+    bool contains(const PolishWord&) const override;
+    Translations::size_type size() const override;
     bool empty() const override;
-    Words::const_iterator begin() const override;
-    Words::const_iterator end() const override;
+    Translations::const_iterator begin() const override;
+    Translations::const_iterator end() const override;
 
 private:
-    Words words;
+    Translations::const_iterator
+    findTranslationPosition(const PolishWord&) const;
+
+    Translations translations;
 };
 }

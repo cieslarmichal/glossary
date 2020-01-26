@@ -32,6 +32,10 @@ set(SOURCES
         Source/wordsDb/statisticsDb/StatisticsSerializerImpl.cpp
         Source/wordsDb/statisticsDb/StatisticsMemoryStorage.cpp
         Source/wordsDb/statisticsDb/StatisticsPersistentStorage.cpp
+        Source/wordsDb/translationsDb/TranslationsDbImpl.cpp
+        Source/wordsDb/translationsDb/TranslationsSerializerImpl.cpp
+        Source/wordsDb/translationsDb/TranslationsMemoryStorage.cpp
+        Source/wordsDb/translationsDb/TranslationsPersistentStorage.cpp
         Source/Glossary.cpp
         Source/GlossaryHtmlParser.cpp
         Source/DefaultHtmlParser.cpp
@@ -62,6 +66,10 @@ set(UT_SOURCES
         UT/Source/wordsDb/statisticsDb/StatisticsSerializerImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsMemoryStorageTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsPersistentStorageTest.cpp
+        UT/Source/wordsDb/translationsDb/TranslationsDbImplTest.cpp
+        UT/Source/wordsDb/translationsDb/TranslationsSerializerImplTest.cpp
+        UT/Source/wordsDb/translationsDb/TranslationsMemoryStorageTest.cpp
+        UT/Source/wordsDb/translationsDb/TranslationsPersistentStorageTest.cpp
         UT/Source/GlossaryHtmlParserTest.cpp
         UT/Source/DefaultHtmlParserTest.cpp
         UT/Source/FileAccessImplTest.cpp

@@ -84,7 +84,7 @@ WordsGeneratorServiceImpl::generateWord(
         else
         {
             return WordDescription(wordWithTranslation.englishWord,
-                                   wordWithTranslation.polishTranslation, {});
+                                   wordWithTranslation.polishWord, {});
         }
     }
 }

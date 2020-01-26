@@ -58,7 +58,8 @@ DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
     lineStream >> englishWord >> polishWord;
     if (!englishWord.empty() && !polishWord.empty())
     {
-        return Translation{englishWord, polishWord};
+        return Translation{polishWord, englishWord};
+        //TODO: add strong typedefs
     }
     return boost::none;
 }
