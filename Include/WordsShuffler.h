@@ -1,8 +1,8 @@
 #pragma once
 
-#include "wordsDb/descriptionsDb/WordsDescriptions.h"
+#include "wordsDb/wordsDescriptionsDb/WordsDescriptions.h"
 
-using namespace wordsDb::descriptionsDb;
+using namespace wordsDb::wordsDescriptionsDb;
 
 class WordsShuffler
 {

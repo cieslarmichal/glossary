@@ -14,9 +14,9 @@ const std::string content{"car samochod\n"
                           "air powietrze\n"};
 const std::string contentWithTwoWordsAndOneIncorrect{"car samochod\n"
                                                      "     powietrze\n"};
-const Dictionary expectedDictionaryWithOneWord{{"car", "samochod"}};
+const Dictionary expectedDictionaryWithOneWord{{"samochod", "car"}};
 const std::string emptyContent{};
-const Dictionary expectedDictionary{{"car", "samochod"}, {"air", "powietrze"}};
+const Dictionary expectedDictionary{{"samochod", "car"}, {"powietrze", "air"}};
 }
 
 class DictionaryReaderImplTest : public Test

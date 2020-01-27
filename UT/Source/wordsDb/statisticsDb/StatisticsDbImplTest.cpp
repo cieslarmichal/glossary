@@ -34,8 +34,7 @@ TEST_F(StatisticsDbImplTest, addWordStatistics)
     database.addWordStatistics(wordStats1);
 }
 
-TEST_F(StatisticsDbImplTest,
-       getWordStatistics)
+TEST_F(StatisticsDbImplTest, getWordStatistics)
 {
     EXPECT_CALL(*storage, getWordStatistics(englishWord1))
         .WillOnce(Return(wordStats1));
@@ -47,8 +46,7 @@ TEST_F(StatisticsDbImplTest,
 
 TEST_F(StatisticsDbImplTest, getStatistics)
 {
-    EXPECT_CALL(*storage, getStatistics())
-        .WillOnce(Return(twoWordsStatistics));
+    EXPECT_CALL(*storage, getStatistics()).WillOnce(Return(twoWordsStatistics));
 
     const auto statistics = database.getStatistics();
 
@@ -57,18 +55,18 @@ TEST_F(StatisticsDbImplTest, getStatistics)
 
 TEST_F(StatisticsDbImplTest, englishWordInStorage_shouldAddCorrectAnswer)
 {
-    EXPECT_CALL(*storage, contains(englishWord1))
-        .WillOnce(Return(true));
+    EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(true));
     EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
     database.addCorrectAnswer(englishWord1);
 }
 
-TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddCorrectAnswer)
+TEST_F(StatisticsDbImplTest,
+       englishWordNotInStorage_shouldAddEmptyWordAndThenAddCorrectAnswer)
 {
-    EXPECT_CALL(*storage, contains(englishWord1))
-        .WillOnce(Return(false));
-    EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
+    EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(false));
+    EXPECT_CALL(*storage,
+                addWordStatistics(WordStatistics{englishWord1, 0, 0}));
     EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
     database.addCorrectAnswer(englishWord1);
@@ -76,18 +74,18 @@ TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAd
 
 TEST_F(StatisticsDbImplTest, englishWordInStorage_shouldAddIncorrectAnswer)
 {
-    EXPECT_CALL(*storage, contains(englishWord1))
-        .WillOnce(Return(true));
+    EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(true));
     EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
 
     database.addIncorrectAnswer(englishWord1);
 }
 
-TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddIncorrectAnswer)
+TEST_F(StatisticsDbImplTest,
+       englishWordNotInStorage_shouldAddEmptyWordAndThenAddIncorrectAnswer)
 {
-    EXPECT_CALL(*storage, contains(englishWord1))
-        .WillOnce(Return(false));
-    EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
+    EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(false));
+    EXPECT_CALL(*storage,
+                addWordStatistics(WordStatistics{englishWord1, 0, 0}));
     EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
 
     database.addIncorrectAnswer(englishWord1);
@@ -99,4 +97,3 @@ TEST_F(StatisticsDbImplTest, resetStatistics)
 
     database.resetStatistics();
 }
-

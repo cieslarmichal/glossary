@@ -60,12 +60,12 @@ Translations::const_iterator TranslationsMemoryStorage::end() const
     return translations.end();
 }
 
-Translations::const_iterator
-TranslationsMemoryStorage::findTranslationPosition(const PolishWord& wordToFind) const
+Translations::const_iterator TranslationsMemoryStorage::findTranslationPosition(
+    const PolishWord& wordToFind) const
 {
     return std::find_if(translations.begin(), translations.end(),
                         [wordToFind](const Translation& translation) {
-                          return translation.polishWord == wordToFind;
+                            return translation.polishWord == wordToFind;
                         });
 }
 

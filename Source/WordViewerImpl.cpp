@@ -6,12 +6,12 @@ size_t WordViewerImpl::amountOfDefinitionsToView{5};
 size_t WordViewerImpl::amountOfSentencesToView{2};
 
 std::string WordViewerImpl::viewWord(
-    const wordsDb::descriptionsDb::WordDescription& word) const
+    const wordsDb::wordsDescriptionsDb::WordDescription& wordDescription) const
 {
     std::stringstream wordView;
-    wordView << "English word: " << word.englishWord << "\n";
-    wordView << "Polish translation: " << word.polishWord << "\n";
-    wordView << getWordDescription(word.wordDescription);
+    wordView << "English word: " << wordDescription.englishWord << "\n";
+    wordView << "Polish translation: " << wordDescription.polishWord << "\n";
+    wordView << getDescription(wordDescription.description);
     return wordView.str();
 }
 
@@ -22,14 +22,14 @@ std::string WordViewerImpl::viewPolishWord(const PolishWord& polishWord) const
     return wordView.str();
 }
 
-std::string WordViewerImpl::getWordDescription(
-    const wordsDb::descriptionsDb::Description& wordDescription) const
+std::string WordViewerImpl::getDescription(
+    const wordsDb::wordsDescriptionsDb::Description& description) const
 {
     // TODO: improve viewing: once definitions: and something like ":",
     // examples: "//", sentences: "sentence"
     std::stringstream wordDescriptionView;
 
-    const auto& defsAndExmpls = wordDescription.definitionsWithExamples;
+    const auto& defsAndExmpls = description.definitionsWithExamples;
     for (size_t index = 0;
          index < defsAndExmpls.size() and index <= amountOfDefinitionsToView;
          ++index)
@@ -42,7 +42,7 @@ std::string WordViewerImpl::getWordDescription(
         }
     }
 
-    const auto& sentences = wordDescription.sentences;
+    const auto& sentences = description.sentences;
     for (size_t index = 0;
          index < sentences.size() and index <= amountOfSentencesToView; ++index)
     {

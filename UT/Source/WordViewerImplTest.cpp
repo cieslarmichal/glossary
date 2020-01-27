@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace wordsDb::descriptionsDb;
+using namespace wordsDb::wordsDescriptionsDb;
 
 namespace
 {

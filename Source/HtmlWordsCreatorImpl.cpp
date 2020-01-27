@@ -17,7 +17,7 @@ HtmlWordsCreatorImpl::HtmlWordsCreatorImpl(
 {
 }
 
-boost::optional<wordsDb::descriptionsDb::WordDescription>
+boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
 HtmlWordsCreatorImpl::createWord(
     const wordsDb::translationsDb::Translation& wordWithTranslation) const
 {
@@ -36,12 +36,11 @@ HtmlWordsCreatorImpl::createWord(
 
     const auto parsedHtmlContent = htmlParser->parse(htmlContent);
 
-    if (const auto wordDescription =
-            wordDescriptionParser.parse(parsedHtmlContent))
+    if (const auto wordDescription = descriptionParser.parse(parsedHtmlContent))
     {
-        return wordsDb::descriptionsDb::WordDescription{
-            wordWithTranslation.englishWord,
-            wordWithTranslation.polishWord, *wordDescription};
+        return wordsDb::wordsDescriptionsDb::WordDescription{
+            wordWithTranslation.englishWord, wordWithTranslation.polishWord,
+            *wordDescription};
     }
     return boost::none;
 }

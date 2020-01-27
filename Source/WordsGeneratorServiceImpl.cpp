@@ -8,9 +8,9 @@
 #include "HtmlWordsCreatorImpl.h"
 #include "WordsShufflerImpl.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
-#include "wordsDb/descriptionsDb/DescriptionsDbImpl.h"
-#include "wordsDb/descriptionsDb/DescriptionsPersistentStorage.h"
-#include "wordsDb/descriptionsDb/DescriptionsSerializerImpl.h"
+#include "wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.h"
+#include "wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorage.h"
+#include "wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImpl.h"
 
 WordsGeneratorServiceImpl::WordsGeneratorServiceImpl()
 {
@@ -22,15 +22,18 @@ void WordsGeneratorServiceImpl::initializeWordsCreatorService()
 {
     std::shared_ptr<const FileAccess> fileAccess =
         std::make_shared<const FileAccessImpl>();
-    std::shared_ptr<const wordsDb::descriptionsDb::DescriptionsSerializer>
-        wordsSerializer = std::make_shared<
-            const wordsDb::descriptionsDb::DescriptionsSerializerImpl>();
-    std::unique_ptr<wordsDb::descriptionsDb::DescriptionsStorage> storage =
-        std::make_unique<
-            wordsDb::descriptionsDb::DescriptionsPersistentStorage>(
+    std::shared_ptr<
+        const wordsDb::wordsDescriptionsDb::WordsDescriptionsSerializer>
+        wordsSerializer =
+            std::make_shared<const wordsDb::wordsDescriptionsDb::
+                                 WordsDescriptionsSerializerImpl>();
+    std::unique_ptr<wordsDb::wordsDescriptionsDb::WordsDescriptionsStorage>
+        storage = std::make_unique<
+            wordsDb::wordsDescriptionsDb::WordsDescriptionsPersistentStorage>(
             fileAccess, wordsSerializer);
-    wordsDb = std::make_unique<wordsDb::descriptionsDb::DescriptionsDbImpl>(
-        std::move(storage));
+    wordsDb =
+        std::make_unique<wordsDb::wordsDescriptionsDb::WordsDescriptionsDbImpl>(
+            std::move(storage));
 
     std::unique_ptr<const webConnection::HttpRequestHandler> httpHandler =
         std::make_unique<webConnection::HttpRequestHandlerImpl>();
@@ -49,10 +52,10 @@ void WordsGeneratorServiceImpl::initializeDictionary()
     dictionary = dictionaryReader->read();
 }
 
-wordsDb::descriptionsDb::WordsDescriptions
+wordsDb::wordsDescriptionsDb::WordsDescriptions
 WordsGeneratorServiceImpl::generateWords() const
 {
-    wordsDb::descriptionsDb::WordsDescriptions words;
+    wordsDb::wordsDescriptionsDb::WordsDescriptions words;
     int wordsCounter = 0;
     for (const auto& wordWithTranslation : dictionary)
     {
@@ -64,7 +67,7 @@ WordsGeneratorServiceImpl::generateWords() const
     return wordsShuffler->shuffle(words);
 }
 
-wordsDb::descriptionsDb::WordDescription
+wordsDb::wordsDescriptionsDb::WordDescription
 WordsGeneratorServiceImpl::generateWord(
     const Translation& wordWithTranslation) const
 {
@@ -89,7 +92,7 @@ WordsGeneratorServiceImpl::generateWord(
     }
 }
 
-boost::optional<wordsDb::descriptionsDb::WordDescription>
+boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
 WordsGeneratorServiceImpl::getWordFromDatabase(
     const EnglishWord& englishWord) const
 {
@@ -100,7 +103,7 @@ WordsGeneratorServiceImpl::getWordFromDatabase(
     return boost::none;
 }
 
-boost::optional<wordsDb::descriptionsDb::WordDescription>
+boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
 WordsGeneratorServiceImpl::getWordFromHtml(
     const Translation& wordWithTranslation) const
 {
@@ -108,7 +111,7 @@ WordsGeneratorServiceImpl::getWordFromHtml(
 }
 
 void WordsGeneratorServiceImpl::addWordToStorage(
-    const wordsDb::descriptionsDb::WordDescription& word) const
+    const wordsDb::wordsDescriptionsDb::WordDescription& word) const
 {
     wordsDb->addWordDescription(word);
 }

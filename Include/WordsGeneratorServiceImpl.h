@@ -6,7 +6,7 @@
 #include "HtmlWordsCreator.h"
 #include "WordsGeneratorService.h"
 #include "WordsShuffler.h"
-#include "wordsDb/descriptionsDb/DescriptionsDb.h"
+#include "wordsDb/wordsDescriptionsDb/WordsDescriptionsDb.h"
 
 class WordsGeneratorServiceImpl : public WordsGeneratorService
 {
@@ -26,7 +26,8 @@ private:
     void addWordToStorage(const WordDescription&) const;
     bool wordIsInStorage(const EnglishWord&) const;
 
-    std::unique_ptr<const wordsDb::descriptionsDb::DescriptionsDb> wordsDb;
+    std::unique_ptr<const wordsDb::wordsDescriptionsDb::WordsDescriptionsDb>
+        wordsDb;
     std::unique_ptr<const HtmlWordsCreator> htmlWordCreator;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
     std::unique_ptr<const WordsShuffler> wordsShuffler;

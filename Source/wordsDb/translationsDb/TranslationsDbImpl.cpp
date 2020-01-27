@@ -23,7 +23,6 @@ TranslationsDbImpl::getTranslation(const PolishWord& polishWord) const
 Translations TranslationsDbImpl::getTranslations() const
 {
     return storage->getTranslations();
-
 }
 
 }

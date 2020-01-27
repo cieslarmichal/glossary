@@ -22,12 +22,12 @@ set(SOURCES
         Source/translation/TranslatorImpl.cpp
         Source/translation/TranslationDeserializerImpl.cpp
         Source/webConnection/HttpRequestHandlerImpl.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsDbImpl.cpp
-        Source/wordsDb/descriptionsDb/WordDescriptionParser.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsMemoryStorage.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsPersistentStorage.cpp
-        Source/wordsDb/descriptionsDb/DescriptionsSerializerImpl.cpp
-        Source/wordsDb/descriptionsDb/WordDescriptionSerializer.cpp
+        Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.cpp
+        Source/DescriptionParser.cpp
+        Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorage.cpp
+        Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorage.cpp
+        Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImpl.cpp
+        Source/wordsDb/wordsDescriptionsDb/DescriptionSerializer.cpp
         Source/wordsDb/statisticsDb/StatisticsDbImpl.cpp
         Source/wordsDb/statisticsDb/StatisticsSerializerImpl.cpp
         Source/wordsDb/statisticsDb/StatisticsMemoryStorage.cpp
@@ -56,12 +56,12 @@ set(UT_SOURCES
         UT/Source/translation/TranslatorImplTest.cpp
         UT/Source/translation/TranslationDeserializerImplTest.cpp
         UT/Source/webConnection/HttpRequestHandlerTest.cpp
-        UT/Source/wordsDb/descriptionsDb/DescriptionsDbImplTest.cpp
-        UT/Source/wordsDb/descriptionsDb/DescriptionsMemoryStorageTest.cpp
-        UT/Source/wordsDb/descriptionsDb/DescriptionsPersistentStorageTest.cpp
-        UT/Source/wordsDb/descriptionsDb/DescriptionsSerializerImplTest.cpp
-        UT/Source/wordsDb/descriptionsDb/WordDescriptionSerializerTest.cpp
-        UT/Source/wordsDb/descriptionsDb/WordDescriptionParserTest.cpp
+        UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImplTest.cpp
+        UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorageTest.cpp
+        UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorageTest.cpp
+        UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImplTest.cpp
+        UT/Source/wordsDb/wordsDescriptionsDb/DescriptionSerializerTest.cpp
+        UT/Source/DescriptionParserTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsDbImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsSerializerImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsMemoryStorageTest.cpp

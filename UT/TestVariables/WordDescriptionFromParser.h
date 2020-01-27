@@ -1,8 +1,8 @@
 #pragma once
 
-#include "wordsDb/descriptionsDb/Description.h"
+#include "wordsDb/wordsDescriptionsDb/Description.h"
 
-using namespace wordsDb::descriptionsDb;
+using namespace wordsDb::wordsDescriptionsDb;
 
 const DefinitionsWithExamples definitionsWithExamples{
         {"the alcoholic fermented juice of fresh grapes used as a beverage", boost::none},

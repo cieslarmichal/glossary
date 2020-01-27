@@ -1,15 +1,15 @@
 #pragma once
 
-#include "wordsDb/descriptionsDb/WordsDescriptions.h"
 #include "wordsDb/translationsDb/Translation.h"
+#include "wordsDb/wordsDescriptionsDb/WordsDescriptions.h"
 
 class WordsGeneratorService
 {
 public:
     virtual ~WordsGeneratorService() = default;
 
-    virtual wordsDb::descriptionsDb::WordDescription
+    virtual wordsDb::wordsDescriptionsDb::WordDescription
     generateWord(const wordsDb::translationsDb::Translation&) const = 0;
-    virtual wordsDb::descriptionsDb::WordsDescriptions
+    virtual wordsDb::wordsDescriptionsDb::WordsDescriptions
     generateWords() const = 0;
 };

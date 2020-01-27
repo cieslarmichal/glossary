@@ -20,7 +20,7 @@ const EnglishWord englishWord2{"englishWord2"};
 const Translation translation1{polishWord1, englishWord1};
 const Translation translation2{polishWord2, englishWord2};
 const Translations translationsWithOneTranslation{translation1};
-const Translations translationsWithTwoTranslations{translation1,translation2};
+const Translations translationsWithTwoTranslations{translation1, translation2};
 const Translations emptyTranslations{};
 }
 
@@ -45,7 +45,8 @@ TEST_F(TranslationsPersistentStorageTest,
        givenPersistentStorageWithEmptyFile_shouldNotLoadAnyTranslations)
 {
     EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return(""));
-    EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(emptyTranslations));
+    EXPECT_CALL(*serializer, deserialize(""))
+        .WillOnce(Return(emptyTranslations));
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualTranslations = persistentStorage.getTranslations();
@@ -64,7 +65,8 @@ TEST_F(TranslationsPersistentStorageTest,
     ASSERT_EQ(actualTranslations, translationsWithTwoTranslations);
 }
 
-TEST_F(TranslationsPersistentStorageTest, givenInvalidFile_shouldReturnNoTranslations)
+TEST_F(TranslationsPersistentStorageTest,
+       givenInvalidFile_shouldReturnNoTranslations)
 {
     EXPECT_CALL(*fileAccess, readContent(filepath))
         .WillOnce(Throw(exceptions::FileNotFound{""}));
@@ -130,8 +132,7 @@ TEST_F(TranslationsPersistentStorageTest,
     expectTwoTranslationsLoad();
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
-    const auto actualWordStats =
-        persistentStorage.getTranslation(polishWord1);
+    const auto actualWordStats = persistentStorage.getTranslation(polishWord1);
 
     ASSERT_EQ(*actualWordStats, translation1);
 }
