@@ -9,7 +9,7 @@ add_subdirectory(externals)
 
 set(CMAKE_CXX_STANDARD 20)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
-set( FLAGS -std=c++20 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
+set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
 
