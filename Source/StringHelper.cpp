@@ -1,5 +1,7 @@
 #include "StringHelper.h"
 
+#include <iostream>
+
 #include "boost/algorithm/string.hpp"
 
 namespace
@@ -29,8 +31,7 @@ std::string cutOffFromString(const std::string& line, size_t startIndexToCut,
     auto sizeOfLine = line.size();
 
     auto head = line.substr(0, startIndexToCut);
-    auto tail = line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut);
-
+    auto tail = line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut + 1);
     return head + tail;
 }
 
@@ -46,7 +47,7 @@ std::string substring(const std::string& line, size_t startIndex,
     return line.substr(startIndex, endIndex - startIndex);
 }
 
-std::string getCaseInsensitive(const std::string& input)
+std::string getLowerCases(const std::string& input)
 {
     return boost::algorithm::to_lower_copy(input);
 }

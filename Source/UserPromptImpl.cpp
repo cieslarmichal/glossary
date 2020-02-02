@@ -46,7 +46,7 @@ bool UserPromptImpl::yesNoAnswerIsInvalid(const std::string& input) const
     const auto isValid =
         std::any_of(correctYesNoAnswers.begin(), correctYesNoAnswers.end(),
                     [input](const auto& yesNo) {
-                        return yesNo == stringHelper::getCaseInsensitive(input);
+                        return yesNo == stringHelper::getLowerCases(input);
                     });
 
     return !isValid;

@@ -1,14 +1,12 @@
 #pragma once
 
-#include "DefaultHtmlParser.h"
+#include <string>
+#include <vector>
 
-class GlossaryHtmlParser : public DefaultHtmlParser
+class GlossaryHtmlParser
 {
 public:
-    std::vector<std::string> parse(const std::string&) const override;
+    virtual ~GlossaryHtmlParser() = default;
 
-private:
-    std::vector<std::string>
-    selectImportantLines(const std::vector<std::string>&) const;
-    void removeHtmlStrings(std::vector<std::string>&) const;
+    virtual std::vector<std::string> parse(const std::string&) const = 0;
 };

@@ -9,7 +9,7 @@ add_subdirectory(externals)
 
 set(CMAKE_CXX_STANDARD 20)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
-set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
+set( FLAGS -std=c++20 -Wall -g3 -fno-omit-frame-pointer -pedantic-errors -Wextra -Wconversion -Werror)
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
 
@@ -37,8 +37,8 @@ set(SOURCES
         Source/wordsDb/translationsDb/TranslationsMemoryStorage.cpp
         Source/wordsDb/translationsDb/TranslationsPersistentStorage.cpp
         Source/Glossary.cpp
-        Source/GlossaryHtmlParser.cpp
-        Source/DefaultHtmlParser.cpp
+        Source/GlossaryHtmlParserImpl.cpp
+        Source/HtmlTagsDeleter.cpp
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
         Source/DictionaryReaderImpl.cpp
@@ -70,8 +70,8 @@ set(UT_SOURCES
         UT/Source/wordsDb/translationsDb/TranslationsSerializerImplTest.cpp
         UT/Source/wordsDb/translationsDb/TranslationsMemoryStorageTest.cpp
         UT/Source/wordsDb/translationsDb/TranslationsPersistentStorageTest.cpp
-        UT/Source/GlossaryHtmlParserTest.cpp
-        UT/Source/DefaultHtmlParserTest.cpp
+        UT/Source/GlossaryHtmlParserImplTest.cpp
+        UT/Source/HtmlTagsDeleterTest.cpp
         UT/Source/FileAccessImplTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
         UT/Source/HtmlWordsCreatorImplTest.cpp
@@ -79,6 +79,7 @@ set(UT_SOURCES
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp
         UT/Source/AnswerCheckerImplTest.cpp
+        UT/Source/StringHelperTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

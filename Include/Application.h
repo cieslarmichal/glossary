@@ -3,7 +3,8 @@
 class Application
 {
 public:
-    //TODO: if There are no wordsDescriptions stored, wypierdala apke
+    //TODO: if There are html content reading wypierdala apke
+
     virtual ~Application() = default;
 
     virtual void run() = 0;

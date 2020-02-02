@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "GlossaryHtmlParser.h"
+#include "GlossaryHtmlParserImpl.h"
 #include "exceptions/ConnectionFailed.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
 
@@ -11,9 +11,9 @@ const std::string HtmlWordsCreatorImpl::urlAddress{
 
 HtmlWordsCreatorImpl::HtmlWordsCreatorImpl(
     std::unique_ptr<const webConnection::HttpRequestHandler> htmlReaderInit,
-    std::unique_ptr<const HtmlParser> htmlParserInit)
-    : httpHandler{std::move(htmlReaderInit)}, htmlParser{
-                                                  std::move(htmlParserInit)}
+    std::unique_ptr<const GlossaryHtmlParser> glossaryParserInit)
+    : httpHandler{std::move(htmlReaderInit)}, glossaryParser{
+                                                  std::move(glossaryParserInit)}
 {
 }
 
@@ -34,7 +34,7 @@ HtmlWordsCreatorImpl::createWord(
         return boost::none;
     }
 
-    const auto parsedHtmlContent = htmlParser->parse(htmlContent);
+    const auto parsedHtmlContent = glossaryParser->parse(htmlContent);
 
     if (const auto wordDescription = descriptionParser.parse(parsedHtmlContent))
     {

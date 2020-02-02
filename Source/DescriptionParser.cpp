@@ -15,10 +15,11 @@ void removeSentenceMarks(Sentence&);
 bool isDefinition(const std::string&);
 bool isExample(const std::string&);
 bool isSentence(const std::string&);
+void trimEmptySpaces(std::string&);
 
-const std::string definitionMark{":"};
-const std::string exampleMark{"//"};
-const std::string sentenceMark{"\""};
+const std::string definitionPrefix{": "};
+const std::string examplePrefix{"// "};
+const std::string sentencePrefix{"; "};
 }
 
 boost::optional<Description>
@@ -92,36 +93,40 @@ void removeMarks(Description& wordDescription)
 
 void removeDefinitionMarks(Definition& definition)
 {
-    boost::erase_all(definition, definitionMark);
-    boost::algorithm::trim(definition);
+    definition.erase(0, definitionPrefix.size());
+    trimEmptySpaces(definition);
 }
 
 void removeExampleMarks(Example& example)
 {
-    boost::erase_all(example, exampleMark);
-    boost::algorithm::trim(example);
+    example.erase(0, examplePrefix.size());
+    trimEmptySpaces(example);
 }
 
 void removeSentenceMarks(Sentence& sentence)
 {
-    boost::erase_all(sentence, sentenceMark);
-    boost::algorithm::trim(sentence);
+    sentence.erase(0, sentencePrefix.size());
+    trimEmptySpaces(sentence);
 }
 
 bool isDefinition(const std::string& line)
 {
-    return (!line.empty() && line.substr(0, 1) == definitionMark);
+    return line.rfind(definitionPrefix, 0) !=std::string::npos;
 }
 
 bool isExample(const std::string& line)
 {
-    return (line.size() >= 2 && line.substr(0, 2) == exampleMark);
+    return line.rfind(examplePrefix, 0) !=std::string::npos;
 }
 
 bool isSentence(const std::string& line)
 {
-    return (line.size() >= 2 && line.substr(0, 1) == sentenceMark &&
-            line.substr(line.size() - 1, 1) == sentenceMark);
+    return line.rfind(sentencePrefix, 0) !=std::string::npos;
+}
+
+void trimEmptySpaces(std::string& line)
+{
+    boost::algorithm::trim(line);
 }
 
 }

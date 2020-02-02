@@ -4,7 +4,7 @@
 
 #include "DictionaryReaderImpl.h"
 #include "FileAccessImpl.h"
-#include "GlossaryHtmlParser.h"
+#include "GlossaryHtmlParserImpl.h"
 #include "HtmlWordsCreatorImpl.h"
 #include "WordsShufflerImpl.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
@@ -37,8 +37,8 @@ void WordsGeneratorServiceImpl::initializeWordsCreatorService()
 
     std::unique_ptr<const webConnection::HttpRequestHandler> httpHandler =
         std::make_unique<webConnection::HttpRequestHandlerImpl>();
-    std::unique_ptr<const HtmlParser> htmlParser =
-        std::make_unique<GlossaryHtmlParser>();
+    std::unique_ptr<const GlossaryHtmlParser> htmlParser =
+        std::make_unique<GlossaryHtmlParserImpl>();
     htmlWordCreator = std::make_unique<HtmlWordsCreatorImpl>(
         std::move(httpHandler), std::move(htmlParser));
 
@@ -100,6 +100,7 @@ WordsGeneratorServiceImpl::getWordFromDatabase(
     {
         return *wordsDb->getWordDescription(englishWord);
     }
+
     return boost::none;
 }
 
