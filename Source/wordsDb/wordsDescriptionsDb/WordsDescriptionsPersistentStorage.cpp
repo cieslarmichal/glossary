@@ -6,7 +6,6 @@
 
 namespace wordsDb::wordsDescriptionsDb
 {
-// TODO: change filenames
 const std::string WordsDescriptionsPersistentStorage::directory{"../database"};
 const std::string WordsDescriptionsPersistentStorage::filename{directory +
                                                                "/wordsDescriptions.txt"};

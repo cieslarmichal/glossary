@@ -79,18 +79,10 @@ Statistics StatisticsSerializerImpl::parseStatistics(
     {
         if (isWordStatisticsValid(wordStatisticsData))
         {
-            try
-            {
-                statistics.emplace_back(
-                    WordStatistics{wordStatisticsData[englishWordField],
-                                   wordStatisticsData[correctAnswersField],
-                                   wordStatisticsData[incorrectAnswersField]});
-            }
-            catch (const std::exception& e)
-            {
-                std::cerr << "Unable to read wordStatistics:" << e.what()
-                          << "\n";
-            }
+            statistics.emplace_back(
+                WordStatistics{wordStatisticsData[englishWordField],
+                               wordStatisticsData[correctAnswersField],
+                               wordStatisticsData[incorrectAnswersField]});
         }
         else
         {

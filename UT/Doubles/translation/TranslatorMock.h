@@ -6,7 +6,6 @@
 
 namespace translation
 {
-// TODO:: use newer gmock version
 
 class TranslatorMock : public Translator
 {

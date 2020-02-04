@@ -91,6 +91,21 @@ TEST_F(TranslationsPersistentStorageTest,
     ASSERT_FALSE(persistentStorage.empty());
 }
 
+TEST_F(
+    TranslationsPersistentStorageTest,
+    givenTranslationAdditionAndNonExistingFIle_shouldAddWordTranslationAndNotSerialize)
+{
+    TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
+    EXPECT_CALL(*fileAccess, write(filepath, "words"))
+        .WillOnce(Throw(exceptions::FileNotFound{""}));
+    EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation))
+        .WillOnce(Return("words"));
+
+    persistentStorage.addTranslation(translation1);
+
+    ASSERT_FALSE(persistentStorage.empty());
+}
+
 TEST_F(TranslationsPersistentStorageTest,
        givenTwoSameTranslations_shouldAddAndSerializeOnlyOne)
 {

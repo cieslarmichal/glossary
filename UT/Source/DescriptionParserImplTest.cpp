@@ -1,4 +1,4 @@
-#include "DescriptionParser.h"
+#include "DescriptionParserImpl.h"
 
 #include "StringHelper.h"
 #include "gtest/gtest.h"
@@ -16,8 +16,8 @@ const auto exampleContent{
     "fruit) used as a beverage    \n"
     "// blackberry wine   \n"
     ": something that invigorates or intoxicates\n"
-    ";     In addition to beer, a selection of local and national wines will be "
-    "offered..      \n"
+    ";     In addition to beer, a selection of local and national wines will "
+    "be offered..      \n"
     "; Who doesn't love delicious food paired with your favorite wine?\n"
     ": wine is a delicious beverage"};
 const DefinitionsWithExamples definitionsWithExamples{
@@ -54,13 +54,14 @@ const Description wordDescriptionPartlyComplete{someDefinitionsAndExamples,
 const std::vector<std::string> emptyContent{};
 }
 
-class DescriptionParserTest : public Test
+class DescriptionParserImplTest : public Test
 {
 public:
-    DescriptionParser parser;
+    DescriptionParserImpl parser;
 };
 
-TEST_F(DescriptionParserTest, givenEmptyContent_shoulNotReturnWordDescription)
+TEST_F(DescriptionParserImplTest,
+       givenEmptyContent_shoulNotReturnWordDescription)
 {
     const auto actualWordDescription = parser.parse(emptyContent);
 
@@ -68,7 +69,7 @@ TEST_F(DescriptionParserTest, givenEmptyContent_shoulNotReturnWordDescription)
 }
 
 TEST_F(
-    DescriptionParserTest,
+    DescriptionParserImplTest,
     givenHtmlContentWithoutSomeSpecificMarks_shouldReturnWordDescriptionWithSkippedSomeLines)
 {
     const auto content =
@@ -79,7 +80,7 @@ TEST_F(
     EXPECT_EQ(actualWordDescription, wordDescriptionPartlyComplete);
 }
 
-TEST_F(DescriptionParserTest,
+TEST_F(DescriptionParserImplTest,
        givenParsedHtmlContent_shouldReturnWordDescription)
 {
     const auto content = stringHelper::getSplitLines(exampleContent);

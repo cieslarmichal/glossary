@@ -23,7 +23,7 @@ set(SOURCES
         Source/translation/TranslationDeserializerImpl.cpp
         Source/webConnection/HttpRequestHandlerImpl.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.cpp
-        Source/DescriptionParser.cpp
+        Source/DescriptionParserImpl.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorage.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorage.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImpl.cpp
@@ -61,7 +61,7 @@ set(UT_SOURCES
         UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorageTest.cpp
         UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImplTest.cpp
         UT/Source/wordsDb/wordsDescriptionsDb/DescriptionSerializerTest.cpp
-        UT/Source/DescriptionParserTest.cpp
+        UT/Source/DescriptionParserImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsDbImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsSerializerImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsMemoryStorageTest.cpp

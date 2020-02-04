@@ -1,7 +1,5 @@
 #include "wordsDb/wordsDescriptionsDb/DescriptionSerializer.h"
 
-#include <iostream>
-
 #include "nlohmann/json.hpp"
 
 namespace wordsDb::wordsDescriptionsDb
@@ -29,15 +27,8 @@ Description DescriptionSerializer::deserialize(const nlohmann::json& json) const
     {
         return {};
     }
-    try
-    {
-        return readDescription(json);
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << "Unable to parse description\n";
-    }
-    return {};
+
+    return readDescription(json);
 }
 
 namespace

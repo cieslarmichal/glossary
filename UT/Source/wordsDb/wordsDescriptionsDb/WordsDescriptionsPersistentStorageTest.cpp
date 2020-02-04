@@ -90,7 +90,23 @@ TEST_F(WordsDescriptionsPersistentStorageTest,
 
     persistentStorage.addWordDescription(word3);
 
-    ASSERT_FALSE(persistentStorage.empty());
+    ASSERT_EQ(persistentStorage.size(), 3);
+}
+
+TEST_F(WordsDescriptionsPersistentStorageTest,
+       givenWordAdditionAndNonExistingFile_shouldAddWordAndNotSerialize)
+{
+    expectTwoWordsDescriptionsLoad();
+    WordsDescriptionsPersistentStorage persistentStorage{fileAccess,
+                                                         serializer};
+    EXPECT_CALL(*fileAccess, write(filepath, "words"))
+        .WillOnce(Throw(exceptions::FileNotFound{""}));
+    EXPECT_CALL(*serializer, serialize(wordsAfterAddition))
+        .WillOnce(Return("words"));
+
+    persistentStorage.addWordDescription(word3);
+
+    ASSERT_EQ(persistentStorage.size(), 3);
 }
 
 TEST_F(WordsDescriptionsPersistentStorageTest,

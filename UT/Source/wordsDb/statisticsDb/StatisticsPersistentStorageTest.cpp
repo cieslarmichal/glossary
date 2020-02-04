@@ -104,6 +104,22 @@ TEST_F(StatisticsPersistentStorageTest,
     ASSERT_FALSE(persistentStorage.empty());
 }
 
+TEST_F(
+    StatisticsPersistentStorageTest,
+    givenWordStatsAdditionAndNonExistingFile_shouldAddWordStatsAndNotSerialize)
+{
+    StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
+    ASSERT_TRUE(persistentStorage.empty());
+    EXPECT_CALL(*fileAccess, write(filepath, "words"))
+        .WillOnce(Throw(exceptions::FileNotFound{""}));
+    EXPECT_CALL(*serializer, serialize(oneWordStatistics))
+        .WillOnce(Return("words"));
+
+    persistentStorage.addWordStatistics(wordStats1);
+
+    ASSERT_FALSE(persistentStorage.empty());
+}
+
 TEST_F(StatisticsPersistentStorageTest,
        givenTwoSameWordsStats_shouldAddAndSerializeOnlyOne)
 {

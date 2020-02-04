@@ -11,6 +11,7 @@ const auto jsonContentWithText =
     R"({"code":200,"lang":"pl-en","text":["beer"]})";
 const auto expectedText = "beer";
 const auto jsonContentWithoutText = R"({"code":403,"lang":"pl-en"})";
+const auto invalidJson{"{:"};
 const auto emptyJson = "";
 }
 
@@ -23,6 +24,13 @@ public:
 TEST_F(TranslationDeserializerImplTest, givenEmpyJson_shouldReturnEmptyText)
 {
     const auto result = deserializer.deserialize(emptyJson);
+
+    ASSERT_TRUE(result.empty());
+}
+
+TEST_F(TranslationDeserializerImplTest, givenInvalidJson_shouldReturnEmptyText)
+{
+    const auto result = deserializer.deserialize(invalidJson);
 
     ASSERT_TRUE(result.empty());
 }

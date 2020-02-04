@@ -7,7 +7,6 @@
 namespace wordsDb::translationsDb
 {
 
-// TODO: change filenames to be more relevant
 const std::string TranslationsPersistentStorage::directory{"../database"};
 const std::string TranslationsPersistentStorage::filename{directory +
                                                           "/translations.txt"};

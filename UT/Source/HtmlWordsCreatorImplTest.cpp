@@ -25,7 +25,6 @@ const std::vector<std::string> emptyParsedHtmlContent{};
 
 class HtmlWordsCreatorImplTest : public Test
 {
-    // TODO: mock WordDescriptionParser
 public:
     std::string prepareHtmlContent()
     {

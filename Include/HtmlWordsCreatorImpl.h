@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "DescriptionParser.h"
+#include "DescriptionParserImpl.h"
 #include "GlossaryHtmlParser.h"
 #include "HtmlWordsCreator.h"
 #include "webConnection/HttpRequestHandler.h"
@@ -20,7 +20,7 @@ public:
 private:
     std::unique_ptr<const webConnection::HttpRequestHandler> httpHandler;
     std::unique_ptr<const GlossaryHtmlParser> glossaryParser;
-    DescriptionParser descriptionParser;
+    DescriptionParserImpl descriptionParser;
 
     static const std::string urlAddress;
 };

@@ -7,7 +7,6 @@
 namespace wordsDb::statisticsDb
 {
 
-// TODO: change filenames to be more relevant
 const std::string StatisticsPersistentStorage::directory{"../database"};
 const std::string StatisticsPersistentStorage::filename{
     directory + "/statistics.txt"};

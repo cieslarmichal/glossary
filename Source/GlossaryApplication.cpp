@@ -18,7 +18,7 @@ GlossaryApplication::GlossaryApplication()
 }
 
 // TODO: make FileAccessImpl only one shared_ptr not two
-// (persistentAnswersCounter and WordService)
+// TODO: (persistentAnswersCounter and WordService)
 void GlossaryApplication::initialize()
 {
     wordsGenerator = std::make_unique<WordsGeneratorServiceImpl>();

@@ -75,29 +75,20 @@ WordsDescriptions WordsDescriptionsSerializerImpl::readWordsDescriptions(
 WordsDescriptions WordsDescriptionsSerializerImpl::parseWordsDescriptions(
     const nlohmann::json& wordsDescriptionsJson) const
 {
-    // TODO: split to functions
     WordsDescriptions wordsDescriptions;
     for (const auto& wordDescriptionData : wordsDescriptionsJson)
     {
         if (isWordDescriptionValid(wordDescriptionData))
         {
-            try
-            {
-                const EnglishWord englishWord{
-                    std::string(wordDescriptionData[englishWordField])};
-                const PolishWord polishWord{
-                    std::string(wordDescriptionData[polishWordField])};
-                const Description wordDescription{
-                    wordDescriptionSerializer.deserialize(
-                        wordDescriptionData[descriptionField])};
-                wordsDescriptions.push_back(
-                    {englishWord, polishWord, wordDescription});
-            }
-            catch (const std::exception& e)
-            {
-                std::cerr << "Unable to read wordDescription:" << e.what()
-                          << "\n";
-            }
+            const EnglishWord englishWord{
+                std::string(wordDescriptionData[englishWordField])};
+            const PolishWord polishWord{
+                std::string(wordDescriptionData[polishWordField])};
+            const Description wordDescription{
+                wordDescriptionSerializer.deserialize(
+                    wordDescriptionData[descriptionField])};
+            wordsDescriptions.push_back(
+                {englishWord, polishWord, wordDescription});
         }
         else
         {

@@ -1,6 +1,4 @@
-#include "DescriptionParser.h"
-
-#include <iostream>
+#include "DescriptionParserImpl.h"
 
 #include "boost/algorithm/string.hpp"
 
@@ -23,7 +21,7 @@ const std::string sentencePrefix{"; "};
 }
 
 boost::optional<Description>
-DescriptionParser::parse(const std::vector<std::string>& lines) const
+DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
 {
     Description wordDescription;
     bool previousLineIsDefinition = false;

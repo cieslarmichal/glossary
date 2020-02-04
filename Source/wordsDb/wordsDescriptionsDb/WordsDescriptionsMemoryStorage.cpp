@@ -1,7 +1,5 @@
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorage.h"
 
-#include <iostream>
-
 namespace wordsDb::wordsDescriptionsDb
 {
 void WordsDescriptionsMemoryStorage::addWordDescription(

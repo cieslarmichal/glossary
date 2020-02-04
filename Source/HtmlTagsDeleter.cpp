@@ -1,7 +1,6 @@
 #include "HtmlTagsDeleter.h"
 
 #include <algorithm>
-#include <iostream>
 
 #include "StringHelper.h"
 #include "boost/algorithm/string.hpp"

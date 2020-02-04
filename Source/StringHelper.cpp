@@ -1,7 +1,5 @@
 #include "StringHelper.h"
 
-#include <iostream>
-
 #include "boost/algorithm/string.hpp"
 
 namespace

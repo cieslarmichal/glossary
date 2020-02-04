@@ -1,12 +1,11 @@
 #pragma once
 
-#include "boost/optional.hpp"
-#include "wordsDb/wordsDescriptionsDb/Description.h"
+#include "DescriptionParser.h"
 
 using namespace wordsDb::wordsDescriptionsDb;
 
-class DescriptionParser
+class DescriptionParserImpl : public DescriptionParser
 {
 public:
-    boost::optional<Description> parse(const std::vector<std::string>&) const;
+    boost::optional<Description> parse(const std::vector<std::string>&) const override;
 };
