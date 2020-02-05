@@ -5,7 +5,7 @@
 namespace wordsDb
 {
 
-class WordsDbImpl : public WordsDb
+class WordsDbImpl
 {
 public:
 };
