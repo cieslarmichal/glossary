@@ -23,7 +23,6 @@ set(SOURCES
         Source/translation/TranslationDeserializerImpl.cpp
         Source/webConnection/HttpRequestHandlerImpl.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.cpp
-        Source/DescriptionParserImpl.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorage.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorage.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImpl.cpp
@@ -36,6 +35,8 @@ set(SOURCES
         Source/wordsDb/translationsDb/TranslationsSerializerImpl.cpp
         Source/wordsDb/translationsDb/TranslationsMemoryStorage.cpp
         Source/wordsDb/translationsDb/TranslationsPersistentStorage.cpp
+        Source/wordsDb/WordsDbImpl.cpp
+        Source/DescriptionParserImpl.cpp
         Source/Glossary.cpp
         Source/GlossaryHtmlParserImpl.cpp
         Source/HtmlTagsDeleter.cpp
@@ -61,7 +62,6 @@ set(UT_SOURCES
         UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorageTest.cpp
         UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerImplTest.cpp
         UT/Source/wordsDb/wordsDescriptionsDb/DescriptionSerializerTest.cpp
-        UT/Source/DescriptionParserImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsDbImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsSerializerImplTest.cpp
         UT/Source/wordsDb/statisticsDb/StatisticsMemoryStorageTest.cpp
@@ -70,6 +70,8 @@ set(UT_SOURCES
         UT/Source/wordsDb/translationsDb/TranslationsSerializerImplTest.cpp
         UT/Source/wordsDb/translationsDb/TranslationsMemoryStorageTest.cpp
         UT/Source/wordsDb/translationsDb/TranslationsPersistentStorageTest.cpp
+        UT/Source/wordsDb/WordsDbImplTest.cpp
+        UT/Source/DescriptionParserImplTest.cpp
         UT/Source/GlossaryHtmlParserImplTest.cpp
         UT/Source/HtmlTagsDeleterTest.cpp
         UT/Source/FileAccessImplTest.cpp

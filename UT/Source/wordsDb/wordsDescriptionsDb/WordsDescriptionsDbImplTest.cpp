@@ -10,8 +10,8 @@ using namespace wordsDb::wordsDescriptionsDb;
 namespace
 {
 const EnglishWord englishWord{"englishWord"};
-const WordDescription word(englishWord, "polishWord", {});
-const WordsDescriptions words{word};
+const WordDescription wordDescription{englishWord, "polishWord", {}};
+const WordsDescriptions wordsDescriptions{wordDescription};
 }
 
 class WordsDescriptionsDbImplTest : public Test
@@ -23,15 +23,15 @@ public:
     WordsDescriptionsDbImpl database{std::move(storageInit)};
 };
 
-TEST_F(WordsDescriptionsDbImplTest, givenWordAddition_shouldAddWordToStorage)
+TEST_F(WordsDescriptionsDbImplTest, givenWordDescritpionAddition_shouldAddWordDescriptionToStorage)
 {
-    EXPECT_CALL(*storage, addWordDescription(word));
+    EXPECT_CALL(*storage, addWordDescription(wordDescription));
 
-    database.addWordDescription(word);
+    database.addWordDescription(wordDescription);
 }
 
 TEST_F(WordsDescriptionsDbImplTest,
-       givenEnglishWordNotExistingInStorage_shouldReturnNone)
+       givenEnglishWordDescriptionNotExistingInStorage_shouldReturnNone)
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord))
         .WillOnce(Return(boost::none));
@@ -42,27 +42,27 @@ TEST_F(WordsDescriptionsDbImplTest,
 }
 
 TEST_F(WordsDescriptionsDbImplTest,
-       givenEnglishWordExistingInStorage_shouldReturnWord)
+       givenEnglishWordDescriptionExistingInStorage_shouldReturnWordDescription)
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord))
-        .WillOnce(Return(word));
+        .WillOnce(Return(wordDescription));
 
     const auto actualWord = database.getWordDescription(englishWord);
 
-    ASSERT_EQ(actualWord, word);
+    ASSERT_EQ(actualWord, wordDescription);
 }
 
-TEST_F(WordsDescriptionsDbImplTest, containsWords_shouldReturnWords)
+TEST_F(WordsDescriptionsDbImplTest, containsWordsDescriptions_shouldReturnWordsDescriptions)
 {
-    EXPECT_CALL(*storage, getWordsDescriptions()).WillOnce(Return(words));
+    EXPECT_CALL(*storage, getWordsDescriptions()).WillOnce(Return(wordsDescriptions));
 
     const auto actualWords = database.getWordsDescriptions();
 
-    ASSERT_EQ(actualWords, words);
+    ASSERT_EQ(actualWords, wordsDescriptions);
 }
 
 TEST_F(WordsDescriptionsDbImplTest,
-       givenEnglishWordExistingInStorage_shouldContainThisWord)
+       givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
 
@@ -70,7 +70,7 @@ TEST_F(WordsDescriptionsDbImplTest,
 }
 
 TEST_F(WordsDescriptionsDbImplTest,
-       givenEnglishWordNotExistingInStorage_shouldNotContainThisWord)
+       givenEnglishWordNotExistingInStorage_shouldNotContainThisWordDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(false));
 
