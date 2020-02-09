@@ -43,7 +43,7 @@ set(SOURCES
         Source/FileAccessImpl.cpp
         Source/StringHelper.cpp
         Source/DictionaryReaderImpl.cpp
-        Source/HtmlWordsCreatorImpl.cpp
+        Source/HttpWordDescriptionCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
         Source/WordsShufflerImpl.cpp
         Source/WordViewerImpl.cpp
@@ -76,7 +76,7 @@ set(UT_SOURCES
         UT/Source/HtmlTagsDeleterTest.cpp
         UT/Source/FileAccessImplTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
-        UT/Source/HtmlWordsCreatorImplTest.cpp
+        UT/Source/HttpWordDescriptionCreatorImplTest.cpp
         UT/Source/WordsShufflerImplTest.cpp
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp

@@ -80,15 +80,13 @@ WordsDescriptions WordsDescriptionsSerializerImpl::parseWordsDescriptions(
     {
         if (isWordDescriptionValid(wordDescriptionData))
         {
-            const EnglishWord englishWord{
-                std::string(wordDescriptionData[englishWordField])};
-            const PolishWord polishWord{
-                std::string(wordDescriptionData[polishWordField])};
             const Description wordDescription{
                 wordDescriptionSerializer.deserialize(
                     wordDescriptionData[descriptionField])};
             wordsDescriptions.push_back(
-                {englishWord, polishWord, wordDescription});
+                {std::string{wordDescriptionData[englishWordField]},
+                 std::string{wordDescriptionData[polishWordField]},
+                 wordDescription});
         }
         else
         {

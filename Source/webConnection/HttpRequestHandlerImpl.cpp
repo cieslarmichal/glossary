@@ -42,6 +42,7 @@ Response HttpRequestHandlerImpl::get(const Request& urlAddress) const
 
 namespace
 {
+
 size_t curlWriter(char* data, size_t size, size_t nmemb,
                   std::string* writerData)
 {

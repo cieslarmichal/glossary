@@ -14,9 +14,7 @@ enum class Result
 };
 
 Result tryToWrite(std::ofstream& fileStream, const std::string& data);
-
 const std::string fileNotFoundMessage{"File not found: "};
-const std::string endOfLine{"\n"};
 }
 
 void FileAccessImpl::write(const std::string& path,

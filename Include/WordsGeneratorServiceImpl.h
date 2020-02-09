@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "DictionaryReader.h"
-#include "HtmlWordsCreator.h"
+#include "HttpWordDescriptionCreator.h"
 #include "WordsGeneratorService.h"
 #include "WordsShuffler.h"
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsDb.h"
@@ -28,7 +28,7 @@ private:
 
     std::unique_ptr<const wordsDb::wordsDescriptionsDb::WordsDescriptionsDb>
         wordsDb;
-    std::unique_ptr<const HtmlWordsCreator> htmlWordCreator;
+    std::unique_ptr<const HttpWordDescriptionCreator> htmlWordCreator;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
     std::unique_ptr<const WordsShuffler> wordsShuffler;
 

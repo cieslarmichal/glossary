@@ -2,10 +2,11 @@
 
 #include <iostream>
 
+#include "DescriptionParserImpl.h"
 #include "DictionaryReaderImpl.h"
 #include "FileAccessImpl.h"
 #include "GlossaryHtmlParserImpl.h"
-#include "HtmlWordsCreatorImpl.h"
+#include "HttpWordDescriptionCreatorImpl.h"
 #include "WordsShufflerImpl.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.h"
@@ -39,8 +40,11 @@ void WordsGeneratorServiceImpl::initializeWordsCreatorService()
         std::make_unique<webConnection::HttpRequestHandlerImpl>();
     std::unique_ptr<const GlossaryHtmlParser> htmlParser =
         std::make_unique<GlossaryHtmlParserImpl>();
-    htmlWordCreator = std::make_unique<HtmlWordsCreatorImpl>(
-        std::move(httpHandler), std::move(htmlParser));
+    std::unique_ptr<const DescriptionParser> descriptionParser =
+        std::make_unique<DescriptionParserImpl>();
+    htmlWordCreator = std::make_unique<HttpWordDescriptionCreatorImpl>(
+        std::move(httpHandler), std::move(htmlParser),
+        std::move(descriptionParser));
 
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
 
@@ -108,7 +112,7 @@ boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
 WordsGeneratorServiceImpl::getWordFromHtml(
     const Translation& wordWithTranslation) const
 {
-    return htmlWordCreator->createWord(wordWithTranslation);
+    return htmlWordCreator->createWordDescription(wordWithTranslation);
 }
 
 void WordsGeneratorServiceImpl::addWordToStorage(

@@ -3,11 +3,11 @@
 #include "wordsDb/translationsDb/Translation.h"
 #include "wordsDb/wordsDescriptionsDb/WordDescription.h"
 
-class HtmlWordsCreator
+class HttpWordDescriptionCreator
 {
 public:
-    virtual ~HtmlWordsCreator() = default;
+    virtual ~HttpWordDescriptionCreator() = default;
 
     virtual boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
-    createWord(const wordsDb::translationsDb::Translation&) const = 0;
+    createWordDescription(const wordsDb::translationsDb::Translation&) const = 0;
 };

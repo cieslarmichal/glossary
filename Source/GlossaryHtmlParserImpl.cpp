@@ -19,6 +19,9 @@ bool containsTagWithEndTag(const std::string& content, const std::string& tag);
 TagWithPosition findNearestEndTagPosition(const std::string& content,
                                           size_t startTagPosition);
 TagWithPosition findNearestTagPosition(const std::string& content);
+std::vector<TagWithPosition>
+getGlossaryTagsWithPositions(const std::string& content,
+                             size_t startPosition = 0);
 TagWithPosition getTagPositionWithLowestPosition(
     const std::vector<TagWithPosition>& tagsWithPositions);
 void trimEmptySpaces(std::string& line);
@@ -56,7 +59,7 @@ GlossaryHtmlParserImpl::GlossaryHtmlParserImpl()
 std::vector<std::string>
 GlossaryHtmlParserImpl::parse(const std::string& htmlContent) const
 {
-    auto glossaryLines = selectGlossaryLines(htmlContent);
+    const auto glossaryLines = selectGlossaryLines(htmlContent);
     auto parsedContent = htmlTagsDeleter->deleteTags(glossaryLines);
     return parsedContent;
 }
@@ -96,26 +99,24 @@ std::vector<std::string> getTagsContent(const std::string& contentInit)
     auto content{contentInit};
     while (containsAnyTagWithEndTag(content))
     {
-        auto startTagWithPosition = findNearestTagPosition(content);
+        const auto startTagWithPosition = findNearestTagPosition(content);
         if (startTagWithPosition.position + 1 < content.size())
         {
-            auto endTagPos = findNearestEndTagPosition(
+            const auto endTagPos = findNearestEndTagPosition(
                 content, startTagWithPosition.position);
             if (endTagPos.position != std::string::npos)
             {
-                auto tagContent =stringHelper::substring(content,
+                auto tagContent =
+                    stringHelper::substring(content,
                                             startTagWithPosition.position +
                                                 startTagWithPosition.tag.size(),
                                             endTagPos.position);
                 trimEmptySpaces(tagContent);
-                auto contentWithPrefix = startTagWithPosition.getPrefix() + tagContent;
+                const auto contentWithPrefix =
+                    startTagWithPosition.getPrefix() + tagContent;
                 tagsContent.push_back(contentWithPrefix);
                 content = content.substr(endTagPos.position);
             }
-        }
-        else
-        {
-            std::cerr << "error";
         }
     }
 
@@ -177,43 +178,34 @@ TagWithPosition findNearestEndTagPosition(const std::string& content,
         end = {htmlEndTag, content.find(htmlEndTag, end.position + 1)};
     }
 
-    const TagWithPosition definition{
-        htmlDefinitionTag,
-        content.find(htmlDefinitionTag, startTagPosition + 1)};
-    const TagWithPosition example1{
-        htmlExampleTag1, content.find(htmlExampleTag1, startTagPosition + 1)};
-    const TagWithPosition example2{
-        htmlExampleTag2, content.find(htmlExampleTag2, startTagPosition + 1)};
-    const TagWithPosition example3{
-        htmlExampleTag3, content.find(htmlExampleTag3, startTagPosition + 1)};
-    const TagWithPosition sentence1{
-        htmlSentenceTag1, content.find(htmlSentenceTag1, startTagPosition + 1)};
-    const TagWithPosition sentence2{
-        htmlSentenceTag2, content.find(htmlSentenceTag2, startTagPosition + 1)};
-    const std::vector<TagWithPosition> tagsWithPositions{
-        definition, example1, example2, example3, sentence1, sentence2, end};
+    auto tagsWithPositions = getGlossaryTagsWithPositions(content, startTagPosition + 1);
+    tagsWithPositions.emplace_back(end);
 
     return getTagPositionWithLowestPosition(tagsWithPositions);
 }
 
 TagWithPosition findNearestTagPosition(const std::string& content)
 {
-    const TagWithPosition definition{htmlDefinitionTag,
-                                     content.find(htmlDefinitionTag)};
-    const TagWithPosition example1{htmlExampleTag1,
-                                   content.find(htmlExampleTag1)};
-    const TagWithPosition example2{htmlExampleTag2,
-                                   content.find(htmlExampleTag2)};
-    const TagWithPosition example3{htmlExampleTag3,
-                                   content.find(htmlExampleTag3)};
-    const TagWithPosition sentence1{htmlSentenceTag1,
-                                    content.find(htmlSentenceTag1)};
-    const TagWithPosition sentence2{htmlSentenceTag2,
-                                    content.find(htmlSentenceTag2)};
-    const std::vector<TagWithPosition> tagsWithPositions{
-        definition, example1, example2, example3, sentence1, sentence2};
-
+    const auto tagsWithPositions = getGlossaryTagsWithPositions(content);
     return getTagPositionWithLowestPosition(tagsWithPositions);
+}
+
+std::vector<TagWithPosition>
+getGlossaryTagsWithPositions(const std::string& content, size_t startPosition)
+{
+    const TagWithPosition definition{
+        htmlDefinitionTag, content.find(htmlDefinitionTag, startPosition)};
+    const TagWithPosition example1{
+        htmlExampleTag1, content.find(htmlExampleTag1, startPosition)};
+    const TagWithPosition example2{
+        htmlExampleTag2, content.find(htmlExampleTag2, startPosition)};
+    const TagWithPosition example3{
+        htmlExampleTag3, content.find(htmlExampleTag3, startPosition)};
+    const TagWithPosition sentence1{
+        htmlSentenceTag1, content.find(htmlSentenceTag1, startPosition)};
+    const TagWithPosition sentence2{
+        htmlSentenceTag2, content.find(htmlSentenceTag2, startPosition)};
+    return {definition, example1, example2, example3, sentence1, sentence2};
 }
 
 TagWithPosition getTagPositionWithLowestPosition(

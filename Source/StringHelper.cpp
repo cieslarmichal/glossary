@@ -26,10 +26,9 @@ std::vector<std::string> getSplitLines(const std::string& content)
 std::string cutOffFromString(const std::string& line, size_t startIndexToCut,
                              size_t endIndexToCut)
 {
-    auto sizeOfLine = line.size();
-
-    auto head = line.substr(0, startIndexToCut);
-    auto tail = line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut + 1);
+    const auto sizeOfLine = line.size();
+    const auto head = line.substr(0, startIndexToCut);
+    const auto tail = line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut + 1);
     return head + tail;
 }
 
