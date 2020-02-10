@@ -2,24 +2,18 @@
 
 #include "boost/algorithm/string.hpp"
 
-namespace
-{
-const std::string endOfLine{"\n"};
-
-}
-
 namespace stringHelper
 {
 
-std::string getJoinedLines(const std::vector<std::string>& contentWithLines)
+std::string getJoinedLines(const std::vector<std::string>& contentWithLines, std::string stringToJoinWith)
 {
-    return boost::algorithm::join(contentWithLines, endOfLine);
+    return boost::algorithm::join(contentWithLines, stringToJoinWith);
 }
 
-std::vector<std::string> getSplitLines(const std::string& content)
+std::vector<std::string> getSplitLines(const std::string& content, std::string stringToSplitBy)
 {
     std::vector<std::string> contentWithLines;
-    boost::split(contentWithLines, content, boost::is_any_of(endOfLine));
+    boost::split(contentWithLines, content, boost::is_any_of(stringToSplitBy));
     return contentWithLines;
 }
 

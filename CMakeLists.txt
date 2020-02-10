@@ -21,6 +21,7 @@ endif()
 set(SOURCES
         Source/translation/TranslatorImpl.cpp
         Source/translation/TranslationDeserializerImpl.cpp
+        Source/translation/TranslationRequestFormatterImpl.cpp
         Source/webConnection/HttpRequestHandlerImpl.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.cpp
         Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorage.cpp
@@ -56,6 +57,7 @@ set(SOURCES
 set(UT_SOURCES
         UT/Source/translation/TranslatorImplTest.cpp
         UT/Source/translation/TranslationDeserializerImplTest.cpp
+        UT/Source/translation/TranslationRequestFormatterImplTest.cpp
         UT/Source/webConnection/HttpRequestHandlerTest.cpp
         UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImplTest.cpp
         UT/Source/wordsDb/wordsDescriptionsDb/WordsDescriptionsMemoryStorageTest.cpp

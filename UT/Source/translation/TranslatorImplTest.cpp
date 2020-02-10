@@ -1,6 +1,7 @@
 #include "translation/TranslatorImpl.h"
 
 #include "translation/TranslationDeserializerMock.h"
+#include "translation/TranslationRequestFormatterMock.h"
 #include "webConnection/HttpRequestHandlerMock.h"
 
 #include "exceptions/ConnectionFailed.h"
@@ -28,11 +29,20 @@ public:
     std::unique_ptr<TranslationDeserializerMock> deserializerInit =
         std::make_unique<StrictMock<TranslationDeserializerMock>>();
     TranslationDeserializerMock* deserializer = deserializerInit.get();
-    TranslatorImpl translator{handler, std::move(deserializerInit)};
+    std::unique_ptr<TranslationRequestFormatterMock> requestFormatterInit =
+        std::make_unique<StrictMock<TranslationRequestFormatterMock>>();
+    TranslationRequestFormatterMock* requestFormatter =
+        requestFormatterInit.get();
+    TranslatorImpl translator{handler, std::move(deserializerInit),
+                              std::move(requestFormatterInit)};
 };
 
 TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
 {
+    EXPECT_CALL(*requestFormatter,
+                getFormattedRequest(polishText, SourceLanguage::Polish,
+                                    TargetLanguage::English))
+        .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request))
         .WillOnce(Throw(exceptions::ConnectionFailed{""}));
 
@@ -45,6 +55,10 @@ TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
 TEST_F(TranslatorImplTest,
        givenFailureResponseFromTranslationApi_shouldReturnNone)
 {
+    EXPECT_CALL(*requestFormatter,
+                getFormattedRequest(polishText, SourceLanguage::Polish,
+                                    TargetLanguage::English))
+        .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(failureResponse));
 
     const auto translation = translator.translate(
@@ -56,6 +70,10 @@ TEST_F(TranslatorImplTest,
 TEST_F(TranslatorImplTest,
        givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
 {
+    EXPECT_CALL(*requestFormatter,
+                getFormattedRequest(polishText, SourceLanguage::Polish,
+                                    TargetLanguage::English))
+        .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(successResponse));
     EXPECT_CALL(*deserializer, deserialize(responseContent))
         .WillOnce(Return(englishText));

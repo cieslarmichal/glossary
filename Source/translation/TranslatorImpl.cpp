@@ -8,26 +8,17 @@ namespace translation
 {
 namespace
 {
-// TODO: get key from file and tell ppl to generate their own key from website
-// TODO: https://translate.yandex.com/developers/keys
-
+constexpr int successCode = 200;
 // TODO: class calling translationApi
-
-const std::string urlAddress{
-    "https://translate.yandex.net/api/v1.5/tr.json/translate"};
-const std::string apiKey{"trnsl.1.1.20200113T184314Z.f0829944dec57123."
-                         "a22eb90262e3bd9a179a881dc6960e0a7f142c8d"};
-const int successCode = 200;
-webConnection::Request getRequest(const std::string&,
-                                  translation::SourceLanguage,
-                                  translation::TargetLanguage);
 }
 
 TranslatorImpl::TranslatorImpl(
     std::shared_ptr<webConnection::HttpRequestHandler> handler,
-    std::unique_ptr<TranslationDeserializer> deseralizer)
-    : httpHandler{std::move(handler)}, translationDeserializer{
-                                           std::move(deseralizer)}
+    std::unique_ptr<TranslationDeserializer> deseralizer,
+    std::unique_ptr<TranslationRequestFormatter> formatter)
+    : httpHandler{std::move(handler)},
+      translationDeserializer{std::move(deseralizer)}, requestFormatter{
+                                                           std::move(formatter)}
 {
 }
 
@@ -36,7 +27,8 @@ TranslatorImpl::translate(const std::string& sourceText,
                           translation::SourceLanguage sourceLanguage,
                           translation::TargetLanguage targetLanguage) const
 {
-    const auto request = getRequest(sourceText, sourceLanguage, targetLanguage);
+    const auto request = requestFormatter->getFormattedRequest(
+        sourceText, sourceLanguage, targetLanguage);
     const auto response = getResponseFromTranslationApi(request);
 
     if (response.code == successCode)
@@ -58,21 +50,6 @@ webConnection::Response TranslatorImpl::getResponseFromTranslationApi(
         std::cerr << e.what();
     }
     return {};
-}
-
-namespace
-{
-webConnection::Request getRequest(const std::string& sourceText,
-                                  translation::SourceLanguage sourceLanguage,
-                                  translation::TargetLanguage targetLanguage)
-{
-    const auto keyField = "key=" + apiKey;
-    const auto text = "text=" + sourceText;
-    const auto lang = "lang=" + toLanguageCode(sourceLanguage) + "-" +
-                      toLanguageCode(targetLanguage);
-    return urlAddress + "?" + keyField + "&" + text + "&" + lang;
-}
-
 }
 
 }
