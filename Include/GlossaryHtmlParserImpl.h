@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "GlossaryHtmlParser.h"
-#include "HtmlTagsDeleter.h"
+#include "utils/HtmlTagsDeleter.h"
 
 class GlossaryHtmlParserImpl : public GlossaryHtmlParser
 {
@@ -15,5 +15,5 @@ public:
 private:
     std::vector<std::string> selectGlossaryLines(const std::string&) const;
 
-    std::unique_ptr<HtmlTagsDeleter> htmlTagsDeleter;
+    std::unique_ptr<utils::HtmlTagsDeleter> htmlTagsDeleter;
 };

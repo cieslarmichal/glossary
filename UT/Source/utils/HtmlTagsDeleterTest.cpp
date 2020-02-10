@@ -1,8 +1,9 @@
-#include "HtmlTagsDeleter.h"
+#include "utils/HtmlTagsDeleter.h"
 
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace utils;
 
 namespace
 {

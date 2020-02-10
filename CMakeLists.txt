@@ -40,7 +40,7 @@ set(SOURCES
         Source/DescriptionParserImpl.cpp
         Source/Glossary.cpp
         Source/GlossaryHtmlParserImpl.cpp
-        Source/HtmlTagsDeleter.cpp
+        Source/utils/HtmlTagsDeleter.cpp
         Source/utils/FileAccessImpl.cpp
         Source/utils/StringHelper.cpp
         Source/DictionaryReaderImpl.cpp
@@ -75,7 +75,7 @@ set(UT_SOURCES
         UT/Source/wordsDb/WordsDbImplTest.cpp
         UT/Source/DescriptionParserImplTest.cpp
         UT/Source/GlossaryHtmlParserImplTest.cpp
-        UT/Source/HtmlTagsDeleterTest.cpp
+        UT/Source/utils/HtmlTagsDeleterTest.cpp
         UT/Source/utils/FileAccessImplTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
         UT/Source/HttpWordDescriptionCreatorImplTest.cpp

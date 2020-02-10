@@ -1,10 +1,12 @@
-#include "HtmlTagsDeleter.h"
+#include "utils/HtmlTagsDeleter.h"
 
 #include <algorithm>
 
 #include "boost/algorithm/string.hpp"
 #include "utils/StringHelper.h"
 
+namespace utils
+{
 namespace
 {
 bool containsHtmlOpenTagWithEndTag(const std::string&);
@@ -62,5 +64,6 @@ bool containsHtmlOpenTagWithEndTag(const std::string& content)
 {
     return ((content.find(openHtmlTag) != std::string::npos) &&
             (content.find(endHtmlTag) != std::string::npos));
+}
 }
 }

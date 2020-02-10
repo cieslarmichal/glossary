@@ -5,8 +5,8 @@
 
 #include <boost/algorithm/string/trim.hpp>
 
-#include "HtmlTagsDeleter.h"
 #include "boost/assign/list_of.hpp"
+#include "utils/HtmlTagsDeleter.h"
 #include "utils/StringHelper.h"
 
 namespace
@@ -53,7 +53,7 @@ std::map<std::string, std::string> tagPrefixMapping =
 GlossaryHtmlParserImpl::GlossaryHtmlParserImpl()
 {
     // TODO: Refactor code
-    htmlTagsDeleter = std::make_unique<HtmlTagsDeleter>();
+    htmlTagsDeleter = std::make_unique<utils::HtmlTagsDeleter>();
 }
 
 std::vector<std::string>

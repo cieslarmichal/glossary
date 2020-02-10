@@ -3,6 +3,8 @@
 #include <string>
 #include <vector>
 
+namespace utils
+{
 class HtmlTagsDeleter
 {
 public:
@@ -13,3 +15,4 @@ private:
     void removeHtmlTags(std::string&) const;
     void trimEmptySpaces(std::vector<std::string>&) const;
 };
+}
