@@ -10,6 +10,6 @@ namespace translation
 class TranslationDeserializerMock : public TranslationDeserializer
 {
 public:
-    MOCK_CONST_METHOD1(deserialize, std::string(const std::string&));
+    MOCK_CONST_METHOD1(deserialize, TranslatedText(const std::string&));
 };
 }

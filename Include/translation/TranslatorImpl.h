@@ -16,7 +16,7 @@ public:
                    std::unique_ptr<TranslationDeserializer>,
                    std::unique_ptr<TranslationRequestFormatter>);
 
-    boost::optional<std::string> translate(const std::string&, SourceLanguage,
+    boost::optional<TranslatedText> translate(const std::string&, SourceLanguage,
                                            TargetLanguage) const override;
 
 private:

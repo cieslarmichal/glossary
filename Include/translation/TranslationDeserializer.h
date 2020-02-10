@@ -1,6 +1,6 @@
 #pragma once
 
-#include <string>
+#include "TranslatedText.h"
 
 namespace translation
 {
@@ -10,6 +10,6 @@ class TranslationDeserializer
 public:
     virtual ~TranslationDeserializer() = default;
 
-    virtual std::string deserialize(const std::string&) const = 0;
+    virtual TranslatedText deserialize(const std::string&) const = 0;
 };
 }

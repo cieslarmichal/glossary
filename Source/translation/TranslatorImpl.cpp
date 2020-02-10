@@ -22,7 +22,7 @@ TranslatorImpl::TranslatorImpl(
 {
 }
 
-boost::optional<std::string>
+boost::optional<TranslatedText>
 TranslatorImpl::translate(const std::string& sourceText,
                           translation::SourceLanguage sourceLanguage,
                           translation::TargetLanguage targetLanguage) const

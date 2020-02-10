@@ -8,6 +8,7 @@ namespace wordsDb::translationsDb
 class TranslationsDb
 {
 public:
+    // TODO: add support different languages in storage
     virtual ~TranslationsDb() = default;
 
     virtual void addTranslation(Translation) = 0;

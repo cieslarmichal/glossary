@@ -19,6 +19,8 @@ const webConnection::Response successResponse{200, responseContent};
 const webConnection::Response failureResponse{400, ""};
 const auto polishText = "piwo";
 const auto englishText = "beer";
+const auto sourceLanguage = SourceLanguage::Polish;
+const auto targetLanguage = TargetLanguage::English;
 }
 
 class TranslatorImplTest : public Test
@@ -40,14 +42,13 @@ public:
 TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
 {
     EXPECT_CALL(*requestFormatter,
-                getFormattedRequest(polishText, SourceLanguage::Polish,
-                                    TargetLanguage::English))
+                getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request))
         .WillOnce(Throw(exceptions::ConnectionFailed{""}));
 
-    const auto translation = translator.translate(
-        polishText, SourceLanguage::Polish, TargetLanguage::English);
+    const auto translation =
+        translator.translate(polishText, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(translation, boost::none);
 }
@@ -56,13 +57,12 @@ TEST_F(TranslatorImplTest,
        givenFailureResponseFromTranslationApi_shouldReturnNone)
 {
     EXPECT_CALL(*requestFormatter,
-                getFormattedRequest(polishText, SourceLanguage::Polish,
-                                    TargetLanguage::English))
+                getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(failureResponse));
 
-    const auto translation = translator.translate(
-        polishText, SourceLanguage::Polish, TargetLanguage::English);
+    const auto translation =
+        translator.translate(polishText, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(translation, boost::none);
 }
@@ -71,15 +71,14 @@ TEST_F(TranslatorImplTest,
        givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
 {
     EXPECT_CALL(*requestFormatter,
-                getFormattedRequest(polishText, SourceLanguage::Polish,
-                                    TargetLanguage::English))
+                getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(successResponse));
     EXPECT_CALL(*deserializer, deserialize(responseContent))
         .WillOnce(Return(englishText));
 
-    const auto translation = translator.translate(
-        polishText, SourceLanguage::Polish, TargetLanguage::English);
+    const auto translation =
+        translator.translate(polishText, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(*translation, englishText);
 }

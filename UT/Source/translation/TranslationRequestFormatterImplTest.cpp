@@ -20,6 +20,8 @@ const webConnection::Request requestWithMultipleWord =
 const auto emptyText = "";
 const auto singleWordText = "piwo";
 const auto multipleWordsText = "piwo jest pyszne";
+const auto sourceLanguage = SourceLanguage::Polish;
+const auto targetLanguage = TargetLanguage::English;
 }
 
 class TranslationRequestFormatterImplTest : public Test
@@ -32,7 +34,7 @@ TEST_F(TranslationRequestFormatterImplTest,
        givenEmptyString_shouldReturnEmptyString)
 {
     const auto formattedRequest = formatter.getFormattedRequest(
-        emptyText, SourceLanguage::Polish, TargetLanguage::English);
+        emptyText, sourceLanguage, targetLanguage);
 
     ASSERT_TRUE(formattedRequest.empty());
 }
@@ -41,7 +43,7 @@ TEST_F(TranslationRequestFormatterImplTest,
        givenOneWordText_shouldReturnRequestWithThisWordInTextField)
 {
     const auto actualFormattedRequest = formatter.getFormattedRequest(
-        singleWordText, SourceLanguage::Polish, TargetLanguage::English);
+        singleWordText, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(actualFormattedRequest, requestWithSingleWord);
 }
@@ -51,7 +53,7 @@ TEST_F(
     givenThreeWordsText_shouldReturnRequestWithTheseWordsSplitByPlusSignInTextField)
 {
     const auto actualFormattedRequest = formatter.getFormattedRequest(
-        multipleWordsText, SourceLanguage::Polish, TargetLanguage::English);
+        multipleWordsText, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(actualFormattedRequest, requestWithMultipleWord);
 }

@@ -37,6 +37,7 @@ set(SOURCES
         Source/wordsDb/translationsDb/TranslationsMemoryStorage.cpp
         Source/wordsDb/translationsDb/TranslationsPersistentStorage.cpp
         Source/wordsDb/WordsDbImpl.cpp
+        Source/TranslationServiceImpl.cpp
         Source/DescriptionParserImpl.cpp
         Source/Glossary.cpp
         Source/GlossaryHtmlParserImpl.cpp
@@ -73,6 +74,7 @@ set(UT_SOURCES
         UT/Source/wordsDb/translationsDb/TranslationsMemoryStorageTest.cpp
         UT/Source/wordsDb/translationsDb/TranslationsPersistentStorageTest.cpp
         UT/Source/wordsDb/WordsDbImplTest.cpp
+        UT/Source/TranslationServiceImplTest.cpp
         UT/Source/DescriptionParserImplTest.cpp
         UT/Source/GlossaryHtmlParserImplTest.cpp
         UT/Source/utils/HtmlTagsDeleterTest.cpp
