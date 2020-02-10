@@ -8,11 +8,11 @@ namespace wordsDb::statisticsDb
 {
 
 const std::string StatisticsPersistentStorage::directory{"../database"};
-const std::string StatisticsPersistentStorage::filename{
-    directory + "/statistics.txt"};
+const std::string StatisticsPersistentStorage::filename{directory +
+                                                        "/statistics.txt"};
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(
-    std::shared_ptr<const FileAccess> fileAccessInit,
+    std::shared_ptr<const utils::FileAccess> fileAccessInit,
     std::shared_ptr<const StatisticsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{
                                                  std::move(serializerInit)}

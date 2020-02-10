@@ -109,17 +109,17 @@ void removeSentenceMarks(Sentence& sentence)
 
 bool isDefinition(const std::string& line)
 {
-    return line.rfind(definitionPrefix, 0) !=std::string::npos;
+    return line.rfind(definitionPrefix, 0) != std::string::npos;
 }
 
 bool isExample(const std::string& line)
 {
-    return line.rfind(examplePrefix, 0) !=std::string::npos;
+    return line.rfind(examplePrefix, 0) != std::string::npos;
 }
 
 bool isSentence(const std::string& line)
 {
-    return line.rfind(sentencePrefix, 0) !=std::string::npos;
+    return line.rfind(sentencePrefix, 0) != std::string::npos;
 }
 
 void trimEmptySpaces(std::string& line)

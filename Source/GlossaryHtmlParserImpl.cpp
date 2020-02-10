@@ -6,8 +6,8 @@
 #include <boost/algorithm/string/trim.hpp>
 
 #include "HtmlTagsDeleter.h"
-#include "StringHelper.h"
 #include "boost/assign/list_of.hpp"
+#include "utils/StringHelper.h"
 
 namespace
 {
@@ -107,10 +107,10 @@ std::vector<std::string> getTagsContent(const std::string& contentInit)
             if (endTagPos.position != std::string::npos)
             {
                 auto tagContent =
-                    stringHelper::substring(content,
-                                            startTagWithPosition.position +
-                                                startTagWithPosition.tag.size(),
-                                            endTagPos.position);
+                    utils::substring(content,
+                                     startTagWithPosition.position +
+                                         startTagWithPosition.tag.size(),
+                                     endTagPos.position);
                 trimEmptySpaces(tagContent);
                 const auto contentWithPrefix =
                     startTagWithPosition.getPrefix() + tagContent;
@@ -178,7 +178,8 @@ TagWithPosition findNearestEndTagPosition(const std::string& content,
         end = {htmlEndTag, content.find(htmlEndTag, end.position + 1)};
     }
 
-    auto tagsWithPositions = getGlossaryTagsWithPositions(content, startTagPosition + 1);
+    auto tagsWithPositions =
+        getGlossaryTagsWithPositions(content, startTagPosition + 1);
     tagsWithPositions.emplace_back(end);
 
     return getTagPositionWithLowestPosition(tagsWithPositions);

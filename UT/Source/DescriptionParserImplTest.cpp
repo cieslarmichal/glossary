@@ -1,7 +1,7 @@
 #include "DescriptionParserImpl.h"
 
-#include "StringHelper.h"
 #include "gtest/gtest.h"
+#include "utils/StringHelper.h"
 
 using namespace ::testing;
 using namespace wordsDb::wordsDescriptionsDb;
@@ -72,8 +72,7 @@ TEST_F(
     DescriptionParserImplTest,
     givenHtmlContentWithoutSomeSpecificMarks_shouldReturnWordDescriptionWithSkippedSomeLines)
 {
-    const auto content =
-        stringHelper::getSplitLines(exampleContentPartlyWithoutMarks);
+    const auto content = utils::getSplitLines(exampleContentPartlyWithoutMarks);
 
     const auto actualWordDescription = parser.parse(content);
 
@@ -83,7 +82,7 @@ TEST_F(
 TEST_F(DescriptionParserImplTest,
        givenParsedHtmlContent_shouldReturnWordDescription)
 {
-    const auto content = stringHelper::getSplitLines(exampleContent);
+    const auto content = utils::getSplitLines(exampleContent);
 
     const auto actualWordDescription = parser.parse(content);
 

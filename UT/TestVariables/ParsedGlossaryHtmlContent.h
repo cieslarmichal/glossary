@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <string>
+#include <vector>
 
 const std::vector<std::string> testParsedGlossaryHtmlContent{
     ": to go or come after and bring or take back",
@@ -45,4 +45,3 @@ const std::vector<std::string> testParsedGlossaryHtmlContent{
     ": to go after and bring back",
     ": to bring as a price : sell for",
     "// The artwork will fetch a high price."};
-

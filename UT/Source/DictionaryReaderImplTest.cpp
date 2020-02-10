@@ -1,11 +1,12 @@
 #include "DictionaryReaderImpl.h"
 
-#include "FileAccessMock.h"
+#include "utils/FileAccessMock.h"
 
 #include "exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace utils;
 
 namespace
 {

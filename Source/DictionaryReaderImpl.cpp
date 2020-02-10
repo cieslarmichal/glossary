@@ -3,15 +3,15 @@
 #include <iostream>
 #include <sstream>
 
-#include "StringHelper.h"
 #include "exceptions/FileNotFound.h"
+#include "utils/StringHelper.h"
 
 const std::string DictionaryReaderImpl::fileDirectory{"../database"};
 const std::string DictionaryReaderImpl::fileName{"/translations.txt"};
 const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
 DictionaryReaderImpl::DictionaryReaderImpl(
-    std::shared_ptr<const FileAccess> access)
+    std::shared_ptr<const utils::FileAccess> access)
     : fileAccess{access}
 {
 }
@@ -36,7 +36,7 @@ std::vector<Translation> DictionaryReaderImpl::processDictionaryContent(
     const std::string& dictionaryContent) const
 {
     std::vector<Translation> wordsWithTranslation;
-    for (const auto& line : stringHelper::getSplitLines(dictionaryContent))
+    for (const auto& line : utils::getSplitLines(dictionaryContent))
     {
         if (not line.empty())
         {

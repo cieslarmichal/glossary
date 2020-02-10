@@ -1,6 +1,6 @@
 #include "translation/TranslationRequestFormatterImpl.h"
 
-#include "StringHelper.h"
+#include "utils/StringHelper.h"
 
 namespace translation
 {
@@ -33,9 +33,8 @@ std::string TranslationRequestFormatterImpl::getFormattedRequest(
 std::string TranslationRequestFormatterImpl::getFormattedSourceText(
     const std::string& sourceText) const
 {
-    const auto splitText =
-        stringHelper::getSplitLines(sourceText, stringToSplitBy);
-    return stringHelper::getJoinedLines(splitText, stringToJoinWith);
+    const auto splitText = utils::getSplitLines(sourceText, stringToSplitBy);
+    return utils::getJoinedLines(splitText, stringToJoinWith);
 }
 
 webConnection::Request TranslationRequestFormatterImpl::getRequest(

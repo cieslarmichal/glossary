@@ -3,9 +3,8 @@
 #include <string>
 #include <vector>
 
-namespace stringHelper
+namespace utils
 {
-// TODO: Move to utils
 const std::string endOfLine{"\n"};
 
 std::string getJoinedLines(const std::vector<std::string>& contentWithLines,

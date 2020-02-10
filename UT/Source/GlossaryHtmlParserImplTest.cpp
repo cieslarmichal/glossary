@@ -1,10 +1,10 @@
 #include "GlossaryHtmlParserImpl.h"
 
-#include <StringHelper.h>
+#include <utils/StringHelper.h>
 
-#include "FileAccessImpl.h"
 #include "TestVariables/ParsedGlossaryHtmlContent.h"
 #include "gtest/gtest.h"
+#include "utils/FileAccessImpl.h"
 
 using namespace ::testing;
 
@@ -29,7 +29,7 @@ const std::string parsedDefinition{
 const std::string parsedSentence{
     "; Several bottles of wine were reported to have been stolen "
     "by two men during overnight July 20-21 from Binny’s Beverage Depot."};
-const std::string parsedExample{ "// blackberry wine"};
+const std::string parsedExample{"// blackberry wine"};
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
 const std::string emptyHtmlContent{};
 const std::string contentWithoutImportantLines{
@@ -44,7 +44,7 @@ class GlossaryHtmlParserImplTest : public Test
 public:
     std::string prepareHtmlContent()
     {
-        const FileAccessImpl fileAccess{};
+        const utils::FileAccessImpl fileAccess{};
         return fileAccess.readContent(htmlContentFilePath);
     }
 
@@ -53,7 +53,8 @@ public:
 
 TEST_F(GlossaryHtmlParserImplTest, givenEmptyHtmlContent_shouldEmptyString)
 {
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(emptyHtmlContent);
+    const auto actualParsedHtmlContent =
+        glossaryHtmlParser.parse(emptyHtmlContent);
 
     ASSERT_TRUE(actualParsedHtmlContent.empty());
 }
@@ -62,22 +63,25 @@ TEST_F(
     GlossaryHtmlParserImplTest,
     givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
 {
-    const std::string testHtmlContent{definition + sentence +
-                                          example};
+    const std::string testHtmlContent{definition + sentence + example};
     const std::vector<std::string> testParsedContent{
         parsedDefinition, parsedSentence, parsedExample};
 
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(testHtmlContent);
+    const auto actualParsedHtmlContent =
+        glossaryHtmlParser.parse(testHtmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedContent);
 }
 
-TEST_F(GlossaryHtmlParserImplTest, givenRealHtmlContent_shouldReturnParsedContent)
+TEST_F(GlossaryHtmlParserImplTest,
+       givenRealHtmlContent_shouldReturnParsedContent)
 {
-    //TODO: takes too much time, test other way, maybe there is no need to test this
+    // TODO: takes too much time, test other way, maybe there is no need to test
+    // this
     const auto realHtmlContent = prepareHtmlContent();
 
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(realHtmlContent);
+    const auto actualParsedHtmlContent =
+        glossaryHtmlParser.parse(realHtmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedGlossaryHtmlContent);
 }

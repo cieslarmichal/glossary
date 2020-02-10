@@ -16,7 +16,8 @@ public:
         std::unique_ptr<const DescriptionParser>);
 
     boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
-    createWordDescription(const wordsDb::translationsDb::Translation&) const override;
+    createWordDescription(
+        const wordsDb::translationsDb::Translation&) const override;
 
 private:
     boost::optional<std::string> getHttpContent(const EnglishWord&) const;

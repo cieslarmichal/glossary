@@ -2,8 +2,8 @@
 
 #include <algorithm>
 
-#include "StringHelper.h"
 #include "boost/algorithm/string.hpp"
+#include "utils/StringHelper.h"
 
 namespace
 {
@@ -13,17 +13,16 @@ const std::string endHtmlTag{">"};
 }
 
 std::vector<std::string>
-HtmlTagsDeleter::deleteTags(const std::vector<std::string> &htmlContent) const
+HtmlTagsDeleter::deleteTags(const std::vector<std::string>& htmlContent) const
 {
     auto contentWithoutTags{htmlContent};
     clear(contentWithoutTags);
     return contentWithoutTags;
 }
 
-void HtmlTagsDeleter::clear(
-    std::vector<std::string>& htmlLines) const
+void HtmlTagsDeleter::clear(std::vector<std::string>& htmlLines) const
 {
-    for(auto & line: htmlLines)
+    for (auto& line : htmlLines)
     {
         removeHtmlTags(line);
     }
@@ -39,13 +38,12 @@ void HtmlTagsDeleter::removeHtmlTags(std::string& content) const
 
         if (endTagPos != std::string::npos)
         {
-            stringHelper::cutOffString(content, startTagPosition, endTagPos);
+            utils::cutOffString(content, startTagPosition, endTagPos);
         }
     }
 }
 
-void HtmlTagsDeleter::trimEmptySpaces(
-    std::vector<std::string>& htmlLines) const
+void HtmlTagsDeleter::trimEmptySpaces(std::vector<std::string>& htmlLines) const
 {
     htmlLines.erase(
         std::remove_if(htmlLines.begin(), htmlLines.end(),

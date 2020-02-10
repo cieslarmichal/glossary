@@ -3,13 +3,13 @@
 #include <memory>
 
 #include "DictionaryReader.h"
-#include "FileAccess.h"
 #include "boost/optional.hpp"
+#include "utils/FileAccess.h"
 
 class DictionaryReaderImpl : public DictionaryReader
 {
 public:
-    explicit DictionaryReaderImpl(std::shared_ptr<const FileAccess>);
+    explicit DictionaryReaderImpl(std::shared_ptr<const utils::FileAccess>);
 
     Dictionary read() const override;
 
@@ -18,7 +18,7 @@ private:
     boost::optional<Translation>
     getWordWithTranslation(const std::string&) const;
 
-    std::shared_ptr<const FileAccess> fileAccess;
+    std::shared_ptr<const utils::FileAccess> fileAccess;
 
     static const std::string fileDirectory;
     static const std::string fileName;

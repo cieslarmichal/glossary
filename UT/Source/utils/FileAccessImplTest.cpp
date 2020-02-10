@@ -1,9 +1,10 @@
-#include "FileAccessImpl.h"
+#include "utils/FileAccessImpl.h"
 
 #include "exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace utils;
 
 namespace
 {

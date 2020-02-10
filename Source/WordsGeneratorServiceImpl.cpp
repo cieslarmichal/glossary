@@ -4,10 +4,10 @@
 
 #include "DescriptionParserImpl.h"
 #include "DictionaryReaderImpl.h"
-#include "FileAccessImpl.h"
 #include "GlossaryHtmlParserImpl.h"
 #include "HttpWordDescriptionCreatorImpl.h"
 #include "WordsShufflerImpl.h"
+#include "utils/FileAccessImpl.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsDbImpl.h"
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorage.h"
@@ -21,8 +21,8 @@ WordsGeneratorServiceImpl::WordsGeneratorServiceImpl()
 
 void WordsGeneratorServiceImpl::initializeWordsCreatorService()
 {
-    std::shared_ptr<const FileAccess> fileAccess =
-        std::make_shared<const FileAccessImpl>();
+    std::shared_ptr<const utils::FileAccess> fileAccess =
+        std::make_shared<const utils::FileAccessImpl>();
     std::shared_ptr<
         const wordsDb::wordsDescriptionsDb::WordsDescriptionsSerializer>
         wordsSerializer =

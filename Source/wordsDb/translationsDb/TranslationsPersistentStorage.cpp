@@ -12,7 +12,7 @@ const std::string TranslationsPersistentStorage::filename{directory +
                                                           "/translations.txt"};
 
 TranslationsPersistentStorage::TranslationsPersistentStorage(
-    std::shared_ptr<const FileAccess> fileAccessInit,
+    std::shared_ptr<const utils::FileAccess> fileAccessInit,
     std::shared_ptr<const TranslationsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{
                                                  std::move(serializerInit)}

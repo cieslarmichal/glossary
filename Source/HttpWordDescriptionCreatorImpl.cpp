@@ -34,8 +34,8 @@ HttpWordDescriptionCreatorImpl::createWordDescription(
     if (const auto wordDescription =
             descriptionParser->parse(linesWithDescription))
     {
-        return wordsDb::wordsDescriptionsDb::WordDescription{translation.englishWord, translation.polishWord,
-                               *wordDescription};
+        return wordsDb::wordsDescriptionsDb::WordDescription{
+            translation.englishWord, translation.polishWord, *wordDescription};
     }
     return boost::none;
 }

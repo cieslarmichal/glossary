@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "FileAccess.h"
 #include "WordsDescriptionsMemoryStorage.h"
 #include "WordsDescriptionsSerializer.h"
 #include "WordsDescriptionsStorage.h"
+#include "utils/FileAccess.h"
 
 namespace wordsDb::wordsDescriptionsDb
 {
@@ -14,7 +14,7 @@ class WordsDescriptionsPersistentStorage : public WordsDescriptionsStorage
 {
 public:
     WordsDescriptionsPersistentStorage(
-        std::shared_ptr<const FileAccess>,
+        std::shared_ptr<const utils::FileAccess>,
         std::shared_ptr<const WordsDescriptionsSerializer>);
 
     void addWordDescription(const WordDescription&) override;
@@ -31,7 +31,7 @@ private:
     void loadFile();
     void serialize() const;
 
-    std::shared_ptr<const FileAccess> fileAccess;
+    std::shared_ptr<const utils::FileAccess> fileAccess;
     std::shared_ptr<const WordsDescriptionsSerializer> serializer;
     WordsDescriptionsMemoryStorage storage;
 

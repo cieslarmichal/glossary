@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "FileAccess.h"
 #include "StatisticsStorage.h"
+#include "utils/FileAccess.h"
 #include "wordsDb/statisticsDb/StatisticsMemoryStorage.h"
 #include "wordsDb/statisticsDb/StatisticsSerializer.h"
 
@@ -13,7 +13,7 @@ class StatisticsPersistentStorage : public StatisticsStorage
 {
 
 public:
-    StatisticsPersistentStorage(std::shared_ptr<const FileAccess>,
+    StatisticsPersistentStorage(std::shared_ptr<const utils::FileAccess>,
                                 std::shared_ptr<const StatisticsSerializer>);
 
     boost::optional<WordStatistics>
@@ -33,7 +33,7 @@ private:
     void loadFile();
     void serialize() const;
 
-    std::shared_ptr<const FileAccess> fileAccess;
+    std::shared_ptr<const utils::FileAccess> fileAccess;
     std::shared_ptr<const StatisticsSerializer> serializer;
     StatisticsMemoryStorage storage;
 

@@ -2,6 +2,8 @@
 
 #include <string>
 
+namespace utils
+{
 class FileAccess
 {
 public:
@@ -13,3 +15,4 @@ public:
                         const std::string& content) const = 0;
     virtual std::string readContent(const std::string& path) const = 0;
 };
+}

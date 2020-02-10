@@ -1,8 +1,9 @@
-#include "StringHelper.h"
+#include "utils/StringHelper.h"
 
 #include "gtest/gtest.h"
 
 using namespace ::testing;
+using namespace utils;
 
 class StringHelperTest : public Test
 {
@@ -24,40 +25,40 @@ public:
     const std::string emptyStr{};
     const std::vector<std::string> emptyVec{};
     const std::vector<std::string> vecWithOneEmptyElement{""};
-
 };
 
 TEST_F(StringHelperTest, givenEmptyString_shouldVectorWithOneEmptyElement)
 {
-    const auto actualVec = stringHelper::getSplitLines(emptyStr);
+    const auto actualVec = getSplitLines(emptyStr);
 
     ASSERT_EQ(actualVec, vecWithOneEmptyElement);
 }
 
 TEST_F(StringHelperTest, givenString_shouldSplitToVectorOfStringsByNewLines)
 {
-    const auto actualVec = stringHelper::getSplitLines(str);
+    const auto actualVec = getSplitLines(str);
 
     ASSERT_EQ(actualVec, strVec);
 }
 
 TEST_F(StringHelperTest, givenEmptyVector_shouldReturnEmptyString)
 {
-    const auto actualStr = stringHelper::getJoinedLines(emptyVec);
+    const auto actualStr = getJoinedLines(emptyVec);
 
     ASSERT_EQ(actualStr, emptyStr);
 }
 
 TEST_F(StringHelperTest, givenVectorOfStrings_shouldJoinElementsToString)
 {
-    const auto actualStr = stringHelper::getJoinedLines(strVec);
+    const auto actualStr = getJoinedLines(strVec);
 
     ASSERT_EQ(actualStr, str);
 }
 
 TEST_F(StringHelperTest, givenString_shouldReturnCutFromStartIndexToEndIndex)
 {
-    const auto actualCut = stringHelper::cutOffFromString(stringBeforeCut, startCutIndex, endCutIndex);
+    const auto actualCut =
+        cutOffFromString(stringBeforeCut, startCutIndex, endCutIndex);
 
     ASSERT_EQ(actualCut, stringAfterCut);
 }
@@ -65,22 +66,22 @@ TEST_F(StringHelperTest, givenString_shouldReturnCutFromStartIndexToEndIndex)
 TEST_F(StringHelperTest,
        givenString_shouldCutFromStringFromStartIndexToEndIndex)
 {
-    stringHelper::cutOffString(stringBeforeCut, startCutIndex, endCutIndex);
+    cutOffString(stringBeforeCut, startCutIndex, endCutIndex);
 
     ASSERT_EQ(stringBeforeCut, stringAfterCut);
 }
 
 TEST_F(StringHelperTest, givenString_shouldReturnSubstringByStartAndEndIndex)
 {
-    const auto actualSubstring = stringHelper::substring(stringBeforeCut, startSubstringIndex, endSubstringIndex);
+    const auto actualSubstring =
+        substring(stringBeforeCut, startSubstringIndex, endSubstringIndex);
 
     ASSERT_EQ(actualSubstring, strSubstring);
 }
 
 TEST_F(StringHelperTest, givenString_shouldLowerAllCharacters)
 {
-    const auto actualStringWithLowerCases =
-        stringHelper::getLowerCases(stringWithUpperCases);
+    const auto actualStringWithLowerCases = getLowerCases(stringWithUpperCases);
 
     ASSERT_EQ(actualStringWithLowerCases, stringWithoutUpperCases);
 }

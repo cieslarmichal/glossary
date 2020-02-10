@@ -1,6 +1,6 @@
 #include "wordsDb/translationsDb/TranslationsPersistentStorage.h"
 
-#include "FileAccessMock.h"
+#include "utils/FileAccessMock.h"
 #include "wordsDb/translationsDb/TranslationsSerializerMock.h"
 
 #include "exceptions/FileNotFound.h"
@@ -35,8 +35,8 @@ public:
             .WillOnce(Return(translationsWithTwoTranslations));
     }
 
-    std::shared_ptr<FileAccessMock> fileAccess =
-        std::make_shared<NiceMock<FileAccessMock>>();
+    std::shared_ptr<utils::FileAccessMock> fileAccess =
+        std::make_shared<NiceMock<utils::FileAccessMock>>();
     std::shared_ptr<TranslationsSerializerMock> serializer =
         std::make_shared<NiceMock<TranslationsSerializerMock>>();
 };

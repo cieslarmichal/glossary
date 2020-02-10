@@ -14,7 +14,8 @@ public:
 TEST_F(HttpRequestHandlerTest,
        givenCorrectUrlAddress_shouldReturnContentOfTheHtmlFile)
 {
-    const std::string correctUrlAddress = "https://www.merriam-webster.com/dictionary/ankle";
+    const std::string correctUrlAddress =
+        "https://www.merriam-webster.com/dictionary/ankle";
 
     const auto response = httpHandler.get(correctUrlAddress);
 

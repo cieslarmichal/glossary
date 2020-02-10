@@ -41,8 +41,8 @@ set(SOURCES
         Source/Glossary.cpp
         Source/GlossaryHtmlParserImpl.cpp
         Source/HtmlTagsDeleter.cpp
-        Source/FileAccessImpl.cpp
-        Source/StringHelper.cpp
+        Source/utils/FileAccessImpl.cpp
+        Source/utils/StringHelper.cpp
         Source/DictionaryReaderImpl.cpp
         Source/HttpWordDescriptionCreatorImpl.cpp
         Source/WordsGeneratorServiceImpl.cpp
@@ -76,14 +76,14 @@ set(UT_SOURCES
         UT/Source/DescriptionParserImplTest.cpp
         UT/Source/GlossaryHtmlParserImplTest.cpp
         UT/Source/HtmlTagsDeleterTest.cpp
-        UT/Source/FileAccessImplTest.cpp
+        UT/Source/utils/FileAccessImplTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
         UT/Source/HttpWordDescriptionCreatorImplTest.cpp
         UT/Source/WordsShufflerImplTest.cpp
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp
         UT/Source/AnswerCheckerImplTest.cpp
-        UT/Source/StringHelperTest.cpp
+        UT/Source/utils/StringHelperTest.cpp
         )
 
 add_executable( ${PROJECT_NAME} ${SOURCES} Source/Main.cpp)

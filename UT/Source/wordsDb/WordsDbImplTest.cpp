@@ -76,7 +76,8 @@ TEST_F(WordsDbImplTest, addWordDescription)
 
 TEST_F(WordsDbImplTest, getWordDescription)
 {
-    EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord)).WillOnce(Return(wordDescription));
+    EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord))
+        .WillOnce(Return(wordDescription));
 
     const auto actualWordDescription = database.getWordDescription(englishWord);
 
@@ -85,7 +86,8 @@ TEST_F(WordsDbImplTest, getWordDescription)
 
 TEST_F(WordsDbImplTest, getWordsDescriptions)
 {
-    EXPECT_CALL(*wordsDescriptionsDb, getWordsDescriptions()).WillOnce(Return(wordsDescriptions));
+    EXPECT_CALL(*wordsDescriptionsDb, getWordsDescriptions())
+        .WillOnce(Return(wordsDescriptions));
 
     const auto actualWordsDescriptions = database.getWordsDescriptions();
 
@@ -94,16 +96,19 @@ TEST_F(WordsDbImplTest, getWordsDescriptions)
 
 TEST_F(WordsDbImplTest, containsWordDescription)
 {
-    EXPECT_CALL(*wordsDescriptionsDb, contains(englishWord)).WillOnce(Return(true));
+    EXPECT_CALL(*wordsDescriptionsDb, contains(englishWord))
+        .WillOnce(Return(true));
 
-    const auto containsWordDescription = database.containsWordDescription(englishWord);
+    const auto containsWordDescription =
+        database.containsWordDescription(englishWord);
 
     ASSERT_TRUE(containsWordDescription);
 }
 
 TEST_F(WordsDbImplTest, getWordStatistics)
 {
-    EXPECT_CALL(*statisticsDb, getWordStatistics(englishWord)).WillOnce(Return(wordStats));
+    EXPECT_CALL(*statisticsDb, getWordStatistics(englishWord))
+        .WillOnce(Return(wordStats));
 
     const auto actualWordStatistics = database.getWordStatistics(englishWord);
 
@@ -146,4 +151,3 @@ TEST_F(WordsDbImplTest, resetStatistics)
 
     database.resetStatistics();
 }
-

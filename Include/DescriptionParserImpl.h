@@ -7,5 +7,6 @@ using namespace wordsDb::wordsDescriptionsDb;
 class DescriptionParserImpl : public DescriptionParser
 {
 public:
-    boost::optional<Description> parse(const std::vector<std::string>&) const override;
+    boost::optional<Description>
+    parse(const std::vector<std::string>&) const override;
 };

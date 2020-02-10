@@ -37,7 +37,8 @@ void WordsDbImpl::addWordDescription(
 }
 
 boost::optional<wordsDescriptionsDb::WordDescription>
-WordsDbImpl::getWordDescription(const EnglishWord& englishWord) const {
+WordsDbImpl::getWordDescription(const EnglishWord& englishWord) const
+{
     return wordsDescriptionsDb->getWordDescription(englishWord);
 }
 

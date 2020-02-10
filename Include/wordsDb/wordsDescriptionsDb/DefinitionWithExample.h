@@ -4,8 +4,8 @@
 
 #include "Definition.h"
 #include "Example.h"
-#include "StringHelper.h"
 #include "boost/optional.hpp"
+#include "utils/StringHelper.h"
 
 namespace
 {
@@ -53,9 +53,8 @@ inline DefinitionWithExample toDefinitionWithExample(const std::string& text)
 
     if (exampleExists())
     {
-        auto definition = stringHelper::substring(text, 0, separatorIndex);
-        auto example =
-            stringHelper::substring(text, separatorIndex + 1, text.size());
+        auto definition = utils::substring(text, 0, separatorIndex);
+        auto example = utils::substring(text, separatorIndex + 1, text.size());
         return DefinitionWithExample{definition, example};
     }
     else

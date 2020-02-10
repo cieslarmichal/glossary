@@ -23,7 +23,8 @@ public:
     WordsDescriptionsDbImpl database{std::move(storageInit)};
 };
 
-TEST_F(WordsDescriptionsDbImplTest, givenWordDescritpionAddition_shouldAddWordDescriptionToStorage)
+TEST_F(WordsDescriptionsDbImplTest,
+       givenWordDescritpionAddition_shouldAddWordDescriptionToStorage)
 {
     EXPECT_CALL(*storage, addWordDescription(wordDescription));
 
@@ -52,9 +53,11 @@ TEST_F(WordsDescriptionsDbImplTest,
     ASSERT_EQ(actualWord, wordDescription);
 }
 
-TEST_F(WordsDescriptionsDbImplTest, containsWordsDescriptions_shouldReturnWordsDescriptions)
+TEST_F(WordsDescriptionsDbImplTest,
+       containsWordsDescriptions_shouldReturnWordsDescriptions)
 {
-    EXPECT_CALL(*storage, getWordsDescriptions()).WillOnce(Return(wordsDescriptions));
+    EXPECT_CALL(*storage, getWordsDescriptions())
+        .WillOnce(Return(wordsDescriptions));
 
     const auto actualWords = database.getWordsDescriptions();
 

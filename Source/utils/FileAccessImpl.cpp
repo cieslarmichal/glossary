@@ -1,10 +1,12 @@
-#include "FileAccessImpl.h"
+#include "utils/FileAccessImpl.h"
 
 #include <fstream>
 #include <sstream>
 
 #include "exceptions/FileNotFound.h"
 
+namespace utils
+{
 namespace
 {
 enum class Result
@@ -69,4 +71,5 @@ Result tryToWrite(std::ofstream& fileStream, const std::string& data)
     return Result::Failure;
 }
 
+}
 }

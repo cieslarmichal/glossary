@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "StringHelper.h"
 #include "boost/algorithm/string.hpp"
+#include "utils/StringHelper.h"
 
 namespace
 {
@@ -46,7 +46,7 @@ bool UserPromptImpl::yesNoAnswerIsInvalid(const std::string& input) const
     const auto isValid =
         std::any_of(correctYesNoAnswers.begin(), correctYesNoAnswers.end(),
                     [input](const auto& yesNo) {
-                        return yesNo == stringHelper::getLowerCases(input);
+                        return yesNo == utils::getLowerCases(input);
                     });
 
     return !isValid;

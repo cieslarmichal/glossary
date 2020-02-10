@@ -7,11 +7,11 @@
 namespace wordsDb::wordsDescriptionsDb
 {
 const std::string WordsDescriptionsPersistentStorage::directory{"../database"};
-const std::string WordsDescriptionsPersistentStorage::filename{directory +
-                                                               "/wordsDescriptions.txt"};
+const std::string WordsDescriptionsPersistentStorage::filename{
+    directory + "/wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(
-    std::shared_ptr<const FileAccess> fileAccessInit,
+    std::shared_ptr<const utils::FileAccess> fileAccessInit,
     std::shared_ptr<const WordsDescriptionsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{
                                                  std::move(serializerInit)}

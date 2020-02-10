@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "FileAccess.h"
 #include "TranslationsMemoryStorage.h"
 #include "TranslationsStorage.h"
+#include "utils/FileAccess.h"
 #include "wordsDb/translationsDb/TranslationsSerializer.h"
 
 namespace wordsDb::translationsDb
@@ -13,7 +13,7 @@ class TranslationsPersistentStorage : public TranslationsStorage
 {
 public:
     TranslationsPersistentStorage(
-        std::shared_ptr<const FileAccess>,
+        std::shared_ptr<const utils::FileAccess>,
         std::shared_ptr<const TranslationsSerializer>);
 
     void addTranslation(Translation) override;
@@ -30,7 +30,7 @@ private:
     void loadFile();
     void serialize() const;
 
-    std::shared_ptr<const FileAccess> fileAccess;
+    std::shared_ptr<const utils::FileAccess> fileAccess;
     std::shared_ptr<const TranslationsSerializer> serializer;
     TranslationsMemoryStorage storage;
 

@@ -4,11 +4,11 @@
 #include <wordsDb/statisticsDb/StatisticsPersistentStorage.h>
 
 #include "AnswerCheckerImpl.h"
-#include "FileAccessImpl.h"
 #include "UserPromptImpl.h"
 #include "WordRandomizerImpl.h"
 #include "WordViewerImpl.h"
 #include "WordsGeneratorServiceImpl.h"
+#include "utils/FileAccessImpl.h"
 #include "wordsDb/statisticsDb/StatisticsDbImpl.h"
 #include "wordsDb/statisticsDb/StatisticsSerializerImpl.h"
 
@@ -23,8 +23,8 @@ void GlossaryApplication::initialize()
 {
     wordsGenerator = std::make_unique<WordsGeneratorServiceImpl>();
 
-    std::shared_ptr<const FileAccess> fileAccess =
-        std::make_shared<const FileAccessImpl>();
+    std::shared_ptr<const utils::FileAccess> fileAccess =
+        std::make_shared<const utils::FileAccessImpl>();
     std::shared_ptr<const wordsDb::statisticsDb::StatisticsSerializer>
         serializer = std::make_shared<
             const wordsDb::statisticsDb::StatisticsSerializerImpl>();

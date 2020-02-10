@@ -1,6 +1,6 @@
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsPersistentStorage.h"
 
-#include "FileAccessMock.h"
+#include "utils/FileAccessMock.h"
 #include "wordsDb/wordsDescriptionsDb/WordsDescriptionsSerializerMock.h"
 
 #include "exceptions/FileNotFound.h"
@@ -33,8 +33,8 @@ public:
             .WillOnce(Return(words));
     }
 
-    std::shared_ptr<FileAccessMock> fileAccess =
-        std::make_shared<NiceMock<FileAccessMock>>();
+    std::shared_ptr<utils::FileAccessMock> fileAccess =
+        std::make_shared<NiceMock<utils::FileAccessMock>>();
     std::shared_ptr<WordsDescriptionsSerializerMock> serializer =
         std::make_shared<NiceMock<WordsDescriptionsSerializerMock>>();
 };

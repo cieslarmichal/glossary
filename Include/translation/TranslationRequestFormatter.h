@@ -12,7 +12,8 @@ class TranslationRequestFormatter
 public:
     virtual ~TranslationRequestFormatter() = default;
 
-    virtual webConnection::Request getFormattedRequest(const std::string&, SourceLanguage,
-                                            TargetLanguage) const = 0;
+    virtual webConnection::Request
+    getFormattedRequest(const std::string&, SourceLanguage,
+                        TargetLanguage) const = 0;
 };
 }

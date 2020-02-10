@@ -1,16 +1,18 @@
-#include "StringHelper.h"
+#include "utils/StringHelper.h"
 
 #include "boost/algorithm/string.hpp"
 
-namespace stringHelper
+namespace utils
 {
 
-std::string getJoinedLines(const std::vector<std::string>& contentWithLines, std::string stringToJoinWith)
+std::string getJoinedLines(const std::vector<std::string>& contentWithLines,
+                           std::string stringToJoinWith)
 {
     return boost::algorithm::join(contentWithLines, stringToJoinWith);
 }
 
-std::vector<std::string> getSplitLines(const std::string& content, std::string stringToSplitBy)
+std::vector<std::string> getSplitLines(const std::string& content,
+                                       std::string stringToSplitBy)
 {
     std::vector<std::string> contentWithLines;
     boost::split(contentWithLines, content, boost::is_any_of(stringToSplitBy));
@@ -22,7 +24,8 @@ std::string cutOffFromString(const std::string& line, size_t startIndexToCut,
 {
     const auto sizeOfLine = line.size();
     const auto head = line.substr(0, startIndexToCut);
-    const auto tail = line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut + 1);
+    const auto tail =
+        line.substr(endIndexToCut + 1, sizeOfLine - endIndexToCut + 1);
     return head + tail;
 }
 
