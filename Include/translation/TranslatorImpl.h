@@ -16,8 +16,9 @@ public:
                    std::unique_ptr<TranslationDeserializer>,
                    std::unique_ptr<TranslationRequestFormatter>);
 
-    boost::optional<TranslatedText> translate(const std::string&, SourceLanguage,
-                                           TargetLanguage) const override;
+    boost::optional<TranslatedText> translate(const std::string&,
+                                              SourceLanguage,
+                                              TargetLanguage) const override;
 
 private:
     webConnection::Response

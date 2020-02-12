@@ -12,7 +12,7 @@ public:
 };
 
 TEST_F(HttpRequestHandlerTest,
-       givenCorrectUrlAddress_shouldReturnContentOfTheHtmlFile)
+       givenCorrectUrlAddress_shouldReturnOkAndContentOfTheHtmlFile)
 {
     const std::string correctUrlAddress =
         "https://www.merriam-webster.com/dictionary/ankle";

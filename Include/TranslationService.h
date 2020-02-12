@@ -12,5 +12,5 @@ public:
 
     virtual boost::optional<translation::TranslatedText>
     translate(const std::string&, translation::SourceLanguage,
-              translation::TargetLanguage) const = 0;
+              translation::TargetLanguage) = 0;
 };

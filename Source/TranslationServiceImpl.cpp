@@ -9,17 +9,23 @@ TranslationServiceImpl::TranslationServiceImpl(
 {
 }
 
-boost::optional<translation::TranslatedText> TranslationServiceImpl::translate(
-    const std::string& sourceText, translation::SourceLanguage sourceLanguage,
-    translation::TargetLanguage targetLanguage) const
+boost::optional<translation::TranslatedText>
+TranslationServiceImpl::translate(const std::string& sourceText,
+                                  translation::SourceLanguage sourceLanguage,
+                                  translation::TargetLanguage targetLanguage)
 {
     if (const auto translationFromDb = getTranslationFromDb(sourceText))
     {
         return translationFromDb;
     }
 
-    return getTranslationFromTranslator(sourceText, sourceLanguage,
-                                        targetLanguage);
+    if (const auto translationFromTranslator = getTranslationFromTranslator(
+            sourceText, sourceLanguage, targetLanguage))
+    {
+        saveTranslationInDb(sourceText, *translationFromTranslator);
+        return translationFromTranslator;
+    }
+    return boost::none;
 }
 
 boost::optional<translation::TranslatedText>
@@ -39,4 +45,13 @@ TranslationServiceImpl::getTranslationFromTranslator(
     translation::TargetLanguage targetLanguage) const
 {
     return translator->translate(sourceText, sourceLanguage, targetLanguage);
+}
+
+void TranslationServiceImpl::saveTranslationInDb(
+    const std::string& sourceText,
+    const translation::TranslatedText& translatedText)
+{
+    const auto newTranslation = wordsDb::translationsDb::Translation{
+        PolishWord{sourceText}, EnglishWord{translatedText}};
+    translationsDb->addTranslation(newTranslation);
 }

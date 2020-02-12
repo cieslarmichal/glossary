@@ -15,7 +15,7 @@ public:
 
     boost::optional<translation::TranslatedText>
     translate(const std::string&, translation::SourceLanguage,
-              translation::TargetLanguage) const override;
+              translation::TargetLanguage) override;
 
 private:
     boost::optional<translation::TranslatedText>
@@ -24,6 +24,8 @@ private:
     getTranslationFromTranslator(const std::string&,
                                  translation::SourceLanguage,
                                  translation::TargetLanguage) const;
+    void saveTranslationInDb(const std::string&,
+                             const translation::TranslatedText&);
 
     std::unique_ptr<translation::Translator> translator;
     std::shared_ptr<wordsDb::translationsDb::TranslationsDb> translationsDb;
