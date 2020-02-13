@@ -4,8 +4,8 @@
 #include "translation/TranslationRequestFormatterMock.h"
 #include "webConnection/HttpRequestHandlerMock.h"
 
-#include "exceptions/ConnectionFailed.h"
 #include "gtest/gtest.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
 using namespace translation;
@@ -45,7 +45,7 @@ TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
                 getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request))
-        .WillOnce(Throw(exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
     const auto translation =
         translator.translate(polishText, sourceLanguage, targetLanguage);

@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "exceptions/ConnectionFailed.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
 
 namespace translation
 {
@@ -45,7 +45,7 @@ webConnection::Response TranslatorImpl::getResponseFromTranslationApi(
     {
         return httpHandler->get(request);
     }
-    catch (const exceptions::ConnectionFailed& e)
+    catch (const webConnection::exceptions::ConnectionFailed& e)
     {
         std::cerr << e.what();
     }

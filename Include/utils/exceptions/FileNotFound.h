@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace exceptions
+namespace utils::exceptions
 {
 struct FileNotFound : std::runtime_error
 {

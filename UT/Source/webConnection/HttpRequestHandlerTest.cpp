@@ -1,6 +1,6 @@
-#include "exceptions/ConnectionFailed.h"
 #include "gtest/gtest.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
 using namespace webConnection;

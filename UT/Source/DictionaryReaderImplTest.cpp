@@ -2,7 +2,7 @@
 
 #include "utils/FileAccessMock.h"
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;
@@ -64,7 +64,7 @@ TEST_F(DictionaryReaderImplTest, givenDictionaryContent_shouldReadDictionary)
 TEST_F(DictionaryReaderImplTest, givenInvalidFile_shouldReturnEmptyDictionary)
 {
     EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
-        .WillOnce(Throw(exceptions::FileNotFound{""}));
+        .WillOnce(Throw(utils::exceptions::FileNotFound{""}));
 
     const auto dictionary = reader.read();
 

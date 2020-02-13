@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 
 namespace statisticsDb
 {
@@ -93,7 +93,7 @@ void StatisticsPersistentStorage::loadFile()
     {
         statistics = serializer->deserialize(fileAccess->readContent(filename));
     }
-    catch (const exceptions::FileNotFound& e)
+    catch (const utils::exceptions::FileNotFound& e)
     {
         std::cerr << e.what();
         return;
@@ -112,7 +112,7 @@ void StatisticsPersistentStorage::serialize() const
         fileAccess->write(filename,
                           serializer->serialize(storage.getStatistics()));
     }
-    catch (const exceptions::FileNotFound& e)
+    catch (const utils::exceptions::FileNotFound& e)
     {
         std::cerr << e.what();
     }

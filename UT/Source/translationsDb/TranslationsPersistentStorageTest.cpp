@@ -3,7 +3,7 @@
 #include "utils/FileAccessMock.h"
 #include "translationsDb/TranslationsSerializerMock.h"
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;
@@ -69,7 +69,7 @@ TEST_F(TranslationsPersistentStorageTest,
        givenInvalidFile_shouldReturnNoTranslations)
 {
     EXPECT_CALL(*fileAccess, readContent(filepath))
-        .WillOnce(Throw(exceptions::FileNotFound{""}));
+        .WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualStats = persistentStorage.getTranslations();
@@ -97,7 +97,7 @@ TEST_F(
 {
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
     EXPECT_CALL(*fileAccess, write(filepath, "words"))
-        .WillOnce(Throw(exceptions::FileNotFound{""}));
+        .WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation))
         .WillOnce(Return("words"));
 

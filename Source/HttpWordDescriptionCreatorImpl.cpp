@@ -3,8 +3,8 @@
 #include <iostream>
 
 #include "GlossaryHtmlParserImpl.h"
-#include "exceptions/ConnectionFailed.h"
 #include "webConnection/HttpRequestHandlerImpl.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
 
 const std::string HttpWordDescriptionCreatorImpl::urlAddress{
     "https://www.merriam-webster.com/dictionary/"};
@@ -48,7 +48,7 @@ boost::optional<std::string> HttpWordDescriptionCreatorImpl::getHttpContent(
         const auto response = httpHandler->get(urlAddress + englishWord);
         return response.content;
     }
-    catch (const exceptions::ConnectionFailed& e)
+    catch (const webConnection::exceptions::ConnectionFailed& e)
     {
         std::cerr << e.what();
         return boost::none;

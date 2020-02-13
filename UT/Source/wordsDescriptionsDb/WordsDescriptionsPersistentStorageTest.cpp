@@ -3,7 +3,7 @@
 #include "utils/FileAccessMock.h"
 #include "wordsDescriptionsDb/WordsDescriptionsSerializerMock.h"
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;
@@ -69,7 +69,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest,
        givenInvalidFile_shouldReturnNoWords)
 {
     EXPECT_CALL(*fileAccess, readContent(filepath))
-        .WillOnce(Throw(exceptions::FileNotFound{""}));
+        .WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess,
                                                          serializer};
 
@@ -100,7 +100,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest,
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess,
                                                          serializer};
     EXPECT_CALL(*fileAccess, write(filepath, "words"))
-        .WillOnce(Throw(exceptions::FileNotFound{""}));
+        .WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(wordsAfterAddition))
         .WillOnce(Return("words"));
 

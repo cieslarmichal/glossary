@@ -3,7 +3,7 @@
 #include <iostream>
 #include <sstream>
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 #include "utils/StringHelper.h"
 
 const std::string DictionaryReaderImpl::fileDirectory{"../database"};
@@ -23,7 +23,7 @@ std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
     {
         dictionaryContent = fileAccess->readContent(filePath);
     }
-    catch (const exceptions::FileNotFound& e)
+    catch (const utils::exceptions::FileNotFound& e)
     {
         std::cerr << e.what();
         return {};

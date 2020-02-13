@@ -1,6 +1,6 @@
 #include "utils/FileAccessImpl.h"
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
 
 using namespace ::testing;
@@ -42,11 +42,11 @@ TEST_F(FileAccessImplTest,
        givenIncorrectPath_shouldThrowFileNotFoundForWritingAppendingAndReading)
 {
     ASSERT_THROW(fileAccess.write(incorrectPath, textToWrite),
-                 exceptions::FileNotFound);
+                 utils::exceptions::FileNotFound);
     ASSERT_THROW(fileAccess.append(incorrectPath, textToWrite),
-                 exceptions::FileNotFound);
+                 utils::exceptions::FileNotFound);
     ASSERT_THROW(fileAccess.readContent(incorrectPath),
-                 exceptions::FileNotFound);
+                 utils::exceptions::FileNotFound);
 }
 
 TEST_F(FileAccessImplTest, givenCorrectPath_shouldAppendToFile)

@@ -3,7 +3,7 @@
 #include <fstream>
 #include <sstream>
 
-#include "exceptions/FileNotFound.h"
+#include "utils/exceptions/FileNotFound.h"
 
 namespace utils
 {
