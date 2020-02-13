@@ -19,9 +19,9 @@ HttpWordDescriptionCreatorImpl::HttpWordDescriptionCreatorImpl(
 {
 }
 
-boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
+boost::optional<wordsDescriptionsDb::WordDescription>
 HttpWordDescriptionCreatorImpl::createWordDescription(
-    const wordsDb::translationsDb::Translation& translation) const
+    const translationsDb::Translation& translation) const
 {
 
     const auto httpContent = getHttpContent(translation.englishWord);
@@ -34,7 +34,7 @@ HttpWordDescriptionCreatorImpl::createWordDescription(
     if (const auto wordDescription =
             descriptionParser->parse(linesWithDescription))
     {
-        return wordsDb::wordsDescriptionsDb::WordDescription{
+        return wordsDescriptionsDb::WordDescription{
             translation.englishWord, translation.polishWord, *wordDescription};
     }
     return boost::none;

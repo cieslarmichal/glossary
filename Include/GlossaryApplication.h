@@ -8,7 +8,7 @@
 #include "WordRandomizer.h"
 #include "WordViewer.h"
 #include "WordsGeneratorService.h"
-#include "wordsDb/statisticsDb/StatisticsDb.h"
+#include "statisticsDb/StatisticsDb.h"
 
 // TODO: move std::cin from UserPrompt to application
 
@@ -25,7 +25,7 @@ private:
 
     // TODO: add const into unique_ptr if possible
     std::unique_ptr<WordsGeneratorService> wordsGenerator;
-    std::unique_ptr<wordsDb::statisticsDb::StatisticsDb> answersCounter;
+    std::unique_ptr<statisticsDb::StatisticsDb> answersCounter;
     std::unique_ptr<AnswerChecker> answerChecker;
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewer> viewer;

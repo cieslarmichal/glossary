@@ -4,14 +4,14 @@
 
 #include "TranslationService.h"
 #include "translation/Translator.h"
-#include "wordsDb/translationsDb/TranslationsDb.h"
+#include "translationsDb/TranslationsDb.h"
 
 class TranslationServiceImpl : public TranslationService
 {
 public:
     TranslationServiceImpl(
         std::unique_ptr<translation::Translator>,
-        std::shared_ptr<wordsDb::translationsDb::TranslationsDb>);
+        std::shared_ptr<translationsDb::TranslationsDb>);
 
     boost::optional<translation::TranslatedText>
     translate(const std::string&, translation::SourceLanguage,
@@ -28,5 +28,5 @@ private:
                              const translation::TranslatedText&);
 
     std::unique_ptr<translation::Translator> translator;
-    std::shared_ptr<wordsDb::translationsDb::TranslationsDb> translationsDb;
+    std::shared_ptr<translationsDb::TranslationsDb> translationsDb;
 };

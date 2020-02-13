@@ -4,7 +4,7 @@
 #include "utils/StringHelper.h"
 
 using namespace ::testing;
-using namespace wordsDb::wordsDescriptionsDb;
+using namespace wordsDescriptionsDb;
 
 namespace
 {

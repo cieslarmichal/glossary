@@ -1,14 +1,14 @@
 #pragma once
 
-#include "wordsDb/translationsDb/Translation.h"
-#include "wordsDb/wordsDescriptionsDb/WordDescription.h"
+#include "translationsDb/Translation.h"
+#include "wordsDescriptionsDb/WordDescription.h"
 
 class HttpWordDescriptionCreator
 {
 public:
     virtual ~HttpWordDescriptionCreator() = default;
 
-    virtual boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>
+    virtual boost::optional<wordsDescriptionsDb::WordDescription>
     createWordDescription(
-        const wordsDb::translationsDb::Translation&) const = 0;
+        const translationsDb::Translation&) const = 0;
 };

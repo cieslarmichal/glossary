@@ -16,7 +16,7 @@ DictionaryReaderImpl::DictionaryReaderImpl(
 {
 }
 
-std::vector<Translation> DictionaryReaderImpl::read() const
+std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
 {
     std::string dictionaryContent;
     try
@@ -32,10 +32,10 @@ std::vector<Translation> DictionaryReaderImpl::read() const
     return processDictionaryContent(dictionaryContent);
 }
 
-std::vector<Translation> DictionaryReaderImpl::processDictionaryContent(
+std::vector<translationsDb::Translation> DictionaryReaderImpl::processDictionaryContent(
     const std::string& dictionaryContent) const
 {
-    std::vector<Translation> wordsWithTranslation;
+    std::vector<translationsDb::Translation> wordsWithTranslation;
     for (const auto& line : utils::getSplitLines(dictionaryContent))
     {
         if (not line.empty())
@@ -49,7 +49,7 @@ std::vector<Translation> DictionaryReaderImpl::processDictionaryContent(
     return wordsWithTranslation;
 }
 
-boost::optional<Translation>
+boost::optional<translationsDb::Translation>
 DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
 {
     std::stringstream lineStream{line};
@@ -58,7 +58,7 @@ DictionaryReaderImpl::getWordWithTranslation(const std::string& line) const
     lineStream >> englishWord >> polishWord;
     if (!englishWord.empty() && !polishWord.empty())
     {
-        return Translation{polishWord, englishWord};
+        return translationsDb::Translation{polishWord, englishWord};
         // TODO: add strong typedefs
     }
     return boost::none;

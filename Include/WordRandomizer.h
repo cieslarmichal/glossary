@@ -1,8 +1,8 @@
 #pragma once
 
-#include "wordsDb/wordsDescriptionsDb/WordsDescriptions.h"
+#include "wordsDescriptionsDb/WordsDescriptions.h"
 
-using namespace wordsDb::wordsDescriptionsDb;
+using namespace wordsDescriptionsDb;
 
 class WordRandomizer
 {

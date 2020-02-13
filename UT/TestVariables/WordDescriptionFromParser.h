@@ -1,8 +1,8 @@
 #pragma once
 
-#include "wordsDb/wordsDescriptionsDb/Description.h"
+#include "wordsDescriptionsDb/Description.h"
 
-using namespace wordsDb::wordsDescriptionsDb;
+using namespace wordsDescriptionsDb;
 
 const DefinitionsWithExamples definitionsWithExamples{
     {"to go or come after and bring or take back", Example{"fetch a doctor"}},

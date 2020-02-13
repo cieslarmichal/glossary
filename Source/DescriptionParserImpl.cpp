@@ -2,7 +2,7 @@
 
 #include "boost/algorithm/string.hpp"
 
-using namespace wordsDb::wordsDescriptionsDb;
+using namespace wordsDescriptionsDb;
 
 namespace
 {

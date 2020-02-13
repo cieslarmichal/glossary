@@ -2,11 +2,9 @@
 
 #include "DescriptionParser.h"
 
-using namespace wordsDb::wordsDescriptionsDb;
-
 class DescriptionParserImpl : public DescriptionParser
 {
 public:
-    boost::optional<Description>
+    boost::optional<wordsDescriptionsDb::Description>
     parse(const std::vector<std::string>&) const override;
 };

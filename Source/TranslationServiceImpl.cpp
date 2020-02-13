@@ -4,7 +4,7 @@
 
 TranslationServiceImpl::TranslationServiceImpl(
     std::unique_ptr<translation::Translator> translatorInit,
-    std::shared_ptr<wordsDb::translationsDb::TranslationsDb> db)
+    std::shared_ptr<translationsDb::TranslationsDb> db)
     : translator{std::move(translatorInit)}, translationsDb{std::move(db)}
 {
 }
@@ -51,7 +51,7 @@ void TranslationServiceImpl::saveTranslationInDb(
     const std::string& sourceText,
     const translation::TranslatedText& translatedText)
 {
-    const auto newTranslation = wordsDb::translationsDb::Translation{
+    const auto newTranslation = translationsDb::Translation{
         PolishWord{sourceText}, EnglishWord{translatedText}};
     translationsDb->addTranslation(newTranslation);
 }

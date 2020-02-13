@@ -16,7 +16,7 @@ namespace
 {
 const std::string urlAddress{
     "https://www.merriam-webster.com/dictionary/fetch"};
-const wordsDb::translationsDb::Translation wordWithTranslation{"sprowadzac",
+const translationsDb::Translation wordWithTranslation{"sprowadzac",
                                                                "fetch"};
 const std::string htmlContentFilePath{"../UT/TestTextFiles/HtmlContent.txt"};
 const WordDescription expectedWordDescription{wordWithTranslation.englishWord,

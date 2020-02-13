@@ -9,6 +9,6 @@ class HttpWordDescriptionCreatorMock : public HttpWordDescriptionCreator
 public:
     MOCK_CONST_METHOD1(
         createWordDescription,
-        boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>(
-            const wordsDb::translationsDb::Translation&));
+        boost::optional<wordsDescriptionsDb::WordDescription>(
+            const translationsDb::Translation&));
 };

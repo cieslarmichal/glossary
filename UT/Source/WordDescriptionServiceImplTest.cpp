@@ -2,13 +2,13 @@
 
 #include "HttpWordDescriptionCreatorMock.h"
 #include "gmock/gmock.h"
-#include "wordsDb/wordsDescriptionsDb/WordsDescriptionsDbMock.h"
+#include "wordsDescriptionsDb/WordsDescriptionsDbMock.h"
 // TODO: delete translation with englishWord
 #include "gtest/gtest.h"
-#include "wordsDb/translationsDb/Translation.h"
+#include "translationsDb/Translation.h"
 
 using namespace ::testing;
-using namespace wordsDb::wordsDescriptionsDb;
+using namespace wordsDescriptionsDb;
 
 namespace
 {
@@ -23,9 +23,9 @@ public:
         std::make_unique<StrictMock<HttpWordDescriptionCreatorMock>>();
     HttpWordDescriptionCreatorMock* wordDescriptionCreator =
         wordDescriptionCreatorInit.get();
-    std::shared_ptr<wordsDb::wordsDescriptionsDb::WordsDescriptionsDbMock>
+    std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDbMock>
         wordsDescriptionsDb = std::make_shared<StrictMock<
-            wordsDb::wordsDescriptionsDb::WordsDescriptionsDbMock>>();
+            wordsDescriptionsDb::WordsDescriptionsDbMock>>();
     WordDescriptionServiceImpl wordDescriptionService{
         std::move(wordDescriptionCreatorInit), wordsDescriptionsDb};
 };
@@ -50,7 +50,7 @@ TEST_F(
         .WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionCreator,
                 createWordDescription(
-                    wordsDb::translationsDb::Translation{"", englishWord}))
+                    translationsDb::Translation{"", englishWord}))
         .WillOnce(Return(wordDescription));
     EXPECT_CALL(*wordsDescriptionsDb, addWordDescription(wordDescription));
 
@@ -67,7 +67,7 @@ TEST_F(WordDescriptionServiceImplTest,
         .WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionCreator,
                 createWordDescription(
-                    wordsDb::translationsDb::Translation{"", englishWord}))
+                    translationsDb::Translation{"", englishWord}))
         .WillOnce(Return(boost::none));
 
     const auto actualWordDescription =

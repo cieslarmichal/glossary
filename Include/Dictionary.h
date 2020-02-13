@@ -2,7 +2,6 @@
 
 #include <vector>
 
-#include "wordsDb/translationsDb/Translation.h"
+#include "translationsDb/Translation.h"
 
-using namespace wordsDb::translationsDb;
-using Dictionary = std::vector<Translation>;
+using Dictionary = std::vector<translationsDb::Translation>;
