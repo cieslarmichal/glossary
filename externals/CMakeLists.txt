@@ -1,6 +1,3 @@
-
-cmake_minimum_required( VERSION 3.12.4 )
-
 find_package(Boost REQUIRED)
 
 set(JSON_BuildTests OFF CACHE INTERNAL "")
