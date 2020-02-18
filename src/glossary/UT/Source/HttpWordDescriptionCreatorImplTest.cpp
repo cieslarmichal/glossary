@@ -5,9 +5,9 @@
 #include "gmock/gmock.h"
 #include "webConnection/HttpHandlerMock.h"
 
+#include "gtest/gtest.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "testVariables/WordDescriptionFromParser.h"
-#include "gtest/gtest.h"
 #include "utils/FileAccessImpl.h"
 
 using namespace ::testing;
@@ -16,12 +16,12 @@ namespace
 {
 const std::string urlAddress{
     "https://www.merriam-webster.com/dictionary/fetch"};
-const translationsDb::Translation wordWithTranslation{"sprowadzac",
-                                                               "fetch"};
-const std::string htmlContentFilePath{"../../../src/glossary/UT/testFiles/HtmlContent.txt"};
+const wordsDescriptionsDb::EnglishWord englishWord{"fetch"};
+const std::string htmlContentFilePath{
+    "../../src/glossary/UT/testFiles/HtmlContent.txt"};
 
-const WordDescription expectedWordDescription{wordWithTranslation.translatedText,
-                                              wordDescriptionFromParser};
+const WordDescription expectedWordDescription{
+    englishWord, wordDescriptionFromParser};
 const webConnection::Response emptyHtmlResponse{};
 const std::vector<std::string> emptyParsedHtmlContent{};
 }
@@ -59,7 +59,7 @@ TEST_F(HttpWordDescriptionCreatorImplTest,
     EXPECT_CALL(*descriptionParser, parse(emptyParsedHtmlContent))
         .WillOnce(Return(boost::none));
 
-    const auto actualWord = creator.createWordDescription(wordWithTranslation);
+    const auto actualWord = creator.createWordDescription(englishWord);
 
     ASSERT_EQ(actualWord, boost::none);
 }
@@ -75,7 +75,7 @@ TEST_F(HttpWordDescriptionCreatorImplTest,
     EXPECT_CALL(*descriptionParser, parse(testParsedGlossaryHtmlContent))
         .WillOnce(Return(wordDescriptionFromParser));
 
-    const auto actualWord = creator.createWordDescription(wordWithTranslation);
+    const auto actualWord = creator.createWordDescription(englishWord);
 
     ASSERT_EQ(*actualWord, expectedWordDescription);
 }

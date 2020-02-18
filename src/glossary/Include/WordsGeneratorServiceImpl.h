@@ -23,7 +23,7 @@ private:
     boost::optional<wordsDescriptionsDb::WordDescription>
     getWordDescriptionFromDatabase(const EnglishWord&) const;
     boost::optional<wordsDescriptionsDb::WordDescription>
-    getWordDescriptionFromHttp(const translationsDb::Translation&) const;
+    getWordDescriptionFromHttp(const wordsDescriptionsDb::EnglishWord&) const;
     void addWordToStorage(const wordsDescriptionsDb::WordDescription&) const;
     bool wordIsInStorage(const EnglishWord&) const;
 

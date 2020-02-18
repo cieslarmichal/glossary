@@ -37,8 +37,7 @@ boost::optional<wordsDescriptionsDb::WordDescription>
 WordDescriptionServiceImpl::createWordDescriptionFromHttp(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
-    return wordDescriptionCreator->createWordDescription(
-        translationsDb::Translation{"", englishWord});
+    return wordDescriptionCreator->createWordDescription(englishWord);
 }
 
 void WordDescriptionServiceImpl::saveWordDescriptionInDb(

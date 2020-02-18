@@ -18,7 +18,10 @@ public:
 
     boost::optional<wordsDescriptionsDb::WordDescription>
     createWordDescription(
-        const translationsDb::Translation&) const override;
+        const wordsDescriptionsDb::EnglishWord &) const override;
+    wordsDescriptionsDb::WordsDescriptions
+    createWordsDescriptions(
+        const wordsDescriptionsDb::EnglishWords &) const override;
 
 private:
     boost::optional<std::string> getHttpContent(const EnglishWord&) const;

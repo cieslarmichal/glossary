@@ -24,8 +24,8 @@ public:
     HttpWordDescriptionCreatorMock* wordDescriptionCreator =
         wordDescriptionCreatorInit.get();
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDbMock>
-        wordsDescriptionsDb = std::make_shared<StrictMock<
-            wordsDescriptionsDb::WordsDescriptionsDbMock>>();
+        wordsDescriptionsDb = std::make_shared<
+            StrictMock<wordsDescriptionsDb::WordsDescriptionsDbMock>>();
     WordDescriptionServiceImpl wordDescriptionService{
         std::move(wordDescriptionCreatorInit), wordsDescriptionsDb};
 };
@@ -48,9 +48,7 @@ TEST_F(
 {
     EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord))
         .WillOnce(Return(boost::none));
-    EXPECT_CALL(*wordDescriptionCreator,
-                createWordDescription(
-                    translationsDb::Translation{"", englishWord}))
+    EXPECT_CALL(*wordDescriptionCreator, createWordDescription(englishWord))
         .WillOnce(Return(wordDescription));
     EXPECT_CALL(*wordsDescriptionsDb, addWordDescription(wordDescription));
 
@@ -65,9 +63,7 @@ TEST_F(WordDescriptionServiceImplTest,
 {
     EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord))
         .WillOnce(Return(boost::none));
-    EXPECT_CALL(*wordDescriptionCreator,
-                createWordDescription(
-                    translationsDb::Translation{"", englishWord}))
+    EXPECT_CALL(*wordDescriptionCreator, createWordDescription(englishWord))
         .WillOnce(Return(boost::none));
 
     const auto actualWordDescription =

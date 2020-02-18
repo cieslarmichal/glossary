@@ -20,10 +20,10 @@ HttpWordDescriptionCreatorImpl::HttpWordDescriptionCreatorImpl(
 
 boost::optional<wordsDescriptionsDb::WordDescription>
 HttpWordDescriptionCreatorImpl::createWordDescription(
-    const translationsDb::Translation& translation) const
+    const wordsDescriptionsDb::EnglishWord & englishWord) const
 {
 
-    const auto httpContent = getHttpContent(translation.translatedText);
+    const auto httpContent = getHttpContent(englishWord);
     if (!httpContent)
     {
         return boost::none;
@@ -34,7 +34,7 @@ HttpWordDescriptionCreatorImpl::createWordDescription(
             descriptionParser->parse(linesWithDescription))
     {
         return wordsDescriptionsDb::WordDescription{
-            translation.translatedText, *wordDescription};
+            englishWord, *wordDescription};
     }
     return boost::none;
 }
@@ -52,4 +52,10 @@ boost::optional<std::string> HttpWordDescriptionCreatorImpl::getHttpContent(
         std::cerr << e.what();
         return boost::none;
     }
+}
+wordsDescriptionsDb::WordsDescriptions
+HttpWordDescriptionCreatorImpl::createWordsDescriptions(
+    const wordsDescriptionsDb::EnglishWords&) const
+{
+    return {};
 }

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "translationsDb/Translation.h"
 #include "wordsDescriptionsDb/WordDescription.h"
 
 class HttpWordDescriptionCreator
@@ -10,5 +9,8 @@ public:
 
     virtual boost::optional<wordsDescriptionsDb::WordDescription>
     createWordDescription(
-        const translationsDb::Translation&) const = 0;
+        const wordsDescriptionsDb::EnglishWord &) const = 0;
+    virtual wordsDescriptionsDb::WordsDescriptions
+    createWordsDescriptions(
+        const wordsDescriptionsDb::EnglishWords&) const = 0;
 };

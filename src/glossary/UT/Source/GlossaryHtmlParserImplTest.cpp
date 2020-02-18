@@ -31,7 +31,7 @@ const std::string parsedSentence{
     "by two men during overnight July 20-21 from Binny’s Beverage Depot."};
 const std::string parsedExample{"// blackberry wine"};
 const std::string htmlContentFilePath{
-    "../../../src/glossary/UT/testFiles/HtmlContent.txt"};
+    "../../src/glossary/UT/testFiles/HtmlContent.txt"};
 
 const std::string emptyHtmlContent{};
 const std::string contentWithoutImportantLines{

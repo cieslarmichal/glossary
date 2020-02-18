@@ -82,7 +82,7 @@ Word WordsGeneratorServiceImpl::generateWord(
     else
     {
         if (const auto wordFromHttp =
-                getWordDescriptionFromHttp(wordWithTranslation))
+                getWordDescriptionFromHttp(wordWithTranslation.translatedText))
         {
             addWordToStorage(*wordFromHttp);
             return {wordWithTranslation.sourceText,
@@ -111,10 +111,10 @@ WordsGeneratorServiceImpl::getWordDescriptionFromDatabase(
 
 boost::optional<wordsDescriptionsDb::WordDescription>
 WordsGeneratorServiceImpl::getWordDescriptionFromHttp(
-    const translationsDb::Translation& wordWithTranslation) const
+    const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     return httpWordDescriptionCreator->createWordDescription(
-        wordWithTranslation);
+        englishWord);
 }
 
 void WordsGeneratorServiceImpl::addWordToStorage(
