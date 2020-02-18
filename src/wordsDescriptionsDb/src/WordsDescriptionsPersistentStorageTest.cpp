@@ -11,7 +11,7 @@ using namespace wordsDescriptionsDb;
 
 namespace
 {
-const std::string filepath{"../database/wordsDescriptions.txt"};
+const std::string filepath{"../../../database/wordsDescriptions.txt"};
 const EnglishWord nonExistingWord("nonExistingWord");
 const EnglishWord englishWord1("englishWord1");
 const EnglishWord englishWord2("englishWord2");

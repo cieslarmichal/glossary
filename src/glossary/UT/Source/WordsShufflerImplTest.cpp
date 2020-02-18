@@ -6,15 +6,17 @@ using namespace ::testing;
 
 namespace
 {
-const WordDescription word1("computer",
-                            {{{"definition", std::string{"example"}},
-                              {"definition2", std::string{"example2"}}},
-                             {"sentence"}});
-const WordDescription word2("tea", {});
-const WordDescription word3("headphones", {});
-const WordsDescriptions words{word1, word2, word3};
-const WordsDescriptions wordsWithOneWord{word1};
-const WordsDescriptions emptyWords{};
+const Word word1{"komputer", "computer",
+                 wordsDescriptionsDb::WordDescription{
+                     "computer",
+                     {{{"definition", std::string{"example"}},
+                       {"definition2", std::string{"example2"}}},
+                      {"sentence"}}}};
+const Word word2{"herbata", "tea", {}};
+const Word word3{"sluchawki", "headphones", {}};
+const Words words{word1, word2, word3};
+const Words wordsWithOneWord{word1};
+const Words emptyWords{};
 }
 
 class WordsShufflerImplTest : public Test

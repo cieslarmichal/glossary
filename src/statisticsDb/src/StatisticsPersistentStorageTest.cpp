@@ -11,7 +11,7 @@ using namespace statisticsDb;
 
 namespace
 {
-const std::string filepath{"../database/statistics.txt"};
+const std::string filepath{"../../../database/statistics.txt"};
 const EnglishWord englishWord1{"englishWord1"};
 const EnglishWord englishWord2{"englishWord2"};
 const EnglishWord englishWord3{"englishWord3"};
