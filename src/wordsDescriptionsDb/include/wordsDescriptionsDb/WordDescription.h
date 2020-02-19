@@ -16,8 +16,7 @@ struct WordDescription
 
     std::string toString() const
     {
-        return "WordDescription{" + englishWord + "\n" +
-               description.toString();
+        return "WordDescription{" + englishWord + "\n" + description.toString();
     }
 
     EnglishWord englishWord;

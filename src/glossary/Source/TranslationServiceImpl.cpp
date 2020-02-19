@@ -52,6 +52,7 @@ void TranslationServiceImpl::saveTranslationInDb(
     const translator::TranslatedText& translatedText)
 {
     const auto newTranslation = translationsDb::Translation{
-        translationsDb::SourceText{sourceText}, translationsDb::TranslatedText{translatedText}};
+        translationsDb::SourceText{sourceText},
+        translationsDb::TranslatedText{translatedText}};
     translationsDb->addTranslation(newTranslation);
 }

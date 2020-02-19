@@ -9,7 +9,7 @@ const std::string HttpWordDescriptionCreatorImpl::urlAddress{
     "https://www.merriam-webster.com/dictionary/"};
 
 HttpWordDescriptionCreatorImpl::HttpWordDescriptionCreatorImpl(
-    std::unique_ptr<const webConnection::HttpHandler> htmlReaderInit,
+    std::shared_ptr<const webConnection::HttpHandler> htmlReaderInit,
     std::unique_ptr<const GlossaryHtmlParser> glossaryParserInit,
     std::unique_ptr<const DescriptionParser> descriptionParserInit)
     : httpHandler{std::move(htmlReaderInit)}, glossaryParser{std::move(
@@ -20,7 +20,7 @@ HttpWordDescriptionCreatorImpl::HttpWordDescriptionCreatorImpl(
 
 boost::optional<wordsDescriptionsDb::WordDescription>
 HttpWordDescriptionCreatorImpl::createWordDescription(
-    const wordsDescriptionsDb::EnglishWord & englishWord) const
+    const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
 
     const auto httpContent = getHttpContent(englishWord);
@@ -33,8 +33,8 @@ HttpWordDescriptionCreatorImpl::createWordDescription(
     if (const auto wordDescription =
             descriptionParser->parse(linesWithDescription))
     {
-        return wordsDescriptionsDb::WordDescription{
-            englishWord, *wordDescription};
+        return wordsDescriptionsDb::WordDescription{englishWord,
+                                                    *wordDescription};
     }
     return boost::none;
 }

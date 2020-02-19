@@ -3,9 +3,8 @@
 #include "HttpWordDescriptionCreatorMock.h"
 #include "gmock/gmock.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDbMock.h"
-// TODO: delete translation with englishWord
+
 #include "gtest/gtest.h"
-#include "translationsDb/Translation.h"
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;

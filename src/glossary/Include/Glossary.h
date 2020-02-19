@@ -9,7 +9,7 @@
 // TODO: filepaths with filesystem
 // TODO: probabilty
 // TODO: add inserting only polish or english word and downloading other one
-// TODO: add testability to WordsGeneratorService
+// TODO: add testability to WordDescriptionGenerator
 // TODO: add testability to GlossaryApplication
 // TODO: try to get rid of std::cin from class
 

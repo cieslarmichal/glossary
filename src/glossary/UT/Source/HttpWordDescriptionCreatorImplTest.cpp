@@ -20,8 +20,8 @@ const wordsDescriptionsDb::EnglishWord englishWord{"fetch"};
 const std::string htmlContentFilePath{
     "../../src/glossary/UT/testFiles/HtmlContent.txt"};
 
-const WordDescription expectedWordDescription{
-    englishWord, wordDescriptionFromParser};
+const WordDescription expectedWordDescription{englishWord,
+                                              wordDescriptionFromParser};
 const webConnection::Response emptyHtmlResponse{};
 const std::vector<std::string> emptyParsedHtmlContent{};
 }

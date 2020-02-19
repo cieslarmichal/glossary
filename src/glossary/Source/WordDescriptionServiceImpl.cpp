@@ -9,7 +9,8 @@ WordDescriptionServiceImpl::WordDescriptionServiceImpl(
 }
 
 boost::optional<wordsDescriptionsDb::WordDescription>
-WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
+WordDescriptionServiceImpl::getWordDescription(
+    const wordsDescriptionsDb::EnglishWord& englishWord)
 {
     if (const auto wordDescriptionFromDb =
             getWordDescriptionFromDb(englishWord))

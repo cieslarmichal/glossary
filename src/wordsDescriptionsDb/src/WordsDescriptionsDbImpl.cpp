@@ -9,9 +9,9 @@ WordsDescriptionsDbImpl::WordsDescriptionsDbImpl(
 }
 
 void WordsDescriptionsDbImpl::addWordDescription(
-    const WordDescription& word) const
+    const WordDescription& wordDescription) const
 {
-    storage->addWordDescription(word);
+    storage->addWordDescription(wordDescription);
 }
 
 boost::optional<WordDescription> WordsDescriptionsDbImpl::getWordDescription(

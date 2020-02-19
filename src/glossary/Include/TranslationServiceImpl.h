@@ -2,16 +2,15 @@
 
 #include <memory>
 
-#include "translationsDb/TranslationsDb.h"
 #include "TranslationService.h"
+#include "translationsDb/TranslationsDb.h"
 #include "translator/Translator.h"
 
 class TranslationServiceImpl : public TranslationService
 {
 public:
-    TranslationServiceImpl(
-        std::unique_ptr<translator::Translator>,
-        std::shared_ptr<translationsDb::TranslationsDb>);
+    TranslationServiceImpl(std::unique_ptr<translator::Translator>,
+                           std::shared_ptr<translationsDb::TranslationsDb>);
 
     boost::optional<translator::TranslatedText>
     translate(const std::string&, translator::SourceLanguage,
@@ -21,8 +20,7 @@ private:
     boost::optional<translator::TranslatedText>
     getTranslationFromDb(const std::string&) const;
     boost::optional<translator::TranslatedText>
-    getTranslationFromTranslator(const std::string&,
-                                 translator::SourceLanguage,
+    getTranslationFromTranslator(const std::string&, translator::SourceLanguage,
                                  translator::TargetLanguage) const;
     void saveTranslationInDb(const std::string&,
                              const translator::TranslatedText&);

@@ -18,9 +18,11 @@ public:
 
 private:
     boost::optional<wordsDescriptionsDb::WordDescription>
-    getWordDescriptionFromDb(const wordsDescriptionsDb::EnglishWord& englishWord) const;
+    getWordDescriptionFromDb(
+        const wordsDescriptionsDb::EnglishWord& englishWord) const;
     boost::optional<wordsDescriptionsDb::WordDescription>
-    createWordDescriptionFromHttp(const wordsDescriptionsDb::EnglishWord& englishWord) const;
+    createWordDescriptionFromHttp(
+        const wordsDescriptionsDb::EnglishWord& englishWord) const;
     void saveWordDescriptionInDb(const wordsDescriptionsDb::WordDescription&);
 
     std::unique_ptr<HttpWordDescriptionCreator> wordDescriptionCreator;

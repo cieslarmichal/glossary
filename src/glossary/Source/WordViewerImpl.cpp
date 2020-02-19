@@ -5,13 +5,12 @@
 size_t WordViewerImpl::amountOfDefinitionsToView{5};
 size_t WordViewerImpl::amountOfSentencesToView{2};
 
-std::string WordViewerImpl::viewWord(
-    const Word& word) const
+std::string WordViewerImpl::viewWord(const Word& word) const
 {
     std::stringstream wordView;
-    wordView << "English word: " << word.englishWord<< "\n";
+    wordView << "English word: " << word.englishWord << "\n";
     wordView << "Polish word: " << word.polishWord << "\n";
-    if(word.wordDescription)
+    if (word.wordDescription)
     {
         wordView << getDescription(word.wordDescription->description);
     }

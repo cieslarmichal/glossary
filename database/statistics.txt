@@ -1,1 +1,1 @@
-{"statistics":[{"correctAnswers":2,"englishWord":"pillow","incorrectAnswers":0},{"correctAnswers":1,"englishWord":"notebook","incorrectAnswers":1},{"correctAnswers":1,"englishWord":"ferry","incorrectAnswers":0},{"correctAnswers":1,"englishWord":"ankle","incorrectAnswers":0}]}
+{"statistics":[{"correctAnswers":2,"englishWord":"pillow","incorrectAnswers":0},{"correctAnswers":2,"englishWord":"notebook","incorrectAnswers":1},{"correctAnswers":1,"englishWord":"ferry","incorrectAnswers":0},{"correctAnswers":1,"englishWord":"ankle","incorrectAnswers":0}]}

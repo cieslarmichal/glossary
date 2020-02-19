@@ -1,8 +1,8 @@
 #include "TranslationServiceImpl.h"
 
+#include "gmock/gmock.h"
 #include "translationsDb/TranslationsDbMock.h"
 #include "translator/TranslatorMock.h"
-#include "gmock/gmock.h"
 
 #include "gtest/gtest.h"
 
@@ -29,9 +29,8 @@ public:
     std::unique_ptr<translator::TranslatorMock> translatorInit =
         std::make_unique<StrictMock<translator::TranslatorMock>>();
     translator::TranslatorMock* translator = translatorInit.get();
-    std::shared_ptr<translationsDb::TranslationsDbMock>
-        translationsDb = std::make_shared<
-            StrictMock<translationsDb::TranslationsDbMock>>();
+    std::shared_ptr<translationsDb::TranslationsDbMock> translationsDb =
+        std::make_shared<StrictMock<translationsDb::TranslationsDbMock>>();
     TranslationServiceImpl translationService{std::move(translatorInit),
                                               translationsDb};
 };

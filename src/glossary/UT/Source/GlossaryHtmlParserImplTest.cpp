@@ -1,10 +1,9 @@
 #include "GlossaryHtmlParserImpl.h"
 
-#include "utils/StringHelper.h"
-
-#include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "gtest/gtest.h"
+#include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "utils/FileAccessImpl.h"
+#include "utils/StringHelper.h"
 
 using namespace ::testing;
 

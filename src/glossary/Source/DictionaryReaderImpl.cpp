@@ -32,7 +32,8 @@ std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
     return processDictionaryContent(dictionaryContent);
 }
 
-std::vector<translationsDb::Translation> DictionaryReaderImpl::processDictionaryContent(
+std::vector<translationsDb::Translation>
+DictionaryReaderImpl::processDictionaryContent(
     const std::string& dictionaryContent) const
 {
     std::vector<translationsDb::Translation> wordsWithTranslation;

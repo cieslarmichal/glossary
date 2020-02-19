@@ -8,6 +8,6 @@ class WordDescriptionServiceMock : public WordDescriptionService
 {
 public:
     MOCK_METHOD1(getWordDescription,
-                 boost::optional<wordsDb::wordsDescriptionsDb::WordDescription>(
-                     const EnglishWord&));
+                 boost::optional<wordsDescriptionsDb::WordDescription>(
+                     const wordsDescriptionsDb::EnglishWord&));
 };

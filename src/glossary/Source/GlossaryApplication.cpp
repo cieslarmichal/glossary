@@ -3,26 +3,58 @@
 #include <iostream>
 
 #include "AnswerCheckerImpl.h"
+#include "DescriptionParserImpl.h"
+#include "DictionaryReaderImpl.h"
+#include "GlossaryHtmlParserImpl.h"
+#include "HttpWordDescriptionCreatorImpl.h"
 #include "UserPromptImpl.h"
+#include "WordDescriptionGeneratorImpl.h"
+#include "WordDescriptionServiceImpl.h"
 #include "WordRandomizerImpl.h"
 #include "WordViewerImpl.h"
-#include "WordsGeneratorServiceImpl.h"
 #include "statisticsDb/StatisticsDbFactory.h"
 #include "utils/FileAccessImpl.h"
+#include "webConnection/HttpHandlerFactory.h"
+#include "wordsDescriptionsDb/WordsDescriptionsDbFactory.h"
 
 GlossaryApplication::GlossaryApplication()
 {
     initialize();
 }
 
-// TODO: make FileAccessImpl only one shared_ptr not two
-// TODO: (persistentAnswersCounter and WordService)
 void GlossaryApplication::initialize()
 {
-    wordsGenerator = std::make_unique<WordsGeneratorServiceImpl>();
-
     std::shared_ptr<const utils::FileAccess> fileAccess =
         std::make_shared<const utils::FileAccessImpl>();
+
+    dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
+    dictionary = dictionaryReader->read();
+
+    std::unique_ptr<const wordsDescriptionsDb::WordsDescriptionsDbFactory>
+        wordsDescriptionsDbFactory =
+            wordsDescriptionsDb::WordsDescriptionsDbFactory::
+                createWordsDescriptionsDbFactory(fileAccess);
+
+    wordsDescriptionsDb =
+        wordsDescriptionsDbFactory->createWordsDescriptionDb();
+
+    std::unique_ptr<const webConnection::HttpHandlerFactory>
+        httpHandlerFactory =
+            webConnection::HttpHandlerFactory::createHttpHandlerFactory();
+
+    std::shared_ptr<const webConnection::HttpHandler> httpHandler =
+        httpHandlerFactory->createHttpHandler();
+    std::unique_ptr<const GlossaryHtmlParser> htmlParser =
+        std::make_unique<GlossaryHtmlParserImpl>();
+    std::unique_ptr<const DescriptionParser> descriptionParser =
+        std::make_unique<DescriptionParserImpl>();
+
+    wordDescriptionGenerator = std::make_unique<WordDescriptionGeneratorImpl>(
+        std::make_unique<WordDescriptionServiceImpl>(
+            std::make_unique<HttpWordDescriptionCreatorImpl>(
+                httpHandler, std::move(htmlParser),
+                std::move(descriptionParser)),
+            wordsDescriptionsDb));
 
     std::unique_ptr<const statisticsDb::StatisticsDbFactory>
         statisticsDbFactory =
@@ -42,7 +74,20 @@ void GlossaryApplication::initialize()
 
 void GlossaryApplication::run()
 {
-    glossaryWords = wordsGenerator->generateWords();
+    for (const auto& dictWord : dictionary)
+    {
+        englishWords.push_back(dictWord.translatedText);
+    }
+
+    const auto wordsDescriptions =
+        wordDescriptionGenerator->generateWordsDescriptions(englishWords);
+
+    for (size_t index = 0; index < wordsDescriptions.size(); index++)
+    {
+        glossaryWords.push_back({dictionary[index].sourceText,
+                                 dictionary[index].translatedText,
+                                 wordsDescriptions[index]});
+    }
 
     loop();
 }
@@ -56,8 +101,7 @@ void GlossaryApplication::loop()
         Word word;
         try
         {
-            word =
-                wordsRandomizer->randomizeWord(glossaryWords);
+            word = wordsRandomizer->randomizeWord(glossaryWords);
         }
         catch (const std::runtime_error& e)
         {
@@ -77,8 +121,7 @@ void GlossaryApplication::loop()
         else
         {
             std::cout << "Inorrect answer :(\n";
-            statisticsDb->addIncorrectAnswer(
-                word.wordDescription->englishWord);
+            statisticsDb->addIncorrectAnswer(word.wordDescription->englishWord);
         }
 
         std::cout << viewer->viewWord(word);

@@ -6,8 +6,7 @@ set(SOURCES
         Source/GlossaryHtmlParserImpl.cpp
         Source/DictionaryReaderImpl.cpp
         Source/HttpWordDescriptionCreatorImpl.cpp
-        Source/WordsGeneratorServiceImpl.cpp
-        Source/WordsShufflerImpl.cpp
+        Source/WordDescriptionGeneratorImpl.cpp
         Source/WordViewerImpl.cpp
         Source/UserPromptImpl.cpp
         Source/AnswerCheckerImpl.cpp
@@ -22,7 +21,6 @@ set(UT_SOURCES
         UT/Source/GlossaryHtmlParserImplTest.cpp
         UT/Source/DictionaryReaderImplTest.cpp
         UT/Source/HttpWordDescriptionCreatorImplTest.cpp
-        UT/Source/WordsShufflerImplTest.cpp
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp
         UT/Source/AnswerCheckerImplTest.cpp
