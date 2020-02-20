@@ -24,6 +24,7 @@ set(UT_SOURCES
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp
         UT/Source/AnswerCheckerImplTest.cpp
+        UT/Source/WordDescriptionGeneratorImplTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

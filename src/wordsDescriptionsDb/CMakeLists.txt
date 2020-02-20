@@ -15,13 +15,13 @@ set(UT_SOURCES
         src/DescriptionSerializerTest.cpp)
 
 add_library(wordsDescriptionsDb ${SOURCES})
-add_executable(wordsDescriptionsDbUT ${UT_SOURCES} ${SOURCES})
+add_executable(wordsDescriptionsDbUT ${UT_SOURCES})
 
 target_include_directories(wordsDescriptionsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/wordsDescriptionsDb")
 target_include_directories(wordsDescriptionsDbUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/wordsDescriptionsDb")
 
 target_link_libraries(wordsDescriptionsDb PRIVATE utils)
-target_link_libraries(wordsDescriptionsDbUT PRIVATE gtest_main gmock utils)
+target_link_libraries(wordsDescriptionsDbUT PRIVATE gtest_main gmock utils wordsDescriptionsDb)
 
 target_compile_options(wordsDescriptionsDb PUBLIC ${FLAGS})
 target_compile_options(wordsDescriptionsDbUT PUBLIC -Wall -Wextra -Werror)

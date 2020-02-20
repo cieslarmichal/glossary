@@ -10,12 +10,12 @@ set(UT_SOURCES
 
 
 add_library(utils ${SOURCES})
-add_executable(utilsUT ${UT_SOURCES} ${SOURCES})
+add_executable(utilsUT ${UT_SOURCES})
 
 target_include_directories(utils PUBLIC "include" PRIVATE "include/utils")
 target_include_directories(utilsUT PRIVATE "include" "include/utils")
 
-target_link_libraries(utilsUT PRIVATE gtest_main gmock)
+target_link_libraries(utilsUT PRIVATE gtest_main gmock utils)
 
 target_compile_options(utils PUBLIC ${FLAGS})
 target_compile_options(utilsUT PUBLIC -Wall -Wextra -Werror)
