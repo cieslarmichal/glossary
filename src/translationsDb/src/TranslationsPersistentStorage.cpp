@@ -7,9 +7,9 @@
 namespace translationsDb
 {
 
-const std::string TranslationsPersistentStorage::directory{"../../database"};
+const std::string TranslationsPersistentStorage::directory{"database/"};
 const std::string TranslationsPersistentStorage::filename{directory +
-                                                          "/translations.txt"};
+                                                          "translations.txt"};
 
 TranslationsPersistentStorage::TranslationsPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,

@@ -18,4 +18,4 @@ target_link_libraries(webConnectionUT PRIVATE gtest_main gmock webConnection)
 target_compile_options(webConnection PUBLIC ${FLAGS})
 target_compile_options(webConnectionUT PUBLIC -Wall -Wextra -Werror)
 
-add_test(webConnectionUT ${EXECUTABLE_OUTPUT_PATH}/webConnectionUT --gtest_color=yes)
+add_test(webConnectionUT webConnectionUT --gtest_color=yes)

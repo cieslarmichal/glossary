@@ -11,7 +11,7 @@ using namespace translationsDb;
 
 namespace
 {
-const std::string filepath{"../../database/translations.txt"};
+const std::string filepath{"database/translations.txt"};
 const SourceText polishWord1{"polishWord1"};
 const SourceText polishWord2{"polishWord2"};
 const SourceText nonExistingPolishWord{"nonExisting"};

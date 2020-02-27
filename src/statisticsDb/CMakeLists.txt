@@ -24,4 +24,4 @@ target_link_libraries(statisticsDbUT PRIVATE gtest_main gmock utils statisticsDb
 target_compile_options(statisticsDb PUBLIC ${FLAGS})
 target_compile_options(statisticsDbUT PUBLIC -Wall -Wextra -Werror)
 
-add_test(statisticsDbUT ${EXECUTABLE_OUTPUT_PATH}/statisticsDbUT --gtest_color=yes)
+add_test(statisticsDbUT statisticsDbUT --gtest_color=yes)

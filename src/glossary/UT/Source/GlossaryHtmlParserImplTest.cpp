@@ -2,8 +2,7 @@
 
 #include "gtest/gtest.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
-#include "utils/FileAccessImpl.h"
-#include "utils/StringHelper.h"
+#include "testVariables/HtmlContent.h"
 
 using namespace ::testing;
 
@@ -29,8 +28,6 @@ const std::string parsedSentence{
     "; Several bottles of wine were reported to have been stolen "
     "by two men during overnight July 20-21 from Binny’s Beverage Depot."};
 const std::string parsedExample{"// blackberry wine"};
-const std::string htmlContentFilePath{
-    "../../src/glossary/UT/testFiles/HtmlContent.txt"};
 
 const std::string emptyHtmlContent{};
 const std::string contentWithoutImportantLines{
@@ -43,12 +40,6 @@ const std::string contentWithoutImportantLines{
 class GlossaryHtmlParserImplTest : public Test
 {
 public:
-    std::string prepareHtmlContent()
-    {
-        const utils::FileAccessImpl fileAccess{};
-        return fileAccess.readContent(htmlContentFilePath);
-    }
-
     GlossaryHtmlParserImpl glossaryHtmlParser;
 };
 
@@ -79,10 +70,8 @@ TEST_F(GlossaryHtmlParserImplTest,
 {
     // TODO: takes too much time, test other way, maybe there is no need to test
 
-    const auto realHtmlContent = prepareHtmlContent();
-
     const auto actualParsedHtmlContent =
-        glossaryHtmlParser.parse(realHtmlContent);
+        glossaryHtmlParser.parse(htmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedGlossaryHtmlContent);
 }

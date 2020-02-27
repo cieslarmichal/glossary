@@ -6,8 +6,8 @@
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
 
-const std::string DictionaryReaderImpl::fileDirectory{"../../database"};
-const std::string DictionaryReaderImpl::fileName{"/translations.txt"};
+const std::string DictionaryReaderImpl::fileDirectory{"database/"};
+const std::string DictionaryReaderImpl::fileName{"translations.txt"};
 const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
 DictionaryReaderImpl::DictionaryReaderImpl(

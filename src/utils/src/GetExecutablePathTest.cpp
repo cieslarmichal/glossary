@@ -1,20 +1,19 @@
-#include "ProjectAbsolutePath.h"
-
-#include "gtest/gtest.h"
+#include "GetExecutablePath.h"
 #include "boost/algorithm/string/predicate.hpp"
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace utils;
 
-class ProjectAbsolutePathTest : public Test
+class GetExecutablePathTest : public Test
 {
 public:
-    const std::string projectName{"glossary/"};
+    const std::string utilsExecutableName{"utilsUT"};
 };
 
-TEST_F(ProjectAbsolutePathTest, shouldReturnAbsolutePathToProject)
+TEST_F(GetExecutablePathTest, shouldReturnAbsolutePathToProject)
 {
     const auto actualPath = getExecutablePath();
-    std::cerr<<actualPath;
-//    ASSERT_TRUE(boost::algorithm::ends_with(actualPath, projectName));
+
+    ASSERT_TRUE(boost::algorithm::ends_with(actualPath, utilsExecutableName));
 }

@@ -6,9 +6,9 @@
 
 namespace wordsDescriptionsDb
 {
-const std::string WordsDescriptionsPersistentStorage::directory{"../../database"};
+const std::string WordsDescriptionsPersistentStorage::directory{"database/"};
 const std::string WordsDescriptionsPersistentStorage::filename{
-    directory + "/wordsDescriptions.txt"};
+    directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,

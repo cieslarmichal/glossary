@@ -24,4 +24,4 @@ target_link_libraries(translationsDbUT PRIVATE gtest_main gmock utils translatio
 target_compile_options(translationsDb PUBLIC ${FLAGS})
 target_compile_options(translationsDbUT PUBLIC -Wall -Wextra -Werror)
 
-add_test(translationsDbUT ${EXECUTABLE_OUTPUT_PATH}/translationsDbUT --gtest_color=yes)
+add_test(translationsDbUT translationsDbUT --gtest_color=yes)

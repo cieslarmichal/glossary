@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "exceptions/FileNotFound.h"
+#include "GetProjectPath.h"
 
 namespace utils
 {
@@ -17,34 +18,45 @@ enum class Result
 };
 
 Result tryToWrite(std::ofstream& fileStream, const std::string& data);
-const std::string fileNotFoundMessage{"File not found: "};
+
+const std::string fileNotFoundMessage{"File not found "};
+const std::string fileNotFoundReadingMessage{fileNotFoundMessage + "while reading: "};
+const std::string fileNotFoundWritingMessage{fileNotFoundMessage + "while writing: "};
 }
 
-void FileAccessImpl::write(const std::string& path,
+FileAccessImpl::FileAccessImpl(const std::string& name) : projectPath{getProjectPath(name)}
+{
+}
+
+void FileAccessImpl::write(const std::string& relativePath,
                            const std::string& content) const
 {
-    std::ofstream fileStream{path};
+    const std::string absolutePath = getAbsolutePath(relativePath);
+    std::cerr<<absolutePath;
+    std::ofstream fileStream{absolutePath};
 
     if (tryToWrite(fileStream, content) == Result::Failure)
     {
-        throw exceptions::FileNotFound(fileNotFoundMessage + path);
+        throw exceptions::FileNotFound(fileNotFoundWritingMessage + absolutePath + "with project path: " + projectPath);
     }
 }
 
-void FileAccessImpl::append(const std::string& path,
+void FileAccessImpl::append(const std::string& relativePath,
                             const std::string& content) const
 {
-    std::ofstream fileStream{path, std::ofstream::app};
+    const std::string absolutePath = getAbsolutePath(relativePath);
+    std::ofstream fileStream{absolutePath, std::ofstream::app};
 
     if (tryToWrite(fileStream, content) == Result::Failure)
     {
-        throw exceptions::FileNotFound(fileNotFoundMessage + path);
+        throw exceptions::FileNotFound(fileNotFoundWritingMessage + absolutePath + "with project path: " + projectPath);
     }
 }
 
-std::string FileAccessImpl::readContent(const std::string& path) const
+std::string FileAccessImpl::readContent(const std::string& relativePath) const
 {
-    std::ifstream fileStream{path};
+    const std::string absolutePath = getAbsolutePath(relativePath);
+    std::ifstream fileStream{absolutePath};
     std::stringstream buffer;
 
     if (fileStream.is_open())
@@ -53,10 +65,15 @@ std::string FileAccessImpl::readContent(const std::string& path) const
     }
     else
     {
-        throw exceptions::FileNotFound(fileNotFoundMessage + path);
+        throw exceptions::FileNotFound(fileNotFoundReadingMessage + absolutePath + "with project path: " + projectPath);
     }
 
     return buffer.str();
+}
+
+std::string FileAccessImpl::getAbsolutePath(const std::string& relativePath) const
+{
+    return projectPath + relativePath;
 }
 
 namespace

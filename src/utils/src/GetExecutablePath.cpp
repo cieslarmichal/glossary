@@ -1,23 +1,14 @@
-#include "ProjectAbsolutePath.h"
-
-#include "exceptions/FileNotFound.h"
+#include "GetExecutablePath.h"
 
 #ifdef _WIN32
-#include <windows.h> //GetModuleFileNameW
+#include <windows.h>
 #else
 #include <limits.h>
-#include <unistd.h> //readlink
+#include <unistd.h>
 #endif
 
 namespace utils
 {
-
-namespace
-{
-const std::string projectName{"glossary/"};
-const std::string fileNotFoundMessage{"Project directory not found in path: "};
-}
-
 std::string getExecutablePath()
 {
 #ifdef _WIN32
@@ -29,15 +20,6 @@ std::string getExecutablePath()
     ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);
     return std::string(result, (count > 0) ? static_cast<unsigned long>(count) : 0);
 #endif
-//    const std::string currentPath = fs::current_path();
-//    std::cerr << currentPath;
-//    const auto projectNamePosition = currentPath.find(projectName);
-//    if (projectNamePosition == std::string::npos)
-//    {
-//        throw exceptions::FileNotFound{fileNotFoundMessage + currentPath};
-//    }
-//    return utils::substring(currentPath, 0,
-//                            projectNamePosition + projectName.length());
 }
 
 }

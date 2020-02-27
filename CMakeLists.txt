@@ -9,7 +9,6 @@ set(CMAKE_CXX_STANDARD 20)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -Wextra -Wconversion -Werror)
 
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR}/bin)
 set(GMOCK_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googlemock/include")
 set(GTEST_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googletest/include")
 set(JSON_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/json/include")

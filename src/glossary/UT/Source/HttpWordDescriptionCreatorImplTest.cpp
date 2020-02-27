@@ -8,6 +8,7 @@
 #include "gtest/gtest.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "testVariables/WordDescriptionFromParser.h"
+#include "testVariables/HtmlContent.h"
 #include "utils/FileAccessImpl.h"
 
 using namespace ::testing;
@@ -17,9 +18,6 @@ namespace
 const std::string urlAddress{
     "https://www.merriam-webster.com/dictionary/fetch"};
 const wordsDescriptionsDb::EnglishWord englishWord{"fetch"};
-const std::string htmlContentFilePath{
-    "../../src/glossary/UT/testFiles/HtmlContent.txt"};
-
 const WordDescription expectedWordDescription{englishWord,
                                               wordDescriptionFromParser};
 const webConnection::Response emptyHtmlResponse{};
@@ -29,12 +27,6 @@ const std::vector<std::string> emptyParsedHtmlContent{};
 class HttpWordDescriptionCreatorImplTest : public Test
 {
 public:
-    std::string prepareHtmlContent()
-    {
-        const utils::FileAccessImpl fileAccess{};
-        return fileAccess.readContent(htmlContentFilePath);
-    }
-
     std::unique_ptr<webConnection::HttpHandlerMock> httpHandlerInit =
         std::make_unique<StrictMock<webConnection::HttpHandlerMock>>();
     webConnection::HttpHandlerMock* httpHandler = httpHandlerInit.get();
@@ -67,7 +59,6 @@ TEST_F(HttpWordDescriptionCreatorImplTest,
 TEST_F(HttpWordDescriptionCreatorImplTest,
        givenWordWithTranslation_shouldCreateWordDescription)
 {
-    const auto htmlContent = prepareHtmlContent();
     webConnection::Response response{200, htmlContent};
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(response));
     EXPECT_CALL(*glossaryParser, parse(htmlContent))

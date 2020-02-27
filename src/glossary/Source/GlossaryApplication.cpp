@@ -25,7 +25,7 @@ GlossaryApplication::GlossaryApplication()
 void GlossaryApplication::initialize()
 {
     std::shared_ptr<const utils::FileAccess> fileAccess =
-        std::make_shared<const utils::FileAccessImpl>();
+        std::make_shared<const utils::FileAccessImpl>("glossary");
 
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
     dictionary = dictionaryReader->read();

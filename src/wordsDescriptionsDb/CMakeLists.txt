@@ -21,10 +21,10 @@ target_include_directories(wordsDescriptionsDb PUBLIC "include" PRIVATE ${JSON_I
 target_include_directories(wordsDescriptionsDbUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/wordsDescriptionsDb")
 
 target_link_libraries(wordsDescriptionsDb PRIVATE utils)
-target_link_libraries(wordsDescriptionsDbUT PRIVATE gtest_main gmock utils wordsDescriptionsDb)
+target_link_libraries(wordsDescriptionsDbUT PRIVATE gtest_main gmock wordsDescriptionsDb utils)
 
 target_compile_options(wordsDescriptionsDb PUBLIC ${FLAGS})
 target_compile_options(wordsDescriptionsDbUT PUBLIC -Wall -Wextra -Werror)
 
-add_test(wordsDescriptionsDbUT ${EXECUTABLE_OUTPUT_PATH}/wordsDescriptionsDbUT --gtest_color=yes)
+add_test(wordsDescriptionsDbUT wordsDescriptionsDbUT --gtest_color=yes)
 

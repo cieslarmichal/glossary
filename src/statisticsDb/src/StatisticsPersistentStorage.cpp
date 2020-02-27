@@ -7,9 +7,9 @@
 namespace statisticsDb
 {
 
-const std::string StatisticsPersistentStorage::directory{"../../database"};
+const std::string StatisticsPersistentStorage::directory{"database/"};
 const std::string StatisticsPersistentStorage::filename{directory +
-                                                        "/statistics.txt"};
+                                                        "statistics.txt"};
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,

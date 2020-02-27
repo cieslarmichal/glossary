@@ -14,19 +14,18 @@ const std::string textToAppend{
     "\nand this text should be written\nby append method"};
 const std::string textAfterWriteAndAppend{textToWrite + textToAppend};
 const std::string correctPathForWriting =
-    "../../src/utils/src/testFiles/testFileForWriting.txt";
+    "/src/utils/src/testFiles/testFileForWriting.txt";
 const std::string correctPathForReading =
-    "../../src/utils/src/testFiles/testFileForReading.txt";
+    "src/utils/src/testFiles/testFileForReading.txt";
 const std::string incorrectPath = "433\\UTzxxxx/fi123xtF";
 const std::string exampleContent{
     "this is example file created\nin order to check readContent\nmethod"};
-
 }
 
 class FileAccessImplTest : public Test
 {
 public:
-    FileAccessImpl fileAccess;
+    FileAccessImpl fileAccess{"glossary"};
 };
 
 TEST_F(FileAccessImplTest, givenCorrectPath_shouldWriteToFile)

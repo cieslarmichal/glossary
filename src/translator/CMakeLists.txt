@@ -22,4 +22,4 @@ target_link_libraries(translatorUT PRIVATE gtest_main gmock utils webConnection 
 target_compile_options(translator PUBLIC ${FLAGS})
 target_compile_options(translatorUT PUBLIC -Wall -Wextra -Werror)
 
-add_test(translatorUT ${EXECUTABLE_OUTPUT_PATH}/translatorUT --gtest_color=yes)
+add_test(translatorUT translatorUT --gtest_color=yes)
