@@ -3,7 +3,7 @@ cmake_minimum_required( VERSION 3.12.1 )
 set( PROJECT_NAME glossary  )
 project( ${PROJECT_NAME} )
 
-enable_testing()
+add_subdirectory(externals)
 
 set(CMAKE_CXX_STANDARD 20)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
@@ -13,8 +13,9 @@ set(GMOCK_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googlemock/inclu
 set(GTEST_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googletest/include")
 set(JSON_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/json/include")
 set(CURL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/curl/include/curl")
+set(PLOG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/plog/include")
 
-add_subdirectory(externals)
+enable_testing()
 
 option(ENABLE_COVERAGE "Enable coverage reporting for gcc/clang" FALSE)
 

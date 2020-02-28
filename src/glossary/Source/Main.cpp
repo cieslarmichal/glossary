@@ -1,9 +1,14 @@
-#include "Glossary.h"
-#include "glog/logging.h"
+#include "plog/Log.h"
 
-int main(int argc, char* argv[])
+#include "Glossary.h"
+#include "utils/GetProjectPath.h"
+
+int main(int, char**)
 {
-    google::InitGoogleLogging(argv[0]);
+    const auto logFilepath{utils::getProjectPath("glossary") + "glossary_logs"};
+    plog::init(plog::debug, "Sample.log");
+
+    LOG_DEBUG << "Hello log!";
 
     Glossary app;
     app.run();

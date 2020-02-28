@@ -1,91 +1,63 @@
----
-Language:        Cpp
-# BasedOnStyle:  LLVM
 AccessModifierOffset: -4
-AlignAfterOpenBracket: Align
-AlignConsecutiveAssignments: false
-AlignConsecutiveDeclarations: false
-AlignEscapedNewlinesLeft: false
-AlignOperands:   true
+AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
-AllowShortBlocksOnASingleLine: false
-AllowShortCaseLabelsOnASingleLine: true
-AllowShortFunctionsOnASingleLine: false
+AllowShortFunctionsOnASingleLine: Empty
 AllowShortIfStatementsOnASingleLine: false
 AllowShortLoopsOnASingleLine: false
-AlwaysBreakAfterDefinitionReturnType: None
-AlwaysBreakAfterReturnType: None
 AlwaysBreakBeforeMultilineStrings: false
 AlwaysBreakTemplateDeclarations: true
 BinPackArguments: true
 BinPackParameters: true
-BreakBeforeBinaryOperators: None
+BreakBeforeBinaryOperators: false
 BreakBeforeBraces: Allman
-BreakBeforeTernaryOperators: true
+BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: false
-ColumnLimit:     80
-CommentPragmas:  '^ IWYU pragma:'
-ConstructorInitializerAllOnOneLineOrOnePerLine: false
+ColumnLimit: 110
+CommentPragmas: ''
+ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
-DerivePointerAlignment: false
-DisableFormat:   false
-ExperimentalAutoDetectBinPacking: false
+DerivePointerBinding: false
+PointerAlignment: Left
 FixNamespaceComments: false
-ForEachMacros:   [ foreach, Q_FOREACH, BOOST_FOREACH ]
-IncludeBlocks: Regroup
-IncludeCategories: 
-  - Regex:           '^"(SFML)/'
-    Priority:        3
-  - Regex:           '^"(llvm|llvm-c|clang|clang-c)/'
-    Priority:        2
-  - Regex:           '^(<|"(gtest|isl|json)/)'
-    Priority:        1
-  - Regex:           '.*'
-    Priority:        10 
+ForEachMacros: [ BOOST_FOREACH ]
 IndentCaseLabels: false
-IndentWidth:     4
-IndentWrappedFunctionNames: false
-KeepEmptyLinesAtTheStartOfBlocks: true
-MacroBlockBegin: ''
-MacroBlockEnd:   ''
+IndentFunctionDeclarationAfterType: false
+IndentWidth: 4
+Language: Cpp
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
-ObjCBlockIndentWidth: 2
-ObjCSpaceAfterProperty: false
+ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: true
-PenaltyBreakBeforeFirstCallParameter: 19
-PenaltyBreakComment: 300
-PenaltyBreakFirstLessLess: 120
-PenaltyBreakString: 1000
-PenaltyExcessCharacter: 1000000
-PenaltyReturnTypeOnItsOwnLine: 60
-PointerAlignment: Left
-ReflowComments:  true
-SortIncludes:    true
-IncludeBlocks: Regroup
-IncludeCategories:
-  - Regex:           '^<(gtest|gmock|boost|SFML)/'
-    Priority:        2
-  - Regex:           '<.+>'
-    Priority:        1
-  - Regex:           '^".*mock.h'
-    Priority:        3
-  - Regex:           '".+"'
-    Priority:        10
-SpaceAfterCStyleCast: false
+#PenaltyBreakBeforeFirstCallParameter: 100
+#PenaltyBreakComment: 100
+#PenaltyBreakFirstLessLess: 0
+#PenaltyBreakString: 100
+#PenaltyExcessCharacter: 1
+#PenaltyReturnTypeOnItsOwnLine: 20
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
 SpacesBeforeTrailingComments: 1
-SpacesInAngles:  false
-SpacesInContainerLiterals: true
+SpacesInAngles: false
 SpacesInCStyleCastParentheses: false
+SpacesInContainerLiterals: false
 SpacesInParentheses: false
-SpacesInSquareBrackets: false
-Standard:        Cpp11
-TabWidth:        4
-UseTab:          Never
-...
+Standard: Cpp11
+TabWidth: 4
+UseTab: Never
+SortIncludes: true
+IncludeBlocks: Regroup
+IncludeCategories:
+  - Regex:           '<.+>'
+    Priority:        1
+  - Regex:           '^"(gtest|gmock|boost|nlohmann|curl|plog)/'
+    Priority:        2
+  - Regex:           '^"Aa'
+    Priority:        3
+  - Regex:           '^".*Mock.h'
+    Priority:        4
+  - Regex:           '".+"'
+    Priority:        10
