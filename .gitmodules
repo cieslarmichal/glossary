@@ -7,3 +7,9 @@
 [submodule "curl"]
 	path = externals/curl
 	url = https://github.com/curl/curl.git
+[submodule "glog"]
+	path = externals/glog
+	url = https://github.com/google/glog.git
+[submodule "gflags"]
+	path = externals/gflags
+	url = https://github.com/gflags/gflags.git
