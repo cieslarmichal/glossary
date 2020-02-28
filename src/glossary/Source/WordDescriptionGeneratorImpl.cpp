@@ -19,10 +19,11 @@ WordDescriptionGeneratorImpl::generateWordsDescriptions(const EnglishWords& engl
     for (const auto& englishWord : englishWords)
     {
         wordsDescriptions.emplace_back(generateWordDescription(englishWord));
-        LOG_INFO << "Generating wordsDescriptions " << ++wordDescriptionCounter << "/"
-                  << englishWords.size() << "\n";
-        std::cout << "Generating wordsDescriptions " << wordDescriptionCounter << "/"
-                 << englishWords.size() << "\n";
+        wordDescriptionCounter++;
+        LOG_INFO << "Generating wordsDescriptions " << wordDescriptionCounter << "/" << englishWords.size()
+                 << "\n";
+        std::cout << "Generating wordsDescriptions " << wordDescriptionCounter << "/" << englishWords.size()
+                  << "\n";
     }
     return wordsDescriptions;
 }
