@@ -10,8 +10,7 @@ namespace
 constexpr auto translationField = "text";
 }
 
-TranslatedText
-TranslationDeserializerImpl::deserialize(const std::string& jsonText) const
+TranslatedText TranslationDeserializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
     {
@@ -30,8 +29,7 @@ TranslationDeserializerImpl::deserialize(const std::string& jsonText) const
     return {};
 }
 
-TranslatedText
-TranslationDeserializerImpl::readTranslation(const nlohmann::json& json) const
+TranslatedText TranslationDeserializerImpl::readTranslation(const nlohmann::json& json) const
 {
     TranslatedText translatedText;
     if (json.find(translationField) != json.end())

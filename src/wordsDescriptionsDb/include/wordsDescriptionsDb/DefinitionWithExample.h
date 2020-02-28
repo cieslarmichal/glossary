@@ -1,8 +1,9 @@
 #pragma once
 
+#include "boost/optional.hpp"
+
 #include "Definition.h"
 #include "Example.h"
-#include "boost/optional.hpp"
 #include "utils/StringHelper.h"
 
 namespace wordsDescriptionsDb
@@ -30,14 +31,12 @@ struct DefinitionWithExample
 
 using DefinitionsWithExamples = std::vector<DefinitionWithExample>;
 
-inline bool operator==(const DefinitionWithExample& lhs,
-                       const DefinitionWithExample& rhs)
+inline bool operator==(const DefinitionWithExample& lhs, const DefinitionWithExample& rhs)
 {
     return (lhs.definition == rhs.definition && lhs.example == rhs.example);
 }
 
-inline std::ostream&
-operator<<(std::ostream& os, const DefinitionWithExample& definitionWithExample)
+inline std::ostream& operator<<(std::ostream& os, const DefinitionWithExample& definitionWithExample)
 {
     os << definitionWithExample.toString();
     return os;
@@ -47,9 +46,7 @@ inline DefinitionWithExample toDefinitionWithExample(const std::string& text)
 {
     auto separatorIndex = text.find(separator);
 
-    auto exampleExists = [separatorIndex]() {
-        return separatorIndex != std::string::npos;
-    };
+    auto exampleExists = [separatorIndex]() { return separatorIndex != std::string::npos; };
 
     if (exampleExists())
     {

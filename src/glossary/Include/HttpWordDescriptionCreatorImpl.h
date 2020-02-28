@@ -11,15 +11,14 @@
 class HttpWordDescriptionCreatorImpl : public HttpWordDescriptionCreator
 {
 public:
-    HttpWordDescriptionCreatorImpl(
-        std::shared_ptr<const webConnection::HttpHandler>,
-        std::unique_ptr<const GlossaryHtmlParser>,
-        std::unique_ptr<const DescriptionParser>);
+    HttpWordDescriptionCreatorImpl(std::shared_ptr<const webConnection::HttpHandler>,
+                                   std::unique_ptr<const GlossaryHtmlParser>,
+                                   std::unique_ptr<const DescriptionParser>);
 
-    boost::optional<wordsDescriptionsDb::WordDescription> createWordDescription(
-        const wordsDescriptionsDb::EnglishWord&) const override;
-    wordsDescriptionsDb::WordsDescriptions createWordsDescriptions(
-        const wordsDescriptionsDb::EnglishWords&) const override;
+    boost::optional<wordsDescriptionsDb::WordDescription>
+    createWordDescription(const wordsDescriptionsDb::EnglishWord&) const override;
+    wordsDescriptionsDb::WordsDescriptions
+    createWordsDescriptions(const wordsDescriptionsDb::EnglishWords&) const override;
 
 private:
     boost::optional<std::string> getHttpContent(const EnglishWord&) const;

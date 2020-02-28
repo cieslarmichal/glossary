@@ -1,8 +1,9 @@
 #include "DictionaryReaderImpl.h"
 
+#include "gtest/gtest.h"
+
 #include "utils/FileAccessMock.h"
 
-#include "gtest/gtest.h"
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
@@ -23,25 +24,21 @@ const Dictionary expectedDictionary{{"samochod", "car"}, {"powietrze", "air"}};
 class DictionaryReaderImplTest : public Test
 {
 public:
-    std::shared_ptr<FileAccessMock> fileAccess =
-        std::make_shared<StrictMock<FileAccessMock>>();
+    std::shared_ptr<FileAccessMock> fileAccess = std::make_shared<StrictMock<FileAccessMock>>();
     DictionaryReaderImpl reader{fileAccess};
 };
 
-TEST_F(DictionaryReaderImplTest,
-       givenEmptyDictionaryContent_shouldReturnEmptyDictionary)
+TEST_F(DictionaryReaderImplTest, givenEmptyDictionaryContent_shouldReturnEmptyDictionary)
 {
-    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
-        .WillOnce(Return(emptyContent));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(emptyContent));
 
     const auto dictionary = reader.read();
 
     EXPECT_TRUE(dictionary.empty());
 }
 
-TEST_F(
-    DictionaryReaderImplTest,
-    givenyDictionaryContentWithTwoWordsAndOneOfThemIsIncorrect_shouldReturnDictWithOneWord)
+TEST_F(DictionaryReaderImplTest,
+       givenyDictionaryContentWithTwoWordsAndOneOfThemIsIncorrect_shouldReturnDictWithOneWord)
 {
     EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
         .WillOnce(Return(contentWithTwoWordsAndOneIncorrect));
@@ -53,8 +50,7 @@ TEST_F(
 
 TEST_F(DictionaryReaderImplTest, givenDictionaryContent_shouldReadDictionary)
 {
-    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath))
-        .WillOnce(Return(content));
+    EXPECT_CALL(*fileAccess, readContent(dictionaryFilePath)).WillOnce(Return(content));
 
     const auto actualDictionary = reader.read();
 

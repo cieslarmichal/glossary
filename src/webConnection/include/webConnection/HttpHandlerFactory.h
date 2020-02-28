@@ -11,10 +11,8 @@ class HttpHandlerFactory
 public:
     virtual ~HttpHandlerFactory() = default;
 
-    virtual std::unique_ptr<HttpHandler>
-    createHttpHandler() const = 0;
+    virtual std::unique_ptr<HttpHandler> createHttpHandler() const = 0;
 
-    static std::unique_ptr<HttpHandlerFactory>
-    createHttpHandlerFactory();
+    static std::unique_ptr<HttpHandlerFactory> createHttpHandlerFactory();
 };
 }

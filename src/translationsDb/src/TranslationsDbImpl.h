@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "TranslationsStorage.h"
 #include "TranslationsDb.h"
+#include "TranslationsStorage.h"
 
 namespace translationsDb
 {
@@ -13,8 +13,7 @@ public:
     explicit TranslationsDbImpl(std::unique_ptr<TranslationsStorage>);
 
     void addTranslation(Translation) override;
-    boost::optional<Translation>
-    getTranslation(const SourceText&) const override;
+    boost::optional<Translation> getTranslation(const SourceText&) const override;
     Translations getTranslations() const override;
 
 private:

@@ -11,6 +11,6 @@ public:
     virtual wordsDescriptionsDb::WordDescription
     generateWordDescription(const wordsDescriptionsDb::EnglishWord&) const = 0;
     // TODO: generateWords with multiple threads
-    virtual wordsDescriptionsDb::WordsDescriptions generateWordsDescriptions(
-        const wordsDescriptionsDb::EnglishWords&) const = 0;
+    virtual wordsDescriptionsDb::WordsDescriptions
+    generateWordsDescriptions(const wordsDescriptionsDb::EnglishWords&) const = 0;
 };

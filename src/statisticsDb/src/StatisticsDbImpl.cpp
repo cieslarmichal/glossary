@@ -3,14 +3,12 @@
 namespace statisticsDb
 {
 
-StatisticsDbImpl::StatisticsDbImpl(
-    std::unique_ptr<StatisticsStorage> storageInit)
+StatisticsDbImpl::StatisticsDbImpl(std::unique_ptr<StatisticsStorage> storageInit)
     : storage{std::move(storageInit)}
 {
 }
 
-boost::optional<WordStatistics>
-StatisticsDbImpl::getWordStatistics(const EnglishWord& englishWord) const
+boost::optional<WordStatistics> StatisticsDbImpl::getWordStatistics(const EnglishWord& englishWord) const
 {
     return storage->getWordStatistics(englishWord);
 }
@@ -48,8 +46,7 @@ void StatisticsDbImpl::resetStatistics()
     storage->resetStatistics();
 }
 
-void StatisticsDbImpl::addEmptyWordStatistics(
-    const EnglishWord& englishWord) const
+void StatisticsDbImpl::addEmptyWordStatistics(const EnglishWord& englishWord) const
 {
     storage->addWordStatistics(WordStatistics{englishWord, 0, 0});
 }

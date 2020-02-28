@@ -6,8 +6,7 @@ namespace translationsDb
 static auto& getWordStatisticsByPosition(const Translations& translations,
                                          Translations::const_iterator position)
 {
-    const auto distance =
-        Translations::size_type(std::distance(translations.cbegin(), position));
+    const auto distance = Translations::size_type(std::distance(translations.cbegin(), position));
     return translations.at(distance);
 }
 
@@ -19,8 +18,7 @@ void TranslationsMemoryStorage::addTranslation(Translation translation)
     }
 }
 
-boost::optional<Translation>
-TranslationsMemoryStorage::getTranslation(const SourceText& polishWord) const
+boost::optional<Translation> TranslationsMemoryStorage::getTranslation(const SourceText& polishWord) const
 {
     auto translationPosition = findTranslationPosition(polishWord);
     if (translationPosition != translations.end())
@@ -60,13 +58,12 @@ Translations::const_iterator TranslationsMemoryStorage::end() const
     return translations.end();
 }
 
-Translations::const_iterator TranslationsMemoryStorage::findTranslationPosition(
-    const SourceText& wordToFind) const
+Translations::const_iterator
+TranslationsMemoryStorage::findTranslationPosition(const SourceText& wordToFind) const
 {
-    return std::find_if(translations.begin(), translations.end(),
-                        [wordToFind](const Translation& translation) {
-                            return translation.sourceText == wordToFind;
-                        });
+    return std::find_if(
+        translations.begin(), translations.end(),
+        [wordToFind](const Translation& translation) { return translation.sourceText == wordToFind; });
 }
 
 }

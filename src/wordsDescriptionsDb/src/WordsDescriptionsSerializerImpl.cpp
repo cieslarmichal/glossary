@@ -13,14 +13,12 @@ constexpr auto descriptionField = "description";
 
 namespace wordsDescriptionsDb
 {
-std::string WordsDescriptionsSerializerImpl::serialize(
-    const WordsDescriptions& descriptions) const
+std::string WordsDescriptionsSerializerImpl::serialize(const WordsDescriptions& descriptions) const
 {
     nlohmann::json serialized;
     for (const auto& wordDescription : descriptions)
     {
-        serialized[wordsDescriptionsField].push_back(
-            getJsonFromWordDescription(wordDescription));
+        serialized[wordsDescriptionsField].push_back(getJsonFromWordDescription(wordDescription));
     }
     if (serialized.empty())
     {
@@ -29,8 +27,7 @@ std::string WordsDescriptionsSerializerImpl::serialize(
     return serialized.dump();
 }
 
-WordsDescriptions
-WordsDescriptionsSerializerImpl::deserialize(const std::string& jsonText) const
+WordsDescriptions WordsDescriptionsSerializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
     {
@@ -49,18 +46,16 @@ WordsDescriptionsSerializerImpl::deserialize(const std::string& jsonText) const
     return {};
 }
 
-nlohmann::json WordsDescriptionsSerializerImpl::getJsonFromWordDescription(
-    const WordDescription& wordDescription) const
+nlohmann::json
+WordsDescriptionsSerializerImpl::getJsonFromWordDescription(const WordDescription& wordDescription) const
 {
     nlohmann::json val = nlohmann::json::object();
     val[englishWordField] = wordDescription.englishWord;
-    val[descriptionField] =
-        wordDescriptionSerializer.serialize(wordDescription.description);
+    val[descriptionField] = wordDescriptionSerializer.serialize(wordDescription.description);
     return val;
 }
 
-WordsDescriptions WordsDescriptionsSerializerImpl::readWordsDescriptions(
-    const nlohmann::json& json) const
+WordsDescriptions WordsDescriptionsSerializerImpl::readWordsDescriptions(const nlohmann::json& json) const
 {
     if (json.find(wordsDescriptionsField) != json.end())
     {
@@ -70,8 +65,8 @@ WordsDescriptions WordsDescriptionsSerializerImpl::readWordsDescriptions(
     return {};
 }
 
-WordsDescriptions WordsDescriptionsSerializerImpl::parseWordsDescriptions(
-    const nlohmann::json& wordsDescriptionsJson) const
+WordsDescriptions
+WordsDescriptionsSerializerImpl::parseWordsDescriptions(const nlohmann::json& wordsDescriptionsJson) const
 {
     WordsDescriptions wordsDescriptions;
     for (const auto& wordDescriptionData : wordsDescriptionsJson)
@@ -79,11 +74,9 @@ WordsDescriptions WordsDescriptionsSerializerImpl::parseWordsDescriptions(
         if (isWordDescriptionValid(wordDescriptionData))
         {
             const Description wordDescription{
-                wordDescriptionSerializer.deserialize(
-                    wordDescriptionData[descriptionField])};
+                wordDescriptionSerializer.deserialize(wordDescriptionData[descriptionField])};
             wordsDescriptions.push_back(
-                {std::string{wordDescriptionData[englishWordField]},
-                 wordDescription});
+                {std::string{wordDescriptionData[englishWordField]}, wordDescription});
         }
         else
         {
@@ -93,15 +86,12 @@ WordsDescriptions WordsDescriptionsSerializerImpl::parseWordsDescriptions(
     return wordsDescriptions;
 }
 
-bool WordsDescriptionsSerializerImpl::isWordDescriptionValid(
-    const nlohmann::json& wordDescriptionData) const
+bool WordsDescriptionsSerializerImpl::isWordDescriptionValid(const nlohmann::json& wordDescriptionData) const
 {
     const auto requiredFields = {englishWordField, descriptionField};
-    auto wordInvalid =
-        boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
-            return wordDescriptionData.find(fieldName) ==
-                   wordDescriptionData.end();
-        });
+    auto wordInvalid = boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
+        return wordDescriptionData.find(fieldName) == wordDescriptionData.end();
+    });
     return !wordInvalid;
 }
 }

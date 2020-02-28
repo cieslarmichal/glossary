@@ -15,8 +15,7 @@ constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
 constexpr auto sentencesField = "sentences";
 }
 
-nlohmann::json
-DescriptionSerializer::serialize(const Description& description) const
+nlohmann::json DescriptionSerializer::serialize(const Description& description) const
 {
     return getJsonFromDescription(description);
 }
@@ -58,11 +57,9 @@ Description readDescription(const nlohmann::json& jsonText)
 
     if (jsonText.find(definitionsWithExamplesField) != jsonText.end())
     {
-        for (const auto& definitionWithExample :
-             jsonText[definitionsWithExamplesField])
+        for (const auto& definitionWithExample : jsonText[definitionsWithExamplesField])
         {
-            definitionsWithExamples.push_back(
-                toDefinitionWithExample(definitionWithExample));
+            definitionsWithExamples.push_back(toDefinitionWithExample(definitionWithExample));
         }
     }
 

@@ -3,19 +3,15 @@
 namespace statisticsDb
 {
 
-static auto& getWordStatisticsByPosition(Statistics& statistics,
-                                         Statistics::const_iterator position)
+static auto& getWordStatisticsByPosition(Statistics& statistics, Statistics::const_iterator position)
 {
-    const auto distance =
-        Statistics::size_type(std::distance(statistics.cbegin(), position));
+    const auto distance = Statistics::size_type(std::distance(statistics.cbegin(), position));
     return statistics.at(distance);
 }
 
-static auto& getWordStatisticsByPosition(const Statistics& statistics,
-                                         Statistics::const_iterator position)
+static auto& getWordStatisticsByPosition(const Statistics& statistics, Statistics::const_iterator position)
 {
-    const auto distance =
-        Statistics::size_type(std::distance(statistics.cbegin(), position));
+    const auto distance = Statistics::size_type(std::distance(statistics.cbegin(), position));
     return statistics.at(distance);
 }
 
@@ -96,13 +92,12 @@ Statistics::const_iterator StatisticsMemoryStorage::end() const
     return statistics.end();
 }
 
-Statistics::const_iterator StatisticsMemoryStorage::findWordStatisticsPosition(
-    const EnglishWord& wordToFind) const
+Statistics::const_iterator
+StatisticsMemoryStorage::findWordStatisticsPosition(const EnglishWord& wordToFind) const
 {
-    return std::find_if(statistics.begin(), statistics.end(),
-                        [wordToFind](const WordStatistics& stats) {
-                            return stats.englishWord == wordToFind;
-                        });
+    return std::find_if(statistics.begin(), statistics.end(), [wordToFind](const WordStatistics& stats) {
+        return stats.englishWord == wordToFind;
+    });
 }
 
 }

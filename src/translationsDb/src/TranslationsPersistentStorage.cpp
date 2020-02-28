@@ -8,14 +8,12 @@ namespace translationsDb
 {
 
 const std::string TranslationsPersistentStorage::directory{"database/"};
-const std::string TranslationsPersistentStorage::filename{directory +
-                                                          "translations.txt"};
+const std::string TranslationsPersistentStorage::filename{directory + "translations.txt"};
 
 TranslationsPersistentStorage::TranslationsPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,
     std::shared_ptr<const TranslationsSerializer> serializerInit)
-    : fileAccess{std::move(fileAccessInit)}, serializer{
-                                                 std::move(serializerInit)}
+    : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
     loadFile();
 }
@@ -29,8 +27,7 @@ void TranslationsPersistentStorage::addTranslation(Translation translation)
     }
 }
 
-boost::optional<Translation> TranslationsPersistentStorage::getTranslation(
-    const SourceText& polishWord) const
+boost::optional<Translation> TranslationsPersistentStorage::getTranslation(const SourceText& polishWord) const
 {
     return storage.getTranslation(polishWord);
 }
@@ -70,8 +67,7 @@ void TranslationsPersistentStorage::loadFile()
     Translations translations;
     try
     {
-        translations =
-            serializer->deserialize(fileAccess->readContent(filename));
+        translations = serializer->deserialize(fileAccess->readContent(filename));
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
@@ -89,8 +85,7 @@ void TranslationsPersistentStorage::serialize() const
 {
     try
     {
-        fileAccess->write(filename,
-                          serializer->serialize(storage.getTranslations()));
+        fileAccess->write(filename, serializer->serialize(storage.getTranslations()));
     }
     catch (const utils::exceptions::FileNotFound& e)
     {

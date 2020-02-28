@@ -8,20 +8,18 @@ namespace statisticsDb
 {
 
 const std::string StatisticsPersistentStorage::directory{"database/"};
-const std::string StatisticsPersistentStorage::filename{directory +
-                                                        "statistics.txt"};
+const std::string StatisticsPersistentStorage::filename{directory + "statistics.txt"};
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,
     std::shared_ptr<const StatisticsSerializer> serializerInit)
-    : fileAccess{std::move(fileAccessInit)}, serializer{
-                                                 std::move(serializerInit)}
+    : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
     loadFile();
 }
 
-boost::optional<WordStatistics> StatisticsPersistentStorage::getWordStatistics(
-    const EnglishWord& englishWord) const
+boost::optional<WordStatistics>
+StatisticsPersistentStorage::getWordStatistics(const EnglishWord& englishWord) const
 {
     return storage.getWordStatistics(englishWord);
 }
@@ -31,8 +29,7 @@ Statistics StatisticsPersistentStorage::getStatistics() const
     return storage.getStatistics();
 }
 
-void StatisticsPersistentStorage::addWordStatistics(
-    WordStatistics wordStatistics)
+void StatisticsPersistentStorage::addWordStatistics(WordStatistics wordStatistics)
 {
     if (not storage.contains(wordStatistics.englishWord))
     {
@@ -41,15 +38,13 @@ void StatisticsPersistentStorage::addWordStatistics(
     }
 }
 
-void StatisticsPersistentStorage::addCorrectAnswer(
-    const EnglishWord& englishWord)
+void StatisticsPersistentStorage::addCorrectAnswer(const EnglishWord& englishWord)
 {
     storage.addCorrectAnswer(englishWord);
     serialize();
 }
 
-void StatisticsPersistentStorage::addIncorrectAnswer(
-    const EnglishWord& englishWord)
+void StatisticsPersistentStorage::addIncorrectAnswer(const EnglishWord& englishWord)
 {
     storage.addIncorrectAnswer(englishWord);
     serialize();
@@ -109,8 +104,7 @@ void StatisticsPersistentStorage::serialize() const
 {
     try
     {
-        fileAccess->write(filename,
-                          serializer->serialize(storage.getStatistics()));
+        fileAccess->write(filename, serializer->serialize(storage.getStatistics()));
     }
     catch (const utils::exceptions::FileNotFound& e)
     {

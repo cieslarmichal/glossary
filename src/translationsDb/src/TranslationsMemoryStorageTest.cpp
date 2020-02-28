@@ -22,8 +22,7 @@ public:
     TranslationsMemoryStorage storage;
 };
 
-TEST_F(TranslationsMemoryStorageTest,
-       givenTranslationNotExistingInStorage_shouldAddTranslation)
+TEST_F(TranslationsMemoryStorageTest, givenTranslationNotExistingInStorage_shouldAddTranslation)
 {
     ASSERT_TRUE(storage.empty());
 
@@ -33,8 +32,7 @@ TEST_F(TranslationsMemoryStorageTest,
     ASSERT_EQ(storage.size(), 1);
 }
 
-TEST_F(TranslationsMemoryStorageTest,
-       givenTranslationExistingInStorage_shouldNotAddTranslation)
+TEST_F(TranslationsMemoryStorageTest, givenTranslationExistingInStorage_shouldNotAddTranslation)
 {
     storage.addTranslation(translation1);
     storage.addTranslation(translation1);
@@ -42,8 +40,7 @@ TEST_F(TranslationsMemoryStorageTest,
     ASSERT_EQ(storage.size(), 1);
 }
 
-TEST_F(TranslationsMemoryStorageTest,
-       givenTwoTranslations_shouldReturnTranslations)
+TEST_F(TranslationsMemoryStorageTest, givenTwoTranslations_shouldReturnTranslations)
 {
     storage.addTranslation(translation1);
     storage.addTranslation(translation2);
@@ -53,8 +50,7 @@ TEST_F(TranslationsMemoryStorageTest,
     ASSERT_EQ(actualTranslations, translations);
 }
 
-TEST_F(TranslationsMemoryStorageTest,
-       givenExistingInStoragePolishWordsTranslation_shouldReturnTranslation)
+TEST_F(TranslationsMemoryStorageTest, givenExistingInStoragePolishWordsTranslation_shouldReturnTranslation)
 {
     storage.addTranslation(translation1);
 
@@ -63,22 +59,19 @@ TEST_F(TranslationsMemoryStorageTest,
     ASSERT_EQ(*actualTranslation, translation1);
 }
 
-TEST_F(TranslationsMemoryStorageTest,
-       givenNonExistingInStoragePolishWordsTranslation_shouldReturnNone)
+TEST_F(TranslationsMemoryStorageTest, givenNonExistingInStoragePolishWordsTranslation_shouldReturnNone)
 {
     const auto actualTranslation = storage.getTranslation(polishWord1);
 
     ASSERT_EQ(actualTranslation, boost::none);
 }
 
-TEST_F(TranslationsMemoryStorageTest,
-       givenTwoTranslations_shouldReturnTwoElementsBasingOnBeginEnd)
+TEST_F(TranslationsMemoryStorageTest, givenTwoTranslations_shouldReturnTwoElementsBasingOnBeginEnd)
 {
     storage.addTranslation(translation1);
     storage.addTranslation(translation2);
 
-    const auto amountOfTranslations =
-        std::distance(storage.begin(), storage.end());
+    const auto amountOfTranslations = std::distance(storage.begin(), storage.end());
 
     ASSERT_EQ(amountOfTranslations, 2);
 }

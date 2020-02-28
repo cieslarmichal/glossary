@@ -1,6 +1,8 @@
 #include "GetProjectPath.h"
+
 #include "boost/algorithm/string/predicate.hpp"
 #include "gtest/gtest.h"
+
 #include "exceptions/FileNotFound.h"
 
 using namespace ::testing;

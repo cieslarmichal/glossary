@@ -3,7 +3,7 @@
 class Application
 {
 public:
-    //change names with Impl in it
+    // change names with Impl in it
     virtual ~Application() = default;
 
     virtual void run() = 0;

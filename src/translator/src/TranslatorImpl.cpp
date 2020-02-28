@@ -11,23 +11,20 @@ namespace
 constexpr int successCode = 200;
 }
 
-TranslatorImpl::TranslatorImpl(
-    std::shared_ptr<webConnection::HttpHandler> handler,
-    std::unique_ptr<TranslationDeserializer> deserializer,
-    std::unique_ptr<TranslationRequestFormatter> formatter)
+TranslatorImpl::TranslatorImpl(std::shared_ptr<webConnection::HttpHandler> handler,
+                               std::unique_ptr<TranslationDeserializer> deserializer,
+                               std::unique_ptr<TranslationRequestFormatter> formatter)
     : httpHandler{std::move(handler)},
-      translationDeserializer{std::move(deserializer)}, requestFormatter{
-                                                           std::move(formatter)}
+      translationDeserializer{std::move(deserializer)},
+      requestFormatter{std::move(formatter)}
 {
 }
 
-boost::optional<TranslatedText>
-TranslatorImpl::translate(const std::string& sourceText,
-                          translator::SourceLanguage sourceLanguage,
-                          translator::TargetLanguage targetLanguage) const
+boost::optional<TranslatedText> TranslatorImpl::translate(const std::string& sourceText,
+                                                          translator::SourceLanguage sourceLanguage,
+                                                          translator::TargetLanguage targetLanguage) const
 {
-    const auto request = requestFormatter->getFormattedRequest(
-        sourceText, sourceLanguage, targetLanguage);
+    const auto request = requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage);
     const auto response = getResponseFromTranslationApi(request);
 
     if (response.code == successCode)
@@ -37,8 +34,8 @@ TranslatorImpl::translate(const std::string& sourceText,
 
     return boost::none;
 }
-webConnection::Response TranslatorImpl::getResponseFromTranslationApi(
-    const webConnection::Request& request) const
+webConnection::Response
+TranslatorImpl::getResponseFromTranslationApi(const webConnection::Request& request) const
 {
     try
     {

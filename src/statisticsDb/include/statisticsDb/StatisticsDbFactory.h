@@ -12,8 +12,7 @@ class StatisticsDbFactory
 public:
     virtual ~StatisticsDbFactory() = default;
 
-    virtual std::unique_ptr<StatisticsDb>
-    createStatisticsDb() const = 0;
+    virtual std::unique_ptr<StatisticsDb> createStatisticsDb() const = 0;
 
     static std::unique_ptr<StatisticsDbFactory>
     createStatisticsDbFactory(const std::shared_ptr<const utils::FileAccess>&);

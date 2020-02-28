@@ -1,6 +1,7 @@
 #pragma once
 
 #include "nlohmann/json.hpp"
+
 #include "DescriptionSerializer.h"
 #include "WordsDescriptionsSerializer.h"
 

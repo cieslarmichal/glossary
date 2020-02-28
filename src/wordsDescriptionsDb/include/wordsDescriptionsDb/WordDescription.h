@@ -9,10 +9,7 @@ struct WordDescription
 {
     WordDescription() = default;
 
-    WordDescription(EnglishWord e, Description wd)
-        : englishWord{e}, description{wd}
-    {
-    }
+    WordDescription(EnglishWord e, Description wd) : englishWord{e}, description{wd} {}
 
     std::string toString() const
     {
@@ -27,8 +24,7 @@ using WordsDescriptions = std::vector<WordDescription>;
 
 inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord &&
-            lhs.description == rhs.description);
+    return (lhs.englishWord == rhs.englishWord && lhs.description == rhs.description);
 }
 
 inline std::ostream& operator<<(std::ostream& os, const WordDescription& word)

@@ -39,12 +39,10 @@ struct Description
 
 inline bool operator==(const Description& lhs, const Description& rhs)
 {
-    return (lhs.definitionsWithExamples == rhs.definitionsWithExamples &&
-            lhs.sentences == rhs.sentences);
+    return (lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const Description& wordDescription)
+inline std::ostream& operator<<(std::ostream& os, const Description& wordDescription)
 {
     os << wordDescription.toString();
     return os;

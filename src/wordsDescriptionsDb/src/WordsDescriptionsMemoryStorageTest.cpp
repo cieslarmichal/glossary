@@ -26,8 +26,7 @@ TEST_F(WordsDescriptionsMemoryStorageTest, givenWordAddition_shouldAddWord)
     ASSERT_EQ(storage.size(), WordsDescriptions::size_type{1});
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest,
-       addTwoDifferentWords_shouldAddTwoWords)
+TEST_F(WordsDescriptionsMemoryStorageTest, addTwoDifferentWords_shouldAddTwoWords)
 {
     storage.addWordDescription(word1);
     storage.addWordDescription(word2);
@@ -45,16 +44,14 @@ TEST_F(WordsDescriptionsMemoryStorageTest, addTwoSameWords_shouldAddOnlyOne)
     ASSERT_EQ(storage.size(), WordsDescriptions::size_type{1});
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest,
-       givenEmptyStorage_getShouldNotReturnWord)
+TEST_F(WordsDescriptionsMemoryStorageTest, givenEmptyStorage_getShouldNotReturnWord)
 {
     const auto result = storage.getWordDescription("someword");
 
     ASSERT_EQ(result, boost::none);
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest,
-       givenStorageWithExactWord_shouldReturnWord)
+TEST_F(WordsDescriptionsMemoryStorageTest, givenStorageWithExactWord_shouldReturnWord)
 {
     storage.addWordDescription(word1);
 
@@ -63,8 +60,7 @@ TEST_F(WordsDescriptionsMemoryStorageTest,
     ASSERT_EQ(actualWord, word1);
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest,
-       givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
+TEST_F(WordsDescriptionsMemoryStorageTest, givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
 {
     storage.addWordDescription(word1);
     storage.addWordDescription(word2);
@@ -79,14 +75,12 @@ TEST_F(WordsDescriptionsMemoryStorageTest, givenEmptyStorage_shouldBeEmpty)
     ASSERT_TRUE(storage.empty());
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest,
-       givenWordNotExistingInStorage_getShouldNotContainThisWord)
+TEST_F(WordsDescriptionsMemoryStorageTest, givenWordNotExistingInStorage_getShouldNotContainThisWord)
 {
     ASSERT_FALSE(storage.contains("someword"));
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest,
-       givenWordExistingInStorage_getShouldContainThisWord)
+TEST_F(WordsDescriptionsMemoryStorageTest, givenWordExistingInStorage_getShouldContainThisWord)
 {
     storage.addWordDescription(word1);
 

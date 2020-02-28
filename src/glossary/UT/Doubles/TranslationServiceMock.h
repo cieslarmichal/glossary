@@ -7,7 +7,7 @@
 class TranslationServiceMock : public TranslationService
 {
 public:
-    MOCK_METHOD3(translate, boost::optional<translation::TranslatedText>(
-                                const std::string&, translation::SourceLanguage,
-                                translation::TargetLanguage));
+    MOCK_METHOD3(translate,
+                 boost::optional<translation::TranslatedText>(const std::string&, translation::SourceLanguage,
+                                                              translation::TargetLanguage));
 };

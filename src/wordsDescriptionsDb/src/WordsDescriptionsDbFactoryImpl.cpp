@@ -13,12 +13,10 @@ WordsDescriptionsDbFactoryImpl::WordsDescriptionsDbFactoryImpl(
 {
 }
 
-std::unique_ptr<WordsDescriptionsDb>
-WordsDescriptionsDbFactoryImpl::createWordsDescriptionDb() const
+std::unique_ptr<WordsDescriptionsDb> WordsDescriptionsDbFactoryImpl::createWordsDescriptionDb() const
 {
-    return std::make_unique<WordsDescriptionsDbImpl>(
-        std::make_unique<WordsDescriptionsPersistentStorage>(
-            fileAccess, std::make_shared<WordsDescriptionsSerializerImpl>()));
+    return std::make_unique<WordsDescriptionsDbImpl>(std::make_unique<WordsDescriptionsPersistentStorage>(
+        fileAccess, std::make_shared<WordsDescriptionsSerializerImpl>()));
 }
 
 }

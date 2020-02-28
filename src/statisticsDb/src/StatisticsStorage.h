@@ -1,7 +1,8 @@
 #pragma once
 
-#include "statisticsDb/WordStatistics.h"
 #include "boost/optional.hpp"
+
+#include "statisticsDb/WordStatistics.h"
 
 namespace statisticsDb
 {
@@ -13,8 +14,7 @@ class StatisticsStorage
 public:
     virtual ~StatisticsStorage() = default;
 
-    virtual boost::optional<WordStatistics>
-    getWordStatistics(const EnglishWord&) const = 0;
+    virtual boost::optional<WordStatistics> getWordStatistics(const EnglishWord&) const = 0;
     virtual Statistics getStatistics() const = 0;
     virtual void addWordStatistics(WordStatistics) = 0;
     virtual void addCorrectAnswer(const EnglishWord&) = 0;

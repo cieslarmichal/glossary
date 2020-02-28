@@ -12,13 +12,11 @@ namespace translationsDb
 class TranslationsPersistentStorage : public TranslationsStorage
 {
 public:
-    TranslationsPersistentStorage(
-        std::shared_ptr<const utils::FileAccess>,
-        std::shared_ptr<const TranslationsSerializer>);
+    TranslationsPersistentStorage(std::shared_ptr<const utils::FileAccess>,
+                                  std::shared_ptr<const TranslationsSerializer>);
 
     void addTranslation(Translation) override;
-    boost::optional<Translation>
-    getTranslation(const SourceText&) const override;
+    boost::optional<Translation> getTranslation(const SourceText&) const override;
     Translations getTranslations() const override;
     bool contains(const SourceText&) const override;
     Translations::size_type size() const override;

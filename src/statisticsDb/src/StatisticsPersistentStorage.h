@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "StatisticsStorage.h"
 #include "StatisticsMemoryStorage.h"
 #include "StatisticsSerializer.h"
+#include "StatisticsStorage.h"
 #include "utils/FileAccess.h"
 
 namespace statisticsDb
@@ -17,8 +17,7 @@ public:
     StatisticsPersistentStorage(std::shared_ptr<const utils::FileAccess>,
                                 std::shared_ptr<const StatisticsSerializer>);
 
-    boost::optional<WordStatistics>
-    getWordStatistics(const EnglishWord&) const override;
+    boost::optional<WordStatistics> getWordStatistics(const EnglishWord&) const override;
     Statistics getStatistics() const override;
     void addWordStatistics(WordStatistics) override;
     void addCorrectAnswer(const EnglishWord&) override;

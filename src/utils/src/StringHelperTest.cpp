@@ -57,14 +57,12 @@ TEST_F(StringHelperTest, givenVectorOfStrings_shouldJoinElementsToString)
 
 TEST_F(StringHelperTest, givenString_shouldReturnCutFromStartIndexToEndIndex)
 {
-    const auto actualCut =
-        cutOffFromString(stringBeforeCut, startCutIndex, endCutIndex);
+    const auto actualCut = cutOffFromString(stringBeforeCut, startCutIndex, endCutIndex);
 
     ASSERT_EQ(actualCut, stringAfterCut);
 }
 
-TEST_F(StringHelperTest,
-       givenString_shouldCutFromStringFromStartIndexToEndIndex)
+TEST_F(StringHelperTest, givenString_shouldCutFromStringFromStartIndexToEndIndex)
 {
     cutOffString(stringBeforeCut, startCutIndex, endCutIndex);
 
@@ -73,8 +71,7 @@ TEST_F(StringHelperTest,
 
 TEST_F(StringHelperTest, givenString_shouldReturnSubstringByStartAndEndIndex)
 {
-    const auto actualSubstring =
-        substring(stringBeforeCut, startSubstringIndex, endSubstringIndex);
+    const auto actualSubstring = substring(stringBeforeCut, startSubstringIndex, endSubstringIndex);
 
     ASSERT_EQ(actualSubstring, strSubstring);
 }

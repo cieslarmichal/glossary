@@ -32,14 +32,12 @@ public:
 
 TEST_F(StatisticsSerializerImplTest, givenNoStatistics_shouldReturnEmptyString)
 {
-    const auto actualSerializedStatistics =
-        serializer.serialize(emptyStatistics);
+    const auto actualSerializedStatistics = serializer.serialize(emptyStatistics);
 
     EXPECT_TRUE(actualSerializedStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest,
-       givenStatistics_shouldReturnSerializedStatistics)
+TEST_F(StatisticsSerializerImplTest, givenStatistics_shouldReturnSerializedStatistics)
 {
     const auto actualSerializedStatistics = serializer.serialize(statistics);
 
@@ -53,49 +51,39 @@ TEST_F(StatisticsSerializerImplTest, givenInvalidJson_shouldReturnNoStatistics)
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest,
-       givenJsonWithoutStatisticsField_shouldReturnNoStatistics)
+TEST_F(StatisticsSerializerImplTest, givenJsonWithoutStatisticsField_shouldReturnNoStatistics)
 {
-    const auto actualStatistics =
-        serializer.deserialize(serializedTranslationsWithoutStatisticsField);
+    const auto actualStatistics = serializer.deserialize(serializedTranslationsWithoutStatisticsField);
 
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest,
-       givenSerializedStatisticsString_shouldReturnStatistics)
+TEST_F(StatisticsSerializerImplTest, givenSerializedStatisticsString_shouldReturnStatistics)
 {
-    const auto actualStatistics =
-        serializer.deserialize(serializedTranslations);
+    const auto actualStatistics = serializer.deserialize(serializedTranslations);
 
     EXPECT_EQ(actualStatistics, statistics);
 }
 
+TEST_F(StatisticsSerializerImplTest, givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
+{
+    const auto actualStatistics = serializer.deserialize(emptySerializedStatistics);
+
+    EXPECT_TRUE(actualStatistics.empty());
+}
+
 TEST_F(StatisticsSerializerImplTest,
-       givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
+       givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
 {
-    const auto actualStatistics =
-        serializer.deserialize(emptySerializedStatistics);
+    const auto actualStatistics = serializer.deserialize(serializedTranslationsWithoutRequiredFields);
 
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(
-    StatisticsSerializerImplTest,
-    givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
+TEST_F(StatisticsSerializerImplTest,
+       givenTwoSerializedStatsAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
 {
-    const auto actualStatistics =
-        serializer.deserialize(serializedTranslationsWithoutRequiredFields);
-
-    EXPECT_TRUE(actualStatistics.empty());
-}
-
-TEST_F(
-    StatisticsSerializerImplTest,
-    givenTwoSerializedStatsAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
-{
-    const auto actualStatistics =
-        serializer.deserialize(twoSerializedTranslationsOneWithouRequiredField);
+    const auto actualStatistics = serializer.deserialize(twoSerializedTranslationsOneWithouRequiredField);
 
     EXPECT_EQ(actualStatistics, statisticsWithOneWord);
 }

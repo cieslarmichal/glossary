@@ -1,7 +1,8 @@
 #pragma once
 
-#include "TranslationsStorage.h"
 #include "boost/optional.hpp"
+
+#include "TranslationsStorage.h"
 
 namespace translationsDb
 {
@@ -10,8 +11,7 @@ class TranslationsMemoryStorage : public TranslationsStorage
 {
 public:
     void addTranslation(Translation) override;
-    boost::optional<Translation>
-    getTranslation(const SourceText&) const override;
+    boost::optional<Translation> getTranslation(const SourceText&) const override;
     Translations getTranslations() const override;
     bool contains(const SourceText&) const override;
     Translations::size_type size() const override;
@@ -20,8 +20,7 @@ public:
     Translations::const_iterator end() const override;
 
 private:
-    Translations::const_iterator
-    findTranslationPosition(const SourceText&) const;
+    Translations::const_iterator findTranslationPosition(const SourceText&) const;
 
     Translations translations;
 };

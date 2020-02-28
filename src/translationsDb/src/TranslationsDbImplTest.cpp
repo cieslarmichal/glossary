@@ -1,8 +1,8 @@
 #include "TranslationsDbImpl.h"
 
-#include "TranslationsStorageMock.h"
-
 #include "gtest/gtest.h"
+
+#include "TranslationsStorageMock.h"
 
 using namespace ::testing;
 using namespace translationsDb;
@@ -36,8 +36,7 @@ TEST_F(TranslationsDbImplTest, addTranslation)
 
 TEST_F(TranslationsDbImplTest, getTranslation)
 {
-    EXPECT_CALL(*storage, getTranslation(polishWord1))
-        .WillOnce(Return(translation1));
+    EXPECT_CALL(*storage, getTranslation(polishWord1)).WillOnce(Return(translation1));
 
     const auto actualTranslation = database.getTranslation(polishWord1);
 

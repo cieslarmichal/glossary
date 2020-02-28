@@ -7,40 +7,34 @@
 namespace wordsDescriptionsDb
 {
 const std::string WordsDescriptionsPersistentStorage::directory{"database/"};
-const std::string WordsDescriptionsPersistentStorage::filename{
-    directory + "wordsDescriptions.txt"};
+const std::string WordsDescriptionsPersistentStorage::filename{directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,
     std::shared_ptr<const WordsDescriptionsSerializer> serializerInit)
-    : fileAccess{std::move(fileAccessInit)}, serializer{
-                                                 std::move(serializerInit)}
+    : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
     loadFile();
 }
 
-void WordsDescriptionsPersistentStorage::addWordDescription(
-    const WordDescription& word)
+void WordsDescriptionsPersistentStorage::addWordDescription(const WordDescription& word)
 {
     storage.addWordDescription(word);
     serialize();
 }
 
 boost::optional<WordDescription>
-WordsDescriptionsPersistentStorage::getWordDescription(
-    const EnglishWord& englishName) const
+WordsDescriptionsPersistentStorage::getWordDescription(const EnglishWord& englishName) const
 {
     return storage.getWordDescription(englishName);
 }
 
-WordsDescriptions
-WordsDescriptionsPersistentStorage::getWordsDescriptions() const
+WordsDescriptions WordsDescriptionsPersistentStorage::getWordsDescriptions() const
 {
     return storage.getWordsDescriptions();
 }
 
-bool WordsDescriptionsPersistentStorage::contains(
-    const EnglishWord& englishWord) const
+bool WordsDescriptionsPersistentStorage::contains(const EnglishWord& englishWord) const
 {
     return storage.contains(englishWord);
 }
@@ -55,14 +49,12 @@ bool WordsDescriptionsPersistentStorage::empty() const
     return storage.empty();
 }
 
-WordsDescriptions::const_iterator
-WordsDescriptionsPersistentStorage::begin() const
+WordsDescriptions::const_iterator WordsDescriptionsPersistentStorage::begin() const
 {
     return storage.begin();
 }
 
-WordsDescriptions::const_iterator
-WordsDescriptionsPersistentStorage::end() const
+WordsDescriptions::const_iterator WordsDescriptionsPersistentStorage::end() const
 {
     return storage.end();
 }
@@ -71,8 +63,7 @@ void WordsDescriptionsPersistentStorage::serialize() const
 {
     try
     {
-        fileAccess->write(
-            filename, serializer->serialize(storage.getWordsDescriptions()));
+        fileAccess->write(filename, serializer->serialize(storage.getWordsDescriptions()));
     }
     catch (const utils::exceptions::FileNotFound& e)
     {

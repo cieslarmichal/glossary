@@ -1,7 +1,8 @@
 #pragma once
 
-#include "StatisticsStorage.h"
 #include "boost/optional.hpp"
+
+#include "StatisticsStorage.h"
 
 namespace statisticsDb
 {
@@ -9,8 +10,7 @@ namespace statisticsDb
 class StatisticsMemoryStorage : public StatisticsStorage
 {
 public:
-    boost::optional<WordStatistics>
-    getWordStatistics(const EnglishWord&) const override;
+    boost::optional<WordStatistics> getWordStatistics(const EnglishWord&) const override;
     Statistics getStatistics() const override;
     void addWordStatistics(WordStatistics) override;
     void addCorrectAnswer(const EnglishWord&) override;
@@ -23,8 +23,7 @@ public:
     Statistics::const_iterator end() const override;
 
 private:
-    Statistics::const_iterator
-    findWordStatisticsPosition(const EnglishWord&) const;
+    Statistics::const_iterator findWordStatisticsPosition(const EnglishWord&) const;
 
     Statistics statistics;
 };

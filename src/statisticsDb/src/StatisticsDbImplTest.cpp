@@ -1,8 +1,8 @@
 #include "StatisticsDbImpl.h"
 
-#include "StatisticsStorageMock.h"
-
 #include "gtest/gtest.h"
+
+#include "StatisticsStorageMock.h"
 
 using namespace ::testing;
 using namespace statisticsDb;
@@ -36,8 +36,7 @@ TEST_F(StatisticsDbImplTest, addWordStatistics)
 
 TEST_F(StatisticsDbImplTest, getWordStatistics)
 {
-    EXPECT_CALL(*storage, getWordStatistics(englishWord1))
-        .WillOnce(Return(wordStats1));
+    EXPECT_CALL(*storage, getWordStatistics(englishWord1)).WillOnce(Return(wordStats1));
 
     const auto actualWordStats = database.getWordStatistics(englishWord1);
 
@@ -61,12 +60,10 @@ TEST_F(StatisticsDbImplTest, englishWordInStorage_shouldAddCorrectAnswer)
     database.addCorrectAnswer(englishWord1);
 }
 
-TEST_F(StatisticsDbImplTest,
-       englishWordNotInStorage_shouldAddEmptyWordAndThenAddCorrectAnswer)
+TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddCorrectAnswer)
 {
     EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(false));
-    EXPECT_CALL(*storage,
-                addWordStatistics(WordStatistics{englishWord1, 0, 0}));
+    EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
     EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
     database.addCorrectAnswer(englishWord1);
@@ -80,12 +77,10 @@ TEST_F(StatisticsDbImplTest, englishWordInStorage_shouldAddIncorrectAnswer)
     database.addIncorrectAnswer(englishWord1);
 }
 
-TEST_F(StatisticsDbImplTest,
-       englishWordNotInStorage_shouldAddEmptyWordAndThenAddIncorrectAnswer)
+TEST_F(StatisticsDbImplTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddIncorrectAnswer)
 {
     EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(false));
-    EXPECT_CALL(*storage,
-                addWordStatistics(WordStatistics{englishWord1, 0, 0}));
+    EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
     EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
 
     database.addIncorrectAnswer(englishWord1);

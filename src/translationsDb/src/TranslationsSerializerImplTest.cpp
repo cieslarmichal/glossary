@@ -34,75 +34,60 @@ public:
     TranslationsSerializerImpl serializer;
 };
 
-TEST_F(TranslationsSerializerImplTest,
-       givenNoTranslations_shouldReturnEmptyString)
+TEST_F(TranslationsSerializerImplTest, givenNoTranslations_shouldReturnEmptyString)
 {
-    const auto actualSerializedTranslations =
-        serializer.serialize(emptyTranslations);
+    const auto actualSerializedTranslations = serializer.serialize(emptyTranslations);
 
     EXPECT_TRUE(actualSerializedTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest,
-       givenTranslations_shouldReturnSerializedTranslations)
+TEST_F(TranslationsSerializerImplTest, givenTranslations_shouldReturnSerializedTranslations)
 {
-    const auto actualSerializedTranslations =
-        serializer.serialize(translations);
+    const auto actualSerializedTranslations = serializer.serialize(translations);
 
     EXPECT_EQ(actualSerializedTranslations, serializedTranslations);
 }
 
-TEST_F(TranslationsSerializerImplTest,
-       givenInvalidJson_shouldReturnNoTranslations)
+TEST_F(TranslationsSerializerImplTest, givenInvalidJson_shouldReturnNoTranslations)
 {
     const auto actualTranslations = serializer.deserialize(invalidJson);
 
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest,
-       givenJsonWithoutTranslationsField_shouldReturnNoTranslations)
+TEST_F(TranslationsSerializerImplTest, givenJsonWithoutTranslationsField_shouldReturnNoTranslations)
 {
-    const auto actualTranslations =
-        serializer.deserialize(serializedTranslationsWithoutTranslationsField);
+    const auto actualTranslations = serializer.deserialize(serializedTranslationsWithoutTranslationsField);
 
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest,
-       givenSerializedTranslations_shouldReturnTranslations)
+TEST_F(TranslationsSerializerImplTest, givenSerializedTranslations_shouldReturnTranslations)
 {
-    const auto actualTranslations =
-        serializer.deserialize(serializedTranslations);
+    const auto actualTranslations = serializer.deserialize(serializedTranslations);
 
     EXPECT_EQ(actualTranslations, translations);
 }
 
+TEST_F(TranslationsSerializerImplTest, givenEmptySerializedTranslationsString_shouldReturnNoTranslations)
+{
+    const auto actualTranslations = serializer.deserialize(emptySerializedStatistics);
+
+    EXPECT_TRUE(actualTranslations.empty());
+}
+
 TEST_F(TranslationsSerializerImplTest,
-       givenEmptySerializedTranslationsString_shouldReturnNoTranslations)
+       givenSerializedTranslationsWithoutRequiredFields_shouldReturnEmptyTranslations)
 {
-    const auto actualTranslations =
-        serializer.deserialize(emptySerializedStatistics);
+    const auto actualTranslations = serializer.deserialize(serializedTranslationsWithoutRequiredFields);
 
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(
-    TranslationsSerializerImplTest,
-    givenSerializedTranslationsWithoutRequiredFields_shouldReturnEmptyTranslations)
+TEST_F(TranslationsSerializerImplTest,
+       givenTwoSerializedTranslationsAndOneOfThemWithoutRequiredFields_shouldReturnTranslationForOneWord)
 {
-    const auto actualTranslations =
-        serializer.deserialize(serializedTranslationsWithoutRequiredFields);
-
-    EXPECT_TRUE(actualTranslations.empty());
-}
-
-TEST_F(
-    TranslationsSerializerImplTest,
-    givenTwoSerializedTranslationsAndOneOfThemWithoutRequiredFields_shouldReturnTranslationForOneWord)
-{
-    const auto actualTranslations = serializer.deserialize(
-        twoSerializedTranslationsOneWithoutRequiredField);
+    const auto actualTranslations = serializer.deserialize(twoSerializedTranslationsOneWithoutRequiredField);
 
     EXPECT_EQ(actualTranslations, translationsWithOneTranslation);
 }

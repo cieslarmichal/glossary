@@ -7,8 +7,7 @@ using namespace translator;
 
 namespace
 {
-const auto jsonContentWithText =
-    R"({"code":200,"lang":"pl-en","text":["beer"]})";
+const auto jsonContentWithText = R"({"code":200,"lang":"pl-en","text":["beer"]})";
 const auto expectedText = "beer";
 const auto jsonContentWithoutText = R"({"code":403,"lang":"pl-en"})";
 const auto invalidJson{"{:"};
@@ -35,8 +34,7 @@ TEST_F(TranslationDeserializerImplTest, givenInvalidJson_shouldReturnEmptyText)
     ASSERT_TRUE(result.empty());
 }
 
-TEST_F(TranslationDeserializerImplTest,
-       givenJsonWithoutTextField_shouldReturnEmptyText)
+TEST_F(TranslationDeserializerImplTest, givenJsonWithoutTextField_shouldReturnEmptyText)
 {
     const auto result = deserializer.deserialize(jsonContentWithoutText);
 

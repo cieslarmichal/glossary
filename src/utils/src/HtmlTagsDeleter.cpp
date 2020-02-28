@@ -3,6 +3,7 @@
 #include <algorithm>
 
 #include "boost/algorithm/string.hpp"
+
 #include "StringHelper.h"
 
 namespace utils
@@ -14,8 +15,7 @@ const std::string openHtmlTag{"<"};
 const std::string endHtmlTag{">"};
 }
 
-std::vector<std::string>
-HtmlTagsDeleter::deleteTags(const std::vector<std::string>& htmlContent) const
+std::vector<std::string> HtmlTagsDeleter::deleteTags(const std::vector<std::string>& htmlContent) const
 {
     auto contentWithoutTags{htmlContent};
     clear(contentWithoutTags);
@@ -48,8 +48,7 @@ void HtmlTagsDeleter::removeHtmlTags(std::string& content) const
 void HtmlTagsDeleter::trimEmptySpaces(std::vector<std::string>& htmlLines) const
 {
     htmlLines.erase(
-        std::remove_if(htmlLines.begin(), htmlLines.end(),
-                       [](std::string& line) { return line.empty(); }),
+        std::remove_if(htmlLines.begin(), htmlLines.end(), [](std::string& line) { return line.empty(); }),
         htmlLines.end());
 
     for (auto& line : htmlLines)

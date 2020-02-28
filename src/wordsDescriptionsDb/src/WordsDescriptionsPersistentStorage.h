@@ -13,13 +13,11 @@ namespace wordsDescriptionsDb
 class WordsDescriptionsPersistentStorage : public WordsDescriptionsStorage
 {
 public:
-    WordsDescriptionsPersistentStorage(
-        std::shared_ptr<const utils::FileAccess>,
-        std::shared_ptr<const WordsDescriptionsSerializer>);
+    WordsDescriptionsPersistentStorage(std::shared_ptr<const utils::FileAccess>,
+                                       std::shared_ptr<const WordsDescriptionsSerializer>);
 
     void addWordDescription(const WordDescription&) override;
-    boost::optional<WordDescription>
-    getWordDescription(const EnglishWord&) const override;
+    boost::optional<WordDescription> getWordDescription(const EnglishWord&) const override;
     WordsDescriptions getWordsDescriptions() const override;
     bool contains(const EnglishWord&) const override;
     WordsDescriptions::size_type size() const override;

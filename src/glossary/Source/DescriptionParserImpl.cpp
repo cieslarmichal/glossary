@@ -20,8 +20,7 @@ const std::string examplePrefix{"// "};
 const std::string sentencePrefix{"; "};
 }
 
-boost::optional<Description>
-DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
+boost::optional<Description> DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
 {
     Description wordDescription;
     bool previousLineIsDefinition = false;
@@ -32,8 +31,7 @@ DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
     {
         if (previousLineIsDefinition && !isExample(line))
         {
-            wordDescription.definitionsWithExamples.push_back(
-                {definition, boost::none});
+            wordDescription.definitionsWithExamples.push_back({definition, boost::none});
             previousLineIsDefinition = false;
         }
 
@@ -44,8 +42,7 @@ DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
 
         if (previousLineIsDefinition && isExample(line))
         {
-            wordDescription.definitionsWithExamples.push_back(
-                {definition, line});
+            wordDescription.definitionsWithExamples.push_back({definition, line});
             previousLineIsDefinition = false;
         }
 
@@ -55,8 +52,7 @@ DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
             previousLineIsDefinition = true;
             if (line == lines.back())
             {
-                wordDescription.definitionsWithExamples.push_back(
-                    {definition, boost::none});
+                wordDescription.definitionsWithExamples.push_back({definition, boost::none});
             }
         }
     }

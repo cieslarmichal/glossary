@@ -1,7 +1,8 @@
 #pragma once
 
-#include "TranslationDeserializer.h"
 #include "nlohmann/json.hpp"
+
+#include "TranslationDeserializer.h"
 
 namespace translator
 {

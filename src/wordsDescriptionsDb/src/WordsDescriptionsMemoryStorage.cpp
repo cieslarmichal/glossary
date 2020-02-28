@@ -2,8 +2,7 @@
 
 namespace wordsDescriptionsDb
 {
-void WordsDescriptionsMemoryStorage::addWordDescription(
-    const WordDescription& wordDescription)
+void WordsDescriptionsMemoryStorage::addWordDescription(const WordDescription& wordDescription)
 {
     if (not contains(wordDescription.englishWord))
     {
@@ -12,8 +11,7 @@ void WordsDescriptionsMemoryStorage::addWordDescription(
 }
 
 boost::optional<WordDescription>
-WordsDescriptionsMemoryStorage::getWordDescription(
-    const EnglishWord& englishWord) const
+WordsDescriptionsMemoryStorage::getWordDescription(const EnglishWord& englishWord) const
 {
     const auto wordDescriptionIter = getWordsDescriptionsIter(englishWord);
 
@@ -29,8 +27,7 @@ WordsDescriptions WordsDescriptionsMemoryStorage::getWordsDescriptions() const
     return wordsDescriptions;
 }
 
-bool WordsDescriptionsMemoryStorage::contains(
-    const EnglishWord& wordToFind) const
+bool WordsDescriptionsMemoryStorage::contains(const EnglishWord& wordToFind) const
 {
     return getWordsDescriptionsIter(wordToFind) != wordsDescriptions.end();
 }
@@ -56,8 +53,7 @@ WordsDescriptions::const_iterator WordsDescriptionsMemoryStorage::end() const
 }
 
 WordsDescriptions::const_iterator
-WordsDescriptionsMemoryStorage::getWordsDescriptionsIter(
-    const EnglishWord& wordToFind) const
+WordsDescriptionsMemoryStorage::getWordsDescriptionsIter(const EnglishWord& wordToFind) const
 {
     return std::find_if(wordsDescriptions.begin(), wordsDescriptions.end(),
                         [wordToFind](const WordDescription& wordDescription) {

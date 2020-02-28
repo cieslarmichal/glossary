@@ -1,6 +1,7 @@
 #include "HttpHandlerImpl.h"
 
 #include "curl/curl.h"
+
 #include "exceptions/ConnectionFailed.h"
 
 namespace webConnection
@@ -27,8 +28,7 @@ Response HttpHandlerImpl::get(const Request& urlAddress) const
         if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
         {
             curl_easy_cleanup(curl);
-            throw exceptions::ConnectionFailed("Error while connecting to: " +
-                                               urlAddress);
+            throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
         }
 
         curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.code);
@@ -43,8 +43,7 @@ Response HttpHandlerImpl::get(const Request& urlAddress) const
 namespace
 {
 
-size_t curlWriter(char* data, size_t size, size_t nmemb,
-                  std::string* writerData)
+size_t curlWriter(char* data, size_t size, size_t nmemb, std::string* writerData)
 {
     writerData->append(data, size * nmemb);
     return size * nmemb;

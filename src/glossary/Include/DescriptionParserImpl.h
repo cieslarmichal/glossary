@@ -5,6 +5,5 @@
 class DescriptionParserImpl : public DescriptionParser
 {
 public:
-    boost::optional<wordsDescriptionsDb::Description>
-    parse(const std::vector<std::string>&) const override;
+    boost::optional<wordsDescriptionsDb::Description> parse(const std::vector<std::string>&) const override;
 };

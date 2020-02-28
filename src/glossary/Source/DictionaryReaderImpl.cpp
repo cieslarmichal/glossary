@@ -10,8 +10,7 @@ const std::string DictionaryReaderImpl::fileDirectory{"database/"};
 const std::string DictionaryReaderImpl::fileName{"translations.txt"};
 const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
-DictionaryReaderImpl::DictionaryReaderImpl(
-    std::shared_ptr<const utils::FileAccess> access)
+DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const utils::FileAccess> access)
     : fileAccess{access}
 {
 }
@@ -33,8 +32,7 @@ std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
 }
 
 std::vector<translationsDb::Translation>
-DictionaryReaderImpl::processDictionaryContent(
-    const std::string& dictionaryContent) const
+DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryContent) const
 {
     std::vector<translationsDb::Translation> wordsWithTranslation;
     for (const auto& line : utils::getSplitLines(dictionaryContent))

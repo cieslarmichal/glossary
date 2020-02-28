@@ -18,8 +18,7 @@ const WordStatistics wordStats3AfterCorrectAnswer{englishWord3, 8, 0};
 const WordStatistics wordStats3AfterIncorrectAnswer{englishWord3, 7, 1};
 
 const Statistics statsWithWord3AfterCorrectAnswer{wordStats3AfterCorrectAnswer};
-const Statistics statsWithWord3AfterIncorrectAnswer{
-    wordStats3AfterIncorrectAnswer};
+const Statistics statsWithWord3AfterIncorrectAnswer{wordStats3AfterIncorrectAnswer};
 }
 
 class StatisticsMemoryStorageTest : public Test
@@ -28,8 +27,7 @@ public:
     StatisticsMemoryStorage storage;
 };
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenWordStatsAdditionNotExistingInStorage_shouldAddWordStats)
+TEST_F(StatisticsMemoryStorageTest, givenWordStatsAdditionNotExistingInStorage_shouldAddWordStats)
 {
     ASSERT_TRUE(storage.empty());
 
@@ -39,8 +37,7 @@ TEST_F(StatisticsMemoryStorageTest,
     ASSERT_EQ(storage.size(), 1);
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenWordStatsAdditionExistingInStorage_shouldNotAddWordStats)
+TEST_F(StatisticsMemoryStorageTest, givenWordStatsAdditionExistingInStorage_shouldNotAddWordStats)
 {
     storage.addWordStatistics(wordStats1);
     storage.addWordStatistics(wordStats1);
@@ -58,8 +55,7 @@ TEST_F(StatisticsMemoryStorageTest, givenTwoWordStats_shouldReturnStatistics)
     ASSERT_EQ(actualStats, twoWordsStatistics);
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenExistingInStorageEnglishWord_shouldReturnWordStats)
+TEST_F(StatisticsMemoryStorageTest, givenExistingInStorageEnglishWord_shouldReturnWordStats)
 {
     storage.addWordStatistics(wordStats1);
 
@@ -68,16 +64,14 @@ TEST_F(StatisticsMemoryStorageTest,
     ASSERT_EQ(wordStatistics, wordStats1);
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenNonExistingInStorageEnglishWord_shouldReturnNone)
+TEST_F(StatisticsMemoryStorageTest, givenNonExistingInStorageEnglishWord_shouldReturnNone)
 {
     const auto wordStatistics = storage.getWordStatistics(englishWord1);
 
     ASSERT_EQ(wordStatistics, boost::none);
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenExistingInStorageEnglishWord_shouldIncreaseCorrectAnswers)
+TEST_F(StatisticsMemoryStorageTest, givenExistingInStorageEnglishWord_shouldIncreaseCorrectAnswers)
 {
     storage.addWordStatistics(wordStats3);
     storage.addCorrectAnswer(englishWord3);
@@ -86,20 +80,16 @@ TEST_F(StatisticsMemoryStorageTest,
     ASSERT_EQ(*actualWordStatistics, wordStats3AfterCorrectAnswer);
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenNonExistingInStorageEnglishWord_shouldNotIncreaseCorrectAnswers)
+TEST_F(StatisticsMemoryStorageTest, givenNonExistingInStorageEnglishWord_shouldNotIncreaseCorrectAnswers)
 {
     storage.addCorrectAnswer(englishWord3);
 
     const auto wordStatistics = storage.getStatistics();
     ASSERT_FALSE(std::any_of(wordStatistics.begin(), wordStatistics.end(),
-                             [&](const WordStatistics& ws) {
-                                 return ws == wordStats3AfterCorrectAnswer;
-                             }));
+                             [&](const WordStatistics& ws) { return ws == wordStats3AfterCorrectAnswer; }));
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenExistingInStorageEnglishWord_shouldIncreaseIncorrectAnswers)
+TEST_F(StatisticsMemoryStorageTest, givenExistingInStorageEnglishWord_shouldIncreaseIncorrectAnswers)
 {
     storage.addWordStatistics(wordStats3);
     storage.addIncorrectAnswer(englishWord3);
@@ -108,16 +98,13 @@ TEST_F(StatisticsMemoryStorageTest,
     ASSERT_EQ(*actualWordStatistics, wordStats3AfterIncorrectAnswer);
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenNonExistingInStorageEnglishWord_shouldNotIncreaseIncorrectAnswers)
+TEST_F(StatisticsMemoryStorageTest, givenNonExistingInStorageEnglishWord_shouldNotIncreaseIncorrectAnswers)
 {
     storage.addIncorrectAnswer(englishWord3);
 
     const auto wordStatistics = storage.getStatistics();
     ASSERT_FALSE(std::any_of(wordStatistics.begin(), wordStatistics.end(),
-                             [&](const WordStatistics& ws) {
-                                 return ws == wordStats3AfterIncorrectAnswer;
-                             }));
+                             [&](const WordStatistics& ws) { return ws == wordStats3AfterIncorrectAnswer; }));
 }
 
 TEST_F(StatisticsMemoryStorageTest, shouldResetStatistics)
@@ -128,10 +115,9 @@ TEST_F(StatisticsMemoryStorageTest, shouldResetStatistics)
     storage.resetStatistics();
 
     const auto stats = storage.getStatistics();
-    ASSERT_FALSE(
-        std::any_of(stats.begin(), stats.end(), [&](const WordStatistics& ws) {
-            return (ws.correctAnswers != 0 && ws.incorrectAnswers != 0);
-        }));
+    ASSERT_FALSE(std::any_of(stats.begin(), stats.end(), [&](const WordStatistics& ws) {
+        return (ws.correctAnswers != 0 && ws.incorrectAnswers != 0);
+    }));
 }
 
 TEST_F(StatisticsMemoryStorageTest, givenWordAddition_shouldContainThisWord)
@@ -141,8 +127,7 @@ TEST_F(StatisticsMemoryStorageTest, givenWordAddition_shouldContainThisWord)
     ASSERT_TRUE(storage.contains(wordStats1.englishWord));
 }
 
-TEST_F(StatisticsMemoryStorageTest,
-       givenTwoWordStats_shouldReturnTwoElementsBasingOnBeginEnd)
+TEST_F(StatisticsMemoryStorageTest, givenTwoWordStats_shouldReturnTwoElementsBasingOnBeginEnd)
 {
     storage.addWordStatistics(wordStats1);
     storage.addWordStatistics(wordStats2);

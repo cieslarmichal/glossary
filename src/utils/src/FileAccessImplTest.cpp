@@ -1,25 +1,21 @@
 #include "FileAccessImpl.h"
 
-#include "exceptions/FileNotFound.h"
 #include "gtest/gtest.h"
+
+#include "exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace utils;
 
 namespace
 {
-const std::string textToWrite{
-    "Hello this text should be written\nby write method"};
-const std::string textToAppend{
-    "\nand this text should be written\nby append method"};
+const std::string textToWrite{"Hello this text should be written\nby write method"};
+const std::string textToAppend{"\nand this text should be written\nby append method"};
 const std::string textAfterWriteAndAppend{textToWrite + textToAppend};
-const std::string correctPathForWriting =
-    "/src/utils/src/testFiles/testFileForWriting.txt";
-const std::string correctPathForReading =
-    "src/utils/src/testFiles/testFileForReading.txt";
+const std::string correctPathForWriting = "/src/utils/src/testFiles/testFileForWriting.txt";
+const std::string correctPathForReading = "src/utils/src/testFiles/testFileForReading.txt";
 const std::string incorrectPath = "433\\UTzxxxx/fi123xtF";
-const std::string exampleContent{
-    "this is example file created\nin order to check readContent\nmethod"};
+const std::string exampleContent{"this is example file created\nin order to check readContent\nmethod"};
 }
 
 class FileAccessImplTest : public Test
@@ -37,15 +33,11 @@ TEST_F(FileAccessImplTest, givenCorrectPath_shouldWriteToFile)
     ASSERT_EQ(textToWrite, fileContent);
 }
 
-TEST_F(FileAccessImplTest,
-       givenIncorrectPath_shouldThrowFileNotFoundForWritingAppendingAndReading)
+TEST_F(FileAccessImplTest, givenIncorrectPath_shouldThrowFileNotFoundForWritingAppendingAndReading)
 {
-    ASSERT_THROW(fileAccess.write(incorrectPath, textToWrite),
-                 utils::exceptions::FileNotFound);
-    ASSERT_THROW(fileAccess.append(incorrectPath, textToWrite),
-                 utils::exceptions::FileNotFound);
-    ASSERT_THROW(fileAccess.readContent(incorrectPath),
-                 utils::exceptions::FileNotFound);
+    ASSERT_THROW(fileAccess.write(incorrectPath, textToWrite), utils::exceptions::FileNotFound);
+    ASSERT_THROW(fileAccess.append(incorrectPath, textToWrite), utils::exceptions::FileNotFound);
+    ASSERT_THROW(fileAccess.readContent(incorrectPath), utils::exceptions::FileNotFound);
 }
 
 TEST_F(FileAccessImplTest, givenCorrectPath_shouldAppendToFile)

@@ -30,36 +30,26 @@ void GlossaryApplication::initialize()
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
     dictionary = dictionaryReader->read();
 
-    std::unique_ptr<const wordsDescriptionsDb::WordsDescriptionsDbFactory>
-        wordsDescriptionsDbFactory =
-            wordsDescriptionsDb::WordsDescriptionsDbFactory::
-                createWordsDescriptionsDbFactory(fileAccess);
+    std::unique_ptr<const wordsDescriptionsDb::WordsDescriptionsDbFactory> wordsDescriptionsDbFactory =
+        wordsDescriptionsDb::WordsDescriptionsDbFactory::createWordsDescriptionsDbFactory(fileAccess);
 
-    wordsDescriptionsDb =
-        wordsDescriptionsDbFactory->createWordsDescriptionDb();
+    wordsDescriptionsDb = wordsDescriptionsDbFactory->createWordsDescriptionDb();
 
-    std::unique_ptr<const webConnection::HttpHandlerFactory>
-        httpHandlerFactory =
-            webConnection::HttpHandlerFactory::createHttpHandlerFactory();
+    std::unique_ptr<const webConnection::HttpHandlerFactory> httpHandlerFactory =
+        webConnection::HttpHandlerFactory::createHttpHandlerFactory();
 
-    std::shared_ptr<const webConnection::HttpHandler> httpHandler =
-        httpHandlerFactory->createHttpHandler();
-    std::unique_ptr<const GlossaryHtmlParser> htmlParser =
-        std::make_unique<GlossaryHtmlParserImpl>();
-    std::unique_ptr<const DescriptionParser> descriptionParser =
-        std::make_unique<DescriptionParserImpl>();
+    std::shared_ptr<const webConnection::HttpHandler> httpHandler = httpHandlerFactory->createHttpHandler();
+    std::unique_ptr<const GlossaryHtmlParser> htmlParser = std::make_unique<GlossaryHtmlParserImpl>();
+    std::unique_ptr<const DescriptionParser> descriptionParser = std::make_unique<DescriptionParserImpl>();
 
-    wordDescriptionGenerator = std::make_unique<WordDescriptionGeneratorImpl>(
-        std::make_unique<WordDescriptionServiceImpl>(
-            std::make_unique<HttpWordDescriptionCreatorImpl>(
-                httpHandler, std::move(htmlParser),
-                std::move(descriptionParser)),
+    wordDescriptionGenerator =
+        std::make_unique<WordDescriptionGeneratorImpl>(std::make_unique<WordDescriptionServiceImpl>(
+            std::make_unique<HttpWordDescriptionCreatorImpl>(httpHandler, std::move(htmlParser),
+                                                             std::move(descriptionParser)),
             wordsDescriptionsDb));
 
-    std::unique_ptr<const statisticsDb::StatisticsDbFactory>
-        statisticsDbFactory =
-            statisticsDb::StatisticsDbFactory::createStatisticsDbFactory(
-                fileAccess);
+    std::unique_ptr<const statisticsDb::StatisticsDbFactory> statisticsDbFactory =
+        statisticsDb::StatisticsDbFactory::createStatisticsDbFactory(fileAccess);
 
     statisticsDb = statisticsDbFactory->createStatisticsDb();
 
@@ -79,14 +69,12 @@ void GlossaryApplication::run()
         englishWords.push_back(dictWord.translatedText);
     }
 
-    const auto wordsDescriptions =
-        wordDescriptionGenerator->generateWordsDescriptions(englishWords);
+    const auto wordsDescriptions = wordDescriptionGenerator->generateWordsDescriptions(englishWords);
 
     for (size_t index = 0; index < wordsDescriptions.size(); index++)
     {
-        glossaryWords.push_back({dictionary[index].sourceText,
-                                 dictionary[index].translatedText,
-                                 wordsDescriptions[index]});
+        glossaryWords.push_back(
+            {dictionary[index].sourceText, dictionary[index].translatedText, wordsDescriptions[index]});
     }
 
     loop();
@@ -112,8 +100,7 @@ void GlossaryApplication::loop()
         std::cout << "Insert english translation:\n";
 
         if (word.wordDescription &&
-            answerChecker->correctWordAnswer(userPrompt->getInput(),
-                                             word.wordDescription->englishWord))
+            answerChecker->correctWordAnswer(userPrompt->getInput(), word.wordDescription->englishWord))
         {
             std::cout << "Correct answer!\n";
             statisticsDb->addCorrectAnswer(word.wordDescription->englishWord);

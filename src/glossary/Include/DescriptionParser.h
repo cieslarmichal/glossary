@@ -1,6 +1,7 @@
 #pragma once
 
 #include "boost/optional.hpp"
+
 #include "wordsDescriptionsDb/Description.h"
 
 class DescriptionParser

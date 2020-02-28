@@ -14,7 +14,7 @@ add_library(translator ${SOURCES})
 add_executable(translatorUT ${UT_SOURCES})
 
 target_include_directories(translator PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/translator")
-target_include_directories(translatorUT PRIVATE "include" "include/translator" ${JSON_INCLUDE_DIR} )
+target_include_directories(translatorUT PRIVATE "include" "include/translator" ${JSON_INCLUDE_DIR})
 
 target_link_libraries(translator PRIVATE utils webConnection)
 target_link_libraries(translatorUT PRIVATE gtest_main gmock utils webConnection translator)

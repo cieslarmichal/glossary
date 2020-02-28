@@ -13,7 +13,6 @@ enum class Language
 using SourceLanguage = Language;
 using TargetLanguage = Language;
 
-
 inline std::string toLanguageCode(Language language)
 {
     if (language == Language::Polish)

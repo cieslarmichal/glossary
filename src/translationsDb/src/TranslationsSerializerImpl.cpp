@@ -14,14 +14,12 @@ constexpr auto englishWordField = "englishWord";
 namespace translationsDb
 {
 
-std::string
-TranslationsSerializerImpl::serialize(const Translations& translations) const
+std::string TranslationsSerializerImpl::serialize(const Translations& translations) const
 {
     nlohmann::json serialized;
     for (const auto& translation : translations)
     {
-        serialized[translationsField].push_back(
-            getJsonFromTranslation(translation));
+        serialized[translationsField].push_back(getJsonFromTranslation(translation));
     }
     if (serialized.empty())
     {
@@ -30,8 +28,7 @@ TranslationsSerializerImpl::serialize(const Translations& translations) const
     return serialized.dump();
 }
 
-Translations
-TranslationsSerializerImpl::deserialize(const std::string& jsonText) const
+Translations TranslationsSerializerImpl::deserialize(const std::string& jsonText) const
 {
     if (jsonText.empty())
     {
@@ -50,8 +47,7 @@ TranslationsSerializerImpl::deserialize(const std::string& jsonText) const
     return {};
 }
 
-nlohmann::json TranslationsSerializerImpl::getJsonFromTranslation(
-    const Translation& translation) const
+nlohmann::json TranslationsSerializerImpl::getJsonFromTranslation(const Translation& translation) const
 {
     nlohmann::json val = nlohmann::json::object();
     val[polishWordField] = translation.sourceText;
@@ -59,8 +55,7 @@ nlohmann::json TranslationsSerializerImpl::getJsonFromTranslation(
     return val;
 }
 
-Translations
-TranslationsSerializerImpl::readTranslations(const nlohmann::json& json) const
+Translations TranslationsSerializerImpl::readTranslations(const nlohmann::json& json) const
 {
     if (json.find(translationsField) != json.end())
     {
@@ -70,8 +65,7 @@ TranslationsSerializerImpl::readTranslations(const nlohmann::json& json) const
     return {};
 }
 
-Translations TranslationsSerializerImpl::parseTranslations(
-    const nlohmann::json& translationsJson) const
+Translations TranslationsSerializerImpl::parseTranslations(const nlohmann::json& translationsJson) const
 {
     Translations translations;
     for (const auto& translationData : translationsJson)
@@ -79,8 +73,7 @@ Translations TranslationsSerializerImpl::parseTranslations(
         if (isTranslationValid(translationData))
         {
             translations.emplace_back(
-                Translation{translationData[polishWordField],
-                            translationData[englishWordField]});
+                Translation{translationData[polishWordField], translationData[englishWordField]});
         }
         else
         {
@@ -90,14 +83,12 @@ Translations TranslationsSerializerImpl::parseTranslations(
     return translations;
 }
 
-bool TranslationsSerializerImpl::isTranslationValid(
-    const nlohmann::json& translationJson) const
+bool TranslationsSerializerImpl::isTranslationValid(const nlohmann::json& translationJson) const
 {
     const auto requiredFields = {polishWordField, englishWordField};
-    auto wordInvalid =
-        boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
-            return translationJson.find(fieldName) == translationJson.end();
-        });
+    auto wordInvalid = boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
+        return translationJson.find(fieldName) == translationJson.end();
+    });
     return !wordInvalid;
 }
 

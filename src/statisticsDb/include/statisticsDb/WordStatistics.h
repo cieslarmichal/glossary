@@ -36,16 +36,14 @@ using Statistics = std::vector<WordStatistics>;
 
 inline bool operator==(const WordStatistics& lhs, const WordStatistics& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord &&
-            lhs.correctAnswers == rhs.correctAnswers &&
+    return (lhs.englishWord == rhs.englishWord && lhs.correctAnswers == rhs.correctAnswers &&
             lhs.incorrectAnswers == rhs.incorrectAnswers);
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const WordStatistics& wordStatistics)
+inline std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics)
 {
-    os << wordStatistics.englishWord << " " << wordStatistics.correctAnswers
-       << " " << wordStatistics.incorrectAnswers;
+    os << wordStatistics.englishWord << " " << wordStatistics.correctAnswers << " "
+       << wordStatistics.incorrectAnswers;
     return os;
 }
 }

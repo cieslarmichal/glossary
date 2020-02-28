@@ -33,8 +33,7 @@ private:
     std::unique_ptr<WordViewer> viewer;
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
-    std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb>
-        wordsDescriptionsDb;
+    std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> wordsDescriptionsDb;
     Dictionary dictionary;
     EnglishWords englishWords;
     Words glossaryWords;

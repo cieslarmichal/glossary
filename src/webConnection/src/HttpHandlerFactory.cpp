@@ -5,8 +5,7 @@
 namespace webConnection
 {
 
-std::unique_ptr<HttpHandlerFactory>
-HttpHandlerFactory::createHttpHandlerFactory()
+std::unique_ptr<HttpHandlerFactory> HttpHandlerFactory::createHttpHandlerFactory()
 {
     return std::make_unique<HttpHandlerFactoryImpl>();
 }

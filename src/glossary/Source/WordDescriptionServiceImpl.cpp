@@ -3,23 +3,19 @@
 WordDescriptionServiceImpl::WordDescriptionServiceImpl(
     std::unique_ptr<HttpWordDescriptionCreator> creator,
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> db)
-    : wordDescriptionCreator{std::move(creator)}, wordsDescriptionsDb{
-                                                      std::move(db)}
+    : wordDescriptionCreator{std::move(creator)}, wordsDescriptionsDb{std::move(db)}
 {
 }
 
 boost::optional<wordsDescriptionsDb::WordDescription>
-WordDescriptionServiceImpl::getWordDescription(
-    const wordsDescriptionsDb::EnglishWord& englishWord)
+WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
 {
-    if (const auto wordDescriptionFromDb =
-            getWordDescriptionFromDb(englishWord))
+    if (const auto wordDescriptionFromDb = getWordDescriptionFromDb(englishWord))
     {
         return wordDescriptionFromDb;
     }
 
-    if (const auto createdWordDescription =
-            createWordDescriptionFromHttp(englishWord))
+    if (const auto createdWordDescription = createWordDescriptionFromHttp(englishWord))
     {
         saveWordDescriptionInDb(*createdWordDescription);
         return createdWordDescription;
@@ -27,8 +23,7 @@ WordDescriptionServiceImpl::getWordDescription(
     return boost::none;
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription>
-WordDescriptionServiceImpl::getWordDescriptionFromDb(
+boost::optional<wordsDescriptionsDb::WordDescription> WordDescriptionServiceImpl::getWordDescriptionFromDb(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     return wordsDescriptionsDb->getWordDescription(englishWord);

@@ -12,8 +12,7 @@ class TranslationsDbFactory
 public:
     virtual ~TranslationsDbFactory() = default;
 
-    virtual std::unique_ptr<TranslationsDb>
-    createTranslationsDb() const = 0;
+    virtual std::unique_ptr<TranslationsDb> createTranslationsDb() const = 0;
 
     static std::unique_ptr<TranslationsDbFactory>
     createTranslationsDbFactory(const std::shared_ptr<const utils::FileAccess>&);

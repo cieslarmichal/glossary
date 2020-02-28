@@ -7,7 +7,6 @@ namespace webConnection
 class HttpHandlerFactoryImpl : public HttpHandlerFactory
 {
 public:
-    std::unique_ptr<HttpHandler>
-    createHttpHandler() const override;
+    std::unique_ptr<HttpHandler> createHttpHandler() const override;
 };
 }
