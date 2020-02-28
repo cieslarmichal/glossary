@@ -3,7 +3,7 @@
 class Application
 {
 public:
-    // TODO: add scripts to build targets and run UTs.
+    //change names with Impl in it
     virtual ~Application() = default;
 
     virtual void run() = 0;

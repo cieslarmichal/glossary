@@ -68,8 +68,6 @@ TEST_F(
 TEST_F(GlossaryHtmlParserImplTest,
        givenRealHtmlContent_shouldReturnParsedContent)
 {
-    // TODO: takes too much time, test other way, maybe there is no need to test
-
     const auto actualParsedHtmlContent =
         glossaryHtmlParser.parse(htmlContent);
 

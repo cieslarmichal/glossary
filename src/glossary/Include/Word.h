@@ -9,8 +9,6 @@
 #include "boost/optional/optional_io.hpp"
 #include "wordsDescriptionsDb/WordDescription.h"
 
-// TODO: add operators overloaded
-
 struct Word
 {
     PolishWord polishWord;

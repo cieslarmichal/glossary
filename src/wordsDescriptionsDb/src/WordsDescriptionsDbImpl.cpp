@@ -9,8 +9,9 @@ WordsDescriptionsDbImpl::WordsDescriptionsDbImpl(
 }
 
 void WordsDescriptionsDbImpl::addWordDescription(
-    const WordDescription& wordDescription) const
+    const WordDescription& wordDescription)
 {
+    std::lock_guard<std::mutex> lockGuard(lock);
     storage->addWordDescription(wordDescription);
 }
 
