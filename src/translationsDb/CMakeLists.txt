@@ -15,7 +15,7 @@ set(UT_SOURCES
 add_library(translationsDb ${SOURCES})
 add_executable(translationsDbUT ${UT_SOURCES})
 
-target_include_directories(translationsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/translationsDb")
+target_include_directories(translationsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/translationsDb" ${PLOG_INCLUDE_DIR})
 target_include_directories(translationsDbUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/translationsDb")
 
 target_link_libraries(translationsDb PRIVATE utils)

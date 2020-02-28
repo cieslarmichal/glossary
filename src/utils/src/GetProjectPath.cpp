@@ -3,6 +3,7 @@
 #include "GetExecutablePath.h"
 #include "StringHelper.h"
 #include "exceptions/FileNotFound.h"
+#include "plog/Log.h"
 
 namespace utils
 {
@@ -20,6 +21,9 @@ std::string getProjectPath(const std::string& projectName)
     {
         throw exceptions::FileNotFound{fileNotFoundMessage + currentPath};
     }
-    return utils::substring(currentPath, 0, projectNamePosition + projectName.length() + 1);
+
+    const auto projectPath = utils::substring(currentPath, 0, projectNamePosition + projectName.length() + 1);
+    LOG_DEBUG<< "Absolute project path: "<< projectPath;
+    return projectPath;
 }
 }

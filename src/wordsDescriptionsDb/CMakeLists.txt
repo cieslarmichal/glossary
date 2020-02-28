@@ -17,7 +17,7 @@ set(UT_SOURCES
 add_library(wordsDescriptionsDb ${SOURCES})
 add_executable(wordsDescriptionsDbUT ${UT_SOURCES})
 
-target_include_directories(wordsDescriptionsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/wordsDescriptionsDb")
+target_include_directories(wordsDescriptionsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/wordsDescriptionsDb" ${PLOG_INCLUDE_DIR})
 target_include_directories(wordsDescriptionsDbUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/wordsDescriptionsDb")
 
 target_link_libraries(wordsDescriptionsDb PRIVATE utils)

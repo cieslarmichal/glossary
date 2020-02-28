@@ -11,6 +11,7 @@ WordsDescriptionsDbFactoryImpl::WordsDescriptionsDbFactoryImpl(
     std::shared_ptr<const utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
+
 }
 
 std::unique_ptr<WordsDescriptionsDb> WordsDescriptionsDbFactoryImpl::createWordsDescriptionDb() const

@@ -7,6 +7,7 @@
 
 #include "utils/HtmlTagsDeleter.h"
 #include "utils/StringHelper.h"
+#include "plog/Log.h"
 
 namespace
 {
@@ -49,6 +50,7 @@ GlossaryHtmlParserImpl::GlossaryHtmlParserImpl()
 
 std::vector<std::string> GlossaryHtmlParserImpl::parse(const std::string& htmlContent) const
 {
+    LOG_DEBUG << "Parsing html content into glossary specific lines";
     const auto glossaryLines = selectGlossaryLines(htmlContent);
     auto parsedContent = htmlTagsDeleter->deleteTags(glossaryLines);
     return parsedContent;

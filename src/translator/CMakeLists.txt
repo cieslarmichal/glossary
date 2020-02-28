@@ -13,7 +13,7 @@ set(UT_SOURCES
 add_library(translator ${SOURCES})
 add_executable(translatorUT ${UT_SOURCES})
 
-target_include_directories(translator PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/translator")
+target_include_directories(translator PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/translator" ${PLOG_INCLUDE_DIR})
 target_include_directories(translatorUT PRIVATE "include" "include/translator" ${JSON_INCLUDE_DIR})
 
 target_link_libraries(translator PRIVATE utils webConnection)

@@ -1,6 +1,6 @@
 #include "StatisticsPersistentStorage.h"
 
-#include <iostream>
+#include "plog/Log.h"
 
 #include "utils/exceptions/FileNotFound.h"
 
@@ -90,7 +90,7 @@ void StatisticsPersistentStorage::loadFile()
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        std::cerr << e.what();
+        LOG_WARNING << "Error while deserializing statistics "<< e.what();
         return;
     }
 
@@ -108,7 +108,7 @@ void StatisticsPersistentStorage::serialize() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        std::cerr << e.what();
+        LOG_WARNING << "Error while serializing statistics "<< e.what();
     }
 }
 

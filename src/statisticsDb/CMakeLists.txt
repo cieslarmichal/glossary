@@ -15,7 +15,7 @@ set(UT_SOURCES
 add_library(statisticsDb ${SOURCES})
 add_executable(statisticsDbUT ${UT_SOURCES})
 
-target_include_directories(statisticsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsDb")
+target_include_directories(statisticsDb PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsDb" ${PLOG_INCLUDE_DIR})
 target_include_directories(statisticsDbUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/statisticsDb")
 
 target_link_libraries(statisticsDb PRIVATE utils)

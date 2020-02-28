@@ -1,6 +1,6 @@
 #include "WordsDescriptionsPersistentStorage.h"
 
-#include <iostream>
+#include "plog/Log.h"
 
 #include "utils/exceptions/FileNotFound.h"
 
@@ -59,18 +59,6 @@ WordsDescriptions::const_iterator WordsDescriptionsPersistentStorage::end() cons
     return storage.end();
 }
 
-void WordsDescriptionsPersistentStorage::serialize() const
-{
-    try
-    {
-        fileAccess->write(filename, serializer->serialize(storage.getWordsDescriptions()));
-    }
-    catch (const utils::exceptions::FileNotFound& e)
-    {
-        std::cerr << e.what();
-    }
-}
-
 void WordsDescriptionsPersistentStorage::loadFile()
 {
     WordsDescriptions words;
@@ -80,13 +68,25 @@ void WordsDescriptionsPersistentStorage::loadFile()
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        std::cerr << e.what();
+        LOG_WARNING << "Error while serializing words descriptions " << e.what();
         return;
     }
 
     for (const auto& word : words)
     {
         storage.addWordDescription(word);
+    }
+}
+
+void WordsDescriptionsPersistentStorage::serialize() const
+{
+    try
+    {
+        fileAccess->write(filename, serializer->serialize(storage.getWordsDescriptions()));
+    }
+    catch (const utils::exceptions::FileNotFound& e)
+    {
+        LOG_WARNING << "Error while deserializing words descriptions " << e.what();
     }
 }
 }

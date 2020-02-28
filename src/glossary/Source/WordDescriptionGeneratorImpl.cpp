@@ -2,6 +2,8 @@
 
 #include <iostream>
 
+#include "plog/Log.h"
+
 using namespace wordsDescriptionsDb;
 
 WordDescriptionGeneratorImpl::WordDescriptionGeneratorImpl(std::unique_ptr<WordDescriptionService> service)
@@ -17,8 +19,10 @@ WordDescriptionGeneratorImpl::generateWordsDescriptions(const EnglishWords& engl
     for (const auto& englishWord : englishWords)
     {
         wordsDescriptions.emplace_back(generateWordDescription(englishWord));
-        std::cout << "Downloading wordsDescriptions " << ++wordDescriptionCounter << "/"
+        LOG_INFO << "Generating wordsDescriptions " << ++wordDescriptionCounter << "/"
                   << englishWords.size() << "\n";
+        std::cout << "Generating wordsDescriptions " << wordDescriptionCounter << "/"
+                 << englishWords.size() << "\n";
     }
     return wordsDescriptions;
 }

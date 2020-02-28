@@ -8,7 +8,6 @@ namespace wordsDescriptionsDb
 namespace
 {
 nlohmann::json getJsonFromDescription(const Description&);
-
 Description readDescription(const nlohmann::json&);
 
 constexpr auto definitionsWithExamplesField = "definitionsWithExamples";

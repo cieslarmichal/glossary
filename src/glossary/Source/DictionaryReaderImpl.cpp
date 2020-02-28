@@ -1,7 +1,8 @@
 #include "DictionaryReaderImpl.h"
 
-#include <iostream>
-#include <sstream>
+#include <utility>
+
+#include "plog/Log.h"
 
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
@@ -11,12 +12,14 @@ const std::string DictionaryReaderImpl::fileName{"translations.txt"};
 const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
 DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const utils::FileAccess> access)
-    : fileAccess{access}
+    : fileAccess{std::move(access)}
 {
 }
 
 std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
 {
+    LOG_DEBUG << "Reading translations from file";
+
     std::string dictionaryContent;
     try
     {
@@ -24,7 +27,7 @@ std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        std::cerr << e.what();
+        LOG_WARNING << "Error while reading translations from file: " << e.what();
         return {};
     }
 

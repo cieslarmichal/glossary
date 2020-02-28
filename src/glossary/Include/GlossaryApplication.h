@@ -1,6 +1,7 @@
 #pragma once
 
 #include <memory>
+#include <utils/FileAccess.h>
 
 #include "AnswerChecker.h"
 #include "Application.h"
@@ -9,15 +10,17 @@
 #include "WordDescriptionGenerator.h"
 #include "WordRandomizer.h"
 #include "WordViewer.h"
+#include "utils/FileAccess.h"
 #include "statisticsDb/StatisticsDb.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDb.h"
 
 // TODO: move std::cin from UserPrompt to application
+// TODO: any_of to all_of
 
 class GlossaryApplication : public Application
 {
 public:
-    GlossaryApplication();
+    explicit GlossaryApplication(std::shared_ptr<utils::FileAccess>);
 
     void run() override;
 
@@ -26,6 +29,7 @@ private:
     void loop();
 
     // TODO: add const into unique_ptr if possible
+    std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
     std::unique_ptr<statisticsDb::StatisticsDb> statisticsDb;
     std::unique_ptr<AnswerChecker> answerChecker;

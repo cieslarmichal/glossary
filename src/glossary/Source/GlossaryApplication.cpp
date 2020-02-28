@@ -1,7 +1,6 @@
 #include "GlossaryApplication.h"
 
 #include <iostream>
-
 #include "AnswerCheckerImpl.h"
 #include "DescriptionParserImpl.h"
 #include "DictionaryReaderImpl.h"
@@ -13,20 +12,17 @@
 #include "WordRandomizerImpl.h"
 #include "WordViewerImpl.h"
 #include "statisticsDb/StatisticsDbFactory.h"
-#include "utils/FileAccessImpl.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDbFactory.h"
 
-GlossaryApplication::GlossaryApplication()
+GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
+    : fileAccess{std::move(fileAccessInit)}
 {
     initialize();
 }
 
 void GlossaryApplication::initialize()
 {
-    std::shared_ptr<const utils::FileAccess> fileAccess =
-        std::make_shared<const utils::FileAccessImpl>("glossary");
-
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
     dictionary = dictionaryReader->read();
 

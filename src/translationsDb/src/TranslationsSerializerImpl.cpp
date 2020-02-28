@@ -1,8 +1,7 @@
 #include "TranslationsSerializerImpl.h"
 
-#include <iostream>
-
 #include "boost/algorithm/cxx11/any_of.hpp"
+#include "plog/Log.h"
 
 namespace
 {
@@ -42,7 +41,7 @@ Translations TranslationsSerializerImpl::deserialize(const std::string& jsonText
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unable to parse translations:" << e.what();
+        LOG_WARNING <<  "Unable to parse translations:" << e.what();
     }
     return {};
 }
@@ -61,7 +60,7 @@ Translations TranslationsSerializerImpl::readTranslations(const nlohmann::json& 
     {
         return parseTranslations(json[translationsField]);
     }
-    std::cerr << "There are no translations stored\n";
+    LOG_WARNING << "There are no translations stored\n";
     return {};
 }
 
@@ -77,7 +76,7 @@ Translations TranslationsSerializerImpl::parseTranslations(const nlohmann::json&
         }
         else
         {
-            std::cerr << "translation does not contain all required data\n";
+            LOG_WARNING << "WordStatistics does not contain all required data\n";
         }
     }
     return translations;

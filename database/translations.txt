@@ -9,3 +9,4 @@ mouse 		mysz
 couch		kanapa
 pillow      poduszka
 beer        piwo
+sheet		przescieradlo

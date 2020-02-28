@@ -1,6 +1,6 @@
 #include "TranslationServiceImpl.h"
 
-#include <iostream>
+#include "plog/Log.h"
 
 TranslationServiceImpl::TranslationServiceImpl(std::unique_ptr<translator::Translator> translatorInit,
                                                std::shared_ptr<translationsDb::TranslationsDb> db)
@@ -12,17 +12,23 @@ boost::optional<translator::TranslatedText>
 TranslationServiceImpl::translate(const std::string& sourceText, translator::SourceLanguage sourceLanguage,
                                   translator::TargetLanguage targetLanguage)
 {
+    LOG_DEBUG << "Translating \"" << sourceText << "\" from " << sourceLanguage << " to " << targetLanguage;
+
     if (const auto translationFromDb = getTranslationFromDb(sourceText))
     {
+        LOG_DEBUG << "Got translation from translations database";
         return translationFromDb;
     }
 
     if (const auto translationFromTranslator =
             getTranslationFromTranslator(sourceText, sourceLanguage, targetLanguage))
     {
+        LOG_DEBUG << "Got translation from translator";
         saveTranslationInDb(sourceText, *translationFromTranslator);
         return translationFromTranslator;
     }
+
+    LOG_DEBUG << "No translation for \"" << sourceText << "\"";
     return boost::none;
 }
 

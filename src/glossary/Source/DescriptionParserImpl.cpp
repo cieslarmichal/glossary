@@ -1,6 +1,7 @@
 #include "DescriptionParserImpl.h"
 
 #include "boost/algorithm/string.hpp"
+#include "plog/Log.h"
 
 using namespace wordsDescriptionsDb;
 
@@ -22,6 +23,8 @@ const std::string sentencePrefix{"; "};
 
 boost::optional<Description> DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
 {
+    LOG_DEBUG << "Parsing glossary specific lines into Descriptions";
+
     Description wordDescription;
     bool previousLineIsDefinition = false;
 

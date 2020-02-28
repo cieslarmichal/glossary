@@ -1,8 +1,7 @@
 #include "StatisticsSerializerImpl.h"
 
-#include <iostream>
-
 #include "boost/algorithm/cxx11/any_of.hpp"
+#include "plog/Log.h"
 
 namespace
 {
@@ -42,7 +41,7 @@ Statistics StatisticsSerializerImpl::deserialize(const std::string& jsonText) co
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unable to parse statistics:" << e.what();
+        LOG_WARNING <<  "Unable to parse statistics:" << e.what();
     }
     return {};
 }
@@ -62,7 +61,7 @@ Statistics StatisticsSerializerImpl::readStatistics(const nlohmann::json& json) 
     {
         return parseStatistics(json[statisticsField]);
     }
-    std::cerr << "There are no statistics stored\n";
+    LOG_WARNING << "There are no statistics stored\n";
     return {};
 }
 
@@ -79,7 +78,7 @@ Statistics StatisticsSerializerImpl::parseStatistics(const nlohmann::json& stati
         }
         else
         {
-            std::cerr << "wordStatistics does not contain all required data\n";
+            LOG_WARNING << "WordStatistics does not contain all required data\n";
         }
     }
     return statistics;
