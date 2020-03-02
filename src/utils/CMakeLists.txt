@@ -16,6 +16,7 @@ set(UT_SOURCES
         src/GetExecutablePathTest.cpp
         src/GetProjectPathTest.cpp
         src/GetSyslogPathTest.cpp
+        src/ThreadSafeQueueTest.cpp
         )
 
 

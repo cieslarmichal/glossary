@@ -86,7 +86,7 @@ void WordsDescriptionsPersistentStorage::serialize() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while deserializing words descriptions " << e.what();
+        LOG_WARNING << "Error while serializing words descriptions " << e.what();
     }
 }
 }

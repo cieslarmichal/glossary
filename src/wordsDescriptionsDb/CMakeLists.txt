@@ -5,7 +5,8 @@ set(SOURCES
         src/WordsDescriptionsSerializerImpl.cpp
         src/DescriptionSerializer.cpp
         src/WordsDescriptionsDbFactory.cpp
-        src/WordsDescriptionsDbFactoryImpl.cpp)
+        src/WordsDescriptionsDbFactoryImpl.cpp
+        )
 
 set(UT_SOURCES
         src/WordsDescriptionsDbImplTest.cpp

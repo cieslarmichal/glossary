@@ -1,10 +1,10 @@
 #include "Glossary.h"
 
+#include "plog/Log.h"
+
 #include "GlossaryApplication.h"
 #include "utils/FileAccessImpl.h"
-#include "plog/Log.h"
 #include "utils/GetSyslogPath.h"
-
 Glossary::Glossary()
     : fileAccess{std::make_shared<utils::FileAccessImpl>("glossary")}, application{std::make_unique<GlossaryApplication>(fileAccess)}
 {
@@ -16,7 +16,6 @@ Glossary::~Glossary()
 {
     LOG_DEBUG << "Shutting down glossary";
 }
-
 
 void Glossary::run()
 {

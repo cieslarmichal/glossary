@@ -1,6 +1,5 @@
 #include "StatisticsDbImpl.h"
 #include "plog/Log.h"
-#include "utils/GetProjectPath.h"
 
 namespace statisticsDb
 {

@@ -1,5 +1,4 @@
 #include "StatisticsPersistentStorage.h"
-
 #include "plog/Log.h"
 
 #include "utils/exceptions/FileNotFound.h"
