@@ -24,7 +24,7 @@ TranslatedText TranslationDeserializerImpl::deserialize(const std::string& jsonT
     }
     catch (const std::exception& e)
     {
-        LOG_WARNING <<  "Unable to parse translated text:" << e.what();
+        LOG_WARNING << "Unable to parse translated text:" << e.what();
     }
     return {};
 }

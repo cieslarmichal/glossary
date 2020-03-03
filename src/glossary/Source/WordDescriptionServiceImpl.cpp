@@ -1,4 +1,5 @@
 #include "WordDescriptionServiceImpl.h"
+
 #include "plog/Log.h"
 
 WordDescriptionServiceImpl::WordDescriptionServiceImpl(
@@ -11,7 +12,7 @@ WordDescriptionServiceImpl::WordDescriptionServiceImpl(
 boost::optional<wordsDescriptionsDb::WordDescription>
 WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
 {
-    LOG_DEBUG << "Getting word description for: "<<englishWord;
+    LOG_DEBUG << "Getting word description for: " << englishWord;
 
     if (const auto wordDescriptionFromDb = getWordDescriptionFromDb(englishWord))
     {
@@ -26,7 +27,7 @@ WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::Englis
         return createdWordDescription;
     }
 
-    LOG_DEBUG << "No word description for "<< englishWord;
+    LOG_DEBUG << "No word description for " << englishWord;
     return boost::none;
 }
 

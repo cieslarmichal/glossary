@@ -6,7 +6,8 @@
 #include "utils/FileAccessImpl.h"
 #include "utils/GetSyslogPath.h"
 Glossary::Glossary()
-    : fileAccess{std::make_shared<utils::FileAccessImpl>("glossary")}, application{std::make_unique<GlossaryApplication>(fileAccess)}
+    : fileAccess{std::make_shared<utils::FileAccessImpl>("glossary")},
+      application{std::make_unique<GlossaryApplication>(fileAccess)}
 {
     initializeLogger();
     LOG_DEBUG << "Initializing glossary";

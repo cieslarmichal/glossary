@@ -4,6 +4,7 @@
 #include <mutex>
 #include <queue>
 #include <vector>
+
 #include "boost/optional.hpp"
 
 namespace utils
@@ -51,7 +52,7 @@ public:
         std::vector<T> data;
         while (not empty())
         {
-            if(const auto element = pop())
+            if (const auto element = pop())
             {
                 data.emplace_back(*element);
             }

@@ -41,7 +41,7 @@ Translations TranslationsSerializerImpl::deserialize(const std::string& jsonText
     }
     catch (const std::exception& e)
     {
-        LOG_WARNING <<  "Unable to parse translations:" << e.what();
+        LOG_WARNING << "Unable to parse translations:" << e.what();
     }
     return {};
 }

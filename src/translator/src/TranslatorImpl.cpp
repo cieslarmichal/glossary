@@ -1,7 +1,8 @@
 #include "TranslatorImpl.h"
 
-#include "webConnection/exceptions/ConnectionFailed.h"
 #include "plog/Log.h"
+
+#include "webConnection/exceptions/ConnectionFailed.h"
 
 namespace translator
 {
@@ -37,14 +38,14 @@ boost::optional<TranslatedText> TranslatorImpl::translate(const std::string& sou
 webConnection::Response
 TranslatorImpl::getResponseFromTranslationApi(const webConnection::Request& request) const
 {
-    LOG_DEBUG << "Sending: "<<request<<" request for translation to translation api";
+    LOG_DEBUG << "Sending: " << request << " request for translation to translation api";
     try
     {
         return httpHandler->get(request);
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
-        LOG_DEBUG << "Error while connecting to translation api "<< e.what();
+        LOG_DEBUG << "Error while connecting to translation api " << e.what();
     }
     return {};
 }

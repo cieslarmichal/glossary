@@ -1,4 +1,5 @@
 #include "StatisticsDbImpl.h"
+
 #include "plog/Log.h"
 
 namespace statisticsDb
@@ -11,7 +12,7 @@ StatisticsDbImpl::StatisticsDbImpl(std::unique_ptr<StatisticsStorage> storageIni
 
 boost::optional<WordStatistics> StatisticsDbImpl::getWordStatistics(const EnglishWord& englishWord) const
 {
-    LOG_DEBUG << "Getting word statistics for "<< englishWord;
+    LOG_DEBUG << "Getting word statistics for " << englishWord;
     return storage->getWordStatistics(englishWord);
 }
 
@@ -23,13 +24,13 @@ Statistics StatisticsDbImpl::getStatistics() const
 
 void StatisticsDbImpl::addWordStatistics(WordStatistics wordStatistics)
 {
-    LOG_DEBUG << "Adding word statistics: "<< wordStatistics;
+    LOG_DEBUG << "Adding word statistics: " << wordStatistics;
     storage->addWordStatistics(std::move(wordStatistics));
 }
 
 void StatisticsDbImpl::addCorrectAnswer(const EnglishWord& englishWord)
 {
-    LOG_DEBUG << "Adding correct answer for: "<< englishWord;
+    LOG_DEBUG << "Adding correct answer for: " << englishWord;
     if (not storage->contains(englishWord))
     {
         addEmptyWordStatistics(englishWord);
@@ -39,7 +40,7 @@ void StatisticsDbImpl::addCorrectAnswer(const EnglishWord& englishWord)
 
 void StatisticsDbImpl::addIncorrectAnswer(const EnglishWord& englishWord)
 {
-    LOG_DEBUG << "Adding incorrect answer for: "<< englishWord;
+    LOG_DEBUG << "Adding incorrect answer for: " << englishWord;
     if (not storage->contains(englishWord))
     {
         addEmptyWordStatistics(englishWord);

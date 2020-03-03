@@ -1,8 +1,7 @@
 #include "WordsDescriptionsSerializerImpl.h"
 
-#include "plog/Log.h"
-
 #include "boost/algorithm/cxx11/all_of.hpp"
+#include "plog/Log.h"
 
 namespace
 {

@@ -10,8 +10,8 @@
 #include "WordDescriptionGenerator.h"
 #include "WordRandomizer.h"
 #include "WordViewer.h"
-#include "utils/FileAccess.h"
 #include "statisticsDb/StatisticsDb.h"
+#include "utils/FileAccess.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDb.h"
 
 // TODO: move std::cin from UserPrompt to application

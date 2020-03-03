@@ -1,8 +1,8 @@
+#include "WordDescriptionConcurrentGenerator.h"
+
 #include "gtest/gtest.h"
 
 #include "WordDescriptionServiceMock.h"
-
-#include "WordDescriptionConcurrentGenerator.h"
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;

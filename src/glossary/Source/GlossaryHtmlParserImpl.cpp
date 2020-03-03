@@ -4,10 +4,10 @@
 #include <map>
 
 #include "boost/assign/list_of.hpp"
+#include "plog/Log.h"
 
 #include "utils/HtmlTagsDeleter.h"
 #include "utils/StringHelper.h"
-#include "plog/Log.h"
 
 namespace
 {

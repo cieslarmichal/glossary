@@ -1,7 +1,8 @@
 #include "TranslationsPersistentStorage.h"
 
-#include "utils/exceptions/FileNotFound.h"
 #include "plog/Log.h"
+
+#include "utils/exceptions/FileNotFound.h"
 
 namespace translationsDb
 {
@@ -70,7 +71,7 @@ void TranslationsPersistentStorage::loadFile()
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while deserializing translations "<< e.what();
+        LOG_WARNING << "Error while deserializing translations " << e.what();
         return;
     }
 
@@ -88,7 +89,7 @@ void TranslationsPersistentStorage::serialize() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while serializing translations "<< e.what();
+        LOG_WARNING << "Error while serializing translations " << e.what();
     }
 }
 
