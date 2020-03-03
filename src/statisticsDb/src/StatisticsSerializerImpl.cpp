@@ -1,6 +1,6 @@
 #include "StatisticsSerializerImpl.h"
 
-#include "boost/algorithm/cxx11/any_of.hpp"
+#include "boost/algorithm/cxx11/all_of.hpp"
 #include "plog/Log.h"
 
 namespace
@@ -41,7 +41,7 @@ Statistics StatisticsSerializerImpl::deserialize(const std::string& jsonText) co
     }
     catch (const std::exception& e)
     {
-        LOG_WARNING <<  "Unable to parse statistics:" << e.what();
+        LOG_WARNING << "Unable to parse statistics:" << e.what();
     }
     return {};
 }
@@ -87,9 +87,9 @@ Statistics StatisticsSerializerImpl::parseStatistics(const nlohmann::json& stati
 bool StatisticsSerializerImpl::isWordStatisticsValid(const nlohmann::json& wordStatisticsJson) const
 {
     const auto requiredFields = {englishWordField, correctAnswersField, incorrectAnswersField};
-    auto wordInvalid = boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
-        return wordStatisticsJson.find(fieldName) == wordStatisticsJson.end();
+    auto wordStatisticsValid = boost::algorithm::all_of(requiredFields, [&](const auto& fieldName) {
+        return wordStatisticsJson.find(fieldName) != wordStatisticsJson.end();
     });
-    return !wordInvalid;
+    return wordStatisticsValid;
 }
 }

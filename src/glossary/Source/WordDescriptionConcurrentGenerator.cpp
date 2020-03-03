@@ -5,7 +5,8 @@
 
 using namespace wordsDescriptionsDb;
 
-WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(std::unique_ptr<WordDescriptionService> service)
+WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(
+    std::unique_ptr<WordDescriptionService> service)
     : wordDescriptionService{std::move(service)}
 {
 }
@@ -13,32 +14,25 @@ WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(std::uniq
 WordsDescriptions
 WordDescriptionConcurrentGenerator::generateWordsDescriptions(const EnglishWords& englishWords)
 {
+    const auto amountOfThreads = getAmountOfThreads();
+    std::vector<std::thread> threadPool;
+    threadPool.reserve(amountOfThreads);
+
     utils::ThreadSafeQueue<EnglishWord> englishWordsQueue{englishWords};
     utils::ThreadSafeQueue<WordDescription> wordsDescriptions;
 
-    std::thread t1(&WordDescriptionConcurrentGenerator::generatorWorker, this, std::ref(englishWordsQueue),
-                   std::ref(wordsDescriptions));
-    std::thread t2(&WordDescriptionConcurrentGenerator::generatorWorker, this, std::ref(englishWordsQueue),
-                   std::ref(wordsDescriptions));
-    std::thread t3(&WordDescriptionConcurrentGenerator::generatorWorker, this, std::ref(englishWordsQueue),
-                   std::ref(wordsDescriptions));
-    t1.join();
-    t2.join();
-    t3.join();
+    for (unsigned i = 0; i < amountOfThreads; i++)
+    {
+        threadPool.emplace_back(std::thread(&WordDescriptionConcurrentGenerator::generatorWorker, this,
+                                             std::ref(englishWordsQueue), std::ref(wordsDescriptions)));
+    }
+
+    for (auto& thread : threadPool)
+    {
+        thread.join();
+    }
 
     return wordsDescriptions.popAll();
-
-    //    WordsDescriptions wordsDescriptions;
-    //    int wordDescriptionCounter = 0;
-    //    for (const auto& englishWord : englishWords)
-    //    {
-    //        wordsDescriptions.emplace_back(generateWordDescription(englishWord));
-    //        wordDescriptionCounter++;
-    //        std::cout << "Generating wordsDescriptions " << wordDescriptionCounter << "/" <<
-    //        englishWords.size()
-    //                  << "\n";
-    //    }
-    //    return wordsDescriptions;
 }
 
 WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(const EnglishWord& englishWord)
@@ -54,7 +48,6 @@ void WordDescriptionConcurrentGenerator::generatorWorker(
     utils::ThreadSafeQueue<wordsDescriptionsDb::EnglishWord>& englishWords,
     utils::ThreadSafeQueue<wordsDescriptionsDb::WordDescription>& wordsDescriptions)
 {
-    std::cerr<<"THREAD ID: "<<std::this_thread::get_id()<<std::endl;
     while (not englishWords.empty())
     {
         if (const auto currentEnglishWord = englishWords.pop())
@@ -63,4 +56,13 @@ void WordDescriptionConcurrentGenerator::generatorWorker(
             wordsDescriptions.push(generatedWordDescription);
         }
     }
+}
+
+unsigned WordDescriptionConcurrentGenerator::getAmountOfThreads() const
+{
+    constexpr auto defaultAmountOfThreads = 4;
+    unsigned amountOfSupportedThreads = std::thread::hardware_concurrency();
+    std::cerr << amountOfSupportedThreads << " concurrent threads are supported.\n";
+    unsigned amountOfThreads = amountOfSupportedThreads !=0 ? amountOfSupportedThreads : defaultAmountOfThreads;
+    return amountOfThreads;
 }

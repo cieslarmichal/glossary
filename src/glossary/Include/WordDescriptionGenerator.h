@@ -8,9 +8,8 @@ class WordDescriptionGenerator
 public:
     virtual ~WordDescriptionGenerator() = default;
 
-    virtual wordsDescriptionsDb::WordDescription
-    generateWordDescription(const wordsDescriptionsDb::EnglishWord&) = 0;
-    // TODO: generateWords with multiple threads
     virtual wordsDescriptionsDb::WordsDescriptions
     generateWordsDescriptions(const wordsDescriptionsDb::EnglishWords&) = 0;
+    virtual wordsDescriptionsDb::WordDescription
+    generateWordDescription(const wordsDescriptionsDb::EnglishWord&) = 0;
 };

@@ -1,6 +1,6 @@
 #include "TranslationsSerializerImpl.h"
 
-#include "boost/algorithm/cxx11/any_of.hpp"
+#include "boost/algorithm/cxx11/all_of.hpp"
 #include "plog/Log.h"
 
 namespace
@@ -85,10 +85,10 @@ Translations TranslationsSerializerImpl::parseTranslations(const nlohmann::json&
 bool TranslationsSerializerImpl::isTranslationValid(const nlohmann::json& translationJson) const
 {
     const auto requiredFields = {polishWordField, englishWordField};
-    auto wordInvalid = boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
-        return translationJson.find(fieldName) == translationJson.end();
+    auto translationValid = boost::algorithm::all_of(requiredFields, [&](const auto& fieldName) {
+        return translationJson.find(fieldName) != translationJson.end();
     });
-    return !wordInvalid;
+    return translationValid;
 }
 
 }

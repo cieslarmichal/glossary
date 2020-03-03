@@ -2,7 +2,7 @@
 
 #include "plog/Log.h"
 
-#include "boost/algorithm/cxx11/any_of.hpp"
+#include "boost/algorithm/cxx11/all_of.hpp"
 
 namespace
 {
@@ -89,9 +89,9 @@ WordsDescriptionsSerializerImpl::parseWordsDescriptions(const nlohmann::json& wo
 bool WordsDescriptionsSerializerImpl::isWordDescriptionValid(const nlohmann::json& wordDescriptionData) const
 {
     const auto requiredFields = {englishWordField, descriptionField};
-    auto wordInvalid = boost::algorithm::any_of(requiredFields, [&](const auto& fieldName) {
-        return wordDescriptionData.find(fieldName) == wordDescriptionData.end();
+    auto wordDescriptionValid = boost::algorithm::all_of(requiredFields, [&](const auto& fieldName) {
+        return wordDescriptionData.find(fieldName) != wordDescriptionData.end();
     });
-    return !wordInvalid;
+    return wordDescriptionValid;
 }
 }

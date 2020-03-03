@@ -15,7 +15,6 @@
 #include "wordsDescriptionsDb/WordsDescriptionsDb.h"
 
 // TODO: move std::cin from UserPrompt to application
-// TODO: any_of to all_of
 
 class GlossaryApplication : public Application
 {
