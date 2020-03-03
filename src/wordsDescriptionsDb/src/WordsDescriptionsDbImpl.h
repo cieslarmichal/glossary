@@ -21,7 +21,7 @@ public:
 
 private:
     std::unique_ptr<WordsDescriptionsStorage> storage;
-    std::mutex lock;
+    mutable std::mutex lock;
 };
 
 }
