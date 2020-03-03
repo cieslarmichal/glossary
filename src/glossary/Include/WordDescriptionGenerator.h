@@ -9,8 +9,8 @@ public:
     virtual ~WordDescriptionGenerator() = default;
 
     virtual wordsDescriptionsDb::WordDescription
-    generateWordDescription(const wordsDescriptionsDb::EnglishWord&) const = 0;
+    generateWordDescription(const wordsDescriptionsDb::EnglishWord&) = 0;
     // TODO: generateWords with multiple threads
     virtual wordsDescriptionsDb::WordsDescriptions
-    generateWordsDescriptions(const wordsDescriptionsDb::EnglishWords&) const = 0;
+    generateWordsDescriptions(const wordsDescriptionsDb::EnglishWords&) = 0;
 };

@@ -3,6 +3,7 @@
 #include <thread>
 
 #include "gtest/gtest.h"
+
 #include "testVariables/TestStrings.h"
 
 using namespace ::testing;
@@ -32,14 +33,12 @@ void popFromOneQueueAndPushToOther(ThreadSafeQueue<std::string>& inputQueue,
 {
     while (not inputQueue.empty())
     {
-        if(const auto data = inputQueue.pop())
+        if (const auto data = inputQueue.pop())
         {
             outputQueue.push(*data);
         }
-
     }
 }
-
 }
 
 class ThreadSafeQueueTest : public Test

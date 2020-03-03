@@ -6,7 +6,7 @@ set(SOURCES
         Source/GlossaryHtmlParserImpl.cpp
         Source/DictionaryReaderImpl.cpp
         Source/HttpWordDescriptionCreatorImpl.cpp
-        Source/WordDescriptionGeneratorImpl.cpp
+        Source/WordDescriptionConcurrentGenerator.cpp
         Source/WordViewerImpl.cpp
         Source/UserPromptImpl.cpp
         Source/AnswerCheckerImpl.cpp
@@ -24,7 +24,7 @@ set(UT_SOURCES
         UT/Source/WordViewerImplTest.cpp
         UT/Source/UserPromptImplTest.cpp
         UT/Source/AnswerCheckerImplTest.cpp
-        UT/Source/WordDescriptionGeneratorImplTest.cpp
+        UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

@@ -1,13 +1,14 @@
 #include "GlossaryApplication.h"
 
 #include <iostream>
+
 #include "AnswerCheckerImpl.h"
 #include "DescriptionParserImpl.h"
 #include "DictionaryReaderImpl.h"
 #include "GlossaryHtmlParserImpl.h"
 #include "HttpWordDescriptionCreatorImpl.h"
 #include "UserPromptImpl.h"
-#include "WordDescriptionGeneratorImpl.h"
+#include "WordDescriptionConcurrentGenerator.h"
 #include "WordDescriptionServiceImpl.h"
 #include "WordRandomizerImpl.h"
 #include "WordViewerImpl.h"
@@ -39,7 +40,7 @@ void GlossaryApplication::initialize()
     std::unique_ptr<const DescriptionParser> descriptionParser = std::make_unique<DescriptionParserImpl>();
 
     wordDescriptionGenerator =
-        std::make_unique<WordDescriptionGeneratorImpl>(std::make_unique<WordDescriptionServiceImpl>(
+        std::make_unique<WordDescriptionConcurrentGenerator>(std::make_unique<WordDescriptionServiceImpl>(
             std::make_unique<HttpWordDescriptionCreatorImpl>(httpHandler, std::move(htmlParser),
                                                              std::move(descriptionParser)),
             wordsDescriptionsDb));

@@ -68,6 +68,5 @@ public:
 private:
     std::queue<T> queue;
     mutable std::mutex lock;
-    //    std::condition_variable signal;
 };
 }

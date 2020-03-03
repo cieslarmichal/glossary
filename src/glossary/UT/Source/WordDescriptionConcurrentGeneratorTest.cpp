@@ -1,8 +1,8 @@
-#include "WordDescriptionGeneratorImpl.h"
-
 #include "gtest/gtest.h"
 
 #include "WordDescriptionServiceMock.h"
+
+#include "WordDescriptionConcurrentGenerator.h"
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;
@@ -30,7 +30,7 @@ public:
     std::unique_ptr<WordDescriptionServiceMock> wordDescriptionServiceInit =
         std::make_unique<StrictMock<WordDescriptionServiceMock>>();
     WordDescriptionServiceMock* wordDescriptionService = wordDescriptionServiceInit.get();
-    WordDescriptionGeneratorImpl generator{std::move(wordDescriptionServiceInit)};
+    WordDescriptionConcurrentGenerator generator{std::move(wordDescriptionServiceInit)};
 };
 
 TEST_F(WordDescriptionGeneratorImplTest,
