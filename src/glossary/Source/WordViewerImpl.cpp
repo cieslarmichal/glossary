@@ -26,8 +26,6 @@ std::string WordViewerImpl::viewPolishWord(const PolishWord& polishWord) const
 
 std::string WordViewerImpl::getDescription(const wordsDescriptionsDb::Description& description) const
 {
-    // TODO: improve viewing: once definitions: and something like ":",
-    // examples: "//", sentences: "sentence"
     std::stringstream wordDescriptionView;
 
     const auto& defsAndExmpls = description.definitionsWithExamples;

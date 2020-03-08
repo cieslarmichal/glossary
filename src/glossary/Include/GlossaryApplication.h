@@ -27,7 +27,6 @@ private:
     void initialize();
     void loop();
 
-    // TODO: add const into unique_ptr if possible
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
     std::unique_ptr<statisticsDb::StatisticsDb> statisticsDb;

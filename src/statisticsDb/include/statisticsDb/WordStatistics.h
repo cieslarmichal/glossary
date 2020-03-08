@@ -7,7 +7,6 @@
 
 namespace statisticsDb
 {
-// TODO: add cpp file
 
 struct WordStatistics
 {

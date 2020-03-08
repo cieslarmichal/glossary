@@ -7,6 +7,5 @@ using namespace ::testing;
 class UserPromptImplTest : public Test
 {
 public:
-    // TODO: add testability
     UserPromptImpl prompt;
 };

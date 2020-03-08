@@ -44,7 +44,6 @@ std::map<std::string, std::string> tagPrefixMapping =
 
 GlossaryHtmlParserImpl::GlossaryHtmlParserImpl()
 {
-    // TODO: Refactor code
     htmlTagsDeleter = std::make_unique<utils::HtmlTagsDeleter>();
 }
 
