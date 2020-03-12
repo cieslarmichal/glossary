@@ -62,7 +62,6 @@ unsigned WordDescriptionConcurrentGenerator::getAmountOfThreads() const
 {
     constexpr auto defaultAmountOfThreads = 4;
     unsigned amountOfSupportedThreads = std::thread::hardware_concurrency();
-    std::cerr << amountOfSupportedThreads << " concurrent threads are supported.\n";
     unsigned amountOfThreads =
         amountOfSupportedThreads != 0 ? amountOfSupportedThreads : defaultAmountOfThreads;
     return amountOfThreads;

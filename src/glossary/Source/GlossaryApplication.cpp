@@ -12,6 +12,7 @@
 #include "WordDescriptionServiceImpl.h"
 #include "WordRandomizerImpl.h"
 #include "WordViewerImpl.h"
+#include "WordsBuilderImpl.h"
 #include "statisticsDb/StatisticsDbFactory.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDbFactory.h"
@@ -57,6 +58,8 @@ void GlossaryApplication::initialize()
     viewer = std::make_unique<WordViewerImpl>();
 
     wordsRandomizer = std::make_unique<WordRandomizerImpl>();
+
+    wordsBuilder = std::make_unique<WordsBuilderImpl>();
 }
 
 void GlossaryApplication::run()
@@ -68,11 +71,7 @@ void GlossaryApplication::run()
 
     const auto wordsDescriptions = wordDescriptionGenerator->generateWordsDescriptions(englishWords);
 
-    for (size_t index = 0; index < wordsDescriptions.size(); index++)
-    {
-        glossaryWords.push_back(
-            {dictionary[index].sourceText, dictionary[index].translatedText, wordsDescriptions[index]});
-    }
+    glossaryWords = wordsBuilder->buildWords(dictionary, wordsDescriptions);
 
     loop();
 }
@@ -87,6 +86,7 @@ void GlossaryApplication::loop()
         try
         {
             word = wordsRandomizer->randomizeWord(glossaryWords);
+            //            std::cerr<< "CURRENT WORD: "<<word<<"\n\n";
         }
         catch (const std::runtime_error& e)
         {
@@ -95,6 +95,7 @@ void GlossaryApplication::loop()
         }
         std::cout << viewer->viewPolishWord(word.polishWord);
         std::cout << "Insert english translation:\n";
+        std::cerr << "expected englishWord: " << word.wordDescription->englishWord << std::endl;
 
         if (word.wordDescription &&
             answerChecker->correctWordAnswer(userPrompt->getInput(), word.wordDescription->englishWord))
@@ -105,6 +106,7 @@ void GlossaryApplication::loop()
         else
         {
             std::cout << "Inorrect answer :(\n";
+            // TODO: nie dziala
             statisticsDb->addIncorrectAnswer(word.wordDescription->englishWord);
         }
 

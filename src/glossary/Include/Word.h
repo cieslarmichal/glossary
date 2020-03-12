@@ -27,6 +27,6 @@ inline bool operator==(const Word& lhs, const Word& rhs)
 
 inline std::ostream& operator<<(std::ostream& os, const Word& word)
 {
-    os << word.polishWord << " " << word.englishWord << " " << word.wordDescription;
+    os << "{polishWord: "<<word.polishWord << ", englishWord: " << word.englishWord << ", wordDescription: " << word.wordDescription<<"}";
     return os;
 }

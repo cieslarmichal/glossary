@@ -12,6 +12,7 @@ set(SOURCES
         Source/AnswerCheckerImpl.cpp
         Source/GlossaryApplication.cpp
         Source/WordRandomizerImpl.cpp
+        Source/WordsBuilderImpl.cpp
         )
 
 set(UT_SOURCES
@@ -25,6 +26,7 @@ set(UT_SOURCES
         UT/Source/UserPromptImplTest.cpp
         UT/Source/AnswerCheckerImplTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
+        UT/Source/WordsBuilderImplTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)
