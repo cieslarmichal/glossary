@@ -1,8 +1,7 @@
 #include "DictionaryReaderImpl.h"
 
-#include <utility>
-
-#include "plog/Log.h"
+#include <iostream>
+#include <sstream>
 
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
@@ -18,8 +17,6 @@ DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const utils::FileAcce
 
 std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
 {
-    LOG_DEBUG << "Reading translations from file";
-
     std::string dictionaryContent;
     try
     {
@@ -27,7 +24,7 @@ std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while reading translations from file: " << e.what();
+        std::cerr << "Error while reading translations from file: " << e.what();
         return {};
     }
 

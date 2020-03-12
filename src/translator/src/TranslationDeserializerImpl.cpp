@@ -1,6 +1,6 @@
 #include "TranslationDeserializerImpl.h"
 
-#include "plog/Log.h"
+#include <iostream>
 
 namespace translator
 {
@@ -24,7 +24,7 @@ TranslatedText TranslationDeserializerImpl::deserialize(const std::string& jsonT
     }
     catch (const std::exception& e)
     {
-        LOG_WARNING << "Unable to parse translated text:" << e.what();
+        std::cerr << "Unable to parse translated text:" << e.what();
     }
     return {};
 }
@@ -40,7 +40,7 @@ TranslatedText TranslationDeserializerImpl::readTranslation(const nlohmann::json
         }
         return translatedText;
     }
-    LOG_WARNING << "There are no translations texts\n";
+    std::cerr << "There are no translations texts\n";
     return {};
 }
 

@@ -1,7 +1,5 @@
 #include "WordDescriptionServiceImpl.h"
 
-#include "plog/Log.h"
-
 WordDescriptionServiceImpl::WordDescriptionServiceImpl(
     std::unique_ptr<HttpWordDescriptionCreator> creator,
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> db)
@@ -12,22 +10,16 @@ WordDescriptionServiceImpl::WordDescriptionServiceImpl(
 boost::optional<wordsDescriptionsDb::WordDescription>
 WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
 {
-    LOG_DEBUG << "Getting word description for: " << englishWord;
-
     if (const auto wordDescriptionFromDb = getWordDescriptionFromDb(englishWord))
     {
-        LOG_DEBUG << "Got word description from word descriptions database";
         return wordDescriptionFromDb;
     }
 
     if (const auto createdWordDescription = createWordDescriptionFromHttp(englishWord))
     {
-        LOG_DEBUG << "Got word description from http";
         saveWordDescriptionInDb(*createdWordDescription);
         return createdWordDescription;
     }
-
-    LOG_DEBUG << "No word description for " << englishWord;
     return boost::none;
 }
 

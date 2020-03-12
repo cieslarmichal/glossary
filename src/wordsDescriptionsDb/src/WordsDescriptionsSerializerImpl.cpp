@@ -1,7 +1,8 @@
 #include "WordsDescriptionsSerializerImpl.h"
 
+#include <iostream>
+
 #include "boost/algorithm/cxx11/all_of.hpp"
-#include "plog/Log.h"
 
 namespace
 {
@@ -40,7 +41,7 @@ WordsDescriptions WordsDescriptionsSerializerImpl::deserialize(const std::string
     }
     catch (const std::exception& e)
     {
-        LOG_WARNING << "Unable to parse wordDescriptions:" << e.what();
+        std::cerr << "Unable to parse wordDescriptions:" << e.what();
     }
     return {};
 }
@@ -60,7 +61,7 @@ WordsDescriptions WordsDescriptionsSerializerImpl::readWordsDescriptions(const n
     {
         return parseWordsDescriptions(json[wordsDescriptionsField]);
     }
-    LOG_WARNING << "There are no wordsDescriptions stored\n";
+    std::cerr << "There are no wordsDescriptions stored\n";
     return {};
 }
 
@@ -79,7 +80,7 @@ WordsDescriptionsSerializerImpl::parseWordsDescriptions(const nlohmann::json& wo
         }
         else
         {
-            LOG_WARNING << "WordDescription does not contain all required data\n";
+            std::cerr << "WordDescription does not contain all required data\n";
         }
     }
     return wordsDescriptions;

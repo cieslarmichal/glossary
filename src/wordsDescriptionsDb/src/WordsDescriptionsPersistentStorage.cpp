@@ -1,6 +1,6 @@
 #include "WordsDescriptionsPersistentStorage.h"
 
-#include "plog/Log.h"
+#include <iostream>
 
 #include "utils/exceptions/FileNotFound.h"
 
@@ -68,7 +68,7 @@ void WordsDescriptionsPersistentStorage::loadFile()
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while serializing words descriptions " << e.what();
+        std::cerr << "Error while serializing words descriptions " << e.what();
         return;
     }
 
@@ -86,7 +86,7 @@ void WordsDescriptionsPersistentStorage::serialize() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while serializing words descriptions " << e.what();
+        std::cerr << "Error while serializing words descriptions " << e.what();
     }
 }
 }

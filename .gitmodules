@@ -7,6 +7,3 @@
 [submodule "curl"]
 	path = externals/curl
 	url = https://github.com/curl/curl.git
-[submodule "plog"]
-	path = externals/plog
-	url = https://github.com/SergiusTheBest/plog.git

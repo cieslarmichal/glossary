@@ -1,6 +1,6 @@
 #include "TranslationsPersistentStorage.h"
 
-#include "plog/Log.h"
+#include <iostream>
 
 #include "utils/exceptions/FileNotFound.h"
 
@@ -71,7 +71,7 @@ void TranslationsPersistentStorage::loadFile()
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while deserializing translations " << e.what();
+        std::cerr << "Error while deserializing translations " << e.what();
         return;
     }
 
@@ -89,7 +89,7 @@ void TranslationsPersistentStorage::serialize() const
     }
     catch (const utils::exceptions::FileNotFound& e)
     {
-        LOG_WARNING << "Error while serializing translations " << e.what();
+        std::cerr << "Error while serializing translations " << e.what();
     }
 }
 

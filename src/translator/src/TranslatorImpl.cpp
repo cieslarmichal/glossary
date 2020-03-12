@@ -1,6 +1,6 @@
 #include "TranslatorImpl.h"
 
-#include "plog/Log.h"
+#include <iostream>
 
 #include "webConnection/exceptions/ConnectionFailed.h"
 
@@ -24,7 +24,6 @@ boost::optional<TranslatedText> TranslatorImpl::translate(const std::string& sou
                                                           translator::SourceLanguage sourceLanguage,
                                                           translator::TargetLanguage targetLanguage) const
 {
-    LOG_DEBUG << "Translating \"" << sourceText << "\" from " << sourceLanguage << " to " << targetLanguage;
     const auto request = requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage);
     const auto response = getResponseFromTranslationApi(request);
 
@@ -38,14 +37,13 @@ boost::optional<TranslatedText> TranslatorImpl::translate(const std::string& sou
 webConnection::Response
 TranslatorImpl::getResponseFromTranslationApi(const webConnection::Request& request) const
 {
-    LOG_DEBUG << "Sending: " << request << " request for translation to translation api";
     try
     {
         return httpHandler->get(request);
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
-        LOG_DEBUG << "Error while connecting to translation api " << e.what();
+        std::cerr << "Error while connecting to translation api: " << e.what();
     }
     return {};
 }

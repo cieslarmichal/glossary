@@ -1,7 +1,5 @@
 #include "GetProjectPath.h"
 
-#include "plog/Log.h"
-
 #include "GetExecutablePath.h"
 #include "StringHelper.h"
 #include "exceptions/FileNotFound.h"
@@ -24,7 +22,6 @@ std::string getProjectPath(const std::string& projectName)
     }
 
     const auto projectPath = utils::substring(currentPath, 0, projectNamePosition + projectName.length() + 1);
-    LOG_DEBUG << "Absolute project path: " << projectPath;
     return projectPath;
 }
 }

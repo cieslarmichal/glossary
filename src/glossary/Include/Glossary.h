@@ -13,13 +13,10 @@ class Glossary
 {
 public:
     Glossary();
-    ~Glossary();
 
     void run();
 
 private:
-    void initializeLogger() const;
-
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<Application> application;
 };

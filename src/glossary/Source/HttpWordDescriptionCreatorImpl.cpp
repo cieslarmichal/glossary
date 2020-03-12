@@ -1,6 +1,6 @@
 #include "HttpWordDescriptionCreatorImpl.h"
 
-#include "plog/Log.h"
+#include <iostream>
 
 #include "GlossaryHtmlParserImpl.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
@@ -20,8 +20,6 @@ HttpWordDescriptionCreatorImpl::HttpWordDescriptionCreatorImpl(
 boost::optional<wordsDescriptionsDb::WordDescription> HttpWordDescriptionCreatorImpl::createWordDescription(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
-    LOG_DEBUG << "Creating word description from " << urlAddress << " for: " << englishWord;
-
     const auto httpContent = getHttpContent(englishWord);
     if (!httpContent)
     {
@@ -46,7 +44,7 @@ HttpWordDescriptionCreatorImpl::getHttpContent(const EnglishWord& englishWord) c
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
-        LOG_WARNING << "Get content from http failed: " << e.what();
+        std::cerr << "Get content from http failed: " << e.what();
         return boost::none;
     }
 }
