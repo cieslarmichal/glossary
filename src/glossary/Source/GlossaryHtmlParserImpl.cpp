@@ -4,6 +4,7 @@
 #include <map>
 
 #include "boost/assign/list_of.hpp"
+
 #include "utils/HtmlTagsDeleter.h"
 #include "utils/StringHelper.h"
 

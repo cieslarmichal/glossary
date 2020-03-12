@@ -20,6 +20,7 @@
 GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
+
     initialize();
 }
 

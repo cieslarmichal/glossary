@@ -47,9 +47,11 @@ TEST_F(WordsBuilderImplTest, givenTranslationsWithWordsDescriptionsInOtherOrder_
     ASSERT_EQ(actualWords, words);
 }
 
-TEST_F(WordsBuilderImplTest, givenTranslationsWithoutOneWordDescription_shouldBindByEnglishWordsAndAddEmptyDescription)
+TEST_F(WordsBuilderImplTest,
+       givenTranslationsWithoutOneWordDescription_shouldBindByEnglishWordsAndAddEmptyDescription)
 {
-    const auto actualWords = wordsBuilder.buildWords(translations, wordsDescriptionsWithMissingWordDescription);
+    const auto actualWords =
+        wordsBuilder.buildWords(translations, wordsDescriptionsWithMissingWordDescription);
 
     ASSERT_EQ(actualWords, wordsWithOneEmptyDescription);
 }

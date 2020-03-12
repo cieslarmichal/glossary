@@ -9,7 +9,6 @@ Glossary::Glossary()
 {
 }
 
-
 void Glossary::run()
 {
     application->run();
