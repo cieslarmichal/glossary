@@ -174,6 +174,14 @@ TEST_F(FileAccessImplTest, givenExistingFile_shouldRemoveFile)
     ASSERT_FALSE(fileAccess.exists(newFilePath));
 }
 
+TEST_F(FileAccessImplTest, givenNonexistingDirectory_shouldNotRenameDirectory)
+{
+    fileAccess.rename(newDirectoryPath, newDirectoryChangedPath);
+
+    ASSERT_FALSE(fileAccess.exists(newDirectoryPath));
+    ASSERT_FALSE(fileAccess.exists(newDirectoryChangedPath));
+}
+
 TEST_F(FileAccessImplTest, givenExistingDirectory_shouldRenameDirectory)
 {
     prepareCreatedDirectory(newDirectoryPath);

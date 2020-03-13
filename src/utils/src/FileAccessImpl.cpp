@@ -91,6 +91,7 @@ void FileAccessImpl::rename(const std::string& path, const std::string& newPath)
 {
     if (not exists(path))
     {
+        //TODO: cover this path in tests
         return;
     }
     const std::string oldAbsolutePath = getAbsolutePath(path);

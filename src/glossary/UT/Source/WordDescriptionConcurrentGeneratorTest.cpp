@@ -3,9 +3,12 @@
 #include "gtest/gtest.h"
 
 #include "WordDescriptionServiceMock.h"
+#include "boost/algorithm/cxx11/all_of.hpp"
+#include "boost/algorithm/cxx11/any_of.hpp"
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;
+using namespace boost::algorithm;
 
 namespace
 {
@@ -15,13 +18,13 @@ const EnglishWord englishWord3{"englishWord3"};
 const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
 const WordDescription wordDescription1{englishWord1, Description{}};
 const WordDescription wordDescription2{
-    englishWord1,
+    englishWord2,
     Description{DefinitionsWithExamples{DefinitionWithExample{Definition{"definition"}, Example{"example"}}},
                 {}}};
 const WordDescription wordDescription3{englishWord3, Description{}};
 const boost::optional<WordDescription> wordDescription1Opt{wordDescription1};
 const boost::optional<WordDescription> wordDescription2Opt{wordDescription2};
-const WordsDescriptions wordsDescriptions{wordDescription1, wordDescription2, wordDescription3};
+const WordsDescriptions expectedWordsDescriptions{wordDescription1, wordDescription2, wordDescription3};
 }
 
 class WordDescriptionGeneratorImplTest : public Test
@@ -65,5 +68,8 @@ TEST_F(WordDescriptionGeneratorImplTest,
 
     const auto actualWordsDescriptions = generator.generateWordsDescriptions(englishWords);
 
-    ASSERT_EQ(actualWordsDescriptions, wordsDescriptions);
+    ASSERT_TRUE(all_of(actualWordsDescriptions, [&](const auto& wordDescription) {
+      return any_of(expectedWordsDescriptions,
+                    [&](const auto& expectedWordDescription) { return wordDescription == expectedWordDescription; });
+    }));
 }
