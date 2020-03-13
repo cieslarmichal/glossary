@@ -7,5 +7,5 @@ class DictionaryReader
 public:
     virtual ~DictionaryReader() = default;
 
-    virtual Dictionary read() const = 0;
+    virtual Dictionaries readDictionaries() const = 0;
 };

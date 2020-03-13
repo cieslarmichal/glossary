@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "testVariables/TestStrings.h"
+#include "testDirectory/testVariables/TestStrings.h"
 
 using namespace ::testing;
 using namespace utils;

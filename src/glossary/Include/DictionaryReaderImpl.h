@@ -12,7 +12,7 @@ class DictionaryReaderImpl : public DictionaryReader
 public:
     explicit DictionaryReaderImpl(std::shared_ptr<const utils::FileAccess>);
 
-    Dictionary read() const override;
+    Dictionaries readDictionaries() const override;
 
 private:
     Dictionary processDictionaryContent(const std::string&) const;

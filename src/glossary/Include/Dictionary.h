@@ -1,7 +1,11 @@
 #pragma once
 
-#include <vector>
+#include <map>
 
 #include "translationsDb/Translation.h"
 
-using Dictionary = std::vector<translationsDb::Translation>;
+using Dictionary = translationsDb::Translations;
+
+using DictionaryName = std::string;
+
+using Dictionaries = std::map<DictionaryName, Dictionary>;

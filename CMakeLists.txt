@@ -5,7 +5,7 @@ project( ${PROJECT_NAME} )
 
 add_subdirectory(externals)
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 set( CMAKE_CXX_FLAGS_DEBUG "-fsanitize=address" )
 set( FLAGS -std=c++17 -Wall -g3 -fno-omit-frame-pointer -Wextra -Werror)
 
@@ -13,7 +13,6 @@ set(GMOCK_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googlemock/inclu
 set(GTEST_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googletest/include")
 set(JSON_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/json/include")
 set(CURL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/curl/include/curl")
-set(PLOG_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/plog/include")
 
 enable_testing()
 

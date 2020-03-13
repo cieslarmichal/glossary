@@ -11,7 +11,7 @@ using namespace utils;
 
 namespace
 {
-const std::string dictionaryFilePath{"database/translations.txt"};
+const std::string dictionaryFilePath{"database/input.txt"};
 const std::string content{"car samochod\n"
                           "air powietrze\n"};
 const std::string contentWithTwoWordsAndOneIncorrect{"car samochod\n"

@@ -7,7 +7,7 @@
 #include "utils/exceptions/FileNotFound.h"
 
 const std::string DictionaryReaderImpl::fileDirectory{"database/"};
-const std::string DictionaryReaderImpl::fileName{"translations.txt"};
+const std::string DictionaryReaderImpl::fileName{"input.txt"};
 const std::string DictionaryReaderImpl::filePath{fileDirectory + fileName};
 
 DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const utils::FileAccess> access)
@@ -15,7 +15,7 @@ DictionaryReaderImpl::DictionaryReaderImpl(std::shared_ptr<const utils::FileAcce
 {
 }
 
-std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
+Dictionaries DictionaryReaderImpl::readDictionaries() const
 {
     std::string dictionaryContent;
     try
@@ -28,11 +28,12 @@ std::vector<translationsDb::Translation> DictionaryReaderImpl::read() const
         return {};
     }
 
-    return processDictionaryContent(dictionaryContent);
+    std::map<DictionaryName, Dictionary> dictionaries;
+    dictionaries["base"] = processDictionaryContent(dictionaryContent);
+    return dictionaries;
 }
 
-std::vector<translationsDb::Translation>
-DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryContent) const
+Dictionary DictionaryReaderImpl::processDictionaryContent(const std::string& dictionaryContent) const
 {
     std::vector<translationsDb::Translation> wordsWithTranslation;
     for (const auto& line : utils::getSplitLines(dictionaryContent))

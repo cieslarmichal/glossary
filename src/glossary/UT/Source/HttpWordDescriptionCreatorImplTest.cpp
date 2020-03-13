@@ -7,10 +7,10 @@
 #include "GlossaryHtmlParserMock.h"
 #include "webConnection/HttpHandlerMock.h"
 
+#include "../../../utils/src/FileAccessImpl.h"
 #include "testVariables/HtmlContent.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "testVariables/WordDescriptionFromParser.h"
-#include "utils/FileAccessImpl.h"
 
 using namespace ::testing;
 

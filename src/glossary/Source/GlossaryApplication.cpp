@@ -27,7 +27,8 @@ GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> file
 void GlossaryApplication::initialize()
 {
     dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
-    dictionary = dictionaryReader->read();
+    dictionaries = dictionaryReader->readDictionaries();
+    baseDictionary = dictionaries.at("base");
 
     std::unique_ptr<const wordsDescriptionsDb::WordsDescriptionsDbFactory> wordsDescriptionsDbFactory =
         wordsDescriptionsDb::WordsDescriptionsDbFactory::createWordsDescriptionsDbFactory(fileAccess);
@@ -65,14 +66,14 @@ void GlossaryApplication::initialize()
 
 void GlossaryApplication::run()
 {
-    for (const auto& dictWord : dictionary)
+    for (const auto& dictWord : baseDictionary)
     {
         englishWords.push_back(dictWord.translatedText);
     }
 
     const auto wordsDescriptions = wordDescriptionGenerator->generateWordsDescriptions(englishWords);
 
-    glossaryWords = wordsBuilder->buildWords(dictionary, wordsDescriptions);
+    glossaryWords = wordsBuilder->buildWords(baseDictionary, wordsDescriptions);
 
     loop();
 }

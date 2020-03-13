@@ -38,7 +38,8 @@ private:
     std::unique_ptr<const DictionaryReader> dictionaryReader;
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> wordsDescriptionsDb;
     std::unique_ptr<WordsBuilder> wordsBuilder;
-    Dictionary dictionary;
+    Dictionaries dictionaries;
+    Dictionary baseDictionary;
     EnglishWords englishWords;
     Words glossaryWords;
 };
