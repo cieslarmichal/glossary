@@ -32,11 +32,11 @@ const std::vector<std::string> filenamesWithoutFiltering{filenameForReading, pdf
 const std::vector<std::string> filenamesAfterFiltering{filenameForReading, pdfFile, filenameForWriting};
 const std::vector<std::string> noExtensionsToFilter{};
 const std::vector<std::string> extensionsToFilter{".txt", ".pdf"};
-const std::string newDirectoryPath{testExperimentalDirectory + "xxx/"};
-const std::string newFileInDirectoryPath{newDirectoryPath + "aaaa.txt"};
-const std::string newDirectoryChangedPath{testExperimentalDirectory + "yyy/"};
-const std::string newFilePath{testExperimentalDirectory + "xxx.txt"};
-const std::string newFileChangedPath{testExperimentalDirectory + "yyy.txt"};
+const std::string newDirectoryPath{testExperimentalDirectory + "xxx"};
+const std::string newFileInDirectoryPath{newDirectoryPath + "/aaaa.txt"};
+const std::string newDirectoryChangedPath{testExperimentalDirectory + "/yyy"};
+const std::string newFilePath{testExperimentalDirectory + "/xxx.txt"};
+const std::string newFileChangedPath{testExperimentalDirectory + "/yyy.txt"};
 }
 
 class FileAccessImplTest : public Test
@@ -113,7 +113,10 @@ TEST_F(FileAccessImplTest,
 {
     const auto actualFilenames = fileAccess.getDirectoryFilenames(testDirectory, noExtensionsToFilter);
 
-    ASSERT_EQ(actualFilenames, filenamesWithoutFiltering);
+    ASSERT_TRUE(all_of(actualFilenames, [&](const std::string& filepath) {
+      return any_of(filenamesWithoutFiltering,
+                    [&](const std::string& filename) { return ends_with(filepath, filename); });
+    }));
 }
 
 TEST_F(FileAccessImplTest,
@@ -121,7 +124,10 @@ TEST_F(FileAccessImplTest,
 {
     const auto actualFilenames = fileAccess.getDirectoryFilenames(testDirectory, extensionsToFilter);
 
-    ASSERT_EQ(actualFilenames, filenamesAfterFiltering);
+    ASSERT_TRUE(all_of(actualFilenames, [&](const std::string& filepath) {
+      return any_of(filenamesAfterFiltering,
+                    [&](const std::string& filename) { return ends_with(filepath, filename); });
+    }));
 }
 
 TEST_F(FileAccessImplTest, givenExistingPath_shouldReturnTrue)
