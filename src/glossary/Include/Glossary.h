@@ -3,7 +3,6 @@
 #include <memory>
 
 #include "Application.h"
-#include "utils/FileAccess.h"
 
 // TODO: QT maybe in future
 // TODO: probabilty
@@ -16,6 +15,5 @@ public:
     void run();
 
 private:
-    std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<Application> application;
 };

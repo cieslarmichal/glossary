@@ -1,6 +1,6 @@
 #include "Glossary.h"
 
-int main(int, char**)
+int main()
 {
     Glossary app;
     app.run();

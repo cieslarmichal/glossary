@@ -1,11 +1,11 @@
 #include "Glossary.h"
 
-#include "../../utils/src/FileAccessImpl.h"
 #include "GlossaryApplication.h"
+#include "utils/FileAccessFactory.h"
 
 Glossary::Glossary()
-    : fileAccess{std::make_shared<utils::FileAccessImpl>("glossary")},
-      application{std::make_unique<GlossaryApplication>(fileAccess)}
+    : application{std::make_unique<GlossaryApplication>(
+          utils::FileAccessFactory::createFileAccessFactory()->createFileAccess("glossary"))}
 {
 }
 
