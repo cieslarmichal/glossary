@@ -32,11 +32,11 @@ const std::vector<std::string> filenamesWithoutFiltering{filenameForReading, pdf
 const std::vector<std::string> filenamesAfterFiltering{filenameForReading, pdfFile, filenameForWriting};
 const std::vector<std::string> noExtensionsToFilter{};
 const std::vector<std::string> extensionsToFilter{".txt", ".pdf"};
-const std::string newDirectoryPath{testExperimentalDirectory + "xxx"};
-const std::string newFileInDirectoryPath{newDirectoryPath + "/aaaa.txt"};
-const std::string newDirectoryChangedPath{testExperimentalDirectory + "/yyy"};
-const std::string newFilePath{testExperimentalDirectory + "/xxx.txt"};
-const std::string newFileChangedPath{testExperimentalDirectory + "/yyy.txt"};
+const std::string newDirectoryPath{testExperimentalDirectory + "xxx/"};
+const std::string newFileInDirectoryPath{newDirectoryPath + "aaaa.txt"};
+const std::string newDirectoryChangedPath{testExperimentalDirectory + "yyy/"};
+const std::string newFilePath{testExperimentalDirectory + "xxx.txt"};
+const std::string newFileChangedPath{testExperimentalDirectory + "yyy.txt"};
 }
 
 class FileAccessImplTest : public Test
