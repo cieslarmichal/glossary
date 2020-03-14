@@ -25,14 +25,14 @@ public:
 
 TEST_F(FileExtensionFilterTest, givenFilenamesAndEmptyExtensionsListShouldNotFilter)
 {
-    const auto filteredFilenames = fileExtensionsFilter.filter(filenames, noExtensions);
+    const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, noExtensions);
 
     ASSERT_EQ(filteredFilenames, filenames);
 }
 
 TEST_F(FileExtensionFilterTest, givenFilenamesAndExtensionsListShouldFilter)
 {
-    const auto filteredFilenames = fileExtensionsFilter.filter(filenames, extensions);
+    const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, extensions);
 
     ASSERT_EQ(filteredFilenames, filenamesAfterFiltering);
 }

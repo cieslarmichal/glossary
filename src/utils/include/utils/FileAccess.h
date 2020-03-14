@@ -17,7 +17,7 @@ public:
     virtual void remove(const std::string& path) const = 0;
     virtual void rename(const std::string& path, const std::string& filename) const = 0;
     virtual bool exists(const std::string& path) const = 0;
-    virtual std::vector<std::string> getDirectoryFilepaths(const std::string& path) const = 0;
+    virtual std::vector<std::string> getDirectoryFilePaths(const std::string& path) const = 0;
     virtual std::vector<std::string>
     getDirectoryFilenames(const std::string& path, const std::vector<std::string>& extensions) const = 0;
 };

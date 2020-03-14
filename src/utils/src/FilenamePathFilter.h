@@ -1,22 +1,23 @@
 #pragma once
 
+#include <experimental/filesystem>
 #include <string>
 #include <vector>
 
-#include <experimental/filesystem>
 #include "boost/optional.hpp"
 
 namespace utils
 {
-using ListOfFiles = std::vector<std::string>;
+namespace fs = std::experimental::filesystem;
+using FilePaths = std::vector<std::string>;
 
 class FilenamePathFilter
 {
 public:
-    ListOfFiles filter(const ListOfFiles&) const;
+    FilePaths filterFilenames(const FilePaths&) const;
 
 private:
-    boost::optional<std::string> getFilename(const std::string&) const;
-    bool isFile(const std::experimental::filesystem::path&) const;
+    boost::optional<std::string> getFilename(const fs::path&) const;
+    bool isFile(const fs::path&) const;
 };
 }

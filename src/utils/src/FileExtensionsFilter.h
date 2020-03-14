@@ -1,18 +1,20 @@
 #pragma once
 
+#include <experimental/filesystem>
 #include <string>
 #include <vector>
 
 namespace utils
 {
-using ListOfFiles = std::vector<std::string>;
+namespace fs = std::experimental::filesystem;
+using FilePaths = std::vector<std::string>;
 
 class FileExtensionsFilter
 {
 public:
-    ListOfFiles filter(const ListOfFiles&, const std::vector<std::string>&) const;
+    FilePaths filterByExtensions(const FilePaths&, const std::vector<std::string>& extensions) const;
 
 private:
-    bool containsAnyOfExtensions(const std::string&, const std::vector<std::string>& fileExtensions) const;
+    bool containsAnyOfExtensions(const fs::path&, const std::vector<std::string>& fileExtensions) const;
 };
 }

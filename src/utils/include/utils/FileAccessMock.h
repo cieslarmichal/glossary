@@ -16,7 +16,7 @@ public:
     MOCK_CONST_METHOD1(remove, void(const std::string&));
     MOCK_CONST_METHOD2(rename, void(const std::string&, const std::string&));
     MOCK_CONST_METHOD1(exists, bool(const std::string&));
-    MOCK_CONST_METHOD1(getDirectoryFilepaths, std::vector<std::string>(const std::string&));
+    MOCK_CONST_METHOD1(getDirectoryFilePaths, std::vector<std::string>(const std::string&));
     MOCK_CONST_METHOD2(getDirectoryFilenames,
                        std::vector<std::string>(const std::string&, const std::vector<std::string>&));
 };

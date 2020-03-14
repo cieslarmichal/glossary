@@ -29,10 +29,12 @@ const std::string fileInsideDummyDir{"fileInsideDir.txt"};
 const std::string jpgFile{"jpgFile.jpg"};
 const std::string pdfFile{"pdfFile.pdf"};
 const std::string incorrectPath = "433\\UTzxxxx/fi123xtF";
-const std::vector<std::string> filenamesWithoutFiltering{filenameForReading, pdfFile, filenameForWriting, dummyDirectoryName, fileInsideDummyDir,
-                                                         jpgFile};
-const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading,jpgFile, pdfFile, filenameForWriting, fileInsideDummyDir};
-const std::vector<std::string> filenamesAfterTxtAndFileFiltering{filenameForReading, filenameForWriting, fileInsideDummyDir};
+const std::vector<std::string> filenamesWithoutFiltering{
+    filenameForReading, pdfFile, filenameForWriting, dummyDirectoryName, fileInsideDummyDir, jpgFile};
+const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading, jpgFile, pdfFile,
+                                                           filenameForWriting, fileInsideDummyDir};
+const std::vector<std::string> filenamesAfterTxtAndFileFiltering{filenameForReading, filenameForWriting,
+                                                                 fileInsideDummyDir};
 const std::vector<std::string> noExtensionsToFilter{};
 const std::vector<std::string> txtExtensionsToFilter{".txt"};
 const std::string newDirectoryPath{testExperimentalDirectory + "xxx/"};
@@ -98,12 +100,12 @@ TEST_F(ProjectFileAccessTest, givenCorrectPath_shouldReturnContentOfFile)
 
 TEST_F(ProjectFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
 {
-    ASSERT_THROW(fileAccess.getDirectoryFilepaths(incorrectPath), exceptions::DirectoryNotFound);
+    ASSERT_THROW(fileAccess.getDirectoryFilePaths(incorrectPath), exceptions::DirectoryNotFound);
 }
 
 TEST_F(ProjectFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilepaths)
 {
-    const auto actualFilepaths = fileAccess.getDirectoryFilepaths(testDirectory);
+    const auto actualFilepaths = fileAccess.getDirectoryFilePaths(testDirectory);
 
     ASSERT_TRUE(all_of(actualFilepaths, [&](const std::string& filepath) {
         return any_of(filenamesWithoutFiltering,

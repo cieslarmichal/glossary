@@ -1,18 +1,14 @@
 #include "FilenamePathFilter.h"
 
-#include <iostream>
-
 namespace utils
 {
 
-namespace fs = std::experimental::filesystem;
-
-ListOfFiles FilenamePathFilter::filter(const ListOfFiles& filepaths) const
+FilePaths FilenamePathFilter::filterFilenames(const FilePaths& filePaths) const
 {
     std::vector<std::string> filenames;
-    for (const auto& filepath : filepaths)
+    for (const auto& filepath : filePaths)
     {
-        if(const auto filename = getFilename(filepath))
+        if (const auto filename = getFilename(filepath))
         {
             filenames.emplace_back(*filename);
         }
@@ -20,12 +16,11 @@ ListOfFiles FilenamePathFilter::filter(const ListOfFiles& filepaths) const
     return filenames;
 }
 
-boost::optional<std::string> FilenamePathFilter::getFilename(const std::string& path) const
+boost::optional<std::string> FilenamePathFilter::getFilename(const fs::path& filePath) const
 {
-    const auto filepath = fs::path{path};
-    if(isFile(filepath))
+    if (isFile(filePath))
     {
-        return static_cast<std::string>(filepath.filename());
+        return static_cast<std::string>(filePath.filename());
     }
     return boost::none;
 }

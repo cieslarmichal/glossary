@@ -1,7 +1,8 @@
 #include "FilenamePathFilter.h"
-#include "GetProjectPath.h"
 
 #include "gtest/gtest.h"
+
+#include "GetProjectPath.h"
 
 using namespace ::testing;
 using namespace utils;
@@ -21,8 +22,10 @@ const std::string jpgFilePath{testDirectory + jpgFilename};
 const std::string pdfFilePath{testDirectory + pdfFilename};
 const std::string dummyDirectoryName{testDirectory + "dummyDir/"};
 const std::string fileInsideDummyDir{dummyDirectoryName + fileInsideDirFilename};
-const std::vector<std::string> filepaths{pathForReading, pathForWriting, jpgFilePath, pdfFilePath, dummyDirectoryName, fileInsideDummyDir};
-const std::vector<std::string> filenamesAfterFiltering{filenameForReading, filenameForWriting, jpgFilename, pdfFilename, fileInsideDirFilename};
+const std::vector<std::string> filepaths{pathForReading, pathForWriting,     jpgFilePath,
+                                         pdfFilePath,    dummyDirectoryName, fileInsideDummyDir};
+const std::vector<std::string> filenamesAfterFiltering{filenameForReading, filenameForWriting, jpgFilename,
+                                                       pdfFilename, fileInsideDirFilename};
 }
 
 class FilenamePathFilterTest : public Test
@@ -33,7 +36,7 @@ public:
 
 TEST_F(FilenamePathFilterTest, givenFilenamesAndEmptyExtensionsListShouldNotFilter)
 {
-    const auto filteredFilenames = filenamePathFilter.filter(filepaths);
+    const auto filteredFilenames = filenamePathFilter.filterFilenames(filepaths);
 
     ASSERT_EQ(filteredFilenames, filenamesAfterFiltering);
 }

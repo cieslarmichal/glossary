@@ -1,34 +1,37 @@
 #include "FileExtensionsFilter.h"
 
+#include <experimental/filesystem>
+
 #include "boost/algorithm/cxx11/any_of.hpp"
-#include "boost/algorithm/string/predicate.hpp"
+
+namespace fs = std::experimental::filesystem;
 
 namespace utils
 {
-ListOfFiles FileExtensionsFilter::filter(const ListOfFiles& listOfFiles,
-                                         const std::vector<std::string>& extensions) const
+FilePaths FileExtensionsFilter::filterByExtensions(const FilePaths& listOfFiles,
+                                                   const std::vector<std::string>& extensions) const
 {
-    ListOfFiles filteredFiles;
+    FilePaths filteredFilePaths;
 
     for (const auto& filename : listOfFiles)
     {
         if (containsAnyOfExtensions(filename, extensions))
         {
-            filteredFiles.push_back(filename);
+            filteredFilePaths.push_back(filename);
         }
     }
 
-    if (filteredFiles.empty())
+    if (filteredFilePaths.empty())
     {
         return listOfFiles;
     }
-    return filteredFiles;
+    return filteredFilePaths;
 }
 
-bool FileExtensionsFilter::containsAnyOfExtensions(const std::string& filename,
-                                             const std::vector<std::string>& extensions) const
+bool FileExtensionsFilter::containsAnyOfExtensions(const fs::path& filename,
+                                                   const std::vector<std::string>& extensions) const
 {
-    return boost::algorithm::any_of(
-        extensions, [&](const auto& extension) { return boost::algorithm::ends_with(filename, extension); });
+    return boost::algorithm::any_of(extensions,
+                                    [&](const auto& extension) { return filename.extension() == extension; });
 }
 }

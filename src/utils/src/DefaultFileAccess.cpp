@@ -90,7 +90,7 @@ bool DefaultFileAccess::exists(const std::string& absolutePath) const
     return fs::exists(absolutePath);
 }
 
-std::vector<std::string> DefaultFileAccess::getDirectoryFilepaths(const std::string& absolutePath) const
+std::vector<std::string> DefaultFileAccess::getDirectoryFilePaths(const std::string& absolutePath) const
 {
     fs::path directoryPath(absolutePath);
 
@@ -112,9 +112,8 @@ std::vector<std::string>
 DefaultFileAccess::getDirectoryFilenames(const std::string& absolutePath,
                                          const std::vector<std::string>& extensions) const
 {
-    const auto filenames = filenamePathFilter.filter(getDirectoryFilepaths(absolutePath));
-    const auto filteredFilenames =
-        fileExtensionsFilter.filter(filenames, extensions);
+    const auto filenames = filenamePathFilter.filterFilenames(getDirectoryFilePaths(absolutePath));
+    const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, extensions);
     return filteredFilenames;
 }
 
