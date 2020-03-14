@@ -3,6 +3,9 @@
 #include <string>
 #include <vector>
 
+#include <experimental/filesystem>
+#include "boost/optional.hpp"
+
 namespace utils
 {
 using ListOfFiles = std::vector<std::string>;
@@ -13,6 +16,7 @@ public:
     ListOfFiles filter(const ListOfFiles&) const;
 
 private:
-    std::string getFilename(const std::string&) const;
+    boost::optional<std::string> getFilename(const std::string&) const;
+    bool isFile(const std::experimental::filesystem::path&) const;
 };
 }

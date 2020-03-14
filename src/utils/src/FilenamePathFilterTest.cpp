@@ -1,4 +1,5 @@
 #include "FilenamePathFilter.h"
+#include "GetProjectPath.h"
 
 #include "gtest/gtest.h"
 
@@ -7,16 +8,21 @@ using namespace utils;
 
 namespace
 {
-const std::string filename1{"file1.txt"};
-const std::string filename2{"file2.pdf"};
-const std::string filename3{"file3.h"};
-const std::string filename4{"x"};
-const std::string filepath1{"/home/michal/" + filename1};
-const std::string filepath2{"/home/michal/" + filename2};
-const std::string filepath3{filename3};
-const std::string filepath4{"/home/michal/" + filename4};
-const std::vector<std::string> filepaths{filepath1, filepath2, filepath3, filepath4};
-const std::vector<std::string> filenamesAfterFiltering{filename1, filename2, filename3, filename4};
+const std::string projectPath{getProjectPath("glossary")};
+const std::string testDirectory = projectPath + "src/utils/src/testDirectory/testFiles/";
+const std::string filenameForReading = "testFileForReading.txt";
+const std::string filenameForWriting = "testFileForWriting.txt";
+const std::string jpgFilename{"jpgFile.jpg"};
+const std::string pdfFilename{"pdfFile.pdf"};
+const std::string fileInsideDirFilename{"fileInsideDir.txt"};
+const std::string pathForReading{testDirectory + filenameForReading};
+const std::string pathForWriting{testDirectory + filenameForWriting};
+const std::string jpgFilePath{testDirectory + jpgFilename};
+const std::string pdfFilePath{testDirectory + pdfFilename};
+const std::string dummyDirectoryName{testDirectory + "dummyDir/"};
+const std::string fileInsideDummyDir{dummyDirectoryName + fileInsideDirFilename};
+const std::vector<std::string> filepaths{pathForReading, pathForWriting, jpgFilePath, pdfFilePath, dummyDirectoryName, fileInsideDummyDir};
+const std::vector<std::string> filenamesAfterFiltering{filenameForReading, filenameForWriting, jpgFilename, pdfFilename, fileInsideDirFilename};
 }
 
 class FilenamePathFilterTest : public Test

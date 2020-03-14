@@ -13,6 +13,6 @@ public:
     ListOfFiles filter(const ListOfFiles&, const std::vector<std::string>&) const;
 
 private:
-    bool isAnyOfExtensions(const std::string&, const std::vector<std::string>& fileExtensions) const;
+    bool containsAnyOfExtensions(const std::string&, const std::vector<std::string>& fileExtensions) const;
 };
 }

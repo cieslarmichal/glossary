@@ -1,11 +1,11 @@
 #include "DictionaryReaderImpl.h"
 
+#include "boost/assign/list_of.hpp"
 #include "gtest/gtest.h"
 
 #include "utils/FileAccessMock.h"
 
 #include "utils/exceptions/FileNotFound.h"
-#include "boost/assign/list_of.hpp"
 
 using namespace ::testing;
 using namespace utils;
@@ -23,8 +23,7 @@ const std::string emptyContent{};
 const Dictionary baseDictionary{{"samochod", "car"}, {"powietrze", "air"}};
 const Dictionaries baseDictionaries1 =
     boost::assign::map_list_of(baseDictionaryName, baseDictionaryWithOneWord);
-const Dictionaries baseDictionaries2 =
-    boost::assign::map_list_of(baseDictionaryName, baseDictionary);
+const Dictionaries baseDictionaries2 = boost::assign::map_list_of(baseDictionaryName, baseDictionary);
 }
 
 class DictionaryReaderImplTest : public Test

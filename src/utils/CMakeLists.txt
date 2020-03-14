@@ -1,18 +1,20 @@
 set(SOURCES
         src/HtmlTagsDeleter.cpp
-        src/FileAccessImpl.cpp
+        src/DefaultFileAccess.cpp
+        src/ProjectFileAccess.cpp
         src/StringHelper.cpp
         src/GetProjectPath.cpp
         src/GetExecutablePath.cpp
         src/FileAccessFactory.cpp
-        src/DefaultFileAccessFactory.cpp
+        src/FileAccessFactoryImpl.cpp
         src/FileExtensionsFilter.cpp
         src/FilenamePathFilter.cpp
         )
 
 set(UT_SOURCES
         src/HtmlTagsDeleterTest.cpp
-        src/FileAccessImplTest.cpp
+        src/DefaultFileAccessTest.cpp
+        src/ProjectFileAccessTest.cpp
         src/StringHelperTest.cpp
         src/GetExecutablePathTest.cpp
         src/GetProjectPathTest.cpp

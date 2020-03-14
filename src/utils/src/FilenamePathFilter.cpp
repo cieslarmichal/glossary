@@ -1,31 +1,38 @@
 #include "FilenamePathFilter.h"
 
+#include <iostream>
+
 namespace utils
 {
 
-namespace
-{
-const std::string delimiter = R"(/)";
-}
+namespace fs = std::experimental::filesystem;
 
 ListOfFiles FilenamePathFilter::filter(const ListOfFiles& filepaths) const
 {
     std::vector<std::string> filenames;
     for (const auto& filepath : filepaths)
     {
-        filenames.emplace_back(getFilename(filepath));
+        if(const auto filename = getFilename(filepath))
+        {
+            filenames.emplace_back(*filename);
+        }
     }
     return filenames;
 }
 
-std::string FilenamePathFilter::getFilename(const std::string& filepath) const
+boost::optional<std::string> FilenamePathFilter::getFilename(const std::string& path) const
 {
-    const auto lastDelimiterPosition = filepath.rfind(delimiter);
-    if (lastDelimiterPosition != std::string::npos && filepath.size() + 1 > lastDelimiterPosition)
+    const auto filepath = fs::path{path};
+    if(isFile(filepath))
     {
-        return filepath.substr(lastDelimiterPosition + 1);
+        return static_cast<std::string>(filepath.filename());
     }
-    return filepath;
+    return boost::none;
+}
+
+bool FilenamePathFilter::isFile(const std::experimental::filesystem::path& path) const
+{
+    return fs::is_regular_file(path);
 }
 
 }

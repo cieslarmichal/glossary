@@ -1,10 +1,10 @@
 #include "WordDescriptionConcurrentGenerator.h"
 
+#include "boost/algorithm/cxx11/all_of.hpp"
+#include "boost/algorithm/cxx11/any_of.hpp"
 #include "gtest/gtest.h"
 
 #include "WordDescriptionServiceMock.h"
-#include "boost/algorithm/cxx11/all_of.hpp"
-#include "boost/algorithm/cxx11/any_of.hpp"
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;
@@ -69,7 +69,8 @@ TEST_F(WordDescriptionGeneratorImplTest,
     const auto actualWordsDescriptions = generator.generateWordsDescriptions(englishWords);
 
     ASSERT_TRUE(all_of(actualWordsDescriptions, [&](const auto& wordDescription) {
-      return any_of(expectedWordsDescriptions,
-                    [&](const auto& expectedWordDescription) { return wordDescription == expectedWordDescription; });
+        return any_of(expectedWordsDescriptions, [&](const auto& expectedWordDescription) {
+            return wordDescription == expectedWordDescription;
+        });
     }));
 }

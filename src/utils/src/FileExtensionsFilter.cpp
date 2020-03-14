@@ -12,7 +12,7 @@ ListOfFiles FileExtensionsFilter::filter(const ListOfFiles& listOfFiles,
 
     for (const auto& filename : listOfFiles)
     {
-        if (isAnyOfExtensions(filename, extensions))
+        if (containsAnyOfExtensions(filename, extensions))
         {
             filteredFiles.push_back(filename);
         }
@@ -25,7 +25,7 @@ ListOfFiles FileExtensionsFilter::filter(const ListOfFiles& listOfFiles,
     return filteredFiles;
 }
 
-bool FileExtensionsFilter::isAnyOfExtensions(const std::string& filename,
+bool FileExtensionsFilter::containsAnyOfExtensions(const std::string& filename,
                                              const std::vector<std::string>& extensions) const
 {
     return boost::algorithm::any_of(
