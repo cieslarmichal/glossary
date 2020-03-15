@@ -1,7 +1,7 @@
 #include "StatisticsMemoryStorage.h"
 
-#include "gtest/gtest.h"
 #include "boost/algorithm/cxx11/any_of.hpp"
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace statisticsDb;
@@ -87,8 +87,8 @@ TEST_F(StatisticsMemoryStorageTest, givenNonExistingInStorageEnglishWord_shouldN
     storage.addCorrectAnswer(englishWord3);
 
     const auto wordStatistics = storage.getStatistics();
-    ASSERT_FALSE(any_of(wordStatistics,
-                             [&](const WordStatistics& ws) { return ws == wordStats3AfterCorrectAnswer; }));
+    ASSERT_FALSE(
+        any_of(wordStatistics, [&](const WordStatistics& ws) { return ws == wordStats3AfterCorrectAnswer; }));
 }
 
 TEST_F(StatisticsMemoryStorageTest, givenExistingInStorageEnglishWord_shouldIncreaseIncorrectAnswers)
@@ -106,7 +106,7 @@ TEST_F(StatisticsMemoryStorageTest, givenNonExistingInStorageEnglishWord_shouldN
 
     const auto wordStatistics = storage.getStatistics();
     ASSERT_FALSE(any_of(wordStatistics,
-                             [&](const WordStatistics& ws) { return ws == wordStats3AfterIncorrectAnswer; }));
+                        [&](const WordStatistics& ws) { return ws == wordStats3AfterIncorrectAnswer; }));
 }
 
 TEST_F(StatisticsMemoryStorageTest, shouldResetStatistics)

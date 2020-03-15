@@ -16,12 +16,10 @@ public:
     void remove(const std::string& absolutePath) const override;
     void rename(const std::string& absolutePath, const std::string& newAbsolutePath) const override;
     bool exists(const std::string& absolutePath) const override;
-    std::vector<std::string> getDirectoryFilePaths(const std::string& absolutePath) const override;
-    //    std::vector<std::string> getFilteredDirectoryFilepaths(const std::string& absolutePath, const
-    //    std::vector<std::string>& extensions) const override; std::vector<std::string>
-    //    getDirectoryFilenames(const std::string& absolutePath) const override;
-    std::vector<std::string> getDirectoryFilenames(const std::string& absolutePath,
-                                                   const std::vector<std::string>& extensions) const override;
+    std::vector<std::string> getAllPathsFromDirectory(const std::string& absolutePath) const override;
+    std::vector<std::string>
+    getAllFilenamesFromDirectory(const std::string& absolutePath,
+                                 const std::vector<std::string>& extensions) const override;
 
 private:
     FilenamePathFilter filenamePathFilter;

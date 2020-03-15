@@ -1,8 +1,8 @@
 #include "ProjectFileAccess.h"
 
 #include "gtest/gtest.h"
-#include "GetProjectPath.h"
 
+#include "GetProjectPath.h"
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
 
@@ -44,11 +44,12 @@ const std::string pathForWriting{testDirectory + filenameForWriting};
 const std::string absoluteFileForReadingPath{testDirectoryAbsolutePath + filenameForReading};
 const std::string absoluteFileForWritingPath{testDirectoryAbsolutePath + filenameForWriting};
 const std::string absoluteDummyDirectoryPath{testDirectoryAbsolutePath + dummyDirectoryName};
-const std::string absoluteFileInsideDummyDirgPath{absoluteDummyDirectoryPath + "/" +fileInsideDummyDir};
+const std::string absoluteFileInsideDummyDirgPath{absoluteDummyDirectoryPath + "/" + fileInsideDummyDir};
 const std::string absoluteJpgFilePath{testDirectoryAbsolutePath + jpgFile};
 const std::string absolutePdfFilePath{testDirectoryAbsolutePath + pdfFile};
-const std::vector<std::string> expectedFilePaths{absoluteFileForReadingPath,         absoluteFileForWritingPath, absoluteDummyDirectoryPath,
-                                                 absoluteFileInsideDummyDirgPath, absoluteJpgFilePath,        absolutePdfFilePath};
+const std::vector<std::string> expectedFilePaths{absoluteFileForReadingPath, absoluteFileForWritingPath,
+                                                 absoluteDummyDirectoryPath, absoluteFileInsideDummyDirgPath,
+                                                 absoluteJpgFilePath,        absolutePdfFilePath};
 const std::vector<std::string> noExtensionsToFilter{};
 const std::vector<std::string> txtExtensionsToFilter{".txt"};
 const std::string newDirectoryPath{testExperimentalDirectory + "xxx/"};
@@ -115,12 +116,12 @@ TEST_F(ProjectFileAccessTest, givenCorrectPath_shouldReturnContentOfFile)
 
 TEST_F(ProjectFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
 {
-    ASSERT_THROW(fileAccess.getDirectoryFilePaths(incorrectPath), exceptions::DirectoryNotFound);
+    ASSERT_THROW(fileAccess.getAllPathsFromDirectory(incorrectPath), exceptions::DirectoryNotFound);
 }
 
 TEST_F(ProjectFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilepaths)
 {
-    const auto actualFilePaths = fileAccess.getDirectoryFilePaths(testDirectory);
+    const auto actualFilePaths = fileAccess.getAllPathsFromDirectory(testDirectory);
 
     ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
 }
@@ -128,7 +129,7 @@ TEST_F(ProjectFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFil
 TEST_F(ProjectFileAccessTest,
        givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
 {
-    const auto actualFilenames = fileAccess.getDirectoryFilenames(testDirectory, noExtensionsToFilter);
+    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
 
     ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
 }
@@ -136,7 +137,8 @@ TEST_F(ProjectFileAccessTest,
 TEST_F(ProjectFileAccessTest,
        givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
 {
-    const auto actualFilenames = fileAccess.getDirectoryFilenames(testDirectory, txtExtensionsToFilter);
+    const auto actualFilenames =
+        fileAccess.getAllFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
 
     ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
 }
