@@ -214,10 +214,18 @@ TEST_F(DefaultFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFil
     ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
 }
 
+TEST_F(DefaultFileAccessTest, givenDirectoryPath_shouldReturnAllFilenamesFromDirectory)
+{
+    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory);
+
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
+}
+
 TEST_F(DefaultFileAccessTest,
        givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
 {
-    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
+    const auto actualFilenames =
+        fileAccess.getFilteredFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
 
     ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
 }
@@ -226,7 +234,7 @@ TEST_F(DefaultFileAccessTest,
        givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
 {
     const auto actualFilenames =
-        fileAccess.getAllFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
+        fileAccess.getFilteredFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
 
     ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
 }

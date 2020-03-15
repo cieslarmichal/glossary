@@ -61,10 +61,16 @@ std::vector<std::string> ProjectFileAccess::getAllPathsFromDirectory(const std::
 }
 
 std::vector<std::string>
-ProjectFileAccess::getAllFilenamesFromDirectory(const std::string& relativePath,
-                                                const std::vector<std::string>& extensions) const
+ProjectFileAccess::getAllFilenamesFromDirectory(const std::string& relativePath) const
 {
-    return fileAccess.getAllFilenamesFromDirectory(getAbsolutePath(relativePath), extensions);
+    return fileAccess.getAllFilenamesFromDirectory(getAbsolutePath(relativePath));
+}
+
+std::vector<std::string>
+ProjectFileAccess::getFilteredFilenamesFromDirectory(const std::string& relativePath,
+                                                     const std::vector<std::string>& extensions) const
+{
+    return fileAccess.getFilteredFilenamesFromDirectory(getAbsolutePath(relativePath), extensions);
 }
 
 std::string ProjectFileAccess::getAbsolutePath(const std::string& relativePath) const

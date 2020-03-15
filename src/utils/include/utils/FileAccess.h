@@ -20,8 +20,9 @@ public:
     virtual bool isRegularFile(const std::string& path) const = 0;
     virtual bool isDirectory(const std::string& path) const = 0;
     virtual std::vector<std::string> getAllPathsFromDirectory(const std::string& directoryPath) const = 0;
+    virtual std::vector<std::string> getAllFilenamesFromDirectory(const std::string& directoryPath) const = 0;
     virtual std::vector<std::string>
-    getAllFilenamesFromDirectory(const std::string& directoryPath,
-                                 const std::vector<std::string>& extensions) const = 0;
+    getFilteredFilenamesFromDirectory(const std::string& directoryPath,
+                                      const std::vector<std::string>& extensions) const = 0;
 };
 }

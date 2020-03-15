@@ -19,7 +19,8 @@ public:
     MOCK_CONST_METHOD1(isRegularFile, bool(const std::string&));
     MOCK_CONST_METHOD1(isDirectory, bool(const std::string&));
     MOCK_CONST_METHOD1(getAllPathsFromDirectory, std::vector<std::string>(const std::string&));
-    MOCK_CONST_METHOD2(getAllFilenamesFromDirectory,
+    MOCK_CONST_METHOD1(getAllFilenamesFromDirectory, std::vector<std::string>(const std::string&));
+    MOCK_CONST_METHOD2(getFilteredFilenamesFromDirectory,
                        std::vector<std::string>(const std::string&, const std::vector<std::string>&));
 };
 }

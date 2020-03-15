@@ -20,9 +20,10 @@ public:
     bool isRegularFile(const std::string& relativePath) const override;
     bool isDirectory(const std::string& relativePath) const override;
     std::vector<std::string> getAllPathsFromDirectory(const std::string& relativePath) const override;
+    std::vector<std::string> getAllFilenamesFromDirectory(const std::string& relativePath) const override;
     std::vector<std::string>
-    getAllFilenamesFromDirectory(const std::string& relativePath,
-                                 const std::vector<std::string>& extensions) const override;
+    getFilteredFilenamesFromDirectory(const std::string& relativePath,
+                                      const std::vector<std::string>& extensions) const override;
 
 private:
     std::string getAbsolutePath(const std::string& relativePath) const;

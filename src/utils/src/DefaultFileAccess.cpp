@@ -118,8 +118,14 @@ std::vector<std::string> DefaultFileAccess::getAllPathsFromDirectory(const std::
 }
 
 std::vector<std::string>
-DefaultFileAccess::getAllFilenamesFromDirectory(const std::string& absolutePath,
-                                                const std::vector<std::string>& extensions) const
+DefaultFileAccess::getAllFilenamesFromDirectory(const std::string& absolutePath) const
+{
+    return filenamePathFilter.filterFilenames(getAllPathsFromDirectory(absolutePath));
+}
+
+std::vector<std::string>
+DefaultFileAccess::getFilteredFilenamesFromDirectory(const std::string& absolutePath,
+                                                     const std::vector<std::string>& extensions) const
 {
     const auto filenames = filenamePathFilter.filterFilenames(getAllPathsFromDirectory(absolutePath));
     const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, extensions);
