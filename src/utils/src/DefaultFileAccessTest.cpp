@@ -110,40 +110,6 @@ TEST_F(DefaultFileAccessTest, givenCorrectPath_shouldReturnContentOfFile)
     ASSERT_EQ(actualFileContent, exampleContent);
 }
 
-TEST_F(DefaultFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
-{
-    ASSERT_THROW(fileAccess.getAllPathsFromDirectory(incorrectPath), exceptions::DirectoryNotFound);
-}
-
-TEST_F(DefaultFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilepaths)
-{
-    const auto actualFilePaths = fileAccess.getAllPathsFromDirectory(testDirectory);
-
-    ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
-}
-
-TEST_F(DefaultFileAccessTest,
-       givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
-{
-    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
-
-    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
-}
-
-TEST_F(DefaultFileAccessTest,
-       givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
-{
-    const auto actualFilenames =
-        fileAccess.getAllFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
-
-    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
-}
-
-TEST_F(DefaultFileAccessTest, givenExistingPath_shouldReturnTrue)
-{
-    ASSERT_TRUE(fileAccess.exists(testDirectory));
-}
-
 TEST_F(DefaultFileAccessTest, givenCorrectPath_shouldCreateNewDirectory)
 {
     prepareDeletedPath(newDirectoryPath);
@@ -209,4 +175,58 @@ TEST_F(DefaultFileAccessTest, givenExistingFile_shouldRenameFile)
 
     ASSERT_TRUE(fileAccess.exists(newFileChangedPath));
     prepareDeletedPath(newFileChangedPath);
+}
+
+TEST_F(DefaultFileAccessTest, givenExistingPath_shouldReturnTrue)
+{
+    ASSERT_TRUE(fileAccess.exists(testDirectory));
+}
+
+TEST_F(DefaultFileAccessTest, givenRegularFilePath_whenCheckingForRegularFile_shouldReturnTrue)
+{
+    ASSERT_TRUE(fileAccess.isRegularFile(pathForReading));
+}
+
+TEST_F(DefaultFileAccessTest, givenDirectoryPath_whenCheckingForRegularFile_shouldReturnFalse)
+{
+    ASSERT_FALSE(fileAccess.isRegularFile(dummyDirectoryPath));
+}
+
+TEST_F(DefaultFileAccessTest, givenDirectoryPath_whenCheckingForDirectory_shouldReturnTrue)
+{
+    ASSERT_TRUE(fileAccess.isDirectory(dummyDirectoryPath));
+}
+
+TEST_F(DefaultFileAccessTest, givenRegularFilePath_whenCheckingForDirectory_shouldReturnFalse)
+{
+    ASSERT_FALSE(fileAccess.isDirectory(pathForReading));
+}
+
+TEST_F(DefaultFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
+{
+    ASSERT_THROW(fileAccess.getAllPathsFromDirectory(incorrectPath), exceptions::DirectoryNotFound);
+}
+
+TEST_F(DefaultFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilePaths)
+{
+    const auto actualFilePaths = fileAccess.getAllPathsFromDirectory(testDirectory);
+
+    ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
+}
+
+TEST_F(DefaultFileAccessTest,
+       givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
+{
+    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
+
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
+}
+
+TEST_F(DefaultFileAccessTest,
+       givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
+{
+    const auto actualFilenames =
+        fileAccess.getAllFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
+
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
 }

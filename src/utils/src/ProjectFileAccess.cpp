@@ -45,6 +45,16 @@ bool ProjectFileAccess::exists(const std::string& relativePath) const
     return fileAccess.exists(getAbsolutePath(relativePath));
 }
 
+bool ProjectFileAccess::isRegularFile(const std::string& relativePath) const
+{
+    return fileAccess.isRegularFile(getAbsolutePath(relativePath));
+}
+
+bool ProjectFileAccess::isDirectory(const std::string& relativePath) const
+{
+    return fileAccess.isDirectory(getAbsolutePath(relativePath));
+}
+
 std::vector<std::string> ProjectFileAccess::getAllPathsFromDirectory(const std::string& relativePath) const
 {
     return fileAccess.getAllPathsFromDirectory(getAbsolutePath(relativePath));

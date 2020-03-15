@@ -30,23 +30,24 @@ const std::string filenameForReading = "testFileForReading.txt";
 const std::string filenameForWriting = "testFileForWriting.txt";
 const std::string dummyDirectoryName{"dummyDir"};
 const std::string fileInsideDummyDir{"fileInsideDir.txt"};
-const std::string jpgFile{"jpgFile.jpg"};
-const std::string pdfFile{"pdfFile.pdf"};
+const std::string jpgFilename{"jpgFile.jpg"};
+const std::string pdfFilename{"pdfFile.pdf"};
 const std::vector<std::string> filenamesWithoutFiltering{
-    filenameForReading, pdfFile, filenameForWriting, dummyDirectoryName, fileInsideDummyDir, jpgFile};
-const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading, jpgFile, pdfFile,
+    filenameForReading, pdfFilename, filenameForWriting, dummyDirectoryName, fileInsideDummyDir, jpgFilename};
+const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading, jpgFilename, pdfFilename,
                                                            filenameForWriting, fileInsideDummyDir};
 const std::vector<std::string> filenamesAfterTxtAndFileFiltering{filenameForReading, filenameForWriting,
                                                                  fileInsideDummyDir};
 const std::string testDirectoryAbsolutePath = projectPath + "src/utils/src/testDirectory/testFiles/";
 const std::string pathForReading{testDirectory + filenameForReading};
 const std::string pathForWriting{testDirectory + filenameForWriting};
+const std::string dummyDirectoryPath{testDirectory + dummyDirectoryName};
 const std::string absoluteFileForReadingPath{testDirectoryAbsolutePath + filenameForReading};
 const std::string absoluteFileForWritingPath{testDirectoryAbsolutePath + filenameForWriting};
 const std::string absoluteDummyDirectoryPath{testDirectoryAbsolutePath + dummyDirectoryName};
 const std::string absoluteFileInsideDummyDirgPath{absoluteDummyDirectoryPath + "/" + fileInsideDummyDir};
-const std::string absoluteJpgFilePath{testDirectoryAbsolutePath + jpgFile};
-const std::string absolutePdfFilePath{testDirectoryAbsolutePath + pdfFile};
+const std::string absoluteJpgFilePath{testDirectoryAbsolutePath + jpgFilename};
+const std::string absolutePdfFilePath{testDirectoryAbsolutePath + pdfFilename};
 const std::vector<std::string> expectedFilePaths{absoluteFileForReadingPath, absoluteFileForWritingPath,
                                                  absoluteDummyDirectoryPath, absoluteFileInsideDummyDirgPath,
                                                  absoluteJpgFilePath,        absolutePdfFilePath};
@@ -114,40 +115,6 @@ TEST_F(ProjectFileAccessTest, givenCorrectPath_shouldReturnContentOfFile)
     ASSERT_EQ(actualFileContent, exampleContent);
 }
 
-TEST_F(ProjectFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
-{
-    ASSERT_THROW(fileAccess.getAllPathsFromDirectory(incorrectPath), exceptions::DirectoryNotFound);
-}
-
-TEST_F(ProjectFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilepaths)
-{
-    const auto actualFilePaths = fileAccess.getAllPathsFromDirectory(testDirectory);
-
-    ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
-}
-
-TEST_F(ProjectFileAccessTest,
-       givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
-{
-    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
-
-    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
-}
-
-TEST_F(ProjectFileAccessTest,
-       givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
-{
-    const auto actualFilenames =
-        fileAccess.getAllFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
-
-    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
-}
-
-TEST_F(ProjectFileAccessTest, givenExistingPath_shouldReturnTrue)
-{
-    ASSERT_TRUE(fileAccess.exists(testDirectory));
-}
-
 TEST_F(ProjectFileAccessTest, givenCorrectPath_shouldCreateNewDirectory)
 {
     prepareDeletedPath(newDirectoryPath);
@@ -213,4 +180,58 @@ TEST_F(ProjectFileAccessTest, givenExistingFile_shouldRenameFile)
 
     ASSERT_TRUE(fileAccess.exists(newFileChangedPath));
     prepareDeletedPath(newFileChangedPath);
+}
+
+TEST_F(ProjectFileAccessTest, givenExistingPath_shouldReturnTrue)
+{
+    ASSERT_TRUE(fileAccess.exists(testDirectory));
+}
+
+TEST_F(ProjectFileAccessTest, givenRegularFilePath_whenCheckingForRegularFile_shouldReturnTrue)
+{
+    ASSERT_TRUE(fileAccess.isRegularFile(pathForReading));
+}
+
+TEST_F(ProjectFileAccessTest, givenDirectoryPath_whenCheckingForRegularFile_shouldReturnFalse)
+{
+    ASSERT_FALSE(fileAccess.isRegularFile(dummyDirectoryPath));
+}
+
+TEST_F(ProjectFileAccessTest, givenDirectoryPath_whenCheckingForDirectory_shouldReturnTrue)
+{
+    ASSERT_TRUE(fileAccess.isDirectory(dummyDirectoryPath));
+}
+
+TEST_F(ProjectFileAccessTest, givenRegularFilePath_whenCheckingForDirectory_shouldReturnFalse)
+{
+    ASSERT_FALSE(fileAccess.isDirectory(pathForReading));
+}
+
+TEST_F(ProjectFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
+{
+    ASSERT_THROW(fileAccess.getAllPathsFromDirectory(incorrectPath), exceptions::DirectoryNotFound);
+}
+
+TEST_F(ProjectFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilepaths)
+{
+    const auto actualFilePaths = fileAccess.getAllPathsFromDirectory(testDirectory);
+
+    ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
+}
+
+TEST_F(ProjectFileAccessTest,
+       givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
+{
+    const auto actualFilenames = fileAccess.getAllFilenamesFromDirectory(testDirectory, noExtensionsToFilter);
+
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
+}
+
+TEST_F(ProjectFileAccessTest,
+       givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
+{
+    const auto actualFilenames =
+        fileAccess.getAllFilenamesFromDirectory(testDirectory, txtExtensionsToFilter);
+
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
 }

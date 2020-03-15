@@ -17,6 +17,8 @@ public:
     void remove(const std::string& relativePath) const override;
     void rename(const std::string& relativePath, const std::string& newRelativePath) const override;
     bool exists(const std::string& relativePath) const override;
+    bool isRegularFile(const std::string& relativePath) const override;
+    bool isDirectory(const std::string& relativePath) const override;
     std::vector<std::string> getAllPathsFromDirectory(const std::string& relativePath) const override;
     std::vector<std::string>
     getAllFilenamesFromDirectory(const std::string& relativePath,

@@ -90,13 +90,22 @@ bool DefaultFileAccess::exists(const std::string& absolutePath) const
     return fs::exists(absolutePath);
 }
 
+bool DefaultFileAccess::isRegularFile(const std::string& absolutePath) const
+{
+    return fs::is_regular_file(absolutePath);
+}
+bool DefaultFileAccess::isDirectory(const std::string& absolutePath) const
+{
+    return fs::is_directory(absolutePath);
+}
+
 std::vector<std::string> DefaultFileAccess::getAllPathsFromDirectory(const std::string& absolutePath) const
 {
     fs::path directoryPath(absolutePath);
 
     std::vector<std::string> listOfFiles;
 
-    if (!fs::exists(directoryPath) || !fs::is_directory(directoryPath))
+    if (not fs::exists(directoryPath) || not isDirectory(directoryPath))
     {
         throw exceptions::DirectoryNotFound{directoryNotFoundMessage + absolutePath};
     }
