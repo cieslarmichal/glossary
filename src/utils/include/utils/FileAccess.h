@@ -8,6 +8,7 @@ namespace utils
 class FileAccess
 {
 public:
+    //TODO: change param names to filepath, dirpath
     virtual ~FileAccess() = default;
 
     virtual void write(const std::string& path, const std::string& content) const = 0;

@@ -1,17 +1,22 @@
 #include "WordDescriptionConcurrentGenerator.h"
 
-#include "boost/algorithm/cxx11/all_of.hpp"
-#include "boost/algorithm/cxx11/any_of.hpp"
 #include "gtest/gtest.h"
 
 #include "WordDescriptionServiceMock.h"
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;
-using namespace boost::algorithm;
 
 namespace
 {
+template <class T>
+static bool compareVectors(std::vector<T> a, std::vector<T> b)
+{
+    std::sort(a.begin(), a.end());
+    std::sort(b.begin(), b.end());
+    return (a == b);
+}
+
 const EnglishWord englishWord1{"englishWord1"};
 const EnglishWord englishWord2{"englishWord2"};
 const EnglishWord englishWord3{"englishWord3"};
@@ -68,9 +73,5 @@ TEST_F(WordDescriptionGeneratorImplTest,
 
     const auto actualWordsDescriptions = generator.generateWordsDescriptions(englishWords);
 
-    ASSERT_TRUE(all_of(actualWordsDescriptions, [&](const auto& wordDescription) {
-        return any_of(expectedWordsDescriptions, [&](const auto& expectedWordDescription) {
-            return wordDescription == expectedWordDescription;
-        });
-    }));
+    ASSERT_TRUE(compareVectors(actualWordsDescriptions, expectedWordsDescriptions));
 }

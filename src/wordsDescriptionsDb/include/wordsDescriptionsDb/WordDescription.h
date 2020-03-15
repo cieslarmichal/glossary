@@ -27,6 +27,11 @@ inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
     return (lhs.englishWord == rhs.englishWord && lhs.description == rhs.description);
 }
 
+inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
+{
+    return lhs.englishWord < rhs.englishWord;
+}
+
 inline std::ostream& operator<<(std::ostream& os, const WordDescription& word)
 {
     os << "\n"

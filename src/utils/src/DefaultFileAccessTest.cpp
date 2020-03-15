@@ -1,8 +1,5 @@
 #include "DefaultFileAccess.h"
 
-#include "boost/algorithm/cxx11/all_of.hpp"
-#include "boost/algorithm/cxx11/any_of.hpp"
-#include "boost/algorithm/string/predicate.hpp"
 #include "gtest/gtest.h"
 
 #include "GetProjectPath.h"
@@ -11,10 +8,17 @@
 
 using namespace ::testing;
 using namespace utils;
-using namespace boost::algorithm;
 
 namespace
 {
+template <class T>
+static bool compareVectors(std::vector<T> a, std::vector<T> b)
+{
+    std::sort(a.begin(), a.end());
+    std::sort(b.begin(), b.end());
+    return (a == b);
+}
+
 const std::string projectPath{getProjectPath("glossary")};
 const std::string textToWrite{"Hello this text should be written\nby write method"};
 const std::string textToAppend{"\nand this text should be written\nby append method"};
@@ -24,19 +28,24 @@ const std::string testDirectory = projectPath + "src/utils/src/testDirectory/tes
 const std::string testExperimentalDirectory = projectPath + "src/utils/src/testDirectory/testExperimental/";
 const std::string filenameForReading = "testFileForReading.txt";
 const std::string filenameForWriting = "testFileForWriting.txt";
-const std::string pathForReading{testDirectory + filenameForReading};
-const std::string pathForWriting{testDirectory + filenameForWriting};
 const std::string dummyDirectoryName{"dummyDir"};
 const std::string fileInsideDummyDir{"fileInsideDir.txt"};
 const std::string jpgFile{"jpgFile.jpg"};
 const std::string pdfFile{"pdfFile.pdf"};
-const std::string incorrectPath = "433\\UTzxxxx/fi123xtF";
+const std::string pathForReading{testDirectory + filenameForReading};
+const std::string pathForWriting{testDirectory + filenameForWriting};
+const std::string dummyDirectoryPath{testDirectory + dummyDirectoryName};
+const std::string fileInsideDummyDirPath{dummyDirectoryPath + "/" + fileInsideDummyDir};
+const std::string jpgPath{testDirectory + jpgFile};
+const std::string pdfPath{testDirectory + pdfFile};
 const std::vector<std::string> filenamesWithoutFiltering{
     filenameForReading, pdfFile, filenameForWriting, dummyDirectoryName, fileInsideDummyDir, jpgFile};
 const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading, jpgFile, pdfFile,
                                                            filenameForWriting, fileInsideDummyDir};
 const std::vector<std::string> filenamesAfterTxtAndFileFiltering{filenameForReading, filenameForWriting,
                                                                  fileInsideDummyDir};
+const std::vector<std::string> expectedFilePaths{pathForReading,         pathForWriting, dummyDirectoryPath,
+                                                 fileInsideDummyDirPath, jpgPath,        pdfPath};
 const std::vector<std::string> noExtensionsToFilter{};
 const std::vector<std::string> txtExtensionsToFilter{".txt"};
 const std::string newDirectoryPath{testExperimentalDirectory + "xxx/"};
@@ -44,6 +53,7 @@ const std::string newFileInDirectoryPath{newDirectoryPath + "aaaa.txt"};
 const std::string newDirectoryChangedPath{testExperimentalDirectory + "yyy/"};
 const std::string newFilePath{testExperimentalDirectory + "xxx.txt"};
 const std::string newFileChangedPath{testExperimentalDirectory + "yyy.txt"};
+const std::string incorrectPath = "433\\UTzxxxx/fi123xtF";
 }
 
 class DefaultFileAccessTest : public Test
@@ -107,12 +117,9 @@ TEST_F(DefaultFileAccessTest, givenIncorrectPath_shouldThrowDirectoryNotFound)
 
 TEST_F(DefaultFileAccessTest, givenCorrectDirectoryPath_shouldReturnDirectoryFilepaths)
 {
-    const auto actualFilepaths = fileAccess.getDirectoryFilePaths(testDirectory);
+    const auto actualFilePaths = fileAccess.getDirectoryFilePaths(testDirectory);
 
-    ASSERT_TRUE(all_of(actualFilepaths, [&](const std::string& filepath) {
-        return any_of(filenamesWithoutFiltering,
-                      [&](const std::string& filename) { return ends_with(filepath, filename); });
-    }));
+    ASSERT_TRUE(compareVectors(actualFilePaths, expectedFilePaths));
 }
 
 TEST_F(DefaultFileAccessTest,
@@ -120,10 +127,7 @@ TEST_F(DefaultFileAccessTest,
 {
     const auto actualFilenames = fileAccess.getDirectoryFilenames(testDirectory, noExtensionsToFilter);
 
-    ASSERT_TRUE(all_of(actualFilenames, [&](const std::string& filepath) {
-        return any_of(filenamesAfterFileFiltering,
-                      [&](const std::string& filename) { return ends_with(filepath, filename); });
-    }));
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
 }
 
 TEST_F(DefaultFileAccessTest,
@@ -131,10 +135,7 @@ TEST_F(DefaultFileAccessTest,
 {
     const auto actualFilenames = fileAccess.getDirectoryFilenames(testDirectory, txtExtensionsToFilter);
 
-    ASSERT_TRUE(all_of(actualFilenames, [&](const std::string& filepath) {
-        return any_of(filenamesAfterTxtAndFileFiltering,
-                      [&](const std::string& filename) { return ends_with(filepath, filename); });
-    }));
+    ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterTxtAndFileFiltering));
 }
 
 TEST_F(DefaultFileAccessTest, givenExistingPath_shouldReturnTrue)
