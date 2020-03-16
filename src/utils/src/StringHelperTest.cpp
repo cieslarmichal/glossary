@@ -25,6 +25,9 @@ public:
     const std::string emptyStr{};
     const std::vector<std::string> emptyVec{};
     const std::vector<std::string> vecWithOneEmptyElement{""};
+    const std::vector<std::string> vecWithEmptyElements{"", "", ""};
+    const std::vector<std::string> vecWithSomeEmptyElements{"", "aaa", "", "vvvv", ""};
+    const std::vector<std::string> vecWithoutEmptyElements{"aaa", "vvvv"};
 };
 
 TEST_F(StringHelperTest, givenEmptyString_shouldVectorWithOneEmptyElement)
@@ -81,4 +84,18 @@ TEST_F(StringHelperTest, givenString_shouldLowerAllCharacters)
     const auto actualStringWithLowerCases = getLowerCases(stringWithUpperCases);
 
     ASSERT_EQ(actualStringWithLowerCases, stringWithoutUpperCases);
+}
+
+TEST_F(StringHelperTest, givenVectorWithEmptyLines_shouldReturnEmptyVector)
+{
+    const auto actualNonEmptyLines = getNonEmptyLines(vecWithEmptyElements);
+
+    ASSERT_TRUE(actualNonEmptyLines.empty());
+}
+
+TEST_F(StringHelperTest, givenVector_shouldReturnVectorWithoutEmptyStrings)
+{
+    const auto actualNonEmptyLines = getNonEmptyLines(vecWithSomeEmptyElements);
+
+    ASSERT_EQ(actualNonEmptyLines, vecWithoutEmptyElements);
 }

@@ -14,4 +14,5 @@ std::string cutOffFromString(const std::string& line, size_t startIndexToCut, si
 void cutOffString(std::string& line, size_t startIndexToCut, size_t endIndexToCut);
 std::string substring(const std::string& line, size_t startIndex, size_t endIndex);
 std::string getLowerCases(const std::string&);
+std::vector<std::string> getNonEmptyLines(const std::vector<std::string>&);
 }
