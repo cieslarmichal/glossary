@@ -6,8 +6,7 @@
 
 namespace translator
 {
-
-class TranslationDeserializerImpl : public TranslationDeserializer
+class TranslationJsonDeserializer : public TranslationDeserializer
 {
 public:
     TranslatedText deserialize(const std::string&) const override;

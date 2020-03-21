@@ -1,4 +1,4 @@
-#include "TranslationRequestFormatterImpl.h"
+#include "TranslationYandexRequestFormatter.h"
 
 #include "utils/StringHelper.h"
 
@@ -17,7 +17,7 @@ const std::string stringToSplitBy{" "};
 const std::string stringToJoinWith{"+"};
 }
 
-std::string TranslationRequestFormatterImpl::getFormattedRequest(const std::string& sourceText,
+std::string TranslationYandexRequestFormatter::getFormattedRequest(const std::string& sourceText,
                                                                  SourceLanguage sourceLanguage,
                                                                  TargetLanguage targetLanguage) const
 {
@@ -29,14 +29,14 @@ std::string TranslationRequestFormatterImpl::getFormattedRequest(const std::stri
     return getRequest(formattedSourceText, sourceLanguage, targetLanguage);
 }
 
-std::string TranslationRequestFormatterImpl::getFormattedSourceText(const std::string& sourceText) const
+std::string TranslationYandexRequestFormatter::getFormattedSourceText(const std::string& sourceText) const
 {
     const auto splitText = utils::getSplitLines(sourceText, stringToSplitBy);
     return utils::getJoinedLines(splitText, stringToJoinWith);
 }
 
 webConnection::Request
-TranslationRequestFormatterImpl::getRequest(const std::string& sourceText,
+TranslationYandexRequestFormatter::getRequest(const std::string& sourceText,
                                             translator::SourceLanguage sourceLanguage,
                                             translator::TargetLanguage targetLanguage) const
 {

@@ -1,4 +1,4 @@
-#include "TranslationDeserializerImpl.h"
+#include "TranslationJsonDeserializer.h"
 
 #include <iostream>
 
@@ -10,13 +10,8 @@ namespace
 constexpr auto translationField = "text";
 }
 
-TranslatedText TranslationDeserializerImpl::deserialize(const std::string& jsonText) const
+TranslatedText TranslationJsonDeserializer::deserialize(const std::string& jsonText) const
 {
-    if (jsonText.empty())
-    {
-        return {};
-    }
-
     try
     {
         const auto json = nlohmann::json::parse(jsonText);
@@ -29,7 +24,7 @@ TranslatedText TranslationDeserializerImpl::deserialize(const std::string& jsonT
     return {};
 }
 
-TranslatedText TranslationDeserializerImpl::readTranslation(const nlohmann::json& json) const
+TranslatedText TranslationJsonDeserializer::readTranslation(const nlohmann::json& json) const
 {
     TranslatedText translatedText;
     if (json.find(translationField) != json.end())
@@ -40,7 +35,7 @@ TranslatedText TranslationDeserializerImpl::readTranslation(const nlohmann::json
         }
         return translatedText;
     }
-    std::cerr << "There are no translations texts\n";
+    std::cerr << "There are no translations texts";
     return {};
 }
 

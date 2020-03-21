@@ -1,14 +1,14 @@
 set(SOURCES
-        src/TranslatorImpl.cpp
-        src/TranslationDeserializerImpl.cpp
-        src/TranslationRequestFormatterImpl.cpp
+        src/DefaultTranslator.cpp
+        src/TranslationJsonDeserializer.cpp
+        src/TranslationYandexRequestFormatter.cpp
         src/TranslatorFactory.cpp
-        src/TranslatorFactoryImpl.cpp)
+        src/DefaultTranslatorFactory.cpp)
 
 set(UT_SOURCES
-        src/TranslatorImplTest.cpp
-        src/TranslationDeserializerImplTest.cpp
-        src/TranslationRequestFormatterImplTest.cpp)
+        src/DefaultTranslatorTest.cpp
+        src/TranslationJsonDeserializerTest.cpp
+        src/TranslationYandexRequestFormatterTest.cpp)
 
 add_library(translator ${SOURCES})
 add_executable(translatorUT ${UT_SOURCES})

@@ -5,7 +5,7 @@
 namespace translator
 {
 
-class TranslationRequestFormatterImpl : public TranslationRequestFormatter
+class TranslationYandexRequestFormatter : public TranslationRequestFormatter
 {
 public:
     webConnection::Request getFormattedRequest(const std::string&, SourceLanguage,

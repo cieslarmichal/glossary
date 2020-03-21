@@ -5,10 +5,10 @@
 
 namespace translator
 {
-class TranslatorFactoryImpl : public TranslatorFactory
+class DefaultTranslatorFactory : public TranslatorFactory
 {
 public:
-    explicit TranslatorFactoryImpl(std::shared_ptr<webConnection::HttpHandler>);
+    explicit DefaultTranslatorFactory(std::shared_ptr<webConnection::HttpHandler>);
 
     std::unique_ptr<Translator> createTranslator() const override;
 

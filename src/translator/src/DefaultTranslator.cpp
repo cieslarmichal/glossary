@@ -1,4 +1,4 @@
-#include "TranslatorImpl.h"
+#include "DefaultTranslator.h"
 
 #include <iostream>
 
@@ -11,7 +11,7 @@ namespace
 constexpr int successCode = 200;
 }
 
-TranslatorImpl::TranslatorImpl(std::shared_ptr<webConnection::HttpHandler> handler,
+DefaultTranslator::DefaultTranslator(std::shared_ptr<webConnection::HttpHandler> handler,
                                std::unique_ptr<TranslationDeserializer> deserializer,
                                std::unique_ptr<TranslationRequestFormatter> formatter)
     : httpHandler{std::move(handler)},
@@ -20,7 +20,7 @@ TranslatorImpl::TranslatorImpl(std::shared_ptr<webConnection::HttpHandler> handl
 {
 }
 
-boost::optional<TranslatedText> TranslatorImpl::translate(const std::string& sourceText,
+boost::optional<TranslatedText> DefaultTranslator::translate(const std::string& sourceText,
                                                           translator::SourceLanguage sourceLanguage,
                                                           translator::TargetLanguage targetLanguage) const
 {
@@ -35,7 +35,7 @@ boost::optional<TranslatedText> TranslatorImpl::translate(const std::string& sou
     return boost::none;
 }
 webConnection::Response
-TranslatorImpl::getResponseFromTranslationApi(const webConnection::Request& request) const
+DefaultTranslator::getResponseFromTranslationApi(const webConnection::Request& request) const
 {
     try
     {

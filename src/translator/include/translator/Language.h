@@ -1,5 +1,6 @@
 #pragma once
 
+#include <map>
 #include <ostream>
 #include <string>
 
@@ -16,27 +17,16 @@ using TargetLanguage = Language;
 
 inline std::ostream& operator<<(std::ostream& os, const Language& language)
 {
-    if (language == Language::Polish)
-    {
-        os << "Polish";
-    }
-    else if (language == Language::English)
-    {
-        os << "English";
-    }
+    std::map<Language, std::string> languageString{{Language::English, "English"},
+                                                   {Language::Polish, "Polish"}};
+
+    os << languageString.at(language);
     return os;
 }
 
 inline std::string toLanguageCode(Language language)
 {
-    if (language == Language::Polish)
-    {
-        return "pl";
-    }
-    else if (language == Language::English)
-    {
-        return "en";
-    }
-    return {};
+    std::map<Language, std::string> languageCodes{{Language::English, "en"}, {Language::Polish, "pl"}};
+    return languageCodes.at(language);
 }
 }

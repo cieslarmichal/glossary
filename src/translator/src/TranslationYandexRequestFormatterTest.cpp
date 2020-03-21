@@ -1,6 +1,6 @@
-#include "TranslationRequestFormatterImpl.h"
-
 #include "gtest/gtest.h"
+
+#include "TranslationYandexRequestFormatter.h"
 
 using namespace ::testing;
 using namespace translator;
@@ -21,20 +21,20 @@ const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
 }
 
-class TranslationRequestFormatterImplTest : public Test
+class TranslationYandexRequestFormatterTest : public Test
 {
 public:
-    TranslationRequestFormatterImpl formatter;
+    TranslationYandexRequestFormatter formatter;
 };
 
-TEST_F(TranslationRequestFormatterImplTest, givenEmptyString_shouldReturnEmptyString)
+TEST_F(TranslationYandexRequestFormatterTest, givenEmptyString_shouldReturnEmptyString)
 {
     const auto formattedRequest = formatter.getFormattedRequest(emptyText, sourceLanguage, targetLanguage);
 
     ASSERT_TRUE(formattedRequest.empty());
 }
 
-TEST_F(TranslationRequestFormatterImplTest, givenOneWordText_shouldReturnRequestWithThisWordInTextField)
+TEST_F(TranslationYandexRequestFormatterTest, givenOneWordText_shouldReturnRequestWithThisWordInTextField)
 {
     const auto actualFormattedRequest =
         formatter.getFormattedRequest(singleWordText, sourceLanguage, targetLanguage);
@@ -42,7 +42,7 @@ TEST_F(TranslationRequestFormatterImplTest, givenOneWordText_shouldReturnRequest
     ASSERT_EQ(actualFormattedRequest, requestWithSingleWord);
 }
 
-TEST_F(TranslationRequestFormatterImplTest,
+TEST_F(TranslationYandexRequestFormatterTest,
        givenThreeWordsText_shouldReturnRequestWithTheseWordsSplitByPlusSignInTextField)
 {
     const auto actualFormattedRequest =

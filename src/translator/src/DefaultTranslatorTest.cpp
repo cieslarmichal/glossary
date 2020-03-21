@@ -1,4 +1,4 @@
-#include "TranslatorImpl.h"
+#include "DefaultTranslator.h"
 
 #include "gtest/gtest.h"
 
@@ -24,7 +24,7 @@ const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
 }
 
-class TranslatorImplTest : public Test
+class DefaultTranslatorTest : public Test
 {
 public:
     std::shared_ptr<webConnection::HttpHandlerMock> handler =
@@ -35,10 +35,10 @@ public:
     std::unique_ptr<TranslationRequestFormatterMock> requestFormatterInit =
         std::make_unique<StrictMock<TranslationRequestFormatterMock>>();
     TranslationRequestFormatterMock* requestFormatter = requestFormatterInit.get();
-    TranslatorImpl translator{handler, std::move(deserializerInit), std::move(requestFormatterInit)};
+    DefaultTranslator translator{handler, std::move(deserializerInit), std::move(requestFormatterInit)};
 };
 
-TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
+TEST_F(DefaultTranslatorTest, whenConnectionFails_shouldReturnNone)
 {
     EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
@@ -49,7 +49,7 @@ TEST_F(TranslatorImplTest, whenConnectionFails_shouldReturnNone)
     ASSERT_EQ(translation, boost::none);
 }
 
-TEST_F(TranslatorImplTest, givenFailureResponseFromTranslationApi_shouldReturnNone)
+TEST_F(DefaultTranslatorTest, givenFailureResponseFromTranslationApi_shouldReturnNone)
 {
     EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
@@ -60,7 +60,7 @@ TEST_F(TranslatorImplTest, givenFailureResponseFromTranslationApi_shouldReturnNo
     ASSERT_EQ(translation, boost::none);
 }
 
-TEST_F(TranslatorImplTest, givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
+TEST_F(DefaultTranslatorTest, givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
 {
     EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage))
         .WillOnce(Return(request));
