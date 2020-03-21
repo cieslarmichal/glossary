@@ -1,26 +1,25 @@
 set(SOURCES
-        Source/TranslationServiceImpl.cpp
-        Source/WordDescriptionServiceImpl.cpp
+        Source/DefaultTranslationService.cpp
+        Source/DefaultWordDescriptionService.cpp
         Source/Glossary.cpp
         Source/DefaultDictionaryReader.cpp
         Source/WordDescriptionConcurrentGenerator.cpp
-        Source/WordViewerImpl.cpp
-        Source/UserPromptImpl.cpp
-        Source/AnswerCheckerImpl.cpp
+        Source/DefaultWordViewFormatter.cpp
+        Source/UserStandardInputPrompt.cpp
+        Source/DefaultAnswerValidator.cpp
         Source/GlossaryApplication.cpp
-        Source/WordRandomizerImpl.cpp
-        Source/WordsBuilderImpl.cpp
+        Source/WordMersenneTwisterRandomizer.cpp
+        Source/DefaultWordsBuilder.cpp
         )
 
 set(UT_SOURCES
-        UT/Source/TranslationServiceImplTest.cpp
-        UT/Source/WordDescriptionServiceImplTest.cpp
+        UT/Source/DefaultTranslationServiceTest.cpp
+        UT/Source/DefaultWordDescriptionServiceTest.cpp
         UT/Source/DefaultDictionaryReaderTest.cpp
-        UT/Source/WordViewerImplTest.cpp
-        UT/Source/UserPromptImplTest.cpp
-        UT/Source/AnswerCheckerImplTest.cpp
+        UT/Source/DefaultWordViewFormatterTest.cpp
+        UT/Source/DefaultAnswerValidatorTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
-        UT/Source/WordsBuilderImplTest.cpp
+        UT/Source/DefaultWordsBuilderTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

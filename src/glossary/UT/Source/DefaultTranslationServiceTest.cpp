@@ -1,4 +1,4 @@
-#include "TranslationServiceImpl.h"
+#include "DefaultTranslationService.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -23,7 +23,7 @@ const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
 }
 
-class TranslationServiceImplTest : public Test
+class DefaultTranslationServiceTest : public Test
 {
 public:
     std::unique_ptr<translator::TranslatorMock> translatorInit =
@@ -31,10 +31,10 @@ public:
     translator::TranslatorMock* translator = translatorInit.get();
     std::shared_ptr<translationsDb::TranslationsDbMock> translationsDb =
         std::make_shared<StrictMock<translationsDb::TranslationsDbMock>>();
-    TranslationServiceImpl translationService{std::move(translatorInit), translationsDb};
+    DefaultTranslationService translationService{std::move(translatorInit), translationsDb};
 };
 
-TEST_F(TranslationServiceImplTest, dbContainsTranslation_shouldReturnTranslationFromDb)
+TEST_F(DefaultTranslationServiceTest, dbContainsTranslation_shouldReturnTranslationFromDb)
 {
     EXPECT_CALL(*translationsDb, getTranslation(textToTranslate)).WillOnce(Return(translationFromDb));
 
@@ -44,7 +44,7 @@ TEST_F(TranslationServiceImplTest, dbContainsTranslation_shouldReturnTranslation
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(TranslationServiceImplTest,
+TEST_F(DefaultTranslationServiceTest,
        dbDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInDatabase)
 {
     EXPECT_CALL(*translationsDb, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
@@ -58,7 +58,7 @@ TEST_F(TranslationServiceImplTest,
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(TranslationServiceImplTest, dbAndTranslatorDoNotRespondWithTranslation_shouldReturnNone)
+TEST_F(DefaultTranslationServiceTest, dbAndTranslatorDoNotRespondWithTranslation_shouldReturnNone)
 {
     EXPECT_CALL(*translationsDb, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))

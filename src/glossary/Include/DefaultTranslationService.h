@@ -6,11 +6,11 @@
 #include "translationsDb/TranslationsDb.h"
 #include "translator/Translator.h"
 
-class TranslationServiceImpl : public TranslationService
+class DefaultTranslationService : public TranslationService
 {
 public:
-    TranslationServiceImpl(std::unique_ptr<translator::Translator>,
-                           std::shared_ptr<translationsDb::TranslationsDb>);
+    DefaultTranslationService(std::unique_ptr<translator::Translator>,
+                              std::shared_ptr<translationsDb::TranslationsDb>);
 
     boost::optional<translator::TranslatedText> translate(const std::string&, translator::SourceLanguage,
                                                           translator::TargetLanguage) override;

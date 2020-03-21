@@ -6,14 +6,14 @@
 #include "boost/optional.hpp"
 #include "boost/optional/optional_io.hpp"
 
-#include "EnglishWord.h"
 #include "PolishWord.h"
+#include "wordsDescriptionsDb/EnglishWord.h"
 #include "wordsDescriptionsDb/WordDescription.h"
 
 struct Word
 {
     PolishWord polishWord;
-    EnglishWord englishWord;
+    wordsDescriptionsDb::EnglishWord englishWord;
     boost::optional<wordsDescriptionsDb::WordDescription> wordDescription;
 };
 

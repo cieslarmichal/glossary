@@ -2,7 +2,7 @@
 
 #include "WordsBuilder.h"
 
-class WordsBuilderImpl : public WordsBuilder
+class DefaultWordsBuilder : public WordsBuilder
 {
 public:
     Words buildWords(const translationsDb::Translations&,

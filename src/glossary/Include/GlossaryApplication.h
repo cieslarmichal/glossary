@@ -1,15 +1,14 @@
 #pragma once
 
 #include <memory>
-#include <utils/FileAccess.h>
 
-#include "AnswerChecker.h"
+#include "AnswerValidator.h"
 #include "Application.h"
 #include "DictionaryReader.h"
 #include "UserPrompt.h"
 #include "WordDescriptionGenerator.h"
 #include "WordRandomizer.h"
-#include "WordViewer.h"
+#include "WordViewFormatter.h"
 #include "WordsBuilder.h"
 #include "statisticsDb/StatisticsDb.h"
 #include "utils/FileAccess.h"
@@ -31,15 +30,15 @@ private:
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
     std::unique_ptr<statisticsDb::StatisticsDb> statisticsDb;
-    std::unique_ptr<AnswerChecker> answerChecker;
+    std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<UserPrompt> userPrompt;
-    std::unique_ptr<WordViewer> viewer;
+    std::unique_ptr<WordViewFormatter> wordViewFormatter;
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> wordsDescriptionsDb;
     std::unique_ptr<WordsBuilder> wordsBuilder;
     Dictionaries dictionaries;
     Dictionary baseDictionary;
-    EnglishWords englishWords;
+    wordsDescriptionsDb::EnglishWords englishWords;
     Words glossaryWords;
 };

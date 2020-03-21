@@ -2,7 +2,7 @@
 
 #include "UserPrompt.h"
 
-class UserPromptImpl : public UserPrompt
+class UserStandardInputPrompt : public UserPrompt
 {
 public:
     UserInput getInput() const override;

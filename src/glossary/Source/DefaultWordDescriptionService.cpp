@@ -1,6 +1,6 @@
-#include "WordDescriptionServiceImpl.h"
+#include "DefaultWordDescriptionService.h"
 
-WordDescriptionServiceImpl::WordDescriptionServiceImpl(
+DefaultWordDescriptionService::DefaultWordDescriptionService(
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> db)
     : wordDescriptionDownloader{std::move(downloader)}, wordsDescriptionsDb{std::move(db)}
@@ -8,7 +8,7 @@ WordDescriptionServiceImpl::WordDescriptionServiceImpl(
 }
 
 boost::optional<wordsDescriptionsDb::WordDescription>
-WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
+DefaultWordDescriptionService::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
 {
     if (const auto wordDescriptionFromDb = getWordDescriptionFromDb(englishWord))
     {
@@ -23,20 +23,20 @@ WordDescriptionServiceImpl::getWordDescription(const wordsDescriptionsDb::Englis
     return boost::none;
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription> WordDescriptionServiceImpl::getWordDescriptionFromDb(
+boost::optional<wordsDescriptionsDb::WordDescription> DefaultWordDescriptionService::getWordDescriptionFromDb(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     return wordsDescriptionsDb->getWordDescription(englishWord);
 }
 
 boost::optional<wordsDescriptionsDb::WordDescription>
-WordDescriptionServiceImpl::createWordDescriptionFromHttp(
+DefaultWordDescriptionService::createWordDescriptionFromHttp(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
-void WordDescriptionServiceImpl::saveWordDescriptionInDb(
+void DefaultWordDescriptionService::saveWordDescriptionInDb(
     const wordsDescriptionsDb::WordDescription& wordDescription)
 {
     wordsDescriptionsDb->addWordDescription(wordDescription);

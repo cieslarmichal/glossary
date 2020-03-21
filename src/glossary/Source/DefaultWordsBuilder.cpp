@@ -1,9 +1,9 @@
-#include "WordsBuilderImpl.h"
+#include "DefaultWordsBuilder.h"
 
 #include <iostream>
 
-Words WordsBuilderImpl::buildWords(const translationsDb::Translations& translations,
-                                   const wordsDescriptionsDb::WordsDescriptions& wordsDescriptions) const
+Words DefaultWordsBuilder::buildWords(const translationsDb::Translations& translations,
+                                      const wordsDescriptionsDb::WordsDescriptions& wordsDescriptions) const
 {
     Words words;
     for (const auto& translation : translations)
@@ -16,7 +16,7 @@ Words WordsBuilderImpl::buildWords(const translationsDb::Translations& translati
     return words;
 }
 
-wordsDescriptionsDb::WordDescription WordsBuilderImpl::getCorrespondingWordDescription(
+wordsDescriptionsDb::WordDescription DefaultWordsBuilder::getCorrespondingWordDescription(
     const wordsDescriptionsDb::EnglishWord& englishWord,
     const wordsDescriptionsDb::WordsDescriptions& wordsDescriptions) const
 {

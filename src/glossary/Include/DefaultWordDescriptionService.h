@@ -6,11 +6,11 @@
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDb.h"
 
-class WordDescriptionServiceImpl : public WordDescriptionService
+class DefaultWordDescriptionService : public WordDescriptionService
 {
 public:
-    WordDescriptionServiceImpl(std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
-                               std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb>);
+    DefaultWordDescriptionService(std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
+                                  std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb>);
 
     boost::optional<wordsDescriptionsDb::WordDescription>
     getWordDescription(const wordsDescriptionsDb::EnglishWord&) override;

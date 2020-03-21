@@ -1,4 +1,4 @@
-#include "UserPromptImpl.h"
+#include "UserStandardInputPrompt.h"
 
 #include <iostream>
 
@@ -12,12 +12,12 @@ constexpr auto newLine{'\n'};
 std::vector<std::string> correctYesNoAnswers{{"y", "yes", "n", "no"}};
 }
 
-UserInput UserPromptImpl::getInput() const
+UserInput UserStandardInputPrompt::getInput() const
 {
     return getValidString();
 }
 
-UserInput UserPromptImpl::yesPrompt() const
+UserInput UserStandardInputPrompt::yesPrompt() const
 {
     std::string choice;
     while (!(std::cin >> choice) or yesNoAnswerIsInvalid(choice))
@@ -30,7 +30,7 @@ UserInput UserPromptImpl::yesPrompt() const
     return choice;
 }
 
-std::string UserPromptImpl::getValidString() const
+std::string UserStandardInputPrompt::getValidString() const
 {
     std::string temp;
     while (not(std::cin >> temp))
@@ -42,7 +42,7 @@ std::string UserPromptImpl::getValidString() const
     return temp;
 }
 
-bool UserPromptImpl::yesNoAnswerIsInvalid(const std::string& input) const
+bool UserStandardInputPrompt::yesNoAnswerIsInvalid(const std::string& input) const
 {
     const auto isValid =
         std::any_of(correctYesNoAnswers.begin(), correctYesNoAnswers.end(),
@@ -51,7 +51,7 @@ bool UserPromptImpl::yesNoAnswerIsInvalid(const std::string& input) const
     return !isValid;
 }
 
-void UserPromptImpl::clearInputBuffer() const
+void UserStandardInputPrompt::clearInputBuffer() const
 {
     std::cin.clear();
     while (std::cin.get() != newLine)

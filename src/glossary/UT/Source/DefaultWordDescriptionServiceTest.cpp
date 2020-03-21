@@ -1,4 +1,4 @@
-#include "WordDescriptionServiceImpl.h"
+#include "DefaultWordDescriptionService.h"
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
@@ -16,7 +16,7 @@ const EnglishWord englishWord{"englishWord"};
 const WordDescription wordDescription{englishWord, {}};
 }
 
-class WordDescriptionServiceImplTest : public Test
+class DefaultWordDescriptionServiceTest : public Test
 {
 public:
     std::unique_ptr<WordDescriptionDownloaderMock> wordDescriptionDownloaderInit =
@@ -24,11 +24,11 @@ public:
     WordDescriptionDownloaderMock* wordDescriptionDownloader = wordDescriptionDownloaderInit.get();
     std::shared_ptr<WordsDescriptionsDbMock> wordsDescriptionsDb =
         std::make_shared<StrictMock<WordsDescriptionsDbMock>>();
-    WordDescriptionServiceImpl wordDescriptionService{std::move(wordDescriptionDownloaderInit),
-                                                      wordsDescriptionsDb};
+    DefaultWordDescriptionService wordDescriptionService{std::move(wordDescriptionDownloaderInit),
+                                                         wordsDescriptionsDb};
 };
 
-TEST_F(WordDescriptionServiceImplTest, dbContainsWordDescription_shouldReturnWordDescriptionFromDb)
+TEST_F(DefaultWordDescriptionServiceTest, dbContainsWordDescription_shouldReturnWordDescriptionFromDb)
 {
     EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord)).WillOnce(Return(wordDescription));
 
@@ -38,7 +38,7 @@ TEST_F(WordDescriptionServiceImplTest, dbContainsWordDescription_shouldReturnWor
 }
 
 TEST_F(
-    WordDescriptionServiceImplTest,
+    DefaultWordDescriptionServiceTest,
     dbDoesNotContainWordDescription_shouldReturnWordDescriptionFromHttpCreatorAndSaveWordDescriptionInDatabase)
 {
     EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord)).WillOnce(Return(boost::none));
@@ -51,7 +51,7 @@ TEST_F(
     ASSERT_EQ(*actualWordDescription, wordDescription);
 }
 
-TEST_F(WordDescriptionServiceImplTest, dbAndHttpCreatorDoNotRespondWithWordDescription_shouldReturnNone)
+TEST_F(DefaultWordDescriptionServiceTest, dbAndHttpCreatorDoNotRespondWithWordDescription_shouldReturnNone)
 {
     EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, downloadWordDescription(englishWord))

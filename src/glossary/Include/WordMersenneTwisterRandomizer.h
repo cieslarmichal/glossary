@@ -2,7 +2,7 @@
 
 #include "WordRandomizer.h"
 
-class WordRandomizerImpl : public WordRandomizer
+class WordMersenneTwisterRandomizer : public WordRandomizer
 {
 public:
     Word randomizeWord(const Words&) const override;

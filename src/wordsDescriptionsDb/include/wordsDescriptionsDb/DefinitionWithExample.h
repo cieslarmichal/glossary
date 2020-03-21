@@ -1,10 +1,10 @@
 #pragma once
 
 #include "boost/optional.hpp"
+#include "boost/optional/optional_io.hpp"
 
 #include "Definition.h"
 #include "Example.h"
-#include "boost/optional/optional_io.hpp"
 
 namespace wordsDescriptionsDb
 {

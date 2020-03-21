@@ -1,4 +1,4 @@
-#include "WordViewerImpl.h"
+#include "DefaultWordViewFormatter.h"
 
 #include "gtest/gtest.h"
 
@@ -25,29 +25,29 @@ const Word word{{"komputer"}, {"computer"}, wordDescription};
 const Word wordWithoutDescription{{"komputer"}, {"computer"}, boost::none};
 }
 
-class WordViewerImplTest : public Test
+class DefaultWordViewFormatterTest : public Test
 {
 public:
-    WordViewerImpl wordViewer;
+    DefaultWordViewFormatter wordViewFormatter;
 };
 
-TEST_F(WordViewerImplTest, givenEnglishWord_shouldReturnEnglishWordView)
+TEST_F(DefaultWordViewFormatterTest, givenEnglishWord_shouldReturnEnglishWordView)
 {
-    const auto actualEnglishWordView = wordViewer.viewPolishWord(polishWord);
+    const auto actualEnglishWordView = wordViewFormatter.formatPolishWordView(polishWord);
 
     ASSERT_EQ(actualEnglishWordView, polishWordView);
 }
 
-TEST_F(WordViewerImplTest, givenWord_shoulReturnWordView)
+TEST_F(DefaultWordViewFormatterTest, givenWord_shoulReturnWordView)
 {
-    const auto actualWordView = wordViewer.viewWord(word);
+    const auto actualWordView = wordViewFormatter.formatWordView(word);
 
     ASSERT_EQ(actualWordView, wordView);
 }
 
-TEST_F(WordViewerImplTest, givenWordWithoutDescription_shouldReturnWordView)
+TEST_F(DefaultWordViewFormatterTest, givenWordWithoutDescription_shouldReturnWordView)
 {
-    const auto actualWordView = wordViewer.viewWord(wordWithoutDescription);
+    const auto actualWordView = wordViewFormatter.formatWordView(wordWithoutDescription);
 
     ASSERT_EQ(actualWordView, wordViewWithoutDescription);
 }

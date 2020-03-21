@@ -8,7 +8,7 @@ namespace wordDescriptionDownloader
 {
 namespace
 {
-template<class Container>
+template <class Container>
 void removeDuplications(Container& container)
 {
     std::sort(container.begin(), container.end());
@@ -98,8 +98,8 @@ void removeMarks(Description& description)
 
 void removeDuplicationsInDescription(Description& description)
 {
-    auto & definitionsWithExamples = description.definitionsWithExamples;
-    auto & sentences = description.sentences;
+    auto& definitionsWithExamples = description.definitionsWithExamples;
+    auto& sentences = description.sentences;
     removeDuplications(definitionsWithExamples);
     removeDuplications(sentences);
 }

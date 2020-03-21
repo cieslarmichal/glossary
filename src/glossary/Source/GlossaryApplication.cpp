@@ -2,14 +2,14 @@
 
 #include <iostream>
 
-#include "AnswerCheckerImpl.h"
+#include "DefaultAnswerValidator.h"
 #include "DefaultDictionaryReader.h"
-#include "UserPromptImpl.h"
+#include "DefaultWordDescriptionService.h"
+#include "DefaultWordViewFormatter.h"
+#include "DefaultWordsBuilder.h"
+#include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
-#include "WordDescriptionServiceImpl.h"
-#include "WordRandomizerImpl.h"
-#include "WordViewerImpl.h"
-#include "WordsBuilderImpl.h"
+#include "WordMersenneTwisterRandomizer.h"
 #include "statisticsDb/StatisticsDbFactory.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
@@ -45,7 +45,7 @@ void GlossaryApplication::initialize()
         wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
 
     wordDescriptionGenerator =
-        std::make_unique<WordDescriptionConcurrentGenerator>(std::make_unique<WordDescriptionServiceImpl>(
+        std::make_unique<WordDescriptionConcurrentGenerator>(std::make_unique<DefaultWordDescriptionService>(
             std::move(wordDescriptionDownloader), wordsDescriptionsDb));
 
     std::unique_ptr<const statisticsDb::StatisticsDbFactory> statisticsDbFactory =
@@ -53,15 +53,15 @@ void GlossaryApplication::initialize()
 
     statisticsDb = statisticsDbFactory->createStatisticsDb();
 
-    answerChecker = std::make_unique<AnswerCheckerImpl>();
+    answerValidator = std::make_unique<DefaultAnswerValidator>();
 
-    userPrompt = std::make_unique<UserPromptImpl>();
+    userPrompt = std::make_unique<UserStandardInputPrompt>();
 
-    viewer = std::make_unique<WordViewerImpl>();
+    wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
 
-    wordsRandomizer = std::make_unique<WordRandomizerImpl>();
+    wordsRandomizer = std::make_unique<WordMersenneTwisterRandomizer>();
 
-    wordsBuilder = std::make_unique<WordsBuilderImpl>();
+    wordsBuilder = std::make_unique<DefaultWordsBuilder>();
 }
 
 void GlossaryApplication::run()
@@ -94,11 +94,11 @@ void GlossaryApplication::loop()
             std::cerr << e.what();
             break;
         }
-        std::cout << viewer->viewPolishWord(word.polishWord);
+        std::cout << wordViewFormatter->formatPolishWordView(word.polishWord);
         std::cout << "Insert english translation:\n";
 
         if (word.wordDescription &&
-            answerChecker->correctWordAnswer(userPrompt->getInput(), word.wordDescription->englishWord))
+            answerValidator->validateAnswer(userPrompt->getInput(), word.wordDescription->englishWord))
         {
             std::cout << "Correct answer!\n";
             statisticsDb->addCorrectAnswer(word.wordDescription->englishWord);
@@ -109,9 +109,9 @@ void GlossaryApplication::loop()
             statisticsDb->addIncorrectAnswer(word.wordDescription->englishWord);
         }
 
-        std::cout << viewer->viewWord(word);
+        std::cout << wordViewFormatter->formatWordView(word);
 
         std::cout << "Do you want to continue? (yes/no, y/n)\n";
-        userWantToContinue = answerChecker->yesAnswer(userPrompt->yesPrompt());
+        userWantToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
     }
 }

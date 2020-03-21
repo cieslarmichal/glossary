@@ -1,4 +1,4 @@
-#include "AnswerCheckerImpl.h"
+#include "DefaultAnswerValidator.h"
 
 #include "boost/algorithm/string.hpp"
 
@@ -10,12 +10,12 @@ namespace
 std::vector<std::string> correctYesAnswers{{"y"}, {"yes"}};
 }
 
-bool AnswerCheckerImpl::correctWordAnswer(const UserInput& userInput, const PolishWord& polishWord) const
+bool DefaultAnswerValidator::validateAnswer(const UserInput& userInput, const PolishWord& polishWord) const
 {
     return utils::getLowerCases(userInput) == utils::getLowerCases(polishWord);
 }
 
-bool AnswerCheckerImpl::yesAnswer(const UserInput& userInput) const
+bool DefaultAnswerValidator::validateYesAnswer(const UserInput& userInput) const
 {
     const auto isYesAnswer =
         std::any_of(correctYesAnswers.begin(), correctYesAnswers.end(),

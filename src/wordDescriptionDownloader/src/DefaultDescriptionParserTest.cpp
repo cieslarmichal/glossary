@@ -35,19 +35,19 @@ const auto exampleContent{":     the alcoholic fermented juice of fresh grapes u
                           "; Who doesn't love delicious food paired with your favorite wine?\n"
                           ": wine is a delicious beverage"};
 const auto contentWithDuplications{":     the alcoholic fermented juice of fresh grapes used as a beverage\n"
-                          ": wine or a substitute used in Christian communion services\n"
-                          ": wine or a substitute used in Christian communion services\n"
-                          ": the alcoholic usually fermented juice of a plant product (such as a "
-                          "fruit) used as a beverage    \n"
-                          "// blackberry wine   \n"
-                          ": something that invigorates or intoxicates\n"
-                          ": something that invigorates or intoxicates\n"
-                          ";     In addition to beer, a selection of local and national wines will "
-                          "be offered..      \n"
-                          "; Who doesn't love delicious food paired with your favorite wine?\n"
-                          "; Who doesn't love delicious food paired with your favorite wine?\n"
-                          ": wine is a delicious beverage\n"
-                          ": wine is a delicious beverage"};
+                                   ": wine or a substitute used in Christian communion services\n"
+                                   ": wine or a substitute used in Christian communion services\n"
+                                   ": the alcoholic usually fermented juice of a plant product (such as a "
+                                   "fruit) used as a beverage    \n"
+                                   "// blackberry wine   \n"
+                                   ": something that invigorates or intoxicates\n"
+                                   ": something that invigorates or intoxicates\n"
+                                   ";     In addition to beer, a selection of local and national wines will "
+                                   "be offered..      \n"
+                                   "; Who doesn't love delicious food paired with your favorite wine?\n"
+                                   "; Who doesn't love delicious food paired with your favorite wine?\n"
+                                   ": wine is a delicious beverage\n"
+                                   ": wine is a delicious beverage"};
 const DefinitionsWithExamples definitionsWithExamples{
     {"the alcoholic fermented juice of fresh grapes used as a beverage", boost::none},
     {"wine or a substitute used in Christian communion services", boost::none},
@@ -108,7 +108,8 @@ TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContent_shouldReturnDescript
     EXPECT_TRUE(compareDescriptions(*actualDescriptionOpt, expectedDescription));
 }
 
-TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContentWithDuplications_shouldReturnDescriptionWithoutDuplications)
+TEST_F(DefaultDescriptionParserTest,
+       givenParsedHtmlContentWithDuplications_shouldReturnDescriptionWithoutDuplications)
 {
     const auto content = utils::getSplitLines(contentWithDuplications);
 

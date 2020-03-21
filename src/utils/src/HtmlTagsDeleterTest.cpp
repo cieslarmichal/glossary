@@ -8,8 +8,9 @@ using namespace utils;
 namespace
 {
 const std::vector<std::string> emptyHtmlContent{};
-const std::vector<std::string> contentWithTags{"&aasd\n;\n<span class=\"ex-sent first-child t no-aq sents\">\n&mdash;"
-                                           "    & ;blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n&;"};
+const std::vector<std::string> contentWithTags{
+    "&aasd\n;\n<span class=\"ex-sent first-child t no-aq sents\">\n&mdash;"
+    "    & ;blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n&;"};
 const std::vector<std::string> expectedContentWithoutHtmlTags{"blackberry wine"};
 const std::string content1{"<sdadsasdasdasd"};
 const std::string content2{"sdads>asdasdasd"};

@@ -2,8 +2,6 @@
 
 #include "Word.h"
 
-using namespace wordsDescriptionsDb;
-
 class WordRandomizer
 {
 public:

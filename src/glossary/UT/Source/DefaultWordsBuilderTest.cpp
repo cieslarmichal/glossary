@@ -1,4 +1,4 @@
-#include "WordsBuilderImpl.h"
+#include "DefaultWordsBuilder.h"
 
 #include "gtest/gtest.h"
 
@@ -37,7 +37,7 @@ const Words wordsWithOneEmptyDescription{{polishWord1, englishWord1, wordDescrip
 class WordsBuilderImplTest : public Test
 {
 public:
-    WordsBuilderImpl wordsBuilder;
+    DefaultWordsBuilder wordsBuilder;
 };
 
 TEST_F(WordsBuilderImplTest, givenTranslationsWithWordsDescriptionsInOtherOrder_shouldBindByEnglishWords)
