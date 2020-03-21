@@ -68,10 +68,9 @@ Statistics StatisticsJsonSerializer::parseStatistics(const nlohmann::json& stati
     {
         if (isWordStatisticsValid(wordStatisticsData))
         {
-            statistics.emplace_back(
-                WordStatistics{wordStatisticsData[englishWordField].get<std::string>(),
-                               wordStatisticsData[correctAnswersField].get<int>(),
-                               wordStatisticsData[incorrectAnswersField].get<int>()});
+            statistics.emplace_back(WordStatistics{wordStatisticsData[englishWordField].get<std::string>(),
+                                                   wordStatisticsData[correctAnswersField].get<int>(),
+                                                   wordStatisticsData[incorrectAnswersField].get<int>()});
         }
         else
         {

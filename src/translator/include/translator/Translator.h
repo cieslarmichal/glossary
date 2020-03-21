@@ -3,8 +3,8 @@
 #include "boost/optional.hpp"
 
 #include "Language.h"
-#include "TranslatedText.h"
 #include "SourceText.h"
+#include "TranslatedText.h"
 
 namespace translator
 {

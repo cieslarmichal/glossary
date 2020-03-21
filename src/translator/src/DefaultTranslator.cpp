@@ -12,8 +12,8 @@ constexpr int successCode = 200;
 }
 
 DefaultTranslator::DefaultTranslator(std::shared_ptr<webConnection::HttpHandler> handler,
-                               std::unique_ptr<TranslationDeserializer> deserializer,
-                               std::unique_ptr<TranslationRequestFormatter> formatter)
+                                     std::unique_ptr<TranslationDeserializer> deserializer,
+                                     std::unique_ptr<TranslationRequestFormatter> formatter)
     : httpHandler{std::move(handler)},
       translationDeserializer{std::move(deserializer)},
       requestFormatter{std::move(formatter)}
@@ -21,8 +21,8 @@ DefaultTranslator::DefaultTranslator(std::shared_ptr<webConnection::HttpHandler>
 }
 
 boost::optional<TranslatedText> DefaultTranslator::translate(const std::string& sourceText,
-                                                          translator::SourceLanguage sourceLanguage,
-                                                          translator::TargetLanguage targetLanguage) const
+                                                             translator::SourceLanguage sourceLanguage,
+                                                             translator::TargetLanguage targetLanguage) const
 {
     const auto request = requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage);
     const auto response = getResponseFromTranslationApi(request);

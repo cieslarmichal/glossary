@@ -5,13 +5,15 @@
 namespace statisticsDb
 {
 
-WordStatistics::WordStatistics(EnglishWord  word) : englishWord{std::move(word)}
+WordStatistics::WordStatistics(EnglishWord word) : englishWord{std::move(word)}
 {
     resetAnswers();
 }
 
-WordStatistics::WordStatistics(EnglishWord  word, int correctAnswers, int incorrectAnswers)
-    : englishWord{std::move(word)}, amountOfCorrectAnswers{correctAnswers}, amountOfIncorrectAnswers{incorrectAnswers}
+WordStatistics::WordStatistics(EnglishWord word, int correctAnswers, int incorrectAnswers)
+    : englishWord{std::move(word)},
+      amountOfCorrectAnswers{correctAnswers},
+      amountOfIncorrectAnswers{incorrectAnswers}
 {
 }
 

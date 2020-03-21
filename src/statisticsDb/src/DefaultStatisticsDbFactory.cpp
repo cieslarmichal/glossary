@@ -7,7 +7,8 @@
 namespace statisticsDb
 {
 
-DefaultStatisticsDbFactory::DefaultStatisticsDbFactory(std::shared_ptr<const utils::FileAccess> fileAccessInit)
+DefaultStatisticsDbFactory::DefaultStatisticsDbFactory(
+    std::shared_ptr<const utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }

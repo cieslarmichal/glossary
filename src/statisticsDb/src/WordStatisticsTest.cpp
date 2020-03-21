@@ -15,10 +15,9 @@ public:
     WordStatistics wordStatisticsWithAnswers{englishWord, amountOfCorrectAnswers, amountOfIncorrectAnswers};
 };
 
-TEST_F(WordStatisticsTest,
-       givenWordStatisticsWithEnglishWord_shouldHaveEnglishWordWhichIsGiven)
+TEST_F(WordStatisticsTest, givenWordStatisticsWithEnglishWord_shouldHaveEnglishWordWhichIsGiven)
 {
-    ASSERT_EQ(wordStatisticsWithZeroAnswers.getEnglishWord(),englishWord);
+    ASSERT_EQ(wordStatisticsWithZeroAnswers.getEnglishWord(), englishWord);
 }
 
 TEST_F(WordStatisticsTest,
@@ -28,37 +27,37 @@ TEST_F(WordStatisticsTest,
     ASSERT_EQ(wordStatisticsWithZeroAnswers.getAmountOfIncorrectAnswers(), 0);
 }
 
-TEST_F(WordStatisticsTest,
-       givenWordStatisticsWithAnswers_shoulSetAmountsToGiven)
+TEST_F(WordStatisticsTest, givenWordStatisticsWithAnswers_shoulSetAmountsToGiven)
 {
     ASSERT_EQ(wordStatisticsWithAnswers.getAmountOfCorrectAnswers(), amountOfCorrectAnswers);
     ASSERT_EQ(wordStatisticsWithAnswers.getAmountOfIncorrectAnswers(), amountOfIncorrectAnswers);
 }
 
-TEST_F(WordStatisticsTest,
-       shouldAddCorrectAnswerToWordStatistics)
+TEST_F(WordStatisticsTest, shouldAddCorrectAnswerToWordStatistics)
 {
-    const auto amountOfCorrectAnswersBeforeAddition = wordStatisticsWithZeroAnswers.getAmountOfCorrectAnswers();
+    const auto amountOfCorrectAnswersBeforeAddition =
+        wordStatisticsWithZeroAnswers.getAmountOfCorrectAnswers();
 
     wordStatisticsWithZeroAnswers.addCorrectAnswer();
 
-    const auto amountOfCorrectAnswersAfterAddition = wordStatisticsWithZeroAnswers.getAmountOfCorrectAnswers();
+    const auto amountOfCorrectAnswersAfterAddition =
+        wordStatisticsWithZeroAnswers.getAmountOfCorrectAnswers();
     ASSERT_EQ(amountOfCorrectAnswersAfterAddition, amountOfCorrectAnswersBeforeAddition + 1);
 }
 
-TEST_F(WordStatisticsTest,
-       shouldAddIncorrectAnswerToWordStatistics)
+TEST_F(WordStatisticsTest, shouldAddIncorrectAnswerToWordStatistics)
 {
-    const auto amountOfIncorrectAnswersBeforeAddition = wordStatisticsWithZeroAnswers.getAmountOfIncorrectAnswers();
+    const auto amountOfIncorrectAnswersBeforeAddition =
+        wordStatisticsWithZeroAnswers.getAmountOfIncorrectAnswers();
 
     wordStatisticsWithZeroAnswers.addIncorrectAnswer();
 
-    const auto amountOfIncorrectAnswersAfterAddition = wordStatisticsWithZeroAnswers.getAmountOfIncorrectAnswers();
+    const auto amountOfIncorrectAnswersAfterAddition =
+        wordStatisticsWithZeroAnswers.getAmountOfIncorrectAnswers();
     ASSERT_EQ(amountOfIncorrectAnswersAfterAddition, amountOfIncorrectAnswersBeforeAddition + 1);
 }
 
-TEST_F(WordStatisticsTest,
-       givenwordStatisticsWithAnswers_shouldResetAmountOfAnswers)
+TEST_F(WordStatisticsTest, givenwordStatisticsWithAnswers_shouldResetAmountOfAnswers)
 {
     wordStatisticsWithAnswers.resetAnswers();
 

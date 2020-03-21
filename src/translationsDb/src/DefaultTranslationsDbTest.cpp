@@ -1,8 +1,8 @@
+#include "DefaultTranslationsDb.h"
+
 #include "gtest/gtest.h"
 
 #include "TranslationsStorageMock.h"
-
-#include "DefaultTranslationsDb.h"
 
 using namespace ::testing;
 using namespace translationsDb;

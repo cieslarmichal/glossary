@@ -7,7 +7,8 @@
 namespace translationsDb
 {
 
-DefaultTranslationsDbFactory::DefaultTranslationsDbFactory(std::shared_ptr<const utils::FileAccess> fileAccessInit)
+DefaultTranslationsDbFactory::DefaultTranslationsDbFactory(
+    std::shared_ptr<const utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }

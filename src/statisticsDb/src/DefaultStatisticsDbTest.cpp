@@ -1,8 +1,8 @@
+#include "DefaultStatisticsDb.h"
+
 #include "gtest/gtest.h"
 
 #include "StatisticsStorageMock.h"
-
-#include "DefaultStatisticsDb.h"
 
 using namespace ::testing;
 using namespace statisticsDb;

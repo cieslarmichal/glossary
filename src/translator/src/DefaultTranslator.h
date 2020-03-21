@@ -7,14 +7,14 @@
 #include "Translator.h"
 #include "webConnection/HttpHandler.h"
 
-//TODO: check behaviour when returning multiple translations, polish name eg. zamek -castle, zip
+// TODO: check behaviour when returning multiple translations, polish name eg. zamek -castle, zip
 namespace translator
 {
 class DefaultTranslator : public Translator
 {
 public:
     DefaultTranslator(std::shared_ptr<webConnection::HttpHandler>, std::unique_ptr<TranslationDeserializer>,
-                   std::unique_ptr<TranslationRequestFormatter>);
+                      std::unique_ptr<TranslationRequestFormatter>);
 
     boost::optional<TranslatedText> translate(const std::string&, SourceLanguage,
                                               TargetLanguage) const override;

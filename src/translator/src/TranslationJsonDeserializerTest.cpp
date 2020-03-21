@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
-
 #include "TranslationJsonDeserializer.h"
+
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace translator;
@@ -8,7 +8,8 @@ using namespace translator;
 namespace
 {
 const auto contentWithSingleWord = R"({"code":200,"lang":"pl-en","text":["beer"]})";
-const auto contentWithMultipleWords = R"({"code":200,"lang":"pl-en","text":["the castle is a building surrounded by walls"]})";
+const auto contentWithMultipleWords =
+    R"({"code":200,"lang":"pl-en","text":["the castle is a building surrounded by walls"]})";
 const auto expectedTextWithSingleWord = "beer";
 const auto expectedTextWithMultipleWords = "the castle is a building surrounded by walls";
 const auto contentWithoutTextField = R"({"code":403,"lang":"pl-en"})";

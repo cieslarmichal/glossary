@@ -18,8 +18,8 @@ const std::string stringToJoinWith{"+"};
 }
 
 std::string TranslationYandexRequestFormatter::getFormattedRequest(const std::string& sourceText,
-                                                                 SourceLanguage sourceLanguage,
-                                                                 TargetLanguage targetLanguage) const
+                                                                   SourceLanguage sourceLanguage,
+                                                                   TargetLanguage targetLanguage) const
 {
     if (sourceText.empty())
     {
@@ -37,8 +37,8 @@ std::string TranslationYandexRequestFormatter::getFormattedSourceText(const std:
 
 webConnection::Request
 TranslationYandexRequestFormatter::getRequest(const std::string& sourceText,
-                                            translator::SourceLanguage sourceLanguage,
-                                            translator::TargetLanguage targetLanguage) const
+                                              translator::SourceLanguage sourceLanguage,
+                                              translator::TargetLanguage targetLanguage) const
 {
     const auto keyField = "key=" + apiKey;
     const auto text = "text=" + sourceText;
