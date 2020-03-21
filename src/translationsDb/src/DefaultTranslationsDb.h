@@ -7,10 +7,10 @@
 
 namespace translationsDb
 {
-class TranslationsDbImpl : public TranslationsDb
+class DefaultTranslationsDb : public TranslationsDb
 {
 public:
-    explicit TranslationsDbImpl(std::unique_ptr<TranslationsStorage>);
+    explicit DefaultTranslationsDb(std::unique_ptr<TranslationsStorage>);
 
     void addTranslation(Translation) override;
     boost::optional<Translation> getTranslation(const SourceText&) const override;

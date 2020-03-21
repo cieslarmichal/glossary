@@ -1,8 +1,8 @@
-#include "TranslationsDbImpl.h"
-
 #include "gtest/gtest.h"
 
 #include "TranslationsStorageMock.h"
+
+#include "DefaultTranslationsDb.h"
 
 using namespace ::testing;
 using namespace translationsDb;
@@ -18,23 +18,23 @@ const Translation translation2{polishWord2, englishWord2};
 const Translations translations{translation1, translation2};
 }
 
-class TranslationsDbImplTest : public Test
+class DefaultTranslationsDbTest : public Test
 {
 public:
     std::unique_ptr<TranslationsStorageMock> storageInit =
         std::make_unique<StrictMock<TranslationsStorageMock>>();
     TranslationsStorageMock* storage = storageInit.get();
-    TranslationsDbImpl database{std::move(storageInit)};
+    DefaultTranslationsDb database{std::move(storageInit)};
 };
 
-TEST_F(TranslationsDbImplTest, addTranslation)
+TEST_F(DefaultTranslationsDbTest, addTranslation)
 {
     EXPECT_CALL(*storage, addTranslation(translation1));
 
     database.addTranslation(translation1);
 }
 
-TEST_F(TranslationsDbImplTest, getTranslation)
+TEST_F(DefaultTranslationsDbTest, getTranslation)
 {
     EXPECT_CALL(*storage, getTranslation(polishWord1)).WillOnce(Return(translation1));
 
@@ -43,7 +43,7 @@ TEST_F(TranslationsDbImplTest, getTranslation)
     ASSERT_EQ(actualTranslation, translation1);
 }
 
-TEST_F(TranslationsDbImplTest, getTranslations)
+TEST_F(DefaultTranslationsDbTest, getTranslations)
 {
     EXPECT_CALL(*storage, getTranslations()).WillOnce(Return(translations));
 

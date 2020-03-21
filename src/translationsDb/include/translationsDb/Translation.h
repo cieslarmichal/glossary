@@ -8,7 +8,6 @@
 
 namespace translationsDb
 {
-
 struct Translation
 {
     SourceText sourceText;

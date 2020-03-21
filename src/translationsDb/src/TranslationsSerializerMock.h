@@ -6,7 +6,6 @@
 
 namespace translationsDb
 {
-
 class TranslationsSerializerMock : public TranslationsSerializer
 {
 public:

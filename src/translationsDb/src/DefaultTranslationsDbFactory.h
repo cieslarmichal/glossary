@@ -4,10 +4,10 @@
 
 namespace translationsDb
 {
-class TranslationsDbFactoryImpl : public TranslationsDbFactory
+class DefaultTranslationsDbFactory : public TranslationsDbFactory
 {
 public:
-    explicit TranslationsDbFactoryImpl(std::shared_ptr<const utils::FileAccess>);
+    explicit DefaultTranslationsDbFactory(std::shared_ptr<const utils::FileAccess>);
 
     std::unique_ptr<TranslationsDb> createTranslationsDb() const override;
 

@@ -1,14 +1,14 @@
 set(SOURCES
-        src/TranslationsDbImpl.cpp
-        src/TranslationsSerializerImpl.cpp
+        src/DefaultTranslationsDb.cpp
+        src/TranslationsJsonSerializer.cpp
         src/TranslationsMemoryStorage.cpp
         src/TranslationsPersistentStorage.cpp
         src/TranslationsDbFactory.cpp
-        src/TranslationsDbFactoryImpl.cpp)
+        src/DefaultTranslationsDbFactory.cpp)
 
 set(UT_SOURCES
-        src/TranslationsDbImplTest.cpp
-        src/TranslationsSerializerImplTest.cpp
+        src/DefaultTranslationsDbTest.cpp
+        src/TranslationsJsonSerializerTest.cpp
         src/TranslationsMemoryStorageTest.cpp
         src/TranslationsPersistentStorageTest.cpp)
 

@@ -6,7 +6,7 @@
 
 namespace translationsDb
 {
-class TranslationsSerializerImpl : public TranslationsSerializer
+class TranslationsJsonSerializer : public TranslationsSerializer
 {
 public:
     std::string serialize(const Translations&) const override;

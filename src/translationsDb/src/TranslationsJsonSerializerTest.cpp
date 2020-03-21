@@ -1,6 +1,6 @@
-#include "TranslationsSerializerImpl.h"
-
 #include "gtest/gtest.h"
+
+#include "TranslationsJsonSerializer.h"
 
 using namespace ::testing;
 using namespace translationsDb;
@@ -28,55 +28,55 @@ const std::string serializedTranslationsWithoutTranslationsField{
 const std::string emptySerializedStatistics{};
 }
 
-class TranslationsSerializerImplTest : public Test
+class TranslationsJsonSerializerTest : public Test
 {
 public:
-    TranslationsSerializerImpl serializer;
+    TranslationsJsonSerializer serializer;
 };
 
-TEST_F(TranslationsSerializerImplTest, givenNoTranslations_shouldReturnEmptyString)
+TEST_F(TranslationsJsonSerializerTest, givenNoTranslations_shouldReturnEmptyString)
 {
     const auto actualSerializedTranslations = serializer.serialize(emptyTranslations);
 
     EXPECT_TRUE(actualSerializedTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest, givenTranslations_shouldReturnSerializedTranslations)
+TEST_F(TranslationsJsonSerializerTest, givenTranslations_shouldReturnSerializedTranslations)
 {
     const auto actualSerializedTranslations = serializer.serialize(translations);
 
     EXPECT_EQ(actualSerializedTranslations, serializedTranslations);
 }
 
-TEST_F(TranslationsSerializerImplTest, givenInvalidJson_shouldReturnNoTranslations)
+TEST_F(TranslationsJsonSerializerTest, givenInvalidJson_shouldReturnNoTranslations)
 {
     const auto actualTranslations = serializer.deserialize(invalidJson);
 
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest, givenJsonWithoutTranslationsField_shouldReturnNoTranslations)
+TEST_F(TranslationsJsonSerializerTest, givenJsonWithoutTranslationsField_shouldReturnNoTranslations)
 {
     const auto actualTranslations = serializer.deserialize(serializedTranslationsWithoutTranslationsField);
 
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest, givenSerializedTranslations_shouldReturnTranslations)
+TEST_F(TranslationsJsonSerializerTest, givenSerializedTranslations_shouldReturnTranslations)
 {
     const auto actualTranslations = serializer.deserialize(serializedTranslations);
 
     EXPECT_EQ(actualTranslations, translations);
 }
 
-TEST_F(TranslationsSerializerImplTest, givenEmptySerializedTranslationsString_shouldReturnNoTranslations)
+TEST_F(TranslationsJsonSerializerTest, givenEmptySerializedTranslationsString_shouldReturnNoTranslations)
 {
     const auto actualTranslations = serializer.deserialize(emptySerializedStatistics);
 
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest,
+TEST_F(TranslationsJsonSerializerTest,
        givenSerializedTranslationsWithoutRequiredFields_shouldReturnEmptyTranslations)
 {
     const auto actualTranslations = serializer.deserialize(serializedTranslationsWithoutRequiredFields);
@@ -84,7 +84,7 @@ TEST_F(TranslationsSerializerImplTest,
     EXPECT_TRUE(actualTranslations.empty());
 }
 
-TEST_F(TranslationsSerializerImplTest,
+TEST_F(TranslationsJsonSerializerTest,
        givenTwoSerializedTranslationsAndOneOfThemWithoutRequiredFields_shouldReturnTranslationForOneWord)
 {
     const auto actualTranslations = serializer.deserialize(twoSerializedTranslationsOneWithoutRequiredField);

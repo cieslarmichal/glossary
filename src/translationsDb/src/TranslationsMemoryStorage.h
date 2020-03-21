@@ -6,7 +6,6 @@
 
 namespace translationsDb
 {
-
 class TranslationsMemoryStorage : public TranslationsStorage
 {
 public:
