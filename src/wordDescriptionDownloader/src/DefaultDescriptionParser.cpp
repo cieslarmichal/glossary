@@ -8,7 +8,15 @@ namespace wordDescriptionDownloader
 {
 namespace
 {
+template<class Container>
+void removeDuplications(Container& container)
+{
+    std::sort(container.begin(), container.end());
+    container.erase(std::unique(container.begin(), container.end()), container.end());
+}
+
 void removeMarks(Description&);
+void removeDuplicationsInDescription(Description&);
 void removeDefinitionMarks(Definition&);
 void removeExampleMarks(Example&);
 void removeSentenceMarks(Sentence&);
@@ -24,7 +32,7 @@ const std::string sentencePrefix{"; "};
 
 boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
-    Description wordDescription;
+    Description description;
     bool previousLineIsDefinition = false;
 
     Definition definition;
@@ -33,18 +41,18 @@ boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<s
     {
         if (previousLineIsDefinition && !isExample(line))
         {
-            wordDescription.definitionsWithExamples.push_back({definition, boost::none});
+            description.definitionsWithExamples.push_back({definition, boost::none});
             previousLineIsDefinition = false;
         }
 
         if (isSentence(line))
         {
-            wordDescription.sentences.push_back(line);
+            description.sentences.push_back(line);
         }
 
         if (previousLineIsDefinition && isExample(line))
         {
-            wordDescription.definitionsWithExamples.push_back({definition, line});
+            description.definitionsWithExamples.push_back({definition, line});
             previousLineIsDefinition = false;
         }
 
@@ -54,25 +62,26 @@ boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<s
             previousLineIsDefinition = true;
             if (line == lines.back())
             {
-                wordDescription.definitionsWithExamples.push_back({definition, boost::none});
+                description.definitionsWithExamples.push_back({definition, boost::none});
             }
         }
     }
 
-    if (wordDescription.empty())
+    if (description.empty())
     {
         return boost::none;
     }
 
-    removeMarks(wordDescription);
-    return wordDescription;
+    removeMarks(description);
+    removeDuplicationsInDescription(description);
+    return description;
 }
 
 namespace
 {
-void removeMarks(Description& wordDescription)
+void removeMarks(Description& description)
 {
-    for (auto& definitionAndExample : wordDescription.definitionsWithExamples)
+    for (auto& definitionAndExample : description.definitionsWithExamples)
     {
         removeDefinitionMarks(definitionAndExample.definition);
         if (definitionAndExample.example)
@@ -81,10 +90,18 @@ void removeMarks(Description& wordDescription)
         }
     }
 
-    for (auto& sentence : wordDescription.sentences)
+    for (auto& sentence : description.sentences)
     {
         removeSentenceMarks(sentence);
     }
+}
+
+void removeDuplicationsInDescription(Description& description)
+{
+    auto & definitionsWithExamples = description.definitionsWithExamples;
+    auto & sentences = description.sentences;
+    removeDuplications(definitionsWithExamples);
+    removeDuplications(sentences);
 }
 
 void removeDefinitionMarks(Definition& definition)

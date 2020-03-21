@@ -19,7 +19,8 @@ DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
 {
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription> DefaultWordDescriptionDownloader::downloadWordDescription(
+boost::optional<wordsDescriptionsDb::WordDescription>
+DefaultWordDescriptionDownloader::downloadWordDescription(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     const auto httpContent = getHttpContent(englishWord);

@@ -54,7 +54,8 @@ TEST_F(
 TEST_F(WordDescriptionServiceImplTest, dbAndHttpCreatorDoNotRespondWithWordDescription_shouldReturnNone)
 {
     EXPECT_CALL(*wordsDescriptionsDb, getWordDescription(englishWord)).WillOnce(Return(boost::none));
-    EXPECT_CALL(*wordDescriptionDownloader, downloadWordDescription(englishWord)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionDownloader, downloadWordDescription(englishWord))
+        .WillOnce(Return(boost::none));
 
     const auto actualWordDescription = wordDescriptionService.getWordDescription(englishWord);
 

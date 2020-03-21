@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "WordDescriptionService.h"
+#include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDb.h"
 
 class WordDescriptionServiceImpl : public WordDescriptionService

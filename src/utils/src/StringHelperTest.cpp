@@ -22,12 +22,18 @@ public:
     const std::string strSubstring{"</s"};
     const std::string stringWithUpperCases{"aaaAAAaABBBBbB"};
     const std::string stringWithoutUpperCases{"aaaaaaaabbbbbb"};
+    std::string stringToTrim{"    bbb      "};
+    std::string stringToTrim2{" cc bbb      "};
+    const std::string stringAfterTrim{"bbb"};
+    const std::string stringAfterTrim2{"cc bbb"};
+    std::vector<std::string> stringsToTrim{stringToTrim, stringToTrim2};
+    std::vector<std::string> stringsAfterTrim{stringAfterTrim, stringAfterTrim2};
     const std::string emptyStr{};
     const std::vector<std::string> emptyVec{};
     const std::vector<std::string> vecWithOneEmptyElement{""};
     const std::vector<std::string> vecWithEmptyElements{"", "", ""};
-    const std::vector<std::string> vecWithSomeEmptyElements{"", "aaa", "", "vvvv", ""};
-    const std::vector<std::string> vecWithoutEmptyElements{"aaa", "vvvv"};
+    std::vector<std::string> vecWithSomeEmptyElements{"", "aaa", "", "vvvv", ""};
+    std::vector<std::string> vecWithoutEmptyElements{"aaa", "vvvv"};
 };
 
 TEST_F(StringHelperTest, givenEmptyString_shouldVectorWithOneEmptyElement)
@@ -98,4 +104,33 @@ TEST_F(StringHelperTest, givenVector_shouldReturnVectorWithoutEmptyStrings)
     const auto actualNonEmptyLines = getNonEmptyLines(vecWithSomeEmptyElements);
 
     ASSERT_EQ(actualNonEmptyLines, vecWithoutEmptyElements);
+}
+
+TEST_F(StringHelperTest, givenVectorWithEmptyLines_shouldRemoveEmptyLines)
+{
+    removeEmptyLines(vecWithSomeEmptyElements);
+
+    ASSERT_EQ(vecWithSomeEmptyElements, vecWithoutEmptyElements);
+}
+
+TEST_F(StringHelperTest, givenVectorWithoutEmptyLines_shouldNotRemoveLines)
+{
+    const auto amountOfElementsBefore = vecWithoutEmptyElements.size();
+    removeEmptyLines(vecWithoutEmptyElements);
+
+    ASSERT_EQ(vecWithoutEmptyElements.size(), amountOfElementsBefore);
+}
+
+TEST_F(StringHelperTest, shouldTrimString)
+{
+    trim(stringToTrim);
+
+    ASSERT_EQ(stringToTrim, stringAfterTrim);
+}
+
+TEST_F(StringHelperTest, shouldTrimStrings)
+{
+    trimLines(stringsToTrim);
+
+    ASSERT_EQ(stringsToTrim, stringsAfterTrim);
 }

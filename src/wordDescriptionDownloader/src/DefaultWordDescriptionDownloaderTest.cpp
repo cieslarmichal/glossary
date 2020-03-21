@@ -1,3 +1,5 @@
+#include "DefaultWordDescriptionDownloader.h"
+
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
@@ -5,7 +7,6 @@
 #include "LinesSelectorMock.h"
 #include "webConnection/HttpHandlerMock.h"
 
-#include "DefaultWordDescriptionDownloader.h"
 #include "testVariables/HtmlContent.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "testVariables/WordDescriptionFromParser.h"
@@ -28,20 +29,20 @@ public:
     std::unique_ptr<webConnection::HttpHandlerMock> httpHandlerInit =
         std::make_unique<StrictMock<webConnection::HttpHandlerMock>>();
     webConnection::HttpHandlerMock* httpHandler = httpHandlerInit.get();
-    std::unique_ptr<LinesSelectorMock> linesSelectorInit =
-        std::make_unique<StrictMock<LinesSelectorMock>>();
+    std::unique_ptr<LinesSelectorMock> linesSelectorInit = std::make_unique<StrictMock<LinesSelectorMock>>();
     LinesSelectorMock* linesSelector = linesSelectorInit.get();
     std::unique_ptr<DescriptionParserMock> descriptionParserInit =
         std::make_unique<StrictMock<DescriptionParserMock>>();
     DescriptionParserMock* descriptionParser = descriptionParserInit.get();
     DefaultWordDescriptionDownloader downloader{std::move(httpHandlerInit), std::move(linesSelectorInit),
-                                           std::move(descriptionParserInit)};
+                                                std::move(descriptionParserInit)};
 };
 
 TEST_F(DefaultWordDescriptionDownloaderTest, givenEmptyHtmlContent_shouldNotCreateWordDescription)
 {
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(emptyHtmlResponse));
-    EXPECT_CALL(*linesSelector, selectLines(emptyHtmlResponse.content)).WillOnce(Return(emptyParsedHtmlContent));
+    EXPECT_CALL(*linesSelector, selectLines(emptyHtmlResponse.content))
+        .WillOnce(Return(emptyParsedHtmlContent));
     EXPECT_CALL(*descriptionParser, parse(emptyParsedHtmlContent)).WillOnce(Return(boost::none));
 
     const auto actualWord = downloader.downloadWordDescription(englishWord);

@@ -10,6 +10,20 @@ using namespace wordDescriptionDownloader;
 
 namespace
 {
+template <class T>
+static bool compareVectors(std::vector<T> a, std::vector<T> b)
+{
+    std::sort(a.begin(), a.end());
+    std::sort(b.begin(), b.end());
+    return (a == b);
+}
+
+static bool compareDescriptions(Description& lhs, Description& rhs)
+{
+    return compareVectors(lhs.definitionsWithExamples, rhs.definitionsWithExamples) &&
+           compareVectors(lhs.sentences, rhs.sentences);
+}
+
 const auto exampleContent{":     the alcoholic fermented juice of fresh grapes used as a beverage\n"
                           ": wine or a substitute used in Christian communion services\n"
                           ": the alcoholic usually fermented juice of a plant product (such as a "
@@ -19,6 +33,20 @@ const auto exampleContent{":     the alcoholic fermented juice of fresh grapes u
                           ";     In addition to beer, a selection of local and national wines will "
                           "be offered..      \n"
                           "; Who doesn't love delicious food paired with your favorite wine?\n"
+                          ": wine is a delicious beverage"};
+const auto contentWithDuplications{":     the alcoholic fermented juice of fresh grapes used as a beverage\n"
+                          ": wine or a substitute used in Christian communion services\n"
+                          ": wine or a substitute used in Christian communion services\n"
+                          ": the alcoholic usually fermented juice of a plant product (such as a "
+                          "fruit) used as a beverage    \n"
+                          "// blackberry wine   \n"
+                          ": something that invigorates or intoxicates\n"
+                          ": something that invigorates or intoxicates\n"
+                          ";     In addition to beer, a selection of local and national wines will "
+                          "be offered..      \n"
+                          "; Who doesn't love delicious food paired with your favorite wine?\n"
+                          "; Who doesn't love delicious food paired with your favorite wine?\n"
+                          ": wine is a delicious beverage\n"
                           ": wine is a delicious beverage"};
 const DefinitionsWithExamples definitionsWithExamples{
     {"the alcoholic fermented juice of fresh grapes used as a beverage", boost::none},
@@ -31,8 +59,6 @@ const DefinitionsWithExamples definitionsWithExamples{
 const Sentences sentences{{"In addition to beer, a selection of local and national wines will be "
                            "offered.."},
                           {"Who doesn't love delicious food paired with your favorite wine?"}};
-const Description expectedWordDescription{definitionsWithExamples, sentences};
-
 const auto exampleContentPartlyWithoutMarks{
     ": the alcoholic fermented juice of fresh grapes used as a beverage\n"
     "wine or a substitute used in Christian communion services\n"
@@ -41,42 +67,52 @@ const auto exampleContentPartlyWithoutMarks{
     "In addition to beer, a selection of local and national wines will be "
     "offered..\n"
     "; Who doesn't love delicious food paired with your favorite wine?"};
-
 const DefinitionsWithExamples someDefinitionsAndExamples{
     {"the alcoholic fermented juice of fresh grapes used as a beverage", boost::none}};
 const Sentences someSentences{{"Who doesn't love delicious food paired with your favorite wine?"}};
-const Description wordDescriptionPartlyComplete{someDefinitionsAndExamples, someSentences};
 const std::vector<std::string> emptyContent{};
 }
 
 class DefaultDescriptionParserTest : public Test
 {
 public:
+    Description expectedDescription{definitionsWithExamples, sentences};
+    Description descriptionPartlyComplete{someDefinitionsAndExamples, someSentences};
+
     DefaultDescriptionParser parser;
 };
 
-TEST_F(DefaultDescriptionParserTest, givenEmptyContent_shoulNotReturnWordDescription)
+TEST_F(DefaultDescriptionParserTest, givenEmptyContent_shouldReturnNone)
 {
-    const auto actualWordDescription = parser.parse(emptyContent);
+    const auto actualDescriptionOpt = parser.parse(emptyContent);
 
-    EXPECT_FALSE(actualWordDescription);
+    EXPECT_FALSE(actualDescriptionOpt);
 }
 
 TEST_F(DefaultDescriptionParserTest,
-       givenHtmlContentWithoutSomeSpecificMarks_shouldReturnWordDescriptionWithSkippedSomeLines)
+       givenHtmlContentWithoutSomeSpecificMarks_shouldReturnDescriptionWithSkippedSomeLines)
 {
     const auto content = utils::getSplitLines(exampleContentPartlyWithoutMarks);
 
-    const auto actualWordDescription = parser.parse(content);
+    auto actualDescriptionOpt = parser.parse(content);
 
-    EXPECT_EQ(actualWordDescription, wordDescriptionPartlyComplete);
+    EXPECT_TRUE(compareDescriptions(*actualDescriptionOpt, descriptionPartlyComplete));
 }
 
-TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContent_shouldReturnWordDescription)
+TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContent_shouldReturnDescription)
 {
     const auto content = utils::getSplitLines(exampleContent);
 
-    const auto actualWordDescription = parser.parse(content);
+    auto actualDescriptionOpt = parser.parse(content);
 
-    EXPECT_EQ(actualWordDescription, expectedWordDescription);
+    EXPECT_TRUE(compareDescriptions(*actualDescriptionOpt, expectedDescription));
+}
+
+TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContentWithDuplications_shouldReturnDescriptionWithoutDuplications)
+{
+    const auto content = utils::getSplitLines(contentWithDuplications);
+
+    auto actualDescriptionOpt = parser.parse(content);
+
+    EXPECT_TRUE(compareDescriptions(*actualDescriptionOpt, expectedDescription));
 }

@@ -1,5 +1,7 @@
 #include "StringHelper.h"
 
+#include <algorithm>
+
 #include "boost/algorithm/string.hpp"
 
 namespace utils
@@ -25,6 +27,39 @@ std::string cutOffFromString(const std::string& line, size_t startIndexToCut, si
     return head + tail;
 }
 
+std::vector<std::string> getNonEmptyLines(const std::vector<std::string>& lines)
+{
+    std::vector<std::string> nonEmptyLines;
+    for (const auto& line : lines)
+    {
+        if (not line.empty())
+        {
+            nonEmptyLines.push_back(line);
+        }
+    }
+    return nonEmptyLines;
+}
+
+void removeEmptyLines(std::vector<std::string>& lines)
+{
+    lines.erase(std::remove_if(lines.begin(), lines.end(), [](std::string& line) { return line.empty(); }),
+                lines.end());
+}
+
+void trimLines(std::vector<std::string>& lines)
+{
+    for (auto& line : lines)
+    {
+        trim(line);
+    }
+}
+
+void removeDuplicates(std::vector<std::string>& lines)
+{
+    sort(lines.begin(), lines.end());
+    lines.erase(unique(lines.begin(), lines.end()), lines.end());
+}
+
 void cutOffString(std::string& line, size_t startIndexToCut, size_t endIndexToCut)
 {
     line = cutOffFromString(line, startIndexToCut, endIndexToCut);
@@ -40,17 +75,9 @@ std::string getLowerCases(const std::string& input)
     return boost::algorithm::to_lower_copy(input);
 }
 
-std::vector<std::string> getNonEmptyLines(const std::vector<std::string>& lines)
+void trim(std::string& line)
 {
-    std::vector<std::string> nonEmptyLines;
-    for (const auto& line : lines)
-    {
-        if (not line.empty())
-        {
-            nonEmptyLines.push_back(line);
-        }
-    }
-    return nonEmptyLines;
+    boost::algorithm::trim(line);
 }
 
 }

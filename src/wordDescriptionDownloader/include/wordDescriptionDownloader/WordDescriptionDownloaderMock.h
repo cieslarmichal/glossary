@@ -10,6 +10,6 @@ class WordDescriptionDownloaderMock : public WordDescriptionDownloader
 {
 public:
     MOCK_CONST_METHOD1(downloadWordDescription, boost::optional<wordsDescriptionsDb::WordDescription>(
-                                                  const wordsDescriptionsDb::EnglishWord&));
+                                                    const wordsDescriptionsDb::EnglishWord&));
 };
 }

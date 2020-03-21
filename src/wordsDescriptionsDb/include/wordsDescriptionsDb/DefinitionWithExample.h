@@ -4,6 +4,7 @@
 
 #include "Definition.h"
 #include "Example.h"
+#include "boost/optional/optional_io.hpp"
 
 namespace wordsDescriptionsDb
 {
@@ -18,6 +19,11 @@ using DefinitionsWithExamples = std::vector<DefinitionWithExample>;
 inline bool operator==(const DefinitionWithExample& lhs, const DefinitionWithExample& rhs)
 {
     return (lhs.definition == rhs.definition && lhs.example == rhs.example);
+}
+
+inline bool operator<(const DefinitionWithExample& lhs, const DefinitionWithExample& rhs)
+{
+    return (lhs.definition < rhs.definition && lhs.example < rhs.example);
 }
 
 inline std::string toString(const DefinitionWithExample& definitionWithExample)

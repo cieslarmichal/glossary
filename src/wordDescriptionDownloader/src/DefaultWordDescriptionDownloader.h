@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include "WordDescriptionDownloader.h"
 #include "DescriptionParser.h"
-#include "wordsDescriptionsDb/EnglishWord.h"
 #include "LinesSelector.h"
+#include "WordDescriptionDownloader.h"
 #include "webConnection/HttpHandler.h"
+#include "wordsDescriptionsDb/EnglishWord.h"
 
 namespace wordDescriptionDownloader
 {

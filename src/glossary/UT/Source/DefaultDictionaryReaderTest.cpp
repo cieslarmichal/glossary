@@ -1,9 +1,10 @@
+#include "DefaultDictionaryReader.h"
+
 #include "boost/assign/list_of.hpp"
 #include "gtest/gtest.h"
 
 #include "utils/FileAccessMock.h"
 
-#include "DefaultDictionaryReader.h"
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;

@@ -46,7 +46,8 @@ TEST_F(HtmlDescriptionLinesSelectorTest, givenEmptyHtmlContent_shouldEmptyString
     ASSERT_TRUE(actualParsedHtmlContent.empty());
 }
 
-TEST_F(HtmlDescriptionLinesSelectorTest, givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
+TEST_F(HtmlDescriptionLinesSelectorTest,
+       givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
 {
     const std::string testHtmlContent{definition + sentence + example};
     const std::vector<std::string> testParsedContent{parsedDefinition, parsedSentence, parsedExample};

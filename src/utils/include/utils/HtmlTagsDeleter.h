@@ -13,6 +13,7 @@ public:
 private:
     void clear(std::vector<std::string>&) const;
     void removeHtmlTags(std::string&) const;
+    void removeHtmlEntities(std::string&) const;
     void trimEmptySpaces(std::vector<std::string>&) const;
 };
 }
