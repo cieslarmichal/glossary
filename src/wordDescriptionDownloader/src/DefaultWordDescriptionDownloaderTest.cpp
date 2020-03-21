@@ -1,17 +1,17 @@
-#include "HttpWordDescriptionCreatorImpl.h"
-
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 #include "DescriptionParserMock.h"
-#include "GlossaryHtmlParserMock.h"
+#include "LinesSelectorMock.h"
 #include "webConnection/HttpHandlerMock.h"
 
+#include "DefaultWordDescriptionDownloader.h"
 #include "testVariables/HtmlContent.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 #include "testVariables/WordDescriptionFromParser.h"
 
 using namespace ::testing;
+using namespace wordDescriptionDownloader;
 
 namespace
 {
@@ -22,42 +22,42 @@ const webConnection::Response emptyHtmlResponse{};
 const std::vector<std::string> emptyParsedHtmlContent{};
 }
 
-class HttpWordDescriptionCreatorImplTest : public Test
+class DefaultWordDescriptionDownloaderTest : public Test
 {
 public:
     std::unique_ptr<webConnection::HttpHandlerMock> httpHandlerInit =
         std::make_unique<StrictMock<webConnection::HttpHandlerMock>>();
     webConnection::HttpHandlerMock* httpHandler = httpHandlerInit.get();
-    std::unique_ptr<GlossaryHtmlParserMock> glossaryParserInit =
-        std::make_unique<StrictMock<GlossaryHtmlParserMock>>();
-    GlossaryHtmlParserMock* glossaryParser = glossaryParserInit.get();
+    std::unique_ptr<LinesSelectorMock> linesSelectorInit =
+        std::make_unique<StrictMock<LinesSelectorMock>>();
+    LinesSelectorMock* linesSelector = linesSelectorInit.get();
     std::unique_ptr<DescriptionParserMock> descriptionParserInit =
         std::make_unique<StrictMock<DescriptionParserMock>>();
     DescriptionParserMock* descriptionParser = descriptionParserInit.get();
-    HttpWordDescriptionCreatorImpl creator{std::move(httpHandlerInit), std::move(glossaryParserInit),
+    DefaultWordDescriptionDownloader downloader{std::move(httpHandlerInit), std::move(linesSelectorInit),
                                            std::move(descriptionParserInit)};
 };
 
-TEST_F(HttpWordDescriptionCreatorImplTest, givenEmptyHtmlContent_shouldNotCreateWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest, givenEmptyHtmlContent_shouldNotCreateWordDescription)
 {
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(emptyHtmlResponse));
-    EXPECT_CALL(*glossaryParser, parse(emptyHtmlResponse.content)).WillOnce(Return(emptyParsedHtmlContent));
+    EXPECT_CALL(*linesSelector, selectLines(emptyHtmlResponse.content)).WillOnce(Return(emptyParsedHtmlContent));
     EXPECT_CALL(*descriptionParser, parse(emptyParsedHtmlContent)).WillOnce(Return(boost::none));
 
-    const auto actualWord = creator.createWordDescription(englishWord);
+    const auto actualWord = downloader.downloadWordDescription(englishWord);
 
     ASSERT_EQ(actualWord, boost::none);
 }
 
-TEST_F(HttpWordDescriptionCreatorImplTest, givenWordWithTranslation_shouldCreateWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest, givenWordWithTranslation_shouldCreateWordDescription)
 {
     webConnection::Response response{200, htmlContent};
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(response));
-    EXPECT_CALL(*glossaryParser, parse(htmlContent)).WillOnce(Return(testParsedGlossaryHtmlContent));
+    EXPECT_CALL(*linesSelector, selectLines(htmlContent)).WillOnce(Return(testParsedGlossaryHtmlContent));
     EXPECT_CALL(*descriptionParser, parse(testParsedGlossaryHtmlContent))
         .WillOnce(Return(wordDescriptionFromParser));
 
-    const auto actualWord = creator.createWordDescription(englishWord);
+    const auto actualWord = downloader.downloadWordDescription(englishWord);
 
     ASSERT_EQ(*actualWord, expectedWordDescription);
 }

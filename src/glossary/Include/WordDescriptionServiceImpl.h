@@ -2,14 +2,14 @@
 
 #include <memory>
 
-#include "HttpWordDescriptionCreator.h"
+#include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "WordDescriptionService.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDb.h"
 
 class WordDescriptionServiceImpl : public WordDescriptionService
 {
 public:
-    WordDescriptionServiceImpl(std::unique_ptr<HttpWordDescriptionCreator>,
+    WordDescriptionServiceImpl(std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
                                std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb>);
 
     boost::optional<wordsDescriptionsDb::WordDescription>
@@ -22,6 +22,6 @@ private:
     createWordDescriptionFromHttp(const wordsDescriptionsDb::EnglishWord& englishWord) const;
     void saveWordDescriptionInDb(const wordsDescriptionsDb::WordDescription&);
 
-    std::unique_ptr<HttpWordDescriptionCreator> wordDescriptionCreator;
+    std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> wordsDescriptionsDb;
 };

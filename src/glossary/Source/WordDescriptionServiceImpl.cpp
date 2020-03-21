@@ -1,9 +1,9 @@
 #include "WordDescriptionServiceImpl.h"
 
 WordDescriptionServiceImpl::WordDescriptionServiceImpl(
-    std::unique_ptr<HttpWordDescriptionCreator> creator,
+    std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
     std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> db)
-    : wordDescriptionCreator{std::move(creator)}, wordsDescriptionsDb{std::move(db)}
+    : wordDescriptionDownloader{std::move(downloader)}, wordsDescriptionsDb{std::move(db)}
 {
 }
 
@@ -33,7 +33,7 @@ boost::optional<wordsDescriptionsDb::WordDescription>
 WordDescriptionServiceImpl::createWordDescriptionFromHttp(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
-    return wordDescriptionCreator->createWordDescription(englishWord);
+    return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
 void WordDescriptionServiceImpl::saveWordDescriptionInDb(

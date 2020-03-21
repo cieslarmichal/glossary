@@ -4,6 +4,8 @@
 
 #include "wordsDescriptionsDb/Description.h"
 
+namespace wordDescriptionDownloader
+{
 class DescriptionParser
 {
 public:
@@ -12,3 +14,4 @@ public:
     virtual boost::optional<wordsDescriptionsDb::Description>
     parse(const std::vector<std::string>&) const = 0;
 };
+}

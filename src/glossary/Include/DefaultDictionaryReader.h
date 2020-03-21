@@ -7,10 +7,10 @@
 #include "DictionaryReader.h"
 #include "utils/FileAccess.h"
 
-class DictionaryReaderImpl : public DictionaryReader
+class DefaultDictionaryReader : public DictionaryReader
 {
 public:
-    explicit DictionaryReaderImpl(std::shared_ptr<const utils::FileAccess>);
+    explicit DefaultDictionaryReader(std::shared_ptr<const utils::FileAccess>);
 
     Dictionaries readDictionaries() const override;
 

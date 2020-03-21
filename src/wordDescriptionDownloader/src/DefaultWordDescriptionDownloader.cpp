@@ -1,23 +1,25 @@
-#include "HttpWordDescriptionCreatorImpl.h"
+#include "DefaultWordDescriptionDownloader.h"
 
 #include <iostream>
 
-#include "GlossaryHtmlParserImpl.h"
+#include "HtmlDescriptionLinesSelector.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
 
-const std::string HttpWordDescriptionCreatorImpl::urlAddress{"https://www.merriam-webster.com/dictionary/"};
+namespace wordDescriptionDownloader
+{
+const std::string DefaultWordDescriptionDownloader::urlAddress{"https://www.merriam-webster.com/dictionary/"};
 
-HttpWordDescriptionCreatorImpl::HttpWordDescriptionCreatorImpl(
+DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
     std::shared_ptr<const webConnection::HttpHandler> htmlReaderInit,
-    std::unique_ptr<const GlossaryHtmlParser> glossaryParserInit,
+    std::unique_ptr<const LinesSelector> linesSelectorInit,
     std::unique_ptr<const DescriptionParser> descriptionParserInit)
     : httpHandler{std::move(htmlReaderInit)},
-      glossaryParser{std::move(glossaryParserInit)},
+      linesSelector{std::move(linesSelectorInit)},
       descriptionParser{std::move(descriptionParserInit)}
 {
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription> HttpWordDescriptionCreatorImpl::createWordDescription(
+boost::optional<wordsDescriptionsDb::WordDescription> DefaultWordDescriptionDownloader::downloadWordDescription(
     const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     const auto httpContent = getHttpContent(englishWord);
@@ -25,7 +27,7 @@ boost::optional<wordsDescriptionsDb::WordDescription> HttpWordDescriptionCreator
     {
         return boost::none;
     }
-    const auto linesWithDescription = glossaryParser->parse(*httpContent);
+    const auto linesWithDescription = linesSelector->selectLines(*httpContent);
 
     if (const auto wordDescription = descriptionParser->parse(linesWithDescription))
     {
@@ -35,7 +37,7 @@ boost::optional<wordsDescriptionsDb::WordDescription> HttpWordDescriptionCreator
 }
 
 boost::optional<std::string>
-HttpWordDescriptionCreatorImpl::getHttpContent(const EnglishWord& englishWord) const
+DefaultWordDescriptionDownloader::getHttpContent(const wordsDescriptionsDb::EnglishWord& englishWord) const
 {
     try
     {
@@ -47,4 +49,5 @@ HttpWordDescriptionCreatorImpl::getHttpContent(const EnglishWord& englishWord) c
         std::cerr << "Get content from http failed: " << e.what();
         return boost::none;
     }
+}
 }

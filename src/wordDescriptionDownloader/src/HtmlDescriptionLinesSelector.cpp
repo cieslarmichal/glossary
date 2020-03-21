@@ -1,4 +1,4 @@
-#include "GlossaryHtmlParserImpl.h"
+#include "HtmlDescriptionLinesSelector.h"
 
 #include <boost/algorithm/string/trim.hpp>
 #include <map>
@@ -8,6 +8,8 @@
 #include "utils/HtmlTagsDeleter.h"
 #include "utils/StringHelper.h"
 
+namespace wordDescriptionDownloader
+{
 namespace
 {
 struct TagWithPosition;
@@ -41,19 +43,20 @@ std::map<std::string, std::string> tagPrefixMapping =
 // TODO: synonyms  starts with <ul class="mw-list">, ends with </ul>
 }
 
-GlossaryHtmlParserImpl::GlossaryHtmlParserImpl()
+HtmlDescriptionLinesSelector::HtmlDescriptionLinesSelector()
+    : htmlTagsDeleter{std::make_unique<utils::HtmlTagsDeleter>()}
 {
-    htmlTagsDeleter = std::make_unique<utils::HtmlTagsDeleter>();
 }
 
-std::vector<std::string> GlossaryHtmlParserImpl::parse(const std::string& htmlContent) const
+std::vector<std::string> HtmlDescriptionLinesSelector::selectLines(const std::string& htmlContent) const
 {
     const auto glossaryLines = selectGlossaryLines(htmlContent);
     auto parsedContent = htmlTagsDeleter->deleteTags(glossaryLines);
     return parsedContent;
 }
 
-std::vector<std::string> GlossaryHtmlParserImpl::selectGlossaryLines(const std::string& htmlContent) const
+std::vector<std::string>
+HtmlDescriptionLinesSelector::selectGlossaryLines(const std::string& htmlContent) const
 {
     return getTagsContent(htmlContent);
 }
@@ -191,4 +194,5 @@ void trimEmptySpaces(std::string& line)
     boost::algorithm::trim(line);
 }
 
+}
 }

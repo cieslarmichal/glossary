@@ -1,4 +1,4 @@
-#include "GlossaryHtmlParserImpl.h"
+#include "HtmlDescriptionLinesSelector.h"
 
 #include "gtest/gtest.h"
 
@@ -6,6 +6,7 @@
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 
 using namespace ::testing;
+using namespace wordDescriptionDownloader;
 
 namespace
 {
@@ -32,39 +33,39 @@ const std::string contentWithoutImportantLines{"<div class=\"s-term-cnt border-b
                                                "nor examples"};
 }
 
-class GlossaryHtmlParserImplTest : public Test
+class HtmlDescriptionLinesSelectorTest : public Test
 {
 public:
-    GlossaryHtmlParserImpl glossaryHtmlParser;
+    HtmlDescriptionLinesSelector glossaryHtmlParser;
 };
 
-TEST_F(GlossaryHtmlParserImplTest, givenEmptyHtmlContent_shouldEmptyString)
+TEST_F(HtmlDescriptionLinesSelectorTest, givenEmptyHtmlContent_shouldEmptyString)
 {
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(emptyHtmlContent);
+    const auto actualParsedHtmlContent = glossaryHtmlParser.selectLines(emptyHtmlContent);
 
     ASSERT_TRUE(actualParsedHtmlContent.empty());
 }
 
-TEST_F(GlossaryHtmlParserImplTest, givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
+TEST_F(HtmlDescriptionLinesSelectorTest, givenHtmlContentWithDefinitionSequenceAndExample_shouldReturnParsedContent)
 {
     const std::string testHtmlContent{definition + sentence + example};
     const std::vector<std::string> testParsedContent{parsedDefinition, parsedSentence, parsedExample};
 
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(testHtmlContent);
+    const auto actualParsedHtmlContent = glossaryHtmlParser.selectLines(testHtmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedContent);
 }
 
-TEST_F(GlossaryHtmlParserImplTest, givenRealHtmlContent_shouldReturnParsedContent)
+TEST_F(HtmlDescriptionLinesSelectorTest, givenRealHtmlContent_shouldReturnParsedContent)
 {
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(htmlContent);
+    const auto actualParsedHtmlContent = glossaryHtmlParser.selectLines(htmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedGlossaryHtmlContent);
 }
 
-TEST_F(GlossaryHtmlParserImplTest, givenHtmlContentWithoutImportantLines_shouldReturnEmptyVector)
+TEST_F(HtmlDescriptionLinesSelectorTest, givenHtmlContentWithoutImportantLines_shouldReturnEmptyVector)
 {
-    const auto actualParsedHtmlContent = glossaryHtmlParser.parse(contentWithoutImportantLines);
+    const auto actualParsedHtmlContent = glossaryHtmlParser.selectLines(contentWithoutImportantLines);
 
     ASSERT_TRUE(actualParsedHtmlContent.empty());
 }

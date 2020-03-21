@@ -1,4 +1,4 @@
-#include "DescriptionParserImpl.h"
+#include "DefaultDescriptionParser.h"
 
 #include "gtest/gtest.h"
 
@@ -6,10 +6,10 @@
 
 using namespace ::testing;
 using namespace wordsDescriptionsDb;
+using namespace wordDescriptionDownloader;
 
 namespace
 {
-
 const auto exampleContent{":     the alcoholic fermented juice of fresh grapes used as a beverage\n"
                           ": wine or a substitute used in Christian communion services\n"
                           ": the alcoholic usually fermented juice of a plant product (such as a "
@@ -49,20 +49,20 @@ const Description wordDescriptionPartlyComplete{someDefinitionsAndExamples, some
 const std::vector<std::string> emptyContent{};
 }
 
-class DescriptionParserImplTest : public Test
+class DefaultDescriptionParserTest : public Test
 {
 public:
-    DescriptionParserImpl parser;
+    DefaultDescriptionParser parser;
 };
 
-TEST_F(DescriptionParserImplTest, givenEmptyContent_shoulNotReturnWordDescription)
+TEST_F(DefaultDescriptionParserTest, givenEmptyContent_shoulNotReturnWordDescription)
 {
     const auto actualWordDescription = parser.parse(emptyContent);
 
     EXPECT_FALSE(actualWordDescription);
 }
 
-TEST_F(DescriptionParserImplTest,
+TEST_F(DefaultDescriptionParserTest,
        givenHtmlContentWithoutSomeSpecificMarks_shouldReturnWordDescriptionWithSkippedSomeLines)
 {
     const auto content = utils::getSplitLines(exampleContentPartlyWithoutMarks);
@@ -72,7 +72,7 @@ TEST_F(DescriptionParserImplTest,
     EXPECT_EQ(actualWordDescription, wordDescriptionPartlyComplete);
 }
 
-TEST_F(DescriptionParserImplTest, givenParsedHtmlContent_shouldReturnWordDescription)
+TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContent_shouldReturnWordDescription)
 {
     const auto content = utils::getSplitLines(exampleContent);
 

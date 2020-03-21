@@ -3,10 +3,7 @@
 #include <iostream>
 
 #include "AnswerCheckerImpl.h"
-#include "DescriptionParserImpl.h"
-#include "DictionaryReaderImpl.h"
-#include "GlossaryHtmlParserImpl.h"
-#include "HttpWordDescriptionCreatorImpl.h"
+#include "DefaultDictionaryReader.h"
 #include "UserPromptImpl.h"
 #include "WordDescriptionConcurrentGenerator.h"
 #include "WordDescriptionServiceImpl.h"
@@ -15,6 +12,7 @@
 #include "WordsBuilderImpl.h"
 #include "statisticsDb/StatisticsDbFactory.h"
 #include "webConnection/HttpHandlerFactory.h"
+#include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
 #include "wordsDescriptionsDb/WordsDescriptionsDbFactory.h"
 
 GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
@@ -26,7 +24,7 @@ GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> file
 
 void GlossaryApplication::initialize()
 {
-    dictionaryReader = std::make_unique<DictionaryReaderImpl>(fileAccess);
+    dictionaryReader = std::make_unique<DefaultDictionaryReader>(fileAccess);
     dictionaries = dictionaryReader->readDictionaries();
     baseDictionary = dictionaries.at("base");
 
@@ -39,14 +37,16 @@ void GlossaryApplication::initialize()
         webConnection::HttpHandlerFactory::createHttpHandlerFactory();
 
     std::shared_ptr<const webConnection::HttpHandler> httpHandler = httpHandlerFactory->createHttpHandler();
-    std::unique_ptr<const GlossaryHtmlParser> htmlParser = std::make_unique<GlossaryHtmlParserImpl>();
-    std::unique_ptr<const DescriptionParser> descriptionParser = std::make_unique<DescriptionParserImpl>();
+
+    std::unique_ptr<const wordDescriptionDownloader::WordDescriptionDownloaderFactory>
+        wordDescriptionDownloaderFactory = wordDescriptionDownloader::WordDescriptionDownloaderFactory::
+            createWordDescriptionDownloaderFactory(httpHandler);
+    std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader =
+        wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
 
     wordDescriptionGenerator =
         std::make_unique<WordDescriptionConcurrentGenerator>(std::make_unique<WordDescriptionServiceImpl>(
-            std::make_unique<HttpWordDescriptionCreatorImpl>(httpHandler, std::move(htmlParser),
-                                                             std::move(descriptionParser)),
-            wordsDescriptionsDb));
+            std::move(wordDescriptionDownloader), wordsDescriptionsDb));
 
     std::unique_ptr<const statisticsDb::StatisticsDbFactory> statisticsDbFactory =
         statisticsDb::StatisticsDbFactory::createStatisticsDbFactory(fileAccess);

@@ -1,7 +1,6 @@
 #pragma once
 
 #include "WordsDescriptionsDbFactory.h"
-#include "utils/FileAccess.h"
 
 namespace wordsDescriptionsDb
 {

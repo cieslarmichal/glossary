@@ -1,9 +1,11 @@
-#include "DescriptionParserImpl.h"
+#include "DefaultDescriptionParser.h"
 
 #include "boost/algorithm/string.hpp"
 
 using namespace wordsDescriptionsDb;
 
+namespace wordDescriptionDownloader
+{
 namespace
 {
 void removeMarks(Description&);
@@ -20,7 +22,7 @@ const std::string examplePrefix{"// "};
 const std::string sentencePrefix{"; "};
 }
 
-boost::optional<Description> DescriptionParserImpl::parse(const std::vector<std::string>& lines) const
+boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
     Description wordDescription;
     bool previousLineIsDefinition = false;
@@ -123,4 +125,5 @@ void trimEmptySpaces(std::string& line)
     boost::algorithm::trim(line);
 }
 
+}
 }
