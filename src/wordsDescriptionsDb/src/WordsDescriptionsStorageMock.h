@@ -6,7 +6,6 @@
 
 namespace wordsDescriptionsDb
 {
-
 class WordsDescriptionsStorageMock : public WordsDescriptionsStorage
 {
 public:

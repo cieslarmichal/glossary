@@ -7,7 +7,7 @@
 
 namespace wordsDescriptionsDb
 {
-class WordsDescriptionsSerializerImpl : public WordsDescriptionsSerializer
+class WordsDescriptionsJsonSerializer : public WordsDescriptionsSerializer
 {
 public:
     std::string serialize(const WordsDescriptions&) const override;

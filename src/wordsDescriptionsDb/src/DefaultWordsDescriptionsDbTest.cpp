@@ -1,4 +1,4 @@
-#include "WordsDescriptionsDbImpl.h"
+#include "DefaultWordsDescriptionsDb.h"
 
 #include "gtest/gtest.h"
 
@@ -14,23 +14,23 @@ const WordDescription wordDescription{englishWord, {}};
 const WordsDescriptions wordsDescriptions{wordDescription};
 }
 
-class WordsDescriptionsDbImplTest : public Test
+class DefaultWordsDescriptionsDbTest : public Test
 {
 public:
     std::unique_ptr<WordsDescriptionsStorageMock> storageInit =
         std::make_unique<StrictMock<WordsDescriptionsStorageMock>>();
     WordsDescriptionsStorageMock* storage = storageInit.get();
-    WordsDescriptionsDbImpl database{std::move(storageInit)};
+    DefaultWordsDescriptionsDb database{std::move(storageInit)};
 };
 
-TEST_F(WordsDescriptionsDbImplTest, givenWordDescritpionAddition_shouldAddWordDescriptionToStorage)
+TEST_F(DefaultWordsDescriptionsDbTest, givenWordDescritpionAddition_shouldAddWordDescriptionToStorage)
 {
     EXPECT_CALL(*storage, addWordDescription(wordDescription));
 
     database.addWordDescription(wordDescription);
 }
 
-TEST_F(WordsDescriptionsDbImplTest, givenEnglishWordDescriptionNotExistingInStorage_shouldReturnNone)
+TEST_F(DefaultWordsDescriptionsDbTest, givenEnglishWordDescriptionNotExistingInStorage_shouldReturnNone)
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(boost::none));
 
@@ -39,7 +39,8 @@ TEST_F(WordsDescriptionsDbImplTest, givenEnglishWordDescriptionNotExistingInStor
     ASSERT_EQ(actualWord, boost::none);
 }
 
-TEST_F(WordsDescriptionsDbImplTest, givenEnglishWordDescriptionExistingInStorage_shouldReturnWordDescription)
+TEST_F(DefaultWordsDescriptionsDbTest,
+       givenEnglishWordDescriptionExistingInStorage_shouldReturnWordDescription)
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(wordDescription));
 
@@ -48,7 +49,7 @@ TEST_F(WordsDescriptionsDbImplTest, givenEnglishWordDescriptionExistingInStorage
     ASSERT_EQ(actualWord, wordDescription);
 }
 
-TEST_F(WordsDescriptionsDbImplTest, containsWordsDescriptions_shouldReturnWordsDescriptions)
+TEST_F(DefaultWordsDescriptionsDbTest, containsWordsDescriptions_shouldReturnWordsDescriptions)
 {
     EXPECT_CALL(*storage, getWordsDescriptions()).WillOnce(Return(wordsDescriptions));
 
@@ -57,14 +58,15 @@ TEST_F(WordsDescriptionsDbImplTest, containsWordsDescriptions_shouldReturnWordsD
     ASSERT_EQ(actualWords, wordsDescriptions);
 }
 
-TEST_F(WordsDescriptionsDbImplTest, givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
+TEST_F(DefaultWordsDescriptionsDbTest, givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
 
     ASSERT_TRUE(database.contains(englishWord));
 }
 
-TEST_F(WordsDescriptionsDbImplTest, givenEnglishWordNotExistingInStorage_shouldNotContainThisWordDescription)
+TEST_F(DefaultWordsDescriptionsDbTest,
+       givenEnglishWordNotExistingInStorage_shouldNotContainThisWordDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(false));
 

@@ -1,6 +1,7 @@
+#include "CurlHttpHandler.h"
+
 #include "gtest/gtest.h"
 
-#include "CurlHttpHandler.h"
 #include "exceptions/ConnectionFailed.h"
 
 using namespace ::testing;

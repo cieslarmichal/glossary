@@ -1,18 +1,18 @@
 set(SOURCES
-        src/WordsDescriptionsDbImpl.cpp
+        src/DefaultWordsDescriptionsDb.cpp
         src/WordsDescriptionsMemoryStorage.cpp
         src/WordsDescriptionsPersistentStorage.cpp
-        src/WordsDescriptionsSerializerImpl.cpp
+        src/WordsDescriptionsJsonSerializer.cpp
         src/DescriptionSerializer.cpp
         src/WordsDescriptionsDbFactory.cpp
-        src/WordsDescriptionsDbFactoryImpl.cpp
+        src/DefaultWordsDescriptionsDbFactory.cpp
         )
 
 set(UT_SOURCES
-        src/WordsDescriptionsDbImplTest.cpp
+        src/DefaultWordsDescriptionsDbTest.cpp
         src/WordsDescriptionsMemoryStorageTest.cpp
         src/WordsDescriptionsPersistentStorageTest.cpp
-        src/WordsDescriptionsSerializerImplTest.cpp
+        src/WordsDescriptionsJsonSerializerTest.cpp
         src/DescriptionSerializerTest.cpp)
 
 add_library(wordsDescriptionsDb ${SOURCES})

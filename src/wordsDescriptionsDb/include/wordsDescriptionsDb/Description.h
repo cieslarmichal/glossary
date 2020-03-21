@@ -11,23 +11,6 @@ namespace wordsDescriptionsDb
 {
 struct Description
 {
-    std::string toString() const
-    {
-        std::string wordDescriptionAsString;
-
-        for (const auto& definitionAndExample : definitionsWithExamples)
-        {
-            wordDescriptionAsString += definitionAndExample.toString() + "\n";
-        }
-
-        for (const auto& sentence : sentences)
-        {
-            wordDescriptionAsString += sentence + "\n";
-        }
-
-        return wordDescriptionAsString;
-    }
-
     bool empty() const
     {
         return definitionsWithExamples.empty() && sentences.empty();
@@ -42,9 +25,26 @@ inline bool operator==(const Description& lhs, const Description& rhs)
     return (lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const Description& wordDescription)
+inline std::string toString(const Description& description)
 {
-    os << wordDescription.toString();
+    std::string wordDescriptionAsString = "{";
+    wordDescriptionAsString += "definitionsWithExamples: ";
+    for (const auto& definitionAndExample : description.definitionsWithExamples)
+    {
+        wordDescriptionAsString += toString(definitionAndExample) + " ";
+    }
+    wordDescriptionAsString += "sentences: ";
+    for (const auto& sentence : description.sentences)
+    {
+        wordDescriptionAsString += sentence + " ";
+    }
+    wordDescriptionAsString += "}";
+    return wordDescriptionAsString;
+}
+
+inline std::ostream& operator<<(std::ostream& os, const Description& description)
+{
+    os << toString(description);
     return os;
 }
 }

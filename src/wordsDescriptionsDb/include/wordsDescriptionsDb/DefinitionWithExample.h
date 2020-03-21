@@ -4,27 +4,11 @@
 
 #include "Definition.h"
 #include "Example.h"
-#include "utils/StringHelper.h"
 
 namespace wordsDescriptionsDb
 {
-namespace
-{
-const std::string separator = ":";
-}
-
 struct DefinitionWithExample
 {
-    std::string toString() const
-    {
-        std::string definitionWithExample = definition;
-        if (example)
-        {
-            definitionWithExample += separator + *example;
-        }
-        return definitionWithExample;
-    }
-
     Definition definition;
     boost::optional<Example> example;
 };
@@ -36,27 +20,20 @@ inline bool operator==(const DefinitionWithExample& lhs, const DefinitionWithExa
     return (lhs.definition == rhs.definition && lhs.example == rhs.example);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const DefinitionWithExample& definitionWithExample)
+inline std::string toString(const DefinitionWithExample& definitionWithExample)
 {
-    os << definitionWithExample.toString();
-    return os;
+    std::string defWithExample = "{" + definitionWithExample.definition;
+    if (definitionWithExample.example)
+    {
+        defWithExample += ":" + *definitionWithExample.example;
+    }
+    defWithExample += "}";
+    return defWithExample;
 }
 
-inline DefinitionWithExample toDefinitionWithExample(const std::string& text)
+inline std::ostream& operator<<(std::ostream& os, const DefinitionWithExample& definitionWithExample)
 {
-    auto separatorIndex = text.find(separator);
-
-    auto exampleExists = [separatorIndex]() { return separatorIndex != std::string::npos; };
-
-    if (exampleExists())
-    {
-        auto definition = utils::substring(text, 0, separatorIndex);
-        auto example = utils::substring(text, separatorIndex + 1, text.size());
-        return DefinitionWithExample{definition, example};
-    }
-    else
-    {
-        return (DefinitionWithExample{text, boost::none});
-    }
+    os << toString(definitionWithExample);
+    return os;
 }
 }

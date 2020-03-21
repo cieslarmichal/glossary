@@ -43,9 +43,9 @@ std::string getLowerCases(const std::string& input)
 std::vector<std::string> getNonEmptyLines(const std::vector<std::string>& lines)
 {
     std::vector<std::string> nonEmptyLines;
-    for(const auto & line : lines)
+    for (const auto& line : lines)
     {
-        if(not line.empty())
+        if (not line.empty())
         {
             nonEmptyLines.push_back(line);
         }

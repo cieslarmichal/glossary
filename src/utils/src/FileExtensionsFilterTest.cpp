@@ -1,6 +1,6 @@
-#include "gtest/gtest.h"
-
 #include "FileExtensionsFilter.h"
+
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace utils;

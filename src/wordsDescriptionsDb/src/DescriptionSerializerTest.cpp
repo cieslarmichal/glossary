@@ -8,55 +8,31 @@ using namespace wordsDescriptionsDb;
 namespace
 {
 const DefinitionWithExample definitionWithExample1{"definition1", boost::none};
-const DefinitionWithExample definitionWithExample2{"definition2", std::string{"example"}};
+const DefinitionWithExample definitionWithExample2{"definition2", std::string{"example2"}};
 const DefinitionsWithExamples definitionsWithExamples{definitionWithExample1, definitionWithExample2};
 const Sentence sentence1{"sentence1"};
 const Sentence sentence2{"sentence2"};
 const Sentences sentences{sentence1, sentence2};
 const Description description{definitionsWithExamples, sentences};
 const auto expectedSerializedDescription{
-    R"({"definitionsWithExamples":["definition1","definition2:example"],"sentences":["sentence1","sentence2"]})"};
+    R"({"definitionsWithExamples":[{"definition":"definition1"},{"definition":"definition2","example":"example2"}],"sentences":["sentence1","sentence2"]})"};
 const auto expectedSerializedDescriptionWithoutDefinitionsAndExamples{
     R"({"sentences":["sentence1","sentence2"]})"};
 const auto expectedSerializedDescriptionWithoutSentences{
-    R"({"definitionsWithExamples":["definition1","definition2:example"]})"};
-constexpr auto definitionsWithExamplesField = "definitionsWithExamples";
-constexpr auto sentencesField = "sentences";
+    R"({"definitionsWithExamples":[{"definition":"definition1"},{"definition":"definition2","example":"example2"}]})"};
 const DefinitionsWithExamples emptyDefinitionsWithExamples{};
 const Sentences emptySentences{};
 const Description descriptionWithoutDefinitionsAndExamples{emptyDefinitionsWithExamples, sentences};
 const Description descriptionWithoutSentences{definitionsWithExamples, emptySentences};
 const Description emptyDescription{emptyDefinitionsWithExamples, emptySentences};
-const std::string invalidJson{"{."};
 }
 
 class DescriptionSerializerTest : public Test
 {
 public:
-    nlohmann::json prepareDescriptionJson()
+    nlohmann::json prepareJsonFromText(const std::string& jsonText) const
     {
-        nlohmann::json val;
-        val[definitionsWithExamplesField].push_back(definitionWithExample1.toString());
-        val[definitionsWithExamplesField].push_back(definitionWithExample2.toString());
-        val[sentencesField].push_back(sentence1);
-        val[sentencesField].push_back(sentence2);
-        return val;
-    }
-
-    nlohmann::json prepareDescriptionWithoutDefinitionsAndExamplesJson()
-    {
-        nlohmann::json val;
-        val[sentencesField].push_back(sentence1);
-        val[sentencesField].push_back(sentence2);
-        return val;
-    }
-
-    nlohmann::json prepareDescriptionWithoutSentencesJson()
-    {
-        nlohmann::json val;
-        val[definitionsWithExamplesField].push_back(definitionWithExample1.toString());
-        val[definitionsWithExamplesField].push_back(definitionWithExample2.toString());
-        return val;
+        return nlohmann::json::parse(jsonText);
     }
 
     DescriptionSerializer serializer;
@@ -100,16 +76,11 @@ TEST_F(DescriptionSerializerTest, givenEmptyJson_shouldReturnEmptyDescription)
     EXPECT_TRUE(serializedDescription.empty());
 }
 
-TEST_F(DescriptionSerializerTest, givenInvalidJson_shouldReturnNoDescription)
-{
-    const auto actualDescription = serializer.deserialize(invalidJson);
-
-    EXPECT_TRUE(actualDescription.empty());
-}
-
 TEST_F(DescriptionSerializerTest, givenSerializedDescription_shouldReturnDescription)
 {
-    const auto actualDescription = serializer.deserialize(prepareDescriptionJson());
+    const auto serializedDescription = prepareJsonFromText(expectedSerializedDescription);
+
+    const auto actualDescription = serializer.deserialize(serializedDescription);
 
     EXPECT_EQ(actualDescription, description);
 }
@@ -118,8 +89,10 @@ TEST_F(
     DescriptionSerializerTest,
     givenSerializedDescriptionWithoutDefinitionsAndExamplesField_shouldReturnDescriptionWithoutDefinitionsAndExamples)
 {
-    const auto actualDescription =
-        serializer.deserialize(prepareDescriptionWithoutDefinitionsAndExamplesJson());
+    const auto serializedDescription =
+        prepareJsonFromText(expectedSerializedDescriptionWithoutDefinitionsAndExamples);
+
+    const auto actualDescription = serializer.deserialize(serializedDescription);
 
     EXPECT_EQ(actualDescription, descriptionWithoutDefinitionsAndExamples);
     EXPECT_TRUE(actualDescription.definitionsWithExamples.empty());
@@ -128,7 +101,9 @@ TEST_F(
 TEST_F(DescriptionSerializerTest,
        givenSerializedDescriptionWithoutSentencesField_shouldReturnDescriptionWithoutSentences)
 {
-    const auto actualDescription = serializer.deserialize(prepareDescriptionWithoutSentencesJson());
+    const auto serializedDescription = prepareJsonFromText(expectedSerializedDescriptionWithoutSentences);
+
+    const auto actualDescription = serializer.deserialize(serializedDescription);
 
     EXPECT_EQ(actualDescription, descriptionWithoutSentences);
     EXPECT_TRUE(actualDescription.sentences.empty());

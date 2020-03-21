@@ -8,12 +8,9 @@ namespace wordsDescriptionsDb
 struct WordDescription
 {
     WordDescription() = default;
-
-    WordDescription(EnglishWord e, Description wd) : englishWord{e}, description{wd} {}
-
-    std::string toString() const
+    WordDescription(EnglishWord englishWordInit, Description descriptionInit)
+        : englishWord{std::move(englishWordInit)}, description{std::move(descriptionInit)}
     {
-        return "WordDescription{" + englishWord + "\n" + description.toString();
     }
 
     EnglishWord englishWord;
@@ -32,11 +29,14 @@ inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
     return lhs.englishWord < rhs.englishWord;
 }
 
-inline std::ostream& operator<<(std::ostream& os, const WordDescription& word)
+inline std::string toString(const WordDescription& wordDescription)
 {
-    os << "\n"
-       << "englishWord: " << word.englishWord << "\n"
-       << "description:" << word.description << "\n";
+    return wordDescription.englishWord + " " + toString(wordDescription.description);
+}
+
+inline std::ostream& operator<<(std::ostream& os, const WordDescription& wordDescription)
+{
+    os << toString(wordDescription);
     return os;
 }
 }

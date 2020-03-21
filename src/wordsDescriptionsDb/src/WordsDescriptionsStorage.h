@@ -6,7 +6,6 @@
 
 namespace wordsDescriptionsDb
 {
-
 class WordsDescriptionsStorage
 {
 public:

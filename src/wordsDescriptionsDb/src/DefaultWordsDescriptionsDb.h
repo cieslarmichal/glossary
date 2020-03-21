@@ -9,10 +9,10 @@
 namespace wordsDescriptionsDb
 {
 
-class WordsDescriptionsDbImpl : public WordsDescriptionsDb
+class DefaultWordsDescriptionsDb : public WordsDescriptionsDb
 {
 public:
-    explicit WordsDescriptionsDbImpl(std::unique_ptr<WordsDescriptionsStorage>);
+    explicit DefaultWordsDescriptionsDb(std::unique_ptr<WordsDescriptionsStorage>);
 
     void addWordDescription(const WordDescription&) override;
     boost::optional<WordDescription> getWordDescription(const EnglishWord&) const override;

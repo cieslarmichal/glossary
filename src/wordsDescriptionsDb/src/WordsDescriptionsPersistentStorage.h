@@ -9,7 +9,6 @@
 
 namespace wordsDescriptionsDb
 {
-
 class WordsDescriptionsPersistentStorage : public WordsDescriptionsStorage
 {
 public:

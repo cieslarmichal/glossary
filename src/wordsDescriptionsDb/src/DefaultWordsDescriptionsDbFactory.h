@@ -5,10 +5,10 @@
 
 namespace wordsDescriptionsDb
 {
-class WordsDescriptionsDbFactoryImpl : public WordsDescriptionsDbFactory
+class DefaultWordsDescriptionsDbFactory : public WordsDescriptionsDbFactory
 {
 public:
-    explicit WordsDescriptionsDbFactoryImpl(std::shared_ptr<const utils::FileAccess>);
+    explicit DefaultWordsDescriptionsDbFactory(std::shared_ptr<const utils::FileAccess>);
 
     std::unique_ptr<WordsDescriptionsDb> createWordsDescriptionDb() const override;
 
