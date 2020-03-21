@@ -2,8 +2,8 @@
 
 #include <ostream>
 
-#include "ResponseCode.h"
-#include "ResponseContent.h"
+#include "Payload.h"
+#include "StatusCode.h"
 
 namespace webConnection
 {

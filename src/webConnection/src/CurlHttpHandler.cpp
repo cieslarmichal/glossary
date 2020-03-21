@@ -1,4 +1,4 @@
-#include "HttpHandlerImpl.h"
+#include "CurlHttpHandler.h"
 
 #include "curl/curl.h"
 
@@ -12,7 +12,7 @@ namespace
 size_t curlWriter(char* data, size_t size, size_t nmemb, std::string*);
 }
 
-Response HttpHandlerImpl::get(const Request& urlAddress) const
+Response CurlHttpHandler::get(const Request& urlAddress) const
 {
     Response response;
 

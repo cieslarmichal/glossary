@@ -1,18 +1,18 @@
 #include "gtest/gtest.h"
 
-#include "HttpHandlerImpl.h"
+#include "CurlHttpHandler.h"
 #include "exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
 using namespace webConnection;
 
-class HttpHandlerTest : public Test
+class CurlHttpHandlerTest : public Test
 {
 public:
-    HttpHandlerImpl httpHandler;
+    CurlHttpHandler httpHandler;
 };
 
-TEST_F(HttpHandlerTest, givenCorrectUrlAddress_shouldReturnOkAndContentOfTheHtmlFile)
+TEST_F(CurlHttpHandlerTest, givenCorrectUrlAddress_shouldReturnOkAndContentOfTheHtmlFile)
 {
     const std::string correctUrlAddress = "https://www.merriam-webster.com/dictionary/ankle";
 
@@ -22,7 +22,7 @@ TEST_F(HttpHandlerTest, givenCorrectUrlAddress_shouldReturnOkAndContentOfTheHtml
     ASSERT_TRUE(response.content.find("<!DOCTYPE html>") || response.content.find("<!doctype html>"));
 }
 
-TEST_F(HttpHandlerTest, givenIncorrectUrlAddress_shouldThrowConnectionFailed)
+TEST_F(CurlHttpHandlerTest, givenIncorrectUrlAddress_shouldThrowConnectionFailed)
 {
     const auto inaccessibleUrlAddress = ".xh111ttps://aazzz.com";
 

@@ -1,10 +1,10 @@
 set(SOURCES
-        src/HttpHandlerImpl.cpp
+        src/CurlHttpHandler.cpp
         src/HttpHandlerFactory.cpp
-        src/HttpHandlerFactoryImpl.cpp)
+        src/DefaultHttpHandlerFactory.cpp)
 
 set(UT_SOURCES
-        src/HttpHandlerTest.cpp)
+        src/CurlHttpHandlerTest.cpp)
 
 add_library(webConnection ${SOURCES})
 add_executable(webConnectionUT ${UT_SOURCES})

@@ -7,7 +7,7 @@
 namespace webConnection
 {
 
-class HttpHandlerImpl : public HttpHandler
+class CurlHttpHandler : public HttpHandler
 {
 public:
     Response get(const Request&) const override;
