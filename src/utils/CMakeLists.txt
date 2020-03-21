@@ -6,7 +6,7 @@ set(SOURCES
         src/GetProjectPath.cpp
         src/GetExecutablePath.cpp
         src/FileAccessFactory.cpp
-        src/FileAccessFactoryImpl.cpp
+        src/DefaultFileAccessFactory.cpp
         src/FileExtensionsFilter.cpp
         src/FilenamePathFilter.cpp
         )
@@ -19,7 +19,7 @@ set(UT_SOURCES
         src/GetExecutablePathTest.cpp
         src/GetProjectPathTest.cpp
         src/ThreadSafeQueueTest.cpp
-        src/FileExtensionFilterTest.cpp
+        src/FileExtensionsFilterTest.cpp
         src/FilenamePathFilterTest.cpp
         )
 

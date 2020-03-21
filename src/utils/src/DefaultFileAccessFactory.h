@@ -4,7 +4,7 @@
 
 namespace utils
 {
-class FileAccessFactoryImpl : public FileAccessFactory
+class DefaultFileAccessFactory : public FileAccessFactory
 {
 public:
     std::unique_ptr<FileAccess> createDefaultFileAccess() const override;

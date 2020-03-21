@@ -17,20 +17,20 @@ const std::vector<std::string> noExtensions{};
 const std::vector<std::string> extensions{".txt", ".h"};
 }
 
-class FileExtensionFilterTest : public Test
+class FileExtensionsFilterTest : public Test
 {
 public:
     FileExtensionsFilter fileExtensionsFilter;
 };
 
-TEST_F(FileExtensionFilterTest, givenFilenamesAndEmptyExtensionsListShouldNotFilter)
+TEST_F(FileExtensionsFilterTest, givenFilenamesAndEmptyExtensionsListShouldNotFilter)
 {
     const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, noExtensions);
 
     ASSERT_EQ(filteredFilenames, filenames);
 }
 
-TEST_F(FileExtensionFilterTest, givenFilenamesAndExtensionsListShouldFilter)
+TEST_F(FileExtensionsFilterTest, givenFilenamesAndExtensionsListShouldFilter)
 {
     const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, extensions);
 
