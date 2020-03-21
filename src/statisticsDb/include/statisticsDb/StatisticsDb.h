@@ -3,7 +3,7 @@
 #include "boost/optional.hpp"
 
 #include "EnglishWord.h"
-#include "WordStatistics.h"
+#include "Statistics.h"
 
 namespace statisticsDb
 {

@@ -118,7 +118,7 @@ TEST_F(StatisticsMemoryStorageTest, shouldResetStatistics)
 
     const auto stats = storage.getStatistics();
     ASSERT_FALSE(any_of(stats, [&](const WordStatistics& ws) {
-        return (ws.correctAnswers != 0 && ws.incorrectAnswers != 0);
+        return (ws.getAmountOfCorrectAnswers() != 0 && ws.getAmountOfIncorrectAnswers() != 0);
     }));
 }
 
@@ -126,7 +126,7 @@ TEST_F(StatisticsMemoryStorageTest, givenWordAddition_shouldContainThisWord)
 {
     storage.addWordStatistics(wordStats1);
 
-    ASSERT_TRUE(storage.contains(wordStats1.englishWord));
+    ASSERT_TRUE(storage.contains(wordStats1.getEnglishWord()));
 }
 
 TEST_F(StatisticsMemoryStorageTest, givenTwoWordStats_shouldReturnTwoElementsBasingOnBeginEnd)

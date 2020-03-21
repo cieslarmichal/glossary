@@ -1,16 +1,18 @@
 set(SOURCES
-        src/StatisticsDbImpl.cpp
-        src/StatisticsSerializerImpl.cpp
+        src/DefaultStatisticsDb.cpp
+        src/StatisticsJsonSerializer.cpp
         src/StatisticsMemoryStorage.cpp
         src/StatisticsPersistentStorage.cpp
         src/StatisticsDbFactory.cpp
-        src/StatisticsDbFactoryImpl.cpp)
+        src/DefaultStatisticsDbFactory.cpp
+        src/WordStatistics.cpp)
 
 set(UT_SOURCES
-        src/StatisticsDbImplTest.cpp
-        src/StatisticsSerializerImplTest.cpp
+        src/DefaultStatisticsDbTest.cpp
+        src/StatisticsJsonSerializerTest.cpp
         src/StatisticsMemoryStorageTest.cpp
-        src/StatisticsPersistentStorageTest.cpp)
+        src/StatisticsPersistentStorageTest.cpp
+        src/WordStatisticsTest.cpp)
 
 add_library(statisticsDb ${SOURCES})
 add_executable(statisticsDbUT ${UT_SOURCES})

@@ -7,42 +7,25 @@
 
 namespace statisticsDb
 {
-
-struct WordStatistics
+class WordStatistics
 {
-    void addCorrectAnswer()
-    {
-        correctAnswers++;
-    }
+public:
+    WordStatistics(EnglishWord);
+    WordStatistics(EnglishWord, int amountOfCorrectAnswers, int amountOfIncorrectAnswers);
 
-    void addIncorrectAnswer()
-    {
-        incorrectAnswers++;
-    }
+    void addCorrectAnswer();
+    void addIncorrectAnswer();
+    void resetAnswers();
+    EnglishWord getEnglishWord() const;
+    int getAmountOfCorrectAnswers() const;
+    int getAmountOfIncorrectAnswers() const;
 
-    void resetAnswers()
-    {
-        correctAnswers = 0;
-        incorrectAnswers = 0;
-    }
-
+private:
     EnglishWord englishWord;
-    int correctAnswers{0};
-    int incorrectAnswers{0};
+    int amountOfCorrectAnswers;
+    int amountOfIncorrectAnswers;
 };
 
-using Statistics = std::vector<WordStatistics>;
-
-inline bool operator==(const WordStatistics& lhs, const WordStatistics& rhs)
-{
-    return (lhs.englishWord == rhs.englishWord && lhs.correctAnswers == rhs.correctAnswers &&
-            lhs.incorrectAnswers == rhs.incorrectAnswers);
-}
-
-inline std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics)
-{
-    os << wordStatistics.englishWord << " " << wordStatistics.correctAnswers << " "
-       << wordStatistics.incorrectAnswers;
-    return os;
-}
+bool operator==(const WordStatistics& lhs, const WordStatistics& rhs);
+std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics);
 }

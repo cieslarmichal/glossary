@@ -33,7 +33,7 @@ Statistics StatisticsMemoryStorage::getStatistics() const
 
 void StatisticsMemoryStorage::addWordStatistics(WordStatistics wordStatistics)
 {
-    if (not contains(wordStatistics.englishWord))
+    if (not contains(wordStatistics.getEnglishWord()))
     {
         statistics.emplace_back(std::move(wordStatistics));
     }
@@ -96,7 +96,7 @@ Statistics::const_iterator
 StatisticsMemoryStorage::findWordStatisticsPosition(const EnglishWord& wordToFind) const
 {
     return std::find_if(statistics.begin(), statistics.end(), [wordToFind](const WordStatistics& stats) {
-        return stats.englishWord == wordToFind;
+        return stats.getEnglishWord() == wordToFind;
     });
 }
 

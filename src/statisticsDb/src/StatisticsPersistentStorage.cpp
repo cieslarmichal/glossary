@@ -31,7 +31,7 @@ Statistics StatisticsPersistentStorage::getStatistics() const
 
 void StatisticsPersistentStorage::addWordStatistics(WordStatistics wordStatistics)
 {
-    if (not storage.contains(wordStatistics.englishWord))
+    if (not storage.contains(wordStatistics.getEnglishWord()))
     {
         storage.addWordStatistics(std::move(wordStatistics));
         serialize();

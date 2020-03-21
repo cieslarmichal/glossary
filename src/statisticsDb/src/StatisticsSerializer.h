@@ -1,6 +1,6 @@
 #pragma once
 
-#include "statisticsDb/WordStatistics.h"
+#include "statisticsDb/Statistics.h"
 
 namespace statisticsDb
 {

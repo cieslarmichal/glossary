@@ -1,29 +1,29 @@
-#include "StatisticsDbImpl.h"
+#include "DefaultStatisticsDb.h"
 
 namespace statisticsDb
 {
 
-StatisticsDbImpl::StatisticsDbImpl(std::unique_ptr<StatisticsStorage> storageInit)
+DefaultStatisticsDb::DefaultStatisticsDb(std::unique_ptr<StatisticsStorage> storageInit)
     : storage{std::move(storageInit)}
 {
 }
 
-boost::optional<WordStatistics> StatisticsDbImpl::getWordStatistics(const EnglishWord& englishWord) const
+boost::optional<WordStatistics> DefaultStatisticsDb::getWordStatistics(const EnglishWord& englishWord) const
 {
     return storage->getWordStatistics(englishWord);
 }
 
-Statistics StatisticsDbImpl::getStatistics() const
+Statistics DefaultStatisticsDb::getStatistics() const
 {
     return storage->getStatistics();
 }
 
-void StatisticsDbImpl::addWordStatistics(WordStatistics wordStatistics)
+void DefaultStatisticsDb::addWordStatistics(WordStatistics wordStatistics)
 {
     storage->addWordStatistics(std::move(wordStatistics));
 }
 
-void StatisticsDbImpl::addCorrectAnswer(const EnglishWord& englishWord)
+void DefaultStatisticsDb::addCorrectAnswer(const EnglishWord& englishWord)
 {
     if (not storage->contains(englishWord))
     {
@@ -32,7 +32,7 @@ void StatisticsDbImpl::addCorrectAnswer(const EnglishWord& englishWord)
     storage->addCorrectAnswer(englishWord);
 }
 
-void StatisticsDbImpl::addIncorrectAnswer(const EnglishWord& englishWord)
+void DefaultStatisticsDb::addIncorrectAnswer(const EnglishWord& englishWord)
 {
     if (not storage->contains(englishWord))
     {
@@ -41,12 +41,12 @@ void StatisticsDbImpl::addIncorrectAnswer(const EnglishWord& englishWord)
     storage->addIncorrectAnswer(englishWord);
 }
 
-void StatisticsDbImpl::resetStatistics()
+void DefaultStatisticsDb::resetStatistics()
 {
     storage->resetStatistics();
 }
 
-void StatisticsDbImpl::addEmptyWordStatistics(const EnglishWord& englishWord) const
+void DefaultStatisticsDb::addEmptyWordStatistics(const EnglishWord& englishWord) const
 {
     storage->addWordStatistics(WordStatistics{englishWord, 0, 0});
 }

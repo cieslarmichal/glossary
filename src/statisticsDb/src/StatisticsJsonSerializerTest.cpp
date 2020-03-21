@@ -1,6 +1,6 @@
-#include "StatisticsSerializerImpl.h"
-
 #include "gtest/gtest.h"
+
+#include "StatisticsJsonSerializer.h"
 
 using namespace ::testing;
 using namespace statisticsDb;
@@ -24,55 +24,55 @@ const std::string serializedTranslationsWithoutStatisticsField{
 const std::string emptySerializedStatistics{};
 }
 
-class StatisticsSerializerImplTest : public Test
+class StatisticsJsonSerializerTest : public Test
 {
 public:
-    StatisticsSerializerImpl serializer;
+    StatisticsJsonSerializer serializer;
 };
 
-TEST_F(StatisticsSerializerImplTest, givenNoStatistics_shouldReturnEmptyString)
+TEST_F(StatisticsJsonSerializerTest, givenNoStatistics_shouldReturnEmptyString)
 {
     const auto actualSerializedStatistics = serializer.serialize(emptyStatistics);
 
     EXPECT_TRUE(actualSerializedStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest, givenStatistics_shouldReturnSerializedStatistics)
+TEST_F(StatisticsJsonSerializerTest, givenStatistics_shouldReturnSerializedStatistics)
 {
     const auto actualSerializedStatistics = serializer.serialize(statistics);
 
     EXPECT_EQ(actualSerializedStatistics, serializedTranslations);
 }
 
-TEST_F(StatisticsSerializerImplTest, givenInvalidJson_shouldReturnNoStatistics)
+TEST_F(StatisticsJsonSerializerTest, givenInvalidJson_shouldReturnNoStatistics)
 {
     const auto actualStatistics = serializer.deserialize(invalidJson);
 
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest, givenJsonWithoutStatisticsField_shouldReturnNoStatistics)
+TEST_F(StatisticsJsonSerializerTest, givenJsonWithoutStatisticsField_shouldReturnNoStatistics)
 {
     const auto actualStatistics = serializer.deserialize(serializedTranslationsWithoutStatisticsField);
 
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest, givenSerializedStatisticsString_shouldReturnStatistics)
+TEST_F(StatisticsJsonSerializerTest, givenSerializedStatisticsString_shouldReturnStatistics)
 {
     const auto actualStatistics = serializer.deserialize(serializedTranslations);
 
     EXPECT_EQ(actualStatistics, statistics);
 }
 
-TEST_F(StatisticsSerializerImplTest, givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
+TEST_F(StatisticsJsonSerializerTest, givenEmptySerializedStatisticsString_shouldReturnNoStatistics)
 {
     const auto actualStatistics = serializer.deserialize(emptySerializedStatistics);
 
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest,
+TEST_F(StatisticsJsonSerializerTest,
        givenSerializedStatisticsWithoutRequiredFields_shouldReturnEmptyStatistics)
 {
     const auto actualStatistics = serializer.deserialize(serializedTranslationsWithoutRequiredFields);
@@ -80,7 +80,7 @@ TEST_F(StatisticsSerializerImplTest,
     EXPECT_TRUE(actualStatistics.empty());
 }
 
-TEST_F(StatisticsSerializerImplTest,
+TEST_F(StatisticsJsonSerializerTest,
        givenTwoSerializedStatsAndOneOfThemWithoutRequiredFields_shouldReturnStatsForOneWord)
 {
     const auto actualStatistics = serializer.deserialize(twoSerializedTranslationsOneWithouRequiredField);

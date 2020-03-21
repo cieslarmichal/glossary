@@ -4,10 +4,10 @@
 
 namespace statisticsDb
 {
-class StatisticsDbFactoryImpl : public StatisticsDbFactory
+class DefaultStatisticsDbFactory : public StatisticsDbFactory
 {
 public:
-    explicit StatisticsDbFactoryImpl(std::shared_ptr<const utils::FileAccess>);
+    explicit DefaultStatisticsDbFactory(std::shared_ptr<const utils::FileAccess>);
 
     std::unique_ptr<StatisticsDb> createStatisticsDb() const override;
 

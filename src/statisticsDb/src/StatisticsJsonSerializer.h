@@ -7,7 +7,7 @@
 namespace statisticsDb
 {
 
-class StatisticsSerializerImpl : public StatisticsSerializer
+class StatisticsJsonSerializer : public StatisticsSerializer
 {
 public:
     std::string serialize(const Statistics&) const override;

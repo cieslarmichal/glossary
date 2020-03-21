@@ -1,4 +1,4 @@
-#include "StatisticsSerializerImpl.h"
+#include "StatisticsJsonSerializer.h"
 
 #include <iostream>
 
@@ -14,7 +14,7 @@ constexpr auto incorrectAnswersField = "incorrectAnswers";
 
 namespace statisticsDb
 {
-std::string StatisticsSerializerImpl::serialize(const Statistics& statistics) const
+std::string StatisticsJsonSerializer::serialize(const Statistics& statistics) const
 {
     nlohmann::json serialized;
     for (const auto& wordStatistics : statistics)
@@ -28,13 +28,8 @@ std::string StatisticsSerializerImpl::serialize(const Statistics& statistics) co
     return serialized.dump();
 }
 
-Statistics StatisticsSerializerImpl::deserialize(const std::string& jsonText) const
+Statistics StatisticsJsonSerializer::deserialize(const std::string& jsonText) const
 {
-    if (jsonText.empty())
-    {
-        return {};
-    }
-
     try
     {
         const auto json = nlohmann::json::parse(jsonText);
@@ -47,16 +42,16 @@ Statistics StatisticsSerializerImpl::deserialize(const std::string& jsonText) co
     return {};
 }
 
-nlohmann::json StatisticsSerializerImpl::getJsonFromWordStatistics(const WordStatistics& wordStatistics) const
+nlohmann::json StatisticsJsonSerializer::getJsonFromWordStatistics(const WordStatistics& wordStatistics) const
 {
     nlohmann::json val = nlohmann::json::object();
-    val[englishWordField] = wordStatistics.englishWord;
-    val[correctAnswersField] = wordStatistics.correctAnswers;
-    val[incorrectAnswersField] = wordStatistics.incorrectAnswers;
+    val[englishWordField] = wordStatistics.getEnglishWord();
+    val[correctAnswersField] = wordStatistics.getAmountOfCorrectAnswers();
+    val[incorrectAnswersField] = wordStatistics.getAmountOfIncorrectAnswers();
     return val;
 }
 
-Statistics StatisticsSerializerImpl::readStatistics(const nlohmann::json& json) const
+Statistics StatisticsJsonSerializer::readStatistics(const nlohmann::json& json) const
 {
     if (json.find(statisticsField) != json.end())
     {
@@ -66,16 +61,17 @@ Statistics StatisticsSerializerImpl::readStatistics(const nlohmann::json& json) 
     return {};
 }
 
-Statistics StatisticsSerializerImpl::parseStatistics(const nlohmann::json& statisticsJson) const
+Statistics StatisticsJsonSerializer::parseStatistics(const nlohmann::json& statisticsJson) const
 {
     Statistics statistics;
     for (const auto& wordStatisticsData : statisticsJson)
     {
         if (isWordStatisticsValid(wordStatisticsData))
         {
-            statistics.emplace_back(WordStatistics{wordStatisticsData[englishWordField],
-                                                   wordStatisticsData[correctAnswersField],
-                                                   wordStatisticsData[incorrectAnswersField]});
+            statistics.emplace_back(
+                WordStatistics{wordStatisticsData[englishWordField].get<std::string>(),
+                               wordStatisticsData[correctAnswersField].get<int>(),
+                               wordStatisticsData[incorrectAnswersField].get<int>()});
         }
         else
         {
@@ -85,7 +81,7 @@ Statistics StatisticsSerializerImpl::parseStatistics(const nlohmann::json& stati
     return statistics;
 }
 
-bool StatisticsSerializerImpl::isWordStatisticsValid(const nlohmann::json& wordStatisticsJson) const
+bool StatisticsJsonSerializer::isWordStatisticsValid(const nlohmann::json& wordStatisticsJson) const
 {
     const auto requiredFields = {englishWordField, correctAnswersField, incorrectAnswersField};
     auto wordStatisticsValid = boost::algorithm::all_of(requiredFields, [&](const auto& fieldName) {

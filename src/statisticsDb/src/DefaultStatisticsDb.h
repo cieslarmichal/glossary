@@ -8,10 +8,10 @@
 namespace statisticsDb
 {
 
-class StatisticsDbImpl : public StatisticsDb
+class DefaultStatisticsDb : public StatisticsDb
 {
 public:
-    explicit StatisticsDbImpl(std::unique_ptr<StatisticsStorage>);
+    explicit DefaultStatisticsDb(std::unique_ptr<StatisticsStorage>);
 
     boost::optional<WordStatistics> getWordStatistics(const EnglishWord&) const override;
     Statistics getStatistics() const override;
