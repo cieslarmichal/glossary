@@ -20,7 +20,6 @@ private:
 
     std::shared_ptr<const utils::FileAccess> fileAccess;
 
-    static const std::string fileDirectory;
-    static const std::string fileName;
-    static const std::string filePath;
+    static const std::string directory;
+    static const std::string filename;
 };

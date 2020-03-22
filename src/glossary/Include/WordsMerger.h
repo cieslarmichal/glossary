@@ -1,15 +1,14 @@
 #pragma once
 
-#include "Word.h"
+#include "Words.h"
 #include "translationRepository/Translation.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
-class WordsBuilder
+class WordsMerger
 {
 public:
-    //TODO: change class name
-    virtual ~WordsBuilder() = default;
+    virtual ~WordsMerger() = default;
 
-    virtual Words buildWords(const translationRepository::Translations&,
+    virtual UniqueWords mergeWords(const translationRepository::Translations&,
                              const wordDescriptionRepository::WordsDescriptions&) const = 0;
 };

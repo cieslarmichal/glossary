@@ -9,7 +9,9 @@ set(SOURCES
         Source/DefaultAnswerValidator.cpp
         Source/GlossaryApplication.cpp
         Source/WordMersenneTwisterRandomizer.cpp
-        Source/DefaultWordsBuilder.cpp
+        Source/DefaultWordsMerger.cpp
+        Source/WordDescriptionFinder.cpp
+        Source/WordCreator.cpp
         )
 
 set(UT_SOURCES
@@ -19,7 +21,9 @@ set(UT_SOURCES
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
-        UT/Source/DefaultWordsBuilderTest.cpp
+        UT/Source/DefaultWordsMergerTest.cpp
+        UT/Source/WordDescriptionFinderTest.cpp
+        UT/Source/WordCreatorTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

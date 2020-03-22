@@ -9,7 +9,7 @@
 #include "WordDescriptionGenerator.h"
 #include "WordRandomizer.h"
 #include "WordViewFormatter.h"
-#include "WordsBuilder.h"
+#include "WordsMerger.h"
 #include "statisticsRepository/StatisticsRepository.h"
 #include "utils/FileAccess.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
@@ -26,6 +26,7 @@ public:
 private:
     void initialize();
     void loop();
+    boost::optional<Word> randomizeWord() const;
 
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
@@ -36,9 +37,9 @@ private:
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
-    std::unique_ptr<WordsBuilder> wordsBuilder;
+    std::unique_ptr<WordsMerger> wordsMerger;
     Dictionaries dictionaries;
     Dictionary baseDictionary;
     wordDescriptionRepository::EnglishWords englishWords;
-    Words glossaryWords;
+    UniqueWords glossaryWords;
 };

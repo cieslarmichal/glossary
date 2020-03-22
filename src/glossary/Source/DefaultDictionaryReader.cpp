@@ -6,9 +6,8 @@
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
 
-const std::string DefaultDictionaryReader::fileDirectory{"database/"};
-const std::string DefaultDictionaryReader::fileName{"input.txt"};
-const std::string DefaultDictionaryReader::filePath{fileDirectory + fileName};
+const std::string DefaultDictionaryReader::directory{"database/dictionaries/"};
+const std::string DefaultDictionaryReader::filename{directory+"input.txt"};
 
 DefaultDictionaryReader::DefaultDictionaryReader(std::shared_ptr<const utils::FileAccess> access)
     : fileAccess{std::move(access)}
@@ -20,7 +19,7 @@ Dictionaries DefaultDictionaryReader::readDictionaries() const
     std::string dictionaryContent;
     try
     {
-        dictionaryContent = fileAccess->readContent(filePath);
+        dictionaryContent = fileAccess->readContent(filename);
     }
     catch (const utils::exceptions::FileNotFound& e)
     {

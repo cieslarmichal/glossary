@@ -1,4 +1,4 @@
-#include "DefaultWordsBuilder.h"
+#include "DefaultWordsMerger.h"
 
 #include "gtest/gtest.h"
 
@@ -30,28 +30,28 @@ const Words words{{polishWord1, englishWord1, wordDescription1},
                   {polishWord3, englishWord3, wordDescription3},
                   {polishWord2, englishWord2, wordDescription2}};
 const Words wordsWithOneEmptyDescription{{polishWord1, englishWord1, wordDescription1},
-                                         {polishWord3, englishWord3, WordDescription{englishWord3, {}}},
+                                         {polishWord3, englishWord3, boost::none},
                                          {polishWord2, englishWord2, wordDescription2}};
 }
 
-class WordsBuilderImplTest : public Test
+class DefaultWordsMergerTest : public Test
 {
 public:
-    DefaultWordsBuilder wordsBuilder;
+    DefaultWordsMerger wordsMerger;
 };
 
-TEST_F(WordsBuilderImplTest, givenTranslationsWithWordsDescriptionsInOtherOrder_shouldBindByEnglishWords)
+TEST_F(DefaultWordsMergerTest, givenTranslationsWithWordsDescriptionsInOtherOrder_shouldBindByEnglishWords)
 {
-    const auto actualWords = wordsBuilder.buildWords(translations, wordsDescriptions);
+    const auto actualWords = wordsMerger.mergeWords(translations, wordsDescriptions);
 
     ASSERT_EQ(actualWords, words);
 }
 
-TEST_F(WordsBuilderImplTest,
+TEST_F(DefaultWordsMergerTest,
        givenTranslationsWithoutOneWordDescription_shouldBindByEnglishWordsAndAddEmptyDescription)
 {
     const auto actualWords =
-        wordsBuilder.buildWords(translations, wordsDescriptionsWithMissingWordDescription);
+        wordsMerger.mergeWords(translations, wordsDescriptionsWithMissingWordDescription);
 
     ASSERT_EQ(actualWords, wordsWithOneEmptyDescription);
 }

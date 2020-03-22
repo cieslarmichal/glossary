@@ -6,7 +6,7 @@
 #include "DefaultDictionaryReader.h"
 #include "DefaultWordDescriptionService.h"
 #include "DefaultWordViewFormatter.h"
-#include "DefaultWordsBuilder.h"
+#include "DefaultWordsMerger.h"
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
 #include "WordMersenneTwisterRandomizer.h"
@@ -62,7 +62,7 @@ void GlossaryApplication::initialize()
 
     wordsRandomizer = std::make_unique<WordMersenneTwisterRandomizer>();
 
-    wordsBuilder = std::make_unique<DefaultWordsBuilder>();
+    wordsMerger = std::make_unique<DefaultWordsMerger>();
 }
 
 void GlossaryApplication::run()
@@ -74,7 +74,7 @@ void GlossaryApplication::run()
 
     const auto wordsDescriptions = wordDescriptionGenerator->generateWordsDescriptions(englishWords);
 
-    glossaryWords = wordsBuilder->buildWords(baseDictionary, wordsDescriptions);
+    glossaryWords = wordsMerger->mergeWords(baseDictionary, wordsDescriptions);
 
     loop();
 }
@@ -85,34 +85,43 @@ void GlossaryApplication::loop()
 
     while (userWantToContinue)
     {
-        Word word;
-        try
+        const auto &randomizedWord = randomizeWord();
+        if(randomizedWord == boost::none)
         {
-            word = wordsRandomizer->randomizeWord(glossaryWords);
-        }
-        catch (const std::runtime_error& e)
-        {
-            std::cerr << e.what();
+            std::cerr << "Error while randomizing word:";
             break;
         }
-        std::cout << wordViewFormatter->formatPolishWordView(word.polishWord);
+        std::cout << wordViewFormatter->formatPolishWordView(randomizedWord->polishWord);
         std::cout << "Insert english translation:\n";
 
-        if (word.wordDescription &&
-            answerValidator->validateAnswer(userPrompt->getInput(), word.wordDescription->englishWord))
+        if (randomizedWord->wordDescription &&
+            answerValidator->validateAnswer(userPrompt->getInput(), randomizedWord->wordDescription->englishWord))
         {
             std::cout << "Correct answer!\n";
-            statisticsRepository->addCorrectAnswer(word.wordDescription->englishWord);
+            statisticsRepository->addCorrectAnswer(randomizedWord->wordDescription->englishWord);
         }
         else
         {
             std::cout << "Inorrect answer :(\n";
-            statisticsRepository->addIncorrectAnswer(word.wordDescription->englishWord);
+            statisticsRepository->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
         }
 
-        std::cout << wordViewFormatter->formatWordView(word);
+        std::cout << wordViewFormatter->formatWordView(*randomizedWord);
 
         std::cout << "Do you want to continue? (yes/no, y/n)\n";
         userWantToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
     }
+}
+
+boost::optional<Word> GlossaryApplication::randomizeWord() const
+{
+    try
+    {
+        return wordsRandomizer->randomizeWord(glossaryWords);
+    }
+    catch (const std::runtime_error& e)
+    {
+        std::cerr << e.what();
+    }
+    return boost::none;
 }
