@@ -2,7 +2,8 @@
 
 namespace wordDescriptionRepository
 {
-DefaultWordDescriptionRepository::DefaultWordDescriptionRepository(std::unique_ptr<WordsDescriptionsStorage> storageInit)
+DefaultWordDescriptionRepository::DefaultWordDescriptionRepository(
+    std::unique_ptr<WordsDescriptionsStorage> storageInit)
     : storage{std::move(storageInit)}
 {
 }
@@ -19,13 +20,6 @@ DefaultWordDescriptionRepository::getWordDescription(const EnglishWord& englishW
     std::lock_guard<std::mutex> lockGuard(lock);
     return storage->getWordDescription(englishWord);
 }
-
-WordsDescriptions DefaultWordDescriptionRepository::getWordsDescriptions() const
-{
-    std::lock_guard<std::mutex> lockGuard(lock);
-    return storage->getWordsDescriptions();
-}
-
 bool DefaultWordDescriptionRepository::contains(const EnglishWord& englishWord) const
 {
     return storage->contains(englishWord);

@@ -21,8 +21,6 @@ public:
     bool contains(const EnglishWord&) const override;
     WordsDescriptions::size_type size() const override;
     bool empty() const override;
-    WordsDescriptions::const_iterator begin() const override;
-    WordsDescriptions::const_iterator end() const override;
 
 private:
     void loadFile();

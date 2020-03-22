@@ -52,16 +52,6 @@ bool TranslationsPersistentStorage::empty() const
     return storage.empty();
 }
 
-Translations::const_iterator TranslationsPersistentStorage::begin() const
-{
-    return storage.begin();
-}
-
-Translations::const_iterator TranslationsPersistentStorage::end() const
-{
-    return storage.end();
-}
-
 void TranslationsPersistentStorage::loadFile()
 {
     Translations translations;

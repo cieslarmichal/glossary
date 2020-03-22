@@ -1,7 +1,8 @@
 #include "DefaultWordsBuilder.h"
 
-Words DefaultWordsBuilder::buildWords(const translationRepository::Translations& translations,
-                                      const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
+Words DefaultWordsBuilder::buildWords(
+    const translationRepository::Translations& translations,
+    const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
 {
     Words builtWords;
     for (const auto& translation : translations)

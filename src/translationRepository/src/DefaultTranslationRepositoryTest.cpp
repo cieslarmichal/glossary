@@ -1,8 +1,8 @@
+#include "DefaultTranslationRepository.h"
+
 #include "gtest/gtest.h"
 
 #include "TranslationsStorageMock.h"
-
-#include "DefaultTranslationRepository.h"
 
 using namespace ::testing;
 using namespace translationRepository;
@@ -41,13 +41,4 @@ TEST_F(DefaultTranslationRepositoryTest, getTranslation)
     const auto actualTranslation = database.getTranslation(polishWord1);
 
     ASSERT_EQ(actualTranslation, translation1);
-}
-
-TEST_F(DefaultTranslationRepositoryTest, getTranslations)
-{
-    EXPECT_CALL(*storage, getTranslations()).WillOnce(Return(translations));
-
-    const auto actualTranslations = database.getTranslations();
-
-    ASSERT_EQ(actualTranslations, translations);
 }

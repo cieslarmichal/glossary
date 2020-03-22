@@ -48,16 +48,6 @@ bool TranslationsMemoryStorage::empty() const
     return translations.empty();
 }
 
-Translations::const_iterator TranslationsMemoryStorage::begin() const
-{
-    return translations.begin();
-}
-
-Translations::const_iterator TranslationsMemoryStorage::end() const
-{
-    return translations.end();
-}
-
 Translations::const_iterator
 TranslationsMemoryStorage::findTranslationPosition(const SourceText& wordToFind) const
 {

@@ -123,13 +123,3 @@ TEST_F(WordsDescriptionsPersistentStorageTest,
     ASSERT_TRUE(persistentStorage.contains(englishWord2));
     ASSERT_FALSE(persistentStorage.contains(nonExistingWord));
 }
-
-TEST_F(WordsDescriptionsPersistentStorageTest,
-       given_TwoWordsDescriptions_shouldDistanceOfTwoBetweenBeginAndEnd)
-{
-    expectTwoWordsDescriptionsLoad();
-    WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
-
-    const auto distance = std::distance(persistentStorage.begin(), persistentStorage.end());
-    ASSERT_EQ(distance, 2);
-}

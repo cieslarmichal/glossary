@@ -30,7 +30,8 @@ public:
 
 TEST_F(DefaultWordDescriptionServiceTest, dbContainsWordDescription_shouldReturnWordDescriptionFromDb)
 {
-    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(wordDescription));
+    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord))
+        .WillOnce(Return(wordDescription));
 
     const auto actualWordDescription = wordDescriptionService.getWordDescription(englishWord);
 

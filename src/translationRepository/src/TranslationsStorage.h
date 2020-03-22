@@ -17,7 +17,5 @@ public:
     virtual bool contains(const SourceText&) const = 0;
     virtual Translations::size_type size() const = 0;
     virtual bool empty() const = 0;
-    virtual Translations::const_iterator begin() const = 0;
-    virtual Translations::const_iterator end() const = 0;
 };
 }

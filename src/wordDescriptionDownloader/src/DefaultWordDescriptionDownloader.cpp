@@ -37,8 +37,8 @@ DefaultWordDescriptionDownloader::downloadWordDescription(
     return boost::none;
 }
 
-boost::optional<std::string>
-DefaultWordDescriptionDownloader::getHttpContent(const wordDescriptionRepository::EnglishWord& englishWord) const
+boost::optional<std::string> DefaultWordDescriptionDownloader::getHttpContent(
+    const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     try
     {

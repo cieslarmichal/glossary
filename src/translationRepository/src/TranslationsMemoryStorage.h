@@ -15,8 +15,6 @@ public:
     bool contains(const SourceText&) const override;
     Translations::size_type size() const override;
     bool empty() const override;
-    Translations::const_iterator begin() const override;
-    Translations::const_iterator end() const override;
 
 private:
     Translations::const_iterator findTranslationPosition(const SourceText&) const;

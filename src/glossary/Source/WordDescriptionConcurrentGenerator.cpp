@@ -9,8 +9,8 @@ WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(
 {
 }
 
-wordDescriptionRepository::WordsDescriptions
-WordDescriptionConcurrentGenerator::generateWordsDescriptions(const wordDescriptionRepository::EnglishWords& englishWords)
+wordDescriptionRepository::WordsDescriptions WordDescriptionConcurrentGenerator::generateWordsDescriptions(
+    const wordDescriptionRepository::EnglishWords& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
     std::vector<std::thread> threadPool;
@@ -33,7 +33,8 @@ WordDescriptionConcurrentGenerator::generateWordsDescriptions(const wordDescript
     return wordsDescriptions.popAll();
 }
 
-wordDescriptionRepository::WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(const wordDescriptionRepository::EnglishWord& englishWord)
+wordDescriptionRepository::WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(
+    const wordDescriptionRepository::EnglishWord& englishWord)
 {
     if (const auto wordDescription = wordDescriptionService->getWordDescription(englishWord))
     {

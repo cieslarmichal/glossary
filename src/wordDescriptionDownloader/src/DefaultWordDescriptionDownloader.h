@@ -24,7 +24,7 @@ private:
     boost::optional<std::string> getHttpContent(const wordDescriptionRepository::EnglishWord&) const;
 
     std::shared_ptr<const webConnection::HttpHandler> httpHandler;
-    std::unique_ptr<const LinesSelector> linesSelector; //TODO: remove interface
+    std::unique_ptr<const LinesSelector> linesSelector; // TODO: remove interface
     std::unique_ptr<const DescriptionParser> descriptionParser;
 
     static const std::string urlAddress;

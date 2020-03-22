@@ -1,8 +1,8 @@
+#include "DefaultWordDescriptionRepository.h"
+
 #include "gtest/gtest.h"
 
 #include "WordsDescriptionsStorageMock.h"
-
-#include "DefaultWordDescriptionRepository.h"
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;
@@ -49,16 +49,8 @@ TEST_F(DefaultWordDescriptionRepositoryTest,
     ASSERT_EQ(actualWord, wordDescription);
 }
 
-TEST_F(DefaultWordDescriptionRepositoryTest, containsWordsDescriptions_shouldReturnWordsDescriptions)
-{
-    EXPECT_CALL(*storage, getWordsDescriptions()).WillOnce(Return(wordsDescriptions));
-
-    const auto actualWords = database.getWordsDescriptions();
-
-    ASSERT_EQ(actualWords, wordsDescriptions);
-}
-
-TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
+TEST_F(DefaultWordDescriptionRepositoryTest,
+       givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
 

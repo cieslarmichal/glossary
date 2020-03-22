@@ -49,16 +49,6 @@ bool WordsDescriptionsPersistentStorage::empty() const
     return storage.empty();
 }
 
-WordsDescriptions::const_iterator WordsDescriptionsPersistentStorage::begin() const
-{
-    return storage.begin();
-}
-
-WordsDescriptions::const_iterator WordsDescriptionsPersistentStorage::end() const
-{
-    return storage.end();
-}
-
 void WordsDescriptionsPersistentStorage::loadFile()
 {
     WordsDescriptions words;

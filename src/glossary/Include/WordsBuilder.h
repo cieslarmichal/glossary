@@ -7,6 +7,7 @@
 class WordsBuilder
 {
 public:
+    //TODO: change class name
     virtual ~WordsBuilder() = default;
 
     virtual Words buildWords(const translationRepository::Translations&,

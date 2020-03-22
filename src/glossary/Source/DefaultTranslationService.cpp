@@ -1,7 +1,8 @@
 #include "DefaultTranslationService.h"
 
-DefaultTranslationService::DefaultTranslationService(std::unique_ptr<translator::Translator> translatorInit,
-                                                     std::shared_ptr<translationRepository::TranslationRepository> repo)
+DefaultTranslationService::DefaultTranslationService(
+    std::unique_ptr<translator::Translator> translatorInit,
+    std::shared_ptr<translationRepository::TranslationRepository> repo)
     : translator{std::move(translatorInit)}, translationRepository{std::move(repo)}
 {
 }
@@ -44,9 +45,9 @@ DefaultTranslationService::getTranslationFromTranslator(const std::string& sourc
 }
 
 void DefaultTranslationService::saveTranslationInRepository(const std::string& sourceText,
-                                                    const translator::TranslatedText& translatedText)
+                                                            const translator::TranslatedText& translatedText)
 {
-    const auto newTranslation = translationRepository::Translation{translationRepository::SourceText{sourceText},
-                                                                   translationRepository::TranslatedText{translatedText}};
+    const auto newTranslation = translationRepository::Translation{
+        translationRepository::SourceText{sourceText}, translationRepository::TranslatedText{translatedText}};
     translationRepository->addTranslation(newTranslation);
 }

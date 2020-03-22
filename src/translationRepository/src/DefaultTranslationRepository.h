@@ -14,7 +14,6 @@ public:
 
     void addTranslation(Translation) override;
     boost::optional<Translation> getTranslation(const SourceText&) const override;
-    Translations getTranslations() const override;
 
 private:
     std::unique_ptr<TranslationsStorage> storage;

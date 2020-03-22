@@ -60,16 +60,6 @@ TEST_F(WordsDescriptionsMemoryStorageTest, givenStorageWithExactWord_shouldRetur
     ASSERT_EQ(actualWord, word1);
 }
 
-TEST_F(WordsDescriptionsMemoryStorageTest, givenStorageWithTwoWords_shouldReturnTwoElementsBasingOnBeginEnd)
-{
-    storage.addWordDescription(word1);
-    storage.addWordDescription(word2);
-
-    const auto amountOfWords = std::distance(storage.begin(), storage.end());
-
-    ASSERT_EQ(amountOfWords, 2);
-}
-
 TEST_F(WordsDescriptionsMemoryStorageTest, givenEmptyStorage_shouldBeEmpty)
 {
     ASSERT_TRUE(storage.empty());

@@ -144,12 +144,3 @@ TEST_F(TranslationsPersistentStorageTest, givenTwoTranslations_shouldContainsTho
     ASSERT_TRUE(persistentStorage.contains(polishWord2));
     ASSERT_FALSE(persistentStorage.contains(nonExistingPolishWord));
 }
-
-TEST_F(TranslationsPersistentStorageTest, givenTwoTranslations_shouldDistanceOfTwoBetweenBeginAndEnd)
-{
-    expectTwoTranslationsLoad();
-    TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
-
-    const auto distance = std::distance(persistentStorage.begin(), persistentStorage.end());
-    ASSERT_EQ(distance, 2);
-}

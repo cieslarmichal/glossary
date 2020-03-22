@@ -42,16 +42,6 @@ bool WordsDescriptionsMemoryStorage::empty() const
     return wordsDescriptions.empty();
 }
 
-WordsDescriptions::const_iterator WordsDescriptionsMemoryStorage::begin() const
-{
-    return wordsDescriptions.cbegin();
-}
-
-WordsDescriptions::const_iterator WordsDescriptionsMemoryStorage::end() const
-{
-    return wordsDescriptions.cend();
-}
-
 WordsDescriptions::const_iterator
 WordsDescriptionsMemoryStorage::getWordsDescriptionsIter(const EnglishWord& wordToFind) const
 {

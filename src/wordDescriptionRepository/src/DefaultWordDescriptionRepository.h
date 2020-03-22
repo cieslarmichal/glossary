@@ -16,7 +16,6 @@ public:
 
     void addWordDescription(const WordDescription&) override;
     boost::optional<WordDescription> getWordDescription(const EnglishWord&) const override;
-    WordsDescriptions getWordsDescriptions() const override;
     bool contains(const EnglishWord&) const override;
 
 private:

@@ -1,6 +1,6 @@
-#include "TranslationsMemoryStorage.h"
-
 #include "gtest/gtest.h"
+
+#include "TranslationsMemoryStorage.h"
 
 using namespace ::testing;
 using namespace translationRepository;
@@ -64,16 +64,6 @@ TEST_F(TranslationsMemoryStorageTest, givenNonExistingInStoragePolishWordsTransl
     const auto actualTranslation = storage.getTranslation(polishWord1);
 
     ASSERT_EQ(actualTranslation, boost::none);
-}
-
-TEST_F(TranslationsMemoryStorageTest, givenTwoTranslations_shouldReturnTwoElementsBasingOnBeginEnd)
-{
-    storage.addTranslation(translation1);
-    storage.addTranslation(translation2);
-
-    const auto amountOfTranslations = std::distance(storage.begin(), storage.end());
-
-    ASSERT_EQ(amountOfTranslations, 2);
 }
 
 TEST_F(TranslationsMemoryStorageTest, givenInitStorage_shouldBeEmpty)

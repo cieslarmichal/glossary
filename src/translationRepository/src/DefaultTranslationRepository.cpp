@@ -18,9 +18,4 @@ boost::optional<Translation> DefaultTranslationRepository::getTranslation(const 
     return storage->getTranslation(polishWord);
 }
 
-Translations DefaultTranslationRepository::getTranslations() const
-{
-    return storage->getTranslations();
-}
-
 }

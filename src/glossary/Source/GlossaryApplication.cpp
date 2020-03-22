@@ -10,7 +10,7 @@
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
 #include "WordMersenneTwisterRandomizer.h"
-#include "statisticsDb/StatisticsDbFactory.h"
+#include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
@@ -28,10 +28,11 @@ void GlossaryApplication::initialize()
     dictionaries = dictionaryReader->readDictionaries();
     baseDictionary = dictionaries.at("base");
 
-    std::unique_ptr<const wordDescriptionRepository::WordDescriptionRepositoryFactory> wordsDescriptionsDbFactory =
-        wordDescriptionRepository::WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(fileAccess);
+    std::unique_ptr<const wordDescriptionRepository::WordDescriptionRepositoryFactory>
+        wordsDescriptionsDbFactory = wordDescriptionRepository::WordDescriptionRepositoryFactory::
+            createWordDescriptionRepositoryFactory(fileAccess);
 
-    wordsDescriptionsDb = wordsDescriptionsDbFactory->createWordDescriptionRepository();
+    wordDescriptionRepository = wordsDescriptionsDbFactory->createWordDescriptionRepository();
 
     std::unique_ptr<const webConnection::HttpHandlerFactory> httpHandlerFactory =
         webConnection::HttpHandlerFactory::createHttpHandlerFactory();
@@ -46,12 +47,12 @@ void GlossaryApplication::initialize()
 
     wordDescriptionGenerator =
         std::make_unique<WordDescriptionConcurrentGenerator>(std::make_unique<DefaultWordDescriptionService>(
-            std::move(wordDescriptionDownloader), wordsDescriptionsDb));
+            std::move(wordDescriptionDownloader), wordDescriptionRepository));
 
-    std::unique_ptr<const statisticsDb::StatisticsDbFactory> statisticsDbFactory =
-        statisticsDb::StatisticsDbFactory::createStatisticsDbFactory(fileAccess);
+    std::unique_ptr<const statisticsRepository::StatisticsRepositoryFactory> statisticsRepositoryFactory =
+        statisticsRepository::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
 
-    statisticsDb = statisticsDbFactory->createStatisticsDb();
+    statisticsRepository = statisticsRepositoryFactory->createStatisticsRepository();
 
     answerValidator = std::make_unique<DefaultAnswerValidator>();
 
@@ -101,12 +102,12 @@ void GlossaryApplication::loop()
             answerValidator->validateAnswer(userPrompt->getInput(), word.wordDescription->englishWord))
         {
             std::cout << "Correct answer!\n";
-            statisticsDb->addCorrectAnswer(word.wordDescription->englishWord);
+            statisticsRepository->addCorrectAnswer(word.wordDescription->englishWord);
         }
         else
         {
             std::cout << "Inorrect answer :(\n";
-            statisticsDb->addIncorrectAnswer(word.wordDescription->englishWord);
+            statisticsRepository->addIncorrectAnswer(word.wordDescription->englishWord);
         }
 
         std::cout << wordViewFormatter->formatWordView(word);

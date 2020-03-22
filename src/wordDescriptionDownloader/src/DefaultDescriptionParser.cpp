@@ -28,7 +28,8 @@ const std::string examplePrefix{"// "};
 const std::string sentencePrefix{"; "};
 }
 
-boost::optional<wordDescriptionRepository::Description> DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
+boost::optional<wordDescriptionRepository::Description>
+DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
     wordDescriptionRepository::Description description;
     bool previousLineIsDefinition = false;

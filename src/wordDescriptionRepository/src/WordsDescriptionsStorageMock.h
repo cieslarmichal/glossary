@@ -15,7 +15,5 @@ public:
     MOCK_CONST_METHOD1(contains, bool(const EnglishWord&));
     MOCK_CONST_METHOD0(size, WordsDescriptions::size_type());
     MOCK_CONST_METHOD0(empty, bool());
-    MOCK_CONST_METHOD0(begin, WordsDescriptions::const_iterator());
-    MOCK_CONST_METHOD0(end, WordsDescriptions::const_iterator());
 };
 }

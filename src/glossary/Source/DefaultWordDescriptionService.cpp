@@ -23,7 +23,8 @@ DefaultWordDescriptionService::getWordDescription(const wordDescriptionRepositor
     return boost::none;
 }
 
-boost::optional<wordDescriptionRepository::WordDescription> DefaultWordDescriptionService::getWordDescriptionFromRepository(
+boost::optional<wordDescriptionRepository::WordDescription>
+DefaultWordDescriptionService::getWordDescriptionFromRepository(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordDescriptionRepository->getWordDescription(englishWord);

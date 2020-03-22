@@ -10,7 +10,7 @@
 #include "WordRandomizer.h"
 #include "WordViewFormatter.h"
 #include "WordsBuilder.h"
-#include "statisticsDb/StatisticsDb.h"
+#include "statisticsRepository/StatisticsRepository.h"
 #include "utils/FileAccess.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
 
@@ -29,13 +29,13 @@ private:
 
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
-    std::unique_ptr<statisticsDb::StatisticsDb> statisticsDb;
+    std::unique_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewFormatter> wordViewFormatter;
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordsDescriptionsDb;
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
     std::unique_ptr<WordsBuilder> wordsBuilder;
     Dictionaries dictionaries;
     Dictionary baseDictionary;

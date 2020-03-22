@@ -13,7 +13,8 @@ DefaultTranslationRepositoryFactory::DefaultTranslationRepositoryFactory(
 {
 }
 
-std::unique_ptr<TranslationRepository> DefaultTranslationRepositoryFactory::createTranslationRepository() const
+std::unique_ptr<TranslationRepository>
+DefaultTranslationRepositoryFactory::createTranslationRepository() const
 {
     return std::make_unique<DefaultTranslationRepository>(std::make_unique<TranslationsPersistentStorage>(
         fileAccess, std::make_shared<TranslationsJsonSerializer>()));
