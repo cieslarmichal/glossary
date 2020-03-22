@@ -23,7 +23,7 @@ inline bool operator==(const Translation& lhs, const Translation& rhs)
 
 inline std::ostream& operator<<(std::ostream& os, const Translation& translation)
 {
-    os << translation.translatedText << " " << translation.translatedText;
+    os << translation.sourceText << "-" << translation.translatedText;
     return os;
 }
 }

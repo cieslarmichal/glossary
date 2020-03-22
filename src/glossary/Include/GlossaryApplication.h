@@ -33,6 +33,7 @@ private:
     void showMenu() const;
     void guessWord() const;
     void translate() const;
+    void listDictionaries() const;
 
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;

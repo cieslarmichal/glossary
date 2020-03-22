@@ -3,20 +3,13 @@
 #include "gtest/gtest.h"
 
 #include "WordDescriptionRetrieverServiceMock.h"
+#include "utils/StlOperators.h"
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;
 
 namespace
 {
-template <class T>
-static bool compareVectors(std::vector<T> a, std::vector<T> b)
-{
-    std::sort(a.begin(), a.end());
-    std::sort(b.begin(), b.end());
-    return (a == b);
-}
-
 const EnglishWord englishWord1{"englishWord1"};
 const EnglishWord englishWord2{"englishWord2"};
 const EnglishWord englishWord3{"englishWord3"};

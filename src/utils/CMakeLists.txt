@@ -9,6 +9,7 @@ set(SOURCES
         src/DefaultFileAccessFactory.cpp
         src/FileExtensionsFilter.cpp
         src/FilenamePathFilter.cpp
+        include/utils/StlOperators.h
         )
 
 set(UT_SOURCES

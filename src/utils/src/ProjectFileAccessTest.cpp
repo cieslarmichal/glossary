@@ -5,20 +5,13 @@
 #include "GetProjectPath.h"
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
+#include "StlOperators.h"
 
 using namespace ::testing;
 using namespace utils;
 
 namespace
 {
-template <class T>
-static bool compareVectors(std::vector<T> a, std::vector<T> b)
-{
-    std::sort(a.begin(), a.end());
-    std::sort(b.begin(), b.end());
-    return (a == b);
-}
-
 const std::string projectPath{getProjectPath("glossary")};
 const std::string textToWrite{"Hello this text should be written\nby write method"};
 const std::string textToAppend{"\nand this text should be written\nby append method"};

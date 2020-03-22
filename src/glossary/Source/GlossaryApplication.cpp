@@ -15,6 +15,7 @@
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "translationRepository/TranslationRepositoryFactory.h"
 #include "translator/TranslatorFactory.h"
+#include "utils/StlOperators.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
@@ -105,6 +106,8 @@ void GlossaryApplication::loop()
             break;
         case 2:
         case 3:
+            listDictionaries();
+            break;
         case 4:
             std::cout << "Operation not supported yet\n";
             break;
@@ -177,15 +180,21 @@ void GlossaryApplication::guessWord() const
 
 void GlossaryApplication::translate() const
 {
-    std::cout<<"Insert polish word:\n";
+    std::cout << "Insert polish word:\n";
     const auto textToTranslate = userPrompt->getStringInput();
-    const auto translation = translationRetrieverService->retrieveTranslation(textToTranslate, translator::SourceLanguage::Polish, translator::TargetLanguage::English);
-    if(translation)
+    const auto translation = translationRetrieverService->retrieveTranslation(
+        textToTranslate, translator::SourceLanguage::Polish, translator::TargetLanguage::English);
+    if (translation)
     {
-        std::cout<<*translation<<"\n";
+        std::cout << *translation << "\n";
     }
     else
     {
-        std::cout<<"no translation\n";
+        std::cout << "no translation\n";
     }
+}
+
+void GlossaryApplication::listDictionaries() const
+{
+    std::cout << dictionaries<<"\n";
 }
