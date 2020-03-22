@@ -11,7 +11,7 @@ namespace
 constexpr int successCode = 200;
 }
 
-DefaultTranslator::DefaultTranslator(std::shared_ptr<webConnection::HttpHandler> handler,
+DefaultTranslator::DefaultTranslator(std::shared_ptr<const webConnection::HttpHandler> handler,
                                      std::unique_ptr<TranslationDeserializer> deserializer,
                                      std::unique_ptr<TranslationRequestFormatter> formatter)
     : httpHandler{std::move(handler)},

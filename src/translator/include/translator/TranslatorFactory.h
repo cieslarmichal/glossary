@@ -15,6 +15,6 @@ public:
     virtual std::unique_ptr<Translator> createTranslator() const = 0;
 
     static std::unique_ptr<TranslatorFactory>
-    createTranslatorFactory(const std::shared_ptr<webConnection::HttpHandler>&);
+    createTranslatorFactory(const std::shared_ptr<const webConnection::HttpHandler>&);
 };
 }

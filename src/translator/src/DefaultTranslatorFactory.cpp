@@ -8,7 +8,7 @@ namespace translator
 {
 
 DefaultTranslatorFactory::DefaultTranslatorFactory(
-    std::shared_ptr<webConnection::HttpHandler> httpHandlerInit)
+    std::shared_ptr<const webConnection::HttpHandler> httpHandlerInit)
     : httpHandler{std::move(httpHandlerInit)}
 {
 }

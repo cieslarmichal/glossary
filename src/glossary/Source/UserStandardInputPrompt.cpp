@@ -12,9 +12,14 @@ constexpr auto newLine{'\n'};
 std::vector<std::string> correctYesNoAnswers{{"y", "yes", "n", "no"}};
 }
 
-UserInput UserStandardInputPrompt::getInput() const
+UserInput UserStandardInputPrompt::getStringInput() const
 {
     return getValidString();
+}
+
+int UserStandardInputPrompt::getIntInput() const
+{
+    return getValidInt();
 }
 
 UserInput UserStandardInputPrompt::yesPrompt() const
@@ -42,6 +47,18 @@ std::string UserStandardInputPrompt::getValidString() const
     return temp;
 }
 
+int UserStandardInputPrompt::getValidInt() const
+{
+    int temp;
+    while (not(std::cin >> temp))
+    {
+        clearInputBuffer();
+        std::cerr << "Enter valid integer: ";
+    }
+    clearInputBuffer();
+    return temp;
+}
+
 bool UserStandardInputPrompt::yesNoAnswerIsInvalid(const std::string& input) const
 {
     const auto isValid =
@@ -58,3 +75,4 @@ void UserStandardInputPrompt::clearInputBuffer() const
     {
     }
 }
+
