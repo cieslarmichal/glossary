@@ -6,10 +6,10 @@ class DefaultWordsBuilder : public WordsBuilder
 {
 public:
     Words buildWords(const translationsDb::Translations&,
-                     const wordsDescriptionsDb::WordsDescriptions&) const override;
+                     const wordDescriptionRepository::WordsDescriptions&) const override;
 
 private:
-    wordsDescriptionsDb::WordDescription
-    getCorrespondingWordDescription(const wordsDescriptionsDb::EnglishWord&,
-                                    const wordsDescriptionsDb::WordsDescriptions&) const;
+    wordDescriptionRepository::WordDescription
+    getCorrespondingWordDescription(const wordDescriptionRepository::EnglishWord&,
+                                    const wordDescriptionRepository::WordsDescriptions&) const;
 };

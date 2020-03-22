@@ -2,8 +2,6 @@
 
 #include "boost/algorithm/string.hpp"
 
-using namespace wordsDescriptionsDb;
-
 namespace wordDescriptionDownloader
 {
 namespace
@@ -15,11 +13,11 @@ void removeDuplications(Container& container)
     container.erase(std::unique(container.begin(), container.end()), container.end());
 }
 
-void removeMarks(Description&);
-void removeDuplicationsInDescription(Description&);
-void removeDefinitionMarks(Definition&);
-void removeExampleMarks(Example&);
-void removeSentenceMarks(Sentence&);
+void removeMarks(wordDescriptionRepository::Description&);
+void removeDuplicationsInDescription(wordDescriptionRepository::Description&);
+void removeDefinitionMarks(wordDescriptionRepository::Definition&);
+void removeExampleMarks(wordDescriptionRepository::Example&);
+void removeSentenceMarks(wordDescriptionRepository::Sentence&);
 bool isDefinition(const std::string&);
 bool isExample(const std::string&);
 bool isSentence(const std::string&);
@@ -30,12 +28,12 @@ const std::string examplePrefix{"// "};
 const std::string sentencePrefix{"; "};
 }
 
-boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
+boost::optional<wordDescriptionRepository::Description> DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
-    Description description;
+    wordDescriptionRepository::Description description;
     bool previousLineIsDefinition = false;
 
-    Definition definition;
+    wordDescriptionRepository::Definition definition;
 
     for (const auto& line : lines)
     {
@@ -79,7 +77,7 @@ boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<s
 
 namespace
 {
-void removeMarks(Description& description)
+void removeMarks(wordDescriptionRepository::Description& description)
 {
     for (auto& definitionAndExample : description.definitionsWithExamples)
     {
@@ -96,7 +94,7 @@ void removeMarks(Description& description)
     }
 }
 
-void removeDuplicationsInDescription(Description& description)
+void removeDuplicationsInDescription(wordDescriptionRepository::Description& description)
 {
     auto& definitionsWithExamples = description.definitionsWithExamples;
     auto& sentences = description.sentences;
@@ -104,19 +102,19 @@ void removeDuplicationsInDescription(Description& description)
     removeDuplications(sentences);
 }
 
-void removeDefinitionMarks(Definition& definition)
+void removeDefinitionMarks(wordDescriptionRepository::Definition& definition)
 {
     definition.erase(0, definitionPrefix.size());
     trimEmptySpaces(definition);
 }
 
-void removeExampleMarks(Example& example)
+void removeExampleMarks(wordDescriptionRepository::Example& example)
 {
     example.erase(0, examplePrefix.size());
     trimEmptySpaces(example);
 }
 
-void removeSentenceMarks(Sentence& sentence)
+void removeSentenceMarks(wordDescriptionRepository::Sentence& sentence)
 {
     sentence.erase(0, sentencePrefix.size());
     trimEmptySpaces(sentence);

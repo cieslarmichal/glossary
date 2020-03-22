@@ -4,10 +4,10 @@
 #include "gtest/gtest.h"
 
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
-#include "wordsDescriptionsDb/WordsDescriptionsDbMock.h"
+#include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
 
 using namespace ::testing;
-using namespace wordsDescriptionsDb;
+using namespace wordDescriptionRepository;
 using namespace wordDescriptionDownloader;
 
 namespace
@@ -22,8 +22,8 @@ public:
     std::unique_ptr<WordDescriptionDownloaderMock> wordDescriptionDownloaderInit =
         std::make_unique<StrictMock<WordDescriptionDownloaderMock>>();
     WordDescriptionDownloaderMock* wordDescriptionDownloader = wordDescriptionDownloaderInit.get();
-    std::shared_ptr<WordsDescriptionsDbMock> wordsDescriptionsDb =
-        std::make_shared<StrictMock<WordsDescriptionsDbMock>>();
+    std::shared_ptr<WordDescriptionRepositoryMock> wordsDescriptionsDb =
+        std::make_shared<StrictMock<WordDescriptionRepositoryMock>>();
     DefaultWordDescriptionService wordDescriptionService{std::move(wordDescriptionDownloaderInit),
                                                          wordsDescriptionsDb};
 };

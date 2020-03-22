@@ -9,7 +9,7 @@ public:
     std::string formatPolishWordView(const PolishWord&) const override;
 
 private:
-    std::string getDescription(const wordsDescriptionsDb::Description&) const;
+    std::string getDescription(const wordDescriptionRepository::Description&) const;
 
     static size_t amountOfDefinitionsToView;
     static size_t amountOfSentencesToView;

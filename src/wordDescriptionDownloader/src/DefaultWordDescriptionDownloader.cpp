@@ -19,9 +19,9 @@ DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
 {
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription>
+boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionDownloader::downloadWordDescription(
-    const wordsDescriptionsDb::EnglishWord& englishWord) const
+    const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     const auto httpContent = getHttpContent(englishWord);
     if (!httpContent)
@@ -32,13 +32,13 @@ DefaultWordDescriptionDownloader::downloadWordDescription(
 
     if (const auto wordDescription = descriptionParser->parse(linesWithDescription))
     {
-        return wordsDescriptionsDb::WordDescription{englishWord, *wordDescription};
+        return wordDescriptionRepository::WordDescription{englishWord, *wordDescription};
     }
     return boost::none;
 }
 
 boost::optional<std::string>
-DefaultWordDescriptionDownloader::getHttpContent(const wordsDescriptionsDb::EnglishWord& englishWord) const
+DefaultWordDescriptionDownloader::getHttpContent(const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     try
     {

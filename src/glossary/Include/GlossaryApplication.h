@@ -12,7 +12,7 @@
 #include "WordsBuilder.h"
 #include "statisticsDb/StatisticsDb.h"
 #include "utils/FileAccess.h"
-#include "wordsDescriptionsDb/WordsDescriptionsDb.h"
+#include "wordDescriptionRepository/WordDescriptionRepository.h"
 
 // TODO: move std::cin from UserPrompt to application
 
@@ -35,10 +35,10 @@ private:
     std::unique_ptr<WordViewFormatter> wordViewFormatter;
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
-    std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> wordsDescriptionsDb;
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordsDescriptionsDb;
     std::unique_ptr<WordsBuilder> wordsBuilder;
     Dictionaries dictionaries;
     Dictionary baseDictionary;
-    wordsDescriptionsDb::EnglishWords englishWords;
+    wordDescriptionRepository::EnglishWords englishWords;
     Words glossaryWords;
 };

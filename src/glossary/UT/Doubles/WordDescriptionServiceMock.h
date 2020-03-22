@@ -7,6 +7,6 @@
 class WordDescriptionServiceMock : public WordDescriptionService
 {
 public:
-    MOCK_METHOD1(getWordDescription, boost::optional<wordsDescriptionsDb::WordDescription>(
-                                         const wordsDescriptionsDb::EnglishWord&));
+    MOCK_METHOD1(getWordDescription, boost::optional<wordDescriptionRepository::WordDescription>(
+                                         const wordDescriptionRepository::EnglishWord&));
 };

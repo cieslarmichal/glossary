@@ -2,13 +2,13 @@
 
 DefaultWordDescriptionService::DefaultWordDescriptionService(
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
-    std::shared_ptr<wordsDescriptionsDb::WordsDescriptionsDb> db)
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> db)
     : wordDescriptionDownloader{std::move(downloader)}, wordsDescriptionsDb{std::move(db)}
 {
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription>
-DefaultWordDescriptionService::getWordDescription(const wordsDescriptionsDb::EnglishWord& englishWord)
+boost::optional<wordDescriptionRepository::WordDescription>
+DefaultWordDescriptionService::getWordDescription(const wordDescriptionRepository::EnglishWord& englishWord)
 {
     if (const auto wordDescriptionFromDb = getWordDescriptionFromDb(englishWord))
     {
@@ -23,21 +23,21 @@ DefaultWordDescriptionService::getWordDescription(const wordsDescriptionsDb::Eng
     return boost::none;
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription> DefaultWordDescriptionService::getWordDescriptionFromDb(
-    const wordsDescriptionsDb::EnglishWord& englishWord) const
+boost::optional<wordDescriptionRepository::WordDescription> DefaultWordDescriptionService::getWordDescriptionFromDb(
+    const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordsDescriptionsDb->getWordDescription(englishWord);
 }
 
-boost::optional<wordsDescriptionsDb::WordDescription>
+boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::createWordDescriptionFromHttp(
-    const wordsDescriptionsDb::EnglishWord& englishWord) const
+    const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
 void DefaultWordDescriptionService::saveWordDescriptionInDb(
-    const wordsDescriptionsDb::WordDescription& wordDescription)
+    const wordDescriptionRepository::WordDescription& wordDescription)
 {
     wordsDescriptionsDb->addWordDescription(wordDescription);
 }

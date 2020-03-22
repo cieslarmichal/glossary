@@ -5,7 +5,7 @@
 #include "WordDescriptionServiceMock.h"
 
 using namespace ::testing;
-using namespace wordsDescriptionsDb;
+using namespace wordDescriptionRepository;
 
 namespace
 {

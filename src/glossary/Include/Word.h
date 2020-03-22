@@ -7,14 +7,14 @@
 #include "boost/optional/optional_io.hpp"
 
 #include "PolishWord.h"
-#include "wordsDescriptionsDb/EnglishWord.h"
-#include "wordsDescriptionsDb/WordDescription.h"
+#include "wordDescriptionRepository/EnglishWord.h"
+#include "wordDescriptionRepository/WordDescription.h"
 
 struct Word
 {
     PolishWord polishWord;
-    wordsDescriptionsDb::EnglishWord englishWord;
-    boost::optional<wordsDescriptionsDb::WordDescription> wordDescription;
+    wordDescriptionRepository::EnglishWord englishWord;
+    boost::optional<wordDescriptionRepository::WordDescription> wordDescription;
 };
 
 using Words = std::vector<Word>;

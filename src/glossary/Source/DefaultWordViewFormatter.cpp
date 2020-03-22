@@ -25,7 +25,7 @@ std::string DefaultWordViewFormatter::formatPolishWordView(const PolishWord& pol
 }
 
 std::string
-DefaultWordViewFormatter::getDescription(const wordsDescriptionsDb::Description& description) const
+DefaultWordViewFormatter::getDescription(const wordDescriptionRepository::Description& description) const
 {
     std::stringstream wordDescriptionView;
 

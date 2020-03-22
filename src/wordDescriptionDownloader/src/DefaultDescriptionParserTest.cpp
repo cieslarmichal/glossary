@@ -5,7 +5,7 @@
 #include "utils/StringHelper.h"
 
 using namespace ::testing;
-using namespace wordsDescriptionsDb;
+using namespace wordDescriptionRepository;
 using namespace wordDescriptionDownloader;
 
 namespace

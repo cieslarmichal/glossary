@@ -8,7 +8,7 @@ class WordDescriptionGeneratorMock : public WordDescriptionGenerator
 {
 public:
     MOCK_METHOD1(generateWordsDescriptions,
-                 wordsDescriptionsDb::WordsDescriptions(const wordsDescriptionsDb::EnglishWords&));
-    MOCK_METHOD1(generateWordDescription, boost::optional<wordsDescriptionsDb::WordDescription>(
-                                              const wordsDescriptionsDb::EnglishWord&));
+                 wordDescriptionRepository::WordsDescriptions(const wordDescriptionRepository::EnglishWords&));
+    MOCK_METHOD1(generateWordDescription, boost::optional<wordDescriptionRepository::WordDescription>(
+                                              const wordDescriptionRepository::EnglishWord&));
 };

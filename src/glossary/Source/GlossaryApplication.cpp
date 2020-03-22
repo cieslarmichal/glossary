@@ -13,7 +13,7 @@
 #include "statisticsDb/StatisticsDbFactory.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
-#include "wordsDescriptionsDb/WordsDescriptionsDbFactory.h"
+#include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
 
 GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
@@ -28,8 +28,8 @@ void GlossaryApplication::initialize()
     dictionaries = dictionaryReader->readDictionaries();
     baseDictionary = dictionaries.at("base");
 
-    std::unique_ptr<const wordsDescriptionsDb::WordsDescriptionsDbFactory> wordsDescriptionsDbFactory =
-        wordsDescriptionsDb::WordsDescriptionsDbFactory::createWordsDescriptionsDbFactory(fileAccess);
+    std::unique_ptr<const wordDescriptionRepository::WordDescriptionRepositoryFactory> wordsDescriptionsDbFactory =
+        wordDescriptionRepository::WordDescriptionRepositoryFactory::createWordsDescriptionsDbFactory(fileAccess);
 
     wordsDescriptionsDb = wordsDescriptionsDbFactory->createWordsDescriptionDb();
 

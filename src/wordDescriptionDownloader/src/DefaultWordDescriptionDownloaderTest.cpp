@@ -9,7 +9,7 @@
 
 #include "testVariables/HtmlContent.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
-#include "testVariables/WordDescriptionFromParser.h"
+#include "wordDescriptionDownloader/src/testVariables/ExampleDescription.h"
 
 using namespace ::testing;
 using namespace wordDescriptionDownloader;
@@ -17,8 +17,8 @@ using namespace wordDescriptionDownloader;
 namespace
 {
 const std::string urlAddress{"https://www.merriam-webster.com/dictionary/fetch"};
-const wordsDescriptionsDb::EnglishWord englishWord{"fetch"};
-const WordDescription expectedWordDescription{englishWord, wordDescriptionFromParser};
+const wordDescriptionRepository::EnglishWord englishWord{"fetch"};
+const WordDescription expectedWordDescription{englishWord, exampleDescription};
 const webConnection::Response emptyHtmlResponse{};
 const std::vector<std::string> emptyParsedHtmlContent{};
 }
@@ -56,7 +56,7 @@ TEST_F(DefaultWordDescriptionDownloaderTest, givenWordWithTranslation_shouldCrea
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(response));
     EXPECT_CALL(*linesSelector, selectLines(htmlContent)).WillOnce(Return(testParsedGlossaryHtmlContent));
     EXPECT_CALL(*descriptionParser, parse(testParsedGlossaryHtmlContent))
-        .WillOnce(Return(wordDescriptionFromParser));
+        .WillOnce(Return(exampleDescription));
 
     const auto actualWord = downloader.downloadWordDescription(englishWord);
 

@@ -3,23 +3,21 @@
 #include <iostream>
 #include <thread>
 
-using namespace wordsDescriptionsDb;
-
 WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(
     std::unique_ptr<WordDescriptionService> service)
     : wordDescriptionService{std::move(service)}
 {
 }
 
-WordsDescriptions
-WordDescriptionConcurrentGenerator::generateWordsDescriptions(const EnglishWords& englishWords)
+wordDescriptionRepository::WordsDescriptions
+WordDescriptionConcurrentGenerator::generateWordsDescriptions(const wordDescriptionRepository::EnglishWords& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
     std::vector<std::thread> threadPool;
     threadPool.reserve(amountOfThreads);
 
-    utils::ThreadSafeQueue<EnglishWord> englishWordsQueue{englishWords};
-    utils::ThreadSafeQueue<WordDescription> wordsDescriptions;
+    utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord> englishWordsQueue{englishWords};
+    utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription> wordsDescriptions;
 
     for (unsigned i = 0; i < amountOfThreads; i++)
     {
@@ -35,18 +33,18 @@ WordDescriptionConcurrentGenerator::generateWordsDescriptions(const EnglishWords
     return wordsDescriptions.popAll();
 }
 
-WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(const EnglishWord& englishWord)
+wordDescriptionRepository::WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(const wordDescriptionRepository::EnglishWord& englishWord)
 {
     if (const auto wordDescription = wordDescriptionService->getWordDescription(englishWord))
     {
         return *wordDescription;
     }
-    return WordDescription{englishWord, {}};
+    return wordDescriptionRepository::WordDescription{englishWord, {}};
 }
 
 void WordDescriptionConcurrentGenerator::generatorWorker(
-    utils::ThreadSafeQueue<wordsDescriptionsDb::EnglishWord>& englishWords,
-    utils::ThreadSafeQueue<wordsDescriptionsDb::WordDescription>& wordsDescriptions)
+    utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords,
+    utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>& wordsDescriptions)
 {
     while (not englishWords.empty())
     {

@@ -1,24 +1,23 @@
 #include "DefaultWordsBuilder.h"
 
-#include <iostream>
-
 Words DefaultWordsBuilder::buildWords(const translationsDb::Translations& translations,
-                                      const wordsDescriptionsDb::WordsDescriptions& wordsDescriptions) const
+                                      const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
 {
-    Words words;
+    Words builtWords;
     for (const auto& translation : translations)
     {
         const auto polishWord = translation.sourceText;
         const auto englishWord = translation.translatedText;
-        words.push_back(
-            {polishWord, englishWord, getCorrespondingWordDescription(englishWord, wordsDescriptions)});
+        const auto word =
+            Word{polishWord, englishWord, getCorrespondingWordDescription(englishWord, wordsDescriptions)};
+        builtWords.emplace_back(word);
     }
-    return words;
+    return builtWords;
 }
 
-wordsDescriptionsDb::WordDescription DefaultWordsBuilder::getCorrespondingWordDescription(
-    const wordsDescriptionsDb::EnglishWord& englishWord,
-    const wordsDescriptionsDb::WordsDescriptions& wordsDescriptions) const
+wordDescriptionRepository::WordDescription DefaultWordsBuilder::getCorrespondingWordDescription(
+    const wordDescriptionRepository::EnglishWord& englishWord,
+    const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
 {
     for (const auto& wordDescription : wordsDescriptions)
     {
