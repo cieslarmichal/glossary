@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "WordDescriptionServiceMock.h"
+#include "WordDescriptionRetrieverServiceMock.h"
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;
@@ -35,16 +35,16 @@ const WordsDescriptions expectedWordsDescriptions{wordDescription1, wordDescript
 class WordDescriptionGeneratorImplTest : public Test
 {
 public:
-    std::unique_ptr<WordDescriptionServiceMock> wordDescriptionServiceInit =
-        std::make_unique<StrictMock<WordDescriptionServiceMock>>();
-    WordDescriptionServiceMock* wordDescriptionService = wordDescriptionServiceInit.get();
+    std::unique_ptr<WordDescriptionRetrieverServiceMock> wordDescriptionServiceInit =
+        std::make_unique<StrictMock<WordDescriptionRetrieverServiceMock>>();
+    WordDescriptionRetrieverServiceMock* wordDescriptionService = wordDescriptionServiceInit.get();
     WordDescriptionConcurrentGenerator generator{std::move(wordDescriptionServiceInit)};
 };
 
 TEST_F(WordDescriptionGeneratorImplTest,
        givenEnglishWordAndServiceDoesNotContainWordDescription_shouldReturnWordDescriptionWithNoDescription)
 {
-    EXPECT_CALL(*wordDescriptionService, getWordDescription(englishWord1)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord1)).WillOnce(Return(boost::none));
 
     const auto actualWordDescription = generator.generateWordDescription(englishWord1);
 
@@ -54,7 +54,7 @@ TEST_F(WordDescriptionGeneratorImplTest,
 TEST_F(WordDescriptionGeneratorImplTest,
        givenEnglishWordAndServiceContainsWordDescription_shouldReturnWordDescription)
 {
-    EXPECT_CALL(*wordDescriptionService, getWordDescription(englishWord2))
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord2))
         .WillOnce(Return(wordDescription2Opt));
 
     const auto actualWordDescription = generator.generateWordDescription(englishWord2);
@@ -65,11 +65,11 @@ TEST_F(WordDescriptionGeneratorImplTest,
 TEST_F(WordDescriptionGeneratorImplTest,
        givenEnglishWords_shouldGenerateAmountOfWordsDescriptionsEqualAmountOfEnglishWords)
 {
-    EXPECT_CALL(*wordDescriptionService, getWordDescription(englishWord1))
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord1))
         .WillOnce(Return(wordDescription1Opt));
-    EXPECT_CALL(*wordDescriptionService, getWordDescription(englishWord2))
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord2))
         .WillOnce(Return(wordDescription2Opt));
-    EXPECT_CALL(*wordDescriptionService, getWordDescription(englishWord3)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord3)).WillOnce(Return(boost::none));
 
     const auto actualWordsDescriptions = generator.generateWordsDescriptions(englishWords);
 

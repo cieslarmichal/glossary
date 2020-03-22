@@ -13,7 +13,7 @@ using namespace utils;
 namespace
 {
 const std::string baseDictionaryName{"base"};
-const std::string dictionaryFilePath{"database/input.txt"};
+const std::string dictionaryFilePath{"database/dictionaries/input.txt"};
 const std::string content{"car samochod\n"
                           "air powietrze\n"};
 const std::string contentWithTwoWordsAndOneIncorrect{"car samochod\n"

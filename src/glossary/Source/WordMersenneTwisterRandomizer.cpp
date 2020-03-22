@@ -5,7 +5,7 @@
 
 Word WordMersenneTwisterRandomizer::randomizeWord(const UniqueWords& words) const
 {
-    //TODO: fix this class, so many exceptions
+    // TODO: fix this class, so many exceptions
     if (words.empty())
     {
         throw std::runtime_error{"Cant randomize word"};

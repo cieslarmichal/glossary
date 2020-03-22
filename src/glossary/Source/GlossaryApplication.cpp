@@ -4,7 +4,8 @@
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionaryReader.h"
-#include "DefaultWordDescriptionService.h"
+#include "DefaultStatisticsModifierService.h"
+#include "DefaultWordDescriptionRetrieverService.h"
 #include "DefaultWordViewFormatter.h"
 #include "DefaultWordsMerger.h"
 #include "UserStandardInputPrompt.h"
@@ -45,14 +46,16 @@ void GlossaryApplication::initialize()
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader =
         wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
 
-    wordDescriptionGenerator =
-        std::make_unique<WordDescriptionConcurrentGenerator>(std::make_unique<DefaultWordDescriptionService>(
-            std::move(wordDescriptionDownloader), wordDescriptionRepository));
+    wordDescriptionGenerator = std::make_unique<WordDescriptionConcurrentGenerator>(
+        std::make_shared<DefaultWordDescriptionRetrieverService>(std::move(wordDescriptionDownloader),
+                                                                 wordDescriptionRepository));
 
     std::unique_ptr<const statisticsRepository::StatisticsRepositoryFactory> statisticsRepositoryFactory =
         statisticsRepository::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
 
     statisticsRepository = statisticsRepositoryFactory->createStatisticsRepository();
+
+    statisticsModifierService = std::make_shared<DefaultStatisticsModifierService>(statisticsRepository);
 
     answerValidator = std::make_unique<DefaultAnswerValidator>();
 
@@ -85,8 +88,8 @@ void GlossaryApplication::loop()
 
     while (userWantToContinue)
     {
-        const auto &randomizedWord = randomizeWord();
-        if(randomizedWord == boost::none)
+        const auto& randomizedWord = randomizeWord();
+        if (randomizedWord == boost::none)
         {
             std::cerr << "Error while randomizing word:";
             break;
@@ -95,15 +98,16 @@ void GlossaryApplication::loop()
         std::cout << "Insert english translation:\n";
 
         if (randomizedWord->wordDescription &&
-            answerValidator->validateAnswer(userPrompt->getInput(), randomizedWord->wordDescription->englishWord))
+            answerValidator->validateAnswer(userPrompt->getInput(),
+                                            randomizedWord->wordDescription->englishWord))
         {
             std::cout << "Correct answer!\n";
-            statisticsRepository->addCorrectAnswer(randomizedWord->wordDescription->englishWord);
+            statisticsModifierService->addCorrectAnswer(randomizedWord->wordDescription->englishWord);
         }
         else
         {
             std::cout << "Inorrect answer :(\n";
-            statisticsRepository->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
+            statisticsModifierService->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
         }
 
         std::cout << wordViewFormatter->formatWordView(*randomizedWord);

@@ -1,6 +1,6 @@
-#include "DefaultWordDescriptionService.h"
+#include "DefaultWordDescriptionRetrieverService.h"
 
-DefaultWordDescriptionService::DefaultWordDescriptionService(
+DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> repo)
     : wordDescriptionDownloader{std::move(downloader)}, wordDescriptionRepository{std::move(repo)}
@@ -8,7 +8,8 @@ DefaultWordDescriptionService::DefaultWordDescriptionService(
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
-DefaultWordDescriptionService::getWordDescription(const wordDescriptionRepository::EnglishWord& englishWord)
+DefaultWordDescriptionRetrieverService::retrieveWordDescription(
+    const wordDescriptionRepository::EnglishWord& englishWord)
 {
     if (const auto wordDescriptionFromDb = getWordDescriptionFromRepository(englishWord))
     {
@@ -24,20 +25,20 @@ DefaultWordDescriptionService::getWordDescription(const wordDescriptionRepositor
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
-DefaultWordDescriptionService::getWordDescriptionFromRepository(
+DefaultWordDescriptionRetrieverService::getWordDescriptionFromRepository(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordDescriptionRepository->getWordDescription(englishWord);
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
-DefaultWordDescriptionService::downloadWordDescription(
+DefaultWordDescriptionRetrieverService::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
-void DefaultWordDescriptionService::saveWordDescriptionInRepository(
+void DefaultWordDescriptionRetrieverService::saveWordDescriptionInRepository(
     const wordDescriptionRepository::WordDescription& wordDescription)
 {
     wordDescriptionRepository->addWordDescription(wordDescription);

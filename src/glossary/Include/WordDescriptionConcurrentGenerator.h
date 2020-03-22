@@ -2,14 +2,16 @@
 
 #include <memory>
 
+#include "AmountOfSupportedThreadsCalculator.h"
 #include "WordDescriptionGenerator.h"
-#include "WordDescriptionService.h"
+#include "WordDescriptionRetrieverService.h"
 #include "utils/ThreadSafeQueue.h"
 
 class WordDescriptionConcurrentGenerator : public WordDescriptionGenerator
 {
 public:
-    explicit WordDescriptionConcurrentGenerator(std::unique_ptr<WordDescriptionService>);
+    // TODO: refactor, make few classes from this class
+    explicit WordDescriptionConcurrentGenerator(std::shared_ptr<WordDescriptionRetrieverService>);
 
     wordDescriptionRepository::WordsDescriptions
     generateWordsDescriptions(const wordDescriptionRepository::EnglishWords&) override;
@@ -21,5 +23,6 @@ private:
     void generatorWorker(utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords,
                          utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>&);
 
-    std::unique_ptr<WordDescriptionService> wordDescriptionService;
+    std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
+    AmountOfSupportedThreadsCalculator amountOfSupportedThreadsCalculator;
 };

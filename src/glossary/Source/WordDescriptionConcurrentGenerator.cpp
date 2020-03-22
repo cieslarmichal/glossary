@@ -1,11 +1,10 @@
 #include "WordDescriptionConcurrentGenerator.h"
 
-#include <iostream>
 #include <thread>
 
 WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(
-    std::unique_ptr<WordDescriptionService> service)
-    : wordDescriptionService{std::move(service)}
+    std::shared_ptr<WordDescriptionRetrieverService> service)
+    : wordDescriptionRetrieverService{std::move(service)}
 {
 }
 
@@ -36,7 +35,7 @@ wordDescriptionRepository::WordsDescriptions WordDescriptionConcurrentGenerator:
 wordDescriptionRepository::WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    if (const auto wordDescription = wordDescriptionService->getWordDescription(englishWord))
+    if (const auto wordDescription = wordDescriptionRetrieverService->retrieveWordDescription(englishWord))
     {
         return *wordDescription;
     }
@@ -59,9 +58,5 @@ void WordDescriptionConcurrentGenerator::generatorWorker(
 
 unsigned WordDescriptionConcurrentGenerator::getAmountOfThreads() const
 {
-    constexpr auto defaultAmountOfThreads = 4;
-    unsigned amountOfSupportedThreads = std::thread::hardware_concurrency();
-    unsigned amountOfThreads =
-        amountOfSupportedThreads != 0 ? amountOfSupportedThreads : defaultAmountOfThreads;
-    return amountOfThreads;
+    return amountOfSupportedThreadsCalculator.calculate();
 }

@@ -5,11 +5,11 @@
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
-class WordDescriptionService
+class WordDescriptionRetrieverService
 {
 public:
-    virtual ~WordDescriptionService() = default;
+    virtual ~WordDescriptionRetrieverService() = default;
 
     virtual boost::optional<wordDescriptionRepository::WordDescription>
-    getWordDescription(const wordDescriptionRepository::EnglishWord&) = 0;
+    retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) = 0;
 };

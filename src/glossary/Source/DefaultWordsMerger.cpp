@@ -1,8 +1,8 @@
 #include "DefaultWordsMerger.h"
 
-UniqueWords DefaultWordsMerger::mergeWords(
-    const translationRepository::Translations& translations,
-    const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
+UniqueWords
+DefaultWordsMerger::mergeWords(const translationRepository::Translations& translations,
+                               const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
 {
     UniqueWords mergedWords;
     for (const auto& translation : translations)
@@ -15,16 +15,17 @@ UniqueWords DefaultWordsMerger::mergeWords(
     return mergedWords;
 }
 
-boost::optional<wordDescriptionRepository::WordDescription> DefaultWordsMerger::getCorrespondingWordDescription(
+boost::optional<wordDescriptionRepository::WordDescription>
+DefaultWordsMerger::getCorrespondingWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord,
     const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
 {
-    return wordDescriptionFinder.find(englishWord, wordsDescriptions);
+    return wordDescriptionFinder.findCorrespondingWordDescription(englishWord, wordsDescriptions);
 }
 
-std::unique_ptr<Word>
-DefaultWordsMerger::getCreatedWord(const PolishWord& polishWord, const wordDescriptionRepository::EnglishWord& englishWord,
-                                   boost::optional<wordDescriptionRepository::WordDescription>& wordDescription) const
+std::unique_ptr<Word> DefaultWordsMerger::getCreatedWord(
+    const PolishWord& polishWord, const wordDescriptionRepository::EnglishWord& englishWord,
+    boost::optional<wordDescriptionRepository::WordDescription>& wordDescription) const
 {
     return wordCreator.create(polishWord, englishWord, wordDescription);
 }

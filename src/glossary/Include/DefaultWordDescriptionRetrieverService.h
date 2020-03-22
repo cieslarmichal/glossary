@@ -2,18 +2,19 @@
 
 #include <memory>
 
-#include "WordDescriptionService.h"
+#include "WordDescriptionRetrieverService.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
 
-class DefaultWordDescriptionService : public WordDescriptionService
+class DefaultWordDescriptionRetrieverService : public WordDescriptionRetrieverService
 {
 public:
-    DefaultWordDescriptionService(std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
-                                  std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
+    DefaultWordDescriptionRetrieverService(
+        std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
+        std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
     boost::optional<wordDescriptionRepository::WordDescription>
-    getWordDescription(const wordDescriptionRepository::EnglishWord&) override;
+    retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) override;
 
 private:
     boost::optional<wordDescriptionRepository::WordDescription>

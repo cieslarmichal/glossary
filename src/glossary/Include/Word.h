@@ -1,7 +1,7 @@
 #pragma once
 
-#include <ostream>
 #include <memory>
+#include <ostream>
 
 #include "boost/optional.hpp"
 #include "boost/optional/optional_io.hpp"

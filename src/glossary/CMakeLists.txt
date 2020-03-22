@@ -1,6 +1,6 @@
 set(SOURCES
-        Source/DefaultTranslationService.cpp
-        Source/DefaultWordDescriptionService.cpp
+        Source/DefaultTranslationRetrieverService.cpp
+        Source/DefaultWordDescriptionRetrieverService.cpp
         Source/Glossary.cpp
         Source/DefaultDictionaryReader.cpp
         Source/WordDescriptionConcurrentGenerator.cpp
@@ -10,20 +10,25 @@ set(SOURCES
         Source/GlossaryApplication.cpp
         Source/WordMersenneTwisterRandomizer.cpp
         Source/DefaultWordsMerger.cpp
-        Source/WordDescriptionFinder.cpp
+        Source/WordDescriptionCorrespondingToEnglishWordFinder.cpp
         Source/WordCreator.cpp
+        Source/DefaultDictionaryManager.cpp
+        Source/AmountOfSupportedThreadsCalculator.cpp
+        Source/DefaultStatisticsModifierService.cpp
         )
 
 set(UT_SOURCES
-        UT/Source/DefaultTranslationServiceTest.cpp
-        UT/Source/DefaultWordDescriptionServiceTest.cpp
+        UT/Source/DefaultTranslationRetrieverServiceTest.cpp
+        UT/Source/DefaultWordDescriptionRetrieverServiceTest.cpp
         UT/Source/DefaultDictionaryReaderTest.cpp
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
         UT/Source/DefaultWordsMergerTest.cpp
-        UT/Source/WordDescriptionFinderTest.cpp
+        UT/Source/WordDescriptionCorrespondingToEnglishWordFinderTest.cpp
         UT/Source/WordCreatorTest.cpp
+        UT/Source/DefaultDictionaryManagerTest.cpp
+        UT/Source/DefaultStatisticsModifierServiceTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

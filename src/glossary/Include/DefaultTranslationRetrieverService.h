@@ -2,18 +2,19 @@
 
 #include <memory>
 
-#include "TranslationService.h"
+#include "TranslationRetrieverService.h"
 #include "translationRepository/TranslationRepository.h"
 #include "translator/Translator.h"
 
-class DefaultTranslationService : public TranslationService
+class DefaultTranslationRetrieverService : public TranslationRetrieverService
 {
 public:
-    DefaultTranslationService(std::unique_ptr<translator::Translator>,
-                              std::shared_ptr<translationRepository::TranslationRepository>);
+    DefaultTranslationRetrieverService(std::unique_ptr<translator::Translator>,
+                                       std::shared_ptr<translationRepository::TranslationRepository>);
 
-    boost::optional<translator::TranslatedText> translate(const std::string&, translator::SourceLanguage,
-                                                          translator::TargetLanguage) override;
+    boost::optional<translator::TranslatedText> retrieveTranslation(const translator::SourceText&,
+                                                                    translator::SourceLanguage,
+                                                                    translator::TargetLanguage) override;
 
 private:
     boost::optional<translator::TranslatedText> getTranslationFromRepository(const std::string&) const;

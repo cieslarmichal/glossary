@@ -5,6 +5,7 @@
 #include "AnswerValidator.h"
 #include "Application.h"
 #include "DictionaryReader.h"
+#include "StatisticsModifierService.h"
 #include "UserPrompt.h"
 #include "WordDescriptionGenerator.h"
 #include "WordRandomizer.h"
@@ -30,13 +31,14 @@ private:
 
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
-    std::unique_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
+    std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
+    std::shared_ptr<StatisticsModifierService> statisticsModifierService;
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewFormatter> wordViewFormatter;
     std::unique_ptr<WordRandomizer> wordsRandomizer;
     std::unique_ptr<const DictionaryReader> dictionaryReader;
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
     std::unique_ptr<WordsMerger> wordsMerger;
     Dictionaries dictionaries;
     Dictionary baseDictionary;

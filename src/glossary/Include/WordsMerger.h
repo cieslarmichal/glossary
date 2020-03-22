@@ -10,5 +10,5 @@ public:
     virtual ~WordsMerger() = default;
 
     virtual UniqueWords mergeWords(const translationRepository::Translations&,
-                             const wordDescriptionRepository::WordsDescriptions&) const = 0;
+                                   const wordDescriptionRepository::WordsDescriptions&) const = 0;
 };

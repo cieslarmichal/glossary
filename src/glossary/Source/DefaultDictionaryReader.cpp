@@ -7,7 +7,7 @@
 #include "utils/exceptions/FileNotFound.h"
 
 const std::string DefaultDictionaryReader::directory{"database/dictionaries/"};
-const std::string DefaultDictionaryReader::filename{directory+"input.txt"};
+const std::string DefaultDictionaryReader::filename{directory + "input.txt"};
 
 DefaultDictionaryReader::DefaultDictionaryReader(std::shared_ptr<const utils::FileAccess> access)
     : fileAccess{std::move(access)}
