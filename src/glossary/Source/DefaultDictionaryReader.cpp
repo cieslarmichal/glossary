@@ -35,7 +35,7 @@ Dictionaries DefaultDictionaryReader::readDictionaries() const
 
 Dictionary DefaultDictionaryReader::processDictionaryContent(const std::string& dictionaryContent) const
 {
-    std::vector<translationsDb::Translation> wordsWithTranslation;
+    std::vector<translationRepository::Translation> wordsWithTranslation;
     for (const auto& line : utils::getSplitLines(dictionaryContent))
     {
         if (not line.empty())
@@ -49,16 +49,16 @@ Dictionary DefaultDictionaryReader::processDictionaryContent(const std::string& 
     return wordsWithTranslation;
 }
 
-boost::optional<translationsDb::Translation>
+boost::optional<translationRepository::Translation>
 DefaultDictionaryReader::getWordWithTranslation(const std::string& line) const
 {
     std::stringstream lineStream{line};
-    translationsDb::TranslatedText englishWord;
-    translationsDb::SourceText polishWord;
+    translationRepository::TranslatedText englishWord;
+    translationRepository::SourceText polishWord;
     lineStream >> englishWord >> polishWord;
     if (!englishWord.empty() && !polishWord.empty())
     {
-        return translationsDb::Translation{polishWord, englishWord};
+        return translationRepository::Translation{polishWord, englishWord};
         // TODO: add strong typedefs
     }
     return boost::none;

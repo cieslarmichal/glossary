@@ -2,42 +2,42 @@
 
 DefaultWordDescriptionService::DefaultWordDescriptionService(
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> db)
-    : wordDescriptionDownloader{std::move(downloader)}, wordsDescriptionsDb{std::move(db)}
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> repo)
+    : wordDescriptionDownloader{std::move(downloader)}, wordDescriptionRepository{std::move(repo)}
 {
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::getWordDescription(const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    if (const auto wordDescriptionFromDb = getWordDescriptionFromDb(englishWord))
+    if (const auto wordDescriptionFromDb = getWordDescriptionFromRepository(englishWord))
     {
         return wordDescriptionFromDb;
     }
 
-    if (const auto createdWordDescription = createWordDescriptionFromHttp(englishWord))
+    if (const auto createdWordDescription = downloadWordDescription(englishWord))
     {
-        saveWordDescriptionInDb(*createdWordDescription);
+        saveWordDescriptionInRepository(*createdWordDescription);
         return createdWordDescription;
     }
     return boost::none;
 }
 
-boost::optional<wordDescriptionRepository::WordDescription> DefaultWordDescriptionService::getWordDescriptionFromDb(
+boost::optional<wordDescriptionRepository::WordDescription> DefaultWordDescriptionService::getWordDescriptionFromRepository(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    return wordsDescriptionsDb->getWordDescription(englishWord);
+    return wordDescriptionRepository->getWordDescription(englishWord);
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
-DefaultWordDescriptionService::createWordDescriptionFromHttp(
+DefaultWordDescriptionService::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
-void DefaultWordDescriptionService::saveWordDescriptionInDb(
+void DefaultWordDescriptionService::saveWordDescriptionInRepository(
     const wordDescriptionRepository::WordDescription& wordDescription)
 {
-    wordsDescriptionsDb->addWordDescription(wordDescription);
+    wordDescriptionRepository->addWordDescription(wordDescription);
 }

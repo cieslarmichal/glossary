@@ -4,7 +4,7 @@
 
 #include "TranslationsSerializer.h"
 
-namespace translationsDb
+namespace translationRepository
 {
 class TranslationsJsonSerializer : public TranslationsSerializer
 {

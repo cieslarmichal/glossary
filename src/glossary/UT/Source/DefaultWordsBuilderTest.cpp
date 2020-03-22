@@ -4,7 +4,7 @@
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;
-using namespace translationsDb;
+using namespace translationRepository;
 
 namespace
 {

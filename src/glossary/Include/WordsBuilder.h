@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Word.h"
-#include "translationsDb/Translation.h"
+#include "translationRepository/Translation.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
 class WordsBuilder
@@ -9,6 +9,6 @@ class WordsBuilder
 public:
     virtual ~WordsBuilder() = default;
 
-    virtual Words buildWords(const translationsDb::Translations&,
+    virtual Words buildWords(const translationRepository::Translations&,
                              const wordDescriptionRepository::WordsDescriptions&) const = 0;
 };

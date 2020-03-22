@@ -4,7 +4,7 @@
 
 #include "utils/exceptions/FileNotFound.h"
 
-namespace translationsDb
+namespace translationRepository
 {
 
 const std::string TranslationsPersistentStorage::directory{"database/"};

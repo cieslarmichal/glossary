@@ -29,9 +29,9 @@ void GlossaryApplication::initialize()
     baseDictionary = dictionaries.at("base");
 
     std::unique_ptr<const wordDescriptionRepository::WordDescriptionRepositoryFactory> wordsDescriptionsDbFactory =
-        wordDescriptionRepository::WordDescriptionRepositoryFactory::createWordsDescriptionsDbFactory(fileAccess);
+        wordDescriptionRepository::WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(fileAccess);
 
-    wordsDescriptionsDb = wordsDescriptionsDbFactory->createWordsDescriptionDb();
+    wordsDescriptionsDb = wordsDescriptionsDbFactory->createWordDescriptionRepository();
 
     std::unique_ptr<const webConnection::HttpHandlerFactory> httpHandlerFactory =
         webConnection::HttpHandlerFactory::createHttpHandlerFactory();

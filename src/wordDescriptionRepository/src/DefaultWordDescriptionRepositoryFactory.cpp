@@ -13,10 +13,11 @@ DefaultWordDescriptionRepositoryFactory::DefaultWordDescriptionRepositoryFactory
 }
 
 std::unique_ptr<WordDescriptionRepository>
-DefaultWordDescriptionRepositoryFactory::createWordsDescriptionDb() const
+DefaultWordDescriptionRepositoryFactory::createWordDescriptionRepository() const
 {
-    return std::make_unique<DefaultWordDescriptionRepository>(std::make_unique<WordsDescriptionsPersistentStorage>(
-        fileAccess, std::make_shared<WordsDescriptionsJsonSerializer>()));
+    return std::make_unique<DefaultWordDescriptionRepository>(
+        std::make_unique<WordsDescriptionsPersistentStorage>(
+            fileAccess, std::make_shared<WordsDescriptionsJsonSerializer>()));
 }
 
 }

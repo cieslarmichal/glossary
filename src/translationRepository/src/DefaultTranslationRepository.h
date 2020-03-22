@@ -2,15 +2,15 @@
 
 #include <memory>
 
-#include "TranslationsDb.h"
+#include "TranslationRepository.h"
 #include "TranslationsStorage.h"
 
-namespace translationsDb
+namespace translationRepository
 {
-class DefaultTranslationsDb : public TranslationsDb
+class DefaultTranslationRepository : public TranslationRepository
 {
 public:
-    explicit DefaultTranslationsDb(std::unique_ptr<TranslationsStorage>);
+    explicit DefaultTranslationRepository(std::unique_ptr<TranslationsStorage>);
 
     void addTranslation(Translation) override;
     boost::optional<Translation> getTranslation(const SourceText&) const override;

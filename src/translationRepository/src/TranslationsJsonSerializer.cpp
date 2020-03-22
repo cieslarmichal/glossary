@@ -4,15 +4,14 @@
 
 #include "boost/algorithm/cxx11/all_of.hpp"
 
+namespace translationRepository
+{
 namespace
 {
 constexpr auto translationsField = "translations";
 constexpr auto polishWordField = "polishWord";
 constexpr auto englishWordField = "englishWord";
 }
-
-namespace translationsDb
-{
 
 std::string TranslationsJsonSerializer::serialize(const Translations& translations) const
 {

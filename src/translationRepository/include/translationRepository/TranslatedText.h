@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace translationsDb
+namespace translationRepository
 {
 using TranslatedText = std::string;
 }

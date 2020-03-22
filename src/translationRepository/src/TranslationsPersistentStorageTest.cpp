@@ -8,7 +8,7 @@
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
-using namespace translationsDb;
+using namespace translationRepository;
 
 namespace
 {

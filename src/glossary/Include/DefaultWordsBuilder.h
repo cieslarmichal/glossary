@@ -5,7 +5,7 @@
 class DefaultWordsBuilder : public WordsBuilder
 {
 public:
-    Words buildWords(const translationsDb::Translations&,
+    Words buildWords(const translationRepository::Translations&,
                      const wordDescriptionRepository::WordsDescriptions&) const override;
 
 private:

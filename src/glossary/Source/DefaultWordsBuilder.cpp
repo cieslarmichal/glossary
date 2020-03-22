@@ -1,6 +1,6 @@
 #include "DefaultWordsBuilder.h"
 
-Words DefaultWordsBuilder::buildWords(const translationsDb::Translations& translations,
+Words DefaultWordsBuilder::buildWords(const translationRepository::Translations& translations,
                                       const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
 {
     Words builtWords;

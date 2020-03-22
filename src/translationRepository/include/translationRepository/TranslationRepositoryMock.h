@@ -2,12 +2,12 @@
 
 #include "gmock/gmock.h"
 
-#include "TranslationsDb.h"
+#include "TranslationRepository.h"
 
-namespace translationsDb
+namespace translationRepository
 {
 
-class TranslationsDbMock : public TranslationsDb
+class TranslationRepositoryMock : public TranslationRepository
 {
 public:
     MOCK_METHOD1(addTranslation, void(Translation));

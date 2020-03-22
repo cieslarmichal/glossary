@@ -7,7 +7,7 @@
 #include "TranslationsStorage.h"
 #include "utils/FileAccess.h"
 
-namespace translationsDb
+namespace translationRepository
 {
 class TranslationsPersistentStorage : public TranslationsStorage
 {

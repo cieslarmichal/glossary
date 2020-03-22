@@ -1,7 +1,7 @@
 set(INTERNAL_LIBS_INCLUDE_PATH ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory(statisticsDb)
-add_subdirectory(translationsDb)
+add_subdirectory(translationRepository)
 add_subdirectory(wordDescriptionRepository)
 add_subdirectory(wordDescriptionDownloader)
 add_subdirectory(utils)

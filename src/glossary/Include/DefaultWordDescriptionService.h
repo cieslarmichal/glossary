@@ -17,11 +17,11 @@ public:
 
 private:
     boost::optional<wordDescriptionRepository::WordDescription>
-    getWordDescriptionFromDb(const wordDescriptionRepository::EnglishWord& englishWord) const;
+    getWordDescriptionFromRepository(const wordDescriptionRepository::EnglishWord& englishWord) const;
     boost::optional<wordDescriptionRepository::WordDescription>
-    createWordDescriptionFromHttp(const wordDescriptionRepository::EnglishWord& englishWord) const;
-    void saveWordDescriptionInDb(const wordDescriptionRepository::WordDescription&);
+    downloadWordDescription(const wordDescriptionRepository::EnglishWord& englishWord) const;
+    void saveWordDescriptionInRepository(const wordDescriptionRepository::WordDescription&);
 
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordsDescriptionsDb;
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
 };

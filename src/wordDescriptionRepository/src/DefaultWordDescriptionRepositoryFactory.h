@@ -9,7 +9,7 @@ class DefaultWordDescriptionRepositoryFactory : public WordDescriptionRepository
 public:
     explicit DefaultWordDescriptionRepositoryFactory(std::shared_ptr<const utils::FileAccess>);
 
-    std::unique_ptr<WordDescriptionRepository> createWordsDescriptionDb() const override;
+    std::unique_ptr<WordDescriptionRepository> createWordDescriptionRepository() const override;
 
 private:
     std::shared_ptr<const utils::FileAccess> fileAccess;

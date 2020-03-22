@@ -6,7 +6,7 @@
 namespace wordDescriptionRepository
 {
 std::unique_ptr<WordDescriptionRepositoryFactory>
-WordDescriptionRepositoryFactory::createWordsDescriptionsDbFactory(
+WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(
     const std::shared_ptr<const utils::FileAccess>& fileAccess)
 {
     return std::make_unique<DefaultWordDescriptionRepositoryFactory>(fileAccess);

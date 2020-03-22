@@ -1,8 +1,8 @@
 #include "DefaultTranslationService.h"
 
 DefaultTranslationService::DefaultTranslationService(std::unique_ptr<translator::Translator> translatorInit,
-                                                     std::shared_ptr<translationsDb::TranslationsDb> db)
-    : translator{std::move(translatorInit)}, translationsDb{std::move(db)}
+                                                     std::shared_ptr<translationRepository::TranslationRepository> repo)
+    : translator{std::move(translatorInit)}, translationRepository{std::move(repo)}
 {
 }
 
@@ -10,7 +10,7 @@ boost::optional<translator::TranslatedText>
 DefaultTranslationService::translate(const std::string& sourceText, translator::SourceLanguage sourceLanguage,
                                      translator::TargetLanguage targetLanguage)
 {
-    if (const auto translationFromDb = getTranslationFromDb(sourceText))
+    if (const auto translationFromDb = getTranslationFromRepository(sourceText))
     {
         return translationFromDb;
     }
@@ -18,7 +18,7 @@ DefaultTranslationService::translate(const std::string& sourceText, translator::
     if (const auto translationFromTranslator =
             getTranslationFromTranslator(sourceText, sourceLanguage, targetLanguage))
     {
-        saveTranslationInDb(sourceText, *translationFromTranslator);
+        saveTranslationInRepository(sourceText, *translationFromTranslator);
         return translationFromTranslator;
     }
 
@@ -26,9 +26,9 @@ DefaultTranslationService::translate(const std::string& sourceText, translator::
 }
 
 boost::optional<translator::TranslatedText>
-DefaultTranslationService::getTranslationFromDb(const std::string& sourceText) const
+DefaultTranslationService::getTranslationFromRepository(const std::string& sourceText) const
 {
-    if (const auto translation = translationsDb->getTranslation(sourceText))
+    if (const auto translation = translationRepository->getTranslation(sourceText))
     {
         return translator::TranslatedText{translation->translatedText};
     }
@@ -43,10 +43,10 @@ DefaultTranslationService::getTranslationFromTranslator(const std::string& sourc
     return translator->translate(sourceText, sourceLanguage, targetLanguage);
 }
 
-void DefaultTranslationService::saveTranslationInDb(const std::string& sourceText,
+void DefaultTranslationService::saveTranslationInRepository(const std::string& sourceText,
                                                     const translator::TranslatedText& translatedText)
 {
-    const auto newTranslation = translationsDb::Translation{translationsDb::SourceText{sourceText},
-                                                            translationsDb::TranslatedText{translatedText}};
-    translationsDb->addTranslation(newTranslation);
+    const auto newTranslation = translationRepository::Translation{translationRepository::SourceText{sourceText},
+                                                                   translationRepository::TranslatedText{translatedText}};
+    translationRepository->addTranslation(newTranslation);
 }

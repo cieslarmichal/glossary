@@ -4,7 +4,7 @@
 
 #include "TranslationsStorage.h"
 
-namespace translationsDb
+namespace translationRepository
 {
 class TranslationsMemoryStorage : public TranslationsStorage
 {

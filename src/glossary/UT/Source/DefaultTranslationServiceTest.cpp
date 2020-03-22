@@ -3,12 +3,12 @@
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
-#include "translationsDb/TranslationsDbMock.h"
+#include "translationRepository/TranslationRepositoryMock.h"
 #include "translator/TranslatorMock.h"
 
 using namespace ::testing;
 using namespace translator;
-using namespace translationsDb;
+using namespace translationRepository;
 
 namespace
 {
@@ -29,14 +29,14 @@ public:
     std::unique_ptr<translator::TranslatorMock> translatorInit =
         std::make_unique<StrictMock<translator::TranslatorMock>>();
     translator::TranslatorMock* translator = translatorInit.get();
-    std::shared_ptr<translationsDb::TranslationsDbMock> translationsDb =
-        std::make_shared<StrictMock<translationsDb::TranslationsDbMock>>();
-    DefaultTranslationService translationService{std::move(translatorInit), translationsDb};
+    std::shared_ptr<translationRepository::TranslationRepositoryMock> translationRepository =
+        std::make_shared<StrictMock<translationRepository::TranslationRepositoryMock>>();
+    DefaultTranslationService translationService{std::move(translatorInit), translationRepository};
 };
 
 TEST_F(DefaultTranslationServiceTest, dbContainsTranslation_shouldReturnTranslationFromDb)
 {
-    EXPECT_CALL(*translationsDb, getTranslation(textToTranslate)).WillOnce(Return(translationFromDb));
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(translationFromDb));
 
     const auto actualTranslation =
         translationService.translate(textToTranslate, sourceLanguage, targetLanguage);
@@ -47,10 +47,10 @@ TEST_F(DefaultTranslationServiceTest, dbContainsTranslation_shouldReturnTranslat
 TEST_F(DefaultTranslationServiceTest,
        dbDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInDatabase)
 {
-    EXPECT_CALL(*translationsDb, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedTextOpt));
-    EXPECT_CALL(*translationsDb, addTranslation(dbTranslation));
+    EXPECT_CALL(*translationRepository, addTranslation(dbTranslation));
 
     const auto actualTranslation =
         translationService.translate(textToTranslate, sourceLanguage, targetLanguage);
@@ -60,7 +60,7 @@ TEST_F(DefaultTranslationServiceTest,
 
 TEST_F(DefaultTranslationServiceTest, dbAndTranslatorDoNotRespondWithTranslation_shouldReturnNone)
 {
-    EXPECT_CALL(*translationsDb, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
         .WillOnce(Return(boost::none));
     const auto actualTranslation =

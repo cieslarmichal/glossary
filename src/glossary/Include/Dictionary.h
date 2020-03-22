@@ -2,9 +2,9 @@
 
 #include <map>
 
-#include "translationsDb/Translation.h"
+#include "translationRepository/Translation.h"
 
-using Dictionary = translationsDb::Translations;
+using Dictionary = translationRepository::Translations;
 
 using DictionaryName = std::string;
 

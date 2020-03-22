@@ -12,9 +12,9 @@ class WordDescriptionRepositoryFactory
 public:
     virtual ~WordDescriptionRepositoryFactory() = default;
 
-    virtual std::unique_ptr<WordDescriptionRepository> createWordsDescriptionDb() const = 0;
+    virtual std::unique_ptr<WordDescriptionRepository> createWordDescriptionRepository() const = 0;
 
     static std::unique_ptr<WordDescriptionRepositoryFactory>
-    createWordsDescriptionsDbFactory(const std::shared_ptr<const utils::FileAccess>&);
+    createWordDescriptionRepositoryFactory(const std::shared_ptr<const utils::FileAccess>&);
 };
 }

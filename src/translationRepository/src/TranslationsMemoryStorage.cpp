@@ -1,6 +1,6 @@
 #include "TranslationsMemoryStorage.h"
 
-namespace translationsDb
+namespace translationRepository
 {
 
 static auto& getWordStatisticsByPosition(const Translations& translations,
