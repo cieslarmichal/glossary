@@ -1,7 +1,6 @@
 set(SOURCES
         src/HtmlTagsDeleter.cpp
         src/DefaultFileAccess.cpp
-        src/ProjectFileAccess.cpp
         src/StringHelper.cpp
         src/GetProjectPath.cpp
         src/GetExecutablePath.cpp
@@ -15,7 +14,6 @@ set(SOURCES
 set(UT_SOURCES
         src/HtmlTagsDeleterTest.cpp
         src/DefaultFileAccessTest.cpp
-        src/ProjectFileAccessTest.cpp
         src/StringHelperTest.cpp
         src/GetExecutablePathTest.cpp
         src/GetProjectPathTest.cpp

@@ -6,7 +6,6 @@
 
 namespace utils
 {
-
 namespace
 {
 constexpr auto fileNotFoundMessage{"Project directory not found in path: "};

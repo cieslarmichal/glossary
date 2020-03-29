@@ -3,11 +3,12 @@
 #include <iostream>
 
 #include "utils/exceptions/FileNotFound.h"
+#include "utils/GetProjectPath.h"
 
 namespace translationRepository
 {
 
-const std::string TranslationsPersistentStorage::directory{"database/"};
+const std::string TranslationsPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
 const std::string TranslationsPersistentStorage::filename{directory + "translations.txt"};
 
 TranslationsPersistentStorage::TranslationsPersistentStorage(

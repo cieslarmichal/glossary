@@ -2,12 +2,13 @@
 
 #include <iostream>
 
+#include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
 namespace statisticsRepository
 {
 
-const std::string StatisticsPersistentStorage::directory{"database/"};
+const std::string StatisticsPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
 const std::string StatisticsPersistentStorage::filename{directory + "statistics.txt"};
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(

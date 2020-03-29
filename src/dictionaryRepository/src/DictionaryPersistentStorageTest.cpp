@@ -5,14 +5,14 @@
 #include "DictionarySerializerMock.h"
 #include "utils/FileAccessMock.h"
 
-#include "utils/exceptions/FileNotFound.h"
+#include "utils/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace dictionaryRepository;
 
 namespace
 {
-const std::string filePath{"database/dictionaries.txt"};
+const std::string filePath{utils::getProjectPath("glossary") + "database/dictionaries.txt"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};
 const DictionaryName dictionaryName3{"dictionaryName3"};

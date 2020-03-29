@@ -1,10 +1,9 @@
 #include "TranslationsPersistentStorage.h"
 
 #include "gtest/gtest.h"
-
 #include "TranslationsSerializerMock.h"
 #include "utils/include/utils/FileAccessMock.h"
-
+#include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
@@ -12,7 +11,7 @@ using namespace translationRepository;
 
 namespace
 {
-const std::string filepath{"database/translations.txt"};
+const std::string filePath{utils::getProjectPath("glossary") + "database/translations.txt"};
 const SourceText polishWord1{"polishWord1"};
 const SourceText polishWord2{"polishWord2"};
 const SourceText nonExistingPolishWord{"nonExisting"};
@@ -30,7 +29,7 @@ class TranslationsPersistentStorageTest : public Test
 public:
     void expectTwoTranslationsLoad()
     {
-        EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return("some content"));
+        EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return("some content"));
         EXPECT_CALL(*serializer, deserialize("some content"))
             .WillOnce(Return(translationsWithTwoTranslations));
     }
@@ -42,7 +41,7 @@ public:
 
 TEST_F(TranslationsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyTranslations)
 {
-    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return(""));
+    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(emptyTranslations));
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
@@ -63,7 +62,7 @@ TEST_F(TranslationsPersistentStorageTest, givenPersistentStorageWithFileWithStat
 
 TEST_F(TranslationsPersistentStorageTest, givenInvalidFile_shouldReturnNoTranslations)
 {
-    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualStats = persistentStorage.getTranslations();
@@ -75,7 +74,7 @@ TEST_F(TranslationsPersistentStorageTest, givenTranslationAddition_shouldAddWord
 {
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
     ASSERT_TRUE(persistentStorage.empty());
-    EXPECT_CALL(*fileAccess, write(filepath, "words"));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"));
     EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation)).WillOnce(Return("words"));
 
     persistentStorage.addTranslation(translation1);
@@ -87,7 +86,7 @@ TEST_F(TranslationsPersistentStorageTest,
        givenTranslationAdditionAndNonExistingFIle_shouldAddWordTranslationAndNotSerialize)
 {
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
-    EXPECT_CALL(*fileAccess, write(filepath, "words")).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, write(filePath, "words")).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation)).WillOnce(Return("words"));
 
     persistentStorage.addTranslation(translation1);
@@ -99,7 +98,7 @@ TEST_F(TranslationsPersistentStorageTest, givenTwoSameTranslations_shouldAddAndS
 {
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
-    EXPECT_CALL(*fileAccess, write(filepath, "words"));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"));
     EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation)).WillOnce(Return("words"));
 
     persistentStorage.addTranslation(translation1);
@@ -112,12 +111,12 @@ TEST_F(TranslationsPersistentStorageTest, addTwoDifferentTranslations_shouldAddA
 {
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
-    EXPECT_CALL(*fileAccess, write(filepath, "words"));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"));
     EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation)).WillOnce(Return("words"));
 
     persistentStorage.addTranslation(translation1);
 
-    EXPECT_CALL(*fileAccess, write(filepath, "words"));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"));
     EXPECT_CALL(*serializer, serialize(translationsWithTwoTranslations)).WillOnce(Return("words"));
 
     persistentStorage.addTranslation(translation2);

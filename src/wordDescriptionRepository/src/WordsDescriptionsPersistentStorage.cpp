@@ -2,11 +2,13 @@
 
 #include <iostream>
 
+#include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
 namespace wordDescriptionRepository
 {
-const std::string WordsDescriptionsPersistentStorage::directory{"database/"};
+const std::string WordsDescriptionsPersistentStorage::directory{utils::getProjectPath("glossary") +
+                                                                "database/"};
 const std::string WordsDescriptionsPersistentStorage::filename{directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(

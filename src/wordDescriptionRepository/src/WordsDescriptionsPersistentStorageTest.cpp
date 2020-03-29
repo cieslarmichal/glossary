@@ -6,13 +6,14 @@
 #include "utils/FileAccessMock.h"
 
 #include "utils/exceptions/FileNotFound.h"
+#include "utils/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;
 
 namespace
 {
-const std::string filepath{"database/wordsDescriptions.txt"};
+const std::string filePath{utils::getProjectPath("glossary") + "database/wordsDescriptions.txt"};
 const EnglishWord nonExistingWord("nonExistingWord");
 const EnglishWord englishWord1("englishWord1");
 const EnglishWord englishWord2("englishWord2");
@@ -28,7 +29,7 @@ class WordsDescriptionsPersistentStorageTest : public Test
 public:
     void expectTwoWordsDescriptionsLoad()
     {
-        EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return("some content"));
+        EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return("some content"));
         EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(words));
     }
 
@@ -39,7 +40,7 @@ public:
 
 TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyWords)
 {
-    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return(""));
+    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(WordsDescriptions{}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
 
@@ -60,7 +61,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithFileWit
 
 TEST_F(WordsDescriptionsPersistentStorageTest, givenInvalidFile_shouldReturnNoWords)
 {
-    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualWords = persistentStorage.getWordsDescriptions();
@@ -72,7 +73,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenWordAddition_shouldAddWordAn
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
-    EXPECT_CALL(*fileAccess, write(filepath, "words"));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"));
     EXPECT_CALL(*serializer, serialize(wordsAfterAddition)).WillOnce(Return("words"));
 
     persistentStorage.addWordDescription(word3);
@@ -85,7 +86,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest,
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
-    EXPECT_CALL(*fileAccess, write(filepath, "words")).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, write(filePath, "words")).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(wordsAfterAddition)).WillOnce(Return("words"));
 
     persistentStorage.addWordDescription(word3);

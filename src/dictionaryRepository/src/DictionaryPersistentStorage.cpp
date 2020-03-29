@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-#include "utils/exceptions/FileNotFound.h"
+#include "utils/GetProjectPath.h"
 
 namespace dictionaryRepository
 {
-const std::string DictionaryPersistentStorage::directory{"database/"};
+const std::string DictionaryPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
 const std::string DictionaryPersistentStorage::filename{directory + "dictionaries.txt"};
 
 DictionaryPersistentStorage::DictionaryPersistentStorage(

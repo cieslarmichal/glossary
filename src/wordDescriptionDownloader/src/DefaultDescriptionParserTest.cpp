@@ -11,6 +11,12 @@ using namespace wordDescriptionDownloader;
 
 namespace
 {
+static bool compareDescriptions(Description& lhs, Description& rhs)
+{
+    return compareVectors(lhs.definitionsWithExamples, rhs.definitionsWithExamples) &&
+           compareVectors(lhs.sentences, rhs.sentences);
+}
+
 const auto exampleContent{":     the alcoholic fermented juice of fresh grapes used as a beverage\n"
                           ": wine or a substitute used in Christian communion services\n"
                           ": the alcoholic usually fermented juice of a plant product (such as a "
