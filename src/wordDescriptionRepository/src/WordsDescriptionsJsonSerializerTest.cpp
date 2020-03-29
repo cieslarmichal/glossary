@@ -56,7 +56,7 @@ TEST_F(WordsDescriptionsJsonSerializerTest, givenInvalidJson_shouldReturnNoWords
     EXPECT_TRUE(actualDescriptions.empty());
 }
 
-TEST_F(WordsDescriptionsJsonSerializerTest, givenJsonWithoutDescriptionsField_shouldReturnNoWordsDescriptions)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenJsonWithoutWordsDescriptionsField_shouldReturnNoWordsDescriptions)
 {
     const auto actualDescriptions =
         serializer.deserialize(serializedWordsDescriptionsWithoutWordsDescriptionsField);

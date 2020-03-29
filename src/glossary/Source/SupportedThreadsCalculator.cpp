@@ -1,10 +1,10 @@
-#include "AmountOfSupportedThreadsCalculator.h"
+#include "SupportedThreadsCalculator.h"
 
 #include <thread>
 
-const unsigned AmountOfSupportedThreadsCalculator::defaultAmountOfThreads{4};
+const unsigned SupportedThreadsCalculator::defaultAmountOfThreads{4};
 
-unsigned int AmountOfSupportedThreadsCalculator::calculate() const
+unsigned int SupportedThreadsCalculator::calculate() const
 {
     if (const auto amountOfSupportedThreads = getAmountOfSupportedThreads())
     {
@@ -12,7 +12,7 @@ unsigned int AmountOfSupportedThreadsCalculator::calculate() const
     }
     return defaultAmountOfThreads;
 }
-boost::optional<unsigned> AmountOfSupportedThreadsCalculator::getAmountOfSupportedThreads() const
+boost::optional<unsigned> SupportedThreadsCalculator::getAmountOfSupportedThreads() const
 {
     const auto amountOfSupportedThreads = std::thread::hardware_concurrency();
     if (amountOfSupportedThreadsIsSpecified(amountOfSupportedThreads))
@@ -22,7 +22,7 @@ boost::optional<unsigned> AmountOfSupportedThreadsCalculator::getAmountOfSupport
     return boost::none;
 }
 
-bool AmountOfSupportedThreadsCalculator::amountOfSupportedThreadsIsSpecified(unsigned amountOfThreads) const
+bool SupportedThreadsCalculator::amountOfSupportedThreadsIsSpecified(unsigned amountOfThreads) const
 {
     return amountOfThreads != 0;
 }

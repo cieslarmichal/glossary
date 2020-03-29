@@ -3,7 +3,7 @@
 namespace translationRepository
 {
 
-static auto& getWordStatisticsByPosition(const Translations& translations,
+static auto& getTranslationByPosition(const Translations& translations,
                                          Translations::const_iterator position)
 {
     const auto distance = Translations::size_type(std::distance(translations.cbegin(), position));
@@ -23,7 +23,7 @@ boost::optional<Translation> TranslationsMemoryStorage::getTranslation(const Sou
     auto translationPosition = findTranslationPosition(polishWord);
     if (translationPosition != translations.end())
     {
-        return getWordStatisticsByPosition(translations, translationPosition);
+        return getTranslationByPosition(translations, translationPosition);
     }
     return boost::none;
 }

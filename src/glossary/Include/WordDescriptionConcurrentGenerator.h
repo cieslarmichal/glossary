@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "AmountOfSupportedThreadsCalculator.h"
+#include "SupportedThreadsCalculator.h"
 #include "WordDescriptionGenerator.h"
 #include "WordDescriptionRetrieverService.h"
 #include "utils/ThreadSafeQueue.h"
@@ -24,5 +24,5 @@ private:
                          utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>&);
 
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
-    AmountOfSupportedThreadsCalculator amountOfSupportedThreadsCalculator;
+    SupportedThreadsCalculator amountOfSupportedThreadsCalculator;
 };

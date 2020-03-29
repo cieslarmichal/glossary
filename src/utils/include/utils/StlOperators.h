@@ -6,52 +6,41 @@
 #include <set>
 #include <vector>
 
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const std::vector<T>& elements)
+template <typename Iterator>
+std::ostream& printRange(std::ostream& os, Iterator begin, Iterator end)
 {
     os << "{";
-    for (size_t currentIndex = 0; currentIndex < elements.size(); ++currentIndex)
+    if (begin != end)
     {
-        os << elements[currentIndex];
-        if (currentIndex != elements.size() - 1)
+        os << *begin;
+        for (auto it = std::next(begin); it != end; ++it)
         {
-            os << ", ";
+            os << ", " << *it;
         }
     }
-    os << "}";
-    return os;
+    return os << "}";
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
+{
+    return ::printRange(os, v.begin(), v.end());
 }
 
 template <typename T, typename S>
-std::ostream& operator<<(std::ostream& os, const std::map<T, S>& elements)
+std::ostream& operator<<(std::ostream& os, const std::map<T, S>& m)
 {
     os << "{";
-    for (auto iter = elements.begin(); iter != elements.end(); iter++)
+    if (not m.empty())
     {
-        os << iter->first << " : " << iter->second;
-        if ((std::next(iter) != elements.end()))
+        os << "[" << m.begin()->first << "->" << m.begin()->second << "]";
+        for (auto it = std::next(m.begin()); it != m.end(); ++it)
         {
-            os << ", ";
+            os << ", "
+               << "[" << it->first << "->" << it->second << "]";
         }
     }
-    os << "}";
-    return os;
-}
-
-template <typename T>
-std::ostream& operator<<(std::ostream& os, const std::set<T>& elements)
-{
-    os << "{";
-    for (auto it : elements)
-    {
-        os << it;
-        if (it != *elements.rbegin())
-        {
-            os << ", ";
-        }
-    }
-    os << "}";
-    return os;
+    return os << "}";
 }
 
 template <class T>

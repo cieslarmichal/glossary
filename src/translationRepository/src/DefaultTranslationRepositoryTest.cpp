@@ -24,21 +24,21 @@ public:
     std::unique_ptr<TranslationsStorageMock> storageInit =
         std::make_unique<StrictMock<TranslationsStorageMock>>();
     TranslationsStorageMock* storage = storageInit.get();
-    DefaultTranslationRepository database{std::move(storageInit)};
+    DefaultTranslationRepository repository{std::move(storageInit)};
 };
 
 TEST_F(DefaultTranslationRepositoryTest, addTranslation)
 {
     EXPECT_CALL(*storage, addTranslation(translation1));
 
-    database.addTranslation(translation1);
+    repository.addTranslation(translation1);
 }
 
 TEST_F(DefaultTranslationRepositoryTest, getTranslation)
 {
     EXPECT_CALL(*storage, getTranslation(polishWord1)).WillOnce(Return(translation1));
 
-    const auto actualTranslation = database.getTranslation(polishWord1);
+    const auto actualTranslation = repository.getTranslation(polishWord1);
 
     ASSERT_EQ(actualTranslation, translation1);
 }

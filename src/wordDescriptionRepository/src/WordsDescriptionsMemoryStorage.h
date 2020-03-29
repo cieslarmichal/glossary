@@ -1,7 +1,5 @@
 #pragma once
 
-#include "boost/optional.hpp"
-
 #include "WordsDescriptionsStorage.h"
 
 namespace wordDescriptionRepository

@@ -1,15 +1,14 @@
 AccessModifierOffset: -4
-AlignEscapedNewlinesLeft: true
 AlignTrailingComments: true
 AllowAllParametersOfDeclarationOnNextLine: true
 AllowShortFunctionsOnASingleLine: Empty
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
 AllowShortLoopsOnASingleLine: false
 AlwaysBreakBeforeMultilineStrings: false
-AlwaysBreakTemplateDeclarations: true
+AlwaysBreakTemplateDeclarations: Yes
 BinPackArguments: true
 BinPackParameters: true
-BreakBeforeBinaryOperators: false
+BreakBeforeBinaryOperators: None
 BreakBeforeBraces: Allman
 BreakBeforeTernaryOperators: false
 BreakConstructorInitializersBeforeComma: false
@@ -19,24 +18,16 @@ ConstructorInitializerAllOnOneLineOrOnePerLine: true
 ConstructorInitializerIndentWidth: 4
 ContinuationIndentWidth: 4
 Cpp11BracedListStyle: true
-DerivePointerBinding: false
 PointerAlignment: Left
 FixNamespaceComments: false
 ForEachMacros: [ BOOST_FOREACH ]
 IndentCaseLabels: false
-IndentFunctionDeclarationAfterType: false
 IndentWidth: 4
 Language: Cpp
 MaxEmptyLinesToKeep: 1
 NamespaceIndentation: None
 ObjCSpaceAfterProperty: true
 ObjCSpaceBeforeProtocolList: true
-#PenaltyBreakBeforeFirstCallParameter: 100
-#PenaltyBreakComment: 100
-#PenaltyBreakFirstLessLess: 0
-#PenaltyBreakString: 100
-#PenaltyExcessCharacter: 1
-#PenaltyReturnTypeOnItsOwnLine: 20
 SpaceBeforeAssignmentOperators: true
 SpaceBeforeParens: ControlStatements
 SpaceInEmptyParentheses: false
@@ -53,7 +44,7 @@ IncludeBlocks: Regroup
 IncludeCategories:
   - Regex:           '<.+>'
     Priority:        1
-  - Regex:           '^"(gtest|gmock|boost|nlohmann|curl|plog)/'
+  - Regex:           '^"(gtest|gmock|boost|nlohmann|curl)/'
     Priority:        2
   - Regex:           '^"Aa'
     Priority:        3

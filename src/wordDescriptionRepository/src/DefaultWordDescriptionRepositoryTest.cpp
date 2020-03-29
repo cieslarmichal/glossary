@@ -20,21 +20,21 @@ public:
     std::unique_ptr<WordsDescriptionsStorageMock> storageInit =
         std::make_unique<StrictMock<WordsDescriptionsStorageMock>>();
     WordsDescriptionsStorageMock* storage = storageInit.get();
-    DefaultWordDescriptionRepository database{std::move(storageInit)};
+    DefaultWordDescriptionRepository repository{std::move(storageInit)};
 };
 
 TEST_F(DefaultWordDescriptionRepositoryTest, givenWordDescritpionAddition_shouldAddWordDescriptionToStorage)
 {
     EXPECT_CALL(*storage, addWordDescription(wordDescription));
 
-    database.addWordDescription(wordDescription);
+    repository.addWordDescription(wordDescription);
 }
 
 TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordDescriptionNotExistingInStorage_shouldReturnNone)
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(boost::none));
 
-    const auto actualWord = database.getWordDescription(englishWord);
+    const auto actualWord = repository.getWordDescription(englishWord);
 
     ASSERT_EQ(actualWord, boost::none);
 }
@@ -44,7 +44,7 @@ TEST_F(DefaultWordDescriptionRepositoryTest,
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(wordDescription));
 
-    const auto actualWord = database.getWordDescription(englishWord);
+    const auto actualWord = repository.getWordDescription(englishWord);
 
     ASSERT_EQ(actualWord, wordDescription);
 }
@@ -54,7 +54,7 @@ TEST_F(DefaultWordDescriptionRepositoryTest,
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
 
-    ASSERT_TRUE(database.contains(englishWord));
+    ASSERT_TRUE(repository.contains(englishWord));
 }
 
 TEST_F(DefaultWordDescriptionRepositoryTest,
@@ -62,5 +62,5 @@ TEST_F(DefaultWordDescriptionRepositoryTest,
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(false));
 
-    ASSERT_FALSE(database.contains(englishWord));
+    ASSERT_FALSE(repository.contains(englishWord));
 }

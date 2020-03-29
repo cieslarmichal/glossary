@@ -4,6 +4,8 @@
 
 #include "boost/algorithm/cxx11/all_of.hpp"
 
+namespace wordDescriptionRepository
+{
 namespace
 {
 constexpr auto wordsDescriptionsField = "wordsDescriptions";
@@ -11,8 +13,7 @@ constexpr auto englishWordField = "englishWord";
 constexpr auto descriptionField = "description";
 }
 
-namespace wordDescriptionRepository
-{
+
 std::string WordsDescriptionsJsonSerializer::serialize(const WordsDescriptions& descriptions) const
 {
     nlohmann::json serialized;
@@ -36,7 +37,7 @@ WordsDescriptions WordsDescriptionsJsonSerializer::deserialize(const std::string
     }
     catch (const std::exception& e)
     {
-        std::cerr << "Unable to parse wordDescriptions:" << e.what();
+        std::cerr << "Unable to parse wordsDescriptions:" << e.what();
     }
     return {};
 }

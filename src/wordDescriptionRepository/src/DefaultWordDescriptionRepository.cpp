@@ -22,6 +22,7 @@ DefaultWordDescriptionRepository::getWordDescription(const EnglishWord& englishW
 }
 bool DefaultWordDescriptionRepository::contains(const EnglishWord& englishWord) const
 {
+    std::lock_guard<std::mutex> lockGuard(lock);
     return storage->contains(englishWord);
 }
 

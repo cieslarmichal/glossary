@@ -1,4 +1,4 @@
-ankle-kostka
+ankle       kostka
 key		    klucz
 bottle		butelka
 fetch		sprowadzac

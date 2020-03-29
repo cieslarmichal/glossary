@@ -17,7 +17,7 @@ set(UT_SOURCES
 add_library(statisticsRepository ${SOURCES})
 add_executable(statisticsRepositoryUT ${UT_SOURCES})
 
-target_include_directories(statisticsRepository PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsRepository" ${PLOG_INCLUDE_DIR})
+target_include_directories(statisticsRepository PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsRepository")
 target_include_directories(statisticsRepositoryUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/statisticsRepository")
 
 target_link_libraries(statisticsRepository PRIVATE utils)

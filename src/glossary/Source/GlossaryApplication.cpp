@@ -2,8 +2,8 @@
 
 #include <iostream>
 
+#include "../../dictionaryRepository/src/DefaultDictionaryReader.h"
 #include "DefaultAnswerValidator.h"
-#include "DefaultDictionaryReader.h"
 #include "DefaultStatisticsModifierService.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
@@ -105,17 +105,22 @@ void GlossaryApplication::loop()
             translate();
             break;
         case 2:
-        case 3:
-            listDictionaries();
-            break;
-        case 4:
             std::cout << "Operation not supported yet\n";
             break;
-        case 5:
-            guessWord();
+        case 3:
+        case 4:
+            listDictionaries();
             break;
+        case 5:
         case 6:
         case 7:
+            std::cout << "Operation not supported yet\n";
+            break;
+        case 8:
+            guessWord();
+            break;
+        case 9:
+        case 10:
             std::cout << "Operation not supported yet\n";
             break;
         default:
@@ -146,9 +151,12 @@ void GlossaryApplication::showMenu() const
     std::cout << "2.Add word to dictionary\n";
     std::cout << "3.List dictionaries\n";
     std::cout << "4.List english words from dictionary\n";
-    std::cout << "5.Guess english word\n";
-    std::cout << "6.Get description from english word\n";
-    std::cout << "7.See statistics\n";
+    std::cout << "5.Add dictionary\n";
+    std::cout << "6.Remove dictionary\n";
+    std::cout << "7.Add english word to dictionary\n";
+    std::cout << "8.Guess english word\n";
+    std::cout << "9.Get description from english word\n";
+    std::cout << "10.Display statistics\n";
 }
 
 void GlossaryApplication::guessWord() const

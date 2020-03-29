@@ -8,7 +8,6 @@
 
 namespace wordDescriptionRepository
 {
-
 class DefaultWordDescriptionRepository : public WordDescriptionRepository
 {
 public:
@@ -22,5 +21,4 @@ private:
     std::unique_ptr<WordsDescriptionsStorage> storage;
     mutable std::mutex lock;
 };
-
 }

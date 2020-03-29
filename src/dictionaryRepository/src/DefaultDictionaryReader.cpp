@@ -6,6 +6,9 @@
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
 
+namespace dictionaryRepository
+{
+
 const std::string DefaultDictionaryReader::directory{"database/dictionaries/"};
 const std::string DefaultDictionaryReader::filename{directory + "input.txt"};
 
@@ -27,38 +30,44 @@ Dictionaries DefaultDictionaryReader::readDictionaries() const
         return {};
     }
 
-    std::map<DictionaryName, Dictionary> dictionaries;
-    dictionaries["base"] = processDictionaryContent(dictionaryContent);
+    Dictionaries dictionaries;
+    dictionaries.emplace_back(getDictionary(dictionaryContent));
     return dictionaries;
 }
 
-Dictionary DefaultDictionaryReader::processDictionaryContent(const std::string& dictionaryContent) const
+Dictionary DefaultDictionaryReader::getDictionary(const std::string& dictionaryContent) const
 {
-    std::vector<translationRepository::Translation> wordsWithTranslation;
+    Dictionary dictionary{"dictionary", {}};
     for (const auto& line : utils::getSplitLines(dictionaryContent))
     {
         if (not line.empty())
         {
-            if (const auto wordWithTranslation = getWordWithTranslation(line))
+            if (const auto wordWithTranslation = getDictionaryWord(line))
             {
-                wordsWithTranslation.push_back(*wordWithTranslation);
+                dictionary.words.push_back(*wordWithTranslation);
             }
         }
     }
-    return wordsWithTranslation;
+    return dictionary;
 }
 
-boost::optional<translationRepository::Translation>
-DefaultDictionaryReader::getWordWithTranslation(const std::string& line) const
+boost::optional<DictionaryWord> DefaultDictionaryReader::getDictionaryWord(const std::string& line) const
 {
     std::stringstream lineStream{line};
-    translationRepository::TranslatedText englishWord;
-    translationRepository::SourceText polishWord;
+    std::string englishWord;
+    std::string polishWord;
     lineStream >> englishWord >> polishWord;
-    if (!englishWord.empty() && !polishWord.empty())
+    if(englishWord.empty())
     {
-        return translationRepository::Translation{polishWord, englishWord};
-        // TODO: add strong typedefs
+        return boost::none;
     }
-    return boost::none;
+    if(not polishWord.empty())
+    {
+        return DictionaryWord{englishWord, polishWord};
+    }
+    else
+    {
+        return DictionaryWord{englishWord, boost::none};
+    }
+}
 }

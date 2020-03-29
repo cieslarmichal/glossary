@@ -7,6 +7,8 @@
 #include "DictionaryReader.h"
 #include "utils/FileAccess.h"
 
+namespace dictionaryRepository
+{
 class DefaultDictionaryReader : public DictionaryReader
 {
 public:
@@ -15,11 +17,12 @@ public:
     Dictionaries readDictionaries() const override;
 
 private:
-    Dictionary processDictionaryContent(const std::string&) const;
-    boost::optional<translationRepository::Translation> getWordWithTranslation(const std::string&) const;
+    Dictionary getDictionary(const std::string&) const;
+    boost::optional<DictionaryWord> getDictionaryWord(const std::string&) const;
 
     std::shared_ptr<const utils::FileAccess> fileAccess;
 
     static const std::string directory;
     static const std::string filename;
 };
+}

@@ -24,21 +24,21 @@ public:
     std::unique_ptr<StatisticsStorageMock> storageInit =
         std::make_unique<StrictMock<StatisticsStorageMock>>();
     StatisticsStorageMock* storage = storageInit.get();
-    DefaultStatisticsRepository database{std::move(storageInit)};
+    DefaultStatisticsRepository repository{std::move(storageInit)};
 };
 
 TEST_F(DefaultStatisticsRepositoryTest, addWordStatistics)
 {
     EXPECT_CALL(*storage, addWordStatistics(wordStats1));
 
-    database.addWordStatistics(wordStats1);
+    repository.addWordStatistics(wordStats1);
 }
 
 TEST_F(DefaultStatisticsRepositoryTest, getWordStatistics)
 {
     EXPECT_CALL(*storage, getWordStatistics(englishWord1)).WillOnce(Return(wordStats1));
 
-    const auto actualWordStats = database.getWordStatistics(englishWord1);
+    const auto actualWordStats = repository.getWordStatistics(englishWord1);
 
     ASSERT_EQ(actualWordStats, wordStats1);
 }
@@ -47,7 +47,7 @@ TEST_F(DefaultStatisticsRepositoryTest, getStatistics)
 {
     EXPECT_CALL(*storage, getStatistics()).WillOnce(Return(twoWordsStatistics));
 
-    const auto statistics = database.getStatistics();
+    const auto statistics = repository.getStatistics();
 
     ASSERT_EQ(statistics, twoWordsStatistics);
 }
@@ -57,7 +57,7 @@ TEST_F(DefaultStatisticsRepositoryTest, englishWordInStorage_shouldAddCorrectAns
     EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(true));
     EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
-    database.addCorrectAnswer(englishWord1);
+    repository.addCorrectAnswer(englishWord1);
 }
 
 TEST_F(DefaultStatisticsRepositoryTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddCorrectAnswer)
@@ -66,7 +66,7 @@ TEST_F(DefaultStatisticsRepositoryTest, englishWordNotInStorage_shouldAddEmptyWo
     EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
     EXPECT_CALL(*storage, addCorrectAnswer(englishWord1));
 
-    database.addCorrectAnswer(englishWord1);
+    repository.addCorrectAnswer(englishWord1);
 }
 
 TEST_F(DefaultStatisticsRepositoryTest, englishWordInStorage_shouldAddIncorrectAnswer)
@@ -74,7 +74,7 @@ TEST_F(DefaultStatisticsRepositoryTest, englishWordInStorage_shouldAddIncorrectA
     EXPECT_CALL(*storage, contains(englishWord1)).WillOnce(Return(true));
     EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
 
-    database.addIncorrectAnswer(englishWord1);
+    repository.addIncorrectAnswer(englishWord1);
 }
 
 TEST_F(DefaultStatisticsRepositoryTest, englishWordNotInStorage_shouldAddEmptyWordAndThenAddIncorrectAnswer)
@@ -83,12 +83,12 @@ TEST_F(DefaultStatisticsRepositoryTest, englishWordNotInStorage_shouldAddEmptyWo
     EXPECT_CALL(*storage, addWordStatistics(WordStatistics{englishWord1, 0, 0}));
     EXPECT_CALL(*storage, addIncorrectAnswer(englishWord1));
 
-    database.addIncorrectAnswer(englishWord1);
+    repository.addIncorrectAnswer(englishWord1);
 }
 
 TEST_F(DefaultStatisticsRepositoryTest, resetStatistics)
 {
     EXPECT_CALL(*storage, resetStatistics());
 
-    database.resetStatistics();
+    repository.resetStatistics();
 }

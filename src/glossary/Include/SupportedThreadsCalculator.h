@@ -2,7 +2,7 @@
 
 #include "boost/optional.hpp"
 
-class AmountOfSupportedThreadsCalculator
+class SupportedThreadsCalculator
 {
 public:
     unsigned calculate() const;

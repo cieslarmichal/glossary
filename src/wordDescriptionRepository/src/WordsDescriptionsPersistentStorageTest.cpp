@@ -103,7 +103,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenExistingEnglishWord_shouldRe
     ASSERT_EQ(*actualWord, word1);
 }
 
-TEST_F(WordsDescriptionsPersistentStorageTest, givenNonExistingEnglishWord_shouldReturnThisWord)
+TEST_F(WordsDescriptionsPersistentStorageTest, givenNonExistingEnglishWord_shouldReturnNone)
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
@@ -114,7 +114,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenNonExistingEnglishWord_shoul
 }
 
 TEST_F(WordsDescriptionsPersistentStorageTest,
-       givenTwoWordsDescriptions_shouldContainsThoseTwoWordsDescriptions)
+       givenTwoWordsDescriptions_shouldContainThoseTwoWordsDescriptions)
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};

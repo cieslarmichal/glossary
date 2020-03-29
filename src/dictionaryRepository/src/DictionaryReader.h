@@ -2,6 +2,8 @@
 
 #include "Dictionary.h"
 
+namespace dictionaryRepository
+{
 class DictionaryReader
 {
 public:
@@ -9,3 +11,4 @@ public:
 
     virtual Dictionaries readDictionaries() const = 0;
 };
+}

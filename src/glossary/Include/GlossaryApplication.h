@@ -2,20 +2,20 @@
 
 #include <memory>
 
+#include "../../dictionaryRepository/src/DictionaryReader.h"
 #include "AnswerValidator.h"
 #include "Application.h"
-#include "DictionaryReader.h"
 #include "StatisticsModifierService.h"
+#include "TranslationRetrieverService.h"
 #include "UserPrompt.h"
 #include "WordDescriptionGenerator.h"
 #include "WordRandomizer.h"
 #include "WordViewFormatter.h"
 #include "WordsMerger.h"
 #include "statisticsRepository/StatisticsRepository.h"
+#include "translationRepository/TranslationRepository.h"
 #include "utils/FileAccess.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
-#include "translationRepository/TranslationRepository.h"
-#include "TranslationRetrieverService.h"
 
 // TODO: move std::cin from UserPrompt to application
 
