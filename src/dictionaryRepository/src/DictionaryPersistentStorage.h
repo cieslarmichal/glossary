@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "DictionaryStorage.h"
 #include "DictionaryMemoryStorage.h"
 #include "DictionarySerializer.h"
+#include "DictionaryStorage.h"
 #include "utils/FileAccess.h"
 
 namespace dictionaryRepository
@@ -13,7 +13,7 @@ class DictionaryPersistentStorage : public DictionaryStorage
 {
 public:
     DictionaryPersistentStorage(std::shared_ptr<const utils::FileAccess>,
-                                       std::shared_ptr<const DictionarySerializer>);
+                                std::shared_ptr<const DictionarySerializer>);
 
     void addDictionary(const DictionaryName&) override;
     void addDictionary(const Dictionary&) override;

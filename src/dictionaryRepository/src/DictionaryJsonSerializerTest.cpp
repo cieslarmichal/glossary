@@ -112,7 +112,8 @@ TEST_F(
     DictionaryJsonSerializerTest,
     givenJsonDictionaryWithDictionaryWordsWithoutTranslationField_shouldReturnDictionaryWithWordsWithNoneTranslation)
 {
-    const auto actualDictionaries = serializer.deserialize(serializedDictionariesWithMissingTranslationField.dump());
+    const auto actualDictionaries =
+        serializer.deserialize(serializedDictionariesWithMissingTranslationField.dump());
 
     EXPECT_EQ(actualDictionaries, dictionariesWithDictionaryWithSomeWordsWithoutTranslation);
 }

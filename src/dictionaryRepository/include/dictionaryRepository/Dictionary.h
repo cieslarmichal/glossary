@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vector>
 #include <ostream>
+#include <vector>
 
 #include "DictionaryName.h"
 #include "DictionaryWord.h"

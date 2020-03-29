@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "WordDescriptionRetrieverServiceMock.h"
+
 #include "utils/StlOperators.h"
 
 using namespace ::testing;

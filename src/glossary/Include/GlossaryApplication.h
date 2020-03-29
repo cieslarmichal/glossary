@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../../dictionaryRepository/src/DictionaryReader.h"
+#include "../../dictionaryRepository/src/DictionaryWordsReader.h"
 #include "AnswerValidator.h"
 #include "Application.h"
 #include "StatisticsModifierService.h"

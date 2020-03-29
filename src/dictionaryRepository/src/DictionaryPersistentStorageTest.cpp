@@ -69,7 +69,6 @@ public:
         EXPECT_CALL(*fileAccess, write(filePath, "dictionaries"));
     }
 
-
     std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
     std::shared_ptr<DictionarySerializerMock> serializer =
         std::make_shared<StrictMock<DictionarySerializerMock>>();

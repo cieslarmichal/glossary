@@ -1,19 +1,21 @@
 #pragma once
 
-#include "DictionaryRepository.h"
 #include <memory>
+
+#include "DictionaryRepository.h"
 #include "DictionaryStorage.h"
+#include "DictionaryWordsReader.h"
 
 namespace dictionaryRepository
 {
 class DefaultDictionaryRepository : public DictionaryRepository
 {
 public:
-    explicit DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage>);
+    DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage>, std::unique_ptr<DictionaryWordsReader>);
 
     void addDictionary(const DictionaryName&) override;
     void addDictionary(const Dictionary&) override;
-    void addDictionaryByPath(const std::string &absolutePath) override;
+    void addDictionaryFromFile(const DictionaryName&, const std::string& dictionaryWordsPath) override;
     void addWordToDictionary(const DictionaryWord&, const DictionaryName&) override;
     void removeDictionary(const DictionaryName&) override;
     void removeWordFromDictionary(const std::string& englishWord, const DictionaryName&) override;
@@ -23,5 +25,6 @@ public:
 
 private:
     std::unique_ptr<DictionaryStorage> storage;
+    std::unique_ptr<DictionaryWordsReader> dictionaryWordsReader;
 };
 }

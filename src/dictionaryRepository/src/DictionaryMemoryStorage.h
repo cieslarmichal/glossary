@@ -20,7 +20,8 @@ public:
 
 private:
     Dictionaries::const_iterator findDictionaryPosition(const DictionaryName&) const;
-    DictionaryWords::const_iterator findWordInsideDictionaryPosition(const std::string& englishWord, const Dictionary&) const;
+    DictionaryWords::const_iterator findWordInsideDictionaryPosition(const std::string& englishWord,
+                                                                     const Dictionary&) const;
     bool dictionaryExists(const DictionaryName&) const;
     bool englishWordExistsInDictionary(const std::string& englishWord, const DictionaryName&) const;
     bool englishWordNotExistsInDictionary(const std::string& englishWord, const DictionaryName&) const;

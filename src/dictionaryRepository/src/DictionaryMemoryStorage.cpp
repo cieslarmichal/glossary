@@ -33,7 +33,8 @@ void DictionaryMemoryStorage::addDictionary(const Dictionary& dictionary)
 void DictionaryMemoryStorage::addWordToDictionary(const DictionaryWord& dictionaryWord,
                                                   const DictionaryName& dictionaryName)
 {
-    if (dictionaryExists(dictionaryName) && englishWordNotExistsInDictionary(dictionaryWord.englishWord, dictionaryName))
+    if (dictionaryExists(dictionaryName) &&
+        englishWordNotExistsInDictionary(dictionaryWord.englishWord, dictionaryName))
     {
         auto& dictionary = getDictionaryByPosition(dictionaries, findDictionaryPosition(dictionaryName));
         dictionary.words.emplace_back(dictionaryWord);
@@ -113,7 +114,7 @@ bool DictionaryMemoryStorage::dictionaryExists(const DictionaryName& dictionaryN
 }
 
 bool DictionaryMemoryStorage::englishWordExistsInDictionary(const std::string& englishWord,
-                                                     const DictionaryName& dictionaryName) const
+                                                            const DictionaryName& dictionaryName) const
 {
     if (dictionaryExists(dictionaryName))
     {
@@ -124,7 +125,7 @@ bool DictionaryMemoryStorage::englishWordExistsInDictionary(const std::string& e
 }
 
 bool DictionaryMemoryStorage::englishWordNotExistsInDictionary(const std::string& englishWord,
-                                                        const DictionaryName& dictionaryName) const
+                                                               const DictionaryName& dictionaryName) const
 {
     return not englishWordExistsInDictionary(englishWord, dictionaryName);
 }

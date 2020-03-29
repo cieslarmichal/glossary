@@ -13,8 +13,8 @@ namespace translator
 class DefaultTranslator : public Translator
 {
 public:
-    DefaultTranslator(std::shared_ptr<const webConnection::HttpHandler>, std::unique_ptr<TranslationDeserializer>,
-                      std::unique_ptr<TranslationRequestFormatter>);
+    DefaultTranslator(std::shared_ptr<const webConnection::HttpHandler>,
+                      std::unique_ptr<TranslationDeserializer>, std::unique_ptr<TranslationRequestFormatter>);
 
     boost::optional<TranslatedText> translate(const std::string&, SourceLanguage,
                                               TargetLanguage) const override;

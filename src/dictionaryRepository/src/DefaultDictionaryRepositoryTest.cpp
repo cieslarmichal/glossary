@@ -3,19 +3,23 @@
 #include "gtest/gtest.h"
 
 #include "DictionaryStorageMock.h"
+#include "DictionaryWordsReaderMock.h"
 
 using namespace ::testing;
 using namespace dictionaryRepository;
 
 namespace
 {
+const std::string absoluteDictionaryWordsPath{"absoultePathToDictionaryWords.txt"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
 const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
 const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
-const Dictionary dictionary1{dictionaryName1, DictionaryWords{dictionaryWord1, dictionaryWord2, dictionaryWord3}};
-const Dictionary dictionary2{dictionaryName2, DictionaryWords{dictionaryWord1, dictionaryWord2}};
+const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
+const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
+const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
+const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionaries dictionaries{dictionary1, dictionary2};
 }
 
@@ -25,7 +29,10 @@ public:
     std::unique_ptr<DictionaryStorageMock> storageInit =
         std::make_unique<StrictMock<DictionaryStorageMock>>();
     DictionaryStorageMock* storage = storageInit.get();
-    DefaultDictionaryRepository repository{std::move(storageInit)};
+    std::unique_ptr<DictionaryWordsReaderMock> readerInit =
+        std::make_unique<StrictMock<DictionaryWordsReaderMock>>();
+    DictionaryWordsReaderMock* reader = readerInit.get();
+    DefaultDictionaryRepository repository{std::move(storageInit), std::move(readerInit)};
 };
 
 TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryByNameToStorage)
@@ -42,10 +49,12 @@ TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryToStorage)
     repository.addDictionary(dictionary1);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryByPath)
+TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryByNameAndPathToDictionaryWords)
 {
-    // TODO: implement
-    repository.addDictionaryByPath("");
+    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(dictionaryWords2));
+    EXPECT_CALL(*storage, addDictionary(dictionary2));
+
+    repository.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
 }
 
 TEST_F(DefaultDictionaryRepositoryTest, shouldAddWordToDictionaryInStorage)
@@ -78,8 +87,7 @@ TEST_F(DefaultDictionaryRepositoryTest, givenDictionaryNameNonExistingInStorage_
     ASSERT_EQ(actualDictionary, boost::none);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest,
-       givenDictionaryNameExistingInStorage_shouldReturnDictionary)
+TEST_F(DefaultDictionaryRepositoryTest, givenDictionaryNameExistingInStorage_shouldReturnDictionary)
 {
     EXPECT_CALL(*storage, getDictionary(dictionaryName1)).WillOnce(Return(dictionary1));
 
@@ -88,8 +96,7 @@ TEST_F(DefaultDictionaryRepositoryTest,
     ASSERT_EQ(*actualDictionary, dictionary1);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest,
-       shouldReturnDictionariesFromStorage)
+TEST_F(DefaultDictionaryRepositoryTest, shouldReturnDictionariesFromStorage)
 {
     EXPECT_CALL(*storage, getDictionaries()).WillOnce(Return(dictionaries));
 
@@ -98,16 +105,14 @@ TEST_F(DefaultDictionaryRepositoryTest,
     ASSERT_EQ(actualDictionaries, dictionaries);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest,
-       givenDictionaryExistingInStorage_shouldContainThisDictionary)
+TEST_F(DefaultDictionaryRepositoryTest, givenDictionaryExistingInStorage_shouldContainThisDictionary)
 {
     EXPECT_CALL(*storage, containsDictionary(dictionaryName2)).WillOnce(Return(true));
 
     ASSERT_TRUE(repository.containsDictionary(dictionaryName2));
 }
 
-TEST_F(DefaultDictionaryRepositoryTest,
-       givenDictionaryNonExistingInStorage_shouldNotContainThisDictionary)
+TEST_F(DefaultDictionaryRepositoryTest, givenDictionaryNonExistingInStorage_shouldNotContainThisDictionary)
 {
     EXPECT_CALL(*storage, containsDictionary(dictionaryName2)).WillOnce(Return(false));
 

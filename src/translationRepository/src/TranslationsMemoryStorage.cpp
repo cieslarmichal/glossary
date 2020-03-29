@@ -3,8 +3,7 @@
 namespace translationRepository
 {
 
-static auto& getTranslationByPosition(const Translations& translations,
-                                         Translations::const_iterator position)
+static auto& getTranslationByPosition(const Translations& translations, Translations::const_iterator position)
 {
     const auto distance = Translations::size_type(std::distance(translations.cbegin(), position));
     return translations.at(distance);

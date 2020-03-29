@@ -2,9 +2,9 @@
 
 namespace dictionaryRepository
 {
-
-DefaultDictionaryRepository::DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage> storageInit)
-    : storage{std::move(storageInit)}
+DefaultDictionaryRepository::DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage> storageInit,
+                                                         std::unique_ptr<DictionaryWordsReader> reader)
+    : storage{std::move(storageInit)}, dictionaryWordsReader{std::move(reader)}
 
 {
 }
@@ -19,9 +19,11 @@ void DefaultDictionaryRepository::addDictionary(const Dictionary& dictionary)
     storage->addDictionary(dictionary);
 }
 
-void DefaultDictionaryRepository::addDictionaryByPath(const std::string&)
+void DefaultDictionaryRepository::addDictionaryFromFile(const DictionaryName& dictionaryName,
+                                                        const std::string& dictionaryWordsPath)
 {
-    // TODO: input from user, read this paths every file by DictionaryReader
+    const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath);
+    storage->addDictionary({dictionaryName, dictionaryWordsFromFile});
 }
 
 void DefaultDictionaryRepository::addWordToDictionary(const DictionaryWord& dictionaryWord,

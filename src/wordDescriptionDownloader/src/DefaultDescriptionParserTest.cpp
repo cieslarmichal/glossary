@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
-#include "utils/StringHelper.h"
 #include "utils/StlOperators.h"
+#include "utils/StringHelper.h"
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;

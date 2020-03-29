@@ -2,7 +2,7 @@ set(SOURCES
         Source/DefaultTranslationRetrieverService.cpp
         Source/DefaultWordDescriptionRetrieverService.cpp
         Source/Glossary.cpp
-        ../dictionaryRepository/src/DefaultDictionaryReader.cpp
+        ../dictionaryRepository/src/DictionaryWordsTextFileReader.cpp
         Source/WordDescriptionConcurrentGenerator.cpp
         Source/DefaultWordViewFormatter.cpp
         Source/UserStandardInputPrompt.cpp
@@ -20,7 +20,7 @@ set(SOURCES
 set(UT_SOURCES
         UT/Source/DefaultTranslationRetrieverServiceTest.cpp
         UT/Source/DefaultWordDescriptionRetrieverServiceTest.cpp
-        ../dictionaryRepository/src/DefaultDictionaryReaderTest.cpp
+        ../dictionaryRepository/src/DictionaryWordsTextFileReaderTest.cpp
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp

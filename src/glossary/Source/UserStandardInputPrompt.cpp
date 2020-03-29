@@ -75,4 +75,3 @@ void UserStandardInputPrompt::clearInputBuffer() const
     {
     }
 }
-

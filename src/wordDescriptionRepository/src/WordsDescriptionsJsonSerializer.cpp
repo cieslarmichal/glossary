@@ -13,7 +13,6 @@ constexpr auto englishWordField = "englishWord";
 constexpr auto descriptionField = "description";
 }
 
-
 std::string WordsDescriptionsJsonSerializer::serialize(const WordsDescriptions& descriptions) const
 {
     nlohmann::json serialized;

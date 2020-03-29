@@ -1,14 +1,16 @@
 set(SOURCES
         src/DefaultDictionaryRepository.cpp
-        src/DefaultDictionaryReader.cpp
+        src/DictionaryWordsTextFileReader.cpp
         src/DictionaryMemoryStorage.cpp
         src/DictionaryPersistentStorage.cpp
         src/DictionaryJsonSerializer.cpp
-)
+        src/DictionaryRepositoryFactory.cpp
+        src/DefaultDictionaryRepositoryFactory.cpp
+        )
 
 set(UT_SOURCES
         src/DefaultDictionaryRepositoryTest.cpp
-        src/DefaultDictionaryReaderTest.cpp
+        src/DictionaryWordsTextFileReaderTest.cpp
         src/DictionaryMemoryStorageTest.cpp
         src/DictionaryPersistentStorageTest.cpp
         src/DictionaryJsonSerializerTest.cpp

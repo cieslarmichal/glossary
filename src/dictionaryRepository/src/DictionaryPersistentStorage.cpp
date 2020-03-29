@@ -78,7 +78,7 @@ bool DictionaryPersistentStorage::empty() const
 
 void DictionaryPersistentStorage::loadFile()
 {
-    if(fileAccess->exists(filename))
+    if (fileAccess->exists(filename))
     {
         const auto dictionaries = serializer->deserialize(fileAccess->readContent(filename));
         for (const auto& dictionary : dictionaries)

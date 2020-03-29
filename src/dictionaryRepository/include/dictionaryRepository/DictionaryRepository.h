@@ -11,7 +11,7 @@ public:
 
     virtual void addDictionary(const DictionaryName&) = 0;
     virtual void addDictionary(const Dictionary&) = 0;
-    virtual void addDictionaryByPath(const std::string &absolutePath) = 0;
+    virtual void addDictionaryFromFile(const DictionaryName&, const std::string& dictionaryWordsPath) = 0;
     virtual void addWordToDictionary(const DictionaryWord&, const DictionaryName&) = 0;
     virtual void removeDictionary(const DictionaryName&) = 0;
     virtual void removeWordFromDictionary(const std::string& englishWord, const DictionaryName&) = 0;

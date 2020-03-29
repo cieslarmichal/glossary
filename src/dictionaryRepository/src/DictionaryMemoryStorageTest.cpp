@@ -14,7 +14,8 @@ const DictionaryName dictionaryName4{"dictionaryName4"};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
 const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
 const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
-const Dictionary dictionary1{dictionaryName1, DictionaryWords{dictionaryWord1, dictionaryWord2, dictionaryWord3}};
+const Dictionary dictionary1{dictionaryName1,
+                             DictionaryWords{dictionaryWord1, dictionaryWord2, dictionaryWord3}};
 const Dictionary dictionary2{dictionaryName2, DictionaryWords{dictionaryWord1, dictionaryWord2}};
 const Dictionaries dictionaries{dictionary1, dictionary2};
 const Dictionary emptyDictionary1{dictionaryName1, {}};
@@ -101,7 +102,8 @@ TEST_F(DictionaryMemoryStorageTest, givenExistingDictionary_shouldAddWordToDicti
     ASSERT_EQ(actualDictionary->words, DictionaryWords{dictionaryWord1});
 }
 
-TEST_F(DictionaryMemoryStorageTest, givenExistingDictionaryWithExactWord_shouldNotAddSecondSameWordToDictionary)
+TEST_F(DictionaryMemoryStorageTest,
+       givenExistingDictionaryWithExactWord_shouldNotAddSecondSameWordToDictionary)
 {
     storage.addDictionary(dictionaryName1);
     storage.addWordToDictionary(dictionaryWord1, dictionaryName1);

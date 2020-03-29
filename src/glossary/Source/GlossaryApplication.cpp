@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "../../dictionaryRepository/src/DefaultDictionaryReader.h"
+#include "../../dictionaryRepository/src/DictionaryWordsTextFileReader.h"
 #include "DefaultAnswerValidator.h"
 #include "DefaultStatisticsModifierService.h"
 #include "DefaultTranslationRetrieverService.h"
@@ -114,19 +114,20 @@ void GlossaryApplication::loop()
         case 5:
         case 6:
         case 7:
+        case 8:
+        case 9:
             std::cout << "Operation not supported yet\n";
             break;
-        case 8:
+        case 10:
             guessWord();
             break;
-        case 9:
-        case 10:
+        case 11:
+        case 12:
             std::cout << "Operation not supported yet\n";
             break;
         default:
             std::cout << "Invalid value\n";
         }
-        std::cout << "Do you want to continue? (yes/no, y/n)\n";
         userWantToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
     }
 }
@@ -152,11 +153,13 @@ void GlossaryApplication::showMenu() const
     std::cout << "3.List dictionaries\n";
     std::cout << "4.List english words from dictionary\n";
     std::cout << "5.Add dictionary\n";
-    std::cout << "6.Remove dictionary\n";
-    std::cout << "7.Add english word to dictionary\n";
-    std::cout << "8.Guess english word\n";
-    std::cout << "9.Get description from english word\n";
-    std::cout << "10.Display statistics\n";
+    std::cout << "6.Add english word to dictionary\n";
+    std::cout << "7.Remove dictionary\n";
+    std::cout << "8.Remove english word from dictionary\n";
+    std::cout << "9.Add dictionary from file\n";
+    std::cout << "10.Guess english word\n";
+    std::cout << "11.Get description from english word\n";
+    std::cout << "12.Display statistics\n";
 }
 
 void GlossaryApplication::guessWord() const
@@ -204,5 +207,5 @@ void GlossaryApplication::translate() const
 
 void GlossaryApplication::listDictionaries() const
 {
-    std::cout << dictionaries<<"\n";
+    std::cout << dictionaries << "\n";
 }

@@ -3,9 +3,9 @@
 #include "gtest/gtest.h"
 
 #include "GetProjectPath.h"
+#include "StlOperators.h"
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
-#include "StlOperators.h"
 
 using namespace ::testing;
 using namespace utils;
