@@ -1,8 +1,10 @@
 #include "TranslationsPersistentStorage.h"
 
 #include "gtest/gtest.h"
+
 #include "TranslationsSerializerMock.h"
 #include "utils/include/utils/FileAccessMock.h"
+
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 

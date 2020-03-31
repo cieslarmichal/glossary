@@ -3,7 +3,7 @@
 #include <random>
 #include <stdexcept>
 
-Word WordMersenneTwisterRandomizer::randomizeWord(const UniqueWords& words) const
+Word WordMersenneTwisterRandomizer::randomizeWord(const Words& words) const
 {
     // TODO: fix this class, so many exceptions
     if (words.empty())
@@ -11,7 +11,7 @@ Word WordMersenneTwisterRandomizer::randomizeWord(const UniqueWords& words) cons
         throw std::runtime_error{"Cant randomize word"};
     }
 
-    return *words.at(getRandomIndex(words.size()));
+    return words.at(getRandomIndex(words.size()));
 }
 
 Words::size_type WordMersenneTwisterRandomizer::getRandomIndex(Words::size_type size) const

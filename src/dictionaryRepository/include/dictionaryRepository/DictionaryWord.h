@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "boost/optional.hpp"
+#include "boost/optional/optional_io.hpp"
 
 namespace dictionaryRepository
 {
@@ -24,7 +25,7 @@ inline bool operator==(const DictionaryWord& lhs, const DictionaryWord& rhs)
 inline std::ostream& operator<<(std::ostream& os, const DictionaryWord& dictionaryWord)
 {
     os << "{englishWord: " << dictionaryWord.englishWord
-       << ", translation: " << ((dictionaryWord.translation) ? "-" : *dictionaryWord.translation) << "}";
+       << ", translation: " << dictionaryWord.translation << "}";
     return os;
 }
 }

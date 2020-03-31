@@ -4,6 +4,7 @@
 
 #include "StatisticsSerializerMock.h"
 #include "utils/FileAccessMock.h"
+
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 

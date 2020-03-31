@@ -23,7 +23,7 @@ target_include_directories(dictionaryRepository PUBLIC "include" PRIVATE ${JSON_
 target_include_directories(dictionaryRepositoryUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/dictionaryRepository")
 
 target_link_libraries(dictionaryRepository PRIVATE utils)
-target_link_libraries(dictionaryRepositoryUT PRIVATE gtest_main gmock utils dictionaryRepository)
+target_link_libraries(dictionaryRepositoryUT PRIVATE gtest_main gmock dictionaryRepository utils)
 
 target_compile_options(dictionaryRepository PUBLIC ${FLAGS})
 target_compile_options(dictionaryRepositoryUT PUBLIC -Wall -Wextra -Werror)

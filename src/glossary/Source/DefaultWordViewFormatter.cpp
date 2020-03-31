@@ -9,7 +9,10 @@ std::string DefaultWordViewFormatter::formatWordView(const Word& word) const
 {
     std::stringstream wordView;
     wordView << "English word: " << word.englishWord << "\n";
-    wordView << "Polish word: " << word.polishWord << "\n";
+    if (word.polishTranslation)
+    {
+        wordView << "Polish translation: " << *word.polishTranslation << "\n";
+    }
     if (word.wordDescription)
     {
         wordView << getDescription(word.wordDescription->description);

@@ -6,7 +6,6 @@
 
 namespace wordDescriptionRepository
 {
-
 class DescriptionSerializer
 {
 public:

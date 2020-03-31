@@ -4,7 +4,7 @@
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;
-using namespace translationRepository;
+using namespace dictionaryRepository;
 
 namespace
 {
@@ -25,13 +25,14 @@ const WordDescription wordDescription3{
     Description{DefinitionsWithExamples{DefinitionWithExample{Definition{"tiger"}, Example{"zzz"}}}, {}}};
 const WordsDescriptions wordsDescriptions{wordDescription2, wordDescription1, wordDescription3};
 const WordsDescriptions wordsDescriptionsWithMissingWordDescription{wordDescription1, wordDescription2};
-const Translations translations{{"pies", "dog"}, {"kot", "cat"}, {"herbata", "tea"}};
-const Words words{{polishWord1, englishWord1, wordDescription1},
-                  {polishWord3, englishWord3, wordDescription3},
-                  {polishWord2, englishWord2, wordDescription2}};
-const Words wordsWithOneEmptyDescription{{polishWord1, englishWord1, wordDescription1},
-                                         {polishWord3, englishWord3, boost::none},
-                                         {polishWord2, englishWord2, wordDescription2}};
+const DictionaryWords dictionaryWords{
+    {"dog", std::string{"pies"}}, {"cat", std::string{"kot"}}, {"tea", std::string{"herbata"}}};
+const Words words{{englishWord1, polishWord1, wordDescription1},
+                  {englishWord3, polishWord3, wordDescription3},
+                  {englishWord2, polishWord2, wordDescription2}};
+const Words wordsWithOneEmptyDescription{{englishWord1, polishWord1, wordDescription1},
+                                         {englishWord3, polishWord3, boost::none},
+                                         {englishWord2, polishWord2, wordDescription2}};
 }
 
 class DefaultWordsMergerTest : public Test
@@ -42,7 +43,7 @@ public:
 
 TEST_F(DefaultWordsMergerTest, givenTranslationsWithWordsDescriptionsInOtherOrder_shouldBindByEnglishWords)
 {
-    const auto actualWords = wordsMerger.mergeWords(translations, wordsDescriptions);
+    const auto actualWords = wordsMerger.mergeWords(dictionaryWords, wordsDescriptions);
 
     ASSERT_EQ(actualWords, words);
 }
@@ -51,7 +52,7 @@ TEST_F(DefaultWordsMergerTest,
        givenTranslationsWithoutOneWordDescription_shouldBindByEnglishWordsAndAddEmptyDescription)
 {
     const auto actualWords =
-        wordsMerger.mergeWords(translations, wordsDescriptionsWithMissingWordDescription);
+        wordsMerger.mergeWords(dictionaryWords, wordsDescriptionsWithMissingWordDescription);
 
     ASSERT_EQ(actualWords, wordsWithOneEmptyDescription);
 }

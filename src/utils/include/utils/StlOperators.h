@@ -21,6 +21,8 @@ std::ostream& printRange(std::ostream& os, Iterator begin, Iterator end)
     return os << "}";
 }
 
+namespace std
+{
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
 {
@@ -41,6 +43,7 @@ std::ostream& operator<<(std::ostream& os, const std::map<T, S>& m)
         }
     }
     return os << "}";
+}
 }
 
 template <class T>

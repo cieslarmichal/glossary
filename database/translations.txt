@@ -1,1 +1,1 @@
-{"translations":[{"englishWord":"phone","polishWord":"telefon"}]}
+{"translations":[{"englishWord":"phone","polishWord":"telefon"},{"englishWord":"tablet","polishWord":"tabletka"},{"englishWord":"laptop","polishWord":"laptop"},{"englishWord":"chair","polishWord":"krzesło"},{"englishWord":"table","polishWord":"stół"}]}

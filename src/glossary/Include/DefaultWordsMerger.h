@@ -7,15 +7,16 @@
 class DefaultWordsMerger : public WordsMerger
 {
 public:
-    UniqueWords mergeWords(const translationRepository::Translations&,
+    UniqueWords mergeWords(const dictionaryRepository::DictionaryWords&,
                            const wordDescriptionRepository::WordsDescriptions&) const override;
 
 private:
     boost::optional<wordDescriptionRepository::WordDescription>
     getCorrespondingWordDescription(const wordDescriptionRepository::EnglishWord&,
                                     const wordDescriptionRepository::WordsDescriptions&) const;
-    std::unique_ptr<Word> getCreatedWord(const PolishWord&, const wordDescriptionRepository::EnglishWord&,
-                                         boost::optional<wordDescriptionRepository::WordDescription>&) const;
+    std::unique_ptr<Word> getCreatedWord(const wordDescriptionRepository::EnglishWord&,
+                                         const boost::optional<PolishWord>&,
+                                         const boost::optional<wordDescriptionRepository::WordDescription>&) const;
 
     WordDescriptionCorrespondingToEnglishWordFinder wordDescriptionFinder;
     WordCreator wordCreator;

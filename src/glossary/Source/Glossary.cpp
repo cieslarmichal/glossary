@@ -5,7 +5,7 @@
 
 Glossary::Glossary()
     : application{std::make_unique<GlossaryApplication>(
-          utils::FileAccessFactory::createFileAccessFactory()->createProjectFileAccess("glossary"))}
+          utils::FileAccessFactory::createFileAccessFactory()->createDefaultFileAccess())}
 {
 }
 

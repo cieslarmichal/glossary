@@ -2,7 +2,6 @@
 
 #include <iostream>
 
-#include "../../dictionaryRepository/src/DictionaryWordsTextFileReader.h"
 #include "DefaultAnswerValidator.h"
 #include "DefaultStatisticsModifierService.h"
 #include "DefaultTranslationRetrieverService.h"
@@ -12,9 +11,11 @@
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
 #include "WordMersenneTwisterRandomizer.h"
+#include "dictionaryRepository/DictionaryRepositoryFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "translationRepository/TranslationRepositoryFactory.h"
 #include "translator/TranslatorFactory.h"
+#include "utils/GetProjectPath.h"
 #include "utils/StlOperators.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
@@ -29,9 +30,13 @@ GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> file
 
 void GlossaryApplication::initialize()
 {
-    dictionaryReader = std::make_unique<DefaultDictionaryReader>(fileAccess);
-    dictionaries = dictionaryReader->readDictionaries();
-    baseDictionary = dictionaries.at("base");
+    std::unique_ptr<const dictionaryRepository::DictionaryRepositoryFactory> dictionaryRepositoryFactory =
+        dictionaryRepository::DictionaryRepositoryFactory::createDictionaryRepositoryFactory(fileAccess);
+    dictionaryRepository = dictionaryRepositoryFactory->createDictionaryRepository();
+
+    dictionaryRepository->addDictionaryFromFile("base", utils::getProjectPath("glossary") +
+                                                            "database/dictionaries/input.txt");
+    dictionaries = dictionaryRepository->getDictionaries();
 
     std::unique_ptr<const webConnection::HttpHandlerFactory> httpHandlerFactory =
         webConnection::HttpHandlerFactory::createHttpHandlerFactory();
@@ -80,14 +85,30 @@ void GlossaryApplication::initialize()
 
 void GlossaryApplication::run()
 {
-    for (const auto& dictWord : baseDictionary)
+    auto baseDict = std::find_if(dictionaries.begin(), dictionaries.end(),
+                                 [](const auto& dictionary) { return dictionary.name == "base"; });
+    if (baseDict == dictionaries.end())
     {
-        englishWords.push_back(dictWord.translatedText);
+        std::cerr << "not found base dictionary";
+        return;
+    }
+
+    for (const auto& dictWord : baseDict->words)
+    {
+        englishWords.push_back(dictWord.englishWord);
     }
 
     const auto wordsDescriptions = wordDescriptionGenerator->generateWordsDescriptions(englishWords);
 
-    glossaryWords = wordsMerger->mergeWords(baseDictionary, wordsDescriptions);
+    glossaryWords = wordsMerger->mergeWords(baseDict->words, wordsDescriptions);
+
+    for (const auto& glossaryWord : glossaryWords)
+    {
+        if (glossaryWord->polishTranslation)
+        {
+            wordsWithTranslation.emplace_back(*glossaryWord);
+        }
+    }
 
     loop();
 }
@@ -128,15 +149,16 @@ void GlossaryApplication::loop()
         default:
             std::cout << "Invalid value\n";
         }
+        std::cout << "Do you want to continue? (yes/no, y/n)\n";
         userWantToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
     }
 }
 
-boost::optional<Word> GlossaryApplication::randomizeWord() const
+boost::optional<Word> GlossaryApplication::randomizeWord(const Words& words) const
 {
     try
     {
-        return wordsRandomizer->randomizeWord(glossaryWords);
+        return wordsRandomizer->randomizeWord(words);
     }
     catch (const std::runtime_error& e)
     {
@@ -145,9 +167,18 @@ boost::optional<Word> GlossaryApplication::randomizeWord() const
     return boost::none;
 }
 
+boost::optional<Word> GlossaryApplication::randomizeWordWithTranslation() const
+{
+    if (wordsWithTranslation.empty())
+    {
+        return boost::none;
+    }
+    return randomizeWord(wordsWithTranslation);
+}
+
 void GlossaryApplication::showMenu() const
 {
-    std::cout << "Choose glossary mode:\n";
+    std::cout << "\nChoose glossary mode:\n";
     std::cout << "1.Translation\n";
     std::cout << "2.Add word to dictionary\n";
     std::cout << "3.List dictionaries\n";
@@ -164,21 +195,19 @@ void GlossaryApplication::showMenu() const
 
 void GlossaryApplication::guessWord() const
 {
-    const auto& randomizedWord = randomizeWord();
-    if (randomizedWord == boost::none)
+    const auto& randomizedWord = randomizeWordWithTranslation();
+    if (randomizedWord == boost::none || randomizedWord->polishTranslation == boost::none)
     {
-        std::cerr << "Error while randomizing word:";
+        std::cerr << "No words with translations available";
         return;
     }
-    std::cout << wordViewFormatter->formatPolishWordView(randomizedWord->polishWord);
+    std::cout << wordViewFormatter->formatPolishWordView(*randomizedWord->polishTranslation);
     std::cout << "Insert english translation:\n";
 
-    if (randomizedWord->wordDescription &&
-        answerValidator->validateAnswer(userPrompt->getStringInput(),
-                                        randomizedWord->wordDescription->englishWord))
+    if (answerValidator->validateAnswer(userPrompt->getStringInput(), randomizedWord->englishWord))
     {
         std::cout << "Correct answer!\n";
-        statisticsModifierService->addCorrectAnswer(randomizedWord->wordDescription->englishWord);
+        statisticsModifierService->addCorrectAnswer(randomizedWord->englishWord);
     }
     else
     {

@@ -22,10 +22,9 @@ inline bool operator==(const Dictionary& lhs, const Dictionary& rhs)
     return (lhs.name == rhs.name && lhs.words == rhs.words);
 }
 
-}
-// TODO: why it doesnt work inside namespace?
-inline std::ostream& operator<<(std::ostream& os, const dictionaryRepository::Dictionary& dictionary)
+inline std::ostream& operator<<(std::ostream& os, const Dictionary& dictionary)
 {
     os << "{name: " << dictionary.name << ", words: " << dictionary.words << "}";
     return os;
+}
 }

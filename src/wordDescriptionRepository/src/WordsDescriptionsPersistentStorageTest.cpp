@@ -5,8 +5,8 @@
 #include "WordsDescriptionsSerializerMock.h"
 #include "utils/FileAccessMock.h"
 
-#include "utils/exceptions/FileNotFound.h"
 #include "utils/GetProjectPath.h"
+#include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace wordDescriptionRepository;

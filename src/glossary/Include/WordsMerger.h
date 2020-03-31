@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Words.h"
-#include "translationRepository/Translation.h"
+#include "dictionaryRepository/Dictionary.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
 class WordsMerger
@@ -9,6 +9,6 @@ class WordsMerger
 public:
     virtual ~WordsMerger() = default;
 
-    virtual UniqueWords mergeWords(const translationRepository::Translations&,
+    virtual UniqueWords mergeWords(const dictionaryRepository::DictionaryWords&,
                                    const wordDescriptionRepository::WordsDescriptions&) const = 0;
 };
