@@ -85,7 +85,7 @@ TEST_F(DefaultDescriptionParserTest, givenEmptyContent_shouldReturnNone)
 TEST_F(DefaultDescriptionParserTest,
        givenHtmlContentWithoutSomeSpecificMarks_shouldReturnDescriptionWithSkippedSomeLines)
 {
-    const auto content = utils::getSplitLines(exampleContentPartlyWithoutMarks);
+    const auto content = utils::split(exampleContentPartlyWithoutMarks);
 
     auto actualDescriptionOpt = parser.parse(content);
 
@@ -94,7 +94,7 @@ TEST_F(DefaultDescriptionParserTest,
 
 TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContent_shouldReturnDescription)
 {
-    const auto content = utils::getSplitLines(exampleContent);
+    const auto content = utils::split(exampleContent);
 
     auto actualDescriptionOpt = parser.parse(content);
 
@@ -104,7 +104,7 @@ TEST_F(DefaultDescriptionParserTest, givenParsedHtmlContent_shouldReturnDescript
 TEST_F(DefaultDescriptionParserTest,
        givenParsedHtmlContentWithDuplications_shouldReturnDescriptionWithoutDuplications)
 {
-    const auto content = utils::getSplitLines(contentWithDuplications);
+    const auto content = utils::split(contentWithDuplications);
 
     auto actualDescriptionOpt = parser.parse(content);
 

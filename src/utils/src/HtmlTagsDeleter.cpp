@@ -62,7 +62,7 @@ void HtmlTagsDeleter::removeHtmlEntities(std::string& content) const
 void HtmlTagsDeleter::trimEmptySpaces(std::vector<std::string>& htmlLines) const
 {
     utils::removeEmptyLines(htmlLines);
-    utils::trimLines(htmlLines);
+    utils::trim(htmlLines);
 }
 
 namespace

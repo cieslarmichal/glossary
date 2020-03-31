@@ -9,14 +9,16 @@
 
 namespace dictionaryRepository
 {
-class DictionaryWordsTextFileReader : public DictionaryWordsReader
+class DictionaryWordsCSVFileReader : public DictionaryWordsReader
 {
 public:
-    explicit DictionaryWordsTextFileReader(std::shared_ptr<const utils::FileAccess>);
+    explicit DictionaryWordsCSVFileReader(std::shared_ptr<const utils::FileAccess>);
 
     DictionaryWords readDictionaryWords(const std::string& absolutePath) const override;
 
 private:
+    bool dictionaryWordsContentIsValid(const std::string&) const;
+    bool dictionaryWordLineIsValid(const std::string&) const;
     DictionaryWords getDictionaryWords(const std::string&) const;
     boost::optional<DictionaryWord> getDictionaryWord(const std::string&) const;
 

@@ -19,9 +19,7 @@ inline std::ostream& operator<<(std::ostream& os, const Language& language)
 {
     std::map<Language, std::string> languageString{{Language::English, "English"},
                                                    {Language::Polish, "Polish"}};
-
-    os << languageString.at(language);
-    return os;
+    return os << languageString.at(language);
 }
 
 inline std::string toLanguageCode(Language language)

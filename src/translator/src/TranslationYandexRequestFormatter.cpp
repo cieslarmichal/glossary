@@ -31,8 +31,8 @@ std::string TranslationYandexRequestFormatter::getFormattedRequest(const std::st
 
 std::string TranslationYandexRequestFormatter::getFormattedSourceText(const std::string& sourceText) const
 {
-    const auto splitText = utils::getSplitLines(sourceText, stringToSplitBy);
-    return utils::getJoinedLines(splitText, stringToJoinWith);
+    const auto splitText = utils::split(sourceText, stringToSplitBy);
+    return utils::join(splitText, stringToJoinWith);
 }
 
 webConnection::Request

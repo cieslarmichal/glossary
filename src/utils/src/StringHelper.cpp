@@ -7,15 +7,15 @@
 namespace utils
 {
 
-std::string getJoinedLines(const std::vector<std::string>& contentWithLines, std::string stringToJoinWith)
+std::string join(const std::vector<std::string>& contentWithLines, const std::string& joinWith)
 {
-    return boost::algorithm::join(contentWithLines, stringToJoinWith);
+    return boost::algorithm::join(contentWithLines, joinWith);
 }
 
-std::vector<std::string> getSplitLines(const std::string& content, std::string stringToSplitBy)
+std::vector<std::string> split(const std::string& content, const std::string& splitBy)
 {
     std::vector<std::string> contentWithLines;
-    boost::split(contentWithLines, content, boost::is_any_of(stringToSplitBy));
+    boost::split(contentWithLines, content, boost::is_any_of(splitBy));
     return contentWithLines;
 }
 
@@ -46,7 +46,7 @@ void removeEmptyLines(std::vector<std::string>& lines)
                 lines.end());
 }
 
-void trimLines(std::vector<std::string>& lines)
+void trim(std::vector<std::string>& lines)
 {
     for (auto& line : lines)
     {

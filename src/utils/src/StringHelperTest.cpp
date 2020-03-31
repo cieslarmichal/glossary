@@ -38,28 +38,28 @@ public:
 
 TEST_F(StringHelperTest, givenEmptyString_shouldVectorWithOneEmptyElement)
 {
-    const auto actualVec = getSplitLines(emptyStr);
+    const auto actualVec = split(emptyStr);
 
     ASSERT_EQ(actualVec, vecWithOneEmptyElement);
 }
 
 TEST_F(StringHelperTest, givenString_shouldSplitToVectorOfStringsByNewLines)
 {
-    const auto actualVec = getSplitLines(str);
+    const auto actualVec = split(str);
 
     ASSERT_EQ(actualVec, strVec);
 }
 
 TEST_F(StringHelperTest, givenEmptyVector_shouldReturnEmptyString)
 {
-    const auto actualStr = getJoinedLines(emptyVec);
+    const auto actualStr = join(emptyVec);
 
     ASSERT_EQ(actualStr, emptyStr);
 }
 
 TEST_F(StringHelperTest, givenVectorOfStrings_shouldJoinElementsToString)
 {
-    const auto actualStr = getJoinedLines(strVec);
+    const auto actualStr = join(strVec);
 
     ASSERT_EQ(actualStr, str);
 }
@@ -130,7 +130,7 @@ TEST_F(StringHelperTest, shouldTrimString)
 
 TEST_F(StringHelperTest, shouldTrimStrings)
 {
-    trimLines(stringsToTrim);
+    trim(stringsToTrim);
 
     ASSERT_EQ(stringsToTrim, stringsAfterTrim);
 }

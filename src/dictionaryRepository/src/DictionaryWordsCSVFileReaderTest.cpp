@@ -1,9 +1,8 @@
-#include "DictionaryWordsTextFileReader.h"
-
 #include "gtest/gtest.h"
 
 #include "utils/FileAccessMock.h"
 
+#include "DictionaryWordsCSVFileReader.h"
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
@@ -31,7 +30,7 @@ class DictionaryWordsTextFileReaderTest : public Test
 public:
     // TODO: change all NiceMock to StrictMock :)
     std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
-    DictionaryWordsTextFileReader reader{fileAccess};
+    DictionaryWordsCSVFileReader reader{fileAccess};
 };
 
 TEST_F(DictionaryWordsTextFileReaderTest, givenEmptyDictionaryWordsContent_shouldReturnEmptyDictionaryWords)
