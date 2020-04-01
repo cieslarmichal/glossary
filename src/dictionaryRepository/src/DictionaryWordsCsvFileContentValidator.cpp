@@ -1,4 +1,4 @@
-#include "DictionaryWordsCSVFileContentValidator.h"
+#include "DictionaryWordsCsvFileContentValidator.h"
 
 #include "utils/StringHelper.h"
 
@@ -12,14 +12,14 @@ constexpr auto englishWordIndex{0};
 constexpr auto requiredAmountOfWordsInLine{2};
 }
 
-ValidationResult DictionaryWordsCSVFileContentValidator::validate(const std::string& content) const
+ValidationResult DictionaryWordsCsvFileContentValidator::validate(const std::string& content) const
 {
     if (dictionaryWordsContentIsValid(content))
         return ValidationResult::Valid;
     return ValidationResult::Invalid;
 }
 
-bool DictionaryWordsCSVFileContentValidator::dictionaryWordsContentIsValid(
+bool DictionaryWordsCsvFileContentValidator::dictionaryWordsContentIsValid(
     const std::string& dictionaryWordsContent) const
 {
     for (const auto& line : utils::split(dictionaryWordsContent))
@@ -29,7 +29,7 @@ bool DictionaryWordsCSVFileContentValidator::dictionaryWordsContentIsValid(
     }
     return true;
 }
-bool DictionaryWordsCSVFileContentValidator::dictionaryWordLineIsValid(
+bool DictionaryWordsCsvFileContentValidator::dictionaryWordLineIsValid(
     const std::string& dictionaryWordLine) const
 {
     if (dictionaryWordLine.empty())

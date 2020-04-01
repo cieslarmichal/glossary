@@ -3,7 +3,7 @@
 #include "DefaultDictionaryRepository.h"
 #include "DictionaryJsonSerializer.h"
 #include "DictionaryPersistentStorage.h"
-#include "DictionaryWordsCSVFileReader.h"
+#include "DictionaryWordsCsvFileReader.h"
 
 namespace dictionaryRepository
 {
@@ -17,6 +17,6 @@ std::unique_ptr<DictionaryRepository> DefaultDictionaryRepositoryFactory::create
     return std::make_unique<DefaultDictionaryRepository>(
         std::make_unique<DictionaryPersistentStorage>(fileAccess,
                                                       std::make_shared<DictionaryJsonSerializer>()),
-        std::make_unique<DictionaryWordsCSVFileReader>(fileAccess));
+        std::make_unique<DictionaryWordsCsvFileReader>(fileAccess));
 }
 }

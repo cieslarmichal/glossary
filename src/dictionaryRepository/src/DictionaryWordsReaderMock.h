@@ -9,6 +9,6 @@ namespace dictionaryRepository
 class DictionaryWordsReaderMock : public DictionaryWordsReader
 {
 public:
-    MOCK_CONST_METHOD1(readDictionaryWords, DictionaryWords(const std::string& absolutePath));
+    MOCK_CONST_METHOD1(readDictionaryWords, boost::optional<DictionaryWords>(const std::string& absolutePath));
 };
 }

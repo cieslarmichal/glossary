@@ -1,4 +1,4 @@
-#include "DictionaryWordsCSVFileContentValidator.h"
+#include "DictionaryWordsCsvFileContentValidator.h"
 
 #include "gtest/gtest.h"
 
@@ -23,63 +23,63 @@ const std::string contentWithSomeValidLinesAndEmptyLines{"\ncar,samochod\n\n\n"
                                                          "chair,krzeslo\n\n"};
 }
 
-class DictionaryWordsCSVFileContentValidatorTest : public Test
+class DictionaryWordsCsvFileContentValidatorTest : public Test
 {
 public:
-    DictionaryWordsCSVFileContentValidator validator;
+    DictionaryWordsCsvFileContentValidator validator;
 };
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest, givenEmptyContent_shouldReturnValid)
+TEST_F(DictionaryWordsCsvFileContentValidatorTest, givenEmptyContent_shouldReturnValid)
 {
     ASSERT_EQ(validator.validate(emptyContent), ValidationResult::Valid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest,
+TEST_F(DictionaryWordsCsvFileContentValidatorTest,
        givenContentWithOneWordWithoutSeparator_shouldReturnInvalid)
 {
     ASSERT_EQ(validator.validate(contentWithWordWithoutSeparator), ValidationResult::Invalid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest,
+TEST_F(DictionaryWordsCsvFileContentValidatorTest,
        givenContentWithTwoWordsWithoutSeparator_shouldReturnInvalid)
 {
     ASSERT_EQ(validator.validate(contentWithWordsWithoutSeparator), ValidationResult::Invalid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest, givenContentWithOnlySeparator_shouldReturnInvalid)
+TEST_F(DictionaryWordsCsvFileContentValidatorTest, givenContentWithOnlySeparator_shouldReturnInvalid)
 {
     ASSERT_EQ(validator.validate(contentWithSeparator), ValidationResult::Invalid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest, givenContentWithWordOnlyAfterSeparator_shouldReturnInvalid)
+TEST_F(DictionaryWordsCsvFileContentValidatorTest, givenContentWithWordOnlyAfterSeparator_shouldReturnInvalid)
 {
     ASSERT_EQ(validator.validate(contentWithWordOnlyAfterSeparator), ValidationResult::Invalid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest, givenContentWithWordOnlyBeforeSeparator_shouldReturnValid)
+TEST_F(DictionaryWordsCsvFileContentValidatorTest, givenContentWithWordOnlyBeforeSeparator_shouldReturnValid)
 {
     ASSERT_EQ(validator.validate(contentWithWordOnlyBeforeSeparator), ValidationResult::Valid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest,
+TEST_F(DictionaryWordsCsvFileContentValidatorTest,
        givenContentWithWordBeforeAndAfterSeparator_shouldReturnValid)
 {
     ASSERT_EQ(validator.validate(contentWithWordBeforeAndAfterSeparator), ValidationResult::Valid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest,
+TEST_F(DictionaryWordsCsvFileContentValidatorTest,
        givenContentWithMultipleLineWithWordsBeforeAndAfterSeparator_shouldReturnValid)
 {
     ASSERT_EQ(validator.validate(contentWithWordsBeforeAndAfterSeparator), ValidationResult::Valid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest,
+TEST_F(DictionaryWordsCsvFileContentValidatorTest,
        givenContentWithSomeValidLinesAndOneInvalid_shouldReturnInvalid)
 {
     ASSERT_EQ(validator.validate(contentWithSomeValidLinesAndOneInvalid), ValidationResult::Invalid);
 }
 
-TEST_F(DictionaryWordsCSVFileContentValidatorTest,
+TEST_F(DictionaryWordsCsvFileContentValidatorTest,
        givenContentWithSomeValidLinesAndEmptyLines_shouldReturnValid)
 {
     ASSERT_EQ(validator.validate(contentWithSomeValidLinesAndEmptyLines), ValidationResult::Valid);

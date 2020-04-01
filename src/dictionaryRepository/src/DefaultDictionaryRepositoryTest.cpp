@@ -10,7 +10,7 @@ using namespace dictionaryRepository;
 
 namespace
 {
-const std::string absoluteDictionaryWordsPath{"absoultePathToDictionaryWords.txt"};
+const std::string absoluteDictionaryWordsPath{"absoultePathToDictionaryWords.csv"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
@@ -49,10 +49,17 @@ TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryToStorage)
     repository.addDictionary(dictionary1);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryByNameAndPathToDictionaryWords)
+TEST_F(DefaultDictionaryRepositoryTest, givenExistingDictionaryWordsFromFile_shouldAddDictionaryToStorage)
 {
     EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(dictionaryWords2));
     EXPECT_CALL(*storage, addDictionary(dictionary2));
+
+    repository.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
+}
+
+TEST_F(DefaultDictionaryRepositoryTest, givenNonExistingDictionaryWordsFromFile_shouldNotAddDictionaryToStorage)
+{
+    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(boost::none));
 
     repository.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
 }

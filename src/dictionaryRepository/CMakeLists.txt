@@ -1,21 +1,21 @@
 set(SOURCES
         src/DefaultDictionaryRepository.cpp
-        src/DictionaryWordsCSVFileReader.cpp
+        src/DictionaryWordsCsvFileReader.cpp
         src/DictionaryMemoryStorage.cpp
         src/DictionaryPersistentStorage.cpp
         src/DictionaryJsonSerializer.cpp
         src/DictionaryRepositoryFactory.cpp
         src/DefaultDictionaryRepositoryFactory.cpp
-        src/DictionaryWordsCSVFileContentValidator.cpp
+        src/DictionaryWordsCsvFileContentValidator.cpp
         )
 
 set(UT_SOURCES
         src/DefaultDictionaryRepositoryTest.cpp
-        src/DictionaryWordsCSVFileReaderTest.cpp
+        src/DictionaryWordsCsvFileReaderTest.cpp
         src/DictionaryMemoryStorageTest.cpp
         src/DictionaryPersistentStorageTest.cpp
         src/DictionaryJsonSerializerTest.cpp
-        src/DictionaryWordsCSVFileContentValidatorTest.cpp
+        src/DictionaryWordsCsvFileContentValidatorTest.cpp
         )
 
 add_library(dictionaryRepository ${SOURCES})
