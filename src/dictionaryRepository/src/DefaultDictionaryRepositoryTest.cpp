@@ -57,7 +57,8 @@ TEST_F(DefaultDictionaryRepositoryTest, givenExistingDictionaryWordsFromFile_sho
     repository.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest, givenNonExistingDictionaryWordsFromFile_shouldNotAddDictionaryToStorage)
+TEST_F(DefaultDictionaryRepositoryTest,
+       givenNonExistingDictionaryWordsFromFile_shouldNotAddDictionaryToStorage)
 {
     EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(boost::none));
 

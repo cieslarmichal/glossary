@@ -38,15 +38,13 @@ public:
         std::make_shared<NiceMock<WordsDescriptionsSerializerMock>>();
 };
 
-TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyWords)
+TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(WordsDescriptions{}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
 
-    const auto actualWords = persistentStorage.getWordsDescriptions();
-
-    ASSERT_TRUE(actualWords.empty());
+    ASSERT_TRUE(persistentStorage.empty());
 }
 
 TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithFileWithWords_shouldLoadWords)

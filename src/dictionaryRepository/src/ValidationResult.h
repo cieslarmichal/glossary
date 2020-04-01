@@ -14,7 +14,7 @@ enum class ValidationResult
 inline std::ostream& operator<<(std::ostream& os, const ValidationResult& result)
 {
     std::map<ValidationResult, std::string> resultsStringMapping{{ValidationResult::Invalid, "Invalid"},
-                                                   {ValidationResult::Valid, "Valid"}};
+                                                                 {ValidationResult::Valid, "Valid"}};
     return os << resultsStringMapping.at(result);
 }
 }

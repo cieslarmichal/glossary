@@ -21,8 +21,8 @@ const auto wordView{"English word: computer\n"
                     "Definition: definition2\n"
                     "Example: example2\n"
                     "Sentence: sentence\n"};
-const Word word{{"computer"},std::string{"komputer"}, wordDescription};
-const Word wordWithoutWordDescription{{"computer"},std::string{"komputer"}, boost::none};
+const Word word{{"computer"}, std::string{"komputer"}, wordDescription};
+const Word wordWithoutWordDescription{{"computer"}, std::string{"komputer"}, boost::none};
 }
 
 class DefaultWordViewFormatterTest : public Test

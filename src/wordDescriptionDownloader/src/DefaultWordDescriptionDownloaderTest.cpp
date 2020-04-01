@@ -9,6 +9,7 @@
 
 #include "testVariables/HtmlContent.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/src/testVariables/ExampleDescription.h"
 
 using namespace ::testing;
@@ -38,7 +39,7 @@ public:
                                                 std::move(descriptionParserInit)};
 };
 
-TEST_F(DefaultWordDescriptionDownloaderTest, givenEmptyHtmlContent_shouldNotCreateWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest, givenEmptyHtmlContent_shouldReturnNone)
 {
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(emptyHtmlResponse));
     EXPECT_CALL(*linesSelector, selectLines(emptyHtmlResponse.content))
@@ -50,7 +51,17 @@ TEST_F(DefaultWordDescriptionDownloaderTest, givenEmptyHtmlContent_shouldNotCrea
     ASSERT_EQ(actualWord, boost::none);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, givenWordWithTranslation_shouldCreateWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest, givenConnectionFailed_shouldReturnNone)
+{
+    EXPECT_CALL(*httpHandler, get(urlAddress))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+
+    const auto actualWord = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWord, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, givenWordWithTranslation_shouldReturnWordDescription)
 {
     webConnection::Response response{200, htmlContent};
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(response));

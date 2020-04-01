@@ -24,8 +24,8 @@ inline bool operator==(const DictionaryWord& lhs, const DictionaryWord& rhs)
 
 inline std::ostream& operator<<(std::ostream& os, const DictionaryWord& dictionaryWord)
 {
-    os << "{englishWord: " << dictionaryWord.englishWord
-       << ", translation: " << dictionaryWord.translation << "}";
+    os << "{englishWord: " << dictionaryWord.englishWord << ", translation: " << dictionaryWord.translation
+       << "}";
     return os;
 }
 }

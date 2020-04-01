@@ -11,11 +11,11 @@
 #include "WordRandomizer.h"
 #include "WordViewFormatter.h"
 #include "WordsMerger.h"
+#include "dictionaryRepository/DictionaryRepository.h"
 #include "statisticsRepository/StatisticsRepository.h"
 #include "translationRepository/TranslationRepository.h"
 #include "utils/FileAccess.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
-#include "dictionaryRepository/DictionaryRepository.h"
 
 // TODO: move std::cin from UserPrompt to application
 

@@ -2,6 +2,8 @@
 
 #include "gtest/gtest.h"
 
+#include "StlOperators.h"
+
 using namespace ::testing;
 using namespace utils;
 
@@ -33,6 +35,8 @@ public:
     const std::vector<std::string> vecWithOneEmptyElement{""};
     const std::vector<std::string> vecWithEmptyElements{"", "", ""};
     std::vector<std::string> vecWithSomeEmptyElements{"", "aaa", "", "vvvv", ""};
+    std::vector<std::string> vecWithDuplicates{"aaa", "aaa", "", "vvvv", "vvvv"};
+    std::vector<std::string> vecWithoutDuplicates{"aaa", "", "vvvv"};
     std::vector<std::string> vecWithoutEmptyElements{"aaa", "vvvv"};
 };
 
@@ -111,6 +115,13 @@ TEST_F(StringHelperTest, givenVectorWithEmptyLines_shouldRemoveEmptyLines)
     removeEmptyLines(vecWithSomeEmptyElements);
 
     ASSERT_EQ(vecWithSomeEmptyElements, vecWithoutEmptyElements);
+}
+
+TEST_F(StringHelperTest, givenVectorWithDuplicates_shouldRemoveDuplicates)
+{
+    removeDuplicates(vecWithDuplicates);
+
+    ASSERT_TRUE(compareVectors(vecWithDuplicates, vecWithoutDuplicates));
 }
 
 TEST_F(StringHelperTest, givenVectorWithoutEmptyLines_shouldNotRemoveLines)

@@ -15,11 +15,11 @@ const std::string absoluteDictionaryWordsPath{"absoultePathToDictionaryWords.txt
 const std::string content{"car,samochod\n"
                           "air,powietrze\n"};
 const std::string contentWithWhiteSpaces{"\n\n    car   ,   samochod\n\n"
-                          "   air,powietrze    \n"};
+                                         "   air,powietrze    \n"};
 const std::string contentWithTwoWordsAndOneIncomplete{"car,samochod\n"
                                                       "air,\n"};
 const std::string contentWithIncorrectFormat{"car,samochod\n"
-                                                      ",powietrze\n"};
+                                             ",powietrze\n"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};
 const DictionaryWord dictionaryWord1{"car", std::string{"samochod"}};
@@ -47,8 +47,7 @@ TEST_F(DictionaryWordsCsvFileReaderTest, givenNonExistingFilePath_shouldReturnNo
     EXPECT_EQ(actualDictionaryWords, boost::none);
 }
 
-TEST_F(DictionaryWordsCsvFileReaderTest,
-       givenIncorrectFileContentFormat_shouldReturnNone)
+TEST_F(DictionaryWordsCsvFileReaderTest, givenIncorrectFileContentFormat_shouldReturnNone)
 {
     EXPECT_CALL(*fileAccess, exists(absoluteDictionaryWordsPath)).WillOnce(Return(true));
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath))
@@ -69,8 +68,9 @@ TEST_F(DictionaryWordsCsvFileReaderTest, givenEmptyDictionaryWordsContent_should
     EXPECT_TRUE(actualDictionaryWords->empty());
 }
 
-TEST_F(DictionaryWordsCsvFileReaderTest,
-       givenContentWithEnglishWordWithoutTranslation_shouldReturnDictionaryWordsWithEnglishWordAndNoneTranslation)
+TEST_F(
+    DictionaryWordsCsvFileReaderTest,
+    givenContentWithEnglishWordWithoutTranslation_shouldReturnDictionaryWordsWithEnglishWordAndNoneTranslation)
 {
     EXPECT_CALL(*fileAccess, exists(absoluteDictionaryWordsPath)).WillOnce(Return(true));
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath))
@@ -94,7 +94,8 @@ TEST_F(DictionaryWordsCsvFileReaderTest, givenDictionaryWordsContent_shouldReadD
 TEST_F(DictionaryWordsCsvFileReaderTest, givenDictionaryWordsContentWithWhiteSpaces_shouldReadDictionaryWords)
 {
     EXPECT_CALL(*fileAccess, exists(absoluteDictionaryWordsPath)).WillOnce(Return(true));
-    EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath)).WillOnce(Return(contentWithWhiteSpaces));
+    EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath))
+        .WillOnce(Return(contentWithWhiteSpaces));
 
     const auto actualDictionaryWords = reader.readDictionaryWords(absoluteDictionaryWordsPath);
 

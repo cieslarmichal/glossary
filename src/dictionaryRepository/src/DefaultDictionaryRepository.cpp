@@ -23,7 +23,7 @@ void DefaultDictionaryRepository::addDictionaryFromFile(const DictionaryName& di
                                                         const std::string& dictionaryWordsPath)
 {
     const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath);
-    if(dictionaryWordsFromFile)
+    if (dictionaryWordsFromFile)
     {
         storage->addDictionary({dictionaryName, *dictionaryWordsFromFile});
     }

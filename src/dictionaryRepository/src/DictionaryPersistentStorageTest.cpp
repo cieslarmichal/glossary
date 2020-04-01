@@ -74,16 +74,14 @@ public:
         std::make_shared<StrictMock<DictionarySerializerMock>>();
 };
 
-TEST_F(DictionaryPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyDictionaries)
+TEST_F(DictionaryPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
 {
     EXPECT_CALL(*fileAccess, exists(filePath)).WillOnce(Return(true));
     EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(Dictionaries{}));
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
 
-    const auto actualDictionaries = persistentStorage.getDictionaries();
-
-    ASSERT_TRUE(actualDictionaries.empty());
+    ASSERT_TRUE(persistentStorage.empty());
 }
 
 TEST_F(DictionaryPersistentStorageTest, givenPersistentStorageWithFileWithDictionaries_shouldLoadDictionaries)

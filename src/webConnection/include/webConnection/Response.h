@@ -18,10 +18,4 @@ inline bool operator==(const Response& lhs, const Response& rhs)
     return (lhs.code == rhs.code && lhs.content == rhs.content);
 }
 
-inline std::ostream& operator<<(std::ostream& os, const Response& response)
-{
-    os << response.code << " " << response.content;
-    return os;
-}
-
 }

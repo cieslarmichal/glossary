@@ -24,7 +24,7 @@ DefaultWordDescriptionDownloader::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     const auto httpContent = getHttpContent(englishWord);
-    if (!httpContent)
+    if (not httpContent)
     {
         return boost::none;
     }

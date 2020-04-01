@@ -3,8 +3,10 @@
 #include <memory>
 #include <ostream>
 #include <utility>
+
 #include "boost/optional.hpp"
 #include "boost/optional/optional_io.hpp"
+
 #include "PolishWord.h"
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
@@ -29,7 +31,7 @@ using UniqueWord = std::unique_ptr<Word>;
 inline bool operator==(const Word& lhs, const Word& rhs)
 {
     return (lhs.englishWord == rhs.englishWord && lhs.polishTranslation == rhs.polishTranslation &&
-        lhs.wordDescription == rhs.wordDescription);
+            lhs.wordDescription == rhs.wordDescription);
 }
 
 inline bool operator==(const Word& lhs, const UniqueWord& rhs)

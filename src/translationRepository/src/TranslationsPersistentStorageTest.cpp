@@ -41,15 +41,13 @@ public:
         std::make_shared<NiceMock<TranslationsSerializerMock>>();
 };
 
-TEST_F(TranslationsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyTranslations)
+TEST_F(TranslationsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(emptyTranslations));
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
-    const auto actualTranslations = persistentStorage.getTranslations();
-
-    ASSERT_TRUE(actualTranslations.empty());
+    ASSERT_TRUE(persistentStorage.empty());
 }
 
 TEST_F(TranslationsPersistentStorageTest, givenPersistentStorageWithFileWithStatistics_shouldLoadTranslations)

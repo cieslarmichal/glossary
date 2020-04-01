@@ -51,15 +51,13 @@ public:
         std::make_shared<NiceMock<StatisticsSerializerMock>>();
 };
 
-TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldNotLoadAnyStats)
+TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
 {
     EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return(""));
     EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(Statistics{}));
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
 
-    const auto actualStatistics = persistentStorage.getStatistics();
-
-    ASSERT_TRUE(actualStatistics.empty());
+    ASSERT_TRUE(persistentStorage.empty());
 }
 
 TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithFileWithStatistics_shouldLoadStats)

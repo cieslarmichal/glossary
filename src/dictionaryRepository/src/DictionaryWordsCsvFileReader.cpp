@@ -21,7 +21,8 @@ DictionaryWordsCsvFileReader::DictionaryWordsCsvFileReader(
 {
 }
 
-boost::optional<DictionaryWords> DictionaryWordsCsvFileReader::readDictionaryWords(const std::string& absolutePath) const
+boost::optional<DictionaryWords>
+DictionaryWordsCsvFileReader::readDictionaryWords(const std::string& absolutePath) const
 {
     if (not fileAccess->exists(absolutePath))
     {
