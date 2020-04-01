@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "DefaultAnswerValidator.h"
-#include "DefaultStatisticsModifierService.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
 #include "DefaultWordViewFormatter.h"
@@ -24,7 +23,6 @@
 GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
-
     initialize();
 }
 
@@ -60,7 +58,6 @@ void GlossaryApplication::initialize()
     std::unique_ptr<const statisticsRepository::StatisticsRepositoryFactory> statisticsRepositoryFactory =
         statisticsRepository::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
     statisticsRepository = statisticsRepositoryFactory->createStatisticsRepository();
-    statisticsModifierService = std::make_shared<DefaultStatisticsModifierService>(statisticsRepository);
 
     std::unique_ptr<const translationRepository::TranslationRepositoryFactory> translationRepositoryFactory =
         translationRepository::TranslationRepositoryFactory::createTranslationRepositoryFactory(fileAccess);
@@ -115,9 +112,9 @@ void GlossaryApplication::run()
 
 void GlossaryApplication::loop()
 {
-    auto userWantToContinue = true;
+    auto userWantsToContinue = true;
 
-    while (userWantToContinue)
+    while (userWantsToContinue)
     {
         showMenu();
         switch (userPrompt->getIntInput())
@@ -126,31 +123,40 @@ void GlossaryApplication::loop()
             translate();
             break;
         case 2:
-            std::cout << "Operation not supported yet\n";
+            listDictionariesByNames();
             break;
         case 3:
+            listDictionaryWordsFromDictionary();
+            break;
         case 4:
-            listDictionaries();
+            addDictionary();
             break;
         case 5:
-        case 6:
-        case 7:
-        case 8:
-        case 9:
-            std::cout << "Operation not supported yet\n";
+            addEnglishWordToDictionary();
             break;
-        case 10:
+        case 6:
+            removeDictionary();
+            break;
+        case 7:
+            removeEnglishWordFromDictionary();
+            break;
+        case 8:
+            addDictionaryFromFile();
+            break;
+        case 9:
             guessWord();
             break;
+        case 10:
+            getEnglishWordDescription();
+            break;
         case 11:
-        case 12:
-            std::cout << "Operation not supported yet\n";
+            showStatistics();
             break;
         default:
             std::cout << "Invalid value\n";
         }
         std::cout << "Do you want to continue? (yes/no, y/n)\n";
-        userWantToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
+        userWantsToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
     }
 }
 
@@ -179,18 +185,17 @@ boost::optional<Word> GlossaryApplication::randomizeWordWithTranslation() const
 void GlossaryApplication::showMenu() const
 {
     std::cout << "\nChoose glossary mode:\n";
-    std::cout << "1.Translation\n";
-    std::cout << "2.Add word to dictionary\n";
-    std::cout << "3.List dictionaries\n";
-    std::cout << "4.List english words from dictionary\n";
-    std::cout << "5.Add dictionary\n";
-    std::cout << "6.Add english word to dictionary\n";
-    std::cout << "7.Remove dictionary\n";
-    std::cout << "8.Remove english word from dictionary\n";
-    std::cout << "9.Add dictionary from file\n";
-    std::cout << "10.Guess english word\n";
-    std::cout << "11.Get description from english word\n";
-    std::cout << "12.Display statistics\n";
+    std::cout << "1.Translate\n";
+    std::cout << "2.List dictionaries names\n";
+    std::cout << "3.List dictionary words from dictionary\n";
+    std::cout << "4.Add dictionary\n";
+    std::cout << "5.Add english word to dictionary\n";
+    std::cout << "6.Remove dictionary\n";
+    std::cout << "7.Remove english word from dictionary\n";
+    std::cout << "8.Add dictionary from file\n";
+    std::cout << "9.Guess english word\n";
+    std::cout << "10.Get word description\n";
+    std::cout << "11.Show statistics\n";
 }
 
 void GlossaryApplication::guessWord() const
@@ -207,12 +212,12 @@ void GlossaryApplication::guessWord() const
     if (answerValidator->validateAnswer(userPrompt->getStringInput(), randomizedWord->englishWord))
     {
         std::cout << "Correct answer!\n";
-        statisticsModifierService->addCorrectAnswer(randomizedWord->englishWord);
+        statisticsRepository->addCorrectAnswer(randomizedWord->englishWord);
     }
     else
     {
         std::cout << "Inorrect answer :(\n";
-        statisticsModifierService->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
+        statisticsRepository->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
     }
 
     std::cout << wordViewFormatter->formatWordView(*randomizedWord);
@@ -234,7 +239,97 @@ void GlossaryApplication::translate() const
     }
 }
 
-void GlossaryApplication::listDictionaries() const
+void GlossaryApplication::listDictionariesByNames()
 {
-    std::cout << dictionaries << "\n";
+    dictionaries = dictionaryRepository->getDictionaries();
+    for (const auto& dictionary : dictionaries)
+    {
+        std::cout << dictionary.name << " ";
+    }
+    std::cout << "\n";
+}
+
+void GlossaryApplication::listDictionaryWordsFromDictionary()
+{
+    dictionaries = dictionaryRepository->getDictionaries();
+    std::cout << "Insert dictionary name:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    auto foundDictionary =
+        std::find_if(dictionaries.begin(), dictionaries.end(),
+                     [&dictionaryName](const auto& dictionary) { return dictionary.name == dictionaryName; });
+    if (foundDictionary != dictionaries.end())
+    {
+        std::cout << foundDictionary->words << "\n";
+    }
+    else
+        std::cout << "Dictionary not found\n";
+}
+
+void GlossaryApplication::addDictionary() const
+{
+    std::cout << "Insert dictionary name to add:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    if (not dictionaryRepository->containsDictionary(dictionaryName))
+        dictionaryRepository->addDictionary(dictionaryName);
+    else
+        std::cout << "Dictionary: " << dictionaryName << " already exists\n";
+}
+
+void GlossaryApplication::addEnglishWordToDictionary() const
+{
+    std::cout << "Insert dictionary name:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    if (dictionaryRepository->containsDictionary(dictionaryName))
+    {
+        std::cout << "Insert english word:\n";
+        const auto englishWord = userPrompt->getStringInput();
+        dictionaryRepository->addWordToDictionary({englishWord, boost::none}, dictionaryName);
+    }
+    else
+        std::cout << "Dictionary: " << dictionaryName << " not found\n";
+}
+
+void GlossaryApplication::removeDictionary() const
+{
+    std::cout << "Insert dictionary name to remove:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    if (dictionaryRepository->containsDictionary(dictionaryName))
+        dictionaryRepository->removeDictionary(dictionaryName);
+    else
+        std::cout << "Dictionary: " << dictionaryName << " not found\n";
+}
+
+void GlossaryApplication::removeEnglishWordFromDictionary() const
+{
+    std::cout << "Insert dictionary name to remove word from:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    if (dictionaryRepository->containsDictionary(dictionaryName))
+    {
+        std::cout << "Insert english word:\n";
+        const auto englishWord = userPrompt->getStringInput();
+        dictionaryRepository->removeWordFromDictionary(englishWord, dictionaryName);
+    }
+    else
+        std::cout << "Dictionary: " << dictionaryName << " not found\n";
+}
+
+void GlossaryApplication::addDictionaryFromFile() const
+{
+    std::cout << "Insert dictionary name to add:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    std::cout << "Insert absolute path to words dictionary file(csv format):\n";
+    const auto pathToFileWithDictionaryWords = userPrompt->getStringInput();
+    dictionaryRepository->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
+}
+
+void GlossaryApplication::getEnglishWordDescription() const
+{
+    std::cout << "Insert english word:\n";
+    const auto dictionaryWord = userPrompt->getStringInput();
+    std::cout << wordDescriptionGenerator->generateWordDescription(dictionaryWord);
+}
+
+void GlossaryApplication::showStatistics() const
+{
+    std::cout << statisticsRepository->getStatistics() << "\n";
 }

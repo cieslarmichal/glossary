@@ -12,7 +12,6 @@ set(SOURCES
         Source/WordDescriptionCorrespondingToEnglishWordFinder.cpp
         Source/WordCreator.cpp
         Source/SupportedThreadsCalculator.cpp
-        Source/DefaultStatisticsModifierService.cpp
         )
 
 set(UT_SOURCES
@@ -24,7 +23,6 @@ set(UT_SOURCES
         UT/Source/DefaultWordsMergerTest.cpp
         UT/Source/WordDescriptionCorrespondingToEnglishWordFinderTest.cpp
         UT/Source/WordCreatorTest.cpp
-        UT/Source/DefaultStatisticsModifierServiceTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)
