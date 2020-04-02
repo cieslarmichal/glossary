@@ -2,7 +2,7 @@
 
 #include "WordDescriptionRepositoryFactory.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class DefaultWordDescriptionRepositoryFactory : public WordDescriptionRepositoryFactory
 {

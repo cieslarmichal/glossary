@@ -4,6 +4,8 @@
 #include "WordDescriptionCorrespondingToEnglishWordFinder.h"
 #include "WordsMerger.h"
 
+namespace glossary
+{
 class DefaultWordsMerger : public WordsMerger
 {
 public:
@@ -21,3 +23,4 @@ private:
     WordDescriptionCorrespondingToEnglishWordFinder wordDescriptionFinder;
     WordCreator wordCreator;
 };
+}

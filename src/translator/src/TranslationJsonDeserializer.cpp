@@ -2,9 +2,8 @@
 
 #include <iostream>
 
-namespace translator
+namespace glossary::translator
 {
-
 namespace
 {
 constexpr auto translationField = "text";

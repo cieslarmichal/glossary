@@ -3,6 +3,8 @@
 #include "GlossaryApplication.h"
 #include "utils/FileAccessFactory.h"
 
+namespace glossary
+{
 Glossary::Glossary()
     : application{std::make_unique<GlossaryApplication>(
           utils::FileAccessFactory::createFileAccessFactory()->createDefaultFileAccess())}
@@ -12,4 +14,5 @@ Glossary::Glossary()
 void Glossary::run()
 {
     application->run();
+}
 }

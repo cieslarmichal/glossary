@@ -3,7 +3,7 @@
 #include <map>
 #include <ostream>
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 enum class ValidationResult
 {

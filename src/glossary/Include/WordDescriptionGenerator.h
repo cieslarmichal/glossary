@@ -3,6 +3,8 @@
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
+namespace glossary
+{
 class WordDescriptionGenerator
 {
 public:
@@ -13,3 +15,4 @@ public:
     virtual wordDescriptionRepository::WordDescription
     generateWordDescription(const wordDescriptionRepository::EnglishWord&) = 0;
 };
+}

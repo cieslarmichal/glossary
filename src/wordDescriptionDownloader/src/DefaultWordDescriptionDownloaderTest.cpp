@@ -13,6 +13,7 @@
 #include "wordDescriptionDownloader/src/testVariables/ExampleDescription.h"
 
 using namespace ::testing;
+using namespace glossary;
 using namespace wordDescriptionDownloader;
 
 namespace

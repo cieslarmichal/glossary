@@ -1,5 +1,7 @@
 #include "DefaultWordDescriptionRetrieverService.h"
 
+namespace glossary
+{
 DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> repo)
@@ -42,4 +44,5 @@ void DefaultWordDescriptionRetrieverService::saveWordDescriptionInRepository(
     const wordDescriptionRepository::WordDescription& wordDescription)
 {
     wordDescriptionRepository->addWordDescription(wordDescription);
+}
 }

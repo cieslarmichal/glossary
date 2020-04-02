@@ -5,7 +5,7 @@
 #include "StatisticsRepository.h"
 #include "utils/FileAccess.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class StatisticsRepositoryFactory
 {

@@ -4,7 +4,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace statisticsRepository;
+using namespace glossary::statisticsRepository;
 using namespace boost::algorithm;
 
 namespace

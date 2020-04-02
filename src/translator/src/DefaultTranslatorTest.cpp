@@ -9,7 +9,7 @@
 #include "webConnection/exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
-using namespace translator;
+using namespace glossary::translator;
 
 namespace
 {
@@ -28,7 +28,7 @@ class DefaultTranslatorTest : public Test
 {
 public:
     std::shared_ptr<webConnection::HttpHandlerMock> handler =
-        std::make_shared<webConnection::HttpHandlerMock>();
+        std::make_shared<StrictMock<webConnection::HttpHandlerMock>>();
     std::unique_ptr<TranslationDeserializerMock> deserializerInit =
         std::make_unique<StrictMock<TranslationDeserializerMock>>();
     TranslationDeserializerMock* deserializer = deserializerInit.get();

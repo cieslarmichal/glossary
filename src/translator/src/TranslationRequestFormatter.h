@@ -4,9 +4,8 @@
 #include "SourceText.h"
 #include "webConnection/Request.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 class TranslationRequestFormatter
 {
 public:

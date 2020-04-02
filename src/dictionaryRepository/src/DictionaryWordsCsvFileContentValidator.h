@@ -2,7 +2,7 @@
 
 #include "ValidationResult.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryWordsCsvFileContentValidator
 {

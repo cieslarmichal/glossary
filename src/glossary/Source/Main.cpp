@@ -2,7 +2,7 @@
 
 int main()
 {
-    Glossary app;
+    glossary::Glossary app;
     app.run();
 
     return 0;

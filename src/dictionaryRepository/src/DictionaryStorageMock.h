@@ -4,7 +4,7 @@
 
 #include "DictionaryStorage.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryStorageMock : public DictionaryStorage
 {

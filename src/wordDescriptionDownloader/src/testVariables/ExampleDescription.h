@@ -2,7 +2,7 @@
 
 #include "wordDescriptionRepository/Description.h"
 
-using namespace wordDescriptionRepository;
+using namespace glossary::wordDescriptionRepository;
 
 const DefinitionsWithExamples definitionsWithExamples{
     {"to go or come after and bring or take back", Example{"fetch a doctor"}},

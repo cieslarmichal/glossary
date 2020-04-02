@@ -1,5 +1,7 @@
 #pragma once
 
+namespace glossary
+{
 class Application
 {
 public:
@@ -7,3 +9,4 @@ public:
 
     virtual void run() = 0;
 };
+}

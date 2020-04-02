@@ -5,7 +5,7 @@
 #include "Translator.h"
 #include "webConnection/HttpHandler.h"
 
-namespace translator
+namespace glossary::translator
 {
 class TranslatorFactory
 {

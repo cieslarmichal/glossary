@@ -3,12 +3,10 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace statisticsRepository;
+using namespace glossary::statisticsRepository;
 
 namespace
 {
-// TODO: change test string jsons into json and dumpy() them
-// TODO: change XsSerializer to XSerializer
 const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statisticsWithOneWord{statisticsPerWord1};

@@ -4,7 +4,7 @@
 
 #include "WordDescriptionRepository.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class WordDescriptionRepositoryMock : public WordDescriptionRepository
 {

@@ -7,7 +7,7 @@
 #include "DictionaryStorage.h"
 #include "utils/FileAccess.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryPersistentStorage : public DictionaryStorage
 {

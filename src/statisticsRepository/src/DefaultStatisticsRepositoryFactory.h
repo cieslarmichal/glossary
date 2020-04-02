@@ -2,7 +2,7 @@
 
 #include "StatisticsRepositoryFactory.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class DefaultStatisticsRepositoryFactory : public StatisticsRepositoryFactory
 {

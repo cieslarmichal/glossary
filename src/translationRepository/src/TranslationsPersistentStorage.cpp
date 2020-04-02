@@ -5,7 +5,7 @@
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 
 const std::string TranslationsPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};

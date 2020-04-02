@@ -5,6 +5,8 @@
 
 #include "Word.h"
 
+namespace glossary
+{
 using UniqueWords = std::vector<UniqueWord>;
 using Words = std::vector<Word>;
 
@@ -24,4 +26,5 @@ inline bool operator==(const Words& words, const UniqueWords& uniqueWords)
 inline bool operator==(const UniqueWords& uniqueWords, const Words& words)
 {
     return words == uniqueWords;
+}
 }

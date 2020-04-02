@@ -4,7 +4,7 @@
 
 #include "Description.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class DescriptionSerializer
 {

@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 using Example = std::string;
 }

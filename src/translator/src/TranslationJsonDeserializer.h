@@ -4,7 +4,7 @@
 
 #include "TranslationDeserializer.h"
 
-namespace translator
+namespace glossary::translator
 {
 class TranslationJsonDeserializer : public TranslationDeserializer
 {

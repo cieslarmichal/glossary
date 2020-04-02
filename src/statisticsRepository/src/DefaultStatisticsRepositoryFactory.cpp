@@ -4,9 +4,8 @@
 #include "StatisticsJsonSerializer.h"
 #include "StatisticsPersistentStorage.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
-
 DefaultStatisticsRepositoryFactory::DefaultStatisticsRepositoryFactory(
     std::shared_ptr<const utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}

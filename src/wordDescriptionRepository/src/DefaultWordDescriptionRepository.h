@@ -6,7 +6,7 @@
 #include "WordDescriptionRepository.h"
 #include "WordsDescriptionsStorage.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class DefaultWordDescriptionRepository : public WordDescriptionRepository
 {

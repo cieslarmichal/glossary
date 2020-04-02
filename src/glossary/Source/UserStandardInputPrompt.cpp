@@ -6,6 +6,8 @@
 
 #include "utils/StringHelper.h"
 
+namespace glossary
+{
 namespace
 {
 constexpr auto newLine{'\n'};
@@ -74,4 +76,5 @@ void UserStandardInputPrompt::clearInputBuffer() const
     while (std::cin.get() != newLine)
     {
     }
+}
 }

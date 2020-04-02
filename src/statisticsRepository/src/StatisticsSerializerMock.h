@@ -4,7 +4,7 @@
 
 #include "StatisticsSerializer.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class StatisticsSerializerMock : public StatisticsSerializer
 {

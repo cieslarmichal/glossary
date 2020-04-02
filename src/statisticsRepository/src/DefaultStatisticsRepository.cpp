@@ -1,8 +1,7 @@
 #include "DefaultStatisticsRepository.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
-
 DefaultStatisticsRepository::DefaultStatisticsRepository(std::unique_ptr<StatisticsStorage> storageInit)
     : storage{std::move(storageInit)}
 {

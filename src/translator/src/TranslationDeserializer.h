@@ -2,9 +2,8 @@
 
 #include "TranslatedText.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 class TranslationDeserializer
 {
 public:

@@ -4,7 +4,7 @@
 
 #include "StatisticsStorage.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class StatisticsMemoryStorage : public StatisticsStorage
 {

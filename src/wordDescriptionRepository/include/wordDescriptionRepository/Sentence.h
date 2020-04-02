@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 using Sentence = std::string;
 using Sentences = std::vector<Sentence>;

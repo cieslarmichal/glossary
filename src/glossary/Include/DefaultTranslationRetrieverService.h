@@ -6,6 +6,8 @@
 #include "translationRepository/TranslationRepository.h"
 #include "translator/Translator.h"
 
+namespace glossary
+{
 class DefaultTranslationRetrieverService : public TranslationRetrieverService
 {
 public:
@@ -26,3 +28,4 @@ private:
     std::unique_ptr<translator::Translator> translator;
     std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
 };
+}

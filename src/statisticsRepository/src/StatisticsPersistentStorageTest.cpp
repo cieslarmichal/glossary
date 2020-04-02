@@ -9,7 +9,7 @@
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
-using namespace statisticsRepository;
+using namespace glossary::statisticsRepository;
 
 namespace
 {
@@ -29,11 +29,18 @@ const WordStatistics wordStats1AfterIncorrectAnswer{englishWord1, 7, 1};
 const Statistics oneWordStatistics{wordStats1};
 const Statistics oneWordStatisticsAfterCorrectAnswer{wordStats1AfterCorrectAnswer};
 const Statistics oneWordStatisticsAfterIncorrectAnswer{wordStats1AfterIncorrectAnswer};
+const Statistics noStatistics{};
 }
 
 class StatisticsPersistentStorageTest : public Test
 {
 public:
+    void expectNoWordStatisticsLoad()
+    {
+        EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return("some content"));
+        EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(noStatistics));
+    }
+
     void expectOneWordStatisticsLoad()
     {
         EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Return("some content"));
@@ -46,9 +53,9 @@ public:
         EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(twoWordsStatistics));
     }
 
-    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<NiceMock<utils::FileAccessMock>>();
+    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
     std::shared_ptr<StatisticsSerializerMock> serializer =
-        std::make_shared<NiceMock<StatisticsSerializerMock>>();
+        std::make_shared<StrictMock<StatisticsSerializerMock>>();
 };
 
 TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
@@ -82,31 +89,32 @@ TEST_F(StatisticsPersistentStorageTest, givenInvalidFile_shouldReturnNoStats)
 
 TEST_F(StatisticsPersistentStorageTest, givenWordStatsAddition_shouldAddWordStatsAndSerialize)
 {
+    expectNoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
-    ASSERT_TRUE(persistentStorage.empty());
     EXPECT_CALL(*fileAccess, write(filepath, "words"));
     EXPECT_CALL(*serializer, serialize(oneWordStatistics)).WillOnce(Return("words"));
 
     persistentStorage.addWordStatistics(wordStats1);
 
-    ASSERT_FALSE(persistentStorage.empty());
+    ASSERT_TRUE(persistentStorage.contains(wordStats1.getEnglishWord()));
 }
 
 TEST_F(StatisticsPersistentStorageTest,
        givenWordStatsAdditionAndNonExistingFile_shouldAddWordStatsAndNotSerialize)
 {
+    expectNoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
-    ASSERT_TRUE(persistentStorage.empty());
     EXPECT_CALL(*fileAccess, write(filepath, "words")).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(oneWordStatistics)).WillOnce(Return("words"));
 
     persistentStorage.addWordStatistics(wordStats1);
 
-    ASSERT_FALSE(persistentStorage.empty());
+    ASSERT_TRUE(persistentStorage.contains(wordStats1.getEnglishWord()));
 }
 
 TEST_F(StatisticsPersistentStorageTest, givenTwoSameWordsStats_shouldAddAndSerializeOnlyOne)
 {
+    expectNoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
 
     EXPECT_CALL(*fileAccess, write(filepath, "words"));
@@ -120,6 +128,7 @@ TEST_F(StatisticsPersistentStorageTest, givenTwoSameWordsStats_shouldAddAndSeria
 
 TEST_F(StatisticsPersistentStorageTest, addTwoDifferentWordsStats_shouldAddAndSerializeBoth)
 {
+    expectNoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
 
     EXPECT_CALL(*fileAccess, write(filepath, "words"));

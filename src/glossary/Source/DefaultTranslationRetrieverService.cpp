@@ -1,5 +1,7 @@
 #include "DefaultTranslationRetrieverService.h"
 
+namespace glossary
+{
 DefaultTranslationRetrieverService::DefaultTranslationRetrieverService(
     std::unique_ptr<translator::Translator> translatorInit,
     std::shared_ptr<translationRepository::TranslationRepository> repo)
@@ -50,4 +52,5 @@ void DefaultTranslationRetrieverService::saveTranslationInRepository(
     const auto newTranslation = translationRepository::Translation{
         translationRepository::SourceText{sourceText}, translationRepository::TranslatedText{translatedText}};
     translationRepository->addTranslation(newTranslation);
+}
 }

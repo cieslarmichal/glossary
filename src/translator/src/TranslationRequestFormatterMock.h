@@ -4,9 +4,8 @@
 
 #include "TranslationRequestFormatter.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 class TranslationRequestFormatterMock : public TranslationRequestFormatter
 {
 public:

@@ -4,7 +4,7 @@
 #include "DefaultWordDescriptionDownloader.h"
 #include "HtmlDescriptionLinesSelector.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 
 DefaultWordDescriptionDownloaderFactory::DefaultWordDescriptionDownloaderFactory(

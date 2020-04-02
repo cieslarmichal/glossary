@@ -6,7 +6,7 @@
 #include "SourceText.h"
 #include "TranslatedText.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 struct Translation
 {

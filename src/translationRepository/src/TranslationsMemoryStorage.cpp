@@ -1,6 +1,6 @@
 #include "TranslationsMemoryStorage.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 
 static auto& getTranslationByPosition(const Translations& translations, Translations::const_iterator position)

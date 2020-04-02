@@ -6,7 +6,7 @@
 #include "Definition.h"
 #include "Example.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 struct DefinitionWithExample
 {

@@ -2,12 +2,11 @@
 
 #include "utils/StringHelper.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 namespace
 {
-// TODO: get key from file and tell ppl to generate their own key from website
+// TODO: get key from file and tell users to generate their own key from website
 // TODO: https://translate.yandex.com/developers/keys
 
 const std::string urlAddress{"https://translate.yandex.net/api/v1.5/tr.json/translate"};

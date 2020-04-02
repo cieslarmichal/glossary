@@ -2,9 +2,8 @@
 
 #include "DefaultTranslationRepositoryFactory.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
-
 std::unique_ptr<TranslationRepositoryFactory>
 TranslationRepositoryFactory::createTranslationRepositoryFactory(
     const std::shared_ptr<const utils::FileAccess>& fileAccess)

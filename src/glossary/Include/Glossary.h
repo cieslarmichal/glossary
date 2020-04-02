@@ -4,9 +4,10 @@
 
 #include "Application.h"
 
-// TODO: QT maybe in future
-// TODO: probabilty
-
+namespace glossary
+{
+// TODO: do frontend in qt
+// TODO: probabilty impact
 class Glossary
 {
 public:
@@ -17,3 +18,4 @@ public:
 private:
     std::unique_ptr<Application> application;
 };
+}

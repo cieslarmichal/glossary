@@ -2,6 +2,8 @@
 
 #include "Words.h"
 
+namespace glossary
+{
 class WordRandomizer
 {
 public:
@@ -9,3 +11,4 @@ public:
 
     virtual Word randomizeWord(const Words&) const = 0;
 };
+}

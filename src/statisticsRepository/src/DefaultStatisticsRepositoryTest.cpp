@@ -5,7 +5,7 @@
 #include "StatisticsStorageMock.h"
 
 using namespace ::testing;
-using namespace statisticsRepository;
+using namespace glossary::statisticsRepository;
 
 namespace
 {

@@ -5,7 +5,7 @@
 #include "LinesSelector.h"
 #include "utils/HtmlTagsDeleter.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class HtmlDescriptionLinesSelector : public LinesSelector
 {

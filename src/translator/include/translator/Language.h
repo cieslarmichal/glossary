@@ -4,7 +4,7 @@
 #include <ostream>
 #include <string>
 
-namespace translator
+namespace glossary::translator
 {
 enum class Language
 {

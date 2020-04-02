@@ -4,7 +4,7 @@
 #include "TranslationsJsonSerializer.h"
 #include "TranslationsPersistentStorage.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 
 DefaultTranslationRepositoryFactory::DefaultTranslationRepositoryFactory(

@@ -1,6 +1,6 @@
 #include "DefaultWordDescriptionRepository.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 DefaultWordDescriptionRepository::DefaultWordDescriptionRepository(
     std::unique_ptr<WordsDescriptionsStorage> storageInit)

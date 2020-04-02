@@ -1,8 +1,6 @@
 #include "WordStatistics.h"
 
-#include <utility>
-
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 
 WordStatistics::WordStatistics(EnglishWord word) : englishWord{std::move(word)}

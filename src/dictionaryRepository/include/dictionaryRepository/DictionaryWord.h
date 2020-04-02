@@ -7,7 +7,7 @@
 #include "boost/optional.hpp"
 #include "boost/optional/optional_io.hpp"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 struct DictionaryWord
 {

@@ -4,6 +4,8 @@
 
 #include "WordDescriptionGenerator.h"
 
+namespace glossary
+{
 class WordDescriptionGeneratorMock : public WordDescriptionGenerator
 {
 public:
@@ -12,3 +14,4 @@ public:
     MOCK_METHOD1(generateWordDescription, boost::optional<wordDescriptionRepository::WordDescription>(
                                               const wordDescriptionRepository::EnglishWord&));
 };
+}

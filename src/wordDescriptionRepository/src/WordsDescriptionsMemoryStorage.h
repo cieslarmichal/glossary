@@ -2,7 +2,7 @@
 
 #include "WordsDescriptionsStorage.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class WordsDescriptionsMemoryStorage : public WordsDescriptionsStorage
 {

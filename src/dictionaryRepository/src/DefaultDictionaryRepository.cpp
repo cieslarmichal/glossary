@@ -1,6 +1,6 @@
 #include "DefaultDictionaryRepository.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 DefaultDictionaryRepository::DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage> storageInit,
                                                          std::unique_ptr<DictionaryWordsReader> reader)

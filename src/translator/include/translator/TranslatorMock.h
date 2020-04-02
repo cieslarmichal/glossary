@@ -4,7 +4,7 @@
 
 #include "Translator.h"
 
-namespace translator
+namespace glossary::translator
 {
 
 class TranslatorMock : public Translator

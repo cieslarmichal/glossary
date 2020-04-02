@@ -2,6 +2,8 @@
 
 #include <thread>
 
+namespace glossary
+{
 WordDescriptionConcurrentGenerator::WordDescriptionConcurrentGenerator(
     std::shared_ptr<WordDescriptionRetrieverService> service)
     : wordDescriptionRetrieverService{std::move(service)}
@@ -59,4 +61,5 @@ void WordDescriptionConcurrentGenerator::generatorWorker(
 unsigned WordDescriptionConcurrentGenerator::getAmountOfThreads() const
 {
     return amountOfSupportedThreadsCalculator.calculate();
+}
 }

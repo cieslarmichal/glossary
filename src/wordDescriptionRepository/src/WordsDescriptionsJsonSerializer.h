@@ -5,7 +5,7 @@
 #include "DescriptionSerializer.h"
 #include "WordsDescriptionsSerializer.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class WordsDescriptionsJsonSerializer : public WordsDescriptionsSerializer
 {

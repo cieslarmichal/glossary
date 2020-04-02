@@ -5,6 +5,8 @@
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
+namespace glossary
+{
 class WordDescriptionRetrieverService
 {
 public:
@@ -13,3 +15,4 @@ public:
     virtual boost::optional<wordDescriptionRepository::WordDescription>
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) = 0;
 };
+}

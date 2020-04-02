@@ -6,12 +6,11 @@
 
 #include "Translation.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 class TranslationRepository
 {
 public:
-    // TODO: add support different languages in storage
     virtual ~TranslationRepository() = default;
 
     virtual void addTranslation(Translation) = 0;

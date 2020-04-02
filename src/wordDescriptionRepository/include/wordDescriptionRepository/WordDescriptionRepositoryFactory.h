@@ -5,7 +5,7 @@
 #include "WordDescriptionRepository.h"
 #include "utils/FileAccess.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class WordDescriptionRepositoryFactory
 {

@@ -7,6 +7,7 @@
 #include "translator/TranslatorMock.h"
 
 using namespace ::testing;
+using namespace glossary;
 using namespace translator;
 using namespace translationRepository;
 

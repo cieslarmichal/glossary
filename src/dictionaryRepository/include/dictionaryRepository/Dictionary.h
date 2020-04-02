@@ -7,7 +7,7 @@
 #include "DictionaryWord.h"
 #include "utils/StlOperators.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 struct Dictionary
 {

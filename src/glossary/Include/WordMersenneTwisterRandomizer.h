@@ -2,6 +2,9 @@
 
 #include "WordRandomizer.h"
 
+namespace glossary
+{
+// TODO: add randomizer class in utils
 class WordMersenneTwisterRandomizer : public WordRandomizer
 {
 public:
@@ -10,3 +13,4 @@ public:
 private:
     Words::size_type getRandomIndex(Words::size_type) const;
 };
+}

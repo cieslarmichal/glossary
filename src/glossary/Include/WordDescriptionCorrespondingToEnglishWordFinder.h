@@ -4,6 +4,8 @@
 
 #include "wordDescriptionRepository/WordDescription.h"
 
+namespace glossary
+{
 class WordDescriptionCorrespondingToEnglishWordFinder
 {
 public:
@@ -11,3 +13,4 @@ public:
     findCorrespondingWordDescription(const wordDescriptionRepository::EnglishWord&,
                                      const wordDescriptionRepository::WordsDescriptions&) const;
 };
+}

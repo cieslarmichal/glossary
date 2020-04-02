@@ -7,7 +7,7 @@
 #include "WordsDescriptionsStorage.h"
 #include "utils/FileAccess.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 class WordsDescriptionsPersistentStorage : public WordsDescriptionsStorage
 {

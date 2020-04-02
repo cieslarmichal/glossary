@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 using EnglishWord = std::string;
 using EnglishWords = std::vector<EnglishWord>;

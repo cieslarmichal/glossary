@@ -7,7 +7,7 @@
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
-using namespace dictionaryRepository;
+using namespace glossary::dictionaryRepository;
 
 namespace
 {
@@ -33,7 +33,6 @@ const std::string emptyContent{};
 class DictionaryWordsCsvFileReaderTest : public Test
 {
 public:
-    // TODO: change all NiceMock to StrictMock :)
     std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
     DictionaryWordsCsvFileReader reader{fileAccess};
 };

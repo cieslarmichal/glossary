@@ -2,7 +2,7 @@
 
 #include "Translation.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 class TranslationsSerializer
 {

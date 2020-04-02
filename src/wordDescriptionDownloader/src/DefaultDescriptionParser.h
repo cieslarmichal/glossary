@@ -2,7 +2,7 @@
 
 #include "DescriptionParser.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class DefaultDescriptionParser : public DescriptionParser
 {

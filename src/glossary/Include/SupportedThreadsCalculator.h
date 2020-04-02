@@ -2,6 +2,8 @@
 
 #include "boost/optional.hpp"
 
+namespace glossary
+{
 class SupportedThreadsCalculator
 {
 public:
@@ -13,3 +15,4 @@ private:
 
     static const unsigned defaultAmountOfThreads;
 };
+}

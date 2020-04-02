@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 using SourceText = std::string;
 }

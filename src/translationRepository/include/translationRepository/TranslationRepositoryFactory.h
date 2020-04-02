@@ -5,7 +5,7 @@
 #include "TranslationRepository.h"
 #include "utils/FileAccess.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 class TranslationRepositoryFactory
 {

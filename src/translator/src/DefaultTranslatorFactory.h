@@ -3,7 +3,7 @@
 #include "TranslatorFactory.h"
 #include "webConnection/HttpHandler.h"
 
-namespace translator
+namespace glossary::translator
 {
 class DefaultTranslatorFactory : public TranslatorFactory
 {

@@ -2,6 +2,8 @@
 
 #include <sstream>
 
+namespace glossary
+{
 size_t DefaultWordViewFormatter::amountOfDefinitionsToView{5};
 size_t DefaultWordViewFormatter::amountOfSentencesToView{2};
 
@@ -49,4 +51,5 @@ DefaultWordViewFormatter::getDescription(const wordDescriptionRepository::Descri
     }
 
     return wordDescriptionView.str();
+}
 }

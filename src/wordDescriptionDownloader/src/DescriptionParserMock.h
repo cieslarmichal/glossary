@@ -4,7 +4,7 @@
 
 #include "DescriptionParser.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class DescriptionParserMock : public DescriptionParser
 {

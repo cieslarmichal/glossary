@@ -2,6 +2,8 @@
 
 #include "WordViewFormatter.h"
 
+namespace glossary
+{
 class DefaultWordViewFormatter : public WordViewFormatter
 {
 public:
@@ -14,3 +16,4 @@ private:
     static size_t amountOfDefinitionsToView;
     static size_t amountOfSentencesToView;
 };
+}

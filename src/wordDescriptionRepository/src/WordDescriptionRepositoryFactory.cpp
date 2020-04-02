@@ -3,7 +3,7 @@
 #include "DefaultWordDescriptionRepositoryFactory.h"
 #include "utils/FileAccess.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 std::unique_ptr<WordDescriptionRepositoryFactory>
 WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(

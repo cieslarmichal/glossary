@@ -1,6 +1,6 @@
 #include "StatisticsMemoryStorage.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 
 static auto& getWordStatisticsByPosition(Statistics& statistics, Statistics::const_iterator position)

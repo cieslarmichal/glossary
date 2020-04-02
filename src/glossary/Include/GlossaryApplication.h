@@ -16,8 +16,8 @@
 #include "utils/FileAccess.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
 
-// TODO: move std::cin from UserPrompt to application
-
+namespace glossary
+{
 class GlossaryApplication : public Application
 {
 public:
@@ -62,3 +62,4 @@ private:
     UniqueWords glossaryWords;
     Words wordsWithTranslation;
 };
+}

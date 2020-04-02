@@ -2,14 +2,12 @@
 
 #include "DefaultWordDescriptionDownloaderFactory.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
-
 std::unique_ptr<WordDescriptionDownloaderFactory>
 WordDescriptionDownloaderFactory::createWordDescriptionDownloaderFactory(
     const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
 {
     return std::make_unique<DefaultWordDescriptionDownloaderFactory>(httpHandler);
 }
-
 }

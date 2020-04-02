@@ -2,6 +2,8 @@
 
 #include "Word.h"
 
+namespace glossary
+{
 class WordViewFormatter
 {
 public:
@@ -10,3 +12,4 @@ public:
     virtual std::string formatWordView(const Word&) const = 0;
     virtual std::string formatPolishWordView(const PolishWord&) const = 0;
 };
+}

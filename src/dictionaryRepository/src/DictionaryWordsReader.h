@@ -4,7 +4,7 @@
 
 #include "Dictionary.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryWordsReader
 {

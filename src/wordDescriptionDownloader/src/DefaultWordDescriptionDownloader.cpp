@@ -5,7 +5,7 @@
 #include "HtmlDescriptionLinesSelector.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 const std::string DefaultWordDescriptionDownloader::urlAddress{"https://www.merriam-webster.com/dictionary/"};
 
@@ -25,15 +25,13 @@ DefaultWordDescriptionDownloader::downloadWordDescription(
 {
     const auto httpContent = getHttpContent(englishWord);
     if (not httpContent)
-    {
         return boost::none;
-    }
+
     const auto linesWithDescription = linesSelector->selectLines(*httpContent);
 
     if (const auto wordDescription = descriptionParser->parse(linesWithDescription))
-    {
         return wordDescriptionRepository::WordDescription{englishWord, *wordDescription};
-    }
+
     return boost::none;
 }
 

@@ -4,7 +4,7 @@
 
 #include "TranslationsStorage.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 class TranslationsStorageMock : public TranslationsStorage
 {

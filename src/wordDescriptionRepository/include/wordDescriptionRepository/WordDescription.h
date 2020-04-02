@@ -3,7 +3,7 @@
 #include "Description.h"
 #include "EnglishWord.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 struct WordDescription
 {

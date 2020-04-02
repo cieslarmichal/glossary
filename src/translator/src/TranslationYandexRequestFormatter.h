@@ -2,9 +2,8 @@
 
 #include "TranslationRequestFormatter.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 class TranslationYandexRequestFormatter : public TranslationRequestFormatter
 {
 public:

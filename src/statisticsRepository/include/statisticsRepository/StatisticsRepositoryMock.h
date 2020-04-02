@@ -4,9 +4,8 @@
 
 #include "StatisticsRepository.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
-
 class StatisticsRepositoryMock : public StatisticsRepository
 {
 public:

@@ -6,6 +6,8 @@
 
 #include "Word.h"
 
+namespace glossary
+{
 class WordCreator
 {
 public:
@@ -13,3 +15,4 @@ public:
                                  const boost::optional<PolishWord>&,
                                  const boost::optional<wordDescriptionRepository::WordDescription>&) const;
 };
+}

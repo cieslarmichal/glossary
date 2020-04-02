@@ -4,7 +4,7 @@
 
 #include "DictionarySerializer.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionarySerializerMock : public DictionarySerializer
 {

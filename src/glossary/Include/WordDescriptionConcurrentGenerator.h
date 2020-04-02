@@ -7,10 +7,11 @@
 #include "WordDescriptionRetrieverService.h"
 #include "utils/ThreadSafeQueue.h"
 
+namespace glossary
+{
 class WordDescriptionConcurrentGenerator : public WordDescriptionGenerator
 {
 public:
-    // TODO: refactor, make few classes from this class
     explicit WordDescriptionConcurrentGenerator(std::shared_ptr<WordDescriptionRetrieverService>);
 
     wordDescriptionRepository::WordsDescriptions
@@ -26,3 +27,4 @@ private:
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
     SupportedThreadsCalculator amountOfSupportedThreadsCalculator;
 };
+}

@@ -20,6 +20,8 @@
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
 
+namespace glossary
+{
 GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
@@ -332,4 +334,5 @@ void GlossaryApplication::getEnglishWordDescription() const
 void GlossaryApplication::showStatistics() const
 {
     std::cout << statisticsRepository->getStatistics() << "\n";
+}
 }

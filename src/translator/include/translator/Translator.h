@@ -6,7 +6,7 @@
 #include "SourceText.h"
 #include "TranslatedText.h"
 
-namespace translator
+namespace glossary::translator
 {
 class Translator
 {

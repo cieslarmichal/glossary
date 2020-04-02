@@ -8,7 +8,7 @@
 #include "webConnection/HttpHandler.h"
 #include "wordDescriptionRepository/EnglishWord.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class DefaultWordDescriptionDownloader : public WordDescriptionDownloader
 {

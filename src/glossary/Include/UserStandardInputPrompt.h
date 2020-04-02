@@ -2,6 +2,8 @@
 
 #include "UserPrompt.h"
 
+namespace glossary
+{
 class UserStandardInputPrompt : public UserPrompt
 {
 public:
@@ -15,3 +17,4 @@ private:
     bool yesNoAnswerIsInvalid(const std::string&) const;
     void clearInputBuffer() const;
 };
+}

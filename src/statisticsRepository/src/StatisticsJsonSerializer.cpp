@@ -4,7 +4,7 @@
 
 #include "boost/algorithm/cxx11/all_of.hpp"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 namespace
 {

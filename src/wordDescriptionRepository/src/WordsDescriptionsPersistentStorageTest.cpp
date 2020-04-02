@@ -9,7 +9,7 @@
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
-using namespace wordDescriptionRepository;
+using namespace glossary::wordDescriptionRepository;
 
 namespace
 {
@@ -33,9 +33,9 @@ public:
         EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(words));
     }
 
-    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<NiceMock<utils::FileAccessMock>>();
+    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
     std::shared_ptr<WordsDescriptionsSerializerMock> serializer =
-        std::make_shared<NiceMock<WordsDescriptionsSerializerMock>>();
+        std::make_shared<StrictMock<WordsDescriptionsSerializerMock>>();
 };
 
 TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)

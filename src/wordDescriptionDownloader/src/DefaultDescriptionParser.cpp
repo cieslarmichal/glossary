@@ -1,8 +1,10 @@
 #include "DefaultDescriptionParser.h"
 
+#include <iterator>
+
 #include "boost/algorithm/string.hpp"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 namespace
 {
@@ -28,30 +30,22 @@ const std::string examplePrefix{"// "};
 const std::string sentencePrefix{"; "};
 }
 
-boost::optional<wordDescriptionRepository::Description>
-DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
+using namespace wordDescriptionRepository;
+
+boost::optional<Description> DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
 {
-    wordDescriptionRepository::Description description;
+    Description description;
     bool previousLineIsDefinition = false;
 
-    wordDescriptionRepository::Definition definition;
+    Definition definition;
 
-    for (const auto& line : lines)
+    for (auto lineIter = lines.begin(); lineIter != lines.end(); lineIter++)
     {
-        if (previousLineIsDefinition && !isExample(line))
+        const auto& line = *lineIter;
+        if (previousLineIsDefinition)
         {
-            description.definitionsWithExamples.push_back({definition, boost::none});
-            previousLineIsDefinition = false;
-        }
-
-        if (isSentence(line))
-        {
-            description.sentences.push_back(line);
-        }
-
-        if (previousLineIsDefinition && isExample(line))
-        {
-            description.definitionsWithExamples.push_back({definition, line});
+            boost::optional<Example> example = isExample(line) ? boost::optional<Example>(line) : boost::none;
+            description.definitionsWithExamples.push_back({definition, example});
             previousLineIsDefinition = false;
         }
 
@@ -59,17 +53,16 @@ DefaultDescriptionParser::parse(const std::vector<std::string>& lines) const
         {
             definition = line;
             previousLineIsDefinition = true;
-            if (line == lines.back())
-            {
+            if (std::next(lineIter) == lines.end())
                 description.definitionsWithExamples.push_back({definition, boost::none});
-            }
         }
+
+        if (isSentence(line))
+            description.sentences.push_back(line);
     }
 
     if (description.empty())
-    {
         return boost::none;
-    }
 
     removeMarks(description);
     removeDuplicationsInDescription(description);
@@ -84,15 +77,11 @@ void removeMarks(wordDescriptionRepository::Description& description)
     {
         removeDefinitionMarks(definitionAndExample.definition);
         if (definitionAndExample.example)
-        {
             removeExampleMarks(*definitionAndExample.example);
-        }
     }
 
     for (auto& sentence : description.sentences)
-    {
         removeSentenceMarks(sentence);
-    }
 }
 
 void removeDuplicationsInDescription(wordDescriptionRepository::Description& description)

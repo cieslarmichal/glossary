@@ -5,7 +5,7 @@
 
 #include "EnglishWord.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class WordStatistics
 {

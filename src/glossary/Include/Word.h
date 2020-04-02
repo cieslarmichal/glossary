@@ -11,6 +11,8 @@
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
+namespace glossary
+{
 struct Word
 {
     Word(wordDescriptionRepository::EnglishWord englishWordInit, boost::optional<PolishWord> polishWordInit,
@@ -54,4 +56,5 @@ inline std::ostream& operator<<(std::ostream& os, const Word& word)
 inline std::ostream& operator<<(std::ostream& os, const UniqueWord& uniqueWord)
 {
     return os << *uniqueWord;
+}
 }

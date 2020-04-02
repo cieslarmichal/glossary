@@ -4,7 +4,7 @@
 
 #include "wordDescriptionRepository/Description.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class DescriptionParser
 {

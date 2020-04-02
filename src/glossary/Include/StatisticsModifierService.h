@@ -2,6 +2,8 @@
 
 #include "statisticsRepository/EnglishWord.h"
 
+namespace glossary
+{
 class StatisticsModifierService
 {
 public:
@@ -10,3 +12,4 @@ public:
     virtual void addCorrectAnswer(const statisticsRepository::EnglishWord&) = 0;
     virtual void addIncorrectAnswer(const statisticsRepository::EnglishWord&) = 0;
 };
+}

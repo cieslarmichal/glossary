@@ -5,7 +5,7 @@
 #include "StatisticsRepository.h"
 #include "StatisticsStorage.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class DefaultStatisticsRepository : public StatisticsRepository
 {

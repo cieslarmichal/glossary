@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace translator
+namespace glossary::translator
 {
 using TranslatedText = std::string;
 }

@@ -2,7 +2,7 @@
 
 #include "WordStatistics.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 using Statistics = std::vector<WordStatistics>;
 }

@@ -4,7 +4,7 @@
 
 #include "LinesSelector.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class LinesSelectorMock : public LinesSelector
 {

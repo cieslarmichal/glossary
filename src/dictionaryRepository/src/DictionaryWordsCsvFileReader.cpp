@@ -6,7 +6,7 @@
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 namespace
 {

@@ -5,7 +5,7 @@
 #include "TranslationsStorageMock.h"
 
 using namespace ::testing;
-using namespace translationRepository;
+using namespace glossary::translationRepository;
 
 namespace
 {

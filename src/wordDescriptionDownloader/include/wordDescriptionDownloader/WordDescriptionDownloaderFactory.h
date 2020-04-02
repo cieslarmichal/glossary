@@ -5,7 +5,7 @@
 #include "WordDescriptionDownloader.h"
 #include "webConnection/HttpHandler.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class WordDescriptionDownloaderFactory
 {

@@ -5,6 +5,8 @@
 #include "PolishWord.h"
 #include "utils/StringHelper.h"
 
+namespace glossary
+{
 namespace
 {
 std::vector<std::string> correctYesAnswers{{"y"}, {"yes"}};
@@ -22,4 +24,5 @@ bool DefaultAnswerValidator::validateYesAnswer(const UserInput& userInput) const
                     [userInput](const auto& yes) { return yes == utils::getLowerCases(userInput); });
 
     return isYesAnswer;
+}
 }

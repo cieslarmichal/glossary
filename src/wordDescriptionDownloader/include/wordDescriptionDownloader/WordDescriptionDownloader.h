@@ -2,7 +2,7 @@
 
 #include "wordDescriptionRepository/WordDescription.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class WordDescriptionDownloader
 {

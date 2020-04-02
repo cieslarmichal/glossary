@@ -2,9 +2,8 @@
 
 #include "DefaultStatisticsRepositoryFactory.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
-
 std::unique_ptr<StatisticsRepositoryFactory> StatisticsRepositoryFactory::createStatisticsRepositoryFactory(
     const std::shared_ptr<const utils::FileAccess>& fileAccess)
 {

@@ -2,9 +2,8 @@
 
 #include "utils/StringHelper.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
-
 namespace
 {
 constexpr auto wordSeparator{","};

@@ -2,6 +2,8 @@
 
 #include "UserInput.h"
 
+namespace glossary
+{
 class UserPrompt
 {
 public:
@@ -11,3 +13,4 @@ public:
     virtual int getIntInput() const = 0;
     virtual UserInput yesPrompt() const = 0;
 };
+}

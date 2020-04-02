@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace dictionaryRepository;
+using namespace glossary::dictionaryRepository;
 
 namespace
 {

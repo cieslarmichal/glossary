@@ -4,7 +4,7 @@
 
 #include "boost/algorithm/cxx11/all_of.hpp"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 namespace
 {

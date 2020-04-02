@@ -2,7 +2,7 @@
 
 #include "DictionaryRepositoryFactory.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DefaultDictionaryRepositoryFactory : public DictionaryRepositoryFactory
 {

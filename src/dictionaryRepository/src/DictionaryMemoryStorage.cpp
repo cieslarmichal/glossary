@@ -1,6 +1,6 @@
 #include "DictionaryMemoryStorage.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 static auto& getDictionaryByPosition(Dictionaries& dictionaries, Dictionaries::const_iterator position)
 {
@@ -17,17 +17,13 @@ static auto& getDictionaryByPosition(const Dictionaries& dictionaries, Dictionar
 void DictionaryMemoryStorage::addDictionary(const DictionaryName& dictionaryName)
 {
     if (not dictionaryExists(dictionaryName))
-    {
         dictionaries.push_back(Dictionary{dictionaryName, DictionaryWords{}});
-    }
 }
 
 void DictionaryMemoryStorage::addDictionary(const Dictionary& dictionary)
 {
     if (not dictionaryExists(dictionary.name))
-    {
         dictionaries.emplace_back(dictionary);
-    }
 }
 
 void DictionaryMemoryStorage::addWordToDictionary(const DictionaryWord& dictionaryWord,
@@ -44,9 +40,7 @@ void DictionaryMemoryStorage::addWordToDictionary(const DictionaryWord& dictiona
 void DictionaryMemoryStorage::removeDictionary(const DictionaryName& dictionaryName)
 {
     if (dictionaryExists(dictionaryName))
-    {
         dictionaries.erase(findDictionaryPosition(dictionaryName));
-    }
 }
 
 void DictionaryMemoryStorage::removeWordFromDictionary(const std::string& englishWord,
@@ -63,9 +57,7 @@ boost::optional<Dictionary> DictionaryMemoryStorage::getDictionary(const Diction
 {
     auto dictionaryPosition = findDictionaryPosition(dictionaryName);
     if (dictionaryPosition != dictionaries.end())
-    {
         return getDictionaryByPosition(dictionaries, dictionaryPosition);
-    }
     return boost::none;
 }
 

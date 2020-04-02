@@ -1,5 +1,7 @@
 #include "WordDescriptionCorrespondingToEnglishWordFinder.h"
 
+namespace glossary
+{
 boost::optional<wordDescriptionRepository::WordDescription>
 WordDescriptionCorrespondingToEnglishWordFinder::findCorrespondingWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWordToFind,
@@ -8,9 +10,8 @@ WordDescriptionCorrespondingToEnglishWordFinder::findCorrespondingWordDescriptio
     for (const auto& wordDescription : wordsDescriptions)
     {
         if (wordDescription.englishWord == englishWordToFind)
-        {
             return wordDescription;
-        }
     }
     return boost::none;
+}
 }

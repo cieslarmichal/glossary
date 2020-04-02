@@ -7,7 +7,7 @@
 #include "StatisticsStorage.h"
 #include "utils/FileAccess.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class StatisticsPersistentStorage : public StatisticsStorage
 {

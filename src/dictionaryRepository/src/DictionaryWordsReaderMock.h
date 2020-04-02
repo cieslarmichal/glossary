@@ -4,7 +4,7 @@
 
 #include "DictionaryWordsReader.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryWordsReaderMock : public DictionaryWordsReader
 {

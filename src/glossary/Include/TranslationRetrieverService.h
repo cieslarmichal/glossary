@@ -6,6 +6,8 @@
 #include "translator/SourceText.h"
 #include "translator/TranslatedText.h"
 
+namespace glossary
+{
 class TranslationRetrieverService
 {
 public:
@@ -15,3 +17,4 @@ public:
                                                                             translator::SourceLanguage,
                                                                             translator::TargetLanguage) = 0;
 };
+}

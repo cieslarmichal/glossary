@@ -7,8 +7,7 @@
 #include "Translator.h"
 #include "webConnection/HttpHandler.h"
 
-// TODO: check behaviour when returning multiple translations, polish name eg. zamek -castle, zip
-namespace translator
+namespace glossary::translator
 {
 class DefaultTranslator : public Translator
 {

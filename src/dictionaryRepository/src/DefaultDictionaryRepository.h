@@ -6,7 +6,7 @@
 #include "DictionaryStorage.h"
 #include "DictionaryWordsReader.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DefaultDictionaryRepository : public DictionaryRepository
 {

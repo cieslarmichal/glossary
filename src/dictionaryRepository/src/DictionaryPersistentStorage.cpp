@@ -4,7 +4,7 @@
 
 #include "utils/GetProjectPath.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 const std::string DictionaryPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
 const std::string DictionaryPersistentStorage::filename{directory + "dictionaries.txt"};

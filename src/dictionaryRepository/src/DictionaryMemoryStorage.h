@@ -2,7 +2,7 @@
 
 #include "DictionaryStorage.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryMemoryStorage : public DictionaryStorage
 {

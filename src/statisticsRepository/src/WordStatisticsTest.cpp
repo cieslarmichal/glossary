@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace statisticsRepository;
+using namespace glossary::statisticsRepository;
 
 class WordStatisticsTest : public Test
 {

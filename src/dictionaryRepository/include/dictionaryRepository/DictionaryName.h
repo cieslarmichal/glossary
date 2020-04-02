@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 using DictionaryName = std::string;
 }

@@ -4,9 +4,8 @@
 #include "TranslationJsonDeserializer.h"
 #include "TranslationYandexRequestFormatter.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 DefaultTranslatorFactory::DefaultTranslatorFactory(
     std::shared_ptr<const webConnection::HttpHandler> httpHandlerInit)
     : httpHandler{std::move(httpHandlerInit)}

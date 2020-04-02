@@ -4,7 +4,7 @@
 #include "WordsDescriptionsJsonSerializer.h"
 #include "WordsDescriptionsPersistentStorage.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 DefaultWordDescriptionRepositoryFactory::DefaultWordDescriptionRepositoryFactory(
     std::shared_ptr<const utils::FileAccess> fileAccessInit)

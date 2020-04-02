@@ -4,7 +4,7 @@
 
 #include "TranslationRepository.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 
 class TranslationRepositoryMock : public TranslationRepository

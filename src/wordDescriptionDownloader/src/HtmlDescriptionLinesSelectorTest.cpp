@@ -6,7 +6,7 @@
 #include "testVariables/ParsedGlossaryHtmlContent.h"
 
 using namespace ::testing;
-using namespace wordDescriptionDownloader;
+using namespace glossary::wordDescriptionDownloader;
 
 namespace
 {

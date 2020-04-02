@@ -4,7 +4,7 @@
 
 #include "webConnection/exceptions/ConnectionFailed.h"
 
-namespace translator
+namespace glossary::translator
 {
 namespace
 {

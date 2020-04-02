@@ -5,7 +5,7 @@
 #include "DictionaryRepository.h"
 #include "utils/FileAccess.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 class DictionaryRepositoryFactory
 {

@@ -1,5 +1,7 @@
 #include "DefaultWordsMerger.h"
 
+namespace glossary
+{
 UniqueWords
 DefaultWordsMerger::mergeWords(const dictionaryRepository::DictionaryWords& dictionaryWords,
                                const wordDescriptionRepository::WordsDescriptions& wordsDescriptions) const
@@ -29,4 +31,5 @@ std::unique_ptr<Word> DefaultWordsMerger::getCreatedWord(
     const boost::optional<wordDescriptionRepository::WordDescription>& wordDescription) const
 {
     return wordCreator.create(englishWord, polishTranslation, wordDescription);
+}
 }

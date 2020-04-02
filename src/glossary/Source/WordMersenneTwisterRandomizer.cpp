@@ -3,6 +3,8 @@
 #include <random>
 #include <stdexcept>
 
+namespace glossary
+{
 Word WordMersenneTwisterRandomizer::randomizeWord(const Words& words) const
 {
     // TODO: fix this class, so many exceptions
@@ -20,4 +22,5 @@ Words::size_type WordMersenneTwisterRandomizer::getRandomIndex(Words::size_type 
     std::mt19937 mt(rd());
     std::uniform_int_distribution<int> dist(0, int(size) - 1);
     return Words::size_type(dist(mt));
+}
 }

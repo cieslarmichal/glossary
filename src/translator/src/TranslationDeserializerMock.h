@@ -4,9 +4,8 @@
 
 #include "TranslationDeserializer.h"
 
-namespace translator
+namespace glossary::translator
 {
-
 class TranslationDeserializerMock : public TranslationDeserializer
 {
 public:

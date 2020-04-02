@@ -2,6 +2,9 @@
 
 #include <thread>
 
+namespace glossary
+{
+// TODO: move to utils
 const unsigned SupportedThreadsCalculator::defaultAmountOfThreads{4};
 
 unsigned int SupportedThreadsCalculator::calculate() const
@@ -25,4 +28,5 @@ boost::optional<unsigned> SupportedThreadsCalculator::getAmountOfSupportedThread
 bool SupportedThreadsCalculator::amountOfSupportedThreadsIsSpecified(unsigned amountOfThreads) const
 {
     return amountOfThreads != 0;
+}
 }

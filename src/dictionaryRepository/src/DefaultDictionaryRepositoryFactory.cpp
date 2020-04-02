@@ -5,7 +5,7 @@
 #include "DictionaryPersistentStorage.h"
 #include "DictionaryWordsCsvFileReader.h"
 
-namespace dictionaryRepository
+namespace glossary::dictionaryRepository
 {
 DefaultDictionaryRepositoryFactory::DefaultDictionaryRepositoryFactory(
     std::shared_ptr<const utils::FileAccess> fileAccessInit)

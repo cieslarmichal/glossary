@@ -4,7 +4,7 @@
 
 #include "statisticsRepository/Statistics.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class StatisticsStorage
 {

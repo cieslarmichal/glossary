@@ -1,17 +1,15 @@
 #include "HtmlDescriptionLinesSelector.h"
 
-#include <boost/algorithm/string/trim.hpp>
 #include <map>
-
-#include "boost/assign/list_of.hpp"
 
 #include "utils/HtmlTagsDeleter.h"
 #include "utils/StringHelper.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 namespace
 {
+// TODO: synonyms  starts with <ul class="mw-list">, ends with </ul>
 struct TagWithPosition;
 bool operator<(const TagWithPosition& ls, const TagWithPosition& rs);
 std::vector<std::string> getTagsContent(const std::string& content);
@@ -22,7 +20,6 @@ TagWithPosition findNearestTagPosition(const std::string& content);
 std::vector<TagWithPosition> getGlossaryTagsWithPositions(const std::string& content,
                                                           size_t startPosition = 0);
 TagWithPosition getTagPositionWithLowestPosition(const std::vector<TagWithPosition>& tagsWithPositions);
-void trimEmptySpaces(std::string& line);
 
 const std::string htmlDefinitionTag{R"(<span class="dtText"><strong class="mw_t_bc">)"};
 const std::string htmlSentenceTag1{"<span class=\"t has-aq\">"};
@@ -36,11 +33,11 @@ const std::string htmlFindProlongationTag2{"<span class=\"text-uppercase\">"};
 
 const std::string examplePrefix{"// "};
 const std::string sentencePrefix{"; "};
-std::map<std::string, std::string> tagPrefixMapping =
-    boost::assign::map_list_of(htmlExampleTag1, examplePrefix)(htmlExampleTag2, examplePrefix)(
-        htmlExampleTag3, examplePrefix)(htmlSentenceTag1, sentencePrefix)(htmlSentenceTag2, sentencePrefix);
-
-// TODO: synonyms  starts with <ul class="mw-list">, ends with </ul>
+std::map<std::string, std::string> tagPrefixMapping = {{htmlExampleTag1, examplePrefix},
+                                                       {htmlExampleTag2, examplePrefix},
+                                                       {htmlExampleTag3, examplePrefix},
+                                                       {htmlSentenceTag1, sentencePrefix},
+                                                       {htmlSentenceTag2, sentencePrefix}};
 }
 
 HtmlDescriptionLinesSelector::HtmlDescriptionLinesSelector()
@@ -99,7 +96,7 @@ std::vector<std::string> getTagsContent(const std::string& contentInit)
                 auto tagContent =
                     utils::substring(content, startTagWithPosition.position + startTagWithPosition.tag.size(),
                                      endTagPos.position);
-                trimEmptySpaces(tagContent);
+                utils::trim(tagContent);
                 const auto contentWithPrefix = startTagWithPosition.getPrefix() + tagContent;
                 tagsContent.push_back(contentWithPrefix);
                 content = content.substr(endTagPos.position);
@@ -181,17 +178,9 @@ TagWithPosition getTagPositionWithLowestPosition(const std::vector<TagWithPositi
     for (const auto& tagWithPosition : tagsWithPositions)
     {
         if (tagWithPosition < tagWithLowestPosition)
-        {
             tagWithLowestPosition = tagWithPosition;
-        }
     }
-
     return tagWithLowestPosition;
-}
-
-void trimEmptySpaces(std::string& line)
-{
-    boost::algorithm::trim(line);
 }
 
 }

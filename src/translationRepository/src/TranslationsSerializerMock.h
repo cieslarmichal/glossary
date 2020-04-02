@@ -4,7 +4,7 @@
 
 #include "TranslationsSerializer.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 class TranslationsSerializerMock : public TranslationsSerializer
 {

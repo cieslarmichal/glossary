@@ -2,7 +2,7 @@
 
 #include "WordDescriptionDownloaderFactory.h"
 
-namespace wordDescriptionDownloader
+namespace glossary::wordDescriptionDownloader
 {
 class DefaultWordDescriptionDownloaderFactory : public WordDescriptionDownloaderFactory
 {

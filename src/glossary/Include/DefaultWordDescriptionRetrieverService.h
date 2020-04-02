@@ -6,6 +6,8 @@
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
 
+namespace glossary
+{
 class DefaultWordDescriptionRetrieverService : public WordDescriptionRetrieverService
 {
 public:
@@ -26,3 +28,4 @@ private:
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
 };
+}

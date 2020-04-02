@@ -1,8 +1,7 @@
 #include "DefaultTranslationRepository.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
-
 DefaultTranslationRepository::DefaultTranslationRepository(std::unique_ptr<TranslationsStorage> storageInit)
     : storage{std::move(storageInit)}
 {

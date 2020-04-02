@@ -1,6 +1,6 @@
 #include "WordsDescriptionsMemoryStorage.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 void WordsDescriptionsMemoryStorage::addWordDescription(const WordDescription& wordDescription)
 {

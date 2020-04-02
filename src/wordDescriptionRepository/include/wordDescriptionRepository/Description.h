@@ -7,7 +7,7 @@
 #include "DefinitionWithExample.h"
 #include "Sentence.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 struct Description
 {

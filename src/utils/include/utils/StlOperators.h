@@ -14,9 +14,7 @@ std::ostream& printRange(std::ostream& os, Iterator begin, Iterator end)
     {
         os << *begin;
         for (auto it = std::next(begin); it != end; ++it)
-        {
             os << ", " << *it;
-        }
     }
     return os << "}";
 }

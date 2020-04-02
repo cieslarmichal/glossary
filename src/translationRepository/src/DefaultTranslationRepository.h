@@ -5,7 +5,7 @@
 #include "TranslationRepository.h"
 #include "TranslationsStorage.h"
 
-namespace translationRepository
+namespace glossary::translationRepository
 {
 class DefaultTranslationRepository : public TranslationRepository
 {

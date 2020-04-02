@@ -4,7 +4,7 @@
 
 #include "WordsDescriptionsSerializer.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 
 class WordsDescriptionsSerializerMock : public WordsDescriptionsSerializer

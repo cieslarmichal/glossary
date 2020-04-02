@@ -5,7 +5,7 @@
 #include "EnglishWord.h"
 #include "Statistics.h"
 
-namespace statisticsRepository
+namespace glossary::statisticsRepository
 {
 class StatisticsRepository
 {

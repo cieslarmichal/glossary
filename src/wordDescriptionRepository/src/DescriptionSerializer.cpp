@@ -1,6 +1,6 @@
 #include "DescriptionSerializer.h"
 
-namespace wordDescriptionRepository
+namespace glossary::wordDescriptionRepository
 {
 namespace
 {
