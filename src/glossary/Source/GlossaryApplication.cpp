@@ -260,9 +260,7 @@ void GlossaryApplication::listDictionaryWordsFromDictionary()
         std::find_if(dictionaries.begin(), dictionaries.end(),
                      [&dictionaryName](const auto& dictionary) { return dictionary.name == dictionaryName; });
     if (foundDictionary != dictionaries.end())
-    {
         std::cout << foundDictionary->words << "\n";
-    }
     else
         std::cout << "Dictionary not found\n";
 }

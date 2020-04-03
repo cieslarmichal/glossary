@@ -8,6 +8,7 @@ set(SOURCES
         src/DefaultFileAccessFactory.cpp
         src/FileExtensionsFilter.cpp
         src/FilenamePathFilter.cpp
+        src/RandomNumberMersenneTwisterGenerator.cpp
         include/utils/StlOperators.h
         )
 
@@ -20,6 +21,7 @@ set(UT_SOURCES
         src/ThreadSafeQueueTest.cpp
         src/FileExtensionsFilterTest.cpp
         src/FilenamePathFilterTest.cpp
+        src/RandomNumberMersenneTwisterGeneratorTest.cpp
         )
 
 
