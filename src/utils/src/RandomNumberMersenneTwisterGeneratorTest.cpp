@@ -22,11 +22,18 @@ TEST_F(RandomNumberMersenneTwisterGeneratorTest, givenInvalidRangeArguments_shou
     ASSERT_THROW(randomGenerator.generate(rangeEnd, rangeStart), std::invalid_argument);
 }
 
+TEST_F(RandomNumberMersenneTwisterGeneratorTest, givenRangeWithSameNumberSection_shouldGenerateThisNumber)
+{
+    const auto actualRandomNumber = randomGenerator.generate(2,2);
+
+    ASSERT_EQ(actualRandomNumber, 2);
+}
+
 TEST_F(RandomNumberMersenneTwisterGeneratorTest,
        givenValidRangeArguments_shouldGenerateNumberThatIsInGivenRange)
 {
-    const auto randomNumber = randomGenerator.generate(rangeStart, rangeEnd);
+    const auto actualRandomNumber = randomGenerator.generate(rangeStart, rangeEnd);
 
-    ASSERT_TRUE(randomNumber >= rangeStart);
-    ASSERT_TRUE(randomNumber <= rangeEnd);
+    ASSERT_TRUE(actualRandomNumber >= rangeStart);
+    ASSERT_TRUE(actualRandomNumber <= rangeEnd);
 }

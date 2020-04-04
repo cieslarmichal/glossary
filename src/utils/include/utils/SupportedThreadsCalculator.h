@@ -2,7 +2,7 @@
 
 #include "boost/optional.hpp"
 
-namespace glossary
+namespace utils
 {
 class SupportedThreadsCalculator
 {

@@ -22,8 +22,6 @@ const WordDescription wordDescription2{
     Description{DefinitionsWithExamples{DefinitionWithExample{Definition{"definition"}, Example{"example"}}},
                 {}}};
 const WordDescription wordDescription3{englishWord3, Description{}};
-const boost::optional<WordDescription> wordDescription1Opt{wordDescription1};
-const boost::optional<WordDescription> wordDescription2Opt{wordDescription2};
 const WordsDescriptions expectedWordsDescriptions{wordDescription1, wordDescription2, wordDescription3};
 }
 
@@ -37,20 +35,10 @@ public:
 };
 
 TEST_F(WordDescriptionGeneratorImplTest,
-       givenEnglishWordAndServiceDoesNotContainWordDescription_shouldReturnWordDescriptionWithNoDescription)
-{
-    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord1)).WillOnce(Return(boost::none));
-
-    const auto actualWordDescription = generator.generateWordDescription(englishWord1);
-
-    ASSERT_EQ(actualWordDescription, wordDescription1);
-}
-
-TEST_F(WordDescriptionGeneratorImplTest,
-       givenEnglishWordAndServiceContainsWordDescription_shouldReturnWordDescription)
+       givenEnglishWord_shouldReturnWordDescription)
 {
     EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord2))
-        .WillOnce(Return(wordDescription2Opt));
+        .WillOnce(Return(wordDescription2));
 
     const auto actualWordDescription = generator.generateWordDescription(englishWord2);
 
@@ -61,10 +49,10 @@ TEST_F(WordDescriptionGeneratorImplTest,
        givenEnglishWords_shouldGenerateAmountOfWordsDescriptionsEqualAmountOfEnglishWords)
 {
     EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord1))
-        .WillOnce(Return(wordDescription1Opt));
+        .WillOnce(Return(wordDescription1));
     EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord2))
-        .WillOnce(Return(wordDescription2Opt));
-    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord3)).WillOnce(Return(boost::none));
+        .WillOnce(Return(wordDescription2));
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord3)).WillOnce(Return(wordDescription3));
 
     const auto actualWordsDescriptions = generator.generateWordsDescriptions(englishWords);
 

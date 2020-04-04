@@ -9,6 +9,7 @@ set(SOURCES
         src/FileExtensionsFilter.cpp
         src/FilenamePathFilter.cpp
         src/RandomNumberMersenneTwisterGenerator.cpp
+        src/SupportedThreadsCalculator.cpp
         include/utils/StlOperators.h
         )
 

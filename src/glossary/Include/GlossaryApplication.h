@@ -21,6 +21,7 @@ namespace glossary
 class GlossaryApplication : public Application
 {
 public:
+    // TODO: add check connection with merriam webster with start application
     explicit GlossaryApplication(std::shared_ptr<utils::FileAccess>);
 
     void run() override;

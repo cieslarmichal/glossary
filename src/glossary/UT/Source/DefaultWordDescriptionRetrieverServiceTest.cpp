@@ -13,8 +13,10 @@ using namespace wordDescriptionDownloader;
 
 namespace
 {
-const EnglishWord englishWord{"englishWord"};
-const WordDescription wordDescription{englishWord, {}};
+const EnglishWord englishWord{"englishWord1"};
+const WordDescription wordDescriptionFromRepository{englishWord, {{{"def1", boost::none}}, {}}};
+const WordDescription wordDescriptionFromDownloader{englishWord, {{{"def2", boost::none}}, {}}};
+const WordDescription emptyWordDescription{englishWord, {}};
 }
 
 class DefaultWordDescriptionRetrieverServiceTest : public Test
@@ -30,38 +32,39 @@ public:
 };
 
 TEST_F(DefaultWordDescriptionRetrieverServiceTest,
-       dbContainsWordDescription_shouldReturnWordDescriptionFromDb)
+       repositoryContainsWordDescription_shouldReturnWordDescriptionFromRepository)
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord))
-        .WillOnce(Return(wordDescription));
+        .WillOnce(Return(wordDescriptionFromRepository));
 
     const auto actualWordDescription = wordDescriptionService.retrieveWordDescription(englishWord);
 
-    ASSERT_EQ(*actualWordDescription, wordDescription);
+    ASSERT_EQ(actualWordDescription, wordDescriptionFromRepository);
 }
 
 TEST_F(
     DefaultWordDescriptionRetrieverServiceTest,
-    dbDoesNotContainWordDescription_shouldReturnWordDescriptionFromHttpCreatorAndSaveWordDescriptionInDatabase)
+    RepositoryDoesNotContainWordDescription_shouldReturnWordDescriptionFromDownloaderAndSaveWordDescriptionInRepository)
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, downloadWordDescription(englishWord))
-        .WillOnce(Return(wordDescription));
-    EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescription));
+        .WillOnce(Return(wordDescriptionFromDownloader));
+    EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescriptionFromDownloader));
 
     const auto actualWordDescription = wordDescriptionService.retrieveWordDescription(englishWord);
 
-    ASSERT_EQ(*actualWordDescription, wordDescription);
+    ASSERT_EQ(actualWordDescription, wordDescriptionFromDownloader);
 }
 
 TEST_F(DefaultWordDescriptionRetrieverServiceTest,
-       dbAndHttpCreatorDoNotRespondWithWordDescription_shouldReturnNone)
+       repositoryAndDownloaderDoNotRespondWithWordDescription_shouldReturnEmptyWordDescriptionWithEnglishWord)
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, downloadWordDescription(englishWord))
         .WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionRepository, addWordDescription(emptyWordDescription));
 
     const auto actualWordDescription = wordDescriptionService.retrieveWordDescription(englishWord);
 
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_EQ(actualWordDescription, emptyWordDescription);
 }

@@ -9,21 +9,21 @@ DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
 {
 }
 
-boost::optional<wordDescriptionRepository::WordDescription>
-DefaultWordDescriptionRetrieverService::retrieveWordDescription(
+wordDescriptionRepository::WordDescription DefaultWordDescriptionRetrieverService::retrieveWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
     if (const auto wordDescriptionFromDb = getWordDescriptionFromRepository(englishWord))
-    {
-        return wordDescriptionFromDb;
-    }
+        return *wordDescriptionFromDb;
 
     if (const auto createdWordDescription = downloadWordDescription(englishWord))
     {
         saveWordDescriptionInRepository(*createdWordDescription);
-        return createdWordDescription;
+        return *createdWordDescription;
     }
-    return boost::none;
+
+    const auto emptyWordDescriptionWithEnglishWord = getEmptyWordDescriptionWithEnglishWord(englishWord);
+    saveWordDescriptionInRepository(emptyWordDescriptionWithEnglishWord);
+    return emptyWordDescriptionWithEnglishWord;
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
@@ -44,5 +44,11 @@ void DefaultWordDescriptionRetrieverService::saveWordDescriptionInRepository(
     const wordDescriptionRepository::WordDescription& wordDescription)
 {
     wordDescriptionRepository->addWordDescription(wordDescription);
+}
+wordDescriptionRepository::WordDescription
+DefaultWordDescriptionRetrieverService::getEmptyWordDescriptionWithEnglishWord(
+    const wordDescriptionRepository::EnglishWord& englishWord) const
+{
+    return wordDescriptionRepository::WordDescription{englishWord, {}};
 }
 }

@@ -1,10 +1,9 @@
-#include "SupportedThreadsCalculator.h"
+#include "utils/SupportedThreadsCalculator.h"
 
 #include <thread>
 
-namespace glossary
+namespace utils
 {
-// TODO: move to utils
 const unsigned SupportedThreadsCalculator::defaultAmountOfThreads{4};
 
 unsigned int SupportedThreadsCalculator::calculate() const

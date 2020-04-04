@@ -37,11 +37,7 @@ wordDescriptionRepository::WordsDescriptions WordDescriptionConcurrentGenerator:
 wordDescriptionRepository::WordDescription WordDescriptionConcurrentGenerator::generateWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    if (const auto wordDescription = wordDescriptionRetrieverService->retrieveWordDescription(englishWord))
-    {
-        return *wordDescription;
-    }
-    return wordDescriptionRepository::WordDescription{englishWord, {}};
+    return wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
 }
 
 void WordDescriptionConcurrentGenerator::generatorWorker(
@@ -60,6 +56,6 @@ void WordDescriptionConcurrentGenerator::generatorWorker(
 
 unsigned WordDescriptionConcurrentGenerator::getAmountOfThreads() const
 {
-    return amountOfSupportedThreadsCalculator.calculate();
+    return supportedThreadsCalculator.calculate();
 }
 }

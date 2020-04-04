@@ -15,7 +15,7 @@ public:
         std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
         std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
-    boost::optional<wordDescriptionRepository::WordDescription>
+    wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) override;
 
 private:
@@ -23,6 +23,8 @@ private:
     getWordDescriptionFromRepository(const wordDescriptionRepository::EnglishWord& englishWord) const;
     boost::optional<wordDescriptionRepository::WordDescription>
     downloadWordDescription(const wordDescriptionRepository::EnglishWord& englishWord) const;
+    wordDescriptionRepository::WordDescription
+    getEmptyWordDescriptionWithEnglishWord(const wordDescriptionRepository::EnglishWord& englishWord) const;
     void saveWordDescriptionInRepository(const wordDescriptionRepository::WordDescription&);
 
     std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;

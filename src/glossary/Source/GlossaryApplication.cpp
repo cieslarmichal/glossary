@@ -5,16 +5,17 @@
 #include "DefaultAnswerValidator.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
+#include "DefaultWordRandomizer.h"
 #include "DefaultWordViewFormatter.h"
 #include "DefaultWordsMerger.h"
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
-#include "WordMersenneTwisterRandomizer.h"
 #include "dictionaryRepository/DictionaryRepositoryFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "translationRepository/TranslationRepositoryFactory.h"
 #include "translator/TranslatorFactory.h"
 #include "utils/GetProjectPath.h"
+#include "utils/RandomNumberMersenneTwisterGenerator.h"
 #include "utils/StlOperators.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
@@ -77,7 +78,8 @@ void GlossaryApplication::initialize()
 
     wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
 
-    wordsRandomizer = std::make_unique<WordMersenneTwisterRandomizer>();
+    wordsRandomizer = std::make_unique<DefaultWordRandomizer>(
+        std::make_shared<utils::RandomNumberMersenneTwisterGenerator>());
 
     wordsMerger = std::make_unique<DefaultWordsMerger>();
 }
@@ -218,7 +220,7 @@ void GlossaryApplication::guessWord() const
     }
     else
     {
-        std::cout << "Inorrect answer :(\n";
+        std::cout << "Incorrect answer :(\n";
         statisticsRepository->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
     }
 

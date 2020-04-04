@@ -12,7 +12,7 @@ class WordDescriptionRetrieverService
 public:
     virtual ~WordDescriptionRetrieverService() = default;
 
-    virtual boost::optional<wordDescriptionRepository::WordDescription>
+    virtual wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) = 0;
 };
 }
