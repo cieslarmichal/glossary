@@ -7,9 +7,9 @@ namespace glossary
 class UserStandardInputPrompt : public UserPrompt
 {
 public:
-    UserInput getStringInput() const override;
+    std::string getStringInput() const override;
     int getIntInput() const override;
-    UserInput yesPrompt() const override;
+    std::string yesPrompt() const override;
 
 private:
     std::string getValidString() const;

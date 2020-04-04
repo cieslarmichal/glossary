@@ -14,7 +14,7 @@ constexpr auto newLine{'\n'};
 std::vector<std::string> correctYesNoAnswers{{"y", "yes", "n", "no"}};
 }
 
-UserInput UserStandardInputPrompt::getStringInput() const
+std::string UserStandardInputPrompt::getStringInput() const
 {
     return getValidString();
 }
@@ -24,13 +24,13 @@ int UserStandardInputPrompt::getIntInput() const
     return getValidInt();
 }
 
-UserInput UserStandardInputPrompt::yesPrompt() const
+std::string UserStandardInputPrompt::yesPrompt() const
 {
     std::string choice;
     while (!(std::cin >> choice) or yesNoAnswerIsInvalid(choice))
     {
         clearInputBuffer();
-        std::cout << "Enter correct answer (y/n): ";
+        std::cout << "Enter correct answer (yes/no, y/n): ";
     }
     clearInputBuffer();
 

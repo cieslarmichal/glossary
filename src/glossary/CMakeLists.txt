@@ -7,10 +7,7 @@ set(SOURCES
         Source/UserStandardInputPrompt.cpp
         Source/DefaultAnswerValidator.cpp
         Source/GlossaryApplication.cpp
-        Source/DefaultWordsMerger.cpp
-        Source/WordDescriptionCorrespondingToEnglishWordFinder.cpp
-        Source/WordCreator.cpp
-        Source/DefaultWordRandomizer.cpp
+        Source/DefaultDictionaryWordRandomizer.cpp
         )
 
 set(UT_SOURCES
@@ -19,10 +16,7 @@ set(UT_SOURCES
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
-        UT/Source/DefaultWordsMergerTest.cpp
-        UT/Source/WordDescriptionCorrespondingToEnglishWordFinderTest.cpp
-        UT/Source/WordCreatorTest.cpp
-        UT/Source/DefaultWordRandomizerTest.cpp
+        UT/Source/DefaultDictionaryWordRandomizerTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

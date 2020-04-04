@@ -8,22 +8,18 @@ using namespace wordDescriptionRepository;
 
 namespace
 {
-const PolishWord polishWord{"zaslony"};
-const auto polishWordView{"Polish word: zaslony\n"};
+const std::string polishWord{"zaslony"};
+const auto wordView{"Word: zaslony\n"};
 const WordDescription wordDescription("computer", {{{"definition", std::string{"example"}},
                                                     {"definition2", std::string{"example2"}}},
                                                    {"sentence"}});
-const auto wordViewWithoutDescription{"English word: computer\n"
-                                      "Polish translation: komputer\n"};
-const auto wordView{"English word: computer\n"
-                    "Polish translation: komputer\n"
-                    "Definition: definition\n"
-                    "Example: example\n"
-                    "Definition: definition2\n"
-                    "Example: example2\n"
-                    "Sentence: sentence\n"};
-const Word word{{"computer"}, std::string{"komputer"}, wordDescription};
-const Word wordWithoutWordDescription{{"computer"}, std::string{"komputer"}, boost::none};
+const auto wordDescriptionView{"English word: computer\n"
+                               "Description:\n"
+                               "Definition: definition\n"
+                               "Example: example\n"
+                               "Definition: definition2\n"
+                               "Example: example2\n"
+                               "Sentence: sentence\n"};
 }
 
 class DefaultWordViewFormatterTest : public Test
@@ -32,23 +28,16 @@ public:
     DefaultWordViewFormatter wordViewFormatter;
 };
 
-TEST_F(DefaultWordViewFormatterTest, givenEnglishWord_shouldReturnEnglishWordView)
+TEST_F(DefaultWordViewFormatterTest, givenSingleWord_shouldReturnSingleWordView)
 {
-    const auto actualEnglishWordView = wordViewFormatter.formatPolishWordView(polishWord);
-
-    ASSERT_EQ(actualEnglishWordView, polishWordView);
-}
-
-TEST_F(DefaultWordViewFormatterTest, givenWord_shoulReturnWordView)
-{
-    const auto actualWordView = wordViewFormatter.formatWordView(word);
+    const auto actualWordView = wordViewFormatter.formatSingleWordView(polishWord);
 
     ASSERT_EQ(actualWordView, wordView);
 }
 
-TEST_F(DefaultWordViewFormatterTest, givenWordWithoutDescription_shouldReturnWordView)
+TEST_F(DefaultWordViewFormatterTest, givenWordDescription_shoulReturnWordDescriptionView)
 {
-    const auto actualWordView = wordViewFormatter.formatWordView(wordWithoutWordDescription);
+    const auto actualWordDescriptionView = wordViewFormatter.formatWordDescriptionView(wordDescription);
 
-    ASSERT_EQ(actualWordView, wordViewWithoutDescription);
+    ASSERT_EQ(actualWordDescriptionView, wordDescriptionView);
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Word.h"
+#include "wordDescriptionRepository/WordDescription.h"
 
 namespace glossary
 {
@@ -9,7 +9,8 @@ class WordViewFormatter
 public:
     virtual ~WordViewFormatter() = default;
 
-    virtual std::string formatWordView(const Word&) const = 0;
-    virtual std::string formatPolishWordView(const PolishWord&) const = 0;
+    virtual std::string formatSingleWordView(const std::string&) const = 0;
+    virtual std::string
+    formatWordDescriptionView(const wordDescriptionRepository::WordDescription&) const = 0;
 };
 }

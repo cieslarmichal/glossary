@@ -7,8 +7,8 @@ namespace glossary
 class DefaultWordViewFormatter : public WordViewFormatter
 {
 public:
-    std::string formatWordView(const Word&) const override;
-    std::string formatPolishWordView(const PolishWord&) const override;
+    std::string formatSingleWordView(const std::string&) const override;
+    std::string formatWordDescriptionView(const wordDescriptionRepository::WordDescription&) const override;
 
 private:
     std::string getDescription(const wordDescriptionRepository::Description&) const;

@@ -1,7 +1,8 @@
 #pragma once
 
-#include "RandomNumberGenerator.h"
 #include <random>
+
+#include "RandomNumberGenerator.h"
 
 namespace utils
 {

@@ -3,11 +3,10 @@
 #include <iostream>
 
 #include "DefaultAnswerValidator.h"
+#include "DefaultDictionaryWordRandomizer.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
-#include "DefaultWordRandomizer.h"
 #include "DefaultWordViewFormatter.h"
-#include "DefaultWordsMerger.h"
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
 #include "dictionaryRepository/DictionaryRepositoryFactory.h"
@@ -78,10 +77,8 @@ void GlossaryApplication::initialize()
 
     wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
 
-    wordsRandomizer = std::make_unique<DefaultWordRandomizer>(
+    wordsRandomizer = std::make_unique<DefaultDictionaryWordRandomizer>(
         std::make_shared<utils::RandomNumberMersenneTwisterGenerator>());
-
-    wordsMerger = std::make_unique<DefaultWordsMerger>();
 }
 
 void GlossaryApplication::run()
@@ -94,21 +91,13 @@ void GlossaryApplication::run()
         return;
     }
 
+    wordDescriptionGenerator->generateWordsDescriptions(englishWords);
+    //    glossaryWords = wordsMerger->mergeWords(baseDict->words, wordsDescriptions);
+
     for (const auto& dictWord : baseDict->words)
     {
-        englishWords.push_back(dictWord.englishWord);
-    }
-
-    const auto wordsDescriptions = wordDescriptionGenerator->generateWordsDescriptions(englishWords);
-
-    glossaryWords = wordsMerger->mergeWords(baseDict->words, wordsDescriptions);
-
-    for (const auto& glossaryWord : glossaryWords)
-    {
-        if (glossaryWord->polishTranslation)
-        {
-            wordsWithTranslation.emplace_back(*glossaryWord);
-        }
+        if (dictWord.translation)
+            wordsWithTranslations.push_back(dictWord);
     }
 
     loop();
@@ -164,26 +153,28 @@ void GlossaryApplication::loop()
     }
 }
 
-boost::optional<Word> GlossaryApplication::randomizeWord(const Words& words) const
+boost::optional<dictionaryRepository::DictionaryWord> GlossaryApplication::randomizeDictionaryWord(
+    const dictionaryRepository::DictionaryWords& dictionaryWords) const
 {
     try
     {
-        return wordsRandomizer->randomizeWord(words);
+        return wordsRandomizer->randomize(dictionaryWords);
     }
     catch (const std::runtime_error& e)
     {
         std::cerr << e.what();
+        return boost::none;
     }
-    return boost::none;
 }
 
-boost::optional<Word> GlossaryApplication::randomizeWordWithTranslation() const
+boost::optional<dictionaryRepository::DictionaryWord>
+GlossaryApplication::randomizeDictionaryWordWithTranslation() const
 {
-    if (wordsWithTranslation.empty())
+    if (wordsWithTranslations.empty())
     {
         return boost::none;
     }
-    return randomizeWord(wordsWithTranslation);
+    return randomizeDictionaryWord(wordsWithTranslations);
 }
 
 void GlossaryApplication::showMenu() const
@@ -204,13 +195,13 @@ void GlossaryApplication::showMenu() const
 
 void GlossaryApplication::guessWord() const
 {
-    const auto& randomizedWord = randomizeWordWithTranslation();
-    if (randomizedWord == boost::none || randomizedWord->polishTranslation == boost::none)
+    const auto& randomizedWord = randomizeDictionaryWordWithTranslation();
+    if (randomizedWord == boost::none)
     {
         std::cerr << "No words with translations available";
         return;
     }
-    std::cout << wordViewFormatter->formatPolishWordView(*randomizedWord->polishTranslation);
+    std::cout << wordViewFormatter->formatSingleWordView(*randomizedWord->translation);
     std::cout << "Insert english translation:\n";
 
     if (answerValidator->validateAnswer(userPrompt->getStringInput(), randomizedWord->englishWord))
@@ -221,10 +212,13 @@ void GlossaryApplication::guessWord() const
     else
     {
         std::cout << "Incorrect answer :(\n";
-        statisticsRepository->addIncorrectAnswer(randomizedWord->wordDescription->englishWord);
+        statisticsRepository->addIncorrectAnswer(randomizedWord->englishWord);
     }
 
-    std::cout << wordViewFormatter->formatWordView(*randomizedWord);
+    // TODO: change generator into service
+    const auto wordDescription =
+        wordDescriptionGenerator->generateWordDescription(randomizedWord->englishWord);
+    std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription);
 }
 
 void GlossaryApplication::translate() const
@@ -335,4 +329,5 @@ void GlossaryApplication::showStatistics() const
 {
     std::cout << statisticsRepository->getStatistics() << "\n";
 }
+
 }

@@ -7,15 +7,15 @@ using namespace glossary;
 
 namespace
 {
-const PolishWord word{"slon"};
-const UserInput userWordInput{"slon"};
-const UserInput userWordInputWithDifferentCaseSizes{"sLoN"};
-const UserInput userWordInputDifferentThanWord{"xxxxxxx"};
-const UserInput userYesInput1{"yes"};
-const UserInput userYesInput2{"y"};
-const UserInput userYesInput1WithDifferentCaseSizes{"YeS"};
-const UserInput userYesInput2WithDifferentCaseSizes{"Y"};
-const UserInput userInputOtherThanYes{"saidsjaisdaj"};
+const std::string word{"slon"};
+const std::string userWordInput{"slon"};
+const std::string userWordInputWithDifferentCaseSizes{"sLoN"};
+const std::string userWordInputDifferentThanWord{"xxxxxxx"};
+const std::string userYesInput1{"yes"};
+const std::string userYesInput2{"y"};
+const std::string userYesInput1WithDifferentCaseSizes{"YeS"};
+const std::string userYesInput2WithDifferentCaseSizes{"Y"};
+const std::string userInputOtherThanYes{"saidsjaisdaj"};
 }
 
 class DefaultAnswerValidatorTest : public Test

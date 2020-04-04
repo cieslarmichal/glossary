@@ -4,12 +4,11 @@
 
 #include "AnswerValidator.h"
 #include "Application.h"
+#include "DictionaryWordRandomizer.h"
 #include "TranslationRetrieverService.h"
 #include "UserPrompt.h"
 #include "WordDescriptionGenerator.h"
-#include "WordRandomizer.h"
 #include "WordViewFormatter.h"
-#include "WordsMerger.h"
 #include "dictionaryRepository/DictionaryRepository.h"
 #include "statisticsRepository/StatisticsRepository.h"
 #include "translationRepository/TranslationRepository.h"
@@ -29,8 +28,9 @@ public:
 private:
     void initialize();
     void loop();
-    boost::optional<Word> randomizeWord(const Words&) const;
-    boost::optional<Word> randomizeWordWithTranslation() const;
+    boost::optional<dictionaryRepository::DictionaryWord>
+    randomizeDictionaryWord(const dictionaryRepository::DictionaryWords&) const;
+    boost::optional<dictionaryRepository::DictionaryWord> randomizeDictionaryWordWithTranslation() const;
     void showMenu() const;
     void translate() const;
     void listDictionariesByNames();
@@ -51,16 +51,14 @@ private:
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
     std::shared_ptr<TranslationRetrieverService> translationRetrieverService;
-    std::unique_ptr<WordsMerger> wordsMerger;
-    std::unique_ptr<WordRandomizer> wordsRandomizer;
+    std::unique_ptr<DictionaryWordRandomizer> wordsRandomizer;
 
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<WordViewFormatter> wordViewFormatter;
 
     dictionaryRepository::Dictionaries dictionaries;
+    dictionaryRepository::DictionaryWords wordsWithTranslations;
     wordDescriptionRepository::EnglishWords englishWords;
-    UniqueWords glossaryWords;
-    Words wordsWithTranslation;
 };
 }

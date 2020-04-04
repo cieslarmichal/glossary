@@ -1,6 +1,6 @@
 #pragma once
 
-#include "UserInput.h"
+#include <string>
 
 namespace glossary
 {
@@ -9,8 +9,8 @@ class UserPrompt
 public:
     virtual ~UserPrompt() = default;
 
-    virtual UserInput getStringInput() const = 0;
+    virtual std::string getStringInput() const = 0;
     virtual int getIntInput() const = 0;
-    virtual UserInput yesPrompt() const = 0;
+    virtual std::string yesPrompt() const = 0;
 };
 }

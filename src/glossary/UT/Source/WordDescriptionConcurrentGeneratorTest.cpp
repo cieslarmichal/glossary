@@ -34,8 +34,7 @@ public:
     WordDescriptionConcurrentGenerator generator{std::move(wordDescriptionServiceInit)};
 };
 
-TEST_F(WordDescriptionGeneratorImplTest,
-       givenEnglishWord_shouldReturnWordDescription)
+TEST_F(WordDescriptionGeneratorImplTest, givenEnglishWord_shouldReturnWordDescription)
 {
     EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord2))
         .WillOnce(Return(wordDescription2));
@@ -52,7 +51,8 @@ TEST_F(WordDescriptionGeneratorImplTest,
         .WillOnce(Return(wordDescription1));
     EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord2))
         .WillOnce(Return(wordDescription2));
-    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord3)).WillOnce(Return(wordDescription3));
+    EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord3))
+        .WillOnce(Return(wordDescription3));
 
     const auto actualWordsDescriptions = generator.generateWordsDescriptions(englishWords);
 

@@ -24,7 +24,7 @@ TEST_F(RandomNumberMersenneTwisterGeneratorTest, givenInvalidRangeArguments_shou
 
 TEST_F(RandomNumberMersenneTwisterGeneratorTest, givenRangeWithSameNumberSection_shouldGenerateThisNumber)
 {
-    const auto actualRandomNumber = randomGenerator.generate(2,2);
+    const auto actualRandomNumber = randomGenerator.generate(2, 2);
 
     ASSERT_EQ(actualRandomNumber, 2);
 }

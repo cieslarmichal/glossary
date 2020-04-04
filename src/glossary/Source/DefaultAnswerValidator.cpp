@@ -2,7 +2,6 @@
 
 #include "boost/algorithm/string.hpp"
 
-#include "PolishWord.h"
 #include "utils/StringHelper.h"
 
 namespace glossary
@@ -12,12 +11,13 @@ namespace
 std::vector<std::string> correctYesAnswers{{"y"}, {"yes"}};
 }
 
-bool DefaultAnswerValidator::validateAnswer(const UserInput& userInput, const PolishWord& polishWord) const
+bool DefaultAnswerValidator::validateAnswer(const std::string& userInput,
+                                            const std::string& expectedAnswer) const
 {
-    return utils::getLowerCases(userInput) == utils::getLowerCases(polishWord);
+    return utils::getLowerCases(userInput) == utils::getLowerCases(expectedAnswer);
 }
 
-bool DefaultAnswerValidator::validateYesAnswer(const UserInput& userInput) const
+bool DefaultAnswerValidator::validateYesAnswer(const std::string& userInput) const
 {
     const auto isYesAnswer =
         std::any_of(correctYesAnswers.begin(), correctYesAnswers.end(),
