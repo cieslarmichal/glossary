@@ -13,7 +13,6 @@ class Translator
 public:
     virtual ~Translator() = default;
 
-    // TODO: add supported languages
     virtual boost::optional<TranslatedText> translate(const SourceText&, SourceLanguage,
                                                       TargetLanguage) const = 0;
 };

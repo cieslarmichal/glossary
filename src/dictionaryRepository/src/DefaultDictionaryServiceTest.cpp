@@ -5,6 +5,7 @@
 #include "DictionaryNamesRetrieverMock.h"
 #include "DictionaryWordsRetrieverMock.h"
 #include "RandomDictionaryWordRetrieverMock.h"
+#include "csvFileReading/DictionaryWordsReaderMock.h"
 #include "repository/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
@@ -51,8 +52,13 @@ public:
         std::make_unique<StrictMock<RandomDictionaryWordRetrieverMock>>();
     RandomDictionaryWordRetrieverMock* randomDictionaryWordRetriever = randomWordRetrieverInit.get();
 
+    std::unique_ptr<csvFileReading::DictionaryWordsReaderMock> readerInit =
+        std::make_unique<StrictMock<csvFileReading::DictionaryWordsReaderMock>>();
+    csvFileReading::DictionaryWordsReaderMock* reader = readerInit.get();
+
     DefaultDictionaryService service{dictionaryRepository, std::move(namesRetrieverInit),
-                                     std::move(wordsRetrieverInit), std::move(randomWordRetrieverInit)};
+                                     std::move(wordsRetrieverInit), std::move(randomWordRetrieverInit),
+                                     std::move(readerInit)};
 };
 
 TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNames)
@@ -100,11 +106,19 @@ TEST_F(DefaultDictionaryServiceTest, shouldAddDictionaryByName)
     service.addDictionary(dictionaryName1);
 }
 
-TEST_F(DefaultDictionaryServiceTest, shouldAddDictionaryFromFile)
+TEST_F(DefaultDictionaryServiceTest, givenNoneDictionaryWordsFromFile_shouldNotAddDictionary)
 {
-    EXPECT_CALL(*dictionaryRepository, addDictionaryFromFile(dictionaryName1, absoluteDictionaryWordsPath));
+    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(boost::none));
 
     service.addDictionaryFromFile(dictionaryName1, absoluteDictionaryWordsPath);
+}
+
+TEST_F(DefaultDictionaryServiceTest, givenDictionaryWordsFromFile_shouldAddDictionary)
+{
+    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(dictionaryWords2));
+    EXPECT_CALL(*dictionaryRepository, addDictionary(dictionary2));
+
+    service.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
 }
 
 TEST_F(DefaultDictionaryServiceTest, shouldAddWordToDictionary)

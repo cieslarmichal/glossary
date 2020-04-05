@@ -128,9 +128,8 @@ void GlossaryApplication::loop()
             break;
         default:
             std::cout << "Invalid value\n";
+            userWantsToContinue = false;
         }
-        std::cout << "Do you want to continue? (yes/no, y/n)\n";
-        userWantsToContinue = answerValidator->validateYesAnswer(userPrompt->yesPrompt());
     }
 }
 
@@ -149,6 +148,7 @@ void GlossaryApplication::showMenu() const
     std::cout << "10.Get word description\n";
     std::cout << "11.Show statistics\n";
     std::cout << "12.Reset statistics\n";
+    std::cout << "Insert something else to exit\n";
 }
 
 void GlossaryApplication::guessWord() const
@@ -186,13 +186,9 @@ void GlossaryApplication::translate() const
     const auto translation = translationRetrieverService->retrieveTranslation(
         textToTranslate, translator::SourceLanguage::Polish, translator::TargetLanguage::English);
     if (translation)
-    {
         std::cout << *translation << "\n";
-    }
     else
-    {
         std::cout << "no translation\n";
-    }
 }
 
 void GlossaryApplication::listDictionariesByNames()
@@ -263,7 +259,7 @@ void GlossaryApplication::showStatistics() const
 
 void GlossaryApplication::resetStatistics() const
 {
-    std::cout << "Not supported yet";
+    statisticsRepository->resetStatistics();
 }
 
 }

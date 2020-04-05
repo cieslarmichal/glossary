@@ -14,10 +14,8 @@ DefaultTranslationRetrieverService::retrieveTranslation(const translator::Source
                                                         translator::SourceLanguage sourceLanguage,
                                                         translator::TargetLanguage targetLanguage)
 {
-    if (const auto translationFromDb = getTranslationFromRepository(sourceText))
-    {
-        return translationFromDb;
-    }
+    if (const auto translationFromRepo = getTranslationFromRepository(sourceText))
+        return translationFromRepo;
 
     if (const auto translationFromTranslator =
             getTranslationFromTranslator(sourceText, sourceLanguage, targetLanguage))
@@ -33,9 +31,7 @@ boost::optional<translator::TranslatedText>
 DefaultTranslationRetrieverService::getTranslationFromRepository(const std::string& sourceText) const
 {
     if (const auto translation = translationRepository->getTranslation(sourceText))
-    {
         return translator::TranslatedText{translation->translatedText};
-    }
     return boost::none;
 }
 

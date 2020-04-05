@@ -7,11 +7,13 @@ DefaultDictionaryService::DefaultDictionaryService(
     std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit,
     std::unique_ptr<DictionaryNamesRetriever> namesRetriever,
     std::unique_ptr<DictionaryWordsRetriever> wordsRetriever,
-    std::unique_ptr<RandomDictionaryWordRetriever> randomWordRetriever)
+    std::unique_ptr<RandomDictionaryWordRetriever> randomWordRetriever,
+    std::unique_ptr<csvFileReading::DictionaryWordsReader> dictionaryWordsReaderInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)},
       dictionaryNamesRetriever{std::move(namesRetriever)},
       dictionaryWordsRetriever{std::move(wordsRetriever)},
-      randomDictionaryWordRetriever{std::move(randomWordRetriever)}
+      randomDictionaryWordRetriever{std::move(randomWordRetriever)},
+      dictionaryWordsReader{std::move(dictionaryWordsReaderInit)}
 {
 }
 
@@ -42,9 +44,10 @@ void DefaultDictionaryService::addDictionary(const DictionaryName& dictionaryNam
 }
 
 void DefaultDictionaryService::addDictionaryFromFile(const DictionaryName& dictionaryName,
-                                                     const std::string& filePathToDictionaryWords)
+                                                     const std::string& dictionaryWordsPath)
 {
-    dictionaryRepository->addDictionaryFromFile(dictionaryName, filePathToDictionaryWords);
+    if (const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath))
+        dictionaryRepository->addDictionary({dictionaryName, *dictionaryWordsFromFile});
 }
 
 void DefaultDictionaryService::addWordToDictionary(const DictionaryWord& dictionaryWord,

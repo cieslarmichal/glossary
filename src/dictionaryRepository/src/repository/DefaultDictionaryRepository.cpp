@@ -3,9 +3,8 @@
 namespace glossary::dictionaryService::repository
 {
 DefaultDictionaryRepository::DefaultDictionaryRepository(
-    std::unique_ptr<DictionaryStorage> storageInit,
-    std::unique_ptr<csvFileReading::DictionaryWordsReader> reader)
-    : storage{std::move(storageInit)}, dictionaryWordsReader{std::move(reader)}
+    std::unique_ptr<DictionaryStorage> storageInit)
+    : storage{std::move(storageInit)}
 
 {
 }
@@ -15,14 +14,9 @@ void DefaultDictionaryRepository::addDictionary(const DictionaryName& dictionary
     storage->addDictionary(dictionaryName);
 }
 
-void DefaultDictionaryRepository::addDictionaryFromFile(const DictionaryName& dictionaryName,
-                                                        const std::string& dictionaryWordsPath)
+void DefaultDictionaryRepository::addDictionary(const Dictionary& dictionary)
 {
-    const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath);
-    if (dictionaryWordsFromFile)
-    {
-        storage->addDictionary({dictionaryName, *dictionaryWordsFromFile});
-    }
+    storage->addDictionary(dictionary);
 }
 
 void DefaultDictionaryRepository::addWordToDictionary(const DictionaryWord& dictionaryWord,

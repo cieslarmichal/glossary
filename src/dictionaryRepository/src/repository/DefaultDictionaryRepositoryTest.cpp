@@ -30,10 +30,8 @@ public:
     std::unique_ptr<DictionaryStorageMock> storageInit =
         std::make_unique<StrictMock<DictionaryStorageMock>>();
     DictionaryStorageMock* storage = storageInit.get();
-    std::unique_ptr<csvFileReading::DictionaryWordsReaderMock> readerInit =
-        std::make_unique<StrictMock<csvFileReading::DictionaryWordsReaderMock>>();
-    csvFileReading::DictionaryWordsReaderMock* reader = readerInit.get();
-    DefaultDictionaryRepository repository{std::move(storageInit), std::move(readerInit)};
+
+    DefaultDictionaryRepository repository{std::move(storageInit)};
 };
 
 TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryByNameToStorage)
@@ -43,20 +41,11 @@ TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryByNameToStorage)
     repository.addDictionary(dictionaryName1);
 }
 
-TEST_F(DefaultDictionaryRepositoryTest, givenExistingDictionaryWordsFromFile_shouldAddDictionaryToStorage)
+TEST_F(DefaultDictionaryRepositoryTest, shouldAddDictionaryToStorage)
 {
-    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(dictionaryWords2));
-    EXPECT_CALL(*storage, addDictionary(dictionary2));
+    EXPECT_CALL(*storage, addDictionary(dictionary1));
 
-    repository.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
-}
-
-TEST_F(DefaultDictionaryRepositoryTest,
-       givenNonExistingDictionaryWordsFromFile_shouldNotAddDictionaryToStorage)
-{
-    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(boost::none));
-
-    repository.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
+    repository.addDictionary(dictionary1);
 }
 
 TEST_F(DefaultDictionaryRepositoryTest, shouldAddWordToDictionaryInStorage)

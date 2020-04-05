@@ -7,7 +7,6 @@
 namespace glossary
 {
 // TODO: do frontend in qt
-// TODO: probabilty impact
 class Glossary
 {
 public:

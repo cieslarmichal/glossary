@@ -23,8 +23,7 @@ std::unique_ptr<DictionaryService> DefaultDictionaryServiceFactory::createDictio
 {
     auto dictionaryRepository = std::make_shared<repository::DefaultDictionaryRepository>(
         std::make_unique<repository::DictionaryPersistentStorage>(
-            fileAccess, std::make_shared<serialization::DictionaryJsonSerializer>()),
-        std::make_unique<csvFileReading::DictionaryWordsCsvFileReader>(fileAccess));
+            fileAccess, std::make_shared<serialization::DictionaryJsonSerializer>()));
 
     auto dictionaryNamesRetriever = std::make_unique<DefaultDictionaryNamesRetriever>(dictionaryRepository);
 
@@ -34,8 +33,12 @@ std::unique_ptr<DictionaryService> DefaultDictionaryServiceFactory::createDictio
         dictionaryRepository, std::make_unique<DefaultDictionaryWordRandomizer>(
                                   std::make_shared<utils::RandomNumberMersenneTwisterGenerator>()));
 
+    auto dictionaryWordsFileReader =
+        std::make_unique<csvFileReading::DictionaryWordsCsvFileReader>(fileAccess);
+
     return std::make_unique<DefaultDictionaryService>(
         std::move(dictionaryRepository), std::move(dictionaryNamesRetriever),
-        std::move(dictionaryWordsRetriever), std::move(randomDictionaryWordRetriever));
+        std::move(dictionaryWordsRetriever), std::move(randomDictionaryWordRetriever),
+        std::move(dictionaryWordsFileReader));
 }
 }
