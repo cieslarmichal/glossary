@@ -4,7 +4,7 @@ namespace glossary::dictionaryService
 {
 
 DefaultDictionaryNamesRetriever::DefaultDictionaryNamesRetriever(
-    std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit)
+    std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)}
 {
 }

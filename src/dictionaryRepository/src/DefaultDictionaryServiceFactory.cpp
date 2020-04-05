@@ -21,10 +21,10 @@ DefaultDictionaryServiceFactory::DefaultDictionaryServiceFactory(
 
 std::unique_ptr<DictionaryService> DefaultDictionaryServiceFactory::createDictionaryService() const
 {
-    auto dictionaryRepository = std::make_shared<DefaultDictionaryRepository>(
-        std::make_unique<DictionaryPersistentStorage>(fileAccess,
-                                                      std::make_shared<DictionaryJsonSerializer>()),
-        std::make_unique<DictionaryWordsCsvFileReader>(fileAccess));
+    auto dictionaryRepository = std::make_shared<repository::DefaultDictionaryRepository>(
+        std::make_unique<repository::DictionaryPersistentStorage>(
+            fileAccess, std::make_shared<serialization::DictionaryJsonSerializer>()),
+        std::make_unique<csvFileReading::DictionaryWordsCsvFileReader>(fileAccess));
 
     auto dictionaryNamesRetriever = std::make_unique<DefaultDictionaryNamesRetriever>(dictionaryRepository);
 

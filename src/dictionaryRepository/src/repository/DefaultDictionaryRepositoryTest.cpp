@@ -2,11 +2,12 @@
 
 #include "gtest/gtest.h"
 
-#include "dictionaryRepository/src/csvFileReading/DictionaryWordsReaderMock.h"
-#include "dictionaryRepository/src/repository/DictionaryStorageMock.h"
+#include "csvFileReading/DictionaryWordsReaderMock.h"
+#include "repository/DictionaryStorageMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
+using namespace repository;
 
 namespace
 {
@@ -29,9 +30,9 @@ public:
     std::unique_ptr<DictionaryStorageMock> storageInit =
         std::make_unique<StrictMock<DictionaryStorageMock>>();
     DictionaryStorageMock* storage = storageInit.get();
-    std::unique_ptr<DictionaryWordsReaderMock> readerInit =
-        std::make_unique<StrictMock<DictionaryWordsReaderMock>>();
-    DictionaryWordsReaderMock* reader = readerInit.get();
+    std::unique_ptr<csvFileReading::DictionaryWordsReaderMock> readerInit =
+        std::make_unique<StrictMock<csvFileReading::DictionaryWordsReaderMock>>();
+    csvFileReading::DictionaryWordsReaderMock* reader = readerInit.get();
     DefaultDictionaryRepository repository{std::move(storageInit), std::move(readerInit)};
 };
 

@@ -13,7 +13,8 @@ namespace glossary::dictionaryService
 class DefaultDictionaryService : public DictionaryService
 {
 public:
-    DefaultDictionaryService(std::shared_ptr<DictionaryRepository>, std::unique_ptr<DictionaryNamesRetriever>,
+    DefaultDictionaryService(std::shared_ptr<repository::DictionaryRepository>,
+                             std::unique_ptr<DictionaryNamesRetriever>,
                              std::unique_ptr<DictionaryWordsRetriever>,
                              std::unique_ptr<RandomDictionaryWordRetriever>);
 
@@ -28,7 +29,7 @@ public:
     void removeWordFromDictionary(const std::string& word, const DictionaryName&) override;
 
 private:
-    std::shared_ptr<DictionaryRepository> dictionaryRepository;
+    std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;
     std::unique_ptr<DictionaryNamesRetriever> dictionaryNamesRetriever;
     std::unique_ptr<DictionaryWordsRetriever> dictionaryWordsRetriever;
     std::unique_ptr<RandomDictionaryWordRetriever> randomDictionaryWordRetriever;

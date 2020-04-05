@@ -4,7 +4,7 @@
 
 #include "DictionarySerializer.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::serialization
 {
 class DictionaryJsonSerializer : public DictionarySerializer
 {

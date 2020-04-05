@@ -4,7 +4,7 @@ namespace glossary::dictionaryService
 {
 
 DefaultDictionaryService::DefaultDictionaryService(
-    std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit,
+    std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit,
     std::unique_ptr<DictionaryNamesRetriever> namesRetriever,
     std::unique_ptr<DictionaryWordsRetriever> wordsRetriever,
     std::unique_ptr<RandomDictionaryWordRetriever> randomWordRetriever)

@@ -4,14 +4,14 @@
 
 #include "utils/GetProjectPath.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::repository
 {
 const std::string DictionaryPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
 const std::string DictionaryPersistentStorage::filename{directory + "dictionaries.txt"};
 
 DictionaryPersistentStorage::DictionaryPersistentStorage(
     std::shared_ptr<const utils::FileAccess> fileAccessInit,
-    std::shared_ptr<const DictionarySerializer> serializerInit)
+    std::shared_ptr<const serialization::DictionarySerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 
 {

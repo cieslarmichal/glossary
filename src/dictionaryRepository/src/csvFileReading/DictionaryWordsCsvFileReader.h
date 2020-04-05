@@ -8,7 +8,7 @@
 #include "DictionaryWordsReader.h"
 #include "utils/FileAccess.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::csvFileReading
 {
 class DictionaryWordsCsvFileReader : public DictionaryWordsReader
 {

@@ -11,12 +11,12 @@ namespace glossary::dictionaryService
 class DefaultDictionaryNamesRetriever : public DictionaryNamesRetriever
 {
 public:
-    explicit DefaultDictionaryNamesRetriever(std::shared_ptr<DictionaryRepository>);
+    explicit DefaultDictionaryNamesRetriever(std::shared_ptr<repository::DictionaryRepository>);
 
     DictionaryNames retrieveDictionaryNames() const override;
 
 private:
-    std::shared_ptr<DictionaryRepository> dictionaryRepository;
+    std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;
     DictionaryNameSelector dictionaryNameSelector;
 };
 }

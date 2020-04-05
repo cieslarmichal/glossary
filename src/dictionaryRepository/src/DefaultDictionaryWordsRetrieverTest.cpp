@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "dictionaryRepository/src/repository/DictionaryRepositoryMock.h"
+#include "repository/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
@@ -30,8 +30,8 @@ const Dictionaries dictionaries{dictionary1, dictionary2, emptyDictionary};
 class DefaultDictionaryWordsRetrieverTest : public Test
 {
 public:
-    std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
-        std::make_shared<StrictMock<DictionaryRepositoryMock>>();
+    std::shared_ptr<repository::DictionaryRepositoryMock> dictionaryRepository =
+        std::make_shared<StrictMock<repository::DictionaryRepositoryMock>>();
     DefaultDictionaryWordsRetriever retriever{dictionaryRepository};
 };
 

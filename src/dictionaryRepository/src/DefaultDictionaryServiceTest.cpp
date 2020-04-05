@@ -3,10 +3,9 @@
 #include "gtest/gtest.h"
 
 #include "DictionaryNamesRetrieverMock.h"
-#include "DictionaryWordRandomizerMock.h"
 #include "DictionaryWordsRetrieverMock.h"
 #include "RandomDictionaryWordRetrieverMock.h"
-#include "dictionaryRepository/src/repository/DictionaryRepositoryMock.h"
+#include "repository/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
@@ -37,8 +36,8 @@ const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2, dictiona
 class DefaultDictionaryServiceTest : public Test
 {
 public:
-    std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
-        std::make_shared<StrictMock<DictionaryRepositoryMock>>();
+    std::shared_ptr<repository::DictionaryRepositoryMock> dictionaryRepository =
+        std::make_shared<StrictMock<repository::DictionaryRepositoryMock>>();
 
     std::unique_ptr<DictionaryNamesRetrieverMock> namesRetrieverInit =
         std::make_unique<StrictMock<DictionaryNamesRetrieverMock>>();

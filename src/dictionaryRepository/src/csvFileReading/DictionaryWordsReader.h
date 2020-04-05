@@ -4,7 +4,7 @@
 
 #include "Dictionary.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::csvFileReading
 {
 class DictionaryWordsReader
 {

@@ -2,18 +2,18 @@
 
 #include <memory>
 
-#include "../serialization/DictionarySerializer.h"
 #include "DictionaryMemoryStorage.h"
 #include "DictionaryStorage.h"
+#include "serialization/DictionarySerializer.h"
 #include "utils/FileAccess.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::repository
 {
 class DictionaryPersistentStorage : public DictionaryStorage
 {
 public:
     DictionaryPersistentStorage(std::shared_ptr<const utils::FileAccess>,
-                                std::shared_ptr<const DictionarySerializer>);
+                                std::shared_ptr<const serialization::DictionarySerializer>);
 
     void addDictionary(const DictionaryName&) override;
     void addDictionary(const Dictionary&) override;
@@ -31,7 +31,7 @@ private:
     void serialize() const;
 
     std::shared_ptr<const utils::FileAccess> fileAccess;
-    std::shared_ptr<const DictionarySerializer> serializer;
+    std::shared_ptr<const serialization::DictionarySerializer> serializer;
     DictionaryMemoryStorage storage;
 
     static const std::string directory;

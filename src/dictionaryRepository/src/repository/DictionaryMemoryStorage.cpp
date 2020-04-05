@@ -1,6 +1,6 @@
 #include "DictionaryMemoryStorage.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::repository
 {
 static auto& getDictionaryByPosition(Dictionaries& dictionaries, Dictionaries::const_iterator position)
 {

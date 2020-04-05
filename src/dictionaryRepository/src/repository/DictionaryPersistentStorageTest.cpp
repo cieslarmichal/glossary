@@ -2,13 +2,14 @@
 
 #include "gtest/gtest.h"
 
-#include "dictionaryRepository/src/serialization/DictionarySerializerMock.h"
+#include "serialization/DictionarySerializerMock.h"
 #include "utils/FileAccessMock.h"
 
 #include "utils/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
+using namespace repository;
 
 namespace
 {
@@ -70,8 +71,8 @@ public:
     }
 
     std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
-    std::shared_ptr<DictionarySerializerMock> serializer =
-        std::make_shared<StrictMock<DictionarySerializerMock>>();
+    std::shared_ptr<serialization::DictionarySerializerMock> serializer =
+        std::make_shared<StrictMock<serialization::DictionarySerializerMock>>();
 };
 
 TEST_F(DictionaryPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)

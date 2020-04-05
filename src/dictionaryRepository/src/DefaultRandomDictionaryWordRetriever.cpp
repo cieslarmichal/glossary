@@ -4,7 +4,7 @@ namespace glossary::dictionaryService
 {
 
 DefaultRandomDictionaryWordRetriever::DefaultRandomDictionaryWordRetriever(
-    std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit,
+    std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit,
     std::unique_ptr<DictionaryWordRandomizer> randomizer)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)},
       dictionaryWordRandomizer{std::move(randomizer)}

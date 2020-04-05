@@ -3,7 +3,7 @@
 #include <map>
 #include <ostream>
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::csvFileReading
 {
 enum class ValidationResult
 {

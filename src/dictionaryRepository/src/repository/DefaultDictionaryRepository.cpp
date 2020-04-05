@@ -1,9 +1,10 @@
 #include "DefaultDictionaryRepository.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::repository
 {
-DefaultDictionaryRepository::DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage> storageInit,
-                                                         std::unique_ptr<DictionaryWordsReader> reader)
+DefaultDictionaryRepository::DefaultDictionaryRepository(
+    std::unique_ptr<DictionaryStorage> storageInit,
+    std::unique_ptr<csvFileReading::DictionaryWordsReader> reader)
     : storage{std::move(storageInit)}, dictionaryWordsReader{std::move(reader)}
 
 {

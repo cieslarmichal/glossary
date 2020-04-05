@@ -8,6 +8,7 @@
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
+using namespace csvFileReading;
 
 namespace
 {

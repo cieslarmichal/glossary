@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace glossary::dictionaryService;
+using namespace glossary::dictionaryService::csvFileReading;
 
 namespace
 {

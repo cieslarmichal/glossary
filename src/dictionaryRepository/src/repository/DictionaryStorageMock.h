@@ -1,10 +1,10 @@
 #pragma once
 
-#include "../../../../externals/googletest/googlemock/include/gmock/gmock.h"
+#include "gmock/gmock.h"
 
 #include "DictionaryStorage.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::repository
 {
 class DictionaryStorageMock : public DictionaryStorage
 {

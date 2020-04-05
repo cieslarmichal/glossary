@@ -78,7 +78,6 @@ void GlossaryApplication::initialize()
 void GlossaryApplication::run()
 {
     wordDescriptionGenerator->generateWordsDescriptions(englishWords);
-    //    glossaryWords = wordsMerger->mergeWords(baseDict->words, wordsDescriptions);
     loop();
 }
 

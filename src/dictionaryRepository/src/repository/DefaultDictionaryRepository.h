@@ -2,16 +2,17 @@
 
 #include <memory>
 
-#include "../csvFileReading/DictionaryWordsReader.h"
 #include "DictionaryRepository.h"
 #include "DictionaryStorage.h"
+#include "csvFileReading/DictionaryWordsReader.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::repository
 {
 class DefaultDictionaryRepository : public DictionaryRepository
 {
 public:
-    DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage>, std::unique_ptr<DictionaryWordsReader>);
+    DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage>,
+                                std::unique_ptr<csvFileReading::DictionaryWordsReader>);
 
     void addDictionary(const DictionaryName&) override;
     void addDictionaryFromFile(const DictionaryName&, const std::string& dictionaryWordsPath) override;
@@ -24,6 +25,6 @@ public:
 
 private:
     std::unique_ptr<DictionaryStorage> storage;
-    std::unique_ptr<DictionaryWordsReader> dictionaryWordsReader;
+    std::unique_ptr<csvFileReading::DictionaryWordsReader> dictionaryWordsReader;
 };
 }

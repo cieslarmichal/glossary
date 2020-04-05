@@ -12,12 +12,12 @@ namespace glossary::dictionaryService
 class DefaultDictionaryWordsRetriever : public DictionaryWordsRetriever
 {
 public:
-    explicit DefaultDictionaryWordsRetriever(std::shared_ptr<DictionaryRepository>);
+    explicit DefaultDictionaryWordsRetriever(std::shared_ptr<repository::DictionaryRepository>);
 
     DictionaryWords retrieveDictionaryWords(const DictionaryName&) const override;
 
 private:
-    std::shared_ptr<DictionaryRepository> dictionaryRepository;
+    std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;
     DictionaryFinder dictionaryFinder;
     DictionaryWordSelector dictionaryWordSelector;
 };

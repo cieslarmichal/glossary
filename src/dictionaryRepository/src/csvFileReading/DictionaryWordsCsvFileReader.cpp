@@ -1,12 +1,11 @@
 #include "DictionaryWordsCsvFileReader.h"
 
 #include <iostream>
-#include <sstream>
 
 #include "utils/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::csvFileReading
 {
 namespace
 {

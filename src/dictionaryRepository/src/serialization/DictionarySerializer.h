@@ -2,9 +2,8 @@
 
 #include "Dictionary.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::serialization
 {
-// TODO: add namespaces in directories
 class DictionarySerializer
 {
 public:

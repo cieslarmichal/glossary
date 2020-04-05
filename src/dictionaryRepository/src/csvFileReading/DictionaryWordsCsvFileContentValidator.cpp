@@ -2,7 +2,7 @@
 
 #include "utils/StringHelper.h"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::csvFileReading
 {
 namespace
 {

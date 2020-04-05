@@ -4,7 +4,7 @@
 
 #include "boost/algorithm/cxx11/all_of.hpp"
 
-namespace glossary::dictionaryService
+namespace glossary::dictionaryService::serialization
 {
 namespace
 {

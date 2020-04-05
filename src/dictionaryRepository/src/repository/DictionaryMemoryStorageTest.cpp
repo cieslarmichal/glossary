@@ -4,6 +4,7 @@
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
+using namespace repository;
 
 namespace
 {
