@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
-#include "dictionaryRepository/src/repository/DictionaryRepositoryMock.h"
 #include "DictionaryWordRandomizerMock.h"
+#include "dictionaryRepository/src/repository/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
@@ -40,7 +40,8 @@ public:
     DefaultRandomDictionaryWordRetriever retriever{dictionaryRepository, std::move(randomizerInit)};
 };
 
-TEST_F(DefaultRandomDictionaryWordRetrieverTest, givenNonExistingDictionary_shouldReturnNoneRandomDictionaryWord)
+TEST_F(DefaultRandomDictionaryWordRetrieverTest,
+       givenNonExistingDictionary_shouldReturnNoneRandomDictionaryWord)
 {
     EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
 
@@ -83,7 +84,8 @@ TEST_F(DefaultRandomDictionaryWordRetrieverTest, givenEmptyDictionaryWordsInDict
     ASSERT_EQ(actualRandomizedDictionaryWord, boost::none);
 }
 
-TEST_F(DefaultRandomDictionaryWordRetrieverTest, givenDictionaryWordsInDictionaries_shouldReturnRandomDictionaryWord)
+TEST_F(DefaultRandomDictionaryWordRetrieverTest,
+       givenDictionaryWordsInDictionaries_shouldReturnRandomDictionaryWord)
 {
     EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
     EXPECT_CALL(*randomizer, randomize(dictionaryWordsSum)).WillOnce(Return(dictionaryWord2));

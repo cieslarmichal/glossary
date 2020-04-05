@@ -13,7 +13,6 @@
 #include "translationRepository/TranslationRepositoryFactory.h"
 #include "translator/TranslatorFactory.h"
 #include "utils/GetProjectPath.h"
-#include "utils/RandomNumberMersenneTwisterGenerator.h"
 #include "utils/StlOperators.h"
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
@@ -34,7 +33,7 @@ void GlossaryApplication::initialize()
     dictionaryService = dictionaryServiceFactory->createDictionaryService();
 
     dictionaryService->addDictionaryFromFile("base", utils::getProjectPath("glossary") +
-                                                            "database/dictionaries/input.txt");
+                                                         "database/dictionaries/input.txt");
 
     std::unique_ptr<const webConnection::HttpHandlerFactory> httpHandlerFactory =
         webConnection::HttpHandlerFactory::createHttpHandlerFactory();
@@ -199,14 +198,14 @@ void GlossaryApplication::translate() const
 
 void GlossaryApplication::listDictionariesByNames()
 {
-    std::cout<<dictionaryService->getDictionaryNames()<< "\n";
+    std::cout << dictionaryService->getDictionaryNames() << "\n";
 }
 
 void GlossaryApplication::listDictionaryWordsFromDictionary()
 {
     std::cout << "Insert dictionary name:\n";
     const auto dictionaryName = userPrompt->getStringInput();
-    std::cout << dictionaryService->getDictionaryWords(dictionaryName)<<"\n";
+    std::cout << dictionaryService->getDictionaryWords(dictionaryName) << "\n";
 }
 
 void GlossaryApplication::addDictionary() const
@@ -255,7 +254,7 @@ void GlossaryApplication::getEnglishWordDescription() const
     std::cout << "Insert english word:\n";
     const auto dictionaryWord = userPrompt->getStringInput();
     const auto wordDescription = wordDescriptionGenerator->generateWordDescription(dictionaryWord);
-    std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription)<<"\n";
+    std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription) << "\n";
 }
 
 void GlossaryApplication::showStatistics() const
@@ -265,7 +264,7 @@ void GlossaryApplication::showStatistics() const
 
 void GlossaryApplication::resetStatistics() const
 {
-    std::cout<<"Not supported yet";
+    std::cout << "Not supported yet";
 }
 
 }

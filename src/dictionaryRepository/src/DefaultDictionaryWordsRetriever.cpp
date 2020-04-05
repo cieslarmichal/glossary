@@ -3,7 +3,11 @@
 namespace glossary::dictionaryService
 {
 
-DefaultDictionaryWordsRetriever::DefaultDictionaryWordsRetriever(std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit) :dictionaryRepository{std::move(dictionaryRepositoryInit)} {}
+DefaultDictionaryWordsRetriever::DefaultDictionaryWordsRetriever(
+    std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit)
+    : dictionaryRepository{std::move(dictionaryRepositoryInit)}
+{
+}
 
 DictionaryWords
 DefaultDictionaryWordsRetriever::retrieveDictionaryWords(const DictionaryName& dictionaryName) const

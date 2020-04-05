@@ -3,8 +3,8 @@
 #include <memory>
 
 #include "DictionaryFinder.h"
-#include "DictionaryWordSelector.h"
 #include "DictionaryWordRandomizer.h"
+#include "DictionaryWordSelector.h"
 #include "RandomDictionaryWordRetriever.h"
 #include "repository/DictionaryRepository.h"
 

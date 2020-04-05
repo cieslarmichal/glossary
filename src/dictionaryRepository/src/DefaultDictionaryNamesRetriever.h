@@ -3,8 +3,8 @@
 #include <memory>
 
 #include "DictionaryNameSelector.h"
-#include "repository/DictionaryRepository.h"
 #include "DictionaryNamesRetriever.h"
+#include "repository/DictionaryRepository.h"
 
 namespace glossary::dictionaryService
 {

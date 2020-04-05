@@ -9,7 +9,6 @@ class DictionaryWordRandomizer
 public:
     virtual ~DictionaryWordRandomizer() = default;
 
-    virtual DictionaryWord
-    randomize(const DictionaryWords&) const = 0;
+    virtual DictionaryWord randomize(const DictionaryWords&) const = 0;
 };
 }

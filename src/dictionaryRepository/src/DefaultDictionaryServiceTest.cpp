@@ -67,7 +67,8 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNames)
 
 TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryWords)
 {
-    EXPECT_CALL(*dictionaryWordsRetriever, retrieveDictionaryWords(dictionaryName1)).WillOnce(Return(dictionaryWords1));
+    EXPECT_CALL(*dictionaryWordsRetriever, retrieveDictionaryWords(dictionaryName1))
+        .WillOnce(Return(dictionaryWords1));
 
     const auto actualDictionaryWords = service.getDictionaryWords(dictionaryName1);
 
@@ -76,7 +77,8 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryWords)
 
 TEST_F(DefaultDictionaryServiceTest, givenDictionaryName_shouldReturnRandomDictionaryWordFromThisDictionary)
 {
-    EXPECT_CALL(*randomDictionaryWordRetriever, getRandomDictionaryWord(dictionaryName1)).WillOnce(Return(dictionaryWord1));
+    EXPECT_CALL(*randomDictionaryWordRetriever, getRandomDictionaryWord(dictionaryName1))
+        .WillOnce(Return(dictionaryWord1));
 
     const auto actualRandomizedDictionaryWord = service.getRandomDictionaryWord(dictionaryName1);
 

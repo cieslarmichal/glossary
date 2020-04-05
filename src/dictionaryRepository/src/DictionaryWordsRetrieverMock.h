@@ -1,6 +1,7 @@
 #pragma once
 
 #include "gmock/gmock.h"
+
 #include "DictionaryWordsRetriever.h"
 
 namespace glossary::dictionaryService

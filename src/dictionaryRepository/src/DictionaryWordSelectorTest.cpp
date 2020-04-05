@@ -14,7 +14,8 @@ const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}
 const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
 const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
 const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
-const DictionaryWords dictionaryWordsSum{dictionaryWord1, dictionaryWord2, dictionaryWord3, dictionaryWord1, dictionaryWord2};
+const DictionaryWords dictionaryWordsSum{dictionaryWord1, dictionaryWord2, dictionaryWord3, dictionaryWord1,
+                                         dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionaries dictionaries{dictionary1, dictionary2};

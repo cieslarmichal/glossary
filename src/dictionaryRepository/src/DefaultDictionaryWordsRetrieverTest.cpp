@@ -1,8 +1,8 @@
+#include "DefaultDictionaryWordsRetriever.h"
+
 #include "gtest/gtest.h"
 
 #include "dictionaryRepository/src/repository/DictionaryRepositoryMock.h"
-
-#include "DefaultDictionaryWordsRetriever.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;

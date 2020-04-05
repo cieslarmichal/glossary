@@ -1,7 +1,8 @@
 #pragma once
 
-#include "Dictionary.h"
 #include "boost/optional.hpp"
+
+#include "Dictionary.h"
 
 namespace glossary::dictionaryService
 {

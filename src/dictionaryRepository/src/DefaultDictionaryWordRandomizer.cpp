@@ -11,16 +11,14 @@ DefaultDictionaryWordRandomizer::DefaultDictionaryWordRandomizer(
 {
 }
 
-DictionaryWord
-DefaultDictionaryWordRandomizer::randomize(const DictionaryWords& dictionaryWords) const
+DictionaryWord DefaultDictionaryWordRandomizer::randomize(const DictionaryWords& dictionaryWords) const
 {
     if (dictionaryWords.empty())
         throw std::invalid_argument{"Dictionary words are empty, cant randomize word"};
     return dictionaryWords.at(getRandomIndex(dictionaryWords.size()));
 }
 
-int DefaultDictionaryWordRandomizer::getRandomIndex(
-    DictionaryWords::size_type wordsAmount) const
+int DefaultDictionaryWordRandomizer::getRandomIndex(DictionaryWords::size_type wordsAmount) const
 {
     return randomNumberGenerator->generate(0, static_cast<int>(wordsAmount - 1));
 }
