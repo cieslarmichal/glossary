@@ -4,12 +4,11 @@
 
 #include "AnswerValidator.h"
 #include "Application.h"
-#include "DictionaryWordRandomizer.h"
 #include "TranslationRetrieverService.h"
 #include "UserPrompt.h"
 #include "WordDescriptionGenerator.h"
 #include "WordViewFormatter.h"
-#include "dictionaryRepository/DictionaryRepository.h"
+#include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
 #include "translationRepository/TranslationRepository.h"
 #include "utils/FileAccess.h"
@@ -21,6 +20,7 @@ class GlossaryApplication : public Application
 {
 public:
     // TODO: add check connection with merriam webster with start application
+    // TODO: services in separate libs
     explicit GlossaryApplication(std::shared_ptr<utils::FileAccess>);
 
     void run() override;
@@ -28,9 +28,6 @@ public:
 private:
     void initialize();
     void loop();
-    boost::optional<dictionaryRepository::DictionaryWord>
-    randomizeDictionaryWord(const dictionaryRepository::DictionaryWords&) const;
-    boost::optional<dictionaryRepository::DictionaryWord> randomizeDictionaryWordWithTranslation() const;
     void showMenu() const;
     void translate() const;
     void listDictionariesByNames();
@@ -43,22 +40,20 @@ private:
     void guessWord() const;
     void getEnglishWordDescription() const;
     void showStatistics() const;
+    void resetStatistics() const;
 
     std::shared_ptr<utils::FileAccess> fileAccess;
-    std::shared_ptr<dictionaryRepository::DictionaryRepository> dictionaryRepository;
+    std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
     std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
     std::shared_ptr<TranslationRetrieverService> translationRetrieverService;
-    std::unique_ptr<DictionaryWordRandomizer> wordsRandomizer;
 
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<WordViewFormatter> wordViewFormatter;
 
-    dictionaryRepository::Dictionaries dictionaries;
-    dictionaryRepository::DictionaryWords wordsWithTranslations;
     wordDescriptionRepository::EnglishWords englishWords;
 };
 }

@@ -7,7 +7,6 @@ set(SOURCES
         Source/UserStandardInputPrompt.cpp
         Source/DefaultAnswerValidator.cpp
         Source/GlossaryApplication.cpp
-        Source/DefaultDictionaryWordRandomizer.cpp
         )
 
 set(UT_SOURCES
@@ -16,7 +15,6 @@ set(UT_SOURCES
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
         UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
-        UT/Source/DefaultDictionaryWordRandomizerTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)
@@ -25,8 +23,8 @@ add_executable(glossaryUT ${UT_SOURCES} ${SOURCES})
 target_include_directories(glossary PUBLIC "Include" PRIVATE)
 target_include_directories(glossaryUT PUBLIC "Include" "UT/Doubles" "UT/")
 
-target_link_libraries(glossary PUBLIC ${Boost_LIBRARIES} nlohmann_json webConnection dictionaryRepository translationRepository statisticsRepository translator wordDescriptionRepository wordDescriptionDownloader utils)
-target_link_libraries(glossaryUT PUBLIC gtest_main gmock pthread nlohmann_json webConnection dictionaryRepository translationRepository statisticsRepository translator wordDescriptionRepository wordDescriptionDownloader utils)
+target_link_libraries(glossary PUBLIC ${Boost_LIBRARIES} nlohmann_json webConnection dictionaryService translationRepository statisticsRepository translator wordDescriptionRepository wordDescriptionDownloader utils)
+target_link_libraries(glossaryUT PUBLIC gtest_main gmock pthread nlohmann_json webConnection dictionaryService translationRepository statisticsRepository translator wordDescriptionRepository wordDescriptionDownloader utils)
 
 target_compile_options(glossary PUBLIC ${FLAGS})
 target_compile_options(glossaryUT PUBLIC -Wall -Wextra -Werror)
