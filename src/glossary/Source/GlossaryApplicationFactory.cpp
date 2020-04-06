@@ -1,8 +1,10 @@
 #include "GlossaryApplicationFactory.h"
 
+#include "DefaultAnswerValidator.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
 #include "GlossaryApplication.h"
+#include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
 #include "dictionaryService/DictionaryServiceFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
@@ -31,6 +33,8 @@ createWordDescriptionRetrieverService(const std::shared_ptr<utils::FileAccess>&,
                                       const std::shared_ptr<const webConnection::HttpHandler>&);
 std::shared_ptr<WordDescriptionGenerator>
 createWordDescriptionGenerator(const std::shared_ptr<WordDescriptionRetrieverService>&);
+std::unique_ptr<AnswerValidator> createAnswerValidator();
+std::unique_ptr<UserPrompt> createUserPrompt();
 }
 
 std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() const
@@ -44,9 +48,12 @@ std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() con
     auto wordDescriptionRetrieverService = createWordDescriptionRetrieverService(fileAccess, httpHandler);
     auto wordDescriptionGenerator = createWordDescriptionGenerator(wordDescriptionRetrieverService);
 
-    return std::make_unique<GlossaryApplication>(dictionaryService, translationRetrieverService,
-                                                 statisticsRepository, wordDescriptionRetrieverService,
-                                                 wordDescriptionGenerator);
+    auto answerValidator = createAnswerValidator();
+    auto userPrompt = createUserPrompt();
+
+    return std::make_unique<GlossaryApplication>(
+        dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
+        wordDescriptionGenerator, std::move(answerValidator), std::move(userPrompt));
 }
 
 namespace
@@ -113,5 +120,16 @@ std::shared_ptr<WordDescriptionGenerator> createWordDescriptionGenerator(
 {
     return std::make_shared<WordDescriptionConcurrentGenerator>(wordDescriptionRetrieverService);
 }
+
+std::unique_ptr<AnswerValidator> createAnswerValidator()
+{
+    return std::make_unique<DefaultAnswerValidator>();
+}
+
+std::unique_ptr<UserPrompt> createUserPrompt()
+{
+    return std::make_unique<UserStandardInputPrompt>();
+}
+
 }
 }

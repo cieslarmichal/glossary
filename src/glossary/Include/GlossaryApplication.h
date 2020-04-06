@@ -24,7 +24,8 @@ public:
                         std::shared_ptr<TranslationRetrieverService>,
                         std::shared_ptr<statisticsRepository::StatisticsRepository>,
                         std::shared_ptr<WordDescriptionRetrieverService>,
-                        std::shared_ptr<WordDescriptionGenerator>);
+                        std::shared_ptr<WordDescriptionGenerator>, std::unique_ptr<AnswerValidator>,
+                        std::unique_ptr<UserPrompt>);
 
     void run() override;
 
@@ -52,8 +53,8 @@ private:
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
     std::shared_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
 
-    std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<AnswerValidator> answerValidator;
+    std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewFormatter> wordViewFormatter;
 
     wordDescriptionRepository::EnglishWords englishWords;

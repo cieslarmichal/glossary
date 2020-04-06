@@ -2,12 +2,7 @@
 
 #include <iostream>
 
-#include "DefaultAnswerValidator.h"
-#include "DefaultTranslationRetrieverService.h"
-#include "DefaultWordDescriptionRetrieverService.h"
 #include "DefaultWordViewFormatter.h"
-#include "UserStandardInputPrompt.h"
-#include "WordDescriptionConcurrentGenerator.h"
 #include "utils/GetProjectPath.h"
 #include "utils/StlOperators.h"
 
@@ -19,24 +14,21 @@ GlossaryApplication::GlossaryApplication(
     std::shared_ptr<TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionServiceInit,
-    std::shared_ptr<WordDescriptionGenerator> wordDescriptionGeneratorInit)
+    std::shared_ptr<WordDescriptionGenerator> wordDescriptionGeneratorInit,
+    std::unique_ptr<AnswerValidator> validator, std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
-      wordDescriptionGenerator{std::move(wordDescriptionGeneratorInit)}
+      wordDescriptionGenerator{std::move(wordDescriptionGeneratorInit)},
+      answerValidator{std::move(validator)},
+      userPrompt{std::move(prompt)}
 {
     initialize();
 }
 
 void GlossaryApplication::initialize()
 {
-
-    dictionaryService->addDictionaryFromFile("base", utils::getProjectPath("glossary") +
-                                                         "database/dictionaries/input.txt");
-
-    answerValidator = std::make_unique<DefaultAnswerValidator>();
-    userPrompt = std::make_unique<UserStandardInputPrompt>();
     wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
 }
 
@@ -202,6 +194,8 @@ void GlossaryApplication::removeEnglishWordFromDictionary() const
 
 void GlossaryApplication::addDictionaryFromFile() const
 {
+    //    dictionaryService->addDictionaryFromFile("base", utils::getProjectPath("glossary") +
+    //                                                     "database/dictionaries/input.txt");
     std::cout << "Insert dictionary name to add:\n";
     const auto dictionaryName = userPrompt->getStringInput();
     std::cout << "Insert absolute path to words dictionary file(csv format):\n";
