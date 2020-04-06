@@ -1,15 +1,10 @@
 #include "Glossary.h"
 
-#include "GlossaryApplication.h"
-#include "utils/FileAccessFactory.h"
+#include "ApplicationFactory.h"
 
 namespace glossary
 {
-Glossary::Glossary()
-    : application{std::make_unique<GlossaryApplication>(
-          utils::FileAccessFactory::createFileAccessFactory()->createDefaultFileAccess())}
-{
-}
+Glossary::Glossary() : application{ApplicationFactory::createApplicationFactory()->createApplication()} {}
 
 void Glossary::run()
 {

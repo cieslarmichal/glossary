@@ -7,12 +7,11 @@
 #include "TranslationRetrieverService.h"
 #include "UserPrompt.h"
 #include "WordDescriptionGenerator.h"
+#include "WordDescriptionRetrieverService.h"
 #include "WordViewFormatter.h"
 #include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
-#include "translationRepository/TranslationRepository.h"
 #include "utils/FileAccess.h"
-#include "wordDescriptionRepository/WordDescriptionRepository.h"
 
 namespace glossary
 {
@@ -21,7 +20,11 @@ class GlossaryApplication : public Application
 public:
     // TODO: add check connection with merriam webster with start application
     // TODO: services in separate libs
-    explicit GlossaryApplication(std::shared_ptr<utils::FileAccess>);
+    GlossaryApplication(std::shared_ptr<dictionaryService::DictionaryService>,
+                        std::shared_ptr<TranslationRetrieverService>,
+                        std::shared_ptr<statisticsRepository::StatisticsRepository>,
+                        std::shared_ptr<WordDescriptionRetrieverService>,
+                        std::shared_ptr<WordDescriptionGenerator>);
 
     void run() override;
 
@@ -44,11 +47,10 @@ private:
 
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
-    std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
-    std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
-    std::unique_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
     std::shared_ptr<TranslationRetrieverService> translationRetrieverService;
+    std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
+    std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
+    std::shared_ptr<WordDescriptionGenerator> wordDescriptionGenerator;
 
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<AnswerValidator> answerValidator;

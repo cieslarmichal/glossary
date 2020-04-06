@@ -7,6 +7,8 @@ set(SOURCES
         Source/UserStandardInputPrompt.cpp
         Source/DefaultAnswerValidator.cpp
         Source/GlossaryApplication.cpp
+        Source/ApplicationFactory.cpp
+        Source/GlossaryApplicationFactory.cpp
         )
 
 set(UT_SOURCES

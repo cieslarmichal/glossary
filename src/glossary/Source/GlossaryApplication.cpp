@@ -8,70 +8,35 @@
 #include "DefaultWordViewFormatter.h"
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentGenerator.h"
-#include "dictionaryService/DictionaryServiceFactory.h"
-#include "statisticsRepository/StatisticsRepositoryFactory.h"
-#include "translationRepository/TranslationRepositoryFactory.h"
-#include "translator/TranslatorFactory.h"
 #include "utils/GetProjectPath.h"
 #include "utils/StlOperators.h"
-#include "webConnection/HttpHandlerFactory.h"
-#include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
-#include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
 
 namespace glossary
 {
-GlossaryApplication::GlossaryApplication(std::shared_ptr<utils::FileAccess> fileAccessInit)
-    : fileAccess{std::move(fileAccessInit)}
+
+GlossaryApplication::GlossaryApplication(
+    std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
+    std::shared_ptr<TranslationRetrieverService> translationServiceInit,
+    std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
+    std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionServiceInit,
+    std::shared_ptr<WordDescriptionGenerator> wordDescriptionGeneratorInit)
+    : dictionaryService{std::move(dictionaryServiceInit)},
+      translationRetrieverService{std::move(translationServiceInit)},
+      statisticsRepository{std::move(statisticsRepoInit)},
+      wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
+      wordDescriptionGenerator{std::move(wordDescriptionGeneratorInit)}
 {
     initialize();
 }
 
 void GlossaryApplication::initialize()
 {
-    std::unique_ptr<const dictionaryService::DictionaryServiceFactory> dictionaryServiceFactory =
-        dictionaryService::DictionaryServiceFactory::createDictionaryServiceFactory(fileAccess);
-    dictionaryService = dictionaryServiceFactory->createDictionaryService();
 
     dictionaryService->addDictionaryFromFile("base", utils::getProjectPath("glossary") +
                                                          "database/dictionaries/input.txt");
 
-    std::unique_ptr<const webConnection::HttpHandlerFactory> httpHandlerFactory =
-        webConnection::HttpHandlerFactory::createHttpHandlerFactory();
-    std::shared_ptr<const webConnection::HttpHandler> httpHandler = httpHandlerFactory->createHttpHandler();
-
-    std::unique_ptr<const wordDescriptionDownloader::WordDescriptionDownloaderFactory>
-        wordDescriptionDownloaderFactory = wordDescriptionDownloader::WordDescriptionDownloaderFactory::
-            createWordDescriptionDownloaderFactory(httpHandler);
-    std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader =
-        wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
-
-    std::unique_ptr<const wordDescriptionRepository::WordDescriptionRepositoryFactory>
-        wordDescriptionRepositoryFactory = wordDescriptionRepository::WordDescriptionRepositoryFactory::
-            createWordDescriptionRepositoryFactory(fileAccess);
-    wordDescriptionRepository = wordDescriptionRepositoryFactory->createWordDescriptionRepository();
-
-    wordDescriptionGenerator = std::make_unique<WordDescriptionConcurrentGenerator>(
-        std::make_shared<DefaultWordDescriptionRetrieverService>(std::move(wordDescriptionDownloader),
-                                                                 wordDescriptionRepository));
-
-    std::unique_ptr<const statisticsRepository::StatisticsRepositoryFactory> statisticsRepositoryFactory =
-        statisticsRepository::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
-    statisticsRepository = statisticsRepositoryFactory->createStatisticsRepository();
-
-    std::unique_ptr<const translationRepository::TranslationRepositoryFactory> translationRepositoryFactory =
-        translationRepository::TranslationRepositoryFactory::createTranslationRepositoryFactory(fileAccess);
-    translationRepository = translationRepositoryFactory->createTranslationRepository();
-
-    std::unique_ptr<const translator::TranslatorFactory> translatorFactory =
-        translator::TranslatorFactory::createTranslatorFactory(httpHandler);
-
-    translationRetrieverService = std::make_shared<DefaultTranslationRetrieverService>(
-        translatorFactory->createTranslator(), translationRepository);
-
     answerValidator = std::make_unique<DefaultAnswerValidator>();
-
     userPrompt = std::make_unique<UserStandardInputPrompt>();
-
     wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
 }
 
@@ -127,7 +92,7 @@ void GlossaryApplication::loop()
             resetStatistics();
             break;
         default:
-            std::cout << "Invalid value\n";
+            std::cout << "\nLeaving glossary...\n";
             userWantsToContinue = false;
         }
     }
@@ -148,7 +113,7 @@ void GlossaryApplication::showMenu() const
     std::cout << "10.Get word description\n";
     std::cout << "11.Show statistics\n";
     std::cout << "12.Reset statistics\n";
-    std::cout << "Insert something else to exit\n";
+    std::cout << "Insert other number to exit\n";
 }
 
 void GlossaryApplication::guessWord() const

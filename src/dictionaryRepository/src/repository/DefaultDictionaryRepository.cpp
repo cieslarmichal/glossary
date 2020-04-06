@@ -2,8 +2,7 @@
 
 namespace glossary::dictionaryService::repository
 {
-DefaultDictionaryRepository::DefaultDictionaryRepository(
-    std::unique_ptr<DictionaryStorage> storageInit)
+DefaultDictionaryRepository::DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage> storageInit)
     : storage{std::move(storageInit)}
 
 {

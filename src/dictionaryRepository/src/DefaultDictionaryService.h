@@ -6,8 +6,8 @@
 #include "DictionaryService.h"
 #include "DictionaryWordsRetriever.h"
 #include "RandomDictionaryWordRetriever.h"
-#include "repository/DictionaryRepository.h"
 #include "csvFileReading/DictionaryWordsReader.h"
+#include "repository/DictionaryRepository.h"
 
 namespace glossary::dictionaryService
 {
