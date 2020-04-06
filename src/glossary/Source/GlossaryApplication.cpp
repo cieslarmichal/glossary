@@ -14,13 +14,13 @@ GlossaryApplication::GlossaryApplication(
     std::shared_ptr<TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionServiceInit,
-    std::shared_ptr<WordDescriptionGenerator> wordDescriptionGeneratorInit,
+    std::shared_ptr<WordDescriptionLoader> wordDescriptionLoaderInit,
     std::unique_ptr<AnswerValidator> validator, std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
-      wordDescriptionGenerator{std::move(wordDescriptionGeneratorInit)},
+      wordDescriptionLoader{std::move(wordDescriptionLoaderInit)},
       answerValidator{std::move(validator)},
       userPrompt{std::move(prompt)}
 {
@@ -34,7 +34,7 @@ void GlossaryApplication::initialize()
 
 void GlossaryApplication::run()
 {
-    wordDescriptionGenerator->generateWordsDescriptions(englishWords);
+    wordDescriptionLoader->loadWordsDescriptions(englishWords);
     loop();
 }
 
@@ -130,9 +130,8 @@ void GlossaryApplication::guessWord() const
         statisticsRepository->addIncorrectAnswer(dictionaryWord->englishWord);
     }
 
-    // TODO: change generator into service
     const auto wordDescription =
-        wordDescriptionGenerator->generateWordDescription(dictionaryWord->englishWord);
+        wordDescriptionRetrieverService->retrieveWordDescription(dictionaryWord->englishWord);
     std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription);
 }
 
@@ -207,7 +206,7 @@ void GlossaryApplication::getEnglishWordDescription() const
 {
     std::cout << "Insert english word:\n";
     const auto dictionaryWord = userPrompt->getStringInput();
-    const auto wordDescription = wordDescriptionGenerator->generateWordDescription(dictionaryWord);
+    const auto wordDescription = wordDescriptionRetrieverService->retrieveWordDescription(dictionaryWord);
     std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription) << "\n";
 }
 

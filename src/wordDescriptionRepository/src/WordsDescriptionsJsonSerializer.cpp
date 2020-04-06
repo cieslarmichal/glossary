@@ -21,9 +21,7 @@ std::string WordsDescriptionsJsonSerializer::serialize(const WordsDescriptions& 
         serialized[wordsDescriptionsField].push_back(getJsonFromWordDescription(wordDescription));
     }
     if (serialized.empty())
-    {
         return {};
-    }
     return serialized.dump();
 }
 
@@ -53,9 +51,7 @@ WordsDescriptionsJsonSerializer::getJsonFromWordDescription(const WordDescriptio
 WordsDescriptions WordsDescriptionsJsonSerializer::readWordsDescriptions(const nlohmann::json& json) const
 {
     if (json.find(wordsDescriptionsField) != json.end())
-    {
         return parseWordsDescriptions(json[wordsDescriptionsField]);
-    }
     std::cerr << "There are no wordsDescriptions stored";
     return {};
 }

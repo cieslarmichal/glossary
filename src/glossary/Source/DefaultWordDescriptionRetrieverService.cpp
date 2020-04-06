@@ -3,7 +3,7 @@
 namespace glossary
 {
 DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
-    std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
+    std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> repo)
     : wordDescriptionDownloader{std::move(downloader)}, wordDescriptionRepository{std::move(repo)}
 {

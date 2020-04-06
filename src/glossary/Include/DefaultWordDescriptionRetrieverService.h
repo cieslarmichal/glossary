@@ -12,7 +12,7 @@ class DefaultWordDescriptionRetrieverService : public WordDescriptionRetrieverSe
 {
 public:
     DefaultWordDescriptionRetrieverService(
-        std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
+        std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
         std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
     wordDescriptionRepository::WordDescription
@@ -27,7 +27,7 @@ private:
     getEmptyWordDescriptionWithEnglishWord(const wordDescriptionRepository::EnglishWord& englishWord) const;
     void saveWordDescriptionInRepository(const wordDescriptionRepository::WordDescription&);
 
-    std::unique_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
+    std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
 };
 }

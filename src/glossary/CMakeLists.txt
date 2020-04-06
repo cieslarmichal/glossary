@@ -2,7 +2,7 @@ set(SOURCES
         Source/DefaultTranslationRetrieverService.cpp
         Source/DefaultWordDescriptionRetrieverService.cpp
         Source/Glossary.cpp
-        Source/WordDescriptionConcurrentGenerator.cpp
+        Source/WordDescriptionConcurrentLoader.cpp
         Source/DefaultWordViewFormatter.cpp
         Source/UserStandardInputPrompt.cpp
         Source/DefaultAnswerValidator.cpp
@@ -16,7 +16,7 @@ set(UT_SOURCES
         UT/Source/DefaultWordDescriptionRetrieverServiceTest.cpp
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
-        UT/Source/WordDescriptionConcurrentGeneratorTest.cpp
+        UT/Source/WordDescriptionConcurrentLoaderTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

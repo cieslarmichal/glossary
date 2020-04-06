@@ -5,7 +5,7 @@
 #include "DefaultWordDescriptionRetrieverService.h"
 #include "GlossaryApplication.h"
 #include "UserStandardInputPrompt.h"
-#include "WordDescriptionConcurrentGenerator.h"
+#include "WordDescriptionConcurrentLoader.h"
 #include "dictionaryService/DictionaryServiceFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "translationRepository/TranslationRepositoryFactory.h"
@@ -28,11 +28,16 @@ createTranslationRetrieverService(const std::shared_ptr<utils::FileAccess>&,
                                   const std::shared_ptr<const webConnection::HttpHandler>&);
 std::shared_ptr<statisticsRepository::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>&);
-std::shared_ptr<WordDescriptionRetrieverService>
-createWordDescriptionRetrieverService(const std::shared_ptr<utils::FileAccess>&,
-                                      const std::shared_ptr<const webConnection::HttpHandler>&);
-std::shared_ptr<WordDescriptionGenerator>
-createWordDescriptionGenerator(const std::shared_ptr<WordDescriptionRetrieverService>&);
+std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
+createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>&);
+std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>
+createWordDescriptionRepository(const std::shared_ptr<utils::FileAccess>&);
+std::shared_ptr<WordDescriptionRetrieverService> createWordDescriptionRetrieverService(
+    const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
+    const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
+std::shared_ptr<WordDescriptionLoader>
+createWordDescriptionLoader(const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
+                            const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
 std::unique_ptr<AnswerValidator> createAnswerValidator();
 std::unique_ptr<UserPrompt> createUserPrompt();
 }
@@ -45,15 +50,19 @@ std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() con
     auto dictionaryService = createDictionaryService(fileAccess);
     auto translationRetrieverService = createTranslationRetrieverService(fileAccess, httpHandler);
     auto statisticsRepository = createStatisticsRepository(fileAccess);
-    auto wordDescriptionRetrieverService = createWordDescriptionRetrieverService(fileAccess, httpHandler);
-    auto wordDescriptionGenerator = createWordDescriptionGenerator(wordDescriptionRetrieverService);
+    auto wordDescriptionDownloader = createWordDescriptionDownloader(httpHandler);
+    auto wordDescriptionRepository = createWordDescriptionRepository(fileAccess);
+    auto wordDescriptionRetrieverService =
+        createWordDescriptionRetrieverService(wordDescriptionDownloader, wordDescriptionRepository);
+    auto wordDescriptionLoader =
+        createWordDescriptionLoader(wordDescriptionDownloader, wordDescriptionRepository);
 
     auto answerValidator = createAnswerValidator();
     auto userPrompt = createUserPrompt();
 
     return std::make_unique<GlossaryApplication>(
         dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
-        wordDescriptionGenerator, std::move(answerValidator), std::move(userPrompt));
+        wordDescriptionLoader, std::move(answerValidator), std::move(userPrompt));
 }
 
 namespace
@@ -98,27 +107,38 @@ createStatisticsRepository(const std::shared_ptr<utils::FileAccess>& fileAccess)
     return statisticsRepositoryFactory->createStatisticsRepository();
 }
 
-std::shared_ptr<WordDescriptionRetrieverService>
-createWordDescriptionRetrieverService(const std::shared_ptr<utils::FileAccess>& fileAccess,
-                                      const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
+std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
+createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
 {
     auto wordDescriptionDownloaderFactory =
         wordDescriptionDownloader::WordDescriptionDownloaderFactory::createWordDescriptionDownloaderFactory(
             httpHandler);
+    return wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
+}
 
+std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>
+createWordDescriptionRepository(const std::shared_ptr<utils::FileAccess>& fileAccess)
+{
     auto wordDescriptionRepositoryFactory =
         wordDescriptionRepository::WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(
             fileAccess);
-
-    return std::make_shared<DefaultWordDescriptionRetrieverService>(
-        wordDescriptionDownloaderFactory->createWordDescriptionDownloader(),
-        wordDescriptionRepositoryFactory->createWordDescriptionRepository());
+    return wordDescriptionRepositoryFactory->createWordDescriptionRepository();
 }
 
-std::shared_ptr<WordDescriptionGenerator> createWordDescriptionGenerator(
-    const std::shared_ptr<WordDescriptionRetrieverService>& wordDescriptionRetrieverService)
+std::shared_ptr<WordDescriptionRetrieverService> createWordDescriptionRetrieverService(
+    const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>& wordDescriptionDownloader,
+    const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>& wordDescriptionRepository)
 {
-    return std::make_shared<WordDescriptionConcurrentGenerator>(wordDescriptionRetrieverService);
+    return std::make_shared<DefaultWordDescriptionRetrieverService>(wordDescriptionDownloader,
+                                                                    wordDescriptionRepository);
+}
+
+std::shared_ptr<WordDescriptionLoader> createWordDescriptionLoader(
+    const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>& wordDescriptionDownloader,
+    const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>& wordDescriptionRepository)
+{
+    return std::make_shared<WordDescriptionConcurrentLoader>(wordDescriptionDownloader,
+                                                             wordDescriptionRepository);
 }
 
 std::unique_ptr<AnswerValidator> createAnswerValidator()

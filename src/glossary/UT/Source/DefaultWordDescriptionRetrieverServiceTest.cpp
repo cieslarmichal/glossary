@@ -1,6 +1,5 @@
 #include "DefaultWordDescriptionRetrieverService.h"
 
-#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
@@ -22,12 +21,11 @@ const WordDescription emptyWordDescription{englishWord, {}};
 class DefaultWordDescriptionRetrieverServiceTest : public Test
 {
 public:
-    std::unique_ptr<WordDescriptionDownloaderMock> wordDescriptionDownloaderInit =
-        std::make_unique<StrictMock<WordDescriptionDownloaderMock>>();
-    WordDescriptionDownloaderMock* wordDescriptionDownloader = wordDescriptionDownloaderInit.get();
+    std::shared_ptr<WordDescriptionDownloaderMock> wordDescriptionDownloader =
+        std::make_shared<StrictMock<WordDescriptionDownloaderMock>>();
     std::shared_ptr<WordDescriptionRepositoryMock> wordDescriptionRepository =
         std::make_shared<StrictMock<WordDescriptionRepositoryMock>>();
-    DefaultWordDescriptionRetrieverService wordDescriptionService{std::move(wordDescriptionDownloaderInit),
+    DefaultWordDescriptionRetrieverService wordDescriptionService{wordDescriptionDownloader,
                                                                   wordDescriptionRepository};
 };
 

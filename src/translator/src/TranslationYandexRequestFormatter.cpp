@@ -6,9 +6,6 @@ namespace glossary::translator
 {
 namespace
 {
-// TODO: get key from file and tell users to generate their own key from website
-// TODO: https://translate.yandex.com/developers/keys
-
 const std::string urlAddress{"https://translate.yandex.net/api/v1.5/tr.json/translate"};
 const std::string apiKey{"trnsl.1.1.20200113T184314Z.f0829944dec57123."
                          "a22eb90262e3bd9a179a881dc6960e0a7f142c8d"};
@@ -21,9 +18,7 @@ std::string TranslationYandexRequestFormatter::getFormattedRequest(const std::st
                                                                    TargetLanguage targetLanguage) const
 {
     if (sourceText.empty())
-    {
         return {};
-    }
     const auto formattedSourceText = getFormattedSourceText(sourceText);
     return getRequest(formattedSourceText, sourceLanguage, targetLanguage);
 }

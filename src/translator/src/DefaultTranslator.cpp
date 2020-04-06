@@ -28,10 +28,9 @@ boost::optional<TranslatedText> DefaultTranslator::translate(const std::string& 
     const auto response = getResponseFromTranslationApi(request);
 
     if (response.code == successCode)
-    {
         return translationDeserializer->deserialize(response.content);
-    }
 
+    std::cerr << "Error while translating text: " << sourceText;
     return boost::none;
 }
 webConnection::Response
@@ -44,8 +43,8 @@ DefaultTranslator::getResponseFromTranslationApi(const webConnection::Request& r
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Error while connecting to translation api: " << e.what();
+        return {};
     }
-    return {};
 }
 
 }
