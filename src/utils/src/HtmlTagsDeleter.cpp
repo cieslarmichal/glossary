@@ -1,5 +1,7 @@
 #include "HtmlTagsDeleter.h"
 
+#include <regex>
+
 #include "StringHelper.h"
 
 namespace utils
@@ -7,7 +9,6 @@ namespace utils
 namespace
 {
 bool containsHtmlStartingAndClosingTag(const std::string&);
-bool containsHtmlEntityStartingAndClosingTag(const std::string&);
 const std::string startingHtmlTag{"<"};
 const std::string closingHtmlTag{">"};
 const std::string startingEntityNameTag{"&"};
@@ -39,24 +40,14 @@ void HtmlTagsDeleter::removeHtmlTags(std::string& content) const
         auto endTagPos = content.find(closingHtmlTag, startTagPosition);
 
         if (endTagPos != std::string::npos)
-        {
             utils::cutOffString(content, startTagPosition, endTagPos);
-        }
     }
 }
 
 void HtmlTagsDeleter::removeHtmlEntities(std::string& content) const
 {
-    while (containsHtmlEntityStartingAndClosingTag(content))
-    {
-        auto startTagPosition = content.find(startingEntityNameTag);
-        auto endTagPos = content.find(closingEntityNameTag, startTagPosition);
-
-        if (endTagPos != std::string::npos)
-        {
-            utils::cutOffString(content, startTagPosition, endTagPos);
-        }
-    }
+    std::regex htmlEntityNameRegex("&\\S*;");
+    content = std::regex_replace(content, htmlEntityNameRegex, "");
 }
 
 void HtmlTagsDeleter::trimEmptySpaces(std::vector<std::string>& htmlLines) const
@@ -69,14 +60,10 @@ namespace
 {
 bool containsHtmlStartingAndClosingTag(const std::string& content)
 {
-    return ((content.find(startingHtmlTag) != std::string::npos) &&
-            (content.find(closingHtmlTag) != std::string::npos));
-}
-
-bool containsHtmlEntityStartingAndClosingTag(const std::string& content)
-{
-    return ((content.find(startingEntityNameTag) != std::string::npos) &&
-            (content.find(closingEntityNameTag) != std::string::npos));
+    const auto startingHtmlTagPosition = content.find(startingHtmlTag);
+    const auto closingHtmlTagPosition = content.find(closingHtmlTag);
+    return ((startingHtmlTagPosition != std::string::npos) && (closingHtmlTagPosition != std::string::npos) &&
+            startingHtmlTagPosition < closingHtmlTagPosition);
 }
 
 }

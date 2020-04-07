@@ -10,7 +10,6 @@ class WordDescriptionLoader
 public:
     virtual ~WordDescriptionLoader() = default;
 
-    virtual void
-    loadWordsDescriptions(const wordDescriptionRepository::EnglishWords&) = 0;
+    virtual void loadWordsDescriptions(const wordDescriptionRepository::EnglishWords&) = 0;
 };
 }

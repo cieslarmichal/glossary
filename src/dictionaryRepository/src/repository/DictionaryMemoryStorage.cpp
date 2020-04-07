@@ -105,7 +105,7 @@ bool DictionaryMemoryStorage::dictionaryExists(const DictionaryName& dictionaryN
     return containsDictionary(dictionaryName);
 }
 
-bool DictionaryMemoryStorage::englishWordExistsInDictionary(const std::string& englishWord,
+bool DictionaryMemoryStorage::englishWordExistsInDictionary(const EnglishWord& englishWord,
                                                             const DictionaryName& dictionaryName) const
 {
     if (dictionaryExists(dictionaryName))

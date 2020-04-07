@@ -14,7 +14,7 @@ DefaultRandomDictionaryWordRetriever::DefaultRandomDictionaryWordRetriever(
 boost::optional<DictionaryWord> DefaultRandomDictionaryWordRetriever::getRandomDictionaryWord() const
 {
     const auto dictionaries = dictionaryRepository->getDictionaries();
-    const auto wordsFromDictionaries = dictionaryWordSelector.selectWords(dictionaries);
+    const auto wordsFromDictionaries = dictionaryWordAccumulator.accumulateDictionaryWords(dictionaries);
     return randomizeDictionaryWord(wordsFromDictionaries);
 }
 
@@ -24,7 +24,7 @@ DefaultRandomDictionaryWordRetriever::getRandomDictionaryWord(const DictionaryNa
     const auto dictionaries = dictionaryRepository->getDictionaries();
     if (const auto dictionary = dictionaryFinder.findDictionary(dictionaryName, dictionaries))
     {
-        const auto wordsFromDictionary = dictionaryWordSelector.selectWords(*dictionary);
+        const auto wordsFromDictionary = dictionaryWordAccumulator.accumulateDictionaryWords(*dictionary);
         return randomizeDictionaryWord(wordsFromDictionary);
     }
     return boost::none;

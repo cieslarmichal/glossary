@@ -21,14 +21,16 @@ public:
                              std::unique_ptr<csvFileReading::DictionaryWordsReader>);
 
     DictionaryNames getDictionaryNames() const override;
-    DictionaryWords getDictionaryWords(const DictionaryName&) const override;
+    boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const override;
+    boost::optional<EnglishWords> getEnglishWords(const DictionaryName&) const override;
+    EnglishWords getEnglishWords() const override;
     boost::optional<DictionaryWord> getRandomDictionaryWord() const override;
     boost::optional<DictionaryWord> getRandomDictionaryWord(const DictionaryName&) const override;
     void addDictionary(const DictionaryName&) override;
     void addDictionaryFromFile(const DictionaryName&, const std::string& dictionaryWordsPath) override;
     void addWordToDictionary(const DictionaryWord&, const DictionaryName&) override;
     void removeDictionary(const DictionaryName&) override;
-    void removeWordFromDictionary(const std::string& word, const DictionaryName&) override;
+    void removeWordFromDictionary(const EnglishWord& word, const DictionaryName&) override;
 
 private:
     std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;

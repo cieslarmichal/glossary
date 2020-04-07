@@ -22,9 +22,21 @@ DictionaryNames DefaultDictionaryService::getDictionaryNames() const
     return dictionaryNamesRetriever->retrieveDictionaryNames();
 }
 
-DictionaryWords DefaultDictionaryService::getDictionaryWords(const DictionaryName& dictionaryName) const
+boost::optional<DictionaryWords>
+DefaultDictionaryService::getDictionaryWords(const DictionaryName& dictionaryName) const
 {
     return dictionaryWordsRetriever->retrieveDictionaryWords(dictionaryName);
+}
+
+boost::optional<EnglishWords>
+DefaultDictionaryService::getEnglishWords(const DictionaryName& dictionaryName) const
+{
+    return dictionaryWordsRetriever->retrieveEnglishWords(dictionaryName);
+}
+
+EnglishWords DefaultDictionaryService::getEnglishWords() const
+{
+    return dictionaryWordsRetriever->retrieveEnglishWords();
 }
 
 boost::optional<DictionaryWord> DefaultDictionaryService::getRandomDictionaryWord() const
@@ -61,10 +73,10 @@ void DefaultDictionaryService::removeDictionary(const DictionaryName& dictionary
     dictionaryRepository->removeDictionary(dictionaryName);
 }
 
-void DefaultDictionaryService::removeWordFromDictionary(const std::string& word,
+void DefaultDictionaryService::removeWordFromDictionary(const EnglishWord& englishWord,
                                                         const DictionaryName& dictionaryName)
 {
-    dictionaryRepository->removeWordFromDictionary(word, dictionaryName);
+    dictionaryRepository->removeWordFromDictionary(englishWord, dictionaryName);
 }
 
 }

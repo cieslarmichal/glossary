@@ -43,7 +43,7 @@ void DictionaryPersistentStorage::removeDictionary(const DictionaryName& diction
     serialize();
 }
 
-void DictionaryPersistentStorage::removeWordFromDictionary(const std::string& englishWord,
+void DictionaryPersistentStorage::removeWordFromDictionary(const EnglishWord& englishWord,
                                                            const DictionaryName& dictionaryName)
 {
     storage.removeWordFromDictionary(englishWord, dictionaryName);
@@ -82,9 +82,7 @@ void DictionaryPersistentStorage::loadFile()
     {
         const auto dictionaries = serializer->deserialize(fileAccess->readContent(filename));
         for (const auto& dictionary : dictionaries)
-        {
             storage.addDictionary(dictionary);
-        }
     }
     else
     {
@@ -95,13 +93,9 @@ void DictionaryPersistentStorage::loadFile()
 void DictionaryPersistentStorage::serialize() const
 {
     if (fileAccess->exists(filename))
-    {
         fileAccess->write(filename, serializer->serialize(storage.getDictionaries()));
-    }
     else
-    {
         std::cerr << "Error while serializing dictionaries";
-    }
 }
 
 }

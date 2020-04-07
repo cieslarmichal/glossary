@@ -3,8 +3,8 @@
 #include <memory>
 
 #include "DictionaryFinder.h"
+#include "DictionaryWordAccumulator.h"
 #include "DictionaryWordRandomizer.h"
-#include "DictionaryWordSelector.h"
 #include "RandomDictionaryWordRetriever.h"
 #include "repository/DictionaryRepository.h"
 
@@ -24,7 +24,7 @@ private:
 
     std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;
     std::unique_ptr<DictionaryWordRandomizer> dictionaryWordRandomizer;
-    DictionaryWordSelector dictionaryWordSelector;
+    DictionaryWordAccumulator dictionaryWordAccumulator;
     DictionaryFinder dictionaryFinder;
 };
 }

@@ -19,10 +19,14 @@ public:
     void loadWordsDescriptions(const wordDescriptionRepository::EnglishWords&) override;
 
 private:
-    void loadingWordDescriptionWorker(
-        utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords);
-    void loadWordDescription(const wordDescriptionRepository::EnglishWord&);
     unsigned getAmountOfThreads() const;
+    wordDescriptionRepository::EnglishWords
+    getEnglishWordsWithoutWordDescription(const wordDescriptionRepository::EnglishWords&) const;
+    void loadingWordDescriptionWorker(utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>&,
+                                      utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>&);
+    boost::optional<wordDescriptionRepository::WordDescription>
+    downloadWordDescription(const wordDescriptionRepository::EnglishWord&);
+    void loadWordsDescriptionsIntoRepository(const wordDescriptionRepository::WordsDescriptions&);
 
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;

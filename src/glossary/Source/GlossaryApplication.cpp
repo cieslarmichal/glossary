@@ -14,13 +14,13 @@ GlossaryApplication::GlossaryApplication(
     std::shared_ptr<TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionServiceInit,
-    std::shared_ptr<WordDescriptionLoader> wordDescriptionLoaderInit,
+    std::shared_ptr<DictionarySynchronizer> dictionarySynchronizerInit,
     std::unique_ptr<AnswerValidator> validator, std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
-      wordDescriptionLoader{std::move(wordDescriptionLoaderInit)},
+      dictionarySynchronizer{std::move(dictionarySynchronizerInit)},
       answerValidator{std::move(validator)},
       userPrompt{std::move(prompt)}
 {
@@ -30,11 +30,11 @@ GlossaryApplication::GlossaryApplication(
 void GlossaryApplication::initialize()
 {
     wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
+    dictionarySynchronizer->synchronizeDictionaries();
 }
 
 void GlossaryApplication::run()
 {
-    wordDescriptionLoader->loadWordsDescriptions(englishWords);
     loop();
 }
 
@@ -193,13 +193,12 @@ void GlossaryApplication::removeEnglishWordFromDictionary() const
 
 void GlossaryApplication::addDictionaryFromFile() const
 {
-    //    dictionaryService->addDictionaryFromFile("base", utils::getProjectPath("glossary") +
-    //                                                     "database/dictionaries/input.txt");
     std::cout << "Insert dictionary name to add:\n";
     const auto dictionaryName = userPrompt->getStringInput();
     std::cout << "Insert absolute path to words dictionary file(csv format):\n";
     const auto pathToFileWithDictionaryWords = userPrompt->getStringInput();
     dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
+    dictionarySynchronizer->synchronizeDictionary(dictionaryName);
 }
 
 void GlossaryApplication::getEnglishWordDescription() const

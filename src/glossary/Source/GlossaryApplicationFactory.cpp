@@ -3,6 +3,7 @@
 #include "DefaultAnswerValidator.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
+#include "DictionaryWithWordDescriptionsSynchronizer.h"
 #include "GlossaryApplication.h"
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentLoader.h"
@@ -38,6 +39,9 @@ std::shared_ptr<WordDescriptionRetrieverService> createWordDescriptionRetrieverS
 std::shared_ptr<WordDescriptionLoader>
 createWordDescriptionLoader(const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
                             const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
+std::shared_ptr<DictionarySynchronizer>
+createDictionarySynchronizer(const std::shared_ptr<dictionaryService::DictionaryService>&,
+                             const std::shared_ptr<WordDescriptionLoader>&);
 std::unique_ptr<AnswerValidator> createAnswerValidator();
 std::unique_ptr<UserPrompt> createUserPrompt();
 }
@@ -56,13 +60,14 @@ std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() con
         createWordDescriptionRetrieverService(wordDescriptionDownloader, wordDescriptionRepository);
     auto wordDescriptionLoader =
         createWordDescriptionLoader(wordDescriptionDownloader, wordDescriptionRepository);
+    auto dictionarySynchronizer = createDictionarySynchronizer(dictionaryService, wordDescriptionLoader);
 
     auto answerValidator = createAnswerValidator();
     auto userPrompt = createUserPrompt();
 
     return std::make_unique<GlossaryApplication>(
         dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
-        wordDescriptionLoader, std::move(answerValidator), std::move(userPrompt));
+        dictionarySynchronizer, std::move(answerValidator), std::move(userPrompt));
 }
 
 namespace
@@ -139,6 +144,14 @@ std::shared_ptr<WordDescriptionLoader> createWordDescriptionLoader(
 {
     return std::make_shared<WordDescriptionConcurrentLoader>(wordDescriptionDownloader,
                                                              wordDescriptionRepository);
+}
+
+std::shared_ptr<DictionarySynchronizer>
+createDictionarySynchronizer(const std::shared_ptr<dictionaryService::DictionaryService>& dictionaryService,
+                             const std::shared_ptr<WordDescriptionLoader>& wordDescriptionLoader)
+{
+    return std::make_shared<DictionaryWithWordDescriptionsSynchronizer>(dictionaryService,
+                                                                        wordDescriptionLoader);
 }
 
 std::unique_ptr<AnswerValidator> createAnswerValidator()

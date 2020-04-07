@@ -7,11 +7,13 @@
 #include "boost/optional.hpp"
 #include "boost/optional/optional_io.hpp"
 
+#include "EnglishWord.h"
+
 namespace glossary::dictionaryService
 {
 struct DictionaryWord
 {
-    std::string englishWord;
+    EnglishWord englishWord;
     boost::optional<std::string> translation;
 };
 

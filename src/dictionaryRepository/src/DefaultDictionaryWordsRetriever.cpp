@@ -9,13 +9,33 @@ DefaultDictionaryWordsRetriever::DefaultDictionaryWordsRetriever(
 {
 }
 
-DictionaryWords
+boost::optional<DictionaryWords>
 DefaultDictionaryWordsRetriever::retrieveDictionaryWords(const DictionaryName& dictionaryName) const
 {
+    if (const auto dictionary = getDictionary(dictionaryName))
+        return dictionaryWordAccumulator.accumulateDictionaryWords(*dictionary);
+    return boost::none;
+}
+
+boost::optional<EnglishWords>
+DefaultDictionaryWordsRetriever::retrieveEnglishWords(const DictionaryName& dictionaryName) const
+{
+    if (const auto dictionary = getDictionary(dictionaryName))
+        return dictionaryWordAccumulator.accumulateEnglishWords(*dictionary);
+    return boost::none;
+}
+
+EnglishWords DefaultDictionaryWordsRetriever::retrieveEnglishWords() const
+{
     const auto dictionaries = dictionaryRepository->getDictionaries();
-    if (const auto dictionary = dictionaryFinder.findDictionary(dictionaryName, dictionaries))
-        return dictionaryWordSelector.selectWords(*dictionary);
-    return {};
+    return dictionaryWordAccumulator.accumulateEnglishWords(dictionaries);
+}
+
+boost::optional<Dictionary>
+DefaultDictionaryWordsRetriever::getDictionary(const DictionaryName& dictionaryName) const
+{
+    const auto dictionaries = dictionaryRepository->getDictionaries();
+    return dictionaryFinder.findDictionary(dictionaryName, dictionaries);
 }
 
 }

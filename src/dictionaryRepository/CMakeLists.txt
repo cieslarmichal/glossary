@@ -11,7 +11,7 @@ set(SOURCES
         src/DefaultDictionaryService.cpp
         src/DictionaryNameSelector.cpp
         src/DictionaryFinder.cpp
-        src/DictionaryWordSelector.cpp
+        src/DictionaryWordAccumulator.cpp
         src/DefaultDictionaryNamesRetriever.cpp
         src/DefaultDictionaryWordsRetriever.cpp
         src/DefaultRandomDictionaryWordRetriever.cpp
@@ -28,7 +28,7 @@ set(UT_SOURCES
         src/DefaultDictionaryServiceTest.cpp
         src/DictionaryNameSelectorTest.cpp
         src/DictionaryFinderTest.cpp
-        src/DictionaryWordSelectorTest.cpp
+        src/DictionaryWordAccumulatorTest.cpp
         src/DefaultDictionaryNamesRetrieverTest.cpp
         src/DefaultDictionaryWordsRetrieverTest.cpp
         src/DefaultRandomDictionaryWordRetrieverTest.cpp

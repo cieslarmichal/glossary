@@ -9,17 +9,20 @@ namespace
 {
 const std::vector<std::string> emptyHtmlContent{};
 const std::vector<std::string> contentWithTags{
-    "&aasd\n;\n<span class=\"ex-sent first-child t no-aq sents\">\n&mdash;"
-    "    & ;blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n&;"};
+    "&veryimportant;   \n<span class=\"ex-sent first-child t no-aq sents\">\n&mdash;"
+    "    &mdsh; blackberry <span class=\"mw_t_wi\">wine</span></span>\n\n&;"};
 const std::vector<std::string> expectedContentWithoutHtmlTags{"blackberry wine"};
 const std::string content1{"<sdadsasdasdasd"};
 const std::string content2{"sdads>asdasdasd"};
 const std::string content3{"&sdad&sasd&&&asdasd&"};
 const std::string content4{";sd;ads>asda;sdasd;"};
+const std::string content5{"mac & cheese;"};
 const std::vector<std::string> htmlContentWithStartingOnlyHtmlTag{content1};
 const std::vector<std::string> htmlContentWithClosingOnlyHtmlTag{content2};
 const std::vector<std::string> htmlContentWithStartingOnlyEntityHtmlTag{content3};
 const std::vector<std::string> htmlContentWithClosingOnlyEntityHtmlTag{content4};
+const std::vector<std::string> htmlContentWithStartingAndClosingEntityHtmlTagSeparatedWithWhitespaces{
+    content5};
 }
 
 class HtmlTagsDeleterTest : public Test
@@ -61,6 +64,16 @@ TEST_F(HtmlTagsDeleterTest, givenHtmlContentWithoutOpenEntityTag_shouldNotRemove
     const auto actualContentWithoutTags = deleter.deleteTags(htmlContentWithClosingOnlyEntityHtmlTag);
 
     ASSERT_EQ(actualContentWithoutTags, htmlContentWithClosingOnlyEntityHtmlTag);
+}
+
+TEST_F(HtmlTagsDeleterTest,
+       givenHtmlContentWithOpenAndCloseEntityTagSepataredWithWhitespaces_shouldNotRemoveAnything)
+{
+    const auto actualContentWithoutTags =
+        deleter.deleteTags(htmlContentWithStartingAndClosingEntityHtmlTagSeparatedWithWhitespaces);
+
+    ASSERT_EQ(actualContentWithoutTags,
+              htmlContentWithStartingAndClosingEntityHtmlTagSeparatedWithWhitespaces);
 }
 
 TEST_F(HtmlTagsDeleterTest, givenHtmlContent_shouldReturnHtmlTags)

@@ -32,6 +32,8 @@ const Dictionary emptyDictionary{dictionaryName3, emptyDictionaryWords};
 const Dictionaries dictionaries{dictionary1, dictionary2, emptyDictionary};
 const Dictionaries emptyDictionaries{};
 const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2, dictionaryName3};
+const EnglishWords englishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
+                                dictionaryWord3.englishWord};
 }
 
 class DefaultDictionaryServiceTest : public Test
@@ -77,7 +79,26 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryWords)
 
     const auto actualDictionaryWords = service.getDictionaryWords(dictionaryName1);
 
-    ASSERT_EQ(actualDictionaryWords, dictionaryWords1);
+    ASSERT_EQ(*actualDictionaryWords, dictionaryWords1);
+}
+
+TEST_F(DefaultDictionaryServiceTest, shouldReturnEnglishWordsFromDictionary)
+{
+    EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords(dictionaryName1))
+        .WillOnce(Return(englishWords));
+
+    const auto actualEnglishWords = service.getEnglishWords(dictionaryName1);
+
+    ASSERT_EQ(*actualEnglishWords, englishWords);
+}
+
+TEST_F(DefaultDictionaryServiceTest, shouldReturnEnglishWordsFromDictionaries)
+{
+    EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords()).WillOnce(Return(englishWords));
+
+    const auto actualEnglishWords = service.getEnglishWords();
+
+    ASSERT_EQ(actualEnglishWords, englishWords);
 }
 
 TEST_F(DefaultDictionaryServiceTest, givenDictionaryName_shouldReturnRandomDictionaryWordFromThisDictionary)

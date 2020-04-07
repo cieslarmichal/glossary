@@ -29,7 +29,7 @@ void DefaultDictionaryRepository::removeDictionary(const DictionaryName& diction
     storage->removeDictionary(dictionaryName);
 }
 
-void DefaultDictionaryRepository::removeWordFromDictionary(const std::string& englishWord,
+void DefaultDictionaryRepository::removeWordFromDictionary(const EnglishWord& englishWord,
                                                            const DictionaryName& dictionaryName)
 {
     storage->removeWordFromDictionary(englishWord, dictionaryName);

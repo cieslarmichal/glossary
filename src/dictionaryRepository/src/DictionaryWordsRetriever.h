@@ -9,6 +9,8 @@ class DictionaryWordsRetriever
 public:
     virtual ~DictionaryWordsRetriever() = default;
 
-    virtual DictionaryWords retrieveDictionaryWords(const DictionaryName&) const = 0;
+    virtual boost::optional<DictionaryWords> retrieveDictionaryWords(const DictionaryName&) const = 0;
+    virtual boost::optional<EnglishWords> retrieveEnglishWords(const DictionaryName&) const = 0;
+    virtual EnglishWords retrieveEnglishWords() const = 0;
 };
 }

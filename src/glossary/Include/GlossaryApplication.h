@@ -4,9 +4,9 @@
 
 #include "AnswerValidator.h"
 #include "Application.h"
+#include "DictionarySynchronizer.h"
 #include "TranslationRetrieverService.h"
 #include "UserPrompt.h"
-#include "WordDescriptionLoader.h"
 #include "WordDescriptionRetrieverService.h"
 #include "WordViewFormatter.h"
 #include "dictionaryService/DictionaryService.h"
@@ -24,7 +24,7 @@ public:
                         std::shared_ptr<TranslationRetrieverService>,
                         std::shared_ptr<statisticsRepository::StatisticsRepository>,
                         std::shared_ptr<WordDescriptionRetrieverService>,
-                        std::shared_ptr<WordDescriptionLoader>, std::unique_ptr<AnswerValidator>,
+                        std::shared_ptr<DictionarySynchronizer>, std::unique_ptr<AnswerValidator>,
                         std::unique_ptr<UserPrompt>);
 
     void run() override;
@@ -51,7 +51,7 @@ private:
     std::shared_ptr<TranslationRetrieverService> translationRetrieverService;
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
-    std::shared_ptr<WordDescriptionLoader> wordDescriptionLoader;
+    std::shared_ptr<DictionarySynchronizer> dictionarySynchronizer;
 
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<UserPrompt> userPrompt;

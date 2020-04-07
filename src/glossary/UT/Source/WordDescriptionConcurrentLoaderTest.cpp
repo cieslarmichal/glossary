@@ -17,12 +17,6 @@ const EnglishWord englishWord2{"englishWord2"};
 const EnglishWord englishWord3{"englishWord3"};
 const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
 const WordDescription wordDescription1{englishWord1, Description{}};
-const WordDescription wordDescription2{
-    englishWord2,
-    Description{DefinitionsWithExamples{DefinitionWithExample{Definition{"definition"}, Example{"example"}}},
-                {}}};
-const WordDescription wordDescription3{englishWord3, Description{}};
-const WordsDescriptions expectedWordsDescriptions{wordDescription1, wordDescription2, wordDescription3};
 }
 
 class WordDescriptionConcurrentLoaderTest : public Test

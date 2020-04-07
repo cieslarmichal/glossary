@@ -25,6 +25,11 @@ const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionary emptyDictionary{dictionaryName3, emptyDictionaryWords};
 const Dictionaries dictionaries{dictionary1, dictionary2, emptyDictionary};
+const EnglishWords englishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
+                                dictionaryWord3.englishWord};
+const EnglishWords accumulatedEnglishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
+                                           dictionaryWord3.englishWord, dictionaryWord1.englishWord,
+                                           dictionaryWord2.englishWord};
 }
 
 class DefaultDictionaryWordsRetrieverTest : public Test
@@ -41,7 +46,7 @@ TEST_F(DefaultDictionaryWordsRetrieverTest, givenNonExistingDictionary_shouldRet
 
     const auto actualDictionaryWords = retriever.retrieveDictionaryWords(nonExistingDictionaryName);
 
-    ASSERT_TRUE(actualDictionaryWords.empty());
+    ASSERT_EQ(actualDictionaryWords, boost::none);
 }
 
 TEST_F(DefaultDictionaryWordsRetrieverTest, givenExistingDictionary_shouldReturnDictionaryWords)
@@ -50,5 +55,32 @@ TEST_F(DefaultDictionaryWordsRetrieverTest, givenExistingDictionary_shouldReturn
 
     const auto actualDictionaryWords = retriever.retrieveDictionaryWords(dictionaryName1);
 
-    ASSERT_EQ(actualDictionaryWords, dictionaryWords1);
+    ASSERT_EQ(*actualDictionaryWords, dictionaryWords1);
+}
+
+TEST_F(DefaultDictionaryWordsRetrieverTest, givenNonExistingDictionary_shouldReturnEmptyEnglishWords)
+{
+    EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
+
+    const auto actualEnglishWords = retriever.retrieveEnglishWords(nonExistingDictionaryName);
+
+    ASSERT_EQ(actualEnglishWords, boost::none);
+}
+
+TEST_F(DefaultDictionaryWordsRetrieverTest, givenExistingDictionary_shouldReturnEnglishWords)
+{
+    EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
+
+    const auto actualEnglishWords = retriever.retrieveEnglishWords(dictionaryName1);
+
+    ASSERT_EQ(*actualEnglishWords, englishWords);
+}
+
+TEST_F(DefaultDictionaryWordsRetrieverTest, givenDictionaries_shouldReturnEnglishWords)
+{
+    EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
+
+    const auto actualEnglishWords = retriever.retrieveEnglishWords();
+
+    ASSERT_EQ(actualEnglishWords, accumulatedEnglishWords);
 }
