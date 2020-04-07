@@ -27,11 +27,11 @@ public:
     TranslationYandexRequestFormatter formatter;
 };
 
-TEST_F(TranslationYandexRequestFormatterTest, givenEmptyString_shouldReturnEmptyString)
+TEST_F(TranslationYandexRequestFormatterTest, givenEmptyText_shouldReturnNone)
 {
     const auto formattedRequest = formatter.getFormattedRequest(emptyText, sourceLanguage, targetLanguage);
 
-    ASSERT_TRUE(formattedRequest.empty());
+    ASSERT_EQ(formattedRequest, boost::none);
 }
 
 TEST_F(TranslationYandexRequestFormatterTest, givenOneWordText_shouldReturnRequestWithThisWordInTextField)
@@ -39,7 +39,7 @@ TEST_F(TranslationYandexRequestFormatterTest, givenOneWordText_shouldReturnReque
     const auto actualFormattedRequest =
         formatter.getFormattedRequest(singleWordText, sourceLanguage, targetLanguage);
 
-    ASSERT_EQ(actualFormattedRequest, requestWithSingleWord);
+    ASSERT_EQ(*actualFormattedRequest, requestWithSingleWord);
 }
 
 TEST_F(TranslationYandexRequestFormatterTest,
@@ -48,5 +48,5 @@ TEST_F(TranslationYandexRequestFormatterTest,
     const auto actualFormattedRequest =
         formatter.getFormattedRequest(multipleWordsText, sourceLanguage, targetLanguage);
 
-    ASSERT_EQ(actualFormattedRequest, requestWithMultipleWord);
+    ASSERT_EQ(*actualFormattedRequest, requestWithMultipleWord);
 }

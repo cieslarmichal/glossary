@@ -19,7 +19,10 @@ public:
                                               TargetLanguage) const override;
 
 private:
-    webConnection::Response getResponseFromTranslationApi(const webConnection::Request&) const;
+    boost::optional<webConnection::Response>
+    getResponseFromTranslationApi(const webConnection::Request&) const;
+    bool requestIsNotValid(const boost::optional<webConnection::Request>&) const;
+    bool translationSucceeded(webConnection::ResponseCode) const;
 
     std::shared_ptr<const webConnection::HttpHandler> httpHandler;
     std::unique_ptr<TranslationDeserializer> translationDeserializer;

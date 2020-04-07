@@ -10,6 +10,7 @@ class TranslationRequestFormatterMock : public TranslationRequestFormatter
 {
 public:
     MOCK_CONST_METHOD3(getFormattedRequest,
-                       webConnection::Request(const SourceText&, SourceLanguage, TargetLanguage));
+                       boost::optional<webConnection::Request>(const SourceText&, SourceLanguage,
+                                                               TargetLanguage));
 };
 }

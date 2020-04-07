@@ -7,8 +7,8 @@ namespace glossary::translator
 class TranslationYandexRequestFormatter : public TranslationRequestFormatter
 {
 public:
-    webConnection::Request getFormattedRequest(const std::string&, SourceLanguage,
-                                               TargetLanguage) const override;
+    boost::optional<webConnection::Request> getFormattedRequest(const std::string&, SourceLanguage,
+                                                                TargetLanguage) const override;
 
 private:
     std::string getFormattedSourceText(const std::string&) const;

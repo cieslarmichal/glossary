@@ -25,15 +25,20 @@ boost::optional<TranslatedText> DefaultTranslator::translate(const std::string& 
                                                              translator::TargetLanguage targetLanguage) const
 {
     const auto request = requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage);
-    const auto response = getResponseFromTranslationApi(request);
+    if (requestIsNotValid(request))
+        return boost::none;
 
-    if (response.code == successCode)
-        return translationDeserializer->deserialize(response.content);
+    if (const auto response = getResponseFromTranslationApi(*request))
+    {
+        if (translationSucceeded(response->code))
+            return translationDeserializer->deserialize(response->content);
+    }
 
     std::cerr << "Error while translating text: " << sourceText;
     return boost::none;
 }
-webConnection::Response
+
+boost::optional<webConnection::Response>
 DefaultTranslator::getResponseFromTranslationApi(const webConnection::Request& request) const
 {
     try
@@ -43,8 +48,18 @@ DefaultTranslator::getResponseFromTranslationApi(const webConnection::Request& r
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Error while connecting to translation api: " << e.what();
-        return {};
+        return boost::none;
     }
+}
+
+bool DefaultTranslator::requestIsNotValid(const boost::optional<webConnection::Request>& request) const
+{
+    return request == boost::none;
+}
+
+bool DefaultTranslator::translationSucceeded(webConnection::ResponseCode responseCode) const
+{
+    return responseCode == successCode;
 }
 
 }
