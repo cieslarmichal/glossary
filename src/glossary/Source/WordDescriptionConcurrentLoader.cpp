@@ -14,7 +14,7 @@ WordDescriptionConcurrentLoader::WordDescriptionConcurrentLoader(
 {
 }
 
-void WordDescriptionConcurrentLoader::loadWordsDescriptions(
+void WordDescriptionConcurrentLoader::loadMissingWordsDescriptions(
     const wordDescriptionRepository::EnglishWords& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
@@ -36,6 +36,11 @@ void WordDescriptionConcurrentLoader::loadWordsDescriptions(
         thread.join();
 
     loadWordsDescriptionsIntoRepository(wordsDescriptions.popAll());
+}
+
+unsigned WordDescriptionConcurrentLoader::getAmountOfThreads() const
+{
+    return supportedThreadsCalculator.calculate();
 }
 
 wordDescriptionRepository::EnglishWords
@@ -70,18 +75,11 @@ WordDescriptionConcurrentLoader::downloadWordDescription(
     return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
-unsigned WordDescriptionConcurrentLoader::getAmountOfThreads() const
-{
-    return supportedThreadsCalculator.calculate();
-}
-
 void WordDescriptionConcurrentLoader::loadWordsDescriptionsIntoRepository(
     const wordDescriptionRepository::WordsDescriptions& wordsDescriptions)
 {
     for (const auto& wordDescription : wordsDescriptions)
-    {
         wordDescriptionRepository->addWordDescription(wordDescription);
-    }
 }
 
 }

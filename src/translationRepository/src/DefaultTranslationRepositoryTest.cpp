@@ -42,3 +42,18 @@ TEST_F(DefaultTranslationRepositoryTest, getTranslation)
 
     ASSERT_EQ(actualTranslation, translation1);
 }
+
+TEST_F(DefaultTranslationRepositoryTest, givenTranslationForTextExistingInStorage_shouldContainTranslation)
+{
+    EXPECT_CALL(*storage, contains(polishWord1)).WillOnce(Return(true));
+
+    ASSERT_TRUE(repository.containsTranslation(polishWord1));
+}
+
+TEST_F(DefaultTranslationRepositoryTest,
+       givenTranslationForTextNonExistingInStorage_shouldNotContainTranslation)
+{
+    EXPECT_CALL(*storage, contains(polishWord1)).WillOnce(Return(false));
+
+    ASSERT_FALSE(repository.containsTranslation(polishWord1));
+}

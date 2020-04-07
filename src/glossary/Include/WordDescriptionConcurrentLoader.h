@@ -16,7 +16,7 @@ public:
     WordDescriptionConcurrentLoader(std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
                                     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
-    void loadWordsDescriptions(const wordDescriptionRepository::EnglishWords&) override;
+    void loadMissingWordsDescriptions(const wordDescriptionRepository::EnglishWords&) override;
 
 private:
     unsigned getAmountOfThreads() const;

@@ -35,7 +35,7 @@ TEST_F(WordDescriptionConcurrentLoaderTest, givenEnglishWordsExistingInRepositor
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord2)).WillOnce(Return(true));
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord3)).WillOnce(Return(true));
 
-    loader.loadWordsDescriptions(englishWords);
+    loader.loadMissingWordsDescriptions(englishWords);
 }
 
 TEST_F(WordDescriptionConcurrentLoaderTest,
@@ -54,5 +54,5 @@ TEST_F(WordDescriptionConcurrentLoaderTest,
 
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescription1));
 
-    loader.loadWordsDescriptions(englishWords);
+    loader.loadMissingWordsDescriptions(englishWords);
 }

@@ -1,10 +1,11 @@
 #include "GlossaryApplicationFactory.h"
 
 #include "DefaultAnswerValidator.h"
+#include "DefaultDictionarySynchronizer.h"
 #include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
-#include "DictionaryWithWordDescriptionsSynchronizer.h"
 #include "GlossaryApplication.h"
+#include "TranslationConcurrentLoader.h"
 #include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentLoader.h"
 #include "dictionaryService/DictionaryServiceFactory.h"
@@ -24,9 +25,13 @@ std::shared_ptr<utils::FileAccess> createFileAccess();
 std::shared_ptr<const webConnection::HttpHandler> createHttpHandler();
 std::shared_ptr<dictionaryService::DictionaryService>
 createDictionaryService(const std::shared_ptr<utils::FileAccess>&);
+std::shared_ptr<translator::Translator>
+createTranslator(const std::shared_ptr<const webConnection::HttpHandler>&);
+std::shared_ptr<translationRepository::TranslationRepository>
+createTranslationRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<TranslationRetrieverService>
-createTranslationRetrieverService(const std::shared_ptr<utils::FileAccess>&,
-                                  const std::shared_ptr<const webConnection::HttpHandler>&);
+createTranslationRetrieverService(const std::shared_ptr<translator::Translator>&,
+                                  const std::shared_ptr<translationRepository::TranslationRepository>&);
 std::shared_ptr<statisticsRepository::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
@@ -39,9 +44,13 @@ std::shared_ptr<WordDescriptionRetrieverService> createWordDescriptionRetrieverS
 std::shared_ptr<WordDescriptionLoader>
 createWordDescriptionLoader(const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
                             const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
+std::shared_ptr<TranslationLoader>
+createTranslationLoader(const std::shared_ptr<translator::Translator>&,
+                        const std::shared_ptr<translationRepository::TranslationRepository>&);
 std::shared_ptr<DictionarySynchronizer>
 createDictionarySynchronizer(const std::shared_ptr<dictionaryService::DictionaryService>&,
-                             const std::shared_ptr<WordDescriptionLoader>&);
+                             const std::shared_ptr<WordDescriptionLoader>&,
+                             const std::shared_ptr<TranslationLoader>&);
 std::unique_ptr<AnswerValidator> createAnswerValidator();
 std::unique_ptr<UserPrompt> createUserPrompt();
 }
@@ -52,15 +61,23 @@ std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() con
     auto httpHandler = createHttpHandler();
 
     auto dictionaryService = createDictionaryService(fileAccess);
-    auto translationRetrieverService = createTranslationRetrieverService(fileAccess, httpHandler);
+
+    auto translator = createTranslator(httpHandler);
+    auto translationRepository = createTranslationRepository(fileAccess);
+    auto translationRetrieverService = createTranslationRetrieverService(translator, translationRepository);
+
     auto statisticsRepository = createStatisticsRepository(fileAccess);
+
     auto wordDescriptionDownloader = createWordDescriptionDownloader(httpHandler);
     auto wordDescriptionRepository = createWordDescriptionRepository(fileAccess);
     auto wordDescriptionRetrieverService =
         createWordDescriptionRetrieverService(wordDescriptionDownloader, wordDescriptionRepository);
+
     auto wordDescriptionLoader =
         createWordDescriptionLoader(wordDescriptionDownloader, wordDescriptionRepository);
-    auto dictionarySynchronizer = createDictionarySynchronizer(dictionaryService, wordDescriptionLoader);
+    auto translationLoader = createTranslationLoader(translator, translationRepository);
+    auto dictionarySynchronizer =
+        createDictionarySynchronizer(dictionaryService, wordDescriptionLoader, translationLoader);
 
     auto answerValidator = createAnswerValidator();
     auto userPrompt = createUserPrompt();
@@ -91,17 +108,26 @@ createDictionaryService(const std::shared_ptr<utils::FileAccess>& fileAccess)
     return dictionaryServiceFactory->createDictionaryService();
 }
 
-std::shared_ptr<TranslationRetrieverService>
-createTranslationRetrieverService(const std::shared_ptr<utils::FileAccess>& fileAccess,
-                                  const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
+std::shared_ptr<translator::Translator>
+createTranslator(const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
+{
+    auto translatorFactory = translator::TranslatorFactory::createTranslatorFactory(httpHandler);
+    return translatorFactory->createTranslator();
+}
+
+std::shared_ptr<translationRepository::TranslationRepository>
+createTranslationRepository(const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
     auto translationRepositoryFactory =
         translationRepository::TranslationRepositoryFactory::createTranslationRepositoryFactory(fileAccess);
+    return translationRepositoryFactory->createTranslationRepository();
+}
 
-    auto translatorFactory = translator::TranslatorFactory::createTranslatorFactory(httpHandler);
-
-    return std::make_shared<DefaultTranslationRetrieverService>(
-        translatorFactory->createTranslator(), translationRepositoryFactory->createTranslationRepository());
+std::shared_ptr<TranslationRetrieverService> createTranslationRetrieverService(
+    const std::shared_ptr<translator::Translator>& translator,
+    const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository)
+{
+    return std::make_shared<DefaultTranslationRetrieverService>(translator, translationRepository);
 }
 
 std::shared_ptr<statisticsRepository::StatisticsRepository>
@@ -146,12 +172,20 @@ std::shared_ptr<WordDescriptionLoader> createWordDescriptionLoader(
                                                              wordDescriptionRepository);
 }
 
+std::shared_ptr<TranslationLoader> createTranslationLoader(
+    const std::shared_ptr<translator::Translator>& translator,
+    const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository)
+{
+    return std::make_shared<TranslationConcurrentLoader>(translator, translationRepository);
+}
+
 std::shared_ptr<DictionarySynchronizer>
 createDictionarySynchronizer(const std::shared_ptr<dictionaryService::DictionaryService>& dictionaryService,
-                             const std::shared_ptr<WordDescriptionLoader>& wordDescriptionLoader)
+                             const std::shared_ptr<WordDescriptionLoader>& wordDescriptionLoader,
+                             const std::shared_ptr<TranslationLoader>& translationLoader)
 {
-    return std::make_shared<DictionaryWithWordDescriptionsSynchronizer>(dictionaryService,
-                                                                        wordDescriptionLoader);
+    return std::make_shared<DefaultDictionarySynchronizer>(dictionaryService, wordDescriptionLoader,
+                                                           translationLoader);
 }
 
 std::unique_ptr<AnswerValidator> createAnswerValidator()

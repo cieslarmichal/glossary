@@ -3,16 +3,17 @@
 #include <memory>
 
 #include "DictionarySynchronizer.h"
+#include "TranslationLoader.h"
 #include "WordDescriptionLoader.h"
 #include "dictionaryService/DictionaryService.h"
 
 namespace glossary
 {
-class DictionaryWithWordDescriptionsSynchronizer : public DictionarySynchronizer
+class DefaultDictionarySynchronizer : public DictionarySynchronizer
 {
 public:
-    DictionaryWithWordDescriptionsSynchronizer(std::shared_ptr<dictionaryService::DictionaryService>,
-                                               std::shared_ptr<WordDescriptionLoader>);
+    DefaultDictionarySynchronizer(std::shared_ptr<dictionaryService::DictionaryService>,
+                                  std::shared_ptr<WordDescriptionLoader>, std::shared_ptr<TranslationLoader>);
 
     void synchronizeDictionary(const dictionaryService::DictionaryName&) override;
     void synchronizeDictionaries() override;
@@ -25,6 +26,7 @@ private:
 
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
     std::shared_ptr<WordDescriptionLoader> wordDescriptionLoader;
+    std::shared_ptr<TranslationLoader> translationLoader;
 };
 
 }

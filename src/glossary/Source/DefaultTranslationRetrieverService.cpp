@@ -3,7 +3,7 @@
 namespace glossary
 {
 DefaultTranslationRetrieverService::DefaultTranslationRetrieverService(
-    std::unique_ptr<translator::Translator> translatorInit,
+    std::shared_ptr<translator::Translator> translatorInit,
     std::shared_ptr<translationRepository::TranslationRepository> repo)
     : translator{std::move(translatorInit)}, translationRepository{std::move(repo)}
 {

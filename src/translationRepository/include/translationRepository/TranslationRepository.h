@@ -15,5 +15,6 @@ public:
 
     virtual void addTranslation(Translation) = 0;
     virtual boost::optional<Translation> getTranslation(const SourceText&) const = 0;
+    virtual bool containsTranslation(const SourceText&) const = 0;
 };
 }

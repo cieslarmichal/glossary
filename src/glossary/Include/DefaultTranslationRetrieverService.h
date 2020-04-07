@@ -11,7 +11,7 @@ namespace glossary
 class DefaultTranslationRetrieverService : public TranslationRetrieverService
 {
 public:
-    DefaultTranslationRetrieverService(std::unique_ptr<translator::Translator>,
+    DefaultTranslationRetrieverService(std::shared_ptr<translator::Translator>,
                                        std::shared_ptr<translationRepository::TranslationRepository>);
 
     boost::optional<translator::TranslatedText> retrieveTranslation(const translator::SourceText&,
@@ -25,7 +25,7 @@ private:
                                  translator::TargetLanguage) const;
     void saveTranslationInRepository(const std::string&, const translator::TranslatedText&);
 
-    std::unique_ptr<translator::Translator> translator;
+    std::shared_ptr<translator::Translator> translator;
     std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
 };
 }
