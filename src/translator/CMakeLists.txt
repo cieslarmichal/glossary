@@ -1,14 +1,14 @@
 set(SOURCES
         src/DefaultTranslator.cpp
-        src/TranslationJsonDeserializer.cpp
-        src/TranslationYandexRequestFormatter.cpp
+        src/GoogleTranslateApiJsonResponseDeserializer.cpp
+        src/GoogleTranslateApiRequestFormatter.cpp
         src/TranslatorFactory.cpp
         src/DefaultTranslatorFactory.cpp)
 
 set(UT_SOURCES
         src/DefaultTranslatorTest.cpp
-        src/TranslationJsonDeserializerTest.cpp
-        src/TranslationYandexRequestFormatterTest.cpp)
+        src/GoogleTranslateApiJsonResponseDeserializerTest.cpp
+        src/GoogleTranslateApiRequestFormatterTest.cpp)
 
 add_library(translator ${SOURCES})
 add_executable(translatorUT ${UT_SOURCES})

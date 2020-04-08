@@ -1,4 +1,4 @@
-#include "TranslationYandexRequestFormatter.h"
+#include "GoogleTranslateApiRequestFormatter.h"
 
 #include "gtest/gtest.h"
 
@@ -7,13 +7,14 @@ using namespace glossary::translator;
 
 namespace
 {
-const std::string url = R"(https://translate.yandex.net/api/v1.5/tr.json/translate?)";
-const std::string key =
-    R"(key=trnsl.1.1.20200113T184314Z.f0829944dec57123.a22eb90262e3bd9a179a881dc6960e0a7f142c8d&)";
+const std::string url{"https://translation.googleapis.com/language/translate/v2?"};
+const std::string key = {"key=AIzaSyCzXw_W97vKC5sSHXpNSCSpB5STCZkk08o"};
 const auto requestBase = url + key;
-const auto langFields = R"(&lang=pl-en)";
-const webConnection::Request requestWithSingleWord = requestBase + "text=piwo" + langFields;
-const webConnection::Request requestWithMultipleWord = requestBase + "text=piwo+jest+pyszne" + langFields;
+const auto sourceField = R"(&source=pl)";
+const auto targetField = R"(&target=en)";
+const webConnection::Request requestWithSingleWord = requestBase + "&q=piwo" + sourceField + targetField;
+const webConnection::Request requestWithMultipleWord =
+    requestBase + "&q=piwo+jest+pyszne" + sourceField + targetField;
 const auto emptyText = "";
 const auto singleWordText = "piwo";
 const auto multipleWordsText = "piwo jest pyszne";
@@ -21,20 +22,20 @@ const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
 }
 
-class TranslationYandexRequestFormatterTest : public Test
+class GoogleTranslateApiRequestFormatterTest : public Test
 {
 public:
-    TranslationYandexRequestFormatter formatter;
+    GoogleTranslateApiRequestFormatter formatter;
 };
 
-TEST_F(TranslationYandexRequestFormatterTest, givenEmptyText_shouldReturnNone)
+TEST_F(GoogleTranslateApiRequestFormatterTest, givenEmptyText_shouldReturnNone)
 {
     const auto formattedRequest = formatter.getFormattedRequest(emptyText, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(formattedRequest, boost::none);
 }
 
-TEST_F(TranslationYandexRequestFormatterTest, givenOneWordText_shouldReturnRequestWithThisWordInTextField)
+TEST_F(GoogleTranslateApiRequestFormatterTest, givenOneWordText_shouldReturnRequestWithThisWordInTextField)
 {
     const auto actualFormattedRequest =
         formatter.getFormattedRequest(singleWordText, sourceLanguage, targetLanguage);
@@ -42,7 +43,7 @@ TEST_F(TranslationYandexRequestFormatterTest, givenOneWordText_shouldReturnReque
     ASSERT_EQ(*actualFormattedRequest, requestWithSingleWord);
 }
 
-TEST_F(TranslationYandexRequestFormatterTest,
+TEST_F(GoogleTranslateApiRequestFormatterTest,
        givenThreeWordsText_shouldReturnRequestWithTheseWordsSplitByPlusSignInTextField)
 {
     const auto actualFormattedRequest =

@@ -4,7 +4,7 @@
 
 namespace glossary::translator
 {
-class TranslationYandexRequestFormatter : public TranslationRequestFormatter
+class GoogleTranslateApiRequestFormatter : public TranslationRequestFormatter
 {
 public:
     boost::optional<webConnection::Request> getFormattedRequest(const std::string&, SourceLanguage,

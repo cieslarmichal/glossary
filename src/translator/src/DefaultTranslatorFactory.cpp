@@ -1,8 +1,8 @@
 #include "DefaultTranslatorFactory.h"
 
 #include "DefaultTranslator.h"
-#include "TranslationJsonDeserializer.h"
-#include "TranslationYandexRequestFormatter.h"
+#include "GoogleTranslateApiJsonResponseDeserializer.h"
+#include "GoogleTranslateApiRequestFormatter.h"
 
 namespace glossary::translator
 {
@@ -14,8 +14,9 @@ DefaultTranslatorFactory::DefaultTranslatorFactory(
 
 std::unique_ptr<Translator> DefaultTranslatorFactory::createTranslator() const
 {
-    return std::make_unique<DefaultTranslator>(httpHandler, std::make_unique<TranslationJsonDeserializer>(),
-                                               std::make_unique<TranslationYandexRequestFormatter>());
+    return std::make_unique<DefaultTranslator>(
+        httpHandler, std::make_unique<GoogleTranslateApiJsonResponseDeserializer>(),
+        std::make_unique<GoogleTranslateApiRequestFormatter>());
 }
 
 }
