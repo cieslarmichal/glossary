@@ -1,6 +1,5 @@
 #include "DefaultTranslationRetrieverService.h"
 
-#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 #include "translationRepository/TranslationRepositoryMock.h"
@@ -10,6 +9,7 @@ using namespace ::testing;
 using namespace glossary;
 using namespace translator;
 using namespace translationRepository;
+using namespace translationService;
 
 namespace
 {

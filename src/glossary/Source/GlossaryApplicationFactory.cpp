@@ -2,7 +2,6 @@
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionarySynchronizer.h"
-#include "DefaultTranslationRetrieverService.h"
 #include "DefaultWordDescriptionRetrieverService.h"
 #include "GlossaryApplication.h"
 #include "TranslationConcurrentLoader.h"
@@ -11,6 +10,7 @@
 #include "dictionaryService/DictionaryServiceFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "translationRepository/TranslationRepositoryFactory.h"
+#include "translationService/TranslationServiceFactory.h"
 #include "translator/TranslatorFactory.h"
 #include "utils/FileAccessFactory.h"
 #include "webConnection/HttpHandlerFactory.h"
@@ -29,7 +29,7 @@ std::shared_ptr<translator::Translator>
 createTranslator(const std::shared_ptr<const webConnection::HttpHandler>&);
 std::shared_ptr<translationRepository::TranslationRepository>
 createTranslationRepository(const std::shared_ptr<utils::FileAccess>&);
-std::shared_ptr<TranslationRetrieverService>
+std::shared_ptr<translationService::TranslationRetrieverService>
 createTranslationRetrieverService(const std::shared_ptr<translator::Translator>&,
                                   const std::shared_ptr<translationRepository::TranslationRepository>&);
 std::shared_ptr<statisticsRepository::StatisticsRepository>
@@ -123,11 +123,13 @@ createTranslationRepository(const std::shared_ptr<utils::FileAccess>& fileAccess
     return translationRepositoryFactory->createTranslationRepository();
 }
 
-std::shared_ptr<TranslationRetrieverService> createTranslationRetrieverService(
+std::shared_ptr<translationService::TranslationRetrieverService> createTranslationRetrieverService(
     const std::shared_ptr<translator::Translator>& translator,
     const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository)
 {
-    return std::make_shared<DefaultTranslationRetrieverService>(translator, translationRepository);
+    auto translationServiceFactory =
+        translationService::TranslationServiceFactory::createTranslationServiceFactory();
+    return translationServiceFactory->createTranslationService(translator, translationRepository);
 }
 
 std::shared_ptr<statisticsRepository::StatisticsRepository>

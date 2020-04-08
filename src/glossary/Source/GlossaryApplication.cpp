@@ -11,7 +11,7 @@ namespace glossary
 
 GlossaryApplication::GlossaryApplication(
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
-    std::shared_ptr<TranslationRetrieverService> translationServiceInit,
+    std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizerInit,

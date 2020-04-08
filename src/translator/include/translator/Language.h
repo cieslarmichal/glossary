@@ -15,11 +15,16 @@ enum class Language
 using SourceLanguage = Language;
 using TargetLanguage = Language;
 
-inline std::ostream& operator<<(std::ostream& os, const Language& language)
+inline std::string toString(Language language)
 {
-    std::map<Language, std::string> languageString{{Language::English, "English"},
-                                                   {Language::Polish, "Polish"}};
-    return os << languageString.at(language);
+    std::map<Language, std::string> languageString{{Language::Polish, "Polish"},
+                                                   {Language::English, "English"}};
+    return languageString.at(language);
+}
+
+inline std::ostream& operator<<(std::ostream& os, Language language)
+{
+    return os << toString(language);
 }
 
 inline std::string toLanguageCode(Language language)

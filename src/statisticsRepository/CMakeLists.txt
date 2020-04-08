@@ -20,7 +20,7 @@ add_executable(statisticsRepositoryUT ${UT_SOURCES})
 target_include_directories(statisticsRepository PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsRepository")
 target_include_directories(statisticsRepositoryUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/statisticsRepository")
 
-target_link_libraries(statisticsRepository PRIVATE utils)
+target_link_libraries(statisticsRepository PUBLIC utils)
 target_link_libraries(statisticsRepositoryUT PRIVATE gtest_main gmock utils statisticsRepository)
 
 target_compile_options(statisticsRepository PUBLIC ${FLAGS})

@@ -6,7 +6,7 @@
 #include "translationRepository/TranslationRepository.h"
 #include "translator/Translator.h"
 
-namespace glossary
+namespace glossary::translationService
 {
 class DefaultTranslationRetrieverService : public TranslationRetrieverService
 {
@@ -17,6 +17,7 @@ public:
     boost::optional<translator::TranslatedText> retrieveTranslation(const translator::SourceText&,
                                                                     translator::SourceLanguage,
                                                                     translator::TargetLanguage) override;
+    std::vector<std::string> retrieveSupportedLanguages() const override;
 
 private:
     boost::optional<translator::TranslatedText> getTranslationFromRepository(const std::string&) const;

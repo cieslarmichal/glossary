@@ -1,6 +1,6 @@
 #include "DefaultTranslationRetrieverService.h"
 
-namespace glossary
+namespace glossary::translationService
 {
 DefaultTranslationRetrieverService::DefaultTranslationRetrieverService(
     std::shared_ptr<translator::Translator> translatorInit,
@@ -27,6 +27,11 @@ DefaultTranslationRetrieverService::retrieveTranslation(const translator::Source
     return boost::none;
 }
 
+std::vector<std::string> DefaultTranslationRetrieverService::retrieveSupportedLanguages() const
+{
+    return std::vector<std::string>();
+}
+
 boost::optional<translator::TranslatedText>
 DefaultTranslationRetrieverService::getTranslationFromRepository(const std::string& sourceText) const
 {
@@ -49,4 +54,5 @@ void DefaultTranslationRetrieverService::saveTranslationInRepository(
         translationRepository::SourceText{sourceText}, translationRepository::TranslatedText{translatedText}};
     translationRepository->addTranslation(newTranslation);
 }
+
 }

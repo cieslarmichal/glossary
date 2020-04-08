@@ -2,10 +2,10 @@
 
 #include <memory>
 
+#include "../../translationService/include/translationService/TranslationRetrieverService.h"
 #include "AnswerValidator.h"
 #include "Application.h"
 #include "DictionarySynchronizer.h"
-#include "TranslationRetrieverService.h"
 #include "UserPrompt.h"
 #include "WordDescriptionRetrieverService.h"
 #include "WordViewFormatter.h"
@@ -21,7 +21,7 @@ public:
     // TODO: add check connection with merriam webster with start application
     // TODO: services in separate libs
     GlossaryApplication(std::shared_ptr<dictionaryService::DictionaryService>,
-                        std::shared_ptr<TranslationRetrieverService>,
+                        std::shared_ptr<translationService::TranslationRetrieverService>,
                         std::shared_ptr<statisticsRepository::StatisticsRepository>,
                         std::shared_ptr<WordDescriptionRetrieverService>,
                         std::shared_ptr<DictionarySynchronizer>, std::unique_ptr<AnswerValidator>,
@@ -48,7 +48,7 @@ private:
 
     std::shared_ptr<utils::FileAccess> fileAccess;
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
-    std::shared_ptr<TranslationRetrieverService> translationRetrieverService;
+    std::shared_ptr<translationService::TranslationRetrieverService> translationRetrieverService;
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizer;
