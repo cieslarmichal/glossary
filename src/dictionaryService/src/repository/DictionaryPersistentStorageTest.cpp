@@ -27,7 +27,8 @@ const DictionaryWord dictionaryWord4{"englishWord4", boost::none};
 const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
 const DictionaryWords dictionaryWords1AfterAddition{dictionaryWord1, dictionaryWord2, dictionaryWord3,
                                                     dictionaryWord4};
-const DictionaryWords dictionaryWords1AfterTranslationChange{dictionaryWord1AfterChange, dictionaryWord2, dictionaryWord3};
+const DictionaryWords dictionaryWords1AfterTranslationChange{dictionaryWord1AfterChange, dictionaryWord2,
+                                                             dictionaryWord3};
 const DictionaryWords dictionaryWords1AfterRemoval{dictionaryWord2, dictionaryWord3};
 const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
@@ -301,18 +302,21 @@ TEST_F(DictionaryPersistentStorageTest, givenNonExistingDictionary_shouldNotChan
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
     expectSerializeDictionaries(noDictionaries);
 
-    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
+                                                          newDictionaryWordTranslation, dictionaryName1);
 
     ASSERT_EQ(persistentStorage.getDictionary(dictionaryName1), boost::none);
 }
 
-TEST_F(DictionaryPersistentStorageTest, givenExistingDictionaryAndExistingWord_shouldChangeWordTranslationInDictionaryAndSerialize)
+TEST_F(DictionaryPersistentStorageTest,
+       givenExistingDictionaryAndExistingWord_shouldChangeWordTranslationInDictionaryAndSerialize)
 {
     expectTwoDictionariesLoad();
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
     expectSerializeDictionaries(twoDictionariesAfterTranslationChange);
 
-    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
+                                                          newDictionaryWordTranslation, dictionaryName1);
 
     const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
     ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterTranslationChange);
@@ -325,7 +329,8 @@ TEST_F(DictionaryPersistentStorageTest,
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
     EXPECT_CALL(*fileAccess, exists(filePath)).WillOnce(Return(false));
 
-    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
+                                                          newDictionaryWordTranslation, dictionaryName1);
 
     const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
     ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterTranslationChange);

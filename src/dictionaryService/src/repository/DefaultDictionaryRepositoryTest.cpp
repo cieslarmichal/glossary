@@ -72,9 +72,11 @@ TEST_F(DefaultDictionaryRepositoryTest, shouldRemoveWordFromDictionaryInStorage)
 
 TEST_F(DefaultDictionaryRepositoryTest, shouldChangeWordTranslationFromDictionaryInStorage)
 {
-    EXPECT_CALL(*storage, changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1));
+    EXPECT_CALL(*storage, changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
+                                                              newDictionaryWordTranslation, dictionaryName1));
 
-    repository.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+    repository.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                   dictionaryName1);
 }
 
 TEST_F(DefaultDictionaryRepositoryTest, givenDictionaryNameNonExistingInStorage_shouldReturnNone)

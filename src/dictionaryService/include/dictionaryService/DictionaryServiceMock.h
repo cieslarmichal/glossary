@@ -20,6 +20,7 @@ public:
     MOCK_METHOD2(addWordToDictionary, void(const DictionaryWord&, const DictionaryName&));
     MOCK_METHOD1(removeDictionary, void(const DictionaryName&));
     MOCK_METHOD2(removeWordFromDictionary, void(const EnglishWord&, const DictionaryName&));
-    MOCK_METHOD3(updateWordTranslationFromDictionary, void(const EnglishWord&, const std::string&, const DictionaryName&));
+    MOCK_METHOD3(updateWordTranslationFromDictionary,
+                 void(const EnglishWord&, const std::string&, const DictionaryName&));
 };
 }

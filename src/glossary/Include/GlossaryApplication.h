@@ -2,8 +2,6 @@
 
 #include <memory>
 
-#include "translationService/TranslationRetrieverService.h"
-#include "wordDescriptionService/WordDescriptionRetrieverService.h"
 #include "AnswerValidator.h"
 #include "Application.h"
 #include "DictionarySynchronizer.h"
@@ -11,7 +9,9 @@
 #include "WordViewFormatter.h"
 #include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
+#include "translationService/TranslationRetrieverService.h"
 #include "utils/FileAccess.h"
+#include "wordDescriptionService/WordDescriptionRetrieverService.h"
 
 namespace glossary
 {

@@ -35,7 +35,8 @@ void DefaultDictionaryRepository::removeWordFromDictionary(const EnglishWord& en
     storage->removeWordFromDictionary(englishWord, dictionaryName);
 }
 
-void DefaultDictionaryRepository::changeWordTranslationFromDictionary(const EnglishWord& englishWord, const std::string& translation,
+void DefaultDictionaryRepository::changeWordTranslationFromDictionary(const EnglishWord& englishWord,
+                                                                      const std::string& translation,
                                                                       const DictionaryName& dictionaryName)
 {
     storage->changeWordTranslationFromDictionary(englishWord, translation, dictionaryName);
