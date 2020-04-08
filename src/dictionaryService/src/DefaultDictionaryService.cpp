@@ -79,4 +79,10 @@ void DefaultDictionaryService::removeWordFromDictionary(const EnglishWord& engli
     dictionaryRepository->removeWordFromDictionary(englishWord, dictionaryName);
 }
 
+void DefaultDictionaryService::updateWordTranslationFromDictionary(const EnglishWord& englishWord, const std::string& translation,
+                                                                   const DictionaryName& dictionaryName)
+{
+    dictionaryRepository->changeWordTranslationFromDictionary(englishWord, translation, dictionaryName);
+}
+
 }

@@ -14,6 +14,13 @@ static auto& getDictionaryByPosition(const Dictionaries& dictionaries, Dictionar
     return dictionaries.at(distance);
 }
 
+static auto& getDictionaryWordByPosition(DictionaryWords& dictionaryWords,
+                                         DictionaryWords::const_iterator position)
+{
+    const auto distance = DictionaryWords::size_type(std::distance(dictionaryWords.cbegin(), position));
+    return dictionaryWords.at(distance);
+}
+
 void DictionaryMemoryStorage::addDictionary(const DictionaryName& dictionaryName)
 {
     if (not dictionaryExists(dictionaryName))
@@ -50,6 +57,19 @@ void DictionaryMemoryStorage::removeWordFromDictionary(const std::string& englis
     {
         auto& dictionary = getDictionaryByPosition(dictionaries, findDictionaryPosition(dictionaryName));
         dictionary.words.erase(findWordInsideDictionaryPosition(englishWord, dictionary));
+    }
+}
+
+void DictionaryMemoryStorage::changeWordTranslationFromDictionary(const EnglishWord& englishWord,
+                                                                  const std::string& translation,
+                                                                  const DictionaryName& dictionaryName)
+{
+    if (dictionaryExists(dictionaryName) && englishWordExistsInDictionary(englishWord, dictionaryName))
+    {
+        auto& dictionary = getDictionaryByPosition(dictionaries, findDictionaryPosition(dictionaryName));
+        auto& dictionaryWord = getDictionaryWordByPosition(
+            dictionary.words, findWordInsideDictionaryPosition(englishWord, dictionary));
+        dictionaryWord.translation = translation;
     }
 }
 

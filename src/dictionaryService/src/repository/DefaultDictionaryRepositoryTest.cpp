@@ -22,6 +22,7 @@ const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionaries dictionaries{dictionary1, dictionary2};
+const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 }
 
 class DefaultDictionaryRepositoryTest : public Test
@@ -67,6 +68,13 @@ TEST_F(DefaultDictionaryRepositoryTest, shouldRemoveWordFromDictionaryInStorage)
     EXPECT_CALL(*storage, removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1));
 
     repository.removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1);
+}
+
+TEST_F(DefaultDictionaryRepositoryTest, shouldChangeWordTranslationFromDictionaryInStorage)
+{
+    EXPECT_CALL(*storage, changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1));
+
+    repository.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
 }
 
 TEST_F(DefaultDictionaryRepositoryTest, givenDictionaryNameNonExistingInStorage_shouldReturnNone)

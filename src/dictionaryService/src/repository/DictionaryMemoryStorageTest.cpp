@@ -6,28 +6,26 @@ using namespace ::testing;
 using namespace glossary::dictionaryService;
 using namespace repository;
 
-namespace
-{
-const DictionaryName dictionaryName1{"dictionaryName1"};
-const DictionaryName dictionaryName2{"dictionaryName2"};
-const DictionaryName dictionaryName3{"dictionaryName3"};
-const DictionaryName dictionaryName4{"dictionaryName4"};
-const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
-const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
-const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
-const Dictionary dictionary1{dictionaryName1,
-                             DictionaryWords{dictionaryWord1, dictionaryWord2, dictionaryWord3}};
-const Dictionary dictionary2{dictionaryName2, DictionaryWords{dictionaryWord1, dictionaryWord2}};
-const Dictionaries dictionaries{dictionary1, dictionary2};
-const Dictionary emptyDictionary1{dictionaryName1, {}};
-const Dictionary emptyDictionary2{dictionaryName2, {}};
-const Dictionary emptyDictionary3{dictionaryName3, {}};
-const Dictionaries emptyDictionaries{emptyDictionary1, emptyDictionary2};
-}
-
 class DictionaryMemoryStorageTest : public Test
 {
 public:
+    const DictionaryName dictionaryName1{"dictionaryName1"};
+    const DictionaryName dictionaryName2{"dictionaryName2"};
+    const DictionaryName dictionaryName3{"dictionaryName3"};
+    const DictionaryName dictionaryName4{"dictionaryName4"};
+    const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
+    const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
+    const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
+    const Dictionary dictionary1{dictionaryName1,
+                                 DictionaryWords{dictionaryWord1, dictionaryWord2, dictionaryWord3}};
+    const Dictionary dictionary2{dictionaryName2, DictionaryWords{dictionaryWord1, dictionaryWord2}};
+    const Dictionaries dictionaries{dictionary1, dictionary2};
+    const Dictionary emptyDictionary1{dictionaryName1, {}};
+    const Dictionary emptyDictionary2{dictionaryName2, {}};
+    const Dictionary emptyDictionary3{dictionaryName3, {}};
+    const Dictionaries emptyDictionaries{emptyDictionary1, emptyDictionary2};
+    const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
+
     DictionaryMemoryStorage storage;
 };
 
@@ -58,7 +56,7 @@ TEST_F(DictionaryMemoryStorageTest, addTwoSameDictionariesByName_shouldAddOnlyOn
     ASSERT_EQ(storage.size(), 1);
 }
 
-TEST_F(DictionaryMemoryStorageTest, givenDictionaryAddition_shouldAddDictionary)
+TEST_F(DictionaryMemoryStorageTest, shouldAddDictionary)
 {
     storage.addDictionary(dictionary1);
 
@@ -134,13 +132,6 @@ TEST_F(DictionaryMemoryStorageTest, givenTwoDictionaries_shouldRemoveOneDictiona
     ASSERT_EQ(storage.size(), 1);
 }
 
-TEST_F(DictionaryMemoryStorageTest, givenEmptyStorage_getShouldNotReturnDictionary)
-{
-    const auto actualDictionary = storage.getDictionary(dictionaryName1);
-
-    ASSERT_EQ(actualDictionary, boost::none);
-}
-
 TEST_F(DictionaryMemoryStorageTest, givenNonExistingDictionary_shouldNotRemoveWordFromDictionary)
 {
     storage.removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1);
@@ -149,7 +140,7 @@ TEST_F(DictionaryMemoryStorageTest, givenNonExistingDictionary_shouldNotRemoveWo
     ASSERT_EQ(actualDictionary, boost::none);
 }
 
-TEST_F(DictionaryMemoryStorageTest, givenExistingDictionary_shouldRemoveWordFromDictionary)
+TEST_F(DictionaryMemoryStorageTest, givenExistingDictionaryWithExistingWord_shouldRemoveWordFromDictionary)
 {
     storage.addDictionary(dictionaryName2);
     storage.addWordToDictionary(dictionaryWord2, dictionaryName2);
@@ -158,6 +149,43 @@ TEST_F(DictionaryMemoryStorageTest, givenExistingDictionary_shouldRemoveWordFrom
 
     const auto actualDictionary = storage.getDictionary(dictionaryName2);
     ASSERT_TRUE(actualDictionary->words.empty());
+}
+
+TEST_F(DictionaryMemoryStorageTest, givenNonExistingDictionary_shouldNotChangeWordTranslation)
+{
+    storage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                dictionaryName1);
+
+    const auto actualDictionary = storage.getDictionary(dictionaryName1);
+    ASSERT_EQ(actualDictionary, boost::none);
+}
+
+TEST_F(DictionaryMemoryStorageTest, givenExistingDictionaryWithNonExistingWord_shouldNotChangeWordTranslation)
+{
+    storage.addDictionary(dictionaryName1);
+
+    storage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                dictionaryName1);
+
+    const auto actualDictionary = storage.getDictionary(dictionaryName1);
+    ASSERT_TRUE(actualDictionary->words.empty());
+}
+
+TEST_F(DictionaryMemoryStorageTest, givenExistingDictionaryWithExistingWord_shouldChangeWordTranslation)
+{
+    storage.addDictionary(dictionaryName1);
+    storage.addWordToDictionary(dictionaryWord1, dictionaryName1);
+
+    storage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                dictionaryName1);
+
+    const auto actualDictionary = storage.getDictionary(dictionaryName1);
+    const auto words = actualDictionary->words;
+    auto dictionaryWord = std::find_if(words.begin(), words.end(), [&](const DictionaryWord& dictionaryWord) {
+        return dictionaryWord.englishWord == dictionaryWord1.englishWord;
+    });
+    ASSERT_TRUE(dictionaryWord != words.end());
+    ASSERT_EQ(dictionaryWord->translation, newDictionaryWordTranslation);
 }
 
 TEST_F(DictionaryMemoryStorageTest, givenDictionaryWithTwoWords_shouldRemoveOne)
@@ -170,6 +198,13 @@ TEST_F(DictionaryMemoryStorageTest, givenDictionaryWithTwoWords_shouldRemoveOne)
 
     const auto actualDictionary = storage.getDictionary(dictionaryName2);
     ASSERT_EQ(actualDictionary->words, DictionaryWords{dictionaryWord2});
+}
+
+TEST_F(DictionaryMemoryStorageTest, givenEmptyStorage_getShouldNotReturnDictionary)
+{
+    const auto actualDictionary = storage.getDictionary(dictionaryName1);
+
+    ASSERT_EQ(actualDictionary, boost::none);
 }
 
 TEST_F(DictionaryMemoryStorageTest, givenStorageWithExactDictionary_shouldReturnDictionary)

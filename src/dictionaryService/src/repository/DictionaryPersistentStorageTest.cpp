@@ -14,30 +14,32 @@ using namespace repository;
 namespace
 {
 const std::string filePath{utils::getProjectPath("glossary") + "database/dictionaries.txt"};
+const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};
 const DictionaryName dictionaryName3{"dictionaryName3"};
-const DictionaryName dictionaryName4{"dictionaryName4"};
 const DictionaryName nonExistingDictionaryName{"nonExistingDict"};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
+const DictionaryWord dictionaryWord1AfterChange{"englishWord1", newDictionaryWordTranslation};
 const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
 const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
 const DictionaryWord dictionaryWord4{"englishWord4", boost::none};
 const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
 const DictionaryWords dictionaryWords1AfterAddition{dictionaryWord1, dictionaryWord2, dictionaryWord3,
                                                     dictionaryWord4};
+const DictionaryWords dictionaryWords1AfterTranslationChange{dictionaryWord1AfterChange, dictionaryWord2, dictionaryWord3};
 const DictionaryWords dictionaryWords1AfterRemoval{dictionaryWord2, dictionaryWord3};
-const DictionaryWords dictionaryWords1WithOneWord{dictionaryWord1};
 const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary1AfterAddition{dictionaryName1, dictionaryWords1AfterAddition};
 const Dictionary dictionary1AfterRemoval{dictionaryName1, dictionaryWords1AfterRemoval};
+const Dictionary dictionary1AfterTranslationChange{dictionaryName1, dictionaryWords1AfterTranslationChange};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionary emptyDictionary1{dictionaryName1, {}};
 const Dictionary emptyDictionary2{dictionaryName2, {}};
-const Dictionary emptyDictionary3{dictionaryName3, {}};
 const Dictionaries twoDictionaries{dictionary1, dictionary2};
 const Dictionaries twoDictionariesAfterAddition{dictionary1AfterAddition, dictionary2};
+const Dictionaries twoDictionariesAfterTranslationChange{dictionary1AfterTranslationChange, dictionary2};
 const Dictionaries twoDictionariesAfterRemoval{dictionary1AfterRemoval, dictionary2};
 const Dictionaries dictionariesAfterRemoval{dictionary2};
 const Dictionaries dictionariesWithOneDictionary{dictionary1};
@@ -291,6 +293,42 @@ TEST_F(DictionaryPersistentStorageTest,
 
     const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
     ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterRemoval);
+}
+
+TEST_F(DictionaryPersistentStorageTest, givenNonExistingDictionary_shouldNotChangeWordTranslationAndSerialize)
+{
+    expectNoDictionariesLoad();
+    DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
+    expectSerializeDictionaries(noDictionaries);
+
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+
+    ASSERT_EQ(persistentStorage.getDictionary(dictionaryName1), boost::none);
+}
+
+TEST_F(DictionaryPersistentStorageTest, givenExistingDictionaryAndExistingWord_shouldChangeWordTranslationInDictionaryAndSerialize)
+{
+    expectTwoDictionariesLoad();
+    DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
+    expectSerializeDictionaries(twoDictionariesAfterTranslationChange);
+
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+
+    const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
+    ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterTranslationChange);
+}
+
+TEST_F(DictionaryPersistentStorageTest,
+       givenExistingDictionaryAndNotExistingFile_shouldChangeWordTranslationInDictionaryAndNotSerialize)
+{
+    expectTwoDictionariesLoad();
+    DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
+    EXPECT_CALL(*fileAccess, exists(filePath)).WillOnce(Return(false));
+
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1);
+
+    const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
+    ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterTranslationChange);
 }
 
 TEST_F(DictionaryPersistentStorageTest, givenNonExistingDictionaryName_shouldReturnNone)

@@ -34,6 +34,7 @@ const Dictionaries emptyDictionaries{};
 const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2, dictionaryName3};
 const EnglishWords englishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
                                 dictionaryWord3.englishWord};
+const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 }
 
 class DefaultDictionaryServiceTest : public Test
@@ -162,4 +163,14 @@ TEST_F(DefaultDictionaryServiceTest, shouldRemoveWordFromDictionary)
                 removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1));
 
     service.removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1);
+}
+
+TEST_F(DefaultDictionaryServiceTest, shouldUpdateWordTranslationFromDictionary)
+{
+    EXPECT_CALL(*dictionaryRepository,
+                changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                    dictionaryName1));
+
+    service.updateWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                dictionaryName1);
 }

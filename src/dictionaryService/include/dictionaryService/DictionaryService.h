@@ -20,5 +20,7 @@ public:
     virtual void addWordToDictionary(const DictionaryWord&, const DictionaryName&) = 0;
     virtual void removeDictionary(const DictionaryName&) = 0;
     virtual void removeWordFromDictionary(const EnglishWord&, const DictionaryName&) = 0;
+    virtual void updateWordTranslationFromDictionary(const EnglishWord&, const std::string& newTranslation,
+                                                     const DictionaryName&) = 0;
 };
 }

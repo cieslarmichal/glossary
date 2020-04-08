@@ -31,6 +31,7 @@ public:
     void addWordToDictionary(const DictionaryWord&, const DictionaryName&) override;
     void removeDictionary(const DictionaryName&) override;
     void removeWordFromDictionary(const EnglishWord& word, const DictionaryName&) override;
+    void updateWordTranslationFromDictionary(const EnglishWord&, const std::string&, const DictionaryName&) override;
 
 private:
     std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;

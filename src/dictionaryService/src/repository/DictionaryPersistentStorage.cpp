@@ -50,6 +50,14 @@ void DictionaryPersistentStorage::removeWordFromDictionary(const EnglishWord& en
     serialize();
 }
 
+void DictionaryPersistentStorage::changeWordTranslationFromDictionary(const EnglishWord& englishWord,
+                                                                      const std::string& translation,
+                                                                      const DictionaryName& dictionaryName)
+{
+    storage.changeWordTranslationFromDictionary(englishWord, translation, dictionaryName);
+    serialize();
+}
+
 boost::optional<Dictionary>
 DictionaryPersistentStorage::getDictionary(const DictionaryName& dictionaryName) const
 {
