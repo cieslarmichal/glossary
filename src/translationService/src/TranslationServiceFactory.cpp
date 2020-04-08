@@ -6,6 +6,6 @@ namespace glossary::translationService
 {
 std::unique_ptr<TranslationServiceFactory> TranslationServiceFactory::createTranslationServiceFactory()
 {
-    return std::unique_ptr<DefaultTranslationServiceFactory>();
+    return std::make_unique<DefaultTranslationServiceFactory>();
 }
 }

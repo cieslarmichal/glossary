@@ -15,12 +15,14 @@ GlossaryApplication::GlossaryApplication(
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizerInit,
+    std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::unique_ptr<AnswerValidator> validator, std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
       dictionarySynchronizer{std::move(dictionarySynchronizerInit)},
+      dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
       answerValidator{std::move(validator)},
       userPrompt{std::move(prompt)}
 {
@@ -72,15 +74,24 @@ void GlossaryApplication::loop()
             addDictionaryFromFile();
             break;
         case 9:
-            guessWord();
+            updateDictionaryWordTranslationManually();
             break;
         case 10:
-            getEnglishWordDescription();
+            updateDictionaryWordTranslationAutomatically();
             break;
         case 11:
-            showStatistics();
+            updateDictionaryTranslationsAutomatically();
             break;
         case 12:
+            guessWord();
+            break;
+        case 13:
+            getEnglishWordDescription();
+            break;
+        case 14:
+            showStatistics();
+            break;
+        case 15:
             resetStatistics();
             break;
         default:
@@ -101,38 +112,14 @@ void GlossaryApplication::showMenu() const
     std::cout << "6.Remove dictionary\n";
     std::cout << "7.Remove english word from dictionary\n";
     std::cout << "8.Add dictionary from file\n";
-    std::cout << "9.Guess english word\n";
-    std::cout << "10.Get word description\n";
-    std::cout << "11.Show statistics\n";
-    std::cout << "12.Reset statistics\n";
+    std::cout << "9.Update word translation in dictionary manually\n";
+    std::cout << "10.Update word translation in dictionary automatically\n";
+    std::cout << "11.Update words translations in dictionary automatically\n";
+    std::cout << "12.Guess english word\n";
+    std::cout << "13.Get word description\n";
+    std::cout << "14.Show statistics\n";
+    std::cout << "15.Reset statistics\n";
     std::cout << "Insert other number to exit\n";
-}
-
-void GlossaryApplication::guessWord() const
-{
-    const auto& dictionaryWord = dictionaryService->getRandomDictionaryWord();
-    if (dictionaryWord == boost::none)
-    {
-        std::cerr << "No words with translations available";
-        return;
-    }
-    std::cout << wordViewFormatter->formatSingleWordView(*dictionaryWord->translation);
-    std::cout << "Insert english translation:\n";
-
-    if (answerValidator->validateAnswer(userPrompt->getStringInput(), dictionaryWord->englishWord))
-    {
-        std::cout << "Correct answer!\n";
-        statisticsRepository->addCorrectAnswer(dictionaryWord->englishWord);
-    }
-    else
-    {
-        std::cout << "Incorrect answer :(\n";
-        statisticsRepository->addIncorrectAnswer(dictionaryWord->englishWord);
-    }
-
-    const auto wordDescription =
-        wordDescriptionRetrieverService->retrieveWordDescription(dictionaryWord->englishWord);
-    std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription);
 }
 
 void GlossaryApplication::translate() const
@@ -199,6 +186,63 @@ void GlossaryApplication::addDictionaryFromFile() const
     const auto pathToFileWithDictionaryWords = userPrompt->getStringInput();
     dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
     dictionarySynchronizer->synchronizeDictionary(dictionaryName);
+}
+
+void GlossaryApplication::updateDictionaryWordTranslationManually() const
+{
+    std::cout << "Insert dictionary name:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    std::cout << "Insert english word in which you want to update translation:\n";
+    const auto englishWord = userPrompt->getStringInput();
+    std::cout << "Insert new translation:\n";
+    const auto translation = userPrompt->getStringInput();
+
+    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, translation, dictionaryName);
+}
+
+void GlossaryApplication::updateDictionaryWordTranslationAutomatically() const
+{
+    std::cout << "Insert dictionary name:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+    std::cout << "Insert english word in which you want to update translation:\n";
+    const auto englishWord = userPrompt->getStringInput();
+
+    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, dictionaryName);
+}
+
+void GlossaryApplication::updateDictionaryTranslationsAutomatically() const
+{
+    std::cout << "Insert dictionary name:\n";
+    const auto dictionaryName = userPrompt->getStringInput();
+
+    dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
+}
+
+void GlossaryApplication::guessWord() const
+{
+    const auto& dictionaryWord = dictionaryService->getRandomDictionaryWord();
+    if (dictionaryWord == boost::none)
+    {
+        std::cerr << "No words with translations available";
+        return;
+    }
+    std::cout << wordViewFormatter->formatSingleWordView(*dictionaryWord->translation);
+    std::cout << "Insert english translation:\n";
+
+    if (answerValidator->validateAnswer(userPrompt->getStringInput(), dictionaryWord->englishWord))
+    {
+        std::cout << "Correct answer!\n";
+        statisticsRepository->addCorrectAnswer(dictionaryWord->englishWord);
+    }
+    else
+    {
+        std::cout << "Incorrect answer :(\n";
+        statisticsRepository->addIncorrectAnswer(dictionaryWord->englishWord);
+    }
+
+    const auto wordDescription =
+        wordDescriptionRetrieverService->retrieveWordDescription(dictionaryWord->englishWord);
+    std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription);
 }
 
 void GlossaryApplication::getEnglishWordDescription() const

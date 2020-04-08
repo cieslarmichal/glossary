@@ -2,6 +2,7 @@
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionarySynchronizer.h"
+#include "DefaultDictionaryTranslationUpdater.h"
 #include "GlossaryApplication.h"
 #include "TranslationConcurrentLoader.h"
 #include "UserStandardInputPrompt.h"
@@ -52,6 +53,9 @@ std::shared_ptr<DictionarySynchronizer>
 createDictionarySynchronizer(const std::shared_ptr<dictionaryService::DictionaryService>&,
                              const std::shared_ptr<WordDescriptionLoader>&,
                              const std::shared_ptr<TranslationLoader>&);
+std::shared_ptr<DictionaryTranslationUpdater>
+createDictionaryTranslationUpdater(const std::shared_ptr<dictionaryService::DictionaryService>&,
+                                   const std::shared_ptr<translationService::TranslationRetrieverService>&);
 std::unique_ptr<AnswerValidator> createAnswerValidator();
 std::unique_ptr<UserPrompt> createUserPrompt();
 }
@@ -80,12 +84,16 @@ std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() con
     auto dictionarySynchronizer =
         createDictionarySynchronizer(dictionaryService, wordDescriptionLoader, translationLoader);
 
+    auto dictionaryTranslationUpdater =
+        createDictionaryTranslationUpdater(dictionaryService, translationRetrieverService);
+
     auto answerValidator = createAnswerValidator();
     auto userPrompt = createUserPrompt();
 
-    return std::make_unique<GlossaryApplication>(
-        dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
-        dictionarySynchronizer, std::move(answerValidator), std::move(userPrompt));
+    return std::make_unique<GlossaryApplication>(dictionaryService, translationRetrieverService,
+                                                 statisticsRepository, wordDescriptionRetrieverService,
+                                                 dictionarySynchronizer, dictionaryTranslationUpdater,
+                                                 std::move(answerValidator), std::move(userPrompt));
 }
 
 namespace
@@ -192,6 +200,13 @@ createDictionarySynchronizer(const std::shared_ptr<dictionaryService::Dictionary
 {
     return std::make_shared<DefaultDictionarySynchronizer>(dictionaryService, wordDescriptionLoader,
                                                            translationLoader);
+}
+
+std::shared_ptr<DictionaryTranslationUpdater> createDictionaryTranslationUpdater(
+    const std::shared_ptr<dictionaryService::DictionaryService>& dictionaryService,
+    const std::shared_ptr<translationService::TranslationRetrieverService>& translationService)
+{
+    return std::make_shared<DefaultDictionaryTranslationUpdater>(dictionaryService, translationService);
 }
 
 std::unique_ptr<AnswerValidator> createAnswerValidator()

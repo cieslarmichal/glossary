@@ -8,6 +8,6 @@ namespace glossary::wordDescriptionService
 std::unique_ptr<WordDescriptionServiceFactory>
 WordDescriptionServiceFactory::createWordDescriptionServiceFactory()
 {
-    return std::unique_ptr<DefaultWordDescriptionServiceFactory>();
+    return std::make_unique<DefaultWordDescriptionServiceFactory>();
 }
 }

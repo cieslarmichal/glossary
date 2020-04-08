@@ -9,6 +9,7 @@ set(SOURCES
         Source/GlossaryApplicationFactory.cpp
         Source/DefaultDictionarySynchronizer.cpp
         Source/TranslationConcurrentLoader.cpp
+        Source/DefaultDictionaryTranslationUpdater.cpp
         )
 
 set(UT_SOURCES
@@ -17,6 +18,7 @@ set(UT_SOURCES
         UT/Source/WordDescriptionConcurrentLoaderTest.cpp
         UT/Source/DefaultDictionarySynchronizerTest.cpp
         UT/Source/TranslationConcurrentLoaderTest.cpp
+        UT/Source/DefaultDictionaryTranslationUpdaterTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

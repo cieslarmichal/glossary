@@ -5,6 +5,7 @@
 #include "AnswerValidator.h"
 #include "Application.h"
 #include "DictionarySynchronizer.h"
+#include "DictionaryTranslationUpdater.h"
 #include "UserPrompt.h"
 #include "WordViewFormatter.h"
 #include "dictionaryService/DictionaryService.h"
@@ -18,12 +19,12 @@ namespace glossary
 class GlossaryApplication : public Application
 {
 public:
-    // TODO: add check connection with merriam webster with start application
     GlossaryApplication(std::shared_ptr<dictionaryService::DictionaryService>,
                         std::shared_ptr<translationService::TranslationRetrieverService>,
                         std::shared_ptr<statisticsRepository::StatisticsRepository>,
                         std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
-                        std::shared_ptr<DictionarySynchronizer>, std::unique_ptr<AnswerValidator>,
+                        std::shared_ptr<DictionarySynchronizer>,
+                        std::shared_ptr<DictionaryTranslationUpdater>, std::unique_ptr<AnswerValidator>,
                         std::unique_ptr<UserPrompt>);
 
     void run() override;
@@ -40,6 +41,9 @@ private:
     void removeDictionary() const;
     void removeEnglishWordFromDictionary() const;
     void addDictionaryFromFile() const;
+    void updateDictionaryWordTranslationManually() const;
+    void updateDictionaryWordTranslationAutomatically() const;
+    void updateDictionaryTranslationsAutomatically() const;
     void guessWord() const;
     void getEnglishWordDescription() const;
     void showStatistics() const;
@@ -51,6 +55,7 @@ private:
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionRetrieverService;
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizer;
+    std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdater;
 
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<UserPrompt> userPrompt;
