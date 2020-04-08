@@ -13,7 +13,7 @@ GlossaryApplication::GlossaryApplication(
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
     std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
-    std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionServiceInit,
+    std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizerInit,
     std::unique_ptr<AnswerValidator> validator, std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},

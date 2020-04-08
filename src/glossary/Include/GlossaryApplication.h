@@ -2,12 +2,12 @@
 
 #include <memory>
 
-#include "../../translationService/include/translationService/TranslationRetrieverService.h"
+#include "translationService/TranslationRetrieverService.h"
+#include "wordDescriptionService/WordDescriptionRetrieverService.h"
 #include "AnswerValidator.h"
 #include "Application.h"
 #include "DictionarySynchronizer.h"
 #include "UserPrompt.h"
-#include "WordDescriptionRetrieverService.h"
 #include "WordViewFormatter.h"
 #include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
@@ -19,11 +19,10 @@ class GlossaryApplication : public Application
 {
 public:
     // TODO: add check connection with merriam webster with start application
-    // TODO: services in separate libs
     GlossaryApplication(std::shared_ptr<dictionaryService::DictionaryService>,
                         std::shared_ptr<translationService::TranslationRetrieverService>,
                         std::shared_ptr<statisticsRepository::StatisticsRepository>,
-                        std::shared_ptr<WordDescriptionRetrieverService>,
+                        std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
                         std::shared_ptr<DictionarySynchronizer>, std::unique_ptr<AnswerValidator>,
                         std::unique_ptr<UserPrompt>);
 
@@ -50,7 +49,7 @@ private:
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
     std::shared_ptr<translationService::TranslationRetrieverService> translationRetrieverService;
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
-    std::shared_ptr<WordDescriptionRetrieverService> wordDescriptionRetrieverService;
+    std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionRetrieverService;
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizer;
 
     std::unique_ptr<AnswerValidator> answerValidator;

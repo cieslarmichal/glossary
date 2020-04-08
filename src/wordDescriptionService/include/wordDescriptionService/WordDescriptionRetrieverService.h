@@ -5,7 +5,7 @@
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
 
-namespace glossary
+namespace glossary::wordDescriptionService
 {
 class WordDescriptionRetrieverService
 {

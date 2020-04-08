@@ -2,7 +2,6 @@
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionarySynchronizer.h"
-#include "DefaultWordDescriptionRetrieverService.h"
 #include "GlossaryApplication.h"
 #include "TranslationConcurrentLoader.h"
 #include "UserStandardInputPrompt.h"
@@ -16,6 +15,7 @@
 #include "webConnection/HttpHandlerFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
+#include "wordDescriptionService/WordDescriptionServiceFactory.h"
 
 namespace glossary
 {
@@ -38,7 +38,8 @@ std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
 createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>&);
 std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>
 createWordDescriptionRepository(const std::shared_ptr<utils::FileAccess>&);
-std::shared_ptr<WordDescriptionRetrieverService> createWordDescriptionRetrieverService(
+std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>
+createWordDescriptionRetrieverService(
     const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
     const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
 std::shared_ptr<WordDescriptionLoader>
@@ -158,12 +159,15 @@ createWordDescriptionRepository(const std::shared_ptr<utils::FileAccess>& fileAc
     return wordDescriptionRepositoryFactory->createWordDescriptionRepository();
 }
 
-std::shared_ptr<WordDescriptionRetrieverService> createWordDescriptionRetrieverService(
+std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>
+createWordDescriptionRetrieverService(
     const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>& wordDescriptionDownloader,
     const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>& wordDescriptionRepository)
 {
-    return std::make_shared<DefaultWordDescriptionRetrieverService>(wordDescriptionDownloader,
-                                                                    wordDescriptionRepository);
+    auto wordDescriptionServiceFactory =
+        wordDescriptionService::WordDescriptionServiceFactory::createWordDescriptionServiceFactory();
+    return wordDescriptionServiceFactory->createWordDescriptionService(wordDescriptionDownloader,
+                                                                       wordDescriptionRepository);
 }
 
 std::shared_ptr<WordDescriptionLoader> createWordDescriptionLoader(

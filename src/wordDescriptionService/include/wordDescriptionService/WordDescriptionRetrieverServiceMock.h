@@ -4,7 +4,7 @@
 
 #include "WordDescriptionRetrieverService.h"
 
-namespace glossary
+namespace glossary::wordDescriptionService
 {
 class WordDescriptionRetrieverServiceMock : public WordDescriptionRetrieverService
 {

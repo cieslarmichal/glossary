@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include "WordDescriptionRetrieverService.h"
+#include "../include/wordDescriptionService/WordDescriptionRetrieverService.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
 
-namespace glossary
+namespace glossary::wordDescriptionService
 {
 class DefaultWordDescriptionRetrieverService : public WordDescriptionRetrieverService
 {

@@ -12,7 +12,6 @@ public:
     virtual DictionaryNames getDictionaryNames() const = 0;
     virtual boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const = 0;
     virtual boost::optional<EnglishWords> getEnglishWords(const DictionaryName&) const = 0;
-    // TODO: change names
     virtual EnglishWords getEnglishWords() const = 0;
     virtual boost::optional<DictionaryWord> getRandomDictionaryWord() const = 0;
     virtual boost::optional<DictionaryWord> getRandomDictionaryWord(const DictionaryName&) const = 0;

@@ -1,6 +1,6 @@
 #include "DefaultWordDescriptionRetrieverService.h"
 
-namespace glossary
+namespace glossary::wordDescriptionService
 {
 DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
