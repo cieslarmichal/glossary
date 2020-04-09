@@ -10,6 +10,7 @@ set(SOURCES
         Source/DefaultDictionarySynchronizer.cpp
         Source/TranslationConcurrentLoader.cpp
         Source/DefaultDictionaryTranslationUpdater.cpp
+        Source/MerriamWebsterConnectionChecker.cpp
         )
 
 set(UT_SOURCES
@@ -19,6 +20,7 @@ set(UT_SOURCES
         UT/Source/DefaultDictionarySynchronizerTest.cpp
         UT/Source/TranslationConcurrentLoaderTest.cpp
         UT/Source/DefaultDictionaryTranslationUpdaterTest.cpp
+        UT/Source/MerriamWebsterConnectionCheckerTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

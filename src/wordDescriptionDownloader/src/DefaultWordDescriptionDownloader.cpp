@@ -7,13 +7,14 @@
 
 namespace glossary::wordDescriptionDownloader
 {
-const std::string DefaultWordDescriptionDownloader::urlAddress{"https://www.merriam-webster.com/dictionary/"};
+const std::string DefaultWordDescriptionDownloader::urlAddressToDownloadWordDescription{
+    "https://www.merriam-webster.com/dictionary/"};
 
 DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
-    std::shared_ptr<const webConnection::HttpHandler> htmlReaderInit,
+    std::shared_ptr<const webConnection::HttpHandler> httpHandlerInit,
     std::unique_ptr<const LinesSelector> linesSelectorInit,
     std::unique_ptr<const DescriptionParser> descriptionParserInit)
-    : httpHandler{std::move(htmlReaderInit)},
+    : httpHandler{std::move(httpHandlerInit)},
       linesSelector{std::move(linesSelectorInit)},
       descriptionParser{std::move(descriptionParserInit)}
 {
@@ -40,7 +41,7 @@ boost::optional<std::string> DefaultWordDescriptionDownloader::getHttpContent(
 {
     try
     {
-        const auto response = httpHandler->get(urlAddress + englishWord);
+        const auto response = httpHandler->get(urlAddressToDownloadWordDescription + englishWord);
         return response.content;
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)

@@ -16,28 +16,38 @@ GlossaryApplication::GlossaryApplication(
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizerInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
-    std::unique_ptr<AnswerValidator> validator, std::unique_ptr<UserPrompt> prompt)
+    std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator,
+    std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
       dictionarySynchronizer{std::move(dictionarySynchronizerInit)},
       dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
+      connectionChecker{std::move(connectionCheckerInit)},
       answerValidator{std::move(validator)},
-      userPrompt{std::move(prompt)}
+      userPrompt{std::move(prompt)},
+      wordViewFormatter{std::make_unique<DefaultWordViewFormatter>()}
 {
-    initialize();
-}
-
-void GlossaryApplication::initialize()
-{
-    wordViewFormatter = std::make_unique<DefaultWordViewFormatter>();
-    dictionarySynchronizer->synchronizeDictionaries();
 }
 
 void GlossaryApplication::run()
 {
+    if (not connectionIsAvailable())
+        return;
+
+    initialize();
     loop();
+}
+
+bool GlossaryApplication::connectionIsAvailable() const
+{
+    return connectionChecker->connectionAvailable();
+}
+
+void GlossaryApplication::initialize()
+{
+    dictionarySynchronizer->synchronizeDictionaries();
 }
 
 void GlossaryApplication::loop()

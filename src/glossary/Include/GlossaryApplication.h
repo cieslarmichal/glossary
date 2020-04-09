@@ -4,6 +4,7 @@
 
 #include "AnswerValidator.h"
 #include "Application.h"
+#include "ConnectionChecker.h"
 #include "DictionarySynchronizer.h"
 #include "DictionaryTranslationUpdater.h"
 #include "UserPrompt.h"
@@ -11,7 +12,6 @@
 #include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
 #include "translationService/TranslationRetrieverService.h"
-#include "utils/FileAccess.h"
 #include "wordDescriptionService/WordDescriptionRetrieverService.h"
 
 namespace glossary
@@ -24,12 +24,13 @@ public:
                         std::shared_ptr<statisticsRepository::StatisticsRepository>,
                         std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
                         std::shared_ptr<DictionarySynchronizer>,
-                        std::shared_ptr<DictionaryTranslationUpdater>, std::unique_ptr<AnswerValidator>,
-                        std::unique_ptr<UserPrompt>);
+                        std::shared_ptr<DictionaryTranslationUpdater>, std::unique_ptr<ConnectionChecker>,
+                        std::unique_ptr<AnswerValidator>, std::unique_ptr<UserPrompt>);
 
     void run() override;
 
 private:
+    bool connectionIsAvailable() const;
     void initialize();
     void loop();
     void showMenu() const;
@@ -49,7 +50,6 @@ private:
     void showStatistics() const;
     void resetStatistics() const;
 
-    std::shared_ptr<utils::FileAccess> fileAccess;
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
     std::shared_ptr<translationService::TranslationRetrieverService> translationRetrieverService;
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
@@ -57,6 +57,7 @@ private:
     std::shared_ptr<DictionarySynchronizer> dictionarySynchronizer;
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdater;
 
+    std::unique_ptr<ConnectionChecker> connectionChecker;
     std::unique_ptr<AnswerValidator> answerValidator;
     std::unique_ptr<UserPrompt> userPrompt;
     std::unique_ptr<WordViewFormatter> wordViewFormatter;

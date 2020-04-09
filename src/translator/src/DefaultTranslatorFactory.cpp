@@ -14,9 +14,9 @@ DefaultTranslatorFactory::DefaultTranslatorFactory(
 
 std::unique_ptr<Translator> DefaultTranslatorFactory::createTranslator() const
 {
-    return std::make_unique<DefaultTranslator>(
-        httpHandler, std::make_unique<GoogleTranslateApiJsonResponseDeserializer>(),
-        std::make_unique<GoogleTranslateApiRequestFormatter>());
+    return std::make_unique<DefaultTranslator>(httpHandler,
+                                               std::make_unique<GoogleTranslateApiJsonResponseDeserializer>(),
+                                               std::make_unique<GoogleTranslateApiRequestFormatter>());
 }
 
 }

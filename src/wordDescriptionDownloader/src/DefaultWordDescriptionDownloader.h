@@ -27,6 +27,6 @@ private:
     std::unique_ptr<const LinesSelector> linesSelector;
     std::unique_ptr<const DescriptionParser> descriptionParser;
 
-    static const std::string urlAddress;
+    static const std::string urlAddressToDownloadWordDescription;
 };
 }

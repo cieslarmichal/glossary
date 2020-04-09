@@ -1,6 +1,5 @@
 #include "DefaultWordDescriptionDownloader.h"
 
-#include "gmock/gmock.h"
 #include "gtest/gtest.h"
 
 #include "DescriptionParserMock.h"
@@ -28,15 +27,14 @@ const std::vector<std::string> emptyParsedHtmlContent{};
 class DefaultWordDescriptionDownloaderTest : public Test
 {
 public:
-    std::unique_ptr<webConnection::HttpHandlerMock> httpHandlerInit =
-        std::make_unique<StrictMock<webConnection::HttpHandlerMock>>();
-    webConnection::HttpHandlerMock* httpHandler = httpHandlerInit.get();
+    std::shared_ptr<webConnection::HttpHandlerMock> httpHandler =
+        std::make_shared<StrictMock<webConnection::HttpHandlerMock>>();
     std::unique_ptr<LinesSelectorMock> linesSelectorInit = std::make_unique<StrictMock<LinesSelectorMock>>();
     LinesSelectorMock* linesSelector = linesSelectorInit.get();
     std::unique_ptr<DescriptionParserMock> descriptionParserInit =
         std::make_unique<StrictMock<DescriptionParserMock>>();
     DescriptionParserMock* descriptionParser = descriptionParserInit.get();
-    DefaultWordDescriptionDownloader downloader{std::move(httpHandlerInit), std::move(linesSelectorInit),
+    DefaultWordDescriptionDownloader downloader{httpHandler, std::move(linesSelectorInit),
                                                 std::move(descriptionParserInit)};
 };
 

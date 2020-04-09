@@ -9,32 +9,32 @@ namespace webConnection
 
 namespace
 {
-size_t curlWriter(char* data, size_t size, size_t nmemb, std::string*);
+size_t curlWriterCallback(char* data, size_t size, size_t nmemb, std::string*);
 }
 
 Response CurlHttpHandler::get(const Request& urlAddress) const
 {
-    Response response;
 
     curl_global_init(CURL_GLOBAL_ALL);
     CURL* curl = curl_easy_init();
 
-    if (curl)
+    if (not curl)
+        throw exceptions::ConnectionFailed("Error while initializing curl library");
+
+    Response response;
+    curl_easy_setopt(curl, CURLOPT_URL, urlAddress.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response.content);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriterCallback);
+
+    if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
     {
-        curl_easy_setopt(curl, CURLOPT_URL, urlAddress.c_str());
-        curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response.content);
-        curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriter);
-
-        if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
-        {
-            curl_easy_cleanup(curl);
-            throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
-        }
-
-        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.code);
-
         curl_easy_cleanup(curl);
+        throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
     }
+
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.code);
+
+    curl_easy_cleanup(curl);
     curl_global_cleanup();
 
     return response;
@@ -43,7 +43,7 @@ Response CurlHttpHandler::get(const Request& urlAddress) const
 namespace
 {
 
-size_t curlWriter(char* data, size_t size, size_t nmemb, std::string* writerData)
+size_t curlWriterCallback(char* data, size_t size, size_t nmemb, std::string* writerData)
 {
     writerData->append(data, size * nmemb);
     return size * nmemb;
