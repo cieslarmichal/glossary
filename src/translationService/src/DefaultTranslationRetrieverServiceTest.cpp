@@ -22,6 +22,7 @@ const TranslatedText expectedTranslatedText{"tea"};
 const boost::optional<TranslatedText> translatedTextOpt{expectedTranslatedText};
 const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
+const std::vector<std::string> supportedLanguages{"Polish", "English"};
 }
 
 class DefaultTranslationRetrieverServiceTest : public Test
@@ -35,7 +36,8 @@ public:
     DefaultTranslationRetrieverService translationService{std::move(translatorInit), translationRepository};
 };
 
-TEST_F(DefaultTranslationRetrieverServiceTest, dbContainsTranslation_shouldReturnTranslationFromDb)
+TEST_F(DefaultTranslationRetrieverServiceTest,
+       repositoryContainsTranslation_shouldReturnTranslationFromRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(translationFromDb));
 
@@ -46,7 +48,7 @@ TEST_F(DefaultTranslationRetrieverServiceTest, dbContainsTranslation_shouldRetur
 }
 
 TEST_F(DefaultTranslationRetrieverServiceTest,
-       dbDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInDatabase)
+       dbDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
@@ -59,7 +61,7 @@ TEST_F(DefaultTranslationRetrieverServiceTest,
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest, dbAndTranslatorDoNotRespondWithTranslation_shouldReturnNone)
+TEST_F(DefaultTranslationRetrieverServiceTest, repositoryAndTranslatorReturnNoneTranslation_shouldReturnNone)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
@@ -68,4 +70,11 @@ TEST_F(DefaultTranslationRetrieverServiceTest, dbAndTranslatorDoNotRespondWithTr
         translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
 
     ASSERT_EQ(actualTranslation, boost::none);
+}
+
+TEST_F(DefaultTranslationRetrieverServiceTest, shouldReturnSupportedLanguages)
+{
+    const auto actualSupportedLanguages = translationService.retrieveSupportedLanguages();
+
+    ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
 }

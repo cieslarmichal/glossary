@@ -9,26 +9,24 @@ WordStatistics::WordStatistics(EnglishWord word) : englishWord{std::move(word)}
 }
 
 WordStatistics::WordStatistics(EnglishWord word, int correctAnswers, int incorrectAnswers)
-    : englishWord{std::move(word)},
-      amountOfCorrectAnswers{correctAnswers},
-      amountOfIncorrectAnswers{incorrectAnswers}
+    : englishWord{std::move(word)}, correctAnswers{correctAnswers}, incorrectAnswers{incorrectAnswers}
 {
 }
 
 void WordStatistics::addCorrectAnswer()
 {
-    amountOfCorrectAnswers++;
+    correctAnswers++;
 }
 
 void WordStatistics::addIncorrectAnswer()
 {
-    amountOfIncorrectAnswers++;
+    incorrectAnswers++;
 }
 
 void WordStatistics::resetAnswers()
 {
-    amountOfCorrectAnswers = 0;
-    amountOfIncorrectAnswers = 0;
+    correctAnswers = 0;
+    incorrectAnswers = 0;
 }
 
 EnglishWord WordStatistics::getEnglishWord() const
@@ -38,12 +36,12 @@ EnglishWord WordStatistics::getEnglishWord() const
 
 int WordStatistics::getAmountOfCorrectAnswers() const
 {
-    return amountOfCorrectAnswers;
+    return correctAnswers;
 }
 
 int WordStatistics::getAmountOfIncorrectAnswers() const
 {
-    return amountOfIncorrectAnswers;
+    return incorrectAnswers;
 }
 
 bool operator==(const WordStatistics& lhs, const WordStatistics& rhs)
@@ -53,11 +51,16 @@ bool operator==(const WordStatistics& lhs, const WordStatistics& rhs)
             lhs.getAmountOfIncorrectAnswers() == rhs.getAmountOfIncorrectAnswers());
 }
 
+std::string toString(const WordStatistics& wordStatistics)
+{
+    return "{englishWord:" + wordStatistics.getEnglishWord() +
+           ",correctAnswers:" + std::to_string(wordStatistics.getAmountOfCorrectAnswers()) +
+           ",incorrectAnswers:" + std::to_string(wordStatistics.getAmountOfIncorrectAnswers()) + "}";
+}
+
 std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics)
 {
-    os << wordStatistics.getEnglishWord() << " " << wordStatistics.getAmountOfCorrectAnswers() << " "
-       << wordStatistics.getAmountOfIncorrectAnswers();
-    return os;
+    return os << toString(wordStatistics);
 }
 
 }

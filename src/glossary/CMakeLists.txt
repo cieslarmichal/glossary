@@ -1,12 +1,12 @@
 set(SOURCES
-        Source/Glossary.cpp
+        Source/GlossaryApplication.cpp
         Source/WordDescriptionConcurrentLoader.cpp
         Source/DefaultWordViewFormatter.cpp
         Source/UserStandardInputPrompt.cpp
         Source/DefaultAnswerValidator.cpp
-        Source/GlossaryApplication.cpp
-        Source/ApplicationFactory.cpp
-        Source/GlossaryApplicationFactory.cpp
+        Source/DefaultGlossary.cpp
+        Source/GlossaryFactory.cpp
+        Source/DefaultGlossaryFactory.cpp
         Source/DefaultDictionarySynchronizer.cpp
         Source/TranslationConcurrentLoader.cpp
         Source/DefaultDictionaryTranslationUpdater.cpp
@@ -21,6 +21,7 @@ set(UT_SOURCES
         UT/Source/TranslationConcurrentLoaderTest.cpp
         UT/Source/DefaultDictionaryTranslationUpdaterTest.cpp
         UT/Source/MerriamWebsterConnectionCheckerTest.cpp
+        UT/Source/DefaultGlossaryTest.cpp
         )
 
 add_executable(glossary ${SOURCES} Source/Main.cpp)

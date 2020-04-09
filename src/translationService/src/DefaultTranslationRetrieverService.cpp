@@ -29,7 +29,7 @@ DefaultTranslationRetrieverService::retrieveTranslation(const translator::Source
 
 std::vector<std::string> DefaultTranslationRetrieverService::retrieveSupportedLanguages() const
 {
-    return std::vector<std::string>();
+    return supportedLanguagesRetriever.retrieveSupportedLanguages();
 }
 
 boost::optional<translator::TranslatedText>

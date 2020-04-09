@@ -11,7 +11,6 @@ namespace glossary
 namespace
 {
 constexpr auto newLine{'\n'};
-std::vector<std::string> correctYesNoAnswers{{"y", "yes", "n", "no"}};
 }
 
 std::string UserStandardInputPrompt::getStringInput() const
@@ -19,22 +18,9 @@ std::string UserStandardInputPrompt::getStringInput() const
     return getValidString();
 }
 
-int UserStandardInputPrompt::getIntInput() const
+int UserStandardInputPrompt::getNumberInput() const
 {
     return getValidInt();
-}
-
-std::string UserStandardInputPrompt::yesPrompt() const
-{
-    std::string choice;
-    while (!(std::cin >> choice) or yesNoAnswerIsInvalid(choice))
-    {
-        clearInputBuffer();
-        std::cout << "Enter correct answer (yes/no, y/n): ";
-    }
-    clearInputBuffer();
-
-    return choice;
 }
 
 std::string UserStandardInputPrompt::getValidString() const
@@ -59,15 +45,6 @@ int UserStandardInputPrompt::getValidInt() const
     }
     clearInputBuffer();
     return temp;
-}
-
-bool UserStandardInputPrompt::yesNoAnswerIsInvalid(const std::string& input) const
-{
-    const auto isValid =
-        std::any_of(correctYesNoAnswers.begin(), correctYesNoAnswers.end(),
-                    [input](const auto& yesNo) { return yesNo == utils::getLowerCases(input); });
-
-    return !isValid;
 }
 
 void UserStandardInputPrompt::clearInputBuffer() const

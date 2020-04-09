@@ -21,9 +21,13 @@ inline bool operator==(const Translation& lhs, const Translation& rhs)
     return (lhs.translatedText == rhs.translatedText && lhs.sourceText == rhs.sourceText);
 }
 
+inline std::string toString(const Translation& translation)
+{
+    return "{sourceText:" + translation.sourceText + ".translatedText:" + translation.translatedText + "}";
+}
+
 inline std::ostream& operator<<(std::ostream& os, const Translation& translation)
 {
-    os << translation.sourceText << "-" << translation.translatedText;
-    return os;
+    return os << toString(translation);
 }
 }

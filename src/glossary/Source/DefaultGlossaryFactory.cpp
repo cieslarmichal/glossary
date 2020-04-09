@@ -1,9 +1,9 @@
-#include "GlossaryApplicationFactory.h"
+#include "DefaultGlossaryFactory.h"
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionarySynchronizer.h"
 #include "DefaultDictionaryTranslationUpdater.h"
-#include "GlossaryApplication.h"
+#include "DefaultGlossary.h"
 #include "MerriamWebsterConnectionChecker.h"
 #include "TranslationConcurrentLoader.h"
 #include "UserStandardInputPrompt.h"
@@ -63,7 +63,7 @@ std::unique_ptr<AnswerValidator> createAnswerValidator();
 std::unique_ptr<UserPrompt> createUserPrompt();
 }
 
-std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() const
+std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 {
     auto fileAccess = createFileAccess();
     auto httpHandler = createHttpHandler();
@@ -94,7 +94,7 @@ std::unique_ptr<Application> GlossaryApplicationFactory::createApplication() con
     auto answerValidator = createAnswerValidator();
     auto userPrompt = createUserPrompt();
 
-    return std::make_unique<GlossaryApplication>(
+    return std::make_unique<DefaultGlossary>(
         dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
         dictionarySynchronizer, dictionaryTranslationUpdater, std::move(connectionChecker),
         std::move(answerValidator), std::move(userPrompt));

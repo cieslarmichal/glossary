@@ -22,10 +22,11 @@ public:
 
 private:
     EnglishWord englishWord;
-    int amountOfCorrectAnswers;
-    int amountOfIncorrectAnswers;
+    int correctAnswers;
+    int incorrectAnswers;
 };
 
 bool operator==(const WordStatistics& lhs, const WordStatistics& rhs);
+std::string toString(const WordStatistics&);
 std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics);
 }

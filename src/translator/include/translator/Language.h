@@ -24,7 +24,7 @@ inline std::string toString(Language language)
 
 inline std::ostream& operator<<(std::ostream& os, Language language)
 {
-    return os << toString(language);
+    return os << "Language::" << toString(language);
 }
 
 inline std::string toLanguageCode(Language language)

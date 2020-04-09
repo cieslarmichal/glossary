@@ -38,20 +38,3 @@ TEST_F(DefaultAnswerValidatorTest, givenUserInputDifferentThanEnglishWord_should
 {
     ASSERT_FALSE(validator.validateAnswer(userWordInputDifferentThanWord, word));
 }
-
-TEST_F(DefaultAnswerValidatorTest, givenUserInputWithYes_shouldReturnYesAnswerTrue)
-{
-    ASSERT_TRUE(validator.validateYesAnswer(userYesInput1));
-    ASSERT_TRUE(validator.validateYesAnswer(userYesInput2));
-}
-
-TEST_F(DefaultAnswerValidatorTest, givenUserInputWithYesButDifferentCaseSizes_shouldReturnYesAnswerTrue)
-{
-    ASSERT_TRUE(validator.validateYesAnswer(userYesInput1WithDifferentCaseSizes));
-    ASSERT_TRUE(validator.validateYesAnswer(userYesInput2WithDifferentCaseSizes));
-}
-
-TEST_F(DefaultAnswerValidatorTest, givenUserInputDifferentThanYes_shouldReturYesAnswerFalse)
-{
-    ASSERT_FALSE(validator.validateYesAnswer(userInputOtherThanYes));
-}

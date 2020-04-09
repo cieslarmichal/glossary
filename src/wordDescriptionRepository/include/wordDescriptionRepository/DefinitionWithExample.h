@@ -28,18 +28,12 @@ inline bool operator<(const DefinitionWithExample& lhs, const DefinitionWithExam
 
 inline std::string toString(const DefinitionWithExample& definitionWithExample)
 {
-    std::string defWithExample = "{" + definitionWithExample.definition;
-    if (definitionWithExample.example)
-    {
-        defWithExample += ":" + *definitionWithExample.example;
-    }
-    defWithExample += "}";
-    return defWithExample;
+    std::string exampleAsString = (definitionWithExample.example) ? *definitionWithExample.example : "-";
+    return "{definition:" + definitionWithExample.definition + ",example:" + exampleAsString + "}";
 }
 
 inline std::ostream& operator<<(std::ostream& os, const DefinitionWithExample& definitionWithExample)
 {
-    os << toString(definitionWithExample);
-    return os;
+    return os << toString(definitionWithExample);
 }
 }

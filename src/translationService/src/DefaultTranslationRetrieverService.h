@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "SupportedLanguagesRetriever.h"
 #include "TranslationRetrieverService.h"
 #include "translationRepository/TranslationRepository.h"
 #include "translator/Translator.h"
@@ -28,5 +29,6 @@ private:
 
     std::shared_ptr<translator::Translator> translator;
     std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
+    SupportedLanguagesRetriever supportedLanguagesRetriever;
 };
 }

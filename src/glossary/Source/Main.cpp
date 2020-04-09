@@ -1,8 +1,8 @@
-#include "Glossary.h"
+#include "GlossaryApplication.h"
 
 int main()
 {
-    glossary::Glossary app;
+    glossary::GlossaryApplication app;
     app.run();
 
     return 0;

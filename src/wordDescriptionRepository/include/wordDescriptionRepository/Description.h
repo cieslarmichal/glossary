@@ -28,23 +28,19 @@ inline bool operator==(const Description& lhs, const Description& rhs)
 inline std::string toString(const Description& description)
 {
     std::string wordDescriptionAsString = "{";
-    wordDescriptionAsString += "definitionsWithExamples: ";
+    wordDescriptionAsString += "definitionsWithExamples:[";
     for (const auto& definitionAndExample : description.definitionsWithExamples)
-    {
-        wordDescriptionAsString += toString(definitionAndExample) + " ";
-    }
-    wordDescriptionAsString += "sentences: ";
+        wordDescriptionAsString += toString(definitionAndExample) + ",";
+    wordDescriptionAsString += "]";
+    wordDescriptionAsString += "sentences:[";
     for (const auto& sentence : description.sentences)
-    {
-        wordDescriptionAsString += sentence + " ";
-    }
-    wordDescriptionAsString += "}";
+        wordDescriptionAsString += sentence + ",";
+    wordDescriptionAsString += "]}";
     return wordDescriptionAsString;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Description& description)
 {
-    os << toString(description);
-    return os;
+    return os << toString(description);
 }
 }

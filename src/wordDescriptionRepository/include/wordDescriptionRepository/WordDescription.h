@@ -31,7 +31,8 @@ inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
 
 inline std::string toString(const WordDescription& wordDescription)
 {
-    return wordDescription.englishWord + " " + toString(wordDescription.description);
+    return "{englishWord:" + wordDescription.englishWord +
+           ",description:" + toString(wordDescription.description) + "}";
 }
 
 inline std::ostream& operator<<(std::ostream& os, const WordDescription& wordDescription)
