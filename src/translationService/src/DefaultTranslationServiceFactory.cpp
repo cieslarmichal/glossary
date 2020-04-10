@@ -1,7 +1,8 @@
 #include "DefaultTranslationServiceFactory.h"
 
 #include "DefaultTranslationRetrieverService.h"
-#include "GoogleTranslateApiKeyFileReader.h"
+#include "DefaultTranslatorConnectionChecker.h"
+#include "TranslateApiKeyFileReader.h"
 
 namespace glossary::translationService
 {
@@ -17,7 +18,8 @@ std::unique_ptr<TranslationRetrieverService> DefaultTranslationServiceFactory::c
     const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository) const
 {
     return std::make_unique<DefaultTranslationRetrieverService>(
-        translator, translationRepository, std::make_unique<GoogleTranslateApiKeyFileReader>(fileAccess));
+        translator, translationRepository, std::make_unique<TranslateApiKeyFileReader>(fileAccess),
+        std::make_unique<DefaultTranslatorConnectionChecker>(translator));
 }
 
 }

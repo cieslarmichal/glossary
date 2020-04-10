@@ -47,7 +47,8 @@ void DefaultGlossary::run()
 
 bool DefaultGlossary::connectionIsAvailable() const
 {
-    return connectionChecker->connectionAvailable();
+    return connectionChecker->connectionAvailable() &&
+           translationRetrieverService->connectionToTranslateApiAvailable();
 }
 
 void DefaultGlossary::loop()

@@ -19,5 +19,6 @@ public:
                                                                             translator::SourceLanguage,
                                                                             translator::TargetLanguage) = 0;
     virtual std::vector<std::string> retrieveSupportedLanguages() const = 0;
+    virtual bool connectionToTranslateApiAvailable() = 0;
 };
 }

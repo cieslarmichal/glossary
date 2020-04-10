@@ -10,10 +10,10 @@
 
 namespace glossary::translationService
 {
-class GoogleTranslateApiKeyFileReader : public ApiKeyFileReader
+class TranslateApiKeyFileReader : public ApiKeyFileReader
 {
 public:
-    explicit GoogleTranslateApiKeyFileReader(std::shared_ptr<const utils::FileAccess>);
+    explicit TranslateApiKeyFileReader(std::shared_ptr<const utils::FileAccess>);
 
     boost::optional<std::string> readApiKey() const override;
 

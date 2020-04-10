@@ -1,4 +1,4 @@
-#include "GoogleTranslateApiKeyFileReader.h"
+#include "TranslateApiKeyFileReader.h"
 
 #include "gtest/gtest.h"
 
@@ -18,14 +18,14 @@ const std::string validFilePathWithApiKey{"home/validApiKeyFilePath.txt"};
 const std::string exampleApiKey{"apiKey"};
 }
 
-class GoogleTranslateApiKeyFileReaderTest : public Test
+class TranslateApiKeyFileReaderTest : public Test
 {
 public:
     std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
-    GoogleTranslateApiKeyFileReader apiKeyFileReader{fileAccess};
+    TranslateApiKeyFileReader apiKeyFileReader{fileAccess};
 };
 
-TEST_F(GoogleTranslateApiKeyFileReaderTest, configFileWithPathToFileWithApiKeyNotExists_shouldReturnNone)
+TEST_F(TranslateApiKeyFileReaderTest, configFileWithPathToFileWithApiKeyNotExists_shouldReturnNone)
 {
     EXPECT_CALL(*fileAccess, exists(filePathWithPathToFileWithApiKey)).WillOnce(Return(false));
 
@@ -34,7 +34,7 @@ TEST_F(GoogleTranslateApiKeyFileReaderTest, configFileWithPathToFileWithApiKeyNo
     ASSERT_EQ(actualApiKey, boost::none);
 }
 
-TEST_F(GoogleTranslateApiKeyFileReaderTest,
+TEST_F(TranslateApiKeyFileReaderTest,
        configFileWithPathToFileWithApiKeyExists_filePathWithApiKeyNotExists_shouldReturnNone)
 {
     EXPECT_CALL(*fileAccess, exists(filePathWithPathToFileWithApiKey)).WillOnce(Return(true));
@@ -47,7 +47,7 @@ TEST_F(GoogleTranslateApiKeyFileReaderTest,
     ASSERT_EQ(actualApiKey, boost::none);
 }
 
-TEST_F(GoogleTranslateApiKeyFileReaderTest,
+TEST_F(TranslateApiKeyFileReaderTest,
        configFileWithPathToFileWithApiKeyExists_filePathWithApiKeyExists_shouldReturnApiKey)
 {
     EXPECT_CALL(*fileAccess, exists(filePathWithPathToFileWithApiKey)).WillOnce(Return(true));

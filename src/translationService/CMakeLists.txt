@@ -3,15 +3,17 @@ set(SOURCES
         src/DefaultTranslationServiceFactory.cpp
         src/DefaultTranslationRetrieverService.cpp
         src/SupportedLanguagesRetriever.cpp
-        src/GoogleTranslateApiKeyFileReader.cpp
+        src/TranslateApiKeyFileReader.cpp
         src/ApiKeyFromFileContentRetriever.cpp
+        src/DefaultTranslatorConnectionChecker.cpp
         )
 
 set(UT_SOURCES
         src/DefaultTranslationRetrieverServiceTest.cpp
         src/SupportedLanguagesRetrieverTest.cpp
-        src/GoogleTranslateApiKeyFileReaderTest.cpp
+        src/TranslateApiKeyFileReaderTest.cpp
         src/ApiKeyFromFileContentRetrieverTest.cpp
+        src/DefaultTranslatorConnectionCheckerTest.cpp
         )
 
 add_library(translationService ${SOURCES})

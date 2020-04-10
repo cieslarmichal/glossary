@@ -132,9 +132,18 @@ TEST_F(DefaultGlossaryTest, givenNoConnectionAvailable_shouldExit)
     glossary.run();
 }
 
+TEST_F(DefaultGlossaryTest, givenNoConnectionToTranslatorAvailable_shouldExit)
+{
+    EXPECT_CALL(*connectionChecker, connectionAvailable()).WillOnce(Return(true));
+    EXPECT_CALL(*translationService, connectionToTranslateApiAvailable()).WillOnce(Return(false));
+
+    glossary.run();
+}
+
 TEST_F(DefaultGlossaryTest, givenConnectionAvailableAndInvalidValue_shouldProceedToLoopAndExit)
 {
     EXPECT_CALL(*connectionChecker, connectionAvailable()).WillOnce(Return(true));
+    EXPECT_CALL(*translationService, connectionToTranslateApiAvailable()).WillOnce(Return(true));
     expectUserInputNumber(100);
 
     glossary.run();

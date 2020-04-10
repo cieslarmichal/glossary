@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "ApiKeyFileReaderMock.h"
+#include "TranslatorConnectionCheckerMock.h"
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translator/TranslatorMock.h"
 
@@ -36,6 +37,9 @@ public:
     std::unique_ptr<ApiKeyFileReaderMock> apiKeyReaderInit =
         std::make_unique<StrictMock<ApiKeyFileReaderMock>>();
     ApiKeyFileReaderMock* apiKeyReader = apiKeyReaderInit.get();
+    std::unique_ptr<TranslatorConnectionCheckerMock> connectionCheckerInit =
+        std::make_unique<StrictMock<TranslatorConnectionCheckerMock>>();
+    TranslatorConnectionCheckerMock* translatorConnectionChecker = connectionCheckerInit.get();
 };
 
 class DefaultTranslationRetrieverServiceTest_WithApiKey_Base
@@ -62,8 +66,8 @@ class DefaultTranslationRetrieverServiceTest_WithApiKey
     : public DefaultTranslationRetrieverServiceTest_WithApiKey_Base
 {
 public:
-    DefaultTranslationRetrieverService translationService{translator, translationRepository,
-                                                          std::move(apiKeyReaderInit)};
+    DefaultTranslationRetrieverService translationService{
+        translator, translationRepository, std::move(apiKeyReaderInit), std::move(connectionCheckerInit)};
 };
 
 TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
@@ -112,12 +116,34 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey, shouldReturnSupportedL
     ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
 }
 
+TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+       givenConnectionNotAvailableFromTranslatorConnectionChecker_shouldReturnFalse)
+{
+    EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
+        .WillOnce(Return(false));
+
+    const auto connectionAvailable = translationService.connectionToTranslateApiAvailable();
+
+    ASSERT_FALSE(connectionAvailable);
+}
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+       givenConnectionAvailableFromTranslatorConnectionChecker_shouldReturnTrue)
+{
+    EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
+        .WillOnce(Return(true));
+
+    const auto connectionAvailable = translationService.connectionToTranslateApiAvailable();
+
+    ASSERT_TRUE(connectionAvailable);
+}
+
 class DefaultTranslationRetrieverServiceTest_WithoutApiKey
     : public DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base
 {
 public:
-    DefaultTranslationRetrieverService translationService{translator, translationRepository,
-                                                          std::move(apiKeyReaderInit)};
+    DefaultTranslationRetrieverService translationService{
+        translator, translationRepository, std::move(apiKeyReaderInit), std::move(connectionCheckerInit)};
 };
 
 TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
@@ -148,4 +174,11 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, shouldReturnSupport
     const auto actualSupportedLanguages = translationService.retrieveSupportedLanguages();
 
     ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
+}
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, connectionNotAvailable_shouldReturnFalse)
+{
+    const auto connectionAvailable = translationService.connectionToTranslateApiAvailable();
+
+    ASSERT_FALSE(connectionAvailable);
 }

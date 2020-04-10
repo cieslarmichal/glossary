@@ -7,11 +7,13 @@ namespace glossary::translationService
 DefaultTranslationRetrieverService::DefaultTranslationRetrieverService(
     std::shared_ptr<translator::Translator> translatorInit,
     std::shared_ptr<translationRepository::TranslationRepository> repo,
-    std::unique_ptr<ApiKeyFileReader> apiKeyReaderInit)
+    std::unique_ptr<ApiKeyFileReader> apiKeyReaderInit,
+    std::unique_ptr<TranslatorConnectionChecker> connectionChecker)
     : translator{std::move(translatorInit)},
       translationRepository{std::move(repo)},
       apiKeyReader{std::move(apiKeyReaderInit)},
-      translatorApiKey{apiKeyReader->readApiKey()}
+      translatorApiKey{apiKeyReader->readApiKey()},
+      translatorConnectionChecker{std::move(connectionChecker)}
 {
 }
 
@@ -36,6 +38,13 @@ DefaultTranslationRetrieverService::retrieveTranslation(const translator::Source
 std::vector<std::string> DefaultTranslationRetrieverService::retrieveSupportedLanguages() const
 {
     return supportedLanguagesRetriever.retrieveSupportedLanguages();
+}
+
+bool DefaultTranslationRetrieverService::connectionToTranslateApiAvailable()
+{
+    if (translatorApiKey)
+        return translatorConnectionChecker->connectionToTranslatorWithApiKeyIsAvailable(*translatorApiKey);
+    return false;
 }
 
 boost::optional<translator::TranslatedText>
@@ -64,5 +73,4 @@ void DefaultTranslationRetrieverService::saveTranslationInRepository(
         translationRepository::SourceText{sourceText}, translationRepository::TranslatedText{translatedText}};
     translationRepository->addTranslation(newTranslation);
 }
-
 }
