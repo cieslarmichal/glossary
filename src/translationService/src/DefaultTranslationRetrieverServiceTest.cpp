@@ -2,6 +2,7 @@
 
 #include "gtest/gtest.h"
 
+#include "ApiKeyFileReaderMock.h"
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translator/TranslatorMock.h"
 
@@ -23,20 +24,49 @@ const boost::optional<TranslatedText> translatedTextOpt{expectedTranslatedText};
 const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
 const std::vector<std::string> supportedLanguages{"Polish", "English"};
+const std::string apiKey{"topSecretKey"};
 }
 
-class DefaultTranslationRetrieverServiceTest : public Test
+class DefaultTranslationRetrieverServiceTest_Base : public Test
 {
 public:
-    std::unique_ptr<translator::TranslatorMock> translatorInit =
-        std::make_unique<StrictMock<translator::TranslatorMock>>();
-    translator::TranslatorMock* translator = translatorInit.get();
-    std::shared_ptr<translationRepository::TranslationRepositoryMock> translationRepository =
-        std::make_shared<StrictMock<translationRepository::TranslationRepositoryMock>>();
-    DefaultTranslationRetrieverService translationService{std::move(translatorInit), translationRepository};
+    std::shared_ptr<TranslatorMock> translator = std::make_shared<StrictMock<TranslatorMock>>();
+    std::shared_ptr<TranslationRepositoryMock> translationRepository =
+        std::make_shared<StrictMock<TranslationRepositoryMock>>();
+    std::unique_ptr<ApiKeyFileReaderMock> apiKeyReaderInit =
+        std::make_unique<StrictMock<ApiKeyFileReaderMock>>();
+    ApiKeyFileReaderMock* apiKeyReader = apiKeyReaderInit.get();
 };
 
-TEST_F(DefaultTranslationRetrieverServiceTest,
+class DefaultTranslationRetrieverServiceTest_WithApiKey_Base
+    : public DefaultTranslationRetrieverServiceTest_Base
+{
+public:
+    DefaultTranslationRetrieverServiceTest_WithApiKey_Base()
+    {
+        EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(apiKey));
+    }
+};
+
+class DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base
+    : public DefaultTranslationRetrieverServiceTest_Base
+{
+public:
+    DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base()
+    {
+        EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(boost::none));
+    }
+};
+
+class DefaultTranslationRetrieverServiceTest_WithApiKey
+    : public DefaultTranslationRetrieverServiceTest_WithApiKey_Base
+{
+public:
+    DefaultTranslationRetrieverService translationService{translator, translationRepository,
+                                                          std::move(apiKeyReaderInit)};
+};
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
        repositoryContainsTranslation_shouldReturnTranslationFromRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate))
@@ -49,11 +79,11 @@ TEST_F(DefaultTranslationRetrieverServiceTest,
 }
 
 TEST_F(
-    DefaultTranslationRetrieverServiceTest,
+    DefaultTranslationRetrieverServiceTest_WithApiKey,
     repositoryDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
-    EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(translatedTextOpt));
     EXPECT_CALL(*translationRepository, addTranslation(repositoryTranslation));
 
@@ -63,10 +93,11 @@ TEST_F(
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest, repositoryAndTranslatorReturnNoneTranslation_shouldReturnNone)
+TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+       repositoryAndTranslatorReturnNoneTranslation_shouldReturnNone)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
-    EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(boost::none));
     const auto actualTranslation =
         translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
@@ -74,7 +105,45 @@ TEST_F(DefaultTranslationRetrieverServiceTest, repositoryAndTranslatorReturnNone
     ASSERT_EQ(actualTranslation, boost::none);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest, shouldReturnSupportedLanguages)
+TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey, shouldReturnSupportedLanguages)
+{
+    const auto actualSupportedLanguages = translationService.retrieveSupportedLanguages();
+
+    ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
+}
+
+class DefaultTranslationRetrieverServiceTest_WithoutApiKey
+    : public DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base
+{
+public:
+    DefaultTranslationRetrieverService translationService{translator, translationRepository,
+                                                          std::move(apiKeyReaderInit)};
+};
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
+       repositoryReturnsNoneTranslation_shouldReturnNone)
+{
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
+
+    const auto actualTranslation =
+        translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
+
+    ASSERT_EQ(actualTranslation, boost::none);
+}
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
+       repositoryReturnsTranslation_shouldReturnTranslationFromRepository)
+{
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate))
+        .WillOnce(Return(translationFromRepository));
+
+    const auto actualTranslation =
+        translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
+
+    ASSERT_EQ(*actualTranslation, expectedTranslatedText);
+}
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, shouldReturnSupportedLanguages)
 {
     const auto actualSupportedLanguages = translationService.retrieveSupportedLanguages();
 

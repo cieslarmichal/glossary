@@ -2,6 +2,7 @@
 
 #include <memory>
 
+#include "ApiKeyFileReader.h"
 #include "SupportedLanguagesRetriever.h"
 #include "TranslationRetrieverService.h"
 #include "translationRepository/TranslationRepository.h"
@@ -13,7 +14,8 @@ class DefaultTranslationRetrieverService : public TranslationRetrieverService
 {
 public:
     DefaultTranslationRetrieverService(std::shared_ptr<translator::Translator>,
-                                       std::shared_ptr<translationRepository::TranslationRepository>);
+                                       std::shared_ptr<translationRepository::TranslationRepository>,
+                                       std::unique_ptr<ApiKeyFileReader>);
 
     boost::optional<translator::TranslatedText> retrieveTranslation(const translator::SourceText&,
                                                                     translator::SourceLanguage,
@@ -21,6 +23,7 @@ public:
     std::vector<std::string> retrieveSupportedLanguages() const override;
 
 private:
+    void setTranslatorApiKeyFromConfigFile();
     boost::optional<translator::TranslatedText> getTranslationFromRepository(const std::string&) const;
     boost::optional<translator::TranslatedText>
     getTranslationFromTranslator(const std::string&, translator::SourceLanguage,
@@ -30,5 +33,7 @@ private:
     std::shared_ptr<translator::Translator> translator;
     std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
     SupportedLanguagesRetriever supportedLanguagesRetriever;
+    std::unique_ptr<ApiKeyFileReader> apiKeyReader;
+    const boost::optional<std::string> translatorApiKey;
 };
 }

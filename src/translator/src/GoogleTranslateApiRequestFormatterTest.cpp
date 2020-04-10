@@ -8,13 +8,13 @@ using namespace glossary::translator;
 namespace
 {
 const std::string url{"https://translation.googleapis.com/language/translate/v2?"};
-const std::string key = {"key=AIzaSyCzXw_W97vKC5sSHXpNSCSpB5STCZkk08o"};
-const auto requestBase = url + key;
+const std::string apiKey = {"topSecretKey"};
+const std::string keyField = {"key=" + apiKey};
 const auto sourceField = R"(&source=pl)";
 const auto targetField = R"(&target=en)";
-const webConnection::Request requestWithSingleWord = requestBase + "&q=piwo" + sourceField + targetField;
+const webConnection::Request requestWithSingleWord = url + keyField + "&q=piwo" + sourceField + targetField;
 const webConnection::Request requestWithMultipleWord =
-    requestBase + "&q=piwo+jest+pyszne" + sourceField + targetField;
+    url + keyField + "&q=piwo+jest+pyszne" + sourceField + targetField;
 const auto emptyText = "";
 const auto singleWordText = "piwo";
 const auto multipleWordsText = "piwo jest pyszne";
@@ -30,7 +30,8 @@ public:
 
 TEST_F(GoogleTranslateApiRequestFormatterTest, givenEmptyText_shouldReturnNone)
 {
-    const auto formattedRequest = formatter.getFormattedRequest(emptyText, sourceLanguage, targetLanguage);
+    const auto formattedRequest =
+        formatter.getFormattedRequest(emptyText, sourceLanguage, targetLanguage, apiKey);
 
     ASSERT_EQ(formattedRequest, boost::none);
 }
@@ -38,7 +39,7 @@ TEST_F(GoogleTranslateApiRequestFormatterTest, givenEmptyText_shouldReturnNone)
 TEST_F(GoogleTranslateApiRequestFormatterTest, givenOneWordText_shouldReturnRequestWithThisWordInTextField)
 {
     const auto actualFormattedRequest =
-        formatter.getFormattedRequest(singleWordText, sourceLanguage, targetLanguage);
+        formatter.getFormattedRequest(singleWordText, sourceLanguage, targetLanguage, apiKey);
 
     ASSERT_EQ(*actualFormattedRequest, requestWithSingleWord);
 }
@@ -47,7 +48,7 @@ TEST_F(GoogleTranslateApiRequestFormatterTest,
        givenThreeWordsText_shouldReturnRequestWithTheseWordsSplitByPlusSignInTextField)
 {
     const auto actualFormattedRequest =
-        formatter.getFormattedRequest(multipleWordsText, sourceLanguage, targetLanguage);
+        formatter.getFormattedRequest(multipleWordsText, sourceLanguage, targetLanguage, apiKey);
 
     ASSERT_EQ(*actualFormattedRequest, requestWithMultipleWord);
 }

@@ -22,9 +22,11 @@ DefaultTranslator::DefaultTranslator(std::shared_ptr<const webConnection::HttpHa
 
 boost::optional<TranslatedText> DefaultTranslator::translate(const std::string& sourceText,
                                                              translator::SourceLanguage sourceLanguage,
-                                                             translator::TargetLanguage targetLanguage) const
+                                                             translator::TargetLanguage targetLanguage,
+                                                             const std::string& apiKey) const
 {
-    const auto request = requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage);
+    const auto request =
+        requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage, apiKey);
     if (requestIsNotValid(request))
         return boost::none;
 

@@ -33,7 +33,8 @@ std::shared_ptr<translationRepository::TranslationRepository>
 createTranslationRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<translationService::TranslationRetrieverService>
 createTranslationRetrieverService(const std::shared_ptr<translator::Translator>&,
-                                  const std::shared_ptr<translationRepository::TranslationRepository>&);
+                                  const std::shared_ptr<translationRepository::TranslationRepository>&,
+                                  const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<statisticsRepository::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
@@ -48,7 +49,7 @@ std::shared_ptr<WordDescriptionLoader>
 createWordDescriptionLoader(const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
                             const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
 std::shared_ptr<TranslationLoader>
-createTranslationLoader(const std::shared_ptr<translator::Translator>&,
+createTranslationLoader(const std::shared_ptr<translationService::TranslationRetrieverService>&,
                         const std::shared_ptr<translationRepository::TranslationRepository>&);
 std::shared_ptr<DictionarySynchronizer>
 createDictionarySynchronizer(const std::shared_ptr<dictionaryService::DictionaryService>&,
@@ -72,7 +73,8 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 
     auto translator = createTranslator(httpHandler);
     auto translationRepository = createTranslationRepository(fileAccess);
-    auto translationRetrieverService = createTranslationRetrieverService(translator, translationRepository);
+    auto translationRetrieverService =
+        createTranslationRetrieverService(translator, translationRepository, fileAccess);
 
     auto statisticsRepository = createStatisticsRepository(fileAccess);
 
@@ -83,7 +85,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 
     auto wordDescriptionLoader =
         createWordDescriptionLoader(wordDescriptionDownloader, wordDescriptionRepository);
-    auto translationLoader = createTranslationLoader(translator, translationRepository);
+    auto translationLoader = createTranslationLoader(translationRetrieverService, translationRepository);
     auto dictionarySynchronizer =
         createDictionarySynchronizer(dictionaryService, wordDescriptionLoader, translationLoader);
 
@@ -138,10 +140,11 @@ createTranslationRepository(const std::shared_ptr<utils::FileAccess>& fileAccess
 
 std::shared_ptr<translationService::TranslationRetrieverService> createTranslationRetrieverService(
     const std::shared_ptr<translator::Translator>& translator,
-    const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository)
+    const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository,
+    const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
     auto translationServiceFactory =
-        translationService::TranslationServiceFactory::createTranslationServiceFactory();
+        translationService::TranslationServiceFactory::createTranslationServiceFactory(fileAccess);
     return translationServiceFactory->createTranslationService(translator, translationRepository);
 }
 
@@ -191,10 +194,10 @@ std::shared_ptr<WordDescriptionLoader> createWordDescriptionLoader(
 }
 
 std::shared_ptr<TranslationLoader> createTranslationLoader(
-    const std::shared_ptr<translator::Translator>& translator,
+    const std::shared_ptr<translationService::TranslationRetrieverService>& translationService,
     const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository)
 {
-    return std::make_shared<TranslationConcurrentLoader>(translator, translationRepository);
+    return std::make_shared<TranslationConcurrentLoader>(translationService, translationRepository);
 }
 
 std::shared_ptr<DictionarySynchronizer>

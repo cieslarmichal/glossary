@@ -13,8 +13,12 @@ using namespace glossary::translator;
 
 namespace
 {
-const webConnection::Request request =
-    R"(https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20200113T184314Z.f0829944dec57123.a22eb90262e3bd9a179a881dc6960e0a7f142c8d&text=piwo&lang=pl-en)";
+const std::string url{"https://translation.googleapis.com/language/translate/v2?"};
+const std::string apiKey = {"topSecretKey"};
+const std::string keyField = {"key=" + apiKey};
+const auto sourceField = R"(&source=pl)";
+const auto targetField = R"(&target=en)";
+const webConnection::Request request = url + keyField + "&q=piwo" + sourceField + targetField;
 const auto responseContent = R"({"code":200,"lang":"pl-en","text":["beer"]})";
 const webConnection::Response successResponse{200, responseContent};
 const webConnection::Response failureResponse{400, ""};
@@ -40,34 +44,34 @@ public:
 
 TEST_F(DefaultTranslatorTest, whenConnectionFails_shouldReturnNone)
 {
-    EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage);
+    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage, apiKey);
 
     ASSERT_EQ(translation, boost::none);
 }
 
 TEST_F(DefaultTranslatorTest, givenFailureResponseFromTranslationApi_shouldReturnNone)
 {
-    EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(failureResponse));
 
-    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage);
+    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage, apiKey);
 
     ASSERT_EQ(translation, boost::none);
 }
 
 TEST_F(DefaultTranslatorTest, givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)
 {
-    EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(successResponse));
     EXPECT_CALL(*deserializer, deserialize(responseContent)).WillOnce(Return(englishText));
 
-    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage);
+    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage, apiKey);
 
     ASSERT_EQ(*translation, englishText);
 }

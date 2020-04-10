@@ -14,6 +14,7 @@ public:
     virtual ~TranslationRequestFormatter() = default;
 
     virtual boost::optional<webConnection::Request> getFormattedRequest(const SourceText&, SourceLanguage,
-                                                                        TargetLanguage) const = 0;
+                                                                        TargetLanguage,
+                                                                        const std::string& apiKey) const = 0;
 };
 }

@@ -1,11 +1,17 @@
 #include "DefaultTranslationRetrieverService.h"
 
+#include <iostream>
+
 namespace glossary::translationService
 {
 DefaultTranslationRetrieverService::DefaultTranslationRetrieverService(
     std::shared_ptr<translator::Translator> translatorInit,
-    std::shared_ptr<translationRepository::TranslationRepository> repo)
-    : translator{std::move(translatorInit)}, translationRepository{std::move(repo)}
+    std::shared_ptr<translationRepository::TranslationRepository> repo,
+    std::unique_ptr<ApiKeyFileReader> apiKeyReaderInit)
+    : translator{std::move(translatorInit)},
+      translationRepository{std::move(repo)},
+      apiKeyReader{std::move(apiKeyReaderInit)},
+      translatorApiKey{apiKeyReader->readApiKey()}
 {
 }
 
@@ -14,8 +20,8 @@ DefaultTranslationRetrieverService::retrieveTranslation(const translator::Source
                                                         translator::SourceLanguage sourceLanguage,
                                                         translator::TargetLanguage targetLanguage)
 {
-    if (const auto translationFromRepo = getTranslationFromRepository(sourceText))
-        return translationFromRepo;
+    if (const auto translationFromRepository = getTranslationFromRepository(sourceText))
+        return translationFromRepository;
 
     if (const auto translationFromTranslator =
             getTranslationFromTranslator(sourceText, sourceLanguage, targetLanguage))
@@ -44,7 +50,11 @@ boost::optional<translator::TranslatedText> DefaultTranslationRetrieverService::
     const std::string& sourceText, translator::SourceLanguage sourceLanguage,
     translator::TargetLanguage targetLanguage) const
 {
-    return translator->translate(sourceText, sourceLanguage, targetLanguage);
+    if (translatorApiKey)
+        return translator->translate(sourceText, sourceLanguage, targetLanguage, *translatorApiKey);
+
+    std::cerr << "No available translate api key";
+    return boost::none;
 }
 
 void DefaultTranslationRetrieverService::saveTranslationInRepository(

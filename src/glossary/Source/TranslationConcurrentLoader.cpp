@@ -6,9 +6,9 @@ namespace glossary
 {
 
 TranslationConcurrentLoader::TranslationConcurrentLoader(
-    std::shared_ptr<translator::Translator> translatorInit,
+    std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<translationRepository::TranslationRepository> repository)
-    : translator{std::move(translatorInit)}, translationRepository{std::move(repository)}
+    : translationService{std::move(translationServiceInit)}, translationRepository{std::move(repository)}
 {
 }
 
@@ -22,18 +22,15 @@ void TranslationConcurrentLoader::loadMissingTranslations(
     const auto englishWordsWithoutTranslation = getEnglishWordsWithoutTranslation(englishWords);
     utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord> englishWordsQueue{
         englishWordsWithoutTranslation};
-    utils::ThreadSafeQueue<translationRepository::Translation> translations;
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
         threadPool.emplace_back(std::thread(&TranslationConcurrentLoader::loadingTranslationsWorker, this,
-                                            std::ref(englishWordsQueue), std::ref(translations)));
+                                            std::ref(englishWordsQueue)));
     }
 
     for (auto& thread : threadPool)
         thread.join();
-
-    loadTranslationsIntoRepository(translations.popAll());
 }
 
 unsigned TranslationConcurrentLoader::getAmountOfThreads() const
@@ -55,32 +52,18 @@ wordDescriptionRepository::EnglishWords TranslationConcurrentLoader::getEnglishW
 }
 
 void TranslationConcurrentLoader::loadingTranslationsWorker(
-    utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords,
-    utils::ThreadSafeQueue<translationRepository::Translation>& translations)
+    utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords)
 {
     while (const auto currentEnglishWord = englishWords.pop())
     {
-        if (const auto translation = getTranslationFromTranslator(*currentEnglishWord))
-            translations.push(*translation);
+        loadTranslationFromTranslationService(*currentEnglishWord);
     }
 }
 
-boost::optional<translationRepository::Translation> TranslationConcurrentLoader::getTranslationFromTranslator(
+void TranslationConcurrentLoader::loadTranslationFromTranslationService(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    if (const auto translation = translator->translate(englishWord, translator::SourceLanguage::English,
-                                                       translator::TargetLanguage::Polish))
-    {
-        return translationRepository::Translation{englishWord, *translation};
-    }
-    return boost::none;
+    translationService->retrieveTranslation(englishWord, translator::SourceLanguage::English,
+                                            translator::TargetLanguage::Polish);
 }
-
-void TranslationConcurrentLoader::loadTranslationsIntoRepository(
-    const translationRepository::Translations& translations)
-{
-    for (const auto& translation : translations)
-        translationRepository->addTranslation(translation);
-}
-
 }

@@ -6,32 +6,32 @@ namespace glossary::translator
 {
 namespace
 {
-// TODO: reading key from file
 const std::string urlAddress{"https://translation.googleapis.com/language/translate/v2?"};
-const std::string apiKey{"AIzaSyCzXw_W97vKC5sSHXpNSCSpB5STCZkk08o"};
 const std::string stringToSplitBy{" "};
 const std::string stringToJoinWith{"+"};
 }
 
 boost::optional<webConnection::Request> GoogleTranslateApiRequestFormatter::getFormattedRequest(
-    const std::string& sourceText, SourceLanguage sourceLanguage, TargetLanguage targetLanguage) const
+    const SourceText& sourceText, SourceLanguage sourceLanguage, TargetLanguage targetLanguage,
+    const std::string& apiKey) const
 {
     if (sourceText.empty())
         return boost::none;
 
     const auto formattedSourceText = getFormattedSourceText(sourceText);
-    return getRequest(formattedSourceText, sourceLanguage, targetLanguage);
+    return getRequest(formattedSourceText, sourceLanguage, targetLanguage, apiKey);
 }
 
-std::string GoogleTranslateApiRequestFormatter::getFormattedSourceText(const std::string& sourceText) const
+SourceText GoogleTranslateApiRequestFormatter::getFormattedSourceText(const SourceText& sourceText) const
 {
     const auto splitText = utils::split(sourceText, stringToSplitBy);
     return utils::join(splitText, stringToJoinWith);
 }
 
 webConnection::Request
-GoogleTranslateApiRequestFormatter::getRequest(const std::string& sourceText, SourceLanguage sourceLanguage,
-                                               translator::TargetLanguage targetLanguage) const
+GoogleTranslateApiRequestFormatter::getRequest(const SourceText& sourceText, SourceLanguage sourceLanguage,
+                                               translator::TargetLanguage targetLanguage,
+                                               const std::string& apiKey) const
 {
     const auto keyField = "key=" + apiKey;
     const auto text = "q=" + sourceText;

@@ -3,13 +3,15 @@
 #include "gtest/gtest.h"
 
 #include "translationRepository/TranslationRepositoryMock.h"
+#include "translationService/TranslationRetrieverServiceMock.h"
 #include "translator/TranslatorMock.h"
 
 using namespace ::testing;
 using namespace glossary;
-using namespace translator;
+using namespace translationService;
 using namespace translationRepository;
 using namespace wordDescriptionRepository;
+using namespace translator;
 
 namespace
 {
@@ -28,10 +30,11 @@ const TargetLanguage targetLanguage = Language::Polish;
 class TranslationConcurrentLoaderTest : public Test
 {
 public:
-    std::shared_ptr<TranslatorMock> translator = std::make_shared<StrictMock<TranslatorMock>>();
+    std::shared_ptr<TranslationRetrieverServiceMock> translationService =
+        std::make_shared<StrictMock<TranslationRetrieverServiceMock>>();
     std::shared_ptr<TranslationRepositoryMock> translationRepository =
         std::make_shared<StrictMock<TranslationRepositoryMock>>();
-    TranslationConcurrentLoader loader{translator, translationRepository};
+    TranslationConcurrentLoader loader{translationService, translationRepository};
 };
 
 TEST_F(TranslationConcurrentLoaderTest, givenEnglishWordsExistingInRepository_shouldNotLoadAnything)
@@ -44,21 +47,18 @@ TEST_F(TranslationConcurrentLoaderTest, givenEnglishWordsExistingInRepository_sh
 }
 
 TEST_F(TranslationConcurrentLoaderTest,
-       givenEnglishWordsNonExistingInRepository_shouldDownloadWordDescriptionsAndAddToRepositoryIfExists)
+       givenEnglishWordsNonExistingInRepository_shouldLoadTranslationsFromTranslationService)
 {
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord1)).WillOnce(Return(false));
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord2)).WillOnce(Return(false));
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord3)).WillOnce(Return(false));
 
-    EXPECT_CALL(*translator, translate(englishWord1, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*translationService, retrieveTranslation(englishWord1, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedText1));
-    EXPECT_CALL(*translator, translate(englishWord2, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*translationService, retrieveTranslation(englishWord2, sourceLanguage, targetLanguage))
         .WillOnce(Return(boost::none));
-    EXPECT_CALL(*translator, translate(englishWord3, sourceLanguage, targetLanguage))
+    EXPECT_CALL(*translationService, retrieveTranslation(englishWord3, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedText3));
-
-    EXPECT_CALL(*translationRepository, addTranslation(translation1));
-    EXPECT_CALL(*translationRepository, addTranslation(translation3));
 
     loader.loadMissingTranslations(englishWords);
 }
