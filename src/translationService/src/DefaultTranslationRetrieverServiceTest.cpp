@@ -39,7 +39,8 @@ public:
 TEST_F(DefaultTranslationRetrieverServiceTest,
        repositoryContainsTranslation_shouldReturnTranslationFromRepository)
 {
-    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(translationFromRepository));
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate))
+        .WillOnce(Return(translationFromRepository));
 
     const auto actualTranslation =
         translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
@@ -47,8 +48,9 @@ TEST_F(DefaultTranslationRetrieverServiceTest,
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest,
-       repositoryDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
+TEST_F(
+    DefaultTranslationRetrieverServiceTest,
+    repositoryDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))

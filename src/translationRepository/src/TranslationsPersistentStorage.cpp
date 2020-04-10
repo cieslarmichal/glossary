@@ -8,7 +8,8 @@
 namespace glossary::translationRepository
 {
 
-const std::string TranslationsPersistentStorage::directory{utils::getProjectPath("glossary") + "repositoryFiles/"};
+const std::string TranslationsPersistentStorage::directory{utils::getProjectPath("glossary") +
+                                                           "repositoryFiles/"};
 const std::string TranslationsPersistentStorage::filename{directory + "translations.txt"};
 
 TranslationsPersistentStorage::TranslationsPersistentStorage(
