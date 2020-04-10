@@ -13,7 +13,7 @@ using namespace repository;
 
 namespace
 {
-const std::string filePath{utils::getProjectPath("glossary") + "database/dictionaries.txt"};
+const std::string filePath{utils::getProjectPath("glossary") + "repositoryFiles/dictionaries.txt"};
 const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};

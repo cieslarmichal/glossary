@@ -15,8 +15,8 @@ namespace
 {
 const SourceText polishWord{"herbata"};
 const TranslatedText englishWord{"tea"};
-const Translation dbTranslation{polishWord, englishWord};
-const boost::optional<Translation> translationFromDb{dbTranslation};
+const Translation repositoryTranslation{polishWord, englishWord};
+const boost::optional<Translation> translationFromRepository{repositoryTranslation};
 const auto textToTranslate{"herbata"};
 const TranslatedText expectedTranslatedText{"tea"};
 const boost::optional<TranslatedText> translatedTextOpt{expectedTranslatedText};
@@ -39,7 +39,7 @@ public:
 TEST_F(DefaultTranslationRetrieverServiceTest,
        repositoryContainsTranslation_shouldReturnTranslationFromRepository)
 {
-    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(translationFromDb));
+    EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(translationFromRepository));
 
     const auto actualTranslation =
         translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
@@ -48,12 +48,12 @@ TEST_F(DefaultTranslationRetrieverServiceTest,
 }
 
 TEST_F(DefaultTranslationRetrieverServiceTest,
-       dbDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
+       repositoryDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
     EXPECT_CALL(*translator, translate(textToTranslate, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedTextOpt));
-    EXPECT_CALL(*translationRepository, addTranslation(dbTranslation));
+    EXPECT_CALL(*translationRepository, addTranslation(repositoryTranslation));
 
     const auto actualTranslation =
         translationService.retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);

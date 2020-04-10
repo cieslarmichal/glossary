@@ -6,7 +6,7 @@
 
 namespace glossary::dictionaryService::repository
 {
-const std::string DictionaryPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
+const std::string DictionaryPersistentStorage::directory{utils::getProjectPath("glossary") + "repositoryFiles/"};
 const std::string DictionaryPersistentStorage::filename{directory + "dictionaries.txt"};
 
 DictionaryPersistentStorage::DictionaryPersistentStorage(

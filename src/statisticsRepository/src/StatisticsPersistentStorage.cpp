@@ -8,7 +8,7 @@
 namespace glossary::statisticsRepository
 {
 
-const std::string StatisticsPersistentStorage::directory{utils::getProjectPath("glossary") + "database/"};
+const std::string StatisticsPersistentStorage::directory{utils::getProjectPath("glossary") + "repositoryFiles/"};
 const std::string StatisticsPersistentStorage::filename{directory + "statistics.txt"};
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(

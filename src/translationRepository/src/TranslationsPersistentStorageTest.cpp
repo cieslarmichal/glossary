@@ -13,7 +13,7 @@ using namespace glossary::translationRepository;
 
 namespace
 {
-const std::string filePath{utils::getProjectPath("glossary") + "database/translations.txt"};
+const std::string filePath{utils::getProjectPath("glossary") + "repositoryFiles/translations.txt"};
 const SourceText polishWord1{"polishWord1"};
 const SourceText polishWord2{"polishWord2"};
 const SourceText nonExistingPolishWord{"nonExisting"};

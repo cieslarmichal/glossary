@@ -55,13 +55,9 @@ std::string DefaultFileAccess::readContent(const std::string& absolutePath) cons
     std::stringstream buffer;
 
     if (fileStream.is_open())
-    {
         buffer << fileStream.rdbuf();
-    }
     else
-    {
         throw exceptions::FileNotFound(fileNotFoundReadingMessage + absolutePath);
-    }
 
     return buffer.str();
 }

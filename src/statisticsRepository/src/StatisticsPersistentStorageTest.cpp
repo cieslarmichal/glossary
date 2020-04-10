@@ -13,7 +13,7 @@ using namespace glossary::statisticsRepository;
 
 namespace
 {
-const std::string filepath{utils::getProjectPath("glossary") + "database/statistics.txt"};
+const std::string filepath{utils::getProjectPath("glossary") + "repositoryFiles/statistics.txt"};
 const EnglishWord englishWord1{"englishWord1"};
 const EnglishWord englishWord2{"englishWord2"};
 const EnglishWord englishWord3{"englishWord3"};

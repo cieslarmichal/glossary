@@ -8,7 +8,7 @@
 namespace glossary::wordDescriptionRepository
 {
 const std::string WordsDescriptionsPersistentStorage::directory{utils::getProjectPath("glossary") +
-                                                                "database/"};
+                                                                "repositoryFiles/"};
 const std::string WordsDescriptionsPersistentStorage::filename{directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(

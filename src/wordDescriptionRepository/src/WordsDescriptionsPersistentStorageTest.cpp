@@ -13,7 +13,7 @@ using namespace glossary::wordDescriptionRepository;
 
 namespace
 {
-const std::string filePath{utils::getProjectPath("glossary") + "database/wordsDescriptions.txt"};
+const std::string filePath{utils::getProjectPath("glossary") + "repositoryFiles/wordsDescriptions.txt"};
 const EnglishWord nonExistingWord("nonExistingWord");
 const EnglishWord englishWord1("englishWord1");
 const EnglishWord englishWord2("englishWord2");

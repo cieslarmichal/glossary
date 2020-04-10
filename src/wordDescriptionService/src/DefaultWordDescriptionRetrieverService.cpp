@@ -12,8 +12,8 @@ DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
 wordDescriptionRepository::WordDescription DefaultWordDescriptionRetrieverService::retrieveWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    if (const auto wordDescriptionFromDb = getWordDescriptionFromRepository(englishWord))
-        return *wordDescriptionFromDb;
+    if (const auto wordDescriptionFromRepository = getWordDescriptionFromRepository(englishWord))
+        return *wordDescriptionFromRepository;
 
     if (const auto createdWordDescription = downloadWordDescription(englishWord))
     {
