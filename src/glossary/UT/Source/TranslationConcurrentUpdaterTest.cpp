@@ -1,4 +1,4 @@
-#include "TranslationConcurrentLoader.h"
+#include "TranslationConcurrentUpdater.h"
 
 #include "gtest/gtest.h"
 
@@ -10,7 +10,7 @@ using namespace ::testing;
 using namespace glossary;
 using namespace translationService;
 using namespace translationRepository;
-using namespace wordDescriptionRepository;
+using namespace dictionaryService;
 using namespace translator;
 
 namespace
@@ -27,26 +27,26 @@ const SourceLanguage sourceLanguage = Language::English;
 const TargetLanguage targetLanguage = Language::Polish;
 }
 
-class TranslationConcurrentLoaderTest : public Test
+class TranslationConcurrentUpdaterTest : public Test
 {
 public:
     std::shared_ptr<TranslationRetrieverServiceMock> translationService =
         std::make_shared<StrictMock<TranslationRetrieverServiceMock>>();
     std::shared_ptr<TranslationRepositoryMock> translationRepository =
         std::make_shared<StrictMock<TranslationRepositoryMock>>();
-    TranslationConcurrentLoader loader{translationService, translationRepository};
+    TranslationConcurrentUpdater updater{translationService, translationRepository};
 };
 
-TEST_F(TranslationConcurrentLoaderTest, givenEnglishWordsExistingInRepository_shouldNotLoadAnything)
+TEST_F(TranslationConcurrentUpdaterTest, givenEnglishWordsExistingInRepository_shouldNotLoadAnything)
 {
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord1)).WillOnce(Return(true));
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord2)).WillOnce(Return(true));
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord3)).WillOnce(Return(true));
 
-    loader.loadMissingTranslations(englishWords);
+    updater.update(englishWords);
 }
 
-TEST_F(TranslationConcurrentLoaderTest,
+TEST_F(TranslationConcurrentUpdaterTest,
        givenEnglishWordsNonExistingInRepository_shouldLoadTranslationsFromTranslationService)
 {
     EXPECT_CALL(*translationRepository, containsTranslation(englishWord1)).WillOnce(Return(false));
@@ -60,5 +60,5 @@ TEST_F(TranslationConcurrentLoaderTest,
     EXPECT_CALL(*translationService, retrieveTranslation(englishWord3, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedText3));
 
-    loader.loadMissingTranslations(englishWords);
+    updater.update(englishWords);
 }

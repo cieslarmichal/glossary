@@ -22,5 +22,9 @@ public:
     MOCK_METHOD2(removeWordFromDictionary, void(const EnglishWord&, const DictionaryName&));
     MOCK_METHOD3(updateWordTranslationFromDictionary,
                  void(const EnglishWord&, const std::string&, const DictionaryName&));
+    MOCK_METHOD0(synchronizeDictionaries, void());
+    MOCK_METHOD1(registerObserver, void(DictionaryObserver*));
+    MOCK_METHOD1(removeObserver, void(DictionaryObserver*));
+    MOCK_METHOD1(notifyObservers, void(const EnglishWords&));
 };
 }

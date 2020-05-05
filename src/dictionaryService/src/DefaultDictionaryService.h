@@ -5,6 +5,7 @@
 #include "DictionaryNamesRetriever.h"
 #include "DictionaryService.h"
 #include "DictionaryWordsRetriever.h"
+#include "ObserverService.h"
 #include "RandomDictionaryWordRetriever.h"
 #include "csvFileReading/DictionaryWordsReader.h"
 #include "repository/DictionaryRepository.h"
@@ -18,7 +19,8 @@ public:
                              std::unique_ptr<DictionaryNamesRetriever>,
                              std::unique_ptr<DictionaryWordsRetriever>,
                              std::unique_ptr<RandomDictionaryWordRetriever>,
-                             std::unique_ptr<csvFileReading::DictionaryWordsReader>);
+                             std::unique_ptr<csvFileReading::DictionaryWordsReader>,
+                             std::unique_ptr<ObserverService>);
 
     DictionaryNames getDictionaryNames() const override;
     boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const override;
@@ -33,12 +35,18 @@ public:
     void removeWordFromDictionary(const EnglishWord& word, const DictionaryName&) override;
     void updateWordTranslationFromDictionary(const EnglishWord&, const std::string&,
                                              const DictionaryName&) override;
+    void synchronizeDictionaries() override;
+    void registerObserver(DictionaryObserver*) override;
+    void removeObserver(DictionaryObserver*) override;
 
 private:
+    void notifyObservers(const EnglishWords&) override;
+
     std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;
     std::unique_ptr<DictionaryNamesRetriever> dictionaryNamesRetriever;
     std::unique_ptr<DictionaryWordsRetriever> dictionaryWordsRetriever;
     std::unique_ptr<RandomDictionaryWordRetriever> randomDictionaryWordRetriever;
     std::unique_ptr<csvFileReading::DictionaryWordsReader> dictionaryWordsReader;
+    std::unique_ptr<ObserverService> observerService;
 };
 }

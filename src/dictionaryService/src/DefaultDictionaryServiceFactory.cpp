@@ -5,6 +5,7 @@
 #include "DefaultDictionaryWordRandomizer.h"
 #include "DefaultDictionaryWordsRetriever.h"
 #include "DefaultRandomDictionaryWordRetriever.h"
+#include "DictionaryObserverService.h"
 #include "csvFileReading/DictionaryWordsCsvFileReader.h"
 #include "repository/DefaultDictionaryRepository.h"
 #include "repository/DictionaryPersistentStorage.h"
@@ -36,9 +37,11 @@ std::unique_ptr<DictionaryService> DefaultDictionaryServiceFactory::createDictio
     auto dictionaryWordsFileReader =
         std::make_unique<csvFileReading::DictionaryWordsCsvFileReader>(fileAccess);
 
+    auto observerService = std::make_unique<DictionaryObserverService>();
+
     return std::make_unique<DefaultDictionaryService>(
         std::move(dictionaryRepository), std::move(dictionaryNamesRetriever),
         std::move(dictionaryWordsRetriever), std::move(randomDictionaryWordRetriever),
-        std::move(dictionaryWordsFileReader));
+        std::move(dictionaryWordsFileReader), std::move(observerService));
 }
 }

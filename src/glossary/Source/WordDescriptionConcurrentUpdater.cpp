@@ -1,4 +1,4 @@
-#include "WordDescriptionConcurrentLoader.h"
+#include "WordDescriptionConcurrentUpdater.h"
 
 #include <iostream>
 #include <thread>
@@ -6,7 +6,7 @@
 namespace glossary
 {
 
-WordDescriptionConcurrentLoader::WordDescriptionConcurrentLoader(
+WordDescriptionConcurrentUpdater::WordDescriptionConcurrentUpdater(
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloaderInit,
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepositoryInit)
     : wordDescriptionDownloader{std::move(wordDescriptionDownloaderInit)},
@@ -14,8 +14,7 @@ WordDescriptionConcurrentLoader::WordDescriptionConcurrentLoader(
 {
 }
 
-void WordDescriptionConcurrentLoader::loadMissingWordsDescriptions(
-    const wordDescriptionRepository::EnglishWords& englishWords)
+void WordDescriptionConcurrentUpdater::update(const dictionaryService::EnglishWords& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
     std::vector<std::thread> threadPool;
@@ -28,7 +27,7 @@ void WordDescriptionConcurrentLoader::loadMissingWordsDescriptions(
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
-        threadPool.emplace_back(std::thread(&WordDescriptionConcurrentLoader::loadingWordDescriptionWorker,
+        threadPool.emplace_back(std::thread(&WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker,
                                             this, std::ref(englishWordsQueue), std::ref(wordsDescriptions)));
     }
 
@@ -38,13 +37,13 @@ void WordDescriptionConcurrentLoader::loadMissingWordsDescriptions(
     loadWordsDescriptionsIntoRepository(wordsDescriptions.popAll());
 }
 
-unsigned WordDescriptionConcurrentLoader::getAmountOfThreads() const
+unsigned WordDescriptionConcurrentUpdater::getAmountOfThreads() const
 {
     return supportedThreadsCalculator.calculate();
 }
 
 wordDescriptionRepository::EnglishWords
-WordDescriptionConcurrentLoader::getEnglishWordsWithoutWordDescription(
+WordDescriptionConcurrentUpdater::getEnglishWordsWithoutWordDescription(
     const wordDescriptionRepository::EnglishWords& englishWords) const
 {
     wordDescriptionRepository::EnglishWords englishWordsWithoutWordDescription;
@@ -57,7 +56,7 @@ WordDescriptionConcurrentLoader::getEnglishWordsWithoutWordDescription(
     return englishWordsWithoutWordDescription;
 }
 
-void WordDescriptionConcurrentLoader::loadingWordDescriptionWorker(
+void WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker(
     utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords,
     utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>& wordsDescriptions)
 {
@@ -69,13 +68,13 @@ void WordDescriptionConcurrentLoader::loadingWordDescriptionWorker(
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
-WordDescriptionConcurrentLoader::downloadWordDescription(
+WordDescriptionConcurrentUpdater::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
     return wordDescriptionDownloader->downloadWordDescription(englishWord);
 }
 
-void WordDescriptionConcurrentLoader::loadWordsDescriptionsIntoRepository(
+void WordDescriptionConcurrentUpdater::loadWordsDescriptionsIntoRepository(
     const wordDescriptionRepository::WordsDescriptions& wordsDescriptions)
 {
     for (const auto& wordDescription : wordsDescriptions)

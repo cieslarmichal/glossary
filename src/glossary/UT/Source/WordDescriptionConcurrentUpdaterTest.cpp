@@ -1,4 +1,4 @@
-#include "WordDescriptionConcurrentLoader.h"
+#include "WordDescriptionConcurrentUpdater.h"
 
 #include "gtest/gtest.h"
 
@@ -19,26 +19,26 @@ const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
 const WordDescription wordDescription1{englishWord1, Description{}};
 }
 
-class WordDescriptionConcurrentLoaderTest : public Test
+class WordDescriptionConcurrentUpdaterTest : public Test
 {
 public:
     std::shared_ptr<WordDescriptionDownloaderMock> wordDescriptionDownloader =
         std::make_shared<StrictMock<WordDescriptionDownloaderMock>>();
     std::shared_ptr<WordDescriptionRepositoryMock> wordDescriptionRepository =
         std::make_shared<StrictMock<WordDescriptionRepositoryMock>>();
-    WordDescriptionConcurrentLoader loader{wordDescriptionDownloader, wordDescriptionRepository};
+    WordDescriptionConcurrentUpdater updater{wordDescriptionDownloader, wordDescriptionRepository};
 };
 
-TEST_F(WordDescriptionConcurrentLoaderTest, givenEnglishWordsExistingInRepository_shouldNotLoadAnything)
+TEST_F(WordDescriptionConcurrentUpdaterTest, givenEnglishWordsExistingInRepository_shouldNotLoadAnything)
 {
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord1)).WillOnce(Return(true));
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord2)).WillOnce(Return(true));
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord3)).WillOnce(Return(true));
 
-    loader.loadMissingWordsDescriptions(englishWords);
+    updater.update(englishWords);
 }
 
-TEST_F(WordDescriptionConcurrentLoaderTest,
+TEST_F(WordDescriptionConcurrentUpdaterTest,
        givenEnglishWordsNonExistingInRepository_shouldDownloadWordDescriptionsAndAddToRepositoryIfExists)
 {
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord1)).WillOnce(Return(false));
@@ -54,5 +54,5 @@ TEST_F(WordDescriptionConcurrentLoaderTest,
 
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescription1));
 
-    loader.loadMissingWordsDescriptions(englishWords);
+    updater.update(englishWords);
 }

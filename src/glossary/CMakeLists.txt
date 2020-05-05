@@ -1,14 +1,13 @@
 set(SOURCES
         Source/GlossaryApplication.cpp
-        Source/WordDescriptionConcurrentLoader.cpp
+        Source/WordDescriptionConcurrentUpdater.cpp
         Source/DefaultWordViewFormatter.cpp
         Source/UserStandardInputPrompt.cpp
         Source/DefaultAnswerValidator.cpp
         Source/DefaultGlossary.cpp
         Source/GlossaryFactory.cpp
         Source/DefaultGlossaryFactory.cpp
-        Source/DefaultDictionarySynchronizer.cpp
-        Source/TranslationConcurrentLoader.cpp
+        Source/TranslationConcurrentUpdater.cpp
         Source/DefaultDictionaryTranslationUpdater.cpp
         Source/MerriamWebsterConnectionChecker.cpp
         )
@@ -16,9 +15,8 @@ set(SOURCES
 set(UT_SOURCES
         UT/Source/DefaultWordViewFormatterTest.cpp
         UT/Source/DefaultAnswerValidatorTest.cpp
-        UT/Source/WordDescriptionConcurrentLoaderTest.cpp
-        UT/Source/DefaultDictionarySynchronizerTest.cpp
-        UT/Source/TranslationConcurrentLoaderTest.cpp
+        UT/Source/WordDescriptionConcurrentUpdaterTest.cpp
+        UT/Source/TranslationConcurrentUpdaterTest.cpp
         UT/Source/DefaultDictionaryTranslationUpdaterTest.cpp
         UT/Source/MerriamWebsterConnectionCheckerTest.cpp
         UT/Source/DefaultGlossaryTest.cpp

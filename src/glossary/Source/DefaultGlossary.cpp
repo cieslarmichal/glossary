@@ -14,16 +14,16 @@ DefaultGlossary::DefaultGlossary(
     std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
-    std::shared_ptr<DictionarySynchronizer> dictionarySynchronizerInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
+    std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
     std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator,
     std::unique_ptr<UserPrompt> prompt)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
-      dictionarySynchronizer{std::move(dictionarySynchronizerInit)},
       dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
+      dictionaryObservers(dictionaryObserversInit),
       connectionChecker{std::move(connectionCheckerInit)},
       answerValidator{std::move(validator)},
       userPrompt{std::move(prompt)},
@@ -34,7 +34,12 @@ DefaultGlossary::DefaultGlossary(
 
 void DefaultGlossary::initialize()
 {
-    dictionarySynchronizer->synchronizeDictionaries();
+    dictionaryService->synchronizeDictionaries();
+
+    for (const auto& dictionaryObserver : dictionaryObservers)
+    {
+        dictionaryService->registerObserver(dictionaryObserver.get());
+    }
 }
 
 void DefaultGlossary::run()
@@ -229,7 +234,6 @@ void DefaultGlossary::addDictionaryFromFile() const
     std::cout << "Insert absolute path to words dictionary file(csv format):\n";
     const auto pathToFileWithDictionaryWords = userPrompt->getStringInput();
     dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
-    dictionarySynchronizer->synchronizeDictionary(dictionaryName);
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationManually() const

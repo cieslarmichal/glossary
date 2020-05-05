@@ -15,6 +15,7 @@ set(SOURCES
         src/DefaultDictionaryNamesRetriever.cpp
         src/DefaultDictionaryWordsRetriever.cpp
         src/DefaultRandomDictionaryWordRetriever.cpp
+        src/DictionaryObserverService.cpp
         )
 
 set(UT_SOURCES
@@ -32,6 +33,7 @@ set(UT_SOURCES
         src/DefaultDictionaryNamesRetrieverTest.cpp
         src/DefaultDictionaryWordsRetrieverTest.cpp
         src/DefaultRandomDictionaryWordRetrieverTest.cpp
+        src/DictionaryObserverServiceTest.cpp
         )
 
 add_library(dictionaryService ${SOURCES})

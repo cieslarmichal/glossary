@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Dictionary.h"
+#include "ObservableDictionary.h"
 
 namespace glossary::dictionaryService
 {
-class DictionaryService
+class DictionaryService : public ObservableDictionary
 {
 public:
     virtual ~DictionaryService() = default;
@@ -22,5 +23,6 @@ public:
     virtual void removeWordFromDictionary(const EnglishWord&, const DictionaryName&) = 0;
     virtual void updateWordTranslationFromDictionary(const EnglishWord&, const std::string& newTranslation,
                                                      const DictionaryName&) = 0;
+    virtual void synchronizeDictionaries() = 0;
 };
 }

@@ -1,31 +1,29 @@
-#include "TranslationConcurrentLoader.h"
+#include "TranslationConcurrentUpdater.h"
 
 #include <thread>
 
 namespace glossary
 {
 
-TranslationConcurrentLoader::TranslationConcurrentLoader(
+TranslationConcurrentUpdater::TranslationConcurrentUpdater(
     std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
     std::shared_ptr<translationRepository::TranslationRepository> repository)
     : translationService{std::move(translationServiceInit)}, translationRepository{std::move(repository)}
 {
 }
 
-void TranslationConcurrentLoader::loadMissingTranslations(
-    const wordDescriptionRepository::EnglishWords& englishWords)
+void TranslationConcurrentUpdater::update(const dictionaryService::EnglishWords& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
     std::vector<std::thread> threadPool;
     threadPool.reserve(amountOfThreads);
 
     const auto englishWordsWithoutTranslation = getEnglishWordsWithoutTranslation(englishWords);
-    utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord> englishWordsQueue{
-        englishWordsWithoutTranslation};
+    utils::ThreadSafeQueue<dictionaryService::EnglishWord> englishWordsQueue{englishWordsWithoutTranslation};
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
-        threadPool.emplace_back(std::thread(&TranslationConcurrentLoader::loadingTranslationsWorker, this,
+        threadPool.emplace_back(std::thread(&TranslationConcurrentUpdater::loadingTranslationsWorker, this,
                                             std::ref(englishWordsQueue)));
     }
 
@@ -33,15 +31,15 @@ void TranslationConcurrentLoader::loadMissingTranslations(
         thread.join();
 }
 
-unsigned TranslationConcurrentLoader::getAmountOfThreads() const
+unsigned TranslationConcurrentUpdater::getAmountOfThreads() const
 {
     return supportedThreadsCalculator.calculate();
 }
 
-wordDescriptionRepository::EnglishWords TranslationConcurrentLoader::getEnglishWordsWithoutTranslation(
-    const wordDescriptionRepository::EnglishWords& englishWords) const
+dictionaryService::EnglishWords TranslationConcurrentUpdater::getEnglishWordsWithoutTranslation(
+    const dictionaryService::EnglishWords& englishWords) const
 {
-    wordDescriptionRepository::EnglishWords englishWordsWithoutTranslation;
+    dictionaryService::EnglishWords englishWordsWithoutTranslation;
 
     for (const auto& englishWord : englishWords)
     {
@@ -51,8 +49,8 @@ wordDescriptionRepository::EnglishWords TranslationConcurrentLoader::getEnglishW
     return englishWordsWithoutTranslation;
 }
 
-void TranslationConcurrentLoader::loadingTranslationsWorker(
-    utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>& englishWords)
+void TranslationConcurrentUpdater::loadingTranslationsWorker(
+    utils::ThreadSafeQueue<dictionaryService::EnglishWord>& englishWords)
 {
     while (const auto currentEnglishWord = englishWords.pop())
     {
@@ -60,8 +58,8 @@ void TranslationConcurrentLoader::loadingTranslationsWorker(
     }
 }
 
-void TranslationConcurrentLoader::loadTranslationFromTranslationService(
-    const wordDescriptionRepository::EnglishWord& englishWord)
+void TranslationConcurrentUpdater::loadTranslationFromTranslationService(
+    const dictionaryService::EnglishWord& englishWord)
 {
     translationService->retrieveTranslation(englishWord, translator::SourceLanguage::English,
                                             translator::TargetLanguage::Polish);

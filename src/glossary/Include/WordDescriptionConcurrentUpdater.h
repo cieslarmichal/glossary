@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "WordDescriptionLoader.h"
+#include "dictionaryService/DictionaryObserver.h"
 #include "utils/SupportedThreadsCalculator.h"
 #include "utils/ThreadSafeQueue.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
@@ -10,13 +10,13 @@
 
 namespace glossary
 {
-class WordDescriptionConcurrentLoader : public WordDescriptionLoader
+class WordDescriptionConcurrentUpdater : public dictionaryService::DictionaryObserver
 {
 public:
-    WordDescriptionConcurrentLoader(std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
-                                    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
+    WordDescriptionConcurrentUpdater(std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
+                                     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
-    void loadMissingWordsDescriptions(const wordDescriptionRepository::EnglishWords&) override;
+    void update(const dictionaryService::EnglishWords&) override;
 
 private:
     unsigned getAmountOfThreads() const;

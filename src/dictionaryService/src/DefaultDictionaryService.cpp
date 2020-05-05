@@ -8,12 +8,14 @@ DefaultDictionaryService::DefaultDictionaryService(
     std::unique_ptr<DictionaryNamesRetriever> namesRetriever,
     std::unique_ptr<DictionaryWordsRetriever> wordsRetriever,
     std::unique_ptr<RandomDictionaryWordRetriever> randomWordRetriever,
-    std::unique_ptr<csvFileReading::DictionaryWordsReader> dictionaryWordsReaderInit)
+    std::unique_ptr<csvFileReading::DictionaryWordsReader> dictionaryWordsReaderInit,
+    std::unique_ptr<ObserverService> observerServiceInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)},
       dictionaryNamesRetriever{std::move(namesRetriever)},
       dictionaryWordsRetriever{std::move(wordsRetriever)},
       randomDictionaryWordRetriever{std::move(randomWordRetriever)},
-      dictionaryWordsReader{std::move(dictionaryWordsReaderInit)}
+      dictionaryWordsReader{std::move(dictionaryWordsReaderInit)},
+      observerService{std::move(observerServiceInit)}
 {
 }
 
@@ -59,7 +61,14 @@ void DefaultDictionaryService::addDictionaryFromFile(const DictionaryName& dicti
                                                      const std::string& dictionaryWordsPath)
 {
     if (const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath))
+    {
         dictionaryRepository->addDictionary({dictionaryName, *dictionaryWordsFromFile});
+        if (const auto englishWordsFromAddedDictionary =
+                dictionaryWordsRetriever->retrieveEnglishWords(dictionaryName))
+        {
+            notifyObservers(*englishWordsFromAddedDictionary);
+        }
+    }
 }
 
 void DefaultDictionaryService::addWordToDictionary(const DictionaryWord& dictionaryWord,
@@ -84,6 +93,26 @@ void DefaultDictionaryService::updateWordTranslationFromDictionary(const English
                                                                    const DictionaryName& dictionaryName)
 {
     dictionaryRepository->changeWordTranslationFromDictionary(englishWord, translation, dictionaryName);
+}
+
+void DefaultDictionaryService::synchronizeDictionaries()
+{
+    notifyObservers(dictionaryWordsRetriever->retrieveEnglishWords());
+}
+
+void DefaultDictionaryService::registerObserver(DictionaryObserver* observer)
+{
+    observerService->registerObserver(observer);
+}
+
+void DefaultDictionaryService::removeObserver(DictionaryObserver* observer)
+{
+    observerService->removeObserver(observer);
+}
+
+void DefaultDictionaryService::notifyObservers(const EnglishWords& englishWords)
+{
+    observerService->notifyObservers(englishWords);
 }
 
 }

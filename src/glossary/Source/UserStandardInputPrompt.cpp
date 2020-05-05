@@ -41,7 +41,7 @@ int UserStandardInputPrompt::getValidInt() const
     while (not(std::cin >> temp))
     {
         clearInputBuffer();
-        std::cerr << "Enter valid integer: ";
+        std::cerr << "Enter valid number: ";
     }
     clearInputBuffer();
     return temp;

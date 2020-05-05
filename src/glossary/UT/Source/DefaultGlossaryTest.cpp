@@ -4,7 +4,6 @@
 
 #include "AnswerValidatorMock.h"
 #include "ConnectionCheckerMock.h"
-#include "DictionarySynchronizerMock.h"
 #include "DictionaryTranslationUpdaterMock.h"
 #include "UserPromptMock.h"
 #include "dictionaryService/DictionaryServiceMock.h"
@@ -62,7 +61,7 @@ class DefaultGlossaryTest_Base : public Test
 public:
     DefaultGlossaryTest_Base()
     {
-        EXPECT_CALL(*dictionarySynchronizer, synchronizeDictionaries());
+        EXPECT_CALL(*dictionaryService, synchronizeDictionaries());
     }
 
     std::shared_ptr<DictionaryServiceMock> dictionaryService =
@@ -73,8 +72,6 @@ public:
         std::make_shared<StrictMock<StatisticsRepositoryMock>>();
     std::shared_ptr<WordDescriptionRetrieverServiceMock> wordDescriptionService =
         std::make_shared<StrictMock<WordDescriptionRetrieverServiceMock>>();
-    std::shared_ptr<DictionarySynchronizerMock> dictionarySynchronizer =
-        std::make_shared<StrictMock<DictionarySynchronizerMock>>();
     std::shared_ptr<DictionaryTranslationUpdaterMock> dictionaryTranslationUpdater =
         std::make_shared<StrictMock<DictionaryTranslationUpdaterMock>>();
     std::unique_ptr<ConnectionCheckerMock> connectionCheckerInit =
@@ -118,8 +115,8 @@ public:
                              translationService,
                              statisticsRepository,
                              wordDescriptionService,
-                             dictionarySynchronizer,
                              dictionaryTranslationUpdater,
+                             {},
                              std::move(connectionCheckerInit),
                              std::move(answerValidatorInit),
                              std::move(userPromptInit)};
@@ -262,7 +259,6 @@ TEST_F(DefaultGlossaryTest, shouldAddDictionaryFromFileAndSynchronizeDictionary)
 {
     expectUserInputTwoString(dictionaryName1, pathToDictionaryWords);
     EXPECT_CALL(*dictionaryService, addDictionaryFromFile(dictionaryName1, pathToDictionaryWords));
-    EXPECT_CALL(*dictionarySynchronizer, synchronizeDictionary(dictionaryName1));
 
     glossary.addDictionaryFromFile();
 }

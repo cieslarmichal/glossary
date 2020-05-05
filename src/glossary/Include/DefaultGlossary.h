@@ -4,7 +4,6 @@
 
 #include "AnswerValidator.h"
 #include "ConnectionChecker.h"
-#include "DictionarySynchronizer.h"
 #include "DictionaryTranslationUpdater.h"
 #include "Glossary.h"
 #include "UserPrompt.h"
@@ -23,7 +22,8 @@ public:
                     std::shared_ptr<translationService::TranslationRetrieverService>,
                     std::shared_ptr<statisticsRepository::StatisticsRepository>,
                     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
-                    std::shared_ptr<DictionarySynchronizer>, std::shared_ptr<DictionaryTranslationUpdater>,
+                    std::shared_ptr<DictionaryTranslationUpdater>,
+                    std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>>,
                     std::unique_ptr<ConnectionChecker>, std::unique_ptr<AnswerValidator>,
                     std::unique_ptr<UserPrompt>);
 
@@ -54,8 +54,8 @@ private:
     std::shared_ptr<translationService::TranslationRetrieverService> translationRetrieverService;
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepository;
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionRetrieverService;
-    std::shared_ptr<DictionarySynchronizer> dictionarySynchronizer;
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdater;
+    std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObservers;
 
     std::unique_ptr<ConnectionChecker> connectionChecker;
     std::unique_ptr<AnswerValidator> answerValidator;
