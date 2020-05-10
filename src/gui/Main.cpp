@@ -1,16 +1,16 @@
 #include <QApplication>
 
 //#include "GlossaryApplication.h"
-#include "src/MainWindow.h"
+#include "MainViewCreator.h"
 
 int main(int argc, char* argv[])
 {
     QApplication app{argc, argv};
-    MainWindow mainWindow;
-    mainWindow.show();
+    auto mainView = MainViewCreator::createMainView();
+    mainView->show();
 
 //    glossary::GlossaryApplication glossaryApplication;
 //    glossaryApplication.run();
 
-    return QApplication::exec();
+    return app.exec();
 }
