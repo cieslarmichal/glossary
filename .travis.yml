@@ -1,9 +1,5 @@
 sudo: required
-dist: xenial
 language: cpp
-
-services:
-  - xvfb
 
 matrix:
   include:
@@ -21,11 +17,21 @@ matrix:
       env:
       - C_COMPILER=gcc-8
       - CXX_COMPILER=g++-8
+      
+dist: xenial
+
+before_install:
+  - sudo add-apt-repository --yes ppa:ubuntu-sdk-team/ppa
+  - sudo apt-get update -qq
+
+install:
+  - sudo apt-get install -qq cppcheck doxygen graphviz lcov qt5-qmake qtbase5-dev
+
 
 script:
-  - sudo apt-get update
-  - sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y
-  - sudo apt-get install qtbase5-dev qtdeclarative5-dev
+#   - sudo apt-get update
+#   - sudo add-apt-repository ppa:beineri/opt-qt58-trusty -y
+#   - sudo apt-get install qtbase5-dev qtdeclarative5-dev
   - mkdir build
   - cd build
   - env CC=${C_COMPILER} CXX=${CXX_COMPILER} cmake .. -DENABLE_COVERAGE:BOOL=TRUE -DCMAKE_BUILD_TYPE=DEBUG
