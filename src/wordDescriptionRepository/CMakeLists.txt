@@ -18,11 +18,24 @@ set(UT_SOURCES
 add_library(wordDescriptionRepository ${SOURCES})
 add_executable(wordDescriptionRepositoryUT ${UT_SOURCES})
 
-target_include_directories(wordDescriptionRepository PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/wordDescriptionRepository")
-target_include_directories(wordDescriptionRepositoryUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/wordDescriptionRepository")
+target_include_directories(wordDescriptionRepository
+        PUBLIC "include"
+        PRIVATE ${JSON_INCLUDE_DIR} "include/wordDescriptionRepository"
+        )
+target_include_directories(wordDescriptionRepositoryUT PRIVATE
+        "include"
+        ${INTERNAL_LIBS_INCLUDE_PATH}
+        ${JSON_INCLUDE_DIR}
+        "include/wordDescriptionRepository"
+        )
 
 target_link_libraries(wordDescriptionRepository PUBLIC utils)
-target_link_libraries(wordDescriptionRepositoryUT PRIVATE gtest_main gmock wordDescriptionRepository utils)
+target_link_libraries(wordDescriptionRepositoryUT PRIVATE
+        gtest_main
+        gmock
+        wordDescriptionRepository
+        utils
+        )
 
 target_compile_options(wordDescriptionRepository PUBLIC ${FLAGS})
 target_compile_options(wordDescriptionRepositoryUT PUBLIC -Wall -Wextra -Werror)

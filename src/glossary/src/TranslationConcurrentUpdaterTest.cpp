@@ -4,7 +4,6 @@
 
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translationService/TranslationRetrieverServiceMock.h"
-#include "translator/TranslatorMock.h"
 
 using namespace ::testing;
 using namespace glossary;

@@ -6,7 +6,6 @@
 
 namespace glossary
 {
-// TODO: do frontend in qt
 class GlossaryApplication
 {
 public:

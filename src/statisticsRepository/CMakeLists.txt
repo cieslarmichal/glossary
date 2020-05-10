@@ -17,11 +17,24 @@ set(UT_SOURCES
 add_library(statisticsRepository ${SOURCES})
 add_executable(statisticsRepositoryUT ${UT_SOURCES})
 
-target_include_directories(statisticsRepository PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsRepository")
-target_include_directories(statisticsRepositoryUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/statisticsRepository")
+target_include_directories(statisticsRepository
+        PUBLIC "include"
+        PRIVATE ${JSON_INCLUDE_DIR} "include/statisticsRepository"
+        )
+target_include_directories(statisticsRepositoryUT PRIVATE
+        "include"
+        ${INTERNAL_LIBS_INCLUDE_PATH}
+        ${JSON_INCLUDE_DIR}
+        "include/statisticsRepository"
+        )
 
 target_link_libraries(statisticsRepository PUBLIC utils)
-target_link_libraries(statisticsRepositoryUT PRIVATE gtest_main gmock utils statisticsRepository)
+target_link_libraries(statisticsRepositoryUT PRIVATE
+        gtest_main
+        gmock
+        utils
+        statisticsRepository
+        )
 
 target_compile_options(statisticsRepository PUBLIC ${FLAGS})
 target_compile_options(statisticsRepositoryUT PUBLIC -Wall -Wextra -Werror)

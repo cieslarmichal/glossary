@@ -39,11 +39,25 @@ set(UT_SOURCES
 add_library(dictionaryService ${SOURCES})
 add_executable(dictionaryServiceUT ${UT_SOURCES})
 
-target_include_directories(dictionaryService PUBLIC "include" PRIVATE ${JSON_INCLUDE_DIR} "include/dictionaryService" "src/")
-target_include_directories(dictionaryServiceUT PRIVATE "include" ${INTERNAL_LIBS_INCLUDE_PATH} ${JSON_INCLUDE_DIR} "include/dictionaryService" "src/")
+target_include_directories(dictionaryService
+        PUBLIC "include"
+        PRIVATE ${JSON_INCLUDE_DIR} "include/dictionaryService" "src/"
+        )
+target_include_directories(dictionaryServiceUT PRIVATE
+        "include"
+        ${INTERNAL_LIBS_INCLUDE_PATH}
+        ${JSON_INCLUDE_DIR}
+        "include/dictionaryService"
+        "src/"
+        )
 
 target_link_libraries(dictionaryService PUBLIC utils)
-target_link_libraries(dictionaryServiceUT PRIVATE gtest_main gmock dictionaryService utils)
+target_link_libraries(dictionaryServiceUT PRIVATE
+        gtest_main
+        gmock
+        dictionaryService
+        utils
+        )
 
 target_compile_options(dictionaryService PUBLIC ${FLAGS})
 target_compile_options(dictionaryServiceUT PUBLIC -Wall -Wextra -Werror)
