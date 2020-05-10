@@ -1,6 +1,6 @@
 #include <QApplication>
 
-#include "../glossary/include/GlossaryApplication.h"
+//#include "GlossaryApplication.h"
 #include "src/MainWindow.h"
 
 int main(int argc, char* argv[])
@@ -9,8 +9,8 @@ int main(int argc, char* argv[])
     MainWindow mainWindow;
     mainWindow.show();
 
-    //    glossary::GlossaryApplication glossaryApplication;
-    //    glossaryApplication.run();
+//    glossary::GlossaryApplication glossaryApplication;
+//    glossaryApplication.run();
 
     return QApplication::exec();
 }
