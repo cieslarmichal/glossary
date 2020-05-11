@@ -16,6 +16,7 @@ set(SOURCES
     src/viewManager/TranslatorTabViewManager.cpp
     src/viewManager/StatisticsTabViewManager.cpp
     src/view/MainView.cpp
+    src/model/GlossaryAdapter.cpp
     src/Gui.cpp
     Main.cpp
     )

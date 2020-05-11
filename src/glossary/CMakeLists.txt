@@ -1,5 +1,4 @@
 set(SOURCES
-        src/GlossaryApplication.cpp
         src/WordDescriptionConcurrentUpdater.cpp
         src/DefaultWordViewFormatter.cpp
         src/UserStandardInputPrompt.cpp

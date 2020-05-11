@@ -18,8 +18,8 @@ class MainView : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainView(QWidget *parent, std::unique_ptr<GuessTab>, std::unique_ptr<DictionariesTab>,
-                      std::unique_ptr<CheckWordDescriptionTab>, std::unique_ptr<TranslatorTab>, std::unique_ptr<StatisticsTab>);
+    explicit MainView(QWidget *parent, std::shared_ptr<GuessTab>, std::shared_ptr<DictionariesTab>,
+                      std::shared_ptr<CheckWordDescriptionTab>, std::shared_ptr<TranslatorTab>, std::shared_ptr<StatisticsTab>);
     ~MainView();
 
 private slots:
@@ -28,11 +28,11 @@ private slots:
     void on_actionLoadDictionary_triggered();
 
 private:
-    std::unique_ptr<GuessTab> guessTab;
-    std::unique_ptr<DictionariesTab> dictionariesTab;
-    std::unique_ptr<CheckWordDescriptionTab> checkWordDescriptionTab;
-    std::unique_ptr<TranslatorTab> translatorTab;
-    std::unique_ptr<StatisticsTab> statisticsTab;
+    std::shared_ptr<GuessTab> guessTab;
+    std::shared_ptr<DictionariesTab> dictionariesTab;
+    std::shared_ptr<CheckWordDescriptionTab> checkWordDescriptionTab;
+    std::shared_ptr<TranslatorTab> translatorTab;
+    std::shared_ptr<StatisticsTab> statisticsTab;
 
     Ui::MainView *ui;
 };

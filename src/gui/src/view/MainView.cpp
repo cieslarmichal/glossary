@@ -1,12 +1,14 @@
 #include "MainView.h"
+
+#include <utility>
 #include "ui_MainView.h"
 #include "AboutDialog.h"
 
-MainView::MainView(QWidget *parent, std::unique_ptr<GuessTab> guessTabInit,
-                   std::unique_ptr<DictionariesTab> dictionatiesTabInit,
-                   std::unique_ptr<CheckWordDescriptionTab> checkWordDescriptionTabInit,
-                   std::unique_ptr<TranslatorTab> translatorTabInit,
-                   std::unique_ptr<StatisticsTab> statisticsTabInit)
+MainView::MainView(QWidget *parent, std::shared_ptr<GuessTab> guessTabInit,
+                   std::shared_ptr<DictionariesTab> dictionatiesTabInit,
+                   std::shared_ptr<CheckWordDescriptionTab> checkWordDescriptionTabInit,
+                   std::shared_ptr<TranslatorTab> translatorTabInit,
+                   std::shared_ptr<StatisticsTab> statisticsTabInit)
     : QMainWindow(parent), guessTab{std::move(guessTabInit)}, dictionariesTab{std::move(dictionatiesTabInit)},
       checkWordDescriptionTab{std::move(checkWordDescriptionTabInit)}, translatorTab{std::move(translatorTabInit)},
       statisticsTab{std::move(statisticsTabInit)}, ui(new Ui::MainView)
