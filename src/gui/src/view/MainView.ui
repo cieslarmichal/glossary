@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Glossary</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="tabWidget">
+   <widget class="QTabWidget" name="glossaryFunctionsTab">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -23,15 +23,88 @@
       <height>581</height>
      </rect>
     </property>
-    <widget class="QWidget" name="tab">
+    <property name="currentIndex">
+     <number>4</number>
+    </property>
+    <widget class="QWidget" name="guessTab">
      <attribute name="title">
-      <string>Tab 1</string>
+      <string>Guess word</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>781</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="guessTabLayout"/>
+     </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="dictionariesTab">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Manage dictionaries</string>
      </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_2">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>781</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="dictionariesTabLayout"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="wordDescriptionTab">
+     <attribute name="title">
+      <string>Word description</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_3">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>781</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="wordDescriptionTabLayout"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="translatorTab">
+     <attribute name="title">
+      <string>Translator</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_4">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>781</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="translatorTabLayout"/>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="statisticsTab">
+     <attribute name="title">
+      <string>Statistics</string>
+     </attribute>
+     <widget class="QWidget" name="verticalLayoutWidget_5">
+      <property name="geometry">
+       <rect>
+        <x>9</x>
+        <y>9</y>
+        <width>781</width>
+        <height>511</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="statisticsTabLayout"/>
+     </widget>
     </widget>
    </widget>
   </widget>

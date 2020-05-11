@@ -4,10 +4,10 @@
 #include <memory>
 
 #include "view/GuessTab.h"
-class DictionariesTab;
-class CheckWordDescriptionTab;
-class TranslatorTab;
-class StatisticsTab;
+#include "view/CheckWordDescriptionTab.h"
+#include "view/DictionariesTab.h"
+#include "view/StatisticsTab.h"
+#include "view/TranslatorTab.h"
 
 namespace Ui {
 class MainView;
@@ -18,7 +18,8 @@ class MainView : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainView(QWidget *parent, std::unique_ptr<GuessTab>, DictionariesTab&, CheckWordDescriptionTab&, TranslatorTab&, StatisticsTab&);
+    explicit MainView(QWidget *parent, std::unique_ptr<GuessTab>, std::unique_ptr<DictionariesTab>,
+                      std::unique_ptr<CheckWordDescriptionTab>, std::unique_ptr<TranslatorTab>, std::unique_ptr<StatisticsTab>);
     ~MainView();
 
 private slots:
@@ -28,10 +29,10 @@ private slots:
 
 private:
     std::unique_ptr<GuessTab> guessTab;
-    DictionariesTab& dictionariesTab;
-    CheckWordDescriptionTab& checkWordDescriptionTab;
-    TranslatorTab& translatorTab;
-    StatisticsTab& statisticsTab;
+    std::unique_ptr<DictionariesTab> dictionariesTab;
+    std::unique_ptr<CheckWordDescriptionTab> checkWordDescriptionTab;
+    std::unique_ptr<TranslatorTab> translatorTab;
+    std::unique_ptr<StatisticsTab> statisticsTab;
 
     Ui::MainView *ui;
 };

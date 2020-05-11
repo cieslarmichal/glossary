@@ -1,13 +1,13 @@
 #include <QApplication>
 
 //#include "GlossaryApplication.h"
-#include "MainViewCreator.h"
+#include "Gui.h"
 
 int main(int argc, char* argv[])
 {
     QApplication app{argc, argv};
-    auto mainView = MainViewCreator::createMainView();
-    mainView->show();
+    Gui gui;
+    gui.show();
 
 //    glossary::GlossaryApplication glossaryApplication;
 //    glossaryApplication.run();

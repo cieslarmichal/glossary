@@ -2,12 +2,26 @@
 #include "ui_MainView.h"
 #include "AboutDialog.h"
 
-MainView::MainView(QWidget *parent, std::unique_ptr<GuessTab> guessTabInit, DictionariesTab & dictionatiesTabInit,
-                   CheckWordDescriptionTab & checkWordDescriptionTabInit, TranslatorTab & translatorTabInit, StatisticsTab & statisticsTabInit)
-    : QMainWindow(parent), guessTab{std::move(guessTabInit)}, dictionariesTab{dictionatiesTabInit},
-      checkWordDescriptionTab{checkWordDescriptionTabInit}, translatorTab{translatorTabInit}, statisticsTab{statisticsTabInit}, ui(new Ui::MainView)
+MainView::MainView(QWidget *parent, std::unique_ptr<GuessTab> guessTabInit,
+                   std::unique_ptr<DictionariesTab> dictionatiesTabInit,
+                   std::unique_ptr<CheckWordDescriptionTab> checkWordDescriptionTabInit,
+                   std::unique_ptr<TranslatorTab> translatorTabInit,
+                   std::unique_ptr<StatisticsTab> statisticsTabInit)
+    : QMainWindow(parent), guessTab{std::move(guessTabInit)}, dictionariesTab{std::move(dictionatiesTabInit)},
+      checkWordDescriptionTab{std::move(checkWordDescriptionTabInit)}, translatorTab{std::move(translatorTabInit)},
+      statisticsTab{std::move(statisticsTabInit)}, ui(new Ui::MainView)
 {
     ui->setupUi(this);
+    guessTab->setParent(this);
+    dictionariesTab->setParent(this);
+    checkWordDescriptionTab->setParent(this);
+    translatorTab->setParent(this);
+    statisticsTab->setParent(this);
+    ui->guessTabLayout->addWidget(guessTab.get());
+    ui->dictionariesTabLayout->addWidget(dictionariesTab.get());
+    ui->wordDescriptionTabLayout->addWidget(checkWordDescriptionTab.get());
+    ui->translatorTabLayout->addWidget(translatorTab.get());
+    ui->statisticsTabLayout->addWidget(statisticsTab.get());
 }
 
 MainView::~MainView()

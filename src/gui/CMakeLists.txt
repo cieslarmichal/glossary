@@ -15,8 +15,8 @@ set(SOURCES
     src/viewManager/DictionariesTabViewManager.cpp
     src/viewManager/TranslatorTabViewManager.cpp
     src/viewManager/StatisticsTabViewManager.cpp
-    src/MainViewCreator.cpp
     src/view/MainView.cpp
+    src/Gui.cpp
     Main.cpp
     )
 
