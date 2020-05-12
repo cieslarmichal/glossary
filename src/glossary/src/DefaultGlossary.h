@@ -27,7 +27,11 @@ public:
                     std::unique_ptr<ConnectionChecker>, std::unique_ptr<AnswerValidator>,
                     std::unique_ptr<UserPrompt>);
 
-    void run() override;
+    bool connectionIsAvailable() const override;
+    boost::optional<std::string> getRandomPolishWord() const override;
+    boost::optional<std::string> getRandomPolishWord(const std::string& dictionaryName) const override;
+    bool verifyPolishWordTranslation(const std::string& polishWord,
+                                     const std::string& englishWord) const override;
     boost::optional<std::string> translate() const override;
     std::vector<std::string> listDictionariesByNames() override;
     std::vector<std::string> listDictionaryWordsFromDictionary() override;
@@ -39,16 +43,12 @@ public:
     void updateDictionaryWordTranslationManually() const override;
     void updateDictionaryWordTranslationAutomatically() const override;
     void updateDictionaryTranslationsAutomatically() const override;
-    void guessWord() const override;
     std::string getEnglishWordDescription() const override;
     std::vector<std::string> showStatistics() const override;
     void resetStatistics() const override;
 
 private:
-    bool connectionIsAvailable() const;
     void initialize();
-    void loop();
-    void showMenu() const;
 
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
     std::shared_ptr<translationService::TranslationRetrieverService> translationRetrieverService;

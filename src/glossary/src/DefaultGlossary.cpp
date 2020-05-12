@@ -1,6 +1,7 @@
 #include "DefaultGlossary.h"
 
 #include <iostream>
+#include <utility>
 
 #include "DefaultWordViewFormatter.h"
 #include "utils/GetProjectPath.h"
@@ -23,7 +24,7 @@ DefaultGlossary::DefaultGlossary(
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
       dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
-      dictionaryObservers(dictionaryObserversInit),
+      dictionaryObservers(std::move(dictionaryObserversInit)),
       connectionChecker{std::move(connectionCheckerInit)},
       answerValidator{std::move(validator)},
       userPrompt{std::move(prompt)},
@@ -42,100 +43,69 @@ void DefaultGlossary::initialize()
     }
 }
 
-void DefaultGlossary::run()
-{
-    if (not connectionIsAvailable())
-        return;
-
-    loop();
-}
-
 bool DefaultGlossary::connectionIsAvailable() const
 {
     return connectionChecker->connectionAvailable() &&
            translationRetrieverService->connectionToTranslateApiAvailable();
 }
 
-void DefaultGlossary::loop()
+boost::optional<std::string> DefaultGlossary::getRandomPolishWord() const
 {
-    auto userWantsToContinue = true;
-
-    while (userWantsToContinue)
+    auto dictionaryWord = dictionaryService->getRandomDictionaryWord();
+    if (dictionaryWord == boost::none)
     {
-        showMenu();
-        switch (userPrompt->getNumberInput())
-        {
-        case 1:
-            std::cout << translate();
-            break;
-        case 2:
-            std::cout << listDictionariesByNames();
-            break;
-        case 3:
-            std::cout << listDictionaryWordsFromDictionary();
-            break;
-        case 4:
-            addDictionary();
-            break;
-        case 5:
-            addEnglishWordToDictionary();
-            break;
-        case 6:
-            removeDictionary();
-            break;
-        case 7:
-            removeEnglishWordFromDictionary();
-            break;
-        case 8:
-            addDictionaryFromFile();
-            break;
-        case 9:
-            updateDictionaryWordTranslationManually();
-            break;
-        case 10:
-            updateDictionaryWordTranslationAutomatically();
-            break;
-        case 11:
-            updateDictionaryTranslationsAutomatically();
-            break;
-        case 12:
-            guessWord();
-            break;
-        case 13:
-            getEnglishWordDescription();
-            break;
-        case 14:
-            std::cout << showStatistics();
-            break;
-        case 15:
-            resetStatistics();
-            break;
-        default:
-            std::cout << "\nLeaving glossary...\n";
-            userWantsToContinue = false;
-        }
+        std::cerr << "No available dictionary words";
+        return boost::none;
     }
+
+    if (not dictionaryWord->translation)
+    {
+        return translationRetrieverService->retrieveTranslation(dictionaryWord->englishWord,
+                                                                translator::SourceLanguage::English,
+                                                                translator::TargetLanguage::Polish);
+    }
+
+    return dictionaryWord->translation;
 }
 
-void DefaultGlossary::showMenu() const
+boost::optional<std::string> DefaultGlossary::getRandomPolishWord(const std::string& dictionaryName) const
 {
-    std::cout << "\nChoose glossary mode:\n";
-    std::cout << "1.Translate\n";
-    std::cout << "2.List dictionaries names\n";
-    std::cout << "3.List dictionary words from dictionary\n";
-    std::cout << "4.Add dictionary\n";
-    std::cout << "5.Add english word to dictionary\n";
-    std::cout << "6.Remove dictionary\n";
-    std::cout << "7.Remove english word from dictionary\n";
-    std::cout << "8.Add dictionary from file\n";
-    std::cout << "9.Update word translation in dictionary manually\n";
-    std::cout << "10.Update word translation in dictionary automatically\n";
-    std::cout << "11.Update words translations in dictionary automatically\n";
-    std::cout << "12.Guess english word\n";
-    std::cout << "13.Get word description\n";
-    std::cout << "14.Show statistics\n";
-    std::cout << "15.Reset statistics\n";
-    std::cout << "Insert other number to exit\n";
+    auto dictionaryWord = dictionaryService->getRandomDictionaryWord(dictionaryName);
+    if (dictionaryWord == boost::none)
+    {
+        std::cerr << "No available dictionary words";
+        return boost::none;
+    }
+
+    if (not dictionaryWord->translation)
+    {
+        return translationRetrieverService->retrieveTranslation(dictionaryWord->englishWord,
+                                                                translator::SourceLanguage::English,
+                                                                translator::TargetLanguage::Polish);
+    }
+
+    return dictionaryWord->translation;
+}
+
+bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
+                                                  const std::string& englishWord) const
+{
+    const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(polishWord,
+                                                                                               translator::SourceLanguage::Polish,
+                                                                                               translator::TargetLanguage::English);
+    if(englishTranslationFromPolishWord == boost::none)
+    {
+        return false;
+    }
+
+    if (answerValidator->validateAnswer(*englishTranslationFromPolishWord, englishWord))
+    {
+        statisticsRepository->addCorrectAnswer(englishWord);
+        return true;
+    }
+
+    statisticsRepository->addIncorrectAnswer(englishWord);
+    return false;
 }
 
 boost::optional<std::string> DefaultGlossary::translate() const
@@ -264,43 +234,6 @@ void DefaultGlossary::updateDictionaryTranslationsAutomatically() const
     const auto dictionaryName = userPrompt->getStringInput();
 
     dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
-}
-
-void DefaultGlossary::guessWord() const
-{
-    auto dictionaryWord = dictionaryService->getRandomDictionaryWord();
-    if (dictionaryWord == boost::none)
-    {
-        std::cerr << "No words with translations available";
-        return;
-    }
-    if (not dictionaryWord->translation)
-    {
-        if (auto translation = translationRetrieverService->retrieveTranslation(
-                dictionaryWord->englishWord, translator::SourceLanguage::English,
-                translator::TargetLanguage::Polish))
-        {
-            dictionaryWord->translation = *translation;
-        }
-        else
-        {
-            return;
-        }
-    }
-
-    std::cout << wordViewFormatter->formatSingleWordView(*dictionaryWord->translation);
-    std::cout << "Insert english translation:\n";
-
-    if (answerValidator->validateAnswer(userPrompt->getStringInput(), dictionaryWord->englishWord))
-    {
-        std::cout << "Correct answer!\n";
-        statisticsRepository->addCorrectAnswer(dictionaryWord->englishWord);
-    }
-    else
-    {
-        std::cout << "Incorrect answer :(\n";
-        statisticsRepository->addIncorrectAnswer(dictionaryWord->englishWord);
-    }
 }
 
 std::string DefaultGlossary::getEnglishWordDescription() const

@@ -37,14 +37,15 @@ const DictionaryName dictionaryName2{"dictionary2"};
 const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2};
 const std::string englishWord1{"englishWord1"};
 const std::string englishWord2{"englishWord2"};
+const std::string polishWord{"polishWord"};
 const std::string wordTranslation{"wordTranslation"};
 const std::string inputTranslation{"inputTranslation"};
 const std::string pathToDictionaryWords{"/home/words.txt"};
 const DictionaryWord dictionaryWordWithoutTranslation{englishWord1, boost::none};
-const DictionaryWord dictionaryWord2{englishWord2, wordTranslation};
-const DictionaryWords dictionaryWords{dictionaryWordWithoutTranslation, dictionaryWord2};
+const DictionaryWord dictionaryWordWithTranslation{englishWord2, wordTranslation};
+const DictionaryWords dictionaryWords{dictionaryWordWithoutTranslation, dictionaryWordWithTranslation};
 const std::vector<std::string> dictionaryWordsAsString{toString(dictionaryWordWithoutTranslation),
-                                                       toString(dictionaryWord2)};
+                                                       toString(dictionaryWordWithTranslation)};
 const DefinitionWithExample definitionWithExample1{"definition1", std::string{"example1"}};
 const DefinitionWithExample definitionWithExample2{"definition2", std::string{"example2"}};
 const DefinitionsWithExamples definitionsWithExamples{definitionWithExample1, definitionWithExample2};
@@ -122,28 +123,106 @@ public:
                              std::move(userPromptInit)};
 };
 
-TEST_F(DefaultGlossaryTest, givenNoConnectionAvailable_shouldExit)
+TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWord_shouldReturnNone)
 {
-    EXPECT_CALL(*connectionChecker, connectionAvailable()).WillOnce(Return(false));
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord()).WillOnce(Return(boost::none));
 
-    glossary.run();
+    const auto actualPolishWord = glossary.getRandomPolishWord();
+
+    ASSERT_EQ(actualPolishWord, boost::none);
 }
 
-TEST_F(DefaultGlossaryTest, givenNoConnectionToTranslatorAvailable_shouldExit)
+TEST_F(DefaultGlossaryTest,
+       givenRandomDictionaryWordWithoutTranslation_shouldReturnTranslationFromTranslationService)
 {
-    EXPECT_CALL(*connectionChecker, connectionAvailable()).WillOnce(Return(true));
-    EXPECT_CALL(*translationService, connectionToTranslateApiAvailable()).WillOnce(Return(false));
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord())
+        .WillOnce(Return(dictionaryWordWithoutTranslation));
+    EXPECT_CALL(*translationService, retrieveTranslation(dictionaryWordWithoutTranslation.englishWord,
+                                                         englishLanguage, polishLanguage))
+        .WillOnce(Return(polishWord));
 
-    glossary.run();
+    const auto actualPolishWord = glossary.getRandomPolishWord();
+
+    ASSERT_EQ(*actualPolishWord, polishWord);
 }
 
-TEST_F(DefaultGlossaryTest, givenConnectionAvailableAndInvalidValue_shouldProceedToLoopAndExit)
+TEST_F(DefaultGlossaryTest, givenRandomDictionaryWordWithTranslation_shouldReturnWordTranslation)
 {
-    EXPECT_CALL(*connectionChecker, connectionAvailable()).WillOnce(Return(true));
-    EXPECT_CALL(*translationService, connectionToTranslateApiAvailable()).WillOnce(Return(true));
-    expectUserInputNumber(100);
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord())
+        .WillOnce(Return(dictionaryWordWithTranslation));
 
-    glossary.run();
+    const auto actualPolishWord = glossary.getRandomPolishWord();
+
+    ASSERT_EQ(*actualPolishWord, *dictionaryWordWithTranslation.translation);
+}
+
+TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWordFromSpecificDictionary_shouldReturnNone)
+{
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord(dictionaryName1)).WillOnce(Return(boost::none));
+
+    const auto actualPolishWord = glossary.getRandomPolishWord(dictionaryName1);
+
+    ASSERT_EQ(actualPolishWord, boost::none);
+}
+
+TEST_F(
+    DefaultGlossaryTest,
+    givenRandomDictionaryWordFromSpecificDictionaryWithoutTranslation_shouldReturnTranslationFromTranslationService)
+{
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord(dictionaryName1))
+        .WillOnce(Return(dictionaryWordWithoutTranslation));
+    EXPECT_CALL(*translationService, retrieveTranslation(dictionaryWordWithoutTranslation.englishWord,
+                                                         englishLanguage, polishLanguage))
+        .WillOnce(Return(polishWord));
+
+    const auto actualPolishWord = glossary.getRandomPolishWord(dictionaryName1);
+
+    ASSERT_EQ(*actualPolishWord, polishWord);
+}
+
+TEST_F(DefaultGlossaryTest,
+       givenRandomDictionaryWordFromSpecificDictionaryWithTranslation_shouldReturnWordTranslation)
+{
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord(dictionaryName1))
+        .WillOnce(Return(dictionaryWordWithTranslation));
+
+    const auto actualPolishWord = glossary.getRandomPolishWord(dictionaryName1);
+
+    ASSERT_EQ(*actualPolishWord, *dictionaryWordWithTranslation.translation);
+}
+
+TEST_F(DefaultGlossaryTest, givenCorrectPolishWordsTranslation_shouldAddCorrectAnswerAndReturnTrue)
+{
+    EXPECT_CALL(*translationService, retrieveTranslation(polishWord, polishLanguage, englishLanguage))
+        .WillOnce(Return(wordTranslation));
+    EXPECT_CALL(*answerValidator, validateAnswer(wordTranslation, englishWord1)).WillOnce(Return(true));
+    EXPECT_CALL(*statisticsRepository, addCorrectAnswer(englishWord1));
+
+    const auto verificationResult = glossary.verifyPolishWordTranslation(polishWord, englishWord1);
+
+    ASSERT_TRUE(verificationResult);
+}
+
+TEST_F(DefaultGlossaryTest, givenInorrectPolishWordsTranslation_shouldAddIncorrectAnswerAndReturnFalse)
+{
+    EXPECT_CALL(*translationService, retrieveTranslation(polishWord, polishLanguage, englishLanguage))
+        .WillOnce(Return(wordTranslation));
+    EXPECT_CALL(*answerValidator, validateAnswer(wordTranslation, englishWord1)).WillOnce(Return(false));
+    EXPECT_CALL(*statisticsRepository, addIncorrectAnswer(englishWord1));
+
+    const auto verificationResult = glossary.verifyPolishWordTranslation(polishWord, englishWord1);
+
+    ASSERT_FALSE(verificationResult);
+}
+
+TEST_F(DefaultGlossaryTest, givenNoneTranslationFromTranslationService_shouldNotModifyAnswersAndReturnFalse)
+{
+    EXPECT_CALL(*translationService, retrieveTranslation(polishWord, polishLanguage, englishLanguage))
+        .WillOnce(Return(boost::none));
+
+    const auto verificationResult = glossary.verifyPolishWordTranslation(polishWord, englishWord1);
+
+    ASSERT_FALSE(verificationResult);
 }
 
 TEST_F(DefaultGlossaryTest, givenIncorrectSourceLanguage_shouldReturnNone)
@@ -287,84 +366,6 @@ TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryTranslationsAutomatically)
     EXPECT_CALL(*dictionaryTranslationUpdater, updateDictionaryTranslations(dictionaryName1));
 
     glossary.updateDictionaryTranslationsAutomatically();
-}
-
-TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWord_shouldReturn)
-{
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord()).WillOnce(Return(boost::none));
-
-    glossary.guessWord();
-}
-
-TEST_F(DefaultGlossaryTest,
-       givenRandomDictionaryWordAndNotValidGuessAnswer_shouldAddIncorrectAnswerToStatisticsRepository)
-{
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord()).WillOnce(Return(dictionaryWord2));
-    expectUserInputString(inputTranslation);
-    EXPECT_CALL(*answerValidator, validateAnswer(inputTranslation, dictionaryWord2.englishWord))
-        .WillOnce(Return(false));
-    EXPECT_CALL(*statisticsRepository, addIncorrectAnswer(dictionaryWord2.englishWord));
-
-    glossary.guessWord();
-}
-
-TEST_F(DefaultGlossaryTest,
-       givenRandomDictionaryWordAndValidGuessAnswer_shouldAddCorrectAnswerToStatisticsRepository)
-{
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord()).WillOnce(Return(dictionaryWord2));
-    expectUserInputString(inputTranslation);
-    EXPECT_CALL(*answerValidator, validateAnswer(inputTranslation, dictionaryWord2.englishWord))
-        .WillOnce(Return(true));
-    EXPECT_CALL(*statisticsRepository, addCorrectAnswer(dictionaryWord2.englishWord));
-
-    glossary.guessWord();
-}
-
-TEST_F(DefaultGlossaryTest, givenRandomDictionaryWordWithoutTranslation_retrievesNoneTranslation_shouldReturn)
-{
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord())
-        .WillOnce(Return(dictionaryWordWithoutTranslation));
-    EXPECT_CALL(*translationService, retrieveTranslation(dictionaryWordWithoutTranslation.englishWord,
-                                                         englishLanguage, polishLanguage))
-        .WillOnce(Return(boost::none));
-
-    glossary.guessWord();
-}
-
-TEST_F(
-    DefaultGlossaryTest,
-    givenRandomDictionaryWordWithoutTranslationAndInvalidGuessAnswer_retrievesTranslation_shouldAddIncorrectAnswerToStatisticsRepository)
-{
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord())
-        .WillOnce(Return(dictionaryWordWithoutTranslation));
-    EXPECT_CALL(*translationService, retrieveTranslation(dictionaryWordWithoutTranslation.englishWord,
-                                                         englishLanguage, polishLanguage))
-        .WillOnce(Return(wordTranslation));
-    expectUserInputString(inputTranslation);
-    EXPECT_CALL(*answerValidator,
-                validateAnswer(inputTranslation, dictionaryWordWithoutTranslation.englishWord))
-        .WillOnce(Return(false));
-    EXPECT_CALL(*statisticsRepository, addIncorrectAnswer(dictionaryWordWithoutTranslation.englishWord));
-
-    glossary.guessWord();
-}
-
-TEST_F(
-    DefaultGlossaryTest,
-    givenRandomDictionaryWordWithoutTranslationAndValidGuessAnswer_retrievesTranslation_shouldAddCorrectAnswerToStatisticsRepository)
-{
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord())
-        .WillOnce(Return(dictionaryWordWithoutTranslation));
-    EXPECT_CALL(*translationService, retrieveTranslation(dictionaryWordWithoutTranslation.englishWord,
-                                                         englishLanguage, polishLanguage))
-        .WillOnce(Return(wordTranslation));
-    expectUserInputString(inputTranslation);
-    EXPECT_CALL(*answerValidator,
-                validateAnswer(inputTranslation, dictionaryWordWithoutTranslation.englishWord))
-        .WillOnce(Return(true));
-    EXPECT_CALL(*statisticsRepository, addCorrectAnswer(dictionaryWordWithoutTranslation.englishWord));
-
-    glossary.guessWord();
 }
 
 TEST_F(DefaultGlossaryTest, shouldReturnWordDescription)
