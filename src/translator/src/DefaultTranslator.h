@@ -19,10 +19,10 @@ public:
                                               const std::string& apiKey) const override;
 
 private:
-    boost::optional<webConnection::Response>
-    getResponseFromTranslationApi(const webConnection::Request&) const;
+    webConnection::Response tryGetResponseFromTranslationApi(const webConnection::Request&) const;
     bool requestIsNotValid(const boost::optional<webConnection::Request>&) const;
     bool translationSucceeded(webConnection::ResponseCode) const;
+    bool translationFailedDueToInvalidApiKey(webConnection::ResponseCode) const;
 
     std::shared_ptr<const webConnection::HttpHandler> httpHandler;
     std::unique_ptr<TranslationDeserializer> translationDeserializer;

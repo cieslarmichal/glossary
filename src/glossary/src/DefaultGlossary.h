@@ -3,11 +3,9 @@
 #include <memory>
 
 #include "AnswerValidator.h"
-#include "ConnectionChecker.h"
 #include "DictionaryTranslationUpdater.h"
+#include "ExternalServicesAvailabilityChecker.h"
 #include "Glossary.h"
-#include "UserPrompt.h"
-#include "WordViewFormatter.h"
 #include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
 #include "translationService/TranslationRetrieverService.h"
@@ -24,26 +22,34 @@ public:
                     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
                     std::shared_ptr<DictionaryTranslationUpdater>,
                     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>>,
-                    std::unique_ptr<ConnectionChecker>, std::unique_ptr<AnswerValidator>,
-                    std::unique_ptr<UserPrompt>);
+                    std::unique_ptr<ExternalServicesAvailabilityChecker>, std::unique_ptr<AnswerValidator>);
 
-    bool connectionIsAvailable() const override;
+    ExternalServicesAvailabilityStatus checkConnectionToExternalServices() const override;
     boost::optional<std::string> getRandomPolishWord() const override;
     boost::optional<std::string> getRandomPolishWord(const std::string& dictionaryName) const override;
     bool verifyPolishWordTranslation(const std::string& polishWord,
                                      const std::string& englishWord) const override;
-    boost::optional<std::string> translate() const override;
-    std::vector<std::string> listDictionariesByNames() override;
-    std::vector<std::string> listDictionaryWordsFromDictionary() override;
-    void addDictionary() const override;
-    void addEnglishWordToDictionary() const override;
-    void removeDictionary() const override;
-    void removeEnglishWordFromDictionary() const override;
-    void addDictionaryFromFile() const override;
-    void updateDictionaryWordTranslationManually() const override;
-    void updateDictionaryWordTranslationAutomatically() const override;
-    void updateDictionaryTranslationsAutomatically() const override;
-    std::string getEnglishWordDescription() const override;
+    std::vector<std::string> listDictionariesNames() override;
+    std::vector<std::string> listDictionaryWordsFromDictionary(const std::string& dictionaryName) override;
+    void addDictionary(const std::string& dictionaryName) const override;
+    void removeDictionary(const std::string& dictionaryName) const override;
+    void addEnglishWordToDictionary(const std::string& englishWord,
+                                    const std::string& dictionaryName) const override;
+    void removeEnglishWordFromDictionary(const std::string& englishWord,
+                                         const std::string& dictionaryName) const override;
+    void addDictionaryFromFile(const std::string& dictionaryName,
+                               const std::string& pathToFileWithDictionaryWords) const override;
+    void updateDictionaryWordTranslationManually(const std::string& dictionaryName,
+                                                 const std::string& englishWord,
+                                                 const std::string& newTranslation) const override;
+    void updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
+                                                      const std::string& englishWord) const override;
+    void updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const override;
+    std::string getEnglishWordDescription(const std::string& englishWord) const override;
+    boost::optional<std::string> translate(const std::string& textToTranslate,
+                                           const std::string& sourceLanguage,
+                                           const std::string& targetLanguage) const override;
+    std::vector<std::string> getSupportedTranslatorLanguages() const override;
     std::vector<std::string> showStatistics() const override;
     void resetStatistics() const override;
 
@@ -57,11 +63,7 @@ private:
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdater;
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObservers;
 
-    std::unique_ptr<ConnectionChecker> connectionChecker;
+    std::unique_ptr<ExternalServicesAvailabilityChecker> externalServicesConnectionChecker;
     std::unique_ptr<AnswerValidator> answerValidator;
-    std::unique_ptr<UserPrompt> userPrompt;
-    std::unique_ptr<WordViewFormatter> wordViewFormatter;
-
-    wordDescriptionRepository::EnglishWords englishWords;
 };
 }

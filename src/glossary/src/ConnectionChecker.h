@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ConnectionStatus.h"
+
 namespace glossary
 {
 class ConnectionChecker
@@ -7,6 +9,6 @@ class ConnectionChecker
 public:
     virtual ~ConnectionChecker() = default;
 
-    virtual bool connectionAvailable() const = 0;
+    virtual ConnectionStatus connectionAvailable() const = 0;
 };
 }

@@ -23,7 +23,7 @@ public:
                                                                     translator::SourceLanguage,
                                                                     translator::TargetLanguage) override;
     std::vector<std::string> retrieveSupportedLanguages() const override;
-    bool connectionToTranslateApiAvailable() override;
+    TranslationApiConnectionStatus connectionToTranslateApiAvailable() override;
 
 private:
     void setTranslatorApiKeyFromConfigFile();

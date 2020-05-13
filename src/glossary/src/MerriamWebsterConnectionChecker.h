@@ -14,7 +14,7 @@ class MerriamWebsterConnectionChecker : public ConnectionChecker
 public:
     explicit MerriamWebsterConnectionChecker(std::shared_ptr<const webConnection::HttpHandler>);
 
-    bool connectionAvailable() const override;
+    ConnectionStatus connectionAvailable() const override;
 
 private:
     std::shared_ptr<const webConnection::HttpHandler> httpHandler;

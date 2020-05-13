@@ -1,7 +1,5 @@
 set(SOURCES
         src/WordDescriptionConcurrentUpdater.cpp
-        src/DefaultWordViewFormatter.cpp
-        src/UserStandardInputPrompt.cpp
         src/DefaultAnswerValidator.cpp
         src/DefaultGlossary.cpp
         src/GlossaryFactory.cpp
@@ -9,16 +7,17 @@ set(SOURCES
         src/TranslationConcurrentUpdater.cpp
         src/DefaultDictionaryTranslationUpdater.cpp
         src/MerriamWebsterConnectionChecker.cpp
+        src/DefaultExternalServicesAvailabilityChecker.cpp
         )
 
 set(UT_SOURCES
-        src/DefaultWordViewFormatterTest.cpp
         src/DefaultAnswerValidatorTest.cpp
         src/WordDescriptionConcurrentUpdaterTest.cpp
         src/TranslationConcurrentUpdaterTest.cpp
         src/DefaultDictionaryTranslationUpdaterTest.cpp
         src/MerriamWebsterConnectionCheckerTest.cpp
         src/DefaultGlossaryTest.cpp
+        src/DefaultExternalServicesAvailabilityCheckerTest.cpp
         )
 
 add_library(glossary ${SOURCES})

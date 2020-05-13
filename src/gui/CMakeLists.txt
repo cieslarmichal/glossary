@@ -4,22 +4,22 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 set(SOURCES
-    src/view/GuessTab.cpp
-    src/view/DictionariesTab.cpp
-    src/view/CheckWordDescriptionTab.cpp
-    src/view/TranslatorTab.cpp
-    src/view/StatisticsTab.cpp
-    src/view/AboutDialog.cpp
-    src/viewManager/CheckWordDescriptionTabViewManager.cpp
-    src/viewManager/GuessTabViewManager.cpp
-    src/viewManager/DictionariesTabViewManager.cpp
-    src/viewManager/TranslatorTabViewManager.cpp
-    src/viewManager/StatisticsTabViewManager.cpp
-    src/view/MainView.cpp
-    src/model/GlossaryAdapter.cpp
-    src/Gui.cpp
-    Main.cpp
-    )
+        src/view/GuessTab.cpp
+        src/view/DictionariesTab.cpp
+        src/view/CheckWordDescriptionTab.cpp
+        src/view/TranslatorTab.cpp
+        src/view/StatisticsTab.cpp
+        src/view/AboutDialog.cpp
+        src/viewManager/CheckWordDescriptionTabViewManager.cpp
+        src/viewManager/GuessTabViewManager.cpp
+        src/viewManager/DictionariesTabViewManager.cpp
+        src/viewManager/TranslatorTabViewManager.cpp
+        src/viewManager/StatisticsTabViewManager.cpp
+        src/view/MainView.cpp
+        src/model/GlossaryAdapter.cpp
+        src/Gui.cpp
+        Main.cpp
+        )
 
 add_executable(gui ${SOURCES})
 

@@ -1,9 +1,11 @@
 #include "TranslatorTabViewManager.h"
 
-TranslatorTabViewManager::TranslatorTabViewManager(QObject *parent,
-                                                   std::shared_ptr<TranslatorTab> translatorTabInit,
-                                                   std::shared_ptr<GlossaryAdapter> adapter)
+namespace glossary::gui::viewManager
+{
+TranslatorTabViewManager::TranslatorTabViewManager(QObject* parent,
+                                                   std::shared_ptr<view::TranslatorTab> translatorTabInit,
+                                                   std::shared_ptr<model::GlossaryAdapter> adapter)
     : QObject(parent), translatorTab{std::move(translatorTabInit)}, glossaryAdapter{std::move(adapter)}
 {
-
+}
 }

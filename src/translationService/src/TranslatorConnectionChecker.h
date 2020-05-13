@@ -2,6 +2,8 @@
 
 #include <string>
 
+#include "TranslationApiConnectionStatus.h"
+
 namespace glossary::translationService
 {
 class TranslatorConnectionChecker
@@ -9,6 +11,7 @@ class TranslatorConnectionChecker
 public:
     virtual ~TranslatorConnectionChecker() = default;
 
-    virtual bool connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) = 0;
+    virtual TranslationApiConnectionStatus
+    connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) = 0;
 };
 }

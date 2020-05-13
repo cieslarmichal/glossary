@@ -1,17 +1,24 @@
 #include "MainView.h"
 
 #include <utility>
-#include "ui_MainView.h"
-#include "AboutDialog.h"
 
-MainView::MainView(QWidget *parent, std::shared_ptr<GuessTab> guessTabInit,
+#include "AboutDialog.h"
+#include "ui_MainView.h"
+
+namespace glossary::gui::view
+{
+MainView::MainView(QWidget* parent, std::shared_ptr<GuessTab> guessTabInit,
                    std::shared_ptr<DictionariesTab> dictionatiesTabInit,
                    std::shared_ptr<CheckWordDescriptionTab> checkWordDescriptionTabInit,
                    std::shared_ptr<TranslatorTab> translatorTabInit,
                    std::shared_ptr<StatisticsTab> statisticsTabInit)
-    : QMainWindow(parent), guessTab{std::move(guessTabInit)}, dictionariesTab{std::move(dictionatiesTabInit)},
-      checkWordDescriptionTab{std::move(checkWordDescriptionTabInit)}, translatorTab{std::move(translatorTabInit)},
-      statisticsTab{std::move(statisticsTabInit)}, ui(new Ui::MainView)
+    : QMainWindow(parent),
+      guessTab{std::move(guessTabInit)},
+      dictionariesTab{std::move(dictionatiesTabInit)},
+      checkWordDescriptionTab{std::move(checkWordDescriptionTabInit)},
+      translatorTab{std::move(translatorTabInit)},
+      statisticsTab{std::move(statisticsTabInit)},
+      ui(new Ui::MainView)
 {
     ui->setupUi(this);
     guessTab->setParent(this);
@@ -45,5 +52,7 @@ void MainView::on_actionAbout_triggered()
 
 void MainView::on_actionLoadDictionary_triggered()
 {
+
+}
 
 }

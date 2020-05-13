@@ -3,7 +3,6 @@
 #include <iostream>
 #include <utility>
 
-#include "DefaultWordViewFormatter.h"
 #include "utils/GetProjectPath.h"
 #include "utils/StlOperators.h"
 
@@ -17,18 +16,16 @@ DefaultGlossary::DefaultGlossary(
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
-    std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator,
-    std::unique_ptr<UserPrompt> prompt)
+    std::unique_ptr<ExternalServicesAvailabilityChecker> connectionCheckerInit,
+    std::unique_ptr<AnswerValidator> validator)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
       dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
       dictionaryObservers(std::move(dictionaryObserversInit)),
-      connectionChecker{std::move(connectionCheckerInit)},
-      answerValidator{std::move(validator)},
-      userPrompt{std::move(prompt)},
-      wordViewFormatter{std::make_unique<DefaultWordViewFormatter>()}
+      externalServicesConnectionChecker{std::move(connectionCheckerInit)},
+      answerValidator{std::move(validator)}
 {
     initialize();
 }
@@ -43,10 +40,9 @@ void DefaultGlossary::initialize()
     }
 }
 
-bool DefaultGlossary::connectionIsAvailable() const
+ExternalServicesAvailabilityStatus DefaultGlossary::checkConnectionToExternalServices() const
 {
-    return connectionChecker->connectionAvailable() &&
-           translationRetrieverService->connectionToTranslateApiAvailable();
+    return externalServicesConnectionChecker->checkExternalServicesAvailabilityStatus();
 }
 
 boost::optional<std::string> DefaultGlossary::getRandomPolishWord() const
@@ -90,10 +86,9 @@ boost::optional<std::string> DefaultGlossary::getRandomPolishWord(const std::str
 bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
                                                   const std::string& englishWord) const
 {
-    const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(polishWord,
-                                                                                               translator::SourceLanguage::Polish,
-                                                                                               translator::TargetLanguage::English);
-    if(englishTranslationFromPolishWord == boost::none)
+    const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(
+        polishWord, translator::SourceLanguage::Polish, translator::TargetLanguage::English);
+    if (englishTranslationFromPolishWord == boost::none)
     {
         return false;
     }
@@ -108,18 +103,85 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
     return false;
 }
 
-boost::optional<std::string> DefaultGlossary::translate() const
+std::vector<std::string> DefaultGlossary::listDictionariesNames()
 {
-    std::cout << "Supported languages: " << translationRetrieverService->retrieveSupportedLanguages() << "\n";
+    return dictionaryService->getDictionaryNames();
+}
 
-    std::cout << "Insert word to translate:\n";
-    const auto textToTranslate = userPrompt->getStringInput();
+std::vector<std::string> DefaultGlossary::listDictionaryWordsFromDictionary(const std::string& dictionaryName)
+{
+    std::vector<std::string> dictionaryWordsAsString;
+    if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
+    {
+        for (const auto& dictionaryWord : *dictionaryWords)
+            dictionaryWordsAsString.push_back(toString(dictionaryWord));
+    }
+    return dictionaryWordsAsString;
+}
 
-    std::cout << "Insert source language:\n";
-    const auto sourceLanguageText = userPrompt->getStringInput();
+void DefaultGlossary::addDictionary(const std::string& dictionaryName) const
+{
+    dictionaryService->addDictionary(dictionaryName);
+}
 
+void DefaultGlossary::removeDictionary(const std::string& dictionaryName) const
+{
+    dictionaryService->removeDictionary(dictionaryName);
+}
+
+void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
+                                                 const std::string& dictionaryName) const
+{
+    dictionaryService->addWordToDictionary({englishWord, boost::none}, dictionaryName);
+}
+
+void DefaultGlossary::removeEnglishWordFromDictionary(const std::string& englishWord,
+                                                      const std::string& dictionaryName) const
+{
+    dictionaryService->removeWordFromDictionary(englishWord, dictionaryName);
+}
+
+void DefaultGlossary::addDictionaryFromFile(const std::string& dictionaryName,
+                                            const std::string& pathToFileWithDictionaryWords) const
+{
+    dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
+}
+
+void DefaultGlossary::updateDictionaryWordTranslationManually(const std::string& dictionaryName,
+                                                              const std::string& englishWord,
+                                                              const std::string& newTranslation) const
+{
+    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, newTranslation,
+                                                                  dictionaryName);
+}
+
+void DefaultGlossary::updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
+                                                                   const std::string& englishWord) const
+{
+    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, dictionaryName);
+}
+
+void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const
+{
+    dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
+}
+
+std::string DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
+{
+    const auto wordDescription = wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
+    return toString(wordDescription);
+}
+
+std::vector<std::string> DefaultGlossary::getSupportedTranslatorLanguages() const
+{
+    return translationRetrieverService->retrieveSupportedLanguages();
+}
+
+boost::optional<std::string> DefaultGlossary::translate(const std::string& textToTranslate,
+                                                        const std::string& sourceLanguageText,
+                                                        const std::string& targetLanguageText) const
+{
     translator::SourceLanguage sourceLanguage;
-    // TODO: connect with supported languages
     if (answerValidator->validateAnswer(sourceLanguageText, "Polish"))
         sourceLanguage = translator::Language::Polish;
     else if (answerValidator->validateAnswer(sourceLanguageText, "English"))
@@ -129,9 +191,6 @@ boost::optional<std::string> DefaultGlossary::translate() const
         std::cerr << "Invalid source language\n";
         return boost::none;
     }
-
-    std::cout << "Insert target language:\n";
-    const auto targetLanguageText = userPrompt->getStringInput();
 
     translator::TargetLanguage targetLanguage;
     if (answerValidator->validateAnswer(targetLanguageText, "Polish"))
@@ -145,104 +204,6 @@ boost::optional<std::string> DefaultGlossary::translate() const
     }
 
     return translationRetrieverService->retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
-}
-
-std::vector<std::string> DefaultGlossary::listDictionariesByNames()
-{
-    return dictionaryService->getDictionaryNames();
-}
-
-std::vector<std::string> DefaultGlossary::listDictionaryWordsFromDictionary()
-{
-    std::cout << "Insert dictionary name:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    std::vector<std::string> dictionaryWordsAsString;
-    if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
-    {
-        for (const auto& dictionaryWord : *dictionaryWords)
-            dictionaryWordsAsString.push_back(toString(dictionaryWord));
-    }
-    return dictionaryWordsAsString;
-}
-
-void DefaultGlossary::addDictionary() const
-{
-    std::cout << "Insert dictionary name to add:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    dictionaryService->addDictionary(dictionaryName);
-}
-
-void DefaultGlossary::addEnglishWordToDictionary() const
-{
-    std::cout << "Insert dictionary name:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    std::cout << "Insert english word:\n";
-    const auto englishWord = userPrompt->getStringInput();
-    dictionaryService->addWordToDictionary({englishWord, boost::none}, dictionaryName);
-}
-
-void DefaultGlossary::removeDictionary() const
-{
-    std::cout << "Insert dictionary name to remove:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    dictionaryService->removeDictionary(dictionaryName);
-}
-
-void DefaultGlossary::removeEnglishWordFromDictionary() const
-{
-    std::cout << "Insert dictionary name to remove word from:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    std::cout << "Insert english word:\n";
-    const auto englishWord = userPrompt->getStringInput();
-    dictionaryService->removeWordFromDictionary(englishWord, dictionaryName);
-}
-
-void DefaultGlossary::addDictionaryFromFile() const
-{
-    std::cout << "Insert dictionary name to add:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    std::cout << "Insert absolute path to words dictionary file(csv format):\n";
-    const auto pathToFileWithDictionaryWords = userPrompt->getStringInput();
-    dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
-}
-
-void DefaultGlossary::updateDictionaryWordTranslationManually() const
-{
-    std::cout << "Insert dictionary name:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    std::cout << "Insert english word in which you want to update translation:\n";
-    const auto englishWord = userPrompt->getStringInput();
-    std::cout << "Insert new translation:\n";
-    const auto translation = userPrompt->getStringInput();
-
-    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, translation, dictionaryName);
-}
-
-void DefaultGlossary::updateDictionaryWordTranslationAutomatically() const
-{
-    std::cout << "Insert dictionary name:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-    std::cout << "Insert english word in which you want to update translation:\n";
-    const auto englishWord = userPrompt->getStringInput();
-
-    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, dictionaryName);
-}
-
-void DefaultGlossary::updateDictionaryTranslationsAutomatically() const
-{
-    std::cout << "Insert dictionary name:\n";
-    const auto dictionaryName = userPrompt->getStringInput();
-
-    dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
-}
-
-std::string DefaultGlossary::getEnglishWordDescription() const
-{
-    std::cout << "Insert english word:\n";
-    const auto englishWord = userPrompt->getStringInput();
-    const auto wordDescription = wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
-    std::cout << wordViewFormatter->formatWordDescriptionView(wordDescription) << "\n";
-    return toString(wordDescription);
 }
 
 std::vector<std::string> DefaultGlossary::showStatistics() const

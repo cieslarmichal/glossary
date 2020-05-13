@@ -1,9 +1,10 @@
 #include "AboutDialog.h"
+
 #include "ui_AboutDialog.h"
 
-AboutDialog::AboutDialog(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::AboutDialog)
+namespace glossary::gui::view
+{
+AboutDialog::AboutDialog(QWidget* parent) : QDialog(parent), ui(new Ui::AboutDialog)
 {
     ui->setupUi(this);
 }
@@ -11,4 +12,5 @@ AboutDialog::AboutDialog(QWidget *parent) :
 AboutDialog::~AboutDialog()
 {
     delete ui;
+}
 }

@@ -117,25 +117,36 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey, shouldReturnSupportedL
 }
 
 TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
-       givenConnectionNotAvailableFromTranslatorConnectionChecker_shouldReturnFalse)
+       givenConnectionNotAvailableFromTranslatorConnectionChecker_shouldReturnConnectionUnavailableStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
-        .WillOnce(Return(false));
+        .WillOnce(Return(TranslationApiConnectionStatus::Unavailable));
 
-    const auto connectionAvailable = translationService.connectionToTranslateApiAvailable();
+    const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_FALSE(connectionAvailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Unavailable);
 }
 
 TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
-       givenConnectionAvailableFromTranslatorConnectionChecker_shouldReturnTrue)
+       givenConnectionAvailableFromTranslatorConnectionChecker_shouldReturnConnectionAvailableStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
-        .WillOnce(Return(true));
+        .WillOnce(Return(TranslationApiConnectionStatus::Available));
 
-    const auto connectionAvailable = translationService.connectionToTranslateApiAvailable();
+    const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_TRUE(connectionAvailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Available);
+}
+
+TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+       givenInvalidApiKeyStatusFromTranslatorConnectionChecker_shouldReturnInvalidApiKeyStatus)
+{
+    EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
+        .WillOnce(Return(TranslationApiConnectionStatus::InvalidApiKey));
+
+    const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
+
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::InvalidApiKey);
 }
 
 class DefaultTranslationRetrieverServiceTest_WithoutApiKey
@@ -176,9 +187,9 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, shouldReturnSupport
     ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, connectionNotAvailable_shouldReturnFalse)
+TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, noApiKey_shouldReturnInvalidApiKeyStatus)
 {
-    const auto connectionAvailable = translationService.connectionToTranslateApiAvailable();
+    const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_FALSE(connectionAvailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::InvalidApiKey);
 }

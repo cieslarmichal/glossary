@@ -30,7 +30,7 @@ target_link_libraries(translationRepository PUBLIC utils)
 target_link_libraries(translationRepositoryUT PRIVATE
         gtest_main
         gmock
-        utils 
+        utils
         translationRepository
         )
 

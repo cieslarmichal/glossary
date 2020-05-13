@@ -14,6 +14,6 @@ public:
                                                              translator::SourceLanguage,
                                                              translator::TargetLanguage));
     MOCK_CONST_METHOD0(retrieveSupportedLanguages, std::vector<std::string>());
-    MOCK_METHOD0(connectionToTranslateApiAvailable, bool());
+    MOCK_METHOD0(connectionToTranslateApiAvailable, TranslationApiConnectionStatus());
 };
 }

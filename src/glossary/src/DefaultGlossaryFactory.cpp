@@ -2,10 +2,10 @@
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionaryTranslationUpdater.h"
+#include "DefaultExternalServicesAvailabilityChecker.h"
 #include "DefaultGlossary.h"
 #include "MerriamWebsterConnectionChecker.h"
 #include "TranslationConcurrentUpdater.h"
-#include "UserStandardInputPrompt.h"
 #include "WordDescriptionConcurrentUpdater.h"
 #include "dictionaryService/DictionaryServiceFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
@@ -53,10 +53,10 @@ createTranslationUpdater(const std::shared_ptr<translationService::TranslationRe
 std::shared_ptr<DictionaryTranslationUpdater>
 createDictionaryTranslationUpdater(const std::shared_ptr<dictionaryService::DictionaryService>&,
                                    const std::shared_ptr<translationService::TranslationRetrieverService>&);
-std::unique_ptr<ConnectionChecker>
-createConnectionChecker(const std::shared_ptr<const webConnection::HttpHandler>&);
+std::unique_ptr<ExternalServicesAvailabilityChecker> createExternalServicesConnectionChecker(
+    const std::shared_ptr<const webConnection::HttpHandler>&,
+    const std::shared_ptr<translationService::TranslationRetrieverService>&);
 std::unique_ptr<AnswerValidator> createAnswerValidator();
-std::unique_ptr<UserPrompt> createUserPrompt();
 }
 
 std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
@@ -87,14 +87,14 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> observers{wordDescriptionUpdater,
                                                                                   translationUpdater};
 
-    auto connectionChecker = createConnectionChecker(httpHandler);
+    auto externalServicesConnectionChecker =
+        createExternalServicesConnectionChecker(httpHandler, translationRetrieverService);
     auto answerValidator = createAnswerValidator();
-    auto userPrompt = createUserPrompt();
 
     return std::make_unique<DefaultGlossary>(
         dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
-        dictionaryTranslationUpdater, observers, std::move(connectionChecker), std::move(answerValidator),
-        std::move(userPrompt));
+        dictionaryTranslationUpdater, observers, std::move(externalServicesConnectionChecker),
+        std::move(answerValidator));
 }
 
 namespace
@@ -202,20 +202,18 @@ std::shared_ptr<DictionaryTranslationUpdater> createDictionaryTranslationUpdater
     return std::make_shared<DefaultDictionaryTranslationUpdater>(dictionaryService, translationService);
 }
 
-std::unique_ptr<ConnectionChecker>
-createConnectionChecker(const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
+std::unique_ptr<ExternalServicesAvailabilityChecker> createExternalServicesConnectionChecker(
+    const std::shared_ptr<const webConnection::HttpHandler>& httpHandler,
+    const std::shared_ptr<translationService::TranslationRetrieverService>& translationService)
 {
-    return std::make_unique<MerriamWebsterConnectionChecker>(httpHandler);
+    auto webConnectionChecker = std::make_unique<MerriamWebsterConnectionChecker>(httpHandler);
+    return std::make_unique<DefaultExternalServicesAvailabilityChecker>(translationService,
+                                                                        std::move(webConnectionChecker));
 }
 
 std::unique_ptr<AnswerValidator> createAnswerValidator()
 {
     return std::make_unique<DefaultAnswerValidator>();
-}
-
-std::unique_ptr<UserPrompt> createUserPrompt()
-{
-    return std::make_unique<UserStandardInputPrompt>();
 }
 
 }

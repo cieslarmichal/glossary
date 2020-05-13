@@ -16,17 +16,17 @@ MerriamWebsterConnectionChecker::MerriamWebsterConnectionChecker(
 {
 }
 
-bool MerriamWebsterConnectionChecker::connectionAvailable() const
+ConnectionStatus MerriamWebsterConnectionChecker::connectionAvailable() const
 {
     try
     {
         httpHandler->get(merriamWebsterUrlAddress);
-        return true;
+        return ConnectionStatus::Available;
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Connection to " << merriamWebsterUrlAddress << " is not available: " << e.what();
-        return false;
+        return ConnectionStatus::Unavailable;
     }
 }
 

@@ -4,6 +4,9 @@
 
 #include "translator/TranslatorMock.h"
 
+#include "translator/exceptions/InvalidApiKey.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
+
 using namespace ::testing;
 using namespace glossary;
 using namespace translator;
@@ -26,14 +29,26 @@ public:
     DefaultTranslatorConnectionChecker connectionChecker{translator};
 };
 
-TEST_F(DefaultTranslatorConnectionCheckerTest, givenNoneTranslationFromTranslator_shouldReturnFalse)
+TEST_F(DefaultTranslatorConnectionCheckerTest, connectionToTranslatorFailed_shouldReturnConnectionUnavailable)
 {
     EXPECT_CALL(*translator, translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey))
-        .WillOnce(Return(boost::none));
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto connectionAvailable = connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
+    const auto connectionAvailableStatus =
+        connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
 
-    ASSERT_FALSE(connectionAvailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Unavailable);
+}
+
+TEST_F(DefaultTranslatorConnectionCheckerTest, givenInvalidTranslatorApiKey_shouldReturnInvalidApiKey)
+{
+    EXPECT_CALL(*translator, translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey))
+        .WillOnce(Throw(translator::exceptions::InvalidApiKey{""}));
+
+    const auto connectionAvailableStatus =
+        connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
+
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::InvalidApiKey);
 }
 
 TEST_F(DefaultTranslatorConnectionCheckerTest, givenTranslationFromTranslator_shouldReturnTrue)
@@ -41,7 +56,8 @@ TEST_F(DefaultTranslatorConnectionCheckerTest, givenTranslationFromTranslator_sh
     EXPECT_CALL(*translator, translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(translation));
 
-    const auto connectionAvailable = connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
+    const auto connectionAvailableStatus =
+        connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
 
-    ASSERT_TRUE(connectionAvailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Available);
 }

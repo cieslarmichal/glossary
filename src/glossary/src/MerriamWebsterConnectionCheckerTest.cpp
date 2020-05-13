@@ -23,17 +23,22 @@ public:
     MerriamWebsterConnectionChecker connectionChecker{httpHandler};
 };
 
-TEST_F(MerriamWebsterConnectionCheckerTest, givenConnectionFailedFromHttpHandler_shouldReturnFalse)
+TEST_F(MerriamWebsterConnectionCheckerTest,
+       givenConnectionFailedFromHttpHandler_shouldReturnConnectionUnavailable)
 {
     EXPECT_CALL(*httpHandler, get(urlAddress))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_FALSE(connectionChecker.connectionAvailable());
+    const auto connectionStatus = connectionChecker.connectionAvailable();
+
+    ASSERT_EQ(connectionStatus, ConnectionStatus::Unavailable);
 }
 
-TEST_F(MerriamWebsterConnectionCheckerTest, givenOkResponseFromHttpHandler_shouldReturnTrue)
+TEST_F(MerriamWebsterConnectionCheckerTest, givenOkResponseFromHttpHandler_shouldReturnConnectionAvailable)
 {
     EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(okResponse));
 
-    ASSERT_TRUE(connectionChecker.connectionAvailable());
+    const auto connectionStatus = connectionChecker.connectionAvailable();
+
+    ASSERT_EQ(connectionStatus, ConnectionStatus::Available);
 }

@@ -3,19 +3,20 @@
 #include <QObject>
 #include <memory>
 
-class CheckWordDescriptionTab;
-class GlossaryAdapter;
+#include "view/CheckWordDescriptionTab.h"
+#include "model/GlossaryAdapter.h"
 
+namespace glossary::gui::viewManager
+{
 class CheckWordDescriptionTabViewManager : public QObject
 {
     Q_OBJECT
 public:
-    CheckWordDescriptionTabViewManager(QObject *parent,
-                                                std::shared_ptr<CheckWordDescriptionTab>,
-                                                std::shared_ptr<GlossaryAdapter>);
+    CheckWordDescriptionTabViewManager(QObject* parent, std::shared_ptr<view::CheckWordDescriptionTab>,
+                                       std::shared_ptr<model::GlossaryAdapter>);
 
 private:
-     std::shared_ptr<CheckWordDescriptionTab> wordDescriptionTab;
-     std::shared_ptr<GlossaryAdapter> glossaryAdapter;
+    std::shared_ptr<view::CheckWordDescriptionTab> wordDescriptionTab;
+    std::shared_ptr<model::GlossaryAdapter> glossaryAdapter;
 };
-
+}

@@ -6,6 +6,7 @@
 #include "TranslationRequestFormatterMock.h"
 #include "webConnection/HttpHandlerMock.h"
 
+#include "exceptions/InvalidApiKey.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
@@ -42,26 +43,24 @@ public:
     DefaultTranslator translator{handler, std::move(deserializerInit), std::move(requestFormatterInit)};
 };
 
-TEST_F(DefaultTranslatorTest, whenConnectionFails_shouldReturnNone)
+TEST_F(DefaultTranslatorTest, whenConnectionFails_shouldThrowConnectionFailedException)
 {
     EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage, apiKey);
-
-    ASSERT_EQ(translation, boost::none);
+    ASSERT_THROW(translator.translate(polishText, sourceLanguage, targetLanguage, apiKey),
+                 webConnection::exceptions::ConnectionFailed);
 }
 
-TEST_F(DefaultTranslatorTest, givenFailureResponseFromTranslationApi_shouldReturnNone)
+TEST_F(DefaultTranslatorTest, givenInvalidKeyResponseFromTranslationApi_throwInvalidApiKeyException)
 {
     EXPECT_CALL(*requestFormatter, getFormattedRequest(polishText, sourceLanguage, targetLanguage, apiKey))
         .WillOnce(Return(request));
     EXPECT_CALL(*handler, get(request)).WillOnce(Return(failureResponse));
 
-    const auto translation = translator.translate(polishText, sourceLanguage, targetLanguage, apiKey);
-
-    ASSERT_EQ(translation, boost::none);
+    ASSERT_THROW(translator.translate(polishText, sourceLanguage, targetLanguage, apiKey),
+                 exceptions::InvalidApiKey);
 }
 
 TEST_F(DefaultTranslatorTest, givenSuccessResponseFromTranslationApi_shouldReturnTranslatedText)

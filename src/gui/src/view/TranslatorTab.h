@@ -2,19 +2,22 @@
 
 #include <QWidget>
 
-namespace Ui {
+namespace Ui
+{
 class TranslatorTab;
 }
 
+namespace glossary::gui::view
+{
 class TranslatorTab : public QWidget
 {
     Q_OBJECT
 
 public:
-    explicit TranslatorTab(QWidget *parent = nullptr);
+    explicit TranslatorTab(QWidget* parent = nullptr);
     ~TranslatorTab();
 
 private:
-    Ui::TranslatorTab *ui;
+    Ui::TranslatorTab* ui;
 };
-
+}

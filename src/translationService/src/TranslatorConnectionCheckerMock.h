@@ -9,6 +9,7 @@ namespace glossary::translationService
 class TranslatorConnectionCheckerMock : public TranslatorConnectionChecker
 {
 public:
-    MOCK_METHOD1(connectionToTranslatorWithApiKeyIsAvailable, bool(const std::string& apiKey));
+    MOCK_METHOD1(connectionToTranslatorWithApiKeyIsAvailable,
+                 TranslationApiConnectionStatus(const std::string& apiKey));
 };
 }

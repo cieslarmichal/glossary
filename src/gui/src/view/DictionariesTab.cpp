@@ -1,9 +1,10 @@
 #include "DictionariesTab.h"
+
 #include "ui_DictionariesTab.h"
 
-DictionariesTab::DictionariesTab(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::DictionariesTab)
+namespace glossary::gui::view
+{
+DictionariesTab::DictionariesTab(QWidget* parent) : QWidget(parent), ui(new Ui::DictionariesTab)
 {
     ui->setupUi(this);
 }
@@ -11,4 +12,5 @@ DictionariesTab::DictionariesTab(QWidget *parent) :
 DictionariesTab::~DictionariesTab()
 {
     delete ui;
+}
 }

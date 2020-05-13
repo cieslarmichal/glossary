@@ -1,5 +1,8 @@
 #include "DefaultTranslatorConnectionChecker.h"
 
+#include "translator/exceptions/InvalidApiKey.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
+
 namespace glossary::translationService
 {
 
@@ -16,12 +19,22 @@ DefaultTranslatorConnectionChecker::DefaultTranslatorConnectionChecker(
 {
 }
 
-bool DefaultTranslatorConnectionChecker::connectionToTranslatorWithApiKeyIsAvailable(
-    const std::string& apiKey)
+TranslationApiConnectionStatus
+DefaultTranslatorConnectionChecker::connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey)
 {
-    if (translator->translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey))
-        return true;
-    return false;
+    try
+    {
+        translator->translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey);
+        return TranslationApiConnectionStatus::Available;
+    }
+    catch (const translator::exceptions::InvalidApiKey&)
+    {
+        return TranslationApiConnectionStatus::InvalidApiKey;
+    }
+    catch (const webConnection::exceptions::ConnectionFailed&)
+    {
+        return TranslationApiConnectionStatus::Unavailable;
+    }
 }
 
 }

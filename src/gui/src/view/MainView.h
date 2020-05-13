@@ -3,23 +3,27 @@
 #include <QMainWindow>
 #include <memory>
 
-#include "view/GuessTab.h"
 #include "view/CheckWordDescriptionTab.h"
 #include "view/DictionariesTab.h"
+#include "view/GuessTab.h"
 #include "view/StatisticsTab.h"
 #include "view/TranslatorTab.h"
 
-namespace Ui {
+namespace Ui
+{
 class MainView;
 }
 
+namespace glossary::gui::view
+{
 class MainView : public QMainWindow
 {
     Q_OBJECT
 
 public:
-    explicit MainView(QWidget *parent, std::shared_ptr<GuessTab>, std::shared_ptr<DictionariesTab>,
-                      std::shared_ptr<CheckWordDescriptionTab>, std::shared_ptr<TranslatorTab>, std::shared_ptr<StatisticsTab>);
+    explicit MainView(QWidget* parent, std::shared_ptr<GuessTab>, std::shared_ptr<DictionariesTab>,
+                      std::shared_ptr<CheckWordDescriptionTab>, std::shared_ptr<TranslatorTab>,
+                      std::shared_ptr<StatisticsTab>);
     ~MainView();
 
 private slots:
@@ -34,6 +38,6 @@ private:
     std::shared_ptr<TranslatorTab> translatorTab;
     std::shared_ptr<StatisticsTab> statisticsTab;
 
-    Ui::MainView *ui;
+    Ui::MainView* ui;
 };
-
+}

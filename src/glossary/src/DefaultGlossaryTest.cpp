@@ -3,9 +3,8 @@
 #include "gtest/gtest.h"
 
 #include "AnswerValidatorMock.h"
-#include "ConnectionCheckerMock.h"
 #include "DictionaryTranslationUpdaterMock.h"
-#include "UserPromptMock.h"
+#include "ExternalServicesAvailabilityCheckerMock.h"
 #include "dictionaryService/DictionaryServiceMock.h"
 #include "statisticsRepository/StatisticsRepositoryMock.h"
 #include "translationService/TranslationRetrieverServiceMock.h"
@@ -55,6 +54,8 @@ const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
 const std::vector<std::string> statisticsAsString{toString(statisticsPerWord1), toString(statisticsPerWord2)};
+auto availableStatus = ExternalServicesAvailabilityStatus{ConnectionStatus::Available,
+                                                          TranslationApiConnectionStatus::Available};
 }
 
 class DefaultGlossaryTest_Base : public Test
@@ -75,53 +76,37 @@ public:
         std::make_shared<StrictMock<WordDescriptionRetrieverServiceMock>>();
     std::shared_ptr<DictionaryTranslationUpdaterMock> dictionaryTranslationUpdater =
         std::make_shared<StrictMock<DictionaryTranslationUpdaterMock>>();
-    std::unique_ptr<ConnectionCheckerMock> connectionCheckerInit =
-        std::make_unique<StrictMock<ConnectionCheckerMock>>();
-    ConnectionCheckerMock* connectionChecker = connectionCheckerInit.get();
+    std::unique_ptr<ExternalServicesAvailabilityCheckerMock> externalServicesConnectionCheckerInit =
+        std::make_unique<StrictMock<ExternalServicesAvailabilityCheckerMock>>();
+    ExternalServicesAvailabilityCheckerMock* externalServicesConnectionChecker =
+        externalServicesConnectionCheckerInit.get();
     std::unique_ptr<AnswerValidatorMock> answerValidatorInit =
         std::make_unique<StrictMock<AnswerValidatorMock>>();
     AnswerValidatorMock* answerValidator = answerValidatorInit.get();
-    std::unique_ptr<UserPromptMock> userPromptInit = std::make_unique<StrictMock<UserPromptMock>>();
-    UserPromptMock* userPrompt = userPromptInit.get();
 };
 
 class DefaultGlossaryTest : public DefaultGlossaryTest_Base
 {
 public:
-    void expectUserInputNumber(int userInput)
-    {
-        EXPECT_CALL(*userPrompt, getNumberInput()).WillOnce(Return(userInput));
-    }
-
-    void expectUserInputString(const std::string& userInput1)
-    {
-        EXPECT_CALL(*userPrompt, getStringInput()).WillOnce(Return(userInput1));
-    }
-
-    void expectUserInputTwoString(const std::string& userInput1, const std::string& userInput2)
-    {
-        EXPECT_CALL(*userPrompt, getStringInput()).WillOnce(Return(userInput1)).WillOnce(Return(userInput2));
-    }
-
-    void expectUserInputThreeString(const std::string& userInput1, const std::string& userInput2,
-                                    const std::string& userInput3)
-    {
-        EXPECT_CALL(*userPrompt, getStringInput())
-            .WillOnce(Return(userInput1))
-            .WillOnce(Return(userInput2))
-            .WillOnce(Return(userInput3));
-    }
-
     DefaultGlossary glossary{dictionaryService,
                              translationService,
                              statisticsRepository,
                              wordDescriptionService,
                              dictionaryTranslationUpdater,
                              {},
-                             std::move(connectionCheckerInit),
-                             std::move(answerValidatorInit),
-                             std::move(userPromptInit)};
+                             std::move(externalServicesConnectionCheckerInit),
+                             std::move(answerValidatorInit)};
 };
+
+TEST_F(DefaultGlossaryTest, shouldReturnExternalServicesAvailabilityStatus)
+{
+    EXPECT_CALL(*externalServicesConnectionChecker, checkExternalServicesAvailabilityStatus())
+        .WillOnce(Return(availableStatus));
+
+    const auto actualAvailabilityStatus = glossary.checkConnectionToExternalServices();
+
+    ASSERT_EQ(actualAvailabilityStatus, availableStatus);
+}
 
 TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWord_shouldReturnNone)
 {
@@ -203,7 +188,7 @@ TEST_F(DefaultGlossaryTest, givenCorrectPolishWordsTranslation_shouldAddCorrectA
     ASSERT_TRUE(verificationResult);
 }
 
-TEST_F(DefaultGlossaryTest, givenInorrectPolishWordsTranslation_shouldAddIncorrectAnswerAndReturnFalse)
+TEST_F(DefaultGlossaryTest, givenIncorrectPolishWordsTranslation_shouldAddIncorrectAnswerAndReturnFalse)
 {
     EXPECT_CALL(*translationService, retrieveTranslation(polishWord, polishLanguage, englishLanguage))
         .WillOnce(Return(wordTranslation));
@@ -225,24 +210,115 @@ TEST_F(DefaultGlossaryTest, givenNoneTranslationFromTranslationService_shouldNot
     ASSERT_FALSE(verificationResult);
 }
 
-TEST_F(DefaultGlossaryTest, givenIncorrectSourceLanguage_shouldReturnNone)
+TEST_F(DefaultGlossaryTest, shouldReturnNamesOfDictionaries)
+{
+    EXPECT_CALL(*dictionaryService, getDictionaryNames()).WillOnce(Return(dictionaryNames));
+
+    const auto actualNamesOfDictionaries = glossary.listDictionariesNames();
+
+    ASSERT_EQ(actualNamesOfDictionaries, dictionaryNames);
+}
+
+TEST_F(DefaultGlossaryTest, givenNoneDictionaryWords_shouldReturnEmptyDictionaryWords)
+{
+    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(boost::none));
+
+    const auto actualDictionaryWords = glossary.listDictionaryWordsFromDictionary(dictionaryName1);
+
+    ASSERT_TRUE(actualDictionaryWords.empty());
+}
+
+TEST_F(DefaultGlossaryTest, givenDictionaryWords_shouldReturnDictionaryWords)
+{
+    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(dictionaryWords));
+
+    const auto actualDictionaryWords = glossary.listDictionaryWordsFromDictionary(dictionaryName1);
+
+    ASSERT_EQ(actualDictionaryWords, dictionaryWordsAsString);
+}
+
+TEST_F(DefaultGlossaryTest, shouldAddDictionaryByName)
+{
+    EXPECT_CALL(*dictionaryService, addDictionary(dictionaryName1));
+
+    glossary.addDictionary(dictionaryName1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldRemoveDictionaryByName)
+{
+    EXPECT_CALL(*dictionaryService, removeDictionary(dictionaryName1));
+
+    glossary.removeDictionary(dictionaryName1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldAddDictionaryWordToDictionary)
+{
+    EXPECT_CALL(*dictionaryService, addWordToDictionary(dictionaryWordWithoutTranslation, dictionaryName1));
+
+    glossary.addEnglishWordToDictionary(englishWord1, dictionaryName1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldRemoveDictionaryWordFromDictionary)
+{
+    EXPECT_CALL(*dictionaryService, removeWordFromDictionary(englishWord1, dictionaryName1));
+
+    glossary.removeEnglishWordFromDictionary(englishWord1, dictionaryName1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldAddDictionaryFromFile)
+{
+    EXPECT_CALL(*dictionaryService, addDictionaryFromFile(dictionaryName1, pathToDictionaryWords));
+
+    glossary.addDictionaryFromFile(dictionaryName1, pathToDictionaryWords);
+}
+
+TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryWordTranslationByInput)
+{
+    EXPECT_CALL(*dictionaryTranslationUpdater,
+                updateDictionaryWordTranslation(englishWord2, inputTranslation, dictionaryName1));
+
+    glossary.updateDictionaryWordTranslationManually(dictionaryName1, englishWord2, inputTranslation);
+}
+
+TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryWordTranslationAutomatically)
+{
+    EXPECT_CALL(*dictionaryTranslationUpdater,
+                updateDictionaryWordTranslation(englishWord2, dictionaryName1));
+
+    glossary.updateDictionaryWordTranslationAutomatically(dictionaryName1, englishWord2);
+}
+
+TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryTranslationsAutomatically)
+{
+    EXPECT_CALL(*dictionaryTranslationUpdater, updateDictionaryTranslations(dictionaryName1));
+
+    glossary.updateDictionaryTranslationsAutomatically(dictionaryName1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldReturnSupportedLanguagesFromTranslationService)
 {
     EXPECT_CALL(*translationService, retrieveSupportedLanguages()).WillOnce(Return(supportedLanguages));
-    expectUserInputTwoString(textToTranslate, invalidSourceLanguage);
+
+    const auto actualSupportedLanguages = glossary.getSupportedTranslatorLanguages();
+
+    ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
+}
+
+TEST_F(DefaultGlossaryTest, givenIncorrectSourceLanguage_shouldReturnNone)
+{
     EXPECT_CALL(*answerValidator, validateAnswer(invalidSourceLanguage, polishLanguageString))
         .WillOnce(Return(false));
     EXPECT_CALL(*answerValidator, validateAnswer(invalidSourceLanguage, englishLanguageString))
         .WillOnce(Return(false));
 
-    const auto actualTranslation = glossary.translate();
+    const auto actualTranslation =
+        glossary.translate(textToTranslate, invalidSourceLanguage, validTargetLanguage);
 
     ASSERT_EQ(actualTranslation, boost::none);
 }
 
 TEST_F(DefaultGlossaryTest, givenIncorrectTargetLanguage_shouldReturnNone)
 {
-    EXPECT_CALL(*translationService, retrieveSupportedLanguages()).WillOnce(Return(supportedLanguages));
-    expectUserInputThreeString(textToTranslate, validSourceLanguage, invalidTargetLanguage);
     EXPECT_CALL(*answerValidator, validateAnswer(validSourceLanguage, polishLanguageString))
         .WillOnce(Return(true));
     EXPECT_CALL(*answerValidator, validateAnswer(invalidTargetLanguage, polishLanguageString))
@@ -250,15 +326,14 @@ TEST_F(DefaultGlossaryTest, givenIncorrectTargetLanguage_shouldReturnNone)
     EXPECT_CALL(*answerValidator, validateAnswer(invalidTargetLanguage, englishLanguageString))
         .WillOnce(Return(false));
 
-    const auto actualTranslation = glossary.translate();
+    const auto actualTranslation =
+        glossary.translate(textToTranslate, validSourceLanguage, invalidTargetLanguage);
 
     ASSERT_EQ(actualTranslation, boost::none);
 }
 
 TEST_F(DefaultGlossaryTest, givenTranslationFromTranslationService_shouldReturnTranslation)
 {
-    EXPECT_CALL(*translationService, retrieveSupportedLanguages()).WillOnce(Return(supportedLanguages));
-    expectUserInputThreeString(textToTranslate, validSourceLanguage, validTargetLanguage);
     EXPECT_CALL(*answerValidator, validateAnswer(validSourceLanguage, polishLanguageString))
         .WillOnce(Return(true));
     EXPECT_CALL(*answerValidator, validateAnswer(validTargetLanguage, polishLanguageString))
@@ -268,113 +343,18 @@ TEST_F(DefaultGlossaryTest, givenTranslationFromTranslationService_shouldReturnT
     EXPECT_CALL(*translationService, retrieveTranslation(textToTranslate, polishLanguage, englishLanguage))
         .WillOnce(Return(translatedText));
 
-    const auto actualTranslation = glossary.translate();
+    const auto actualTranslation =
+        glossary.translate(textToTranslate, validSourceLanguage, validTargetLanguage);
 
     ASSERT_EQ(*actualTranslation, translatedText);
 }
 
-TEST_F(DefaultGlossaryTest, shouldReturnNamesOfDictionaries)
-{
-    EXPECT_CALL(*dictionaryService, getDictionaryNames()).WillOnce(Return(dictionaryNames));
-
-    const auto actualNamesOfDictionaries = glossary.listDictionariesByNames();
-
-    ASSERT_EQ(actualNamesOfDictionaries, dictionaryNames);
-}
-
-TEST_F(DefaultGlossaryTest, givenNoneDictionaryWords_shouldReturnEmptyDictionaryWords)
-{
-    expectUserInputString(dictionaryName1);
-    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(boost::none));
-
-    const auto actualDictionaryWords = glossary.listDictionaryWordsFromDictionary();
-
-    ASSERT_TRUE(actualDictionaryWords.empty());
-}
-
-TEST_F(DefaultGlossaryTest, givenDictionaryWords_shouldReturnDictionaryWords)
-{
-    expectUserInputString(dictionaryName1);
-    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(dictionaryWords));
-
-    const auto actualDictionaryWords = glossary.listDictionaryWordsFromDictionary();
-
-    ASSERT_EQ(actualDictionaryWords, dictionaryWordsAsString);
-}
-
-TEST_F(DefaultGlossaryTest, shouldAddDictionaryByName)
-{
-    expectUserInputString(dictionaryName1);
-    EXPECT_CALL(*dictionaryService, addDictionary(dictionaryName1));
-
-    glossary.addDictionary();
-}
-
-TEST_F(DefaultGlossaryTest, shouldAddDictionaryWordToDictionary)
-{
-    expectUserInputTwoString(dictionaryName1, englishWord1);
-    EXPECT_CALL(*dictionaryService, addWordToDictionary(dictionaryWordWithoutTranslation, dictionaryName1));
-
-    glossary.addEnglishWordToDictionary();
-}
-
-TEST_F(DefaultGlossaryTest, shouldRemoveDictionaryByName)
-{
-    expectUserInputString(dictionaryName1);
-    EXPECT_CALL(*dictionaryService, removeDictionary(dictionaryName1));
-
-    glossary.removeDictionary();
-}
-
-TEST_F(DefaultGlossaryTest, shouldRemoveDictionaryWordFromDictionary)
-{
-    expectUserInputTwoString(dictionaryName1, englishWord1);
-    EXPECT_CALL(*dictionaryService, removeWordFromDictionary(englishWord1, dictionaryName1));
-
-    glossary.removeEnglishWordFromDictionary();
-}
-
-TEST_F(DefaultGlossaryTest, shouldAddDictionaryFromFileAndSynchronizeDictionary)
-{
-    expectUserInputTwoString(dictionaryName1, pathToDictionaryWords);
-    EXPECT_CALL(*dictionaryService, addDictionaryFromFile(dictionaryName1, pathToDictionaryWords));
-
-    glossary.addDictionaryFromFile();
-}
-
-TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryWordTranslationByInsert)
-{
-    expectUserInputThreeString(dictionaryName1, englishWord2, inputTranslation);
-    EXPECT_CALL(*dictionaryTranslationUpdater,
-                updateDictionaryWordTranslation(englishWord2, inputTranslation, dictionaryName1));
-
-    glossary.updateDictionaryWordTranslationManually();
-}
-
-TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryWordTranslationAutomatically)
-{
-    expectUserInputTwoString(dictionaryName1, englishWord2);
-    EXPECT_CALL(*dictionaryTranslationUpdater,
-                updateDictionaryWordTranslation(englishWord2, dictionaryName1));
-
-    glossary.updateDictionaryWordTranslationAutomatically();
-}
-
-TEST_F(DefaultGlossaryTest, shouldUpdateDictionaryTranslationsAutomatically)
-{
-    expectUserInputString(dictionaryName1);
-    EXPECT_CALL(*dictionaryTranslationUpdater, updateDictionaryTranslations(dictionaryName1));
-
-    glossary.updateDictionaryTranslationsAutomatically();
-}
-
 TEST_F(DefaultGlossaryTest, shouldReturnWordDescription)
 {
-    expectUserInputString(englishWord1);
     EXPECT_CALL(*wordDescriptionService, retrieveWordDescription(englishWord1))
         .WillOnce(Return(wordDescription));
 
-    const auto actualWordDescription = glossary.getEnglishWordDescription();
+    const auto actualWordDescription = glossary.getEnglishWordDescription(englishWord1);
 
     ASSERT_EQ(actualWordDescription, toString(wordDescription));
 }

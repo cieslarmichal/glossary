@@ -1,9 +1,10 @@
 #include "TranslatorTab.h"
+
 #include "ui_TranslatorTab.h"
 
-TranslatorTab::TranslatorTab(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::TranslatorTab)
+namespace glossary::gui::view
+{
+TranslatorTab::TranslatorTab(QWidget* parent) : QWidget(parent), ui(new Ui::TranslatorTab)
 {
     ui->setupUi(this);
 }
@@ -11,4 +12,5 @@ TranslatorTab::TranslatorTab(QWidget *parent) :
 TranslatorTab::~TranslatorTab()
 {
     delete ui;
+}
 }

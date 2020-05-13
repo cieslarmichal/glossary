@@ -9,6 +9,6 @@ namespace glossary
 class ConnectionCheckerMock : public ConnectionChecker
 {
 public:
-    MOCK_CONST_METHOD0(connectionAvailable, bool());
+    MOCK_CONST_METHOD0(connectionAvailable, ConnectionStatus());
 };
 }
