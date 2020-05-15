@@ -50,9 +50,6 @@ void MainView::on_actionAbout_triggered()
     aboutBox.exec();
 }
 
-void MainView::on_actionLoadDictionary_triggered()
-{
-
-}
+void MainView::on_actionLoadDictionary_triggered() {}
 
 }

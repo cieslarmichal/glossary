@@ -114,7 +114,9 @@ std::vector<std::string> DefaultGlossary::listDictionaryWordsFromDictionary(cons
     if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
     {
         for (const auto& dictionaryWord : *dictionaryWords)
+        {
             dictionaryWordsAsString.push_back(toString(dictionaryWord));
+        }
     }
     return dictionaryWordsAsString;
 }
@@ -166,10 +168,9 @@ void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::strin
     dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
 }
 
-std::string DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
+WordDescription DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
 {
-    const auto wordDescription = wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
-    return toString(wordDescription);
+    return wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
 }
 
 std::vector<std::string> DefaultGlossary::getSupportedTranslatorLanguages() const
@@ -183,9 +184,13 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
 {
     translator::SourceLanguage sourceLanguage;
     if (answerValidator->validateAnswer(sourceLanguageText, "Polish"))
+    {
         sourceLanguage = translator::Language::Polish;
+    }
     else if (answerValidator->validateAnswer(sourceLanguageText, "English"))
+    {
         sourceLanguage = translator::Language::English;
+    }
     else
     {
         std::cerr << "Invalid source language\n";
@@ -194,9 +199,13 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
 
     translator::TargetLanguage targetLanguage;
     if (answerValidator->validateAnswer(targetLanguageText, "Polish"))
+    {
         targetLanguage = translator::Language::Polish;
+    }
     else if (answerValidator->validateAnswer(targetLanguageText, "English"))
+    {
         targetLanguage = translator::Language::English;
+    }
     else
     {
         std::cerr << "Invalid target language\n";
@@ -206,12 +215,9 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
     return translationRetrieverService->retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
 }
 
-std::vector<std::string> DefaultGlossary::showStatistics() const
+Statistics DefaultGlossary::getStatistics() const
 {
-    std::vector<std::string> statisticsAsString;
-    for (const auto& wordStatistics : statisticsRepository->getStatistics())
-        statisticsAsString.push_back(toString(wordStatistics));
-    return statisticsAsString;
+    return statisticsRepository->getStatistics();
 }
 
 void DefaultGlossary::resetStatistics() const

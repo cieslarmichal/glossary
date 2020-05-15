@@ -3,8 +3,8 @@
 #include <QObject>
 #include <memory>
 
-#include "view/CheckWordDescriptionTab.h"
 #include "model/GlossaryAdapter.h"
+#include "view/CheckWordDescriptionTab.h"
 
 namespace glossary::gui::viewManager
 {

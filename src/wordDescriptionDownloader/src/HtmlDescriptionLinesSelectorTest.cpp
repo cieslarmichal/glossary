@@ -3,7 +3,9 @@
 #include "gtest/gtest.h"
 
 #include "testVariables/HtmlContent.h"
+#include "testVariables/HtmlContent2.h"
 #include "testVariables/ParsedGlossaryHtmlContent.h"
+#include "utils/StlOperators.h"
 
 using namespace ::testing;
 using namespace glossary::wordDescriptionDownloader;
@@ -62,6 +64,15 @@ TEST_F(HtmlDescriptionLinesSelectorTest, givenRealHtmlContent_shouldReturnParsed
     const auto actualParsedHtmlContent = glossaryHtmlParser.selectLines(htmlContent);
 
     ASSERT_EQ(actualParsedHtmlContent, testParsedGlossaryHtmlContent);
+}
+
+TEST_F(HtmlDescriptionLinesSelectorTest, givenRealHtmlContent2_shouldReturnParsedContent)
+{
+    const auto actualParsedHtmlContent = glossaryHtmlParser.selectLines(htmlContent2);
+
+    std::cout << actualParsedHtmlContent;
+    // TODO: test
+    //    ASSERT_EQ(actualParsedHtmlContent, testParsedGlossaryHtmlContent);
 }
 
 TEST_F(HtmlDescriptionLinesSelectorTest, givenHtmlContentWithoutImportantLines_shouldReturnEmptyVector)

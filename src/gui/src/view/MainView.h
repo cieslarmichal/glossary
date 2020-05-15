@@ -3,11 +3,11 @@
 #include <QMainWindow>
 #include <memory>
 
-#include "view/CheckWordDescriptionTab.h"
-#include "view/DictionariesTab.h"
-#include "view/GuessTab.h"
-#include "view/StatisticsTab.h"
-#include "view/TranslatorTab.h"
+#include "CheckWordDescriptionTab.h"
+#include "DictionariesTab.h"
+#include "GuessTab.h"
+#include "StatisticsTab.h"
+#include "TranslatorTab.h"
 
 namespace Ui
 {

@@ -2,6 +2,7 @@
 
 #include <QObject>
 #include <memory>
+
 #include "model/GlossaryAdapter.h"
 #include "view/DictionariesTab.h"
 

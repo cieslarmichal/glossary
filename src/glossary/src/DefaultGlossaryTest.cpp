@@ -53,7 +53,6 @@ const WordDescription wordDescription{EnglishWord{"computer"},
 const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
-const std::vector<std::string> statisticsAsString{toString(statisticsPerWord1), toString(statisticsPerWord2)};
 auto availableStatus = ExternalServicesAvailabilityStatus{ConnectionStatus::Available,
                                                           TranslationApiConnectionStatus::Available};
 }
@@ -356,16 +355,16 @@ TEST_F(DefaultGlossaryTest, shouldReturnWordDescription)
 
     const auto actualWordDescription = glossary.getEnglishWordDescription(englishWord1);
 
-    ASSERT_EQ(actualWordDescription, toString(wordDescription));
+    ASSERT_EQ(actualWordDescription, wordDescription);
 }
 
 TEST_F(DefaultGlossaryTest, shouldReturnStatistics)
 {
     EXPECT_CALL(*statisticsRepository, getStatistics()).WillOnce(Return(statistics));
 
-    const auto actualStatistics = glossary.showStatistics();
+    const auto actualStatistics = glossary.getStatistics();
 
-    ASSERT_EQ(actualStatistics, statisticsAsString);
+    ASSERT_EQ(actualStatistics, statistics);
 }
 
 TEST_F(DefaultGlossaryTest, shouldResetStatistics)

@@ -6,6 +6,8 @@
 #include "boost/optional.hpp"
 
 #include "ExternalServicesAvailabilityStatus.h"
+#include "Statistics.h"
+#include "WordDescription.h"
 
 namespace glossary
 {
@@ -35,12 +37,12 @@ public:
     virtual void updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
                                                               const std::string& englishWord) const = 0;
     virtual void updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const = 0;
-    virtual std::string getEnglishWordDescription(const std::string& englishWord) const = 0;
+    virtual WordDescription getEnglishWordDescription(const std::string& englishWord) const = 0;
     virtual std::vector<std::string> getSupportedTranslatorLanguages() const = 0;
     virtual boost::optional<std::string> translate(const std::string& textToTranslate,
                                                    const std::string& sourceLanguage,
                                                    const std::string& targetLanguage) const = 0;
-    virtual std::vector<std::string> showStatistics() const = 0;
+    virtual Statistics getStatistics() const = 0;
     virtual void resetStatistics() const = 0;
 };
 }

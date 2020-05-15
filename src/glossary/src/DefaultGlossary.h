@@ -45,12 +45,12 @@ public:
     void updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
                                                       const std::string& englishWord) const override;
     void updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const override;
-    std::string getEnglishWordDescription(const std::string& englishWord) const override;
+    WordDescription getEnglishWordDescription(const std::string& englishWord) const override;
     boost::optional<std::string> translate(const std::string& textToTranslate,
                                            const std::string& sourceLanguage,
                                            const std::string& targetLanguage) const override;
     std::vector<std::string> getSupportedTranslatorLanguages() const override;
-    std::vector<std::string> showStatistics() const override;
+    Statistics getStatistics() const override;
     void resetStatistics() const override;
 
 private:
