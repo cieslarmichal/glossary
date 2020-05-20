@@ -3,7 +3,6 @@ set(SOURCES
         src/WordsDescriptionsMemoryStorage.cpp
         src/WordsDescriptionsPersistentStorage.cpp
         src/WordsDescriptionsJsonSerializer.cpp
-        src/DescriptionSerializer.cpp
         src/WordDescriptionRepositoryFactory.cpp
         src/DefaultWordDescriptionRepositoryFactory.cpp
         )
@@ -13,7 +12,7 @@ set(UT_SOURCES
         src/WordsDescriptionsMemoryStorageTest.cpp
         src/WordsDescriptionsPersistentStorageTest.cpp
         src/WordsDescriptionsJsonSerializerTest.cpp
-        src/DescriptionSerializerTest.cpp)
+        )
 
 add_library(wordDescriptionRepository ${SOURCES})
 add_executable(wordDescriptionRepositoryUT ${UT_SOURCES})

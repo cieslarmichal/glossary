@@ -1,27 +1,24 @@
 #pragma once
 
-#include "Description.h"
+#include "DefinitionWithExample.h"
 #include "EnglishWord.h"
+#include "Sentence.h"
 
 namespace glossary::wordDescriptionRepository
 {
 struct WordDescription
 {
-    WordDescription() = default;
-    WordDescription(EnglishWord englishWordInit, Description descriptionInit)
-        : englishWord{std::move(englishWordInit)}, description{std::move(descriptionInit)}
-    {
-    }
-
     EnglishWord englishWord;
-    Description description;
+    DefinitionsWithExamples definitionsWithExamples;
+    Sentences sentences;
 };
 
 using WordsDescriptions = std::vector<WordDescription>;
 
 inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord && lhs.description == rhs.description);
+    return (lhs.englishWord == rhs.englishWord &&
+            lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
 }
 
 inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
@@ -31,8 +28,16 @@ inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
 
 inline std::string toString(const WordDescription& wordDescription)
 {
-    return "{englishWord:" + wordDescription.englishWord +
-           ",description:" + toString(wordDescription.description) + "}";
+    std::string wordDescriptionString = "{englishWord:" + wordDescription.englishWord;
+    wordDescriptionString += "definitionsWithExamples:[";
+    for (const auto& definitionAndExample : wordDescription.definitionsWithExamples)
+        wordDescriptionString += toString(definitionAndExample) + ",";
+    wordDescriptionString += "]";
+    wordDescriptionString += "sentences:[";
+    for (const auto& sentence : wordDescription.sentences)
+        wordDescriptionString += sentence + ",";
+    wordDescriptionString += "]}";
+    return wordDescriptionString;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const WordDescription& wordDescription)
