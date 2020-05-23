@@ -14,12 +14,13 @@ size_t curlWriterCallback(char* data, size_t size, size_t nmemb, std::string*);
 
 Response CurlHttpHandler::get(const Request& urlAddress) const
 {
-
     curl_global_init(CURL_GLOBAL_ALL);
     CURL* curl = curl_easy_init();
 
     if (not curl)
+    {
         throw exceptions::ConnectionFailed("Error while initializing curl library");
+    }
 
     Response response;
     curl_easy_setopt(curl, CURLOPT_URL, urlAddress.c_str());
@@ -29,6 +30,7 @@ Response CurlHttpHandler::get(const Request& urlAddress) const
     if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
     {
         curl_easy_cleanup(curl);
+        curl_global_cleanup();
         throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
     }
 
@@ -40,9 +42,49 @@ Response CurlHttpHandler::get(const Request& urlAddress) const
     return response;
 }
 
+Response CurlHttpHandler::get(const std::string& url, const std::vector<std::string>& headers) const
+{
+    curl_global_init(CURL_GLOBAL_ALL);
+    CURL* curl = curl_easy_init();
+
+    if (not curl)
+    {
+        throw exceptions::ConnectionFailed("Error while initializing curl library");
+    }
+
+    Response response;
+    curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
+    curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response.content);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriterCallback);
+
+    struct curl_slist* curlHeaders = nullptr;
+    for (const auto& header : headers)
+    {
+        curlHeaders = curl_slist_append(curlHeaders, header.c_str());
+    }
+
+    curl_easy_setopt(curl, CURLOPT_HTTPHEADER, curlHeaders);
+
+    if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
+    {
+        curl_slist_free_all(curlHeaders);
+        curl_easy_cleanup(curl);
+        curl_global_cleanup();
+        throw exceptions::ConnectionFailed("Error while connecting to: " + url);
+    }
+
+    curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.code);
+
+    curl_slist_free_all(curlHeaders);
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
+
+    return response;
+}
+
 namespace
 {
-
 size_t curlWriterCallback(char* data, size_t size, size_t nmemb, std::string* writerData)
 {
     writerData->append(data, size * nmemb);

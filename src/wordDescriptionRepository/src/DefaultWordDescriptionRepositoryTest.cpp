@@ -10,7 +10,7 @@ using namespace glossary::wordDescriptionRepository;
 namespace
 {
 const EnglishWord englishWord{"englishWord"};
-const WordDescription wordDescription{englishWord, {}, {}};
+const WordDescription wordDescription{englishWord, {}, {}, {}};
 const WordsDescriptions wordsDescriptions{wordDescription};
 }
 

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "boost/optional.hpp"
+
 #include "wordDescriptionRepository/WordDescription.h"
 
 namespace glossary::wordDescriptionDownloader

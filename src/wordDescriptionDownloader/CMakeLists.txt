@@ -1,15 +1,19 @@
 set(SOURCES
-        src/DefaultDescriptionParser.cpp
-        src/HtmlDescriptionLinesSelector.cpp
         src/DefaultWordDescriptionDownloader.cpp
         src/WordDescriptionDownloaderFactory.cpp
         src/DefaultWordDescriptionDownloaderFactory.cpp
+        src/WordsApiJsonResponseDeserializer.cpp
+        src/WordsApiResponseFetcher.cpp
+        src/WordsApiKeyFileReader.cpp
+        src/ApiKeyFileFormatter.cpp
         )
 
 set(UT_SOURCES
-        src/DefaultDescriptionParserTest.cpp
-        src/HtmlDescriptionLinesSelectorTest.cpp
         src/DefaultWordDescriptionDownloaderTest.cpp
+        src/WordsApiJsonResponseDeserializerTest.cpp
+        src/WordsApiResponseFetcherTest.cpp
+        src/WordsApiKeyFileReaderTest.cpp
+        src/ApiKeyFileFormatterTest.cpp
         )
 
 add_library(wordDescriptionDownloader ${SOURCES})
@@ -17,10 +21,11 @@ add_executable(wordDescriptionDownloaderUT ${UT_SOURCES})
 
 target_include_directories(wordDescriptionDownloader
         PUBLIC "include"
-        PRIVATE "include/wordDescriptionDownloader"
+        PRIVATE "include/wordDescriptionDownloader" ${JSON_INCLUDE_DIR}
         )
 target_include_directories(wordDescriptionDownloaderUT PRIVATE
         ${INTERNAL_LIBS_INCLUDE_PATH}
+        ${JSON_INCLUDE_DIR}
         "include"
         "include/wordDescriptionDownloader"
         )

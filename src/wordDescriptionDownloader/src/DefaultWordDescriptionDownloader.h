@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "DescriptionParser.h"
-#include "LinesSelector.h"
+#include "ApiResponseFetcher.h"
 #include "WordDescriptionDownloader.h"
+#include "WordDescriptionResponseDeserializer.h"
 #include "webConnection/HttpHandler.h"
 #include "wordDescriptionRepository/EnglishWord.h"
 
@@ -13,20 +13,22 @@ namespace glossary::wordDescriptionDownloader
 class DefaultWordDescriptionDownloader : public WordDescriptionDownloader
 {
 public:
-    DefaultWordDescriptionDownloader(std::shared_ptr<const webConnection::HttpHandler>,
-                                     std::unique_ptr<const LinesSelector>,
-                                     std::unique_ptr<const DescriptionParser>);
+    DefaultWordDescriptionDownloader(std::unique_ptr<const ApiResponseFetcher>,
+                                     std::unique_ptr<const WordDescriptionResponseDeserializer>);
 
     boost::optional<wordDescriptionRepository::WordDescription>
     downloadWordDescription(const wordDescriptionRepository::EnglishWord&) const override;
 
 private:
-    boost::optional<std::string> getHttpContent(const wordDescriptionRepository::EnglishWord&) const;
+    boost::optional<wordDescriptionRepository::Definitions>
+    downloadDefinitions(const wordDescriptionRepository::EnglishWord&) const;
+    boost::optional<wordDescriptionRepository::Examples>
+    downloadExamples(const wordDescriptionRepository::EnglishWord&) const;
+    boost::optional<wordDescriptionRepository::Synonyms>
+    downloadSynonyms(const wordDescriptionRepository::EnglishWord&) const;
+    bool responseCodeIsOk(const webConnection::ResponseCode) const;
 
-    std::shared_ptr<const webConnection::HttpHandler> httpHandler;
-    std::unique_ptr<const LinesSelector> linesSelector;
-    std::unique_ptr<const DescriptionParser> descriptionParser;
-
-    static const std::string urlAddressToDownloadWordDescription;
+    std::unique_ptr<const ApiResponseFetcher> apiResponseFetcher;
+    std::unique_ptr<const WordDescriptionResponseDeserializer> responseDeserializer;
 };
 }

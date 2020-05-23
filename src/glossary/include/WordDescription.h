@@ -5,10 +5,8 @@
 namespace glossary
 {
 using EnglishWord = wordDescriptionRepository::EnglishWord;
-using Definition = wordDescriptionRepository::DefinitionWithExample;
-using Definitions = wordDescriptionRepository::DefinitionsWithExamples;
-using Sentence = wordDescriptionRepository::Sentence;
-using Sentences = wordDescriptionRepository::Sentences;
-using Description = wordDescriptionRepository::Description;
+using Definitions = wordDescriptionRepository::Definitions;
+using Examples = wordDescriptionRepository::Examples;
+using Synonyms = wordDescriptionRepository::Synonyms;
 using WordDescription = wordDescriptionRepository::WordDescription;
 }

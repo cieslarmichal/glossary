@@ -13,6 +13,7 @@ public:
 private:
     QString formatEnglishWord(const EnglishWord&) const;
     QList<QString> formatDefinitions(const Definitions&) const;
-    QList<QString> formatSentences(const Sentences&) const;
+    QList<QString> formatExamples(const Examples&) const;
+    QList<QString> formatSynonyms(const Synonyms&) const;
 };
 }

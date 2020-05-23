@@ -24,8 +24,11 @@ WordDescriptionDialog::WordDescriptionDialog(QWidget* parent, const WordDescript
     definitions.setStringList(formattedWordDescription.definitions);
     ui->listWithDefinitions->setModel(&definitions);
 
-    sentences.setStringList(formattedWordDescription.sentences);
-    ui->listWithSentences->setModel(&sentences);
+    examples.setStringList(formattedWordDescription.examples);
+    ui->listWithExamples->setModel(&examples);
+
+    synonyms.setStringList(formattedWordDescription.synonyms);
+    ui->listWithSynonyms->setModel(&synonyms);
 }
 
 WordDescriptionDialog::~WordDescriptionDialog()

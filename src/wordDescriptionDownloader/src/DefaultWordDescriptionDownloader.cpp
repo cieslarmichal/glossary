@@ -2,21 +2,20 @@
 
 #include <iostream>
 
-#include "HtmlDescriptionLinesSelector.h"
+#include "exceptions/InvalidApiKey.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
 
 namespace glossary::wordDescriptionDownloader
 {
-const std::string DefaultWordDescriptionDownloader::urlAddressToDownloadWordDescription{
-    "https://www.merriam-webster.com/dictionary/"};
+namespace
+{
+const webConnection::ResponseCode okResponse{200};
+}
 
 DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
-    std::shared_ptr<const webConnection::HttpHandler> httpHandlerInit,
-    std::unique_ptr<const LinesSelector> linesSelectorInit,
-    std::unique_ptr<const DescriptionParser> descriptionParserInit)
-    : httpHandler{std::move(httpHandlerInit)},
-      linesSelector{std::move(linesSelectorInit)},
-      descriptionParser{std::move(descriptionParserInit)}
+    std::unique_ptr<const ApiResponseFetcher> fetcher,
+    std::unique_ptr<const WordDescriptionResponseDeserializer> deserializer)
+    : apiResponseFetcher{std::move(fetcher)}, responseDeserializer{std::move(deserializer)}
 {
 }
 
@@ -24,30 +23,93 @@ boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionDownloader::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    const auto httpContent = getHttpContent(englishWord);
-    if (not httpContent)
+    const auto definitions = downloadDefinitions(englishWord);
+    if (not definitions)
+    {
         return boost::none;
-
-    const auto linesWithDescription = linesSelector->selectLines(*httpContent);
-
-    if (const auto wordDescription = descriptionParser->parse(linesWithDescription))
-        return wordDescriptionRepository::WordDescription{englishWord, *wordDescription};
-
-    return boost::none;
+    }
+    const auto examples = downloadExamples(englishWord);
+    if (not examples)
+    {
+        return boost::none;
+    }
+    const auto synonyms = downloadSynonyms(englishWord);
+    if (not synonyms)
+    {
+        return boost::none;
+    }
+    return wordDescriptionRepository::WordDescription{englishWord, *definitions, *examples, *synonyms};
 }
 
-boost::optional<std::string> DefaultWordDescriptionDownloader::getHttpContent(
+boost::optional<wordDescriptionRepository::Definitions> DefaultWordDescriptionDownloader::downloadDefinitions(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     try
     {
-        const auto response = httpHandler->get(urlAddressToDownloadWordDescription + englishWord);
-        return response.content;
+        const auto definitionsApiResponse = apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord);
+        if (responseCodeIsOk(definitionsApiResponse.code))
+        {
+            return responseDeserializer->deserializeDefinitions(definitionsApiResponse.content);
+        }
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Get content from http failed: " << e.what();
-        return boost::none;
     }
+    catch (const exceptions::InvalidApiKey& e)
+    {
+        std::cerr << "Invalid api key: " << e.what();
+    }
+    return boost::none;
 }
+
+boost::optional<wordDescriptionRepository::Examples> DefaultWordDescriptionDownloader::downloadExamples(
+    const wordDescriptionRepository::EnglishWord& englishWord) const
+{
+    try
+    {
+        const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord);
+        if (responseCodeIsOk(examplesApiResponse.code))
+        {
+            return responseDeserializer->deserializeExamples(examplesApiResponse.content);
+        }
+    }
+    catch (const webConnection::exceptions::ConnectionFailed& e)
+    {
+        std::cerr << "Get content from http failed: " << e.what();
+    }
+    catch (const exceptions::InvalidApiKey& e)
+    {
+        std::cerr << "Invalid api key: " << e.what();
+    }
+    return boost::none;
+}
+
+boost::optional<wordDescriptionRepository::Synonyms> DefaultWordDescriptionDownloader::downloadSynonyms(
+    const wordDescriptionRepository::EnglishWord& englishWord) const
+{
+    try
+    {
+        const auto synonymsApiResponse = apiResponseFetcher->tryGetWordSynonymsResponse(englishWord);
+        if (responseCodeIsOk(synonymsApiResponse.code))
+        {
+            return responseDeserializer->deserializeSynonyms(synonymsApiResponse.content);
+        }
+    }
+    catch (const webConnection::exceptions::ConnectionFailed& e)
+    {
+        std::cerr << "Get content from http failed: " << e.what();
+    }
+    catch (const exceptions::InvalidApiKey& e)
+    {
+        std::cerr << "Invalid api key: " << e.what();
+    }
+    return boost::none;
+}
+
+bool DefaultWordDescriptionDownloader::responseCodeIsOk(const webConnection::ResponseCode responseCode) const
+{
+    return responseCode == okResponse;
+}
+
 }

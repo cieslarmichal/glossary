@@ -7,36 +7,27 @@ using namespace glossary::wordDescriptionRepository;
 
 namespace
 {
-const DefinitionWithExample definitionWithExample1{"definition1", {"example11", "example12"}};
-const DefinitionWithExample definitionWithExample2{"definition2", {"example21", "example22"}};
-const DefinitionsWithExamples definitionsWithExamples1{definitionWithExample1, definitionWithExample2};
-const DefinitionsWithExamples definitionsWithExamples2{definitionWithExample2};
-const Sentence sentence1{"sentence1"};
-const Sentence sentence2{"sentence2"};
-const Sentences sentences1{sentence1, sentence2};
-const Sentences sentences2{sentence1};
-const WordDescription wordDescription1{"computer", definitionsWithExamples1, sentences1};
-const WordDescription wordDescription2{"tea", {}, sentences2};
-const WordDescription wordDescription1WithDefinitionErrors{"computer", definitionsWithExamples2, sentences1};
+const Definitions definitions{"definition1", "definition2"};
+const Examples examples{"example1", "example2"};
+const Synonyms synonyms{"synonym1", "synonym2"};
+const WordDescription wordDescription1{"computer", definitions, examples, synonyms};
+const WordDescription wordDescription2{"tea", {}, {}, {}};
 const WordsDescriptions wordsDescriptions1{wordDescription1, wordDescription2};
 const WordsDescriptions wordsDescriptions2{wordDescription2};
-const WordsDescriptions wordsDescriptions3{wordDescription1WithDefinitionErrors, wordDescription2};
 const WordsDescriptions emptyWordsDescriptions{};
 const std::string invalidJson{"{."};
-const std::string expectedSerializedWordsDescriptions{
-    R"({"wordsDescriptions":[{"definitionsWithExamples":[{"definition":"definition1","examples":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"englishWord":"computer","sentences":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
-const std::string serializedWordsDescriptionsWithoutEnglishWordField{
-    R"({"wordsDescriptions":[{"definitionsWithExamples":[{"definition":"definition1","examples":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"error":"computer","sentences":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
-const std::string serializedWordsDescriptionsWithoutDefinitionsWithExamplesField{
-    R"({"wordsDescriptions":[{"error":[{"definition":"definition1","examples":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"englishWord":"computer","sentences":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
-const std::string serializedWordsDescriptionsWithoutSentencesField{
-    R"({"wordsDescriptions":[{"definitionsWithExamples":[{"definition":"definition1","examples":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"englishWord":"computer","error":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
-const std::string serializedWordsDescriptionsWithoutWordsDescriptionsField{
-    R"({"error":[{"definitionsWithExamples":[{"definition":"definition1","examples":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"englishWord":"computer","sentences":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
-const std::string serializedWordsDescriptionsWithoutDefinitionField{
-    R"({"wordsDescriptions":[{"definitionsWithExamples":[{"error":"definition1","examples":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"englishWord":"computer","sentences":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
-const std::string serializedWordsDescriptionsWithoutExamplesField{
-    R"({"wordsDescriptions":[{"definitionsWithExamples":[{"definition":"definition1","error":["example11","example12"]},{"definition":"definition2","examples":["example21","example22"]}],"englishWord":"computer","sentences":["sentence1","sentence2"]},{"definitionsWithExamples":[],"englishWord":"tea","sentences":["sentence1"]}]})"};
+const std::string expectedSerializedWordsDescriptions =
+    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+const std::string serializedWordsDescriptionsWithoutWordsDescriptionsField =
+    R"({"error":[{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+const std::string serializedWordsDescriptionsWithoutEnglishWordField =
+    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"error":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+const std::string serializedWordsDescriptionsWithoutDefinitionsField =
+    R"({"wordsDescriptions":[{"error":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+const std::string serializedWordsDescriptionsWithoutExamplesField =
+    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"englishWord":"computer","error":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+const std::string serializedWordsDescriptionsWithoutSynonymsField =
+    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"error":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
 const std::string emptySerializedWordsDescriptions{};
 }
 
@@ -103,36 +94,26 @@ TEST_F(
 
 TEST_F(
     WordsDescriptionsJsonSerializerTest,
-    givenSerializedWordsDescriptionsFirstWithAndSecondWithoutDefinitionsWithExamplesField_shouldReturnFirstWordDecription)
+    givenSerializedWordsDescriptionsFirstWithAndSecondWithoutDefinitionsField_shouldReturnFirstWordDecription)
 {
     const auto actualDescriptions =
-        serializer.deserialize(serializedWordsDescriptionsWithoutDefinitionsWithExamplesField);
+        serializer.deserialize(serializedWordsDescriptionsWithoutDefinitionsField);
 
     EXPECT_EQ(actualDescriptions, wordsDescriptions2);
-}
-
-TEST_F(
-    WordsDescriptionsJsonSerializerTest,
-    givenSerializedWordsDescriptionsFirstWithAndSecondWithoutSentencesField_shouldReturnFirstWordDecription)
-{
-    const auto actualDescriptions = serializer.deserialize(serializedWordsDescriptionsWithoutSentencesField);
-
-    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
-}
-
-TEST_F(
-    WordsDescriptionsJsonSerializerTest,
-    givenSerializedWordsDescriptionsSomeWithoutDefinitionField_shouldDeserializeThoseWhichHaveDefinitionField)
-{
-    const auto actualDescriptions = serializer.deserialize(serializedWordsDescriptionsWithoutDefinitionField);
-
-    EXPECT_EQ(actualDescriptions, wordsDescriptions3);
 }
 
 TEST_F(WordsDescriptionsJsonSerializerTest,
-       givenSerializedWordsDescriptionsSomeWithoutExampleField_shouldThoseWhichHaveExamplesField)
+       givenSerializedWordsDescriptionsFirstWithAndSecondWithoutExamplesField_shouldReturnFirstWordDecription)
 {
     const auto actualDescriptions = serializer.deserialize(serializedWordsDescriptionsWithoutExamplesField);
 
-    EXPECT_EQ(actualDescriptions, wordsDescriptions3);
+    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
+}
+
+TEST_F(WordsDescriptionsJsonSerializerTest,
+       givenSerializedWordsDescriptionsFirstWithAndSecondWithoutSynonymsField_shouldReturnFirstWordDecription)
+{
+    const auto actualDescriptions = serializer.deserialize(serializedWordsDescriptionsWithoutSynonymsField);
+
+    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
 }

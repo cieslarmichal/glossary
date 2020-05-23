@@ -16,7 +16,7 @@ const EnglishWord englishWord1{"englishWord1"};
 const EnglishWord englishWord2{"englishWord2"};
 const EnglishWord englishWord3{"englishWord3"};
 const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
-const WordDescription wordDescription1{englishWord1, Description{}};
+const WordDescription wordDescription1{englishWord1, {}, {}, {}};
 }
 
 class WordDescriptionConcurrentUpdaterTest : public Test

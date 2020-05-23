@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>908</width>
-    <height>737</height>
+    <width>555</width>
+    <height>529</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,8 +16,8 @@
   <widget class="QDialogButtonBox" name="buttonOk">
    <property name="geometry">
     <rect>
-     <x>400</x>
-     <y>700</y>
+     <x>260</x>
+     <y>490</y>
      <width>81</width>
      <height>21</height>
     </rect>
@@ -32,13 +32,13 @@
     <set>QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QListView" name="listWithSentences">
+  <widget class="QListView" name="listWithExamples">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>410</y>
-     <width>861</width>
-     <height>271</height>
+     <y>200</y>
+     <width>511</width>
+     <height>131</height>
     </rect>
    </property>
   </widget>
@@ -47,22 +47,22 @@
     <rect>
      <x>20</x>
      <y>40</y>
-     <width>861</width>
-     <height>341</height>
+     <width>511</width>
+     <height>131</height>
     </rect>
    </property>
   </widget>
-  <widget class="QLabel" name="labelUsageInSentence">
+  <widget class="QLabel" name="labelExamples">
    <property name="geometry">
     <rect>
      <x>20</x>
-     <y>390</y>
+     <y>180</y>
      <width>759</width>
      <height>17</height>
     </rect>
    </property>
    <property name="text">
-    <string>Example of usage %1 in a sentence:</string>
+    <string>Example of usage %1:</string>
    </property>
   </widget>
   <widget class="QLabel" name="labelDefinitions">
@@ -76,6 +76,29 @@
    </property>
    <property name="text">
     <string>Definitions of %1:</string>
+   </property>
+  </widget>
+  <widget class="QListView" name="listWithSynonyms">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>360</y>
+     <width>511</width>
+     <height>101</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QLabel" name="labelSynonyms">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>340</y>
+     <width>759</width>
+     <height>17</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Synonyms of %1:</string>
    </property>
   </widget>
  </widget>

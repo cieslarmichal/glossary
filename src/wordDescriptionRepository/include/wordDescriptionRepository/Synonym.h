@@ -5,6 +5,6 @@
 
 namespace glossary::wordDescriptionRepository
 {
-using Example = std::string;
-using Examples = std::vector<Example>;
+using Synonym = std::string;
+using Synonyms = std::vector<Synonym>;
 }

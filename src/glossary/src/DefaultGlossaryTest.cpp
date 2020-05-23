@@ -45,11 +45,10 @@ const DictionaryWord dictionaryWordWithTranslation{englishWord2, wordTranslation
 const DictionaryWords dictionaryWords{dictionaryWordWithoutTranslation, dictionaryWordWithTranslation};
 const std::vector<std::string> dictionaryWordsAsString{toString(dictionaryWordWithoutTranslation),
                                                        toString(dictionaryWordWithTranslation)};
-const DefinitionWithExample definitionWithExample1{"definition1", std::string{"example1"}};
-const DefinitionWithExample definitionWithExample2{"definition2", std::string{"example2"}};
-const DefinitionsWithExamples definitionsWithExamples{definitionWithExample1, definitionWithExample2};
-const WordDescription wordDescription{EnglishWord{"computer"},
-                                      Description{definitionsWithExamples, Sentences{"sentence"}}};
+const Definitions definitions{"definition1", "definition2"};
+const Examples examples{"example1", "example2"};
+const Synonyms synonyms{"synonym1", "synonym2", "synonym1000000"};
+const WordDescription wordDescription{EnglishWord{"computer"}, definitions, examples, synonyms};
 const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};

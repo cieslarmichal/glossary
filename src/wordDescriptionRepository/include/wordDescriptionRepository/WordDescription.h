@@ -1,24 +1,27 @@
 #pragma once
 
-#include "DefinitionWithExample.h"
+#include "Definition.h"
 #include "EnglishWord.h"
-#include "Sentence.h"
+#include "Example.h"
+#include "Synonym.h"
+#include "utils/StlOperators.h"
 
 namespace glossary::wordDescriptionRepository
 {
 struct WordDescription
 {
     EnglishWord englishWord;
-    DefinitionsWithExamples definitionsWithExamples;
-    Sentences sentences;
+    Definitions definitions;
+    Examples examples;
+    Synonyms synonyms;
 };
 
 using WordsDescriptions = std::vector<WordDescription>;
 
 inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord &&
-            lhs.definitionsWithExamples == rhs.definitionsWithExamples && lhs.sentences == rhs.sentences);
+    return (lhs.englishWord == rhs.englishWord && lhs.definitions == rhs.definitions &&
+            lhs.examples == rhs.examples && lhs.synonyms == rhs.synonyms);
 }
 
 inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
@@ -29,20 +32,15 @@ inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)
 inline std::string toString(const WordDescription& wordDescription)
 {
     std::string wordDescriptionString = "{englishWord:" + wordDescription.englishWord;
-    wordDescriptionString += "definitionsWithExamples:[";
-    for (const auto& definitionAndExample : wordDescription.definitionsWithExamples)
-        wordDescriptionString += toString(definitionAndExample) + ",";
-    wordDescriptionString += "]";
-    wordDescriptionString += "sentences:[";
-    for (const auto& sentence : wordDescription.sentences)
-        wordDescriptionString += sentence + ",";
-    wordDescriptionString += "]}";
+    wordDescriptionString += "definitions:" + toStringArray(wordDescription.definitions);
+    wordDescriptionString += "examples:" + toStringArray(wordDescription.examples);
+    wordDescriptionString += "synonyms:" + toStringArray(wordDescription.synonyms);
+    wordDescriptionString += "}";
     return wordDescriptionString;
 }
 
 inline std::ostream& operator<<(std::ostream& os, const WordDescription& wordDescription)
 {
-    os << toString(wordDescription);
-    return os;
+    return os << toString(wordDescription);
 }
 }

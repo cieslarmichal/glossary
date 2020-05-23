@@ -11,5 +11,6 @@ class CurlHttpHandler : public HttpHandler
 {
 public:
     Response get(const Request&) const override;
+    Response get(const std::string& url, const std::vector<std::string>& headers) const override;
 };
 }

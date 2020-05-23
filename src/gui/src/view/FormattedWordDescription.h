@@ -9,12 +9,13 @@ struct FormattedWordDescription
 {
     QString englishWord;
     QList<QString> definitions;
-    QList<QString> sentences;
+    QList<QString> examples;
+    QList<QString> synonyms;
 };
 
 inline bool operator==(const FormattedWordDescription& lhs, const FormattedWordDescription& rhs)
 {
     return lhs.englishWord == rhs.englishWord && lhs.definitions == rhs.definitions &&
-           lhs.sentences == rhs.sentences;
+           lhs.examples == rhs.examples && lhs.synonyms == rhs.synonyms;
 }
 }

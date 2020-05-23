@@ -2,73 +2,170 @@
 
 #include "gtest/gtest.h"
 
-#include "DescriptionParserMock.h"
-#include "LinesSelectorMock.h"
-#include "webConnection/HttpHandlerMock.h"
+#include "ApiResponseFetcherMock.h"
+#include "WordDescriptionResponseDeserializerMock.h"
 
-#include "testVariables/HtmlContent.h"
-#include "testVariables/ParsedGlossaryHtmlContent.h"
+#include "exceptions/InvalidApiKey.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
-#include "wordDescriptionDownloader/src/testVariables/ExampleDescription.h"
 
 using namespace ::testing;
 using namespace glossary;
 using namespace wordDescriptionDownloader;
+using namespace wordDescriptionRepository;
 
 namespace
 {
-const std::string urlAddress{"https://www.merriam-webster.com/dictionary/fetch"};
-const wordDescriptionRepository::EnglishWord englishWord{"fetch"};
-const WordDescription expectedWordDescription{englishWord, exampleDescription};
-const webConnection::Response emptyHtmlResponse{};
-const std::vector<std::string> emptyParsedHtmlContent{};
+const EnglishWord englishWord{"englishWord"};
+const webConnection::Response okResponse{200, "content"};
+const webConnection::Response errorResponse{400, ""};
+const Definitions definitions{"definition1", "definition2"};
+const Examples examples{"example1", "example2"};
+const Synonyms synonyms{"synonym1"};
+const WordDescription wordDescription{englishWord, definitions, examples, synonyms};
 }
 
 class DefaultWordDescriptionDownloaderTest : public Test
 {
 public:
-    std::shared_ptr<webConnection::HttpHandlerMock> httpHandler =
-        std::make_shared<StrictMock<webConnection::HttpHandlerMock>>();
-    std::unique_ptr<LinesSelectorMock> linesSelectorInit = std::make_unique<StrictMock<LinesSelectorMock>>();
-    LinesSelectorMock* linesSelector = linesSelectorInit.get();
-    std::unique_ptr<DescriptionParserMock> descriptionParserInit =
-        std::make_unique<StrictMock<DescriptionParserMock>>();
-    DescriptionParserMock* descriptionParser = descriptionParserInit.get();
-    DefaultWordDescriptionDownloader downloader{httpHandler, std::move(linesSelectorInit),
-                                                std::move(descriptionParserInit)};
+    void expectDownloadedDefinitions() const
+    {
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+            .WillOnce(Return(okResponse));
+        EXPECT_CALL(*responseDeserializer, deserializeDefinitions(okResponse.content))
+            .WillOnce(Return(definitions));
+    }
+
+    void expectDownloadedExamples() const
+    {
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+            .WillOnce(Return(okResponse));
+        EXPECT_CALL(*responseDeserializer, deserializeExamples(okResponse.content))
+            .WillOnce(Return(examples));
+    }
+
+    void expectDownloadedSynonyms() const
+    {
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+            .WillOnce(Return(okResponse));
+        EXPECT_CALL(*responseDeserializer, deserializeSynonyms(okResponse.content))
+            .WillOnce(Return(synonyms));
+    }
+
+    std::unique_ptr<ApiResponseFetcherMock> apiResponseFetcherInit =
+        std::make_unique<StrictMock<ApiResponseFetcherMock>>();
+    ApiResponseFetcherMock* apiResponseFetcher = apiResponseFetcherInit.get();
+    std::unique_ptr<WordDescriptionResponseDeserializerMock> responseDeserializerInit =
+        std::make_unique<StrictMock<WordDescriptionResponseDeserializerMock>>();
+    WordDescriptionResponseDeserializerMock* responseDeserializer = responseDeserializerInit.get();
+    DefaultWordDescriptionDownloader downloader{std::move(apiResponseFetcherInit),
+                                                std::move(responseDeserializerInit)};
 };
 
-TEST_F(DefaultWordDescriptionDownloaderTest, givenEmptyHtmlContent_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidConnection_shouldReturnNone)
 {
-    EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(emptyHtmlResponse));
-    EXPECT_CALL(*linesSelector, selectLines(emptyHtmlResponse.content))
-        .WillOnce(Return(emptyParsedHtmlContent));
-    EXPECT_CALL(*descriptionParser, parse(emptyParsedHtmlContent)).WillOnce(Return(boost::none));
-
-    const auto actualWord = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWord, boost::none);
-}
-
-TEST_F(DefaultWordDescriptionDownloaderTest, givenConnectionFailed_shouldReturnNone)
-{
-    EXPECT_CALL(*httpHandler, get(urlAddress))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto actualWord = downloader.downloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
 
-    ASSERT_EQ(actualWord, boost::none);
+    ASSERT_EQ(actualWordDescription, boost::none);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, givenWordWithTranslation_shouldReturnWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_shouldReturnNone)
 {
-    webConnection::Response response{200, htmlContent};
-    EXPECT_CALL(*httpHandler, get(urlAddress)).WillOnce(Return(response));
-    EXPECT_CALL(*linesSelector, selectLines(htmlContent)).WillOnce(Return(testParsedGlossaryHtmlContent));
-    EXPECT_CALL(*descriptionParser, parse(testParsedGlossaryHtmlContent))
-        .WillOnce(Return(exampleDescription));
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+        .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    const auto actualWord = downloader.downloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
 
-    ASSERT_EQ(*actualWord, expectedWordDescription);
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_ReturnsNotOkResponseCode_shouldReturnNone)
+{
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+        .WillOnce(Return(errorResponse));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidConnection_shouldReturnNone)
+{
+    expectDownloadedDefinitions();
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shouldReturnNone)
+{
+    expectDownloadedDefinitions();
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+        .WillOnce(Throw(exceptions::InvalidApiKey{""}));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_ReturnsNotOkResponseCode_shouldReturnNone)
+{
+    expectDownloadedDefinitions();
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord)).WillOnce(Return(errorResponse));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidConnection_shouldReturnNone)
+{
+    expectDownloadedDefinitions();
+    expectDownloadedExamples();
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shouldReturnNone)
+{
+    expectDownloadedDefinitions();
+    expectDownloadedExamples();
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+        .WillOnce(Throw(exceptions::InvalidApiKey{""}));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_ReturnsNotOkResponseCode_shouldReturnNone)
+{
+    expectDownloadedDefinitions();
+    expectDownloadedExamples();
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord)).WillOnce(Return(errorResponse));
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(actualWordDescription, boost::none);
+}
+
+TEST_F(DefaultWordDescriptionDownloaderTest,
+       fetchedDefinitionsExamplesAndSynonyms_shouldReturnWordDescription)
+{
+    expectDownloadedDefinitions();
+    expectDownloadedExamples();
+    expectDownloadedSynonyms();
+
+    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+
+    ASSERT_EQ(*actualWordDescription, wordDescription);
 }

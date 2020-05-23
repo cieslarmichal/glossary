@@ -6,7 +6,7 @@
 
 namespace glossary
 {
-
+// TODO: delete this class and add method in WdService like in TranslationService
 const std::string MerriamWebsterConnectionChecker::merriamWebsterUrlAddress{
     "https://www.merriam-webster.com/dictionary/"};
 

@@ -14,12 +14,8 @@ public:
 
 private:
     nlohmann::json getJsonFromWordDescription(const WordDescription&) const;
-    nlohmann::json getJsonFromDefinitionsWithExamples(const DefinitionsWithExamples&) const;
-    nlohmann::json getJsonFromDefinitionWithExample(const DefinitionWithExample&) const;
     WordsDescriptions readWordsDescriptions(const nlohmann::json&) const;
     WordsDescriptions parseWordsDescriptions(const nlohmann::json&) const;
-    DefinitionsWithExamples parseDefinitionsWithExamples(const nlohmann::json&) const;
     bool isWordDescriptionValid(const nlohmann::json&) const;
-    bool isDefinitionsWithExamplesValid(const nlohmann::json&) const;
 };
 }

@@ -14,9 +14,9 @@ using namespace wordDescriptionService;
 namespace
 {
 const EnglishWord englishWord{"englishWord1"};
-const WordDescription wordDescriptionFromRepository{englishWord, {{{"def1", boost::none}}, {}}};
-const WordDescription wordDescriptionFromDownloader{englishWord, {{{"def2", boost::none}}, {}}};
-const WordDescription emptyWordDescription{englishWord, {}};
+const WordDescription wordDescriptionFromRepository{englishWord, {"def1"}, {}, {}};
+const WordDescription wordDescriptionFromDownloader{englishWord, {"def2"}, {}, {}};
+const WordDescription emptyWordDescription{englishWord, {}, {}, {}};
 }
 
 class DefaultWordDescriptionRetrieverServiceTest : public Test

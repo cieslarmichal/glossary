@@ -7,9 +7,10 @@ FormattedWordDescription
 WordDescriptionFormatter::formatWordDescription(const WordDescription& wordDescription) const
 {
     auto englishWord = formatEnglishWord(wordDescription.englishWord);
-    auto definitions = formatDefinitions(wordDescription.description.definitionsWithExamples);
-    auto sentences = formatSentences(wordDescription.description.sentences);
-    return {englishWord, definitions, sentences};
+    auto definitions = formatDefinitions(wordDescription.definitions);
+    auto examples = formatExamples(wordDescription.examples);
+    auto synonyms = formatSynonyms(wordDescription.synonyms);
+    return {englishWord, definitions, examples, synonyms};
 }
 
 QString WordDescriptionFormatter::formatEnglishWord(const EnglishWord& englishWord) const
@@ -17,34 +18,34 @@ QString WordDescriptionFormatter::formatEnglishWord(const EnglishWord& englishWo
     return QString::fromStdString(englishWord);
 }
 
-QList<QString> WordDescriptionFormatter::formatDefinitions(const Definitions& definitionsAndExamples) const
+QList<QString> WordDescriptionFormatter::formatDefinitions(const Definitions& definitions) const
 {
     QList<QString> formattedDefinitions;
-    for (const auto& definitionAndExample : definitionsAndExamples)
+    for (const auto& definition : definitions)
     {
-        QString definition = QString::fromStdString(definitionAndExample.definition);
-        formattedDefinitions.push_back(definition);
-        if (definitionAndExample.example)
-        {
-            QString example = "// " + QString::fromStdString(*definitionAndExample.example);
-            formattedDefinitions.push_back(example);
-        }
-        else
-        {
-            formattedDefinitions.push_back("");
-        }
+        formattedDefinitions.push_back(QString::fromStdString(definition));
     }
     return formattedDefinitions;
 }
 
-QList<QString> WordDescriptionFormatter::formatSentences(const Sentences& sentences) const
+QList<QString> WordDescriptionFormatter::formatExamples(const Examples& examples) const
 {
-    QList<QString> formattedSentences;
-    for (const auto& sentence : sentences)
+    QList<QString> formattedExamples;
+    for (const auto& example : examples)
     {
-        formattedSentences.push_back(QString::fromStdString(sentence));
+        formattedExamples.push_back(QString::fromStdString(example));
     }
-    return formattedSentences;
+    return formattedExamples;
+}
+
+QList<QString> WordDescriptionFormatter::formatSynonyms(const Synonyms& synonyms) const
+{
+    QList<QString> formattedSynonyms;
+    for (const auto& synonym : synonyms)
+    {
+        formattedSynonyms.push_back(QString::fromStdString(synonym));
+    }
+    return formattedSynonyms;
 }
 
 }

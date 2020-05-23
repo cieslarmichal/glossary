@@ -25,6 +25,7 @@ private:
     Ui::WordDescriptionDialog* ui;
     WordDescriptionFormatter wordDescriptionFormatter;
     QStringListModel definitions;
-    QStringListModel sentences;
+    QStringListModel examples;
+    QStringListModel synonyms;
 };
 }

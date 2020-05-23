@@ -37,7 +37,8 @@ createTranslationRetrieverService(const std::shared_ptr<translator::Translator>&
 std::shared_ptr<statisticsRepository::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
-createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>&);
+createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>&,
+                                const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>
 createWordDescriptionRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>
@@ -73,7 +74,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 
     auto statisticsRepository = createStatisticsRepository(fileAccess);
 
-    auto wordDescriptionDownloader = createWordDescriptionDownloader(httpHandler);
+    auto wordDescriptionDownloader = createWordDescriptionDownloader(httpHandler, fileAccess);
     auto wordDescriptionRepository = createWordDescriptionRepository(fileAccess);
     auto wordDescriptionRetrieverService =
         createWordDescriptionRetrieverService(wordDescriptionDownloader, wordDescriptionRepository);
@@ -152,11 +153,12 @@ createStatisticsRepository(const std::shared_ptr<utils::FileAccess>& fileAccess)
 }
 
 std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
-createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
+createWordDescriptionDownloader(const std::shared_ptr<const webConnection::HttpHandler>& httpHandler,
+                                const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
     auto wordDescriptionDownloaderFactory =
         wordDescriptionDownloader::WordDescriptionDownloaderFactory::createWordDescriptionDownloaderFactory(
-            httpHandler);
+            httpHandler, fileAccess);
     return wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
 }
 

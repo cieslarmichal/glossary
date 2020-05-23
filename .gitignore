@@ -2,4 +2,5 @@
 cmake-build-debug/
 build/
 config/googleTranslateApiKey.txt
+config/wordsApiKey.txt
 CMakeLists.txt.user

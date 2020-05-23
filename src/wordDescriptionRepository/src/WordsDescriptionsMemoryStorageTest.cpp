@@ -7,8 +7,8 @@ using namespace glossary::wordDescriptionRepository;
 
 namespace
 {
-const WordDescription word1{"xxx", {}, {}};
-const WordDescription word2{"yyy", {}, {}};
+const WordDescription word1{"xxx", {}, {}, {}};
+const WordDescription word2{"yyy", {}, {}, {}};
 const WordsDescriptions words{word1, word2};
 }
 

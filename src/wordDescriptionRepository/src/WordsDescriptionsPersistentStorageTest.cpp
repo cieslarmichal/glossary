@@ -17,10 +17,10 @@ const std::string filePath{utils::getProjectPath("glossary") + "repositoryFiles/
 const EnglishWord nonExistingWord("nonExistingWord");
 const EnglishWord englishWord1("englishWord1");
 const EnglishWord englishWord2("englishWord2");
-const WordDescription word1{englishWord1, {}, {}};
-const WordDescription word2{englishWord2, {}, {}};
+const WordDescription word1{englishWord1, {}, {}, {}};
+const WordDescription word2{englishWord2, {}, {}, {}};
 const WordsDescriptions words{word1, word2};
-const WordDescription word3{"yzzxc12yy", {}, {}};
+const WordDescription word3{"yzzxc12yy", {}, {}, {}};
 const WordsDescriptions wordsAfterAddition{word1, word2, word3};
 }
 

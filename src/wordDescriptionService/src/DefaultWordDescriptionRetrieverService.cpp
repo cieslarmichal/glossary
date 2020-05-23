@@ -13,7 +13,9 @@ wordDescriptionRepository::WordDescription DefaultWordDescriptionRetrieverServic
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
     if (const auto wordDescriptionFromRepository = getWordDescriptionFromRepository(englishWord))
+    {
         return *wordDescriptionFromRepository;
+    }
 
     if (const auto createdWordDescription = downloadWordDescription(englishWord))
     {
@@ -45,10 +47,11 @@ void DefaultWordDescriptionRetrieverService::saveWordDescriptionInRepository(
 {
     wordDescriptionRepository->addWordDescription(wordDescription);
 }
+
 wordDescriptionRepository::WordDescription
 DefaultWordDescriptionRetrieverService::getEmptyWordDescriptionWithEnglishWord(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    return wordDescriptionRepository::WordDescription{englishWord, {}};
+    return wordDescriptionRepository::WordDescription{englishWord, {}, {}, {}};
 }
 }
