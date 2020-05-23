@@ -2,13 +2,14 @@
 
 #include <QWidget>
 
+
+namespace glossary::gui::view
+{
 namespace Ui
 {
 class TranslatorTab;
 }
 
-namespace glossary::gui::view
-{
 class TranslatorTab : public QWidget
 {
     Q_OBJECT

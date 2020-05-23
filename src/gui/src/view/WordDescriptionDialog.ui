@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>WordDescriptionDialog</class>
- <widget class="QDialog" name="WordDescriptionDialog">
+ <class>glossary::gui::view::WordDescriptionDialog</class>
+ <widget class="QDialog" name="glossary::gui::view::WordDescriptionDialog">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -107,7 +107,7 @@
   <connection>
    <sender>buttonOk</sender>
    <signal>accepted()</signal>
-   <receiver>WordDescriptionDialog</receiver>
+   <receiver>glossary::gui::view::WordDescriptionDialog</receiver>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
@@ -123,7 +123,7 @@
   <connection>
    <sender>buttonOk</sender>
    <signal>rejected()</signal>
-   <receiver>WordDescriptionDialog</receiver>
+   <receiver>glossary::gui::view::WordDescriptionDialog</receiver>
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">

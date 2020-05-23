@@ -9,13 +9,14 @@
 #include "StatisticsTab.h"
 #include "TranslatorTab.h"
 
+
+namespace glossary::gui::view
+{
 namespace Ui
 {
 class MainView;
 }
 
-namespace glossary::gui::view
-{
 class MainView : public QMainWindow
 {
     Q_OBJECT

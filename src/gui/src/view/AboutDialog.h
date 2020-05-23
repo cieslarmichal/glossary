@@ -2,13 +2,13 @@
 
 #include <QDialog>
 
+namespace glossary::gui::view
+{
 namespace Ui
 {
 class AboutDialog;
 }
 
-namespace glossary::gui::view
-{
 class AboutDialog : public QDialog
 {
     Q_OBJECT

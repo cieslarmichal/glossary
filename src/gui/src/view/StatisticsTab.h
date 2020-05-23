@@ -2,13 +2,14 @@
 
 #include <QWidget>
 
+
+namespace glossary::gui::view
+{
 namespace Ui
 {
 class StatisticsTab;
 }
 
-namespace glossary::gui::view
-{
 class StatisticsTab : public QWidget
 {
     Q_OBJECT

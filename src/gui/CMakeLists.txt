@@ -1,4 +1,6 @@
 
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
+
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
@@ -37,6 +39,5 @@ target_link_libraries(guiUT PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets gtest_main g
 
 target_compile_options(gui PUBLIC ${FLAGS})
 target_compile_options(guiUT PUBLIC -Wall -Wextra -Werror)
-
 
 add_test(guiUT guiUT --gtest_color=yes)

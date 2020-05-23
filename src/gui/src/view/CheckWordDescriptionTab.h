@@ -2,17 +2,17 @@
 
 #include <QWidget>
 
+namespace glossary::gui::view
+{
+
 namespace Ui
 {
 class CheckWordDescriptionTab;
 }
 
-namespace glossary::gui::view
-{
 class CheckWordDescriptionTab : public QWidget
 {
     Q_OBJECT
-
 public:
     explicit CheckWordDescriptionTab(QWidget* parent = nullptr);
     ~CheckWordDescriptionTab();

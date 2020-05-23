@@ -7,13 +7,14 @@
 
 #include "WordDescription.h"
 
+
+namespace glossary::gui::view
+{
 namespace Ui
 {
 class GuessTab;
 }
 
-namespace glossary::gui::view
-{
 class GuessTab : public QWidget
 {
     Q_OBJECT

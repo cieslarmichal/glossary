@@ -2,13 +2,14 @@
 
 #include <QWidget>
 
+namespace glossary::gui::view
+{
+
 namespace Ui
 {
 class DictionariesTab;
 }
 
-namespace glossary::gui::view
-{
 class DictionariesTab : public QWidget
 {
     Q_OBJECT

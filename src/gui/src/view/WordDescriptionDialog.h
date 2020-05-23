@@ -6,13 +6,14 @@
 #include "WordDescription.h"
 #include "WordDescriptionFormatter.h"
 
+
+namespace glossary::gui::view
+{
 namespace Ui
 {
 class WordDescriptionDialog;
 }
 
-namespace glossary::gui::view
-{
 class WordDescriptionDialog : public QDialog
 {
     Q_OBJECT
