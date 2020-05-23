@@ -14,6 +14,7 @@ matrix:
             - g++-8
             - boost1.68
             - valgrind
+            - libgl1-mesa-dev
       env:
       - C_COMPILER=gcc-8
       - CXX_COMPILER=g++-8
