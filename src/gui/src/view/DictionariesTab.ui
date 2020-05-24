@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>614</width>
-    <height>461</height>
+    <width>739</width>
+    <height>540</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -16,27 +16,17 @@
   <widget class="QListView" name="listOfDictionaries">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>70</x>
      <y>50</y>
-     <width>201</width>
-     <height>241</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QListView" name="listOfDictionaryWords">
-   <property name="geometry">
-    <rect>
-     <x>290</x>
-     <y>50</y>
-     <width>161</width>
-     <height>391</height>
+     <width>151</width>
+     <height>301</height>
     </rect>
    </property>
   </widget>
   <widget class="QLabel" name="labelDictionaries">
    <property name="geometry">
     <rect>
-     <x>70</x>
+     <x>90</x>
      <y>20</y>
      <width>101</width>
      <height>16</height>
@@ -49,7 +39,7 @@
   <widget class="QLabel" name="labelDictionaryWords">
    <property name="geometry">
     <rect>
-     <x>310</x>
+     <x>370</x>
      <y>20</y>
      <width>131</width>
      <height>21</height>
@@ -59,13 +49,13 @@
     <string>Dictionary words:</string>
    </property>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>470</x>
+     <x>590</x>
      <y>130</y>
      <width>131</width>
-     <height>111</height>
+     <height>116</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout">
@@ -119,13 +109,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>310</y>
-     <width>171</width>
-     <height>122</height>
+     <x>70</x>
+     <y>360</y>
+     <width>151</width>
+     <height>101</height>
     </rect>
    </property>
    <layout class="QVBoxLayout" name="verticalLayout_3">
@@ -156,7 +146,7 @@
        </widget>
       </item>
       <item>
-       <widget class="QPushButton" name="butonRemoveDictionary">
+       <widget class="QPushButton" name="buttonRemoveDictionary">
         <property name="font">
          <font>
           <pointsize>10</pointsize>
@@ -182,6 +172,16 @@
      </widget>
     </item>
    </layout>
+  </widget>
+  <widget class="QTableView" name="tableOfDictionaryWords">
+   <property name="geometry">
+    <rect>
+     <x>320</x>
+     <y>50</y>
+     <width>251</width>
+     <height>451</height>
+    </rect>
+   </property>
   </widget>
  </widget>
  <resources/>

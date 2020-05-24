@@ -27,7 +27,7 @@ public:
     virtual DictionaryWords getDictionaryWords(const DictionaryName&) const = 0;
     virtual void addDictionary(const DictionaryName&) const = 0;
     virtual void removeDictionary(const DictionaryName&) const = 0;
-    virtual void addEnglishWordToDictionary(const EnglishWord&,
+    virtual void addEnglishWordToDictionary(const EnglishWord&, const std::string& translation,
                                             const DictionaryName&) const = 0;
     virtual void removeEnglishWordFromDictionary(const EnglishWord&,
                                                  const DictionaryName&) const = 0;

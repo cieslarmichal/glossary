@@ -20,17 +20,29 @@ public:
     WordDescription getWordDescription(const QString& englishWord) const;
     bool verifyCorrectnessOfTranslation(const QString& polishWord, const QString& englishWord) const;
     QList<QString> getDictionaryNames() const;
+    Dictionaries getDictionaries() const;
+    DictionaryWords getDictionaryWords(const QString& dictionaryName) const;
 
 signals:
     void notifyAboutRandomPolishWord(const QString&) const;
     void notifyAboutWordDescription(const WordDescription&) const;
     void notifyAboutTranslationVerdict(bool) const;
+    void notifyAboutDictionaryWordsUpdate(const DictionaryName&, const DictionaryWords&) const;
+    void notifyAboutDictionariesUpdate(const Dictionaries&) const;
 
 public slots:
     void onRandomPolishWordTriggered() const;
     void onRandomPolishWordFromDictionaryTriggered(const QString& dictionaryName) const;
     void onWordDescriptionTriggered(const QString& englishWord) const;
-    void onTranslationCorectnessTriggered(const QString& polishWord, const QString& englishWord) const;
+    void onTranslationCorrectnessTriggered(const QString& polishWord, const QString& englishWord) const;
+    void onDictionaryAdded(const QString& dictionaryName) const;
+    void onDictionaryAddedFromFile(const QString& dictionaryName, const QString& pathToDictionaryWords) const;
+    void onDictionaryRemoved(const QString& dictionaryName) const;
+    void onDictionaryTranslationsUpdateRequest(const QString& dictionaryName) const;
+    void onWordAdded(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void onWordRemoved(const QString& dictionaryName, const QString& englishWord) const;
+    void onWordTranslationUpdateRequest(const QString& dictionaryName, const QString& englishWord) const;
+    void onWordTranslationChanged(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
 
 private:
     std::unique_ptr<glossary::Glossary> glossary;

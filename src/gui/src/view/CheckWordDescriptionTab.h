@@ -4,7 +4,6 @@
 
 namespace glossary::gui::view
 {
-
 namespace Ui
 {
 class CheckWordDescriptionTab;

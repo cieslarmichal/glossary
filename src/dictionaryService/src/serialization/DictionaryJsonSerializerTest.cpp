@@ -20,7 +20,6 @@ const Dictionary dictionaryWithSomeWordsWithoutTranslation{
     dictionaryName3, DictionaryWords{dictionaryWord1, dictionaryWord2, dictionaryWordWithoutTranslation}};
 const Dictionary emptyDictionary{dictionaryName1, {}};
 const Dictionaries noDictionaries{};
-const Dictionaries dictionariesWithoutWords{emptyDictionary};
 const Dictionaries dictionaries{dictionary1, dictionary2};
 const Dictionaries dictionariesWithDictionaryWithOneWOrd{dictionary1};
 const Dictionaries dictionariesWithDictionaryWithSomeWordsWithoutTranslation{

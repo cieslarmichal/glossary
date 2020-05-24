@@ -14,6 +14,8 @@ set(SOURCES
         src/view/AboutDialog.cpp
         src/view/WordDescriptionDialog.cpp
         src/view/WordDescriptionFormatter.cpp
+        src/view/DictionaryFormatter.cpp
+        src/view/FormattedDictionariesStorage.cpp
         src/viewManager/CheckWordDescriptionTabViewManager.cpp
         src/viewManager/GuessTabViewManager.cpp
         src/viewManager/DictionariesTabViewManager.cpp
@@ -26,6 +28,8 @@ set(SOURCES
 
 set(UT_SOURCES
         src/view/WordDescriptionFormatterTest.cpp
+        src/view/DictionaryFormatterTest.cpp
+        src/view/FormattedDictionariesStorageTest.cpp
         )
 
 add_executable(gui ${SOURCES} Main.cpp)
