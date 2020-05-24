@@ -9,7 +9,7 @@ namespace glossary::wordDescriptionDownloader
 class WordDescriptionDownloaderMock : public WordDescriptionDownloader
 {
 public:
-    MOCK_CONST_METHOD1(downloadWordDescription, boost::optional<wordDescriptionRepository::WordDescription>(
+    MOCK_CONST_METHOD1(tryDownloadWordDescription, wordDescriptionRepository::WordDescription(
                                                     const wordDescriptionRepository::EnglishWord&));
 };
 }

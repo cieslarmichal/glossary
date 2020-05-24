@@ -19,92 +19,47 @@ DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
 {
 }
 
-boost::optional<wordDescriptionRepository::WordDescription>
-DefaultWordDescriptionDownloader::downloadWordDescription(
+wordDescriptionRepository::WordDescription DefaultWordDescriptionDownloader::tryDownloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    const auto definitions = downloadDefinitions(englishWord);
-    if (not definitions)
-    {
-        return boost::none;
-    }
-    const auto examples = downloadExamples(englishWord);
-    if (not examples)
-    {
-        return boost::none;
-    }
-    const auto synonyms = downloadSynonyms(englishWord);
-    if (not synonyms)
-    {
-        return boost::none;
-    }
-    return wordDescriptionRepository::WordDescription{englishWord, *definitions, *examples, *synonyms};
+    auto definitions = downloadDefinitions(englishWord);
+    auto examples = downloadExamples(englishWord);
+    auto synonyms = downloadSynonyms(englishWord);
+    return wordDescriptionRepository::WordDescription{englishWord, definitions, examples, synonyms};
 }
 
-boost::optional<wordDescriptionRepository::Definitions> DefaultWordDescriptionDownloader::downloadDefinitions(
+wordDescriptionRepository::Definitions DefaultWordDescriptionDownloader::downloadDefinitions(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    try
+    const auto definitionsApiResponse = apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord);
+    if (responseCodeIsOk(definitionsApiResponse.code))
     {
-        const auto definitionsApiResponse = apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord);
-        if (responseCodeIsOk(definitionsApiResponse.code))
-        {
-            return responseDeserializer->deserializeDefinitions(definitionsApiResponse.content);
-        }
+        return responseDeserializer->deserializeDefinitions(definitionsApiResponse.content);
     }
-    catch (const webConnection::exceptions::ConnectionFailed& e)
-    {
-        std::cerr << "Get content from http failed: " << e.what();
-    }
-    catch (const exceptions::InvalidApiKey& e)
-    {
-        std::cerr << "Invalid api key: " << e.what();
-    }
-    return boost::none;
+    return {};
 }
 
-boost::optional<wordDescriptionRepository::Examples> DefaultWordDescriptionDownloader::downloadExamples(
+wordDescriptionRepository::Examples DefaultWordDescriptionDownloader::downloadExamples(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    try
+    const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord);
+    if (responseCodeIsOk(examplesApiResponse.code))
     {
-        const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord);
-        if (responseCodeIsOk(examplesApiResponse.code))
-        {
-            return responseDeserializer->deserializeExamples(examplesApiResponse.content);
-        }
+        return responseDeserializer->deserializeExamples(examplesApiResponse.content);
     }
-    catch (const webConnection::exceptions::ConnectionFailed& e)
-    {
-        std::cerr << "Get content from http failed: " << e.what();
-    }
-    catch (const exceptions::InvalidApiKey& e)
-    {
-        std::cerr << "Invalid api key: " << e.what();
-    }
-    return boost::none;
+    return {};
 }
 
-boost::optional<wordDescriptionRepository::Synonyms> DefaultWordDescriptionDownloader::downloadSynonyms(
+wordDescriptionRepository::Synonyms DefaultWordDescriptionDownloader::downloadSynonyms(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    try
+
+    const auto synonymsApiResponse = apiResponseFetcher->tryGetWordSynonymsResponse(englishWord);
+    if (responseCodeIsOk(synonymsApiResponse.code))
     {
-        const auto synonymsApiResponse = apiResponseFetcher->tryGetWordSynonymsResponse(englishWord);
-        if (responseCodeIsOk(synonymsApiResponse.code))
-        {
-            return responseDeserializer->deserializeSynonyms(synonymsApiResponse.content);
-        }
+        return responseDeserializer->deserializeSynonyms(synonymsApiResponse.content);
     }
-    catch (const webConnection::exceptions::ConnectionFailed& e)
-    {
-        std::cerr << "Get content from http failed: " << e.what();
-    }
-    catch (const exceptions::InvalidApiKey& e)
-    {
-        std::cerr << "Invalid api key: " << e.what();
-    }
-    return boost::none;
+    return {};
 }
 
 bool DefaultWordDescriptionDownloader::responseCodeIsOk(const webConnection::ResponseCode responseCode) const

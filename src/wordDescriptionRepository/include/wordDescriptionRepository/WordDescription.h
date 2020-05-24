@@ -10,6 +10,11 @@ namespace glossary::wordDescriptionRepository
 {
 struct WordDescription
 {
+    bool empty() const
+    {
+        return definitions.empty() && examples.empty() && synonyms.empty();
+    }
+
     EnglishWord englishWord;
     Definitions definitions;
     Examples examples;

@@ -240,6 +240,19 @@
     <string/>
    </property>
   </widget>
+  <widget class="QLabel" name="labelWordDescriptionError">
+   <property name="geometry">
+    <rect>
+     <x>20</x>
+     <y>300</y>
+     <width>141</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

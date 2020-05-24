@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "TranslationApiConnectionStatus.h"
+#include "TranslationApiStatus.h"
 
 namespace glossary::translationService
 {
@@ -11,7 +11,6 @@ class TranslatorConnectionChecker
 public:
     virtual ~TranslatorConnectionChecker() = default;
 
-    virtual TranslationApiConnectionStatus
-    connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) = 0;
+    virtual TranslationApiStatus connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) = 0;
 };
 }

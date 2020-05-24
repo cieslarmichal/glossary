@@ -22,6 +22,9 @@ const Definitions definitions{"definition1", "definition2"};
 const Examples examples{"example1", "example2"};
 const Synonyms synonyms{"synonym1"};
 const WordDescription wordDescription{englishWord, definitions, examples, synonyms};
+const Definitions emptyDefinitions{};
+const Examples emptyExamples{};
+const Synonyms emptySynonyms{};
 }
 
 class DefaultWordDescriptionDownloaderTest : public Test
@@ -51,6 +54,30 @@ public:
             .WillOnce(Return(synonyms));
     }
 
+    void expectDownloadedEmptyDefinitions() const
+    {
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+            .WillOnce(Return(okResponse));
+        EXPECT_CALL(*responseDeserializer, deserializeDefinitions(okResponse.content))
+            .WillOnce(Return(emptyDefinitions));
+    }
+
+    void expectDownloadedEmptyExamples() const
+    {
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+            .WillOnce(Return(okResponse));
+        EXPECT_CALL(*responseDeserializer, deserializeExamples(okResponse.content))
+            .WillOnce(Return(emptyExamples));
+    }
+
+    void expectDownloadedEmptySynonyms() const
+    {
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+            .WillOnce(Return(okResponse));
+        EXPECT_CALL(*responseDeserializer, deserializeSynonyms(okResponse.content))
+            .WillOnce(Return(emptySynonyms));
+    }
+
     std::unique_ptr<ApiResponseFetcherMock> apiResponseFetcherInit =
         std::make_unique<StrictMock<ApiResponseFetcherMock>>();
     ApiResponseFetcherMock* apiResponseFetcher = apiResponseFetcherInit.get();
@@ -61,101 +88,92 @@ public:
                                                 std::move(responseDeserializerInit)};
 };
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidConnection_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwConnectionFailed_shouldThrowConnectionFailed)
 {
     EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),webConnection::exceptions::ConnectionFailed);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_shouldThrowInvalidApiKey)
 {
     EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
         .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_ReturnsNotOkResponseCode_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
     EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
         .WillOnce(Return(errorResponse));
+    expectDownloadedEmptyExamples();
+    expectDownloadedEmptySynonyms();
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
 
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_TRUE(actualWordDescription.empty());
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidConnection_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwConnectionFailed_shouldThrowConnectionFailed)
 {
     expectDownloadedDefinitions();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),webConnection::exceptions::ConnectionFailed);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shouldThrowInvalidApiKey)
 {
     expectDownloadedDefinitions();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
         .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_ReturnsNotOkResponseCode_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
-    expectDownloadedDefinitions();
+    expectDownloadedEmptyDefinitions();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord)).WillOnce(Return(errorResponse));
+    expectDownloadedEmptySynonyms();
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
 
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_TRUE(actualWordDescription.empty());
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidConnection_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwConnectionFailed_shouldThrowConnectionFailed)
 {
     expectDownloadedDefinitions();
     expectDownloadedExamples();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),webConnection::exceptions::ConnectionFailed);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shouldReturnThrowInvalidApiKey)
 {
     expectDownloadedDefinitions();
     expectDownloadedExamples();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
         .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
-
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_ReturnsNotOkResponseCode_shouldReturnNone)
+TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
-    expectDownloadedDefinitions();
-    expectDownloadedExamples();
+    expectDownloadedEmptyDefinitions();
+    expectDownloadedEmptyExamples();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord)).WillOnce(Return(errorResponse));
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
 
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_TRUE(actualWordDescription.empty());
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest,
@@ -165,7 +183,7 @@ TEST_F(DefaultWordDescriptionDownloaderTest,
     expectDownloadedExamples();
     expectDownloadedSynonyms();
 
-    const auto actualWordDescription = downloader.downloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
 
-    ASSERT_EQ(*actualWordDescription, wordDescription);
+    ASSERT_EQ(actualWordDescription, wordDescription);
 }

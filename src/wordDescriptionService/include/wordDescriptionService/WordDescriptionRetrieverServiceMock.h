@@ -11,5 +11,6 @@ class WordDescriptionRetrieverServiceMock : public WordDescriptionRetrieverServi
 public:
     MOCK_METHOD1(retrieveWordDescription,
                  wordDescriptionRepository::WordDescription(const wordDescriptionRepository::EnglishWord&));
+    MOCK_METHOD0(connectionToWordsApiAvailable, WordsApiStatus());
 };
 }

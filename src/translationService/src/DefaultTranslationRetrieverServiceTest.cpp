@@ -120,33 +120,33 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
        givenConnectionNotAvailableFromTranslatorConnectionChecker_shouldReturnConnectionUnavailableStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
-        .WillOnce(Return(TranslationApiConnectionStatus::Unavailable));
+        .WillOnce(Return(TranslationApiStatus::Unavailable));
 
     const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Unavailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::Unavailable);
 }
 
 TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
        givenConnectionAvailableFromTranslatorConnectionChecker_shouldReturnConnectionAvailableStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
-        .WillOnce(Return(TranslationApiConnectionStatus::Available));
+        .WillOnce(Return(TranslationApiStatus::Available));
 
     const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Available);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::Available);
 }
 
 TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
        givenInvalidApiKeyStatusFromTranslatorConnectionChecker_shouldReturnInvalidApiKeyStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
-        .WillOnce(Return(TranslationApiConnectionStatus::InvalidApiKey));
+        .WillOnce(Return(TranslationApiStatus::InvalidApiKey));
 
     const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::InvalidApiKey);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::InvalidApiKey);
 }
 
 class DefaultTranslationRetrieverServiceTest_WithoutApiKey
@@ -191,5 +191,5 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, noApiKey_shouldRetu
 {
     const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::InvalidApiKey);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::InvalidApiKey);
 }

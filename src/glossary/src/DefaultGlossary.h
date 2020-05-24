@@ -3,8 +3,8 @@
 #include <memory>
 
 #include "AnswerValidator.h"
+#include "ConnectionChecker.h"
 #include "DictionaryTranslationUpdater.h"
-#include "ExternalServicesAvailabilityChecker.h"
 #include "Glossary.h"
 #include "dictionaryService/DictionaryService.h"
 #include "statisticsRepository/StatisticsRepository.h"
@@ -22,30 +22,28 @@ public:
                     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
                     std::shared_ptr<DictionaryTranslationUpdater>,
                     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>>,
-                    std::unique_ptr<ExternalServicesAvailabilityChecker>, std::unique_ptr<AnswerValidator>);
+                    std::unique_ptr<ConnectionChecker>, std::unique_ptr<AnswerValidator>);
 
-    ExternalServicesAvailabilityStatus checkConnectionToExternalServices() const override;
+    ExternalServicesStatus checkConnectionToExternalServices() const override;
     boost::optional<std::string> getRandomPolishWord() const override;
-    boost::optional<std::string> getRandomPolishWord(const std::string& dictionaryName) const override;
+    boost::optional<std::string> getRandomPolishWord(const DictionaryName&) const override;
     bool verifyPolishWordTranslation(const std::string& polishWord,
                                      const std::string& englishWord) const override;
-    std::vector<std::string> listDictionariesNames() override;
-    std::vector<std::string> listDictionaryWordsFromDictionary(const std::string& dictionaryName) override;
-    void addDictionary(const std::string& dictionaryName) const override;
-    void removeDictionary(const std::string& dictionaryName) const override;
-    void addEnglishWordToDictionary(const std::string& englishWord,
-                                    const std::string& dictionaryName) const override;
-    void removeEnglishWordFromDictionary(const std::string& englishWord,
-                                         const std::string& dictionaryName) const override;
-    void addDictionaryFromFile(const std::string& dictionaryName,
+    Dictionaries getDictionaries() const override;
+    DictionaryNames getDictionariesNames() const override;
+    DictionaryWords getDictionaryWords(const DictionaryName&) const override;
+    void addDictionary(const DictionaryName&) const override;
+    void removeDictionary(const DictionaryName&) const override;
+    void addEnglishWordToDictionary(const EnglishWord&, const DictionaryName&) const override;
+    void removeEnglishWordFromDictionary(const EnglishWord&, const DictionaryName&) const override;
+    void addDictionaryFromFile(const DictionaryName&,
                                const std::string& pathToFileWithDictionaryWords) const override;
-    void updateDictionaryWordTranslationManually(const std::string& dictionaryName,
-                                                 const std::string& englishWord,
+    void updateDictionaryWordTranslationManually(const DictionaryName&, const EnglishWord&,
                                                  const std::string& newTranslation) const override;
-    void updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
-                                                      const std::string& englishWord) const override;
-    void updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const override;
-    WordDescription getEnglishWordDescription(const std::string& englishWord) const override;
+    void updateDictionaryWordTranslationAutomatically(const DictionaryName&,
+                                                      const EnglishWord&) const override;
+    void updateDictionaryTranslationsAutomatically(const DictionaryName&) const override;
+    WordDescription getEnglishWordDescription(const EnglishWord&) const override;
     boost::optional<std::string> translate(const std::string& textToTranslate,
                                            const std::string& sourceLanguage,
                                            const std::string& targetLanguage) const override;
@@ -63,7 +61,7 @@ private:
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdater;
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObservers;
 
-    std::unique_ptr<ExternalServicesAvailabilityChecker> externalServicesConnectionChecker;
+    std::unique_ptr<ConnectionChecker> externalServicesConnectionChecker;
     std::unique_ptr<AnswerValidator> answerValidator;
 };
 }

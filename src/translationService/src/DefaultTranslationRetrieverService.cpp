@@ -40,13 +40,13 @@ std::vector<std::string> DefaultTranslationRetrieverService::retrieveSupportedLa
     return supportedLanguagesRetriever.retrieveSupportedLanguages();
 }
 
-TranslationApiConnectionStatus DefaultTranslationRetrieverService::connectionToTranslateApiAvailable()
+TranslationApiStatus DefaultTranslationRetrieverService::connectionToTranslateApiAvailable()
 {
     if (translatorApiKey)
     {
         return translatorConnectionChecker->connectionToTranslatorWithApiKeyIsAvailable(*translatorApiKey);
     }
-    return TranslationApiConnectionStatus::InvalidApiKey;
+    return TranslationApiStatus::InvalidApiKey;
 }
 
 boost::optional<translator::TranslatedText>

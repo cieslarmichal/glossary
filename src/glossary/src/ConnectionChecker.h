@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ConnectionStatus.h"
+#include "ExternalServicesStatus.h"
 
 namespace glossary
 {
@@ -9,6 +9,6 @@ class ConnectionChecker
 public:
     virtual ~ConnectionChecker() = default;
 
-    virtual ConnectionStatus connectionAvailable() const = 0;
+    virtual ExternalServicesStatus checkExternalServicesAvailabilityStatus() const = 0;
 };
 }

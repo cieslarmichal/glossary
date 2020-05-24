@@ -32,7 +32,9 @@ void WordDescriptionConcurrentUpdater::update(const dictionaryService::EnglishWo
     }
 
     for (auto& thread : threadPool)
+    {
         thread.join();
+    }
 
     loadWordsDescriptionsIntoRepository(wordsDescriptions.popAll());
 }
@@ -51,7 +53,9 @@ WordDescriptionConcurrentUpdater::getEnglishWordsWithoutWordDescription(
     for (const auto& englishWord : englishWords)
     {
         if (not wordDescriptionRepository->contains(englishWord))
+        {
             englishWordsWithoutWordDescription.emplace_back(englishWord);
+        }
     }
     return englishWordsWithoutWordDescription;
 }
@@ -63,7 +67,9 @@ void WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker(
     while (const auto currentEnglishWord = englishWords.pop())
     {
         if (const auto downloadedWordDescription = downloadWordDescription(*currentEnglishWord))
+        {
             wordsDescriptions.push(*downloadedWordDescription);
+        }
     }
 }
 
@@ -71,14 +77,23 @@ boost::optional<wordDescriptionRepository::WordDescription>
 WordDescriptionConcurrentUpdater::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    return wordDescriptionDownloader->downloadWordDescription(englishWord);
+    try
+    {
+        return wordDescriptionDownloader->tryDownloadWordDescription(englishWord);
+    }
+    catch(const std::exception&)
+    {
+        return boost::none;
+    }
 }
 
 void WordDescriptionConcurrentUpdater::loadWordsDescriptionsIntoRepository(
     const wordDescriptionRepository::WordsDescriptions& wordsDescriptions)
 {
     for (const auto& wordDescription : wordsDescriptions)
+    {
         wordDescriptionRepository->addWordDescription(wordDescription);
+    }
 }
 
 }

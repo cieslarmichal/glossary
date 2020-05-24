@@ -1,11 +1,17 @@
 #include "DefaultWordDescriptionRetrieverService.h"
 
+#include "webConnection/exceptions/ConnectionFailed.h"
+#include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
+
 namespace glossary::wordDescriptionService
 {
 DefaultWordDescriptionRetrieverService::DefaultWordDescriptionRetrieverService(
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> downloader,
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> repo)
-    : wordDescriptionDownloader{std::move(downloader)}, wordDescriptionRepository{std::move(repo)}
+    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> repo,
+    std::unique_ptr<WordsApiConnectionChecker> checker)
+    : wordDescriptionDownloader{std::move(downloader)},
+      wordDescriptionRepository{std::move(repo)},
+      connectionChecker{std::move(checker)}
 {
 }
 
@@ -23,7 +29,7 @@ wordDescriptionRepository::WordDescription DefaultWordDescriptionRetrieverServic
         return *createdWordDescription;
     }
 
-    const auto emptyWordDescriptionWithEnglishWord = getEmptyWordDescriptionWithEnglishWord(englishWord);
+    auto emptyWordDescriptionWithEnglishWord = getEmptyWordDescriptionWithEnglishWord(englishWord);
     saveWordDescriptionInRepository(emptyWordDescriptionWithEnglishWord);
     return emptyWordDescriptionWithEnglishWord;
 }
@@ -39,7 +45,19 @@ boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionRetrieverService::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
-    return wordDescriptionDownloader->downloadWordDescription(englishWord);
+    try
+    {
+        return wordDescriptionDownloader->tryDownloadWordDescription(englishWord);
+    }
+    catch (const webConnection::exceptions::ConnectionFailed& e)
+    {
+        std::cerr << "Connection failed: " << e.what();
+    }
+    catch (const wordDescriptionDownloader::exceptions::InvalidApiKey& e)
+    {
+        std::cerr << "Invalid api key: " << e.what();
+    }
+    return boost::none;
 }
 
 void DefaultWordDescriptionRetrieverService::saveWordDescriptionInRepository(
@@ -53,5 +71,10 @@ DefaultWordDescriptionRetrieverService::getEmptyWordDescriptionWithEnglishWord(
     const wordDescriptionRepository::EnglishWord& englishWord) const
 {
     return wordDescriptionRepository::WordDescription{englishWord, {}, {}, {}};
+}
+
+WordsApiStatus DefaultWordDescriptionRetrieverService::connectionToWordsApiAvailable()
+{
+    return connectionChecker->connectionToWordsApiAvailable();
 }
 }

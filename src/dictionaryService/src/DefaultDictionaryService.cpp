@@ -19,6 +19,11 @@ DefaultDictionaryService::DefaultDictionaryService(
 {
 }
 
+Dictionaries DefaultDictionaryService::getDictionaries() const
+{
+    return dictionaryRepository->getDictionaries();
+}
+
 DictionaryNames DefaultDictionaryService::getDictionaryNames() const
 {
     return dictionaryNamesRetriever->retrieveDictionaryNames();

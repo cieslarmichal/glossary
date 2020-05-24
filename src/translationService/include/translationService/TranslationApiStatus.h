@@ -2,7 +2,7 @@
 
 namespace glossary::translationService
 {
-enum class TranslationApiConnectionStatus
+enum class TranslationApiStatus
 {
     Available,
     InvalidApiKey,

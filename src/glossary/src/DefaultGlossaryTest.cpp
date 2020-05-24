@@ -3,8 +3,9 @@
 #include "gtest/gtest.h"
 
 #include "AnswerValidatorMock.h"
+#include "ConnectionCheckerMock.h"
 #include "DictionaryTranslationUpdaterMock.h"
-#include "ExternalServicesAvailabilityCheckerMock.h"
+#include "GlossaryMock.h"
 #include "dictionaryService/DictionaryServiceMock.h"
 #include "statisticsRepository/StatisticsRepositoryMock.h"
 #include "translationService/TranslationRetrieverServiceMock.h"
@@ -43,8 +44,6 @@ const std::string pathToDictionaryWords{"/home/words.txt"};
 const DictionaryWord dictionaryWordWithoutTranslation{englishWord1, boost::none};
 const DictionaryWord dictionaryWordWithTranslation{englishWord2, wordTranslation};
 const DictionaryWords dictionaryWords{dictionaryWordWithoutTranslation, dictionaryWordWithTranslation};
-const std::vector<std::string> dictionaryWordsAsString{toString(dictionaryWordWithoutTranslation),
-                                                       toString(dictionaryWordWithTranslation)};
 const Definitions definitions{"definition1", "definition2"};
 const Examples examples{"example1", "example2"};
 const Synonyms synonyms{"synonym1", "synonym2", "synonym1000000"};
@@ -52,8 +51,16 @@ const WordDescription wordDescription{EnglishWord{"computer"}, definitions, exam
 const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
-auto availableStatus = ExternalServicesAvailabilityStatus{ConnectionStatus::Available,
-                                                          TranslationApiConnectionStatus::Available};
+auto availableStatus =
+    ExternalServicesStatus{WordsApiStatus::Available, TranslationApiStatus::Available};
+const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
+const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
+const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
+const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
+const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
+const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
+const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
+const Dictionaries dictionaries{dictionary1, dictionary2};
 }
 
 class DefaultGlossaryTest_Base : public Test
@@ -74,9 +81,9 @@ public:
         std::make_shared<StrictMock<WordDescriptionRetrieverServiceMock>>();
     std::shared_ptr<DictionaryTranslationUpdaterMock> dictionaryTranslationUpdater =
         std::make_shared<StrictMock<DictionaryTranslationUpdaterMock>>();
-    std::unique_ptr<ExternalServicesAvailabilityCheckerMock> externalServicesConnectionCheckerInit =
-        std::make_unique<StrictMock<ExternalServicesAvailabilityCheckerMock>>();
-    ExternalServicesAvailabilityCheckerMock* externalServicesConnectionChecker =
+    std::unique_ptr<ConnectionCheckerMock> externalServicesConnectionCheckerInit =
+        std::make_unique<StrictMock<ConnectionCheckerMock>>();
+    ConnectionCheckerMock* externalServicesConnectionChecker =
         externalServicesConnectionCheckerInit.get();
     std::unique_ptr<AnswerValidatorMock> answerValidatorInit =
         std::make_unique<StrictMock<AnswerValidatorMock>>();
@@ -208,11 +215,20 @@ TEST_F(DefaultGlossaryTest, givenNoneTranslationFromTranslationService_shouldNot
     ASSERT_FALSE(verificationResult);
 }
 
+TEST_F(DefaultGlossaryTest, shouldReturnDictionaries)
+{
+    EXPECT_CALL(*dictionaryService, getDictionaries).WillOnce(Return(dictionaries));
+
+    const auto actualDictionaries= glossary.getDictionaries();
+
+    ASSERT_EQ(actualDictionaries, dictionaries);
+}
+
 TEST_F(DefaultGlossaryTest, shouldReturnNamesOfDictionaries)
 {
     EXPECT_CALL(*dictionaryService, getDictionaryNames()).WillOnce(Return(dictionaryNames));
 
-    const auto actualNamesOfDictionaries = glossary.listDictionariesNames();
+    const auto actualNamesOfDictionaries = glossary.getDictionariesNames();
 
     ASSERT_EQ(actualNamesOfDictionaries, dictionaryNames);
 }
@@ -221,7 +237,7 @@ TEST_F(DefaultGlossaryTest, givenNoneDictionaryWords_shouldReturnEmptyDictionary
 {
     EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(boost::none));
 
-    const auto actualDictionaryWords = glossary.listDictionaryWordsFromDictionary(dictionaryName1);
+    const auto actualDictionaryWords = glossary.getDictionaryWords(dictionaryName1);
 
     ASSERT_TRUE(actualDictionaryWords.empty());
 }
@@ -230,9 +246,9 @@ TEST_F(DefaultGlossaryTest, givenDictionaryWords_shouldReturnDictionaryWords)
 {
     EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(dictionaryWords));
 
-    const auto actualDictionaryWords = glossary.listDictionaryWordsFromDictionary(dictionaryName1);
+    const auto actualDictionaryWords = glossary.getDictionaryWords(dictionaryName1);
 
-    ASSERT_EQ(actualDictionaryWords, dictionaryWordsAsString);
+    ASSERT_EQ(actualDictionaryWords, dictionaryWords);
 }
 
 TEST_F(DefaultGlossaryTest, shouldAddDictionaryByName)

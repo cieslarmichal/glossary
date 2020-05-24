@@ -9,6 +9,7 @@ namespace glossary::dictionaryService
 class DictionaryServiceMock : public DictionaryService
 {
 public:
+    MOCK_CONST_METHOD0(getDictionaries, Dictionaries());
     MOCK_CONST_METHOD0(getDictionaryNames, DictionaryNames());
     MOCK_CONST_METHOD1(getDictionaryWords, boost::optional<DictionaryWords>(const DictionaryName&));
     MOCK_CONST_METHOD1(getEnglishWords, boost::optional<EnglishWords>(const DictionaryName&));

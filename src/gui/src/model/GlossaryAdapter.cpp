@@ -42,7 +42,7 @@ bool GlossaryAdapter::verifyCorrectnessOfTranslation(const QString& polishWord,
 
 QList<QString> GlossaryAdapter::getDictionaryNames() const
 {
-    const auto dictionaryNames = glossary->listDictionariesNames();
+    const auto dictionaryNames = glossary->getDictionariesNames();
 
     QList<QString> listOfDictionaryNames;
     for (const auto& dictionaryName : dictionaryNames)

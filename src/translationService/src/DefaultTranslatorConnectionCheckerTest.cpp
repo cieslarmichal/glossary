@@ -37,7 +37,7 @@ TEST_F(DefaultTranslatorConnectionCheckerTest, connectionToTranslatorFailed_shou
     const auto connectionAvailableStatus =
         connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Unavailable);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::Unavailable);
 }
 
 TEST_F(DefaultTranslatorConnectionCheckerTest, givenInvalidTranslatorApiKey_shouldReturnInvalidApiKey)
@@ -48,7 +48,7 @@ TEST_F(DefaultTranslatorConnectionCheckerTest, givenInvalidTranslatorApiKey_shou
     const auto connectionAvailableStatus =
         connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::InvalidApiKey);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::InvalidApiKey);
 }
 
 TEST_F(DefaultTranslatorConnectionCheckerTest, givenTranslationFromTranslator_shouldReturnTrue)
@@ -59,5 +59,5 @@ TEST_F(DefaultTranslatorConnectionCheckerTest, givenTranslationFromTranslator_sh
     const auto connectionAvailableStatus =
         connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);
 
-    ASSERT_EQ(connectionAvailableStatus, TranslationApiConnectionStatus::Available);
+    ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::Available);
 }

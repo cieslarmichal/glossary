@@ -32,7 +32,6 @@ const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionary emptyDictionary{dictionaryName3, emptyDictionaryWords};
 const Dictionaries dictionaries{dictionary1, dictionary2, emptyDictionary};
-const Dictionaries emptyDictionaries{};
 const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2, dictionaryName3};
 const EnglishWords englishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
                                 dictionaryWord3.englishWord};
@@ -71,6 +70,15 @@ public:
                                      std::move(wordsRetrieverInit), std::move(randomWordRetrieverInit),
                                      std::move(readerInit),         std::move(observerServiceInit)};
 };
+
+TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaries)
+{
+    EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
+
+    const auto actualDictionaries = service.getDictionaries();
+
+    ASSERT_EQ(actualDictionaries, dictionaries);
+}
 
 TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNames)
 {

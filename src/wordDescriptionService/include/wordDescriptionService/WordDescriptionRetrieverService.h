@@ -4,6 +4,7 @@
 
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
+#include "WordsApiStatus.h"
 
 namespace glossary::wordDescriptionService
 {
@@ -14,5 +15,6 @@ public:
 
     virtual wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) = 0;
+    virtual WordsApiStatus connectionToWordsApiAvailable() = 0;
 };
 }

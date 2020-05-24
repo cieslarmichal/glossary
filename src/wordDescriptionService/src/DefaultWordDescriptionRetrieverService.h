@@ -2,9 +2,10 @@
 
 #include <memory>
 
-#include "../include/wordDescriptionService/WordDescriptionRetrieverService.h"
+#include "WordDescriptionRetrieverService.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
+#include "WordsApiConnectionChecker.h"
 
 namespace glossary::wordDescriptionService
 {
@@ -13,10 +14,11 @@ class DefaultWordDescriptionRetrieverService : public WordDescriptionRetrieverSe
 public:
     DefaultWordDescriptionRetrieverService(
         std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
-        std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
+        std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>, std::unique_ptr<WordsApiConnectionChecker>);
 
     wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) override;
+    WordsApiStatus connectionToWordsApiAvailable() override;
 
 private:
     boost::optional<wordDescriptionRepository::WordDescription>
@@ -29,5 +31,6 @@ private:
 
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
+    std::unique_ptr<WordsApiConnectionChecker> connectionChecker;
 };
 }

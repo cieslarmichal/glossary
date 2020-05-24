@@ -19,21 +19,21 @@ DefaultTranslatorConnectionChecker::DefaultTranslatorConnectionChecker(
 {
 }
 
-TranslationApiConnectionStatus
+TranslationApiStatus
 DefaultTranslatorConnectionChecker::connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey)
 {
     try
     {
         translator->translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey);
-        return TranslationApiConnectionStatus::Available;
+        return TranslationApiStatus::Available;
     }
     catch (const translator::exceptions::InvalidApiKey&)
     {
-        return TranslationApiConnectionStatus::InvalidApiKey;
+        return TranslationApiStatus::InvalidApiKey;
     }
     catch (const webConnection::exceptions::ConnectionFailed&)
     {
-        return TranslationApiConnectionStatus::Unavailable;
+        return TranslationApiStatus::Unavailable;
     }
 }
 

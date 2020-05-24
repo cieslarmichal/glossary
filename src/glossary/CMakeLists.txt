@@ -6,8 +6,7 @@ set(SOURCES
         src/DefaultGlossaryFactory.cpp
         src/TranslationConcurrentUpdater.cpp
         src/DefaultDictionaryTranslationUpdater.cpp
-        src/MerriamWebsterConnectionChecker.cpp
-        src/DefaultExternalServicesAvailabilityChecker.cpp
+        src/ExternalServicesConnectionChecker.cpp
         )
 
 set(UT_SOURCES
@@ -15,9 +14,8 @@ set(UT_SOURCES
         src/WordDescriptionConcurrentUpdaterTest.cpp
         src/TranslationConcurrentUpdaterTest.cpp
         src/DefaultDictionaryTranslationUpdaterTest.cpp
-        src/MerriamWebsterConnectionCheckerTest.cpp
         src/DefaultGlossaryTest.cpp
-        src/DefaultExternalServicesAvailabilityCheckerTest.cpp
+        src/ExternalServicesConnectionCheckerTest.cpp
         )
 
 add_library(glossary ${SOURCES})

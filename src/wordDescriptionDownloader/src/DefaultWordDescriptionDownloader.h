@@ -16,17 +16,17 @@ public:
     DefaultWordDescriptionDownloader(std::unique_ptr<const ApiResponseFetcher>,
                                      std::unique_ptr<const WordDescriptionResponseDeserializer>);
 
-    boost::optional<wordDescriptionRepository::WordDescription>
-    downloadWordDescription(const wordDescriptionRepository::EnglishWord&) const override;
+    wordDescriptionRepository::WordDescription
+    tryDownloadWordDescription(const wordDescriptionRepository::EnglishWord&) const override;
 
 private:
-    boost::optional<wordDescriptionRepository::Definitions>
+    wordDescriptionRepository::Definitions
     downloadDefinitions(const wordDescriptionRepository::EnglishWord&) const;
-    boost::optional<wordDescriptionRepository::Examples>
+    wordDescriptionRepository::Examples
     downloadExamples(const wordDescriptionRepository::EnglishWord&) const;
-    boost::optional<wordDescriptionRepository::Synonyms>
+    wordDescriptionRepository::Synonyms
     downloadSynonyms(const wordDescriptionRepository::EnglishWord&) const;
-    bool responseCodeIsOk(const webConnection::ResponseCode) const;
+    bool responseCodeIsOk(webConnection::ResponseCode) const;
 
     std::unique_ptr<const ApiResponseFetcher> apiResponseFetcher;
     std::unique_ptr<const WordDescriptionResponseDeserializer> responseDeserializer;

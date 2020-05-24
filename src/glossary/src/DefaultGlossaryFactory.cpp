@@ -2,9 +2,8 @@
 
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionaryTranslationUpdater.h"
-#include "DefaultExternalServicesAvailabilityChecker.h"
 #include "DefaultGlossary.h"
-#include "MerriamWebsterConnectionChecker.h"
+#include "ExternalServicesConnectionChecker.h"
 #include "TranslationConcurrentUpdater.h"
 #include "WordDescriptionConcurrentUpdater.h"
 #include "dictionaryService/DictionaryServiceFactory.h"
@@ -54,8 +53,8 @@ createTranslationUpdater(const std::shared_ptr<translationService::TranslationRe
 std::shared_ptr<DictionaryTranslationUpdater>
 createDictionaryTranslationUpdater(const std::shared_ptr<dictionaryService::DictionaryService>&,
                                    const std::shared_ptr<translationService::TranslationRetrieverService>&);
-std::unique_ptr<ExternalServicesAvailabilityChecker> createExternalServicesConnectionChecker(
-    const std::shared_ptr<const webConnection::HttpHandler>&,
+std::unique_ptr<ConnectionChecker> createExternalServicesConnectionChecker(
+    const std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>&,
     const std::shared_ptr<translationService::TranslationRetrieverService>&);
 std::unique_ptr<AnswerValidator> createAnswerValidator();
 }
@@ -89,7 +88,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
                                                                                   translationUpdater};
 
     auto externalServicesConnectionChecker =
-        createExternalServicesConnectionChecker(httpHandler, translationRetrieverService);
+        createExternalServicesConnectionChecker(wordDescriptionRetrieverService, translationRetrieverService);
     auto answerValidator = createAnswerValidator();
 
     return std::make_unique<DefaultGlossary>(
@@ -204,13 +203,11 @@ std::shared_ptr<DictionaryTranslationUpdater> createDictionaryTranslationUpdater
     return std::make_shared<DefaultDictionaryTranslationUpdater>(dictionaryService, translationService);
 }
 
-std::unique_ptr<ExternalServicesAvailabilityChecker> createExternalServicesConnectionChecker(
-    const std::shared_ptr<const webConnection::HttpHandler>& httpHandler,
+std::unique_ptr<ConnectionChecker> createExternalServicesConnectionChecker(
+    const std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>& wordDescriptionService,
     const std::shared_ptr<translationService::TranslationRetrieverService>& translationService)
 {
-    auto webConnectionChecker = std::make_unique<MerriamWebsterConnectionChecker>(httpHandler);
-    return std::make_unique<DefaultExternalServicesAvailabilityChecker>(translationService,
-                                                                        std::move(webConnectionChecker));
+    return std::make_unique<ExternalServicesConnectionChecker>(translationService, wordDescriptionService);
 }
 
 std::unique_ptr<AnswerValidator> createAnswerValidator()
