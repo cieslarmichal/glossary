@@ -265,7 +265,14 @@ TEST_F(DefaultGlossaryTest, shouldRemoveDictionaryByName)
     glossary.removeDictionary(dictionaryName1);
 }
 
-TEST_F(DefaultGlossaryTest, shouldAddDictionaryWordToDictionary)
+TEST_F(DefaultGlossaryTest, shouldAddDictionaryWordWithoutTranslationToDictionary)
+{
+    EXPECT_CALL(*dictionaryService, addWordToDictionary(dictionaryWordWithoutTranslation, dictionaryName1));
+
+    glossary.addEnglishWordToDictionary(englishWord1, dictionaryName1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldAddDictionaryWordWithTranslationToDictionary)
 {
     EXPECT_CALL(*dictionaryService, addWordToDictionary(dictionaryWordWithTranslation, dictionaryName1));
 

@@ -19,7 +19,9 @@ public:
     MOCK_CONST_METHOD1(getDictionaryWords, DictionaryWords(const DictionaryName&));
     MOCK_CONST_METHOD1(addDictionary, void(const DictionaryName&));
     MOCK_CONST_METHOD1(removeDictionary, void(const DictionaryName&));
-    MOCK_CONST_METHOD3(addEnglishWordToDictionary, void(const EnglishWord&,const std::string& translation, const DictionaryName&));
+    MOCK_CONST_METHOD2(addEnglishWordToDictionary, void(const EnglishWord&, const DictionaryName&));
+    MOCK_CONST_METHOD3(addEnglishWordToDictionary,
+                       void(const EnglishWord&, const std::string& translation, const DictionaryName&));
     MOCK_CONST_METHOD2(removeEnglishWordFromDictionary, void(const EnglishWord&, const DictionaryName&));
     MOCK_CONST_METHOD2(addDictionaryFromFile,
                        void(const DictionaryName&, const std::string& pathToFileWithDictionaryWords));

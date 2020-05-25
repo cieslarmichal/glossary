@@ -27,7 +27,8 @@ signals:
     void notifyAddDictionaryFromFile(const QString& dictionaryName, const QString& pathToDictionaryWords) const;
     void notifyRemoveDictionary(const QString& dictionaryName) const;
     void notifyUpdateDictionaryTranslationsRequest(const QString& dictionaryName) const;
-    void notifyAddWord(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void notifyAddWordWithTranslation(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void notifyAddWordWithoutTranslation(const QString& dictionaryName, const QString& englishWord) const;
     void notifyRemoveWord(const QString& dictionaryName, const QString& englishWord) const;
     void notifyUpdateTranslationRequest(const QString& dictionaryName, const QString& englishWord) const;
     void notifyModifyWord(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
@@ -42,18 +43,25 @@ private slots:
     void on_buttonRemoveDictionary_clicked();
     void on_buttonUpdateTranslations_clicked();
     void on_buttonAddWord_clicked();
-    void on_buttonModifyWord_clicked();
     void on_buttonUpdateTranslation_clicked();
     void on_buttonRemoveWord_clicked();
+    void on_listOfDictionaries_clicked(const QModelIndex &index);
+    void on_listOfDictionaryWords_clicked(const QModelIndex &index);
 
 private:
-    void synchronizeDictionariesModels();
+    void synchronizeDictionariesModel();
+    void synchronizeDictionaryWordsModel(const QString& dictionaryName);
+    void clearDictionaryWordsModel();
+    void setDictionaryWordsNoFocusButtonsEnabled(bool enabled);
+    void setDictionaryWordsWithFocusButtonsEnabled(bool enabled);
+    void setDictionaryButtonsEnabled(bool enabled);
 
     Ui::DictionariesTab* ui;
     DictionaryFormatter dictionaryFormatter;
-    FormattedDictionariesStorage currentDictionaries;
-    QStringListModel currentDictionaryNames;
-    QStringListModel currentDictionaryWords;
-    QStringListModel currentDictionaryTranslations;
+    FormattedDictionariesStorage dictionariesStorage;
+    QStringListModel dictionaryNames;
+    boost::optional<QString> currentDictionaryName;
+    QStringListModel currentDctionaryWords;
+    boost::optional<QString> currentDictionaryWord;
 };
 }

@@ -116,9 +116,17 @@ void GlossaryAdapter::onDictionaryTranslationsUpdateRequest(const QString &dicti
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
 
-void GlossaryAdapter::onWordAdded(const QString &dictionaryName, const QString &englishWord, const QString &translation) const
+void GlossaryAdapter::onWordWithTranslationAdded(const QString &dictionaryName, const QString &englishWord, const QString &translation) const
 {
     glossary->addEnglishWordToDictionary(englishWord.toStdString(), translation.toStdString(), dictionaryName.toStdString());
+    auto currentDictionaryWords = getDictionaryWords(dictionaryName);
+    emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
+}
+
+void GlossaryAdapter::onWordWithoutTranslationAdded(const QString& dictionaryName,
+                                                    const QString& englishWord) const
+{
+    glossary->addEnglishWordToDictionary(englishWord.toStdString(), dictionaryName.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }

@@ -132,7 +132,12 @@ void DefaultGlossary::removeDictionary(const DictionaryName& dictionaryName) con
     dictionaryService->removeDictionary(dictionaryName);
 }
 
-void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord,const std::string& translation,
+void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord, const DictionaryName& dictionaryName) const
+{
+    dictionaryService->addWordToDictionary({englishWord, boost::none}, dictionaryName);
+}
+
+void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord, const std::string& translation,
                                                  const DictionaryName& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, translation}, dictionaryName);

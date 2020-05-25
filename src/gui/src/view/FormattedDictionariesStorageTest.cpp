@@ -100,3 +100,22 @@ TEST_F(FormattedDictionariesStorageTest, givenExistingDictionaryName_shouldRetur
 
     ASSERT_EQ(actualDictionaryWords, formattedDictionaryWords);
 }
+
+TEST_F(FormattedDictionariesStorageTest, givenEmptyDictionaries_shouldReturnTrue)
+{
+    FormattedDictionariesStorage dictionariesStorage{emptyDictionaries};
+
+    const auto actualDictionariesEmpty = dictionariesStorage.dictionariesAreEmpty();
+
+    ASSERT_TRUE(actualDictionariesEmpty);
+}
+
+TEST_F(FormattedDictionariesStorageTest, givenNonEmptyDictionaries_shouldReturnFalse)
+{
+    FormattedDictionariesStorage dictionariesStorage{dictionaries1};
+
+    const auto actualDictionariesEmpty = dictionariesStorage.dictionariesAreEmpty();
+
+    ASSERT_FALSE(actualDictionariesEmpty);
+}
+

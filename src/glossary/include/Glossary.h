@@ -27,14 +27,13 @@ public:
     virtual DictionaryWords getDictionaryWords(const DictionaryName&) const = 0;
     virtual void addDictionary(const DictionaryName&) const = 0;
     virtual void removeDictionary(const DictionaryName&) const = 0;
+    virtual void addEnglishWordToDictionary(const EnglishWord&, const DictionaryName&) const = 0;
     virtual void addEnglishWordToDictionary(const EnglishWord&, const std::string& translation,
                                             const DictionaryName&) const = 0;
-    virtual void removeEnglishWordFromDictionary(const EnglishWord&,
-                                                 const DictionaryName&) const = 0;
+    virtual void removeEnglishWordFromDictionary(const EnglishWord&, const DictionaryName&) const = 0;
     virtual void addDictionaryFromFile(const DictionaryName&,
                                        const std::string& pathToFileWithDictionaryWords) const = 0;
-    virtual void updateDictionaryWordTranslationManually(const DictionaryName&,
-                                                         const EnglishWord&,
+    virtual void updateDictionaryWordTranslationManually(const DictionaryName&, const EnglishWord&,
                                                          const std::string& newTranslation) const = 0;
     virtual void updateDictionaryWordTranslationAutomatically(const DictionaryName&,
                                                               const EnglishWord&) const = 0;

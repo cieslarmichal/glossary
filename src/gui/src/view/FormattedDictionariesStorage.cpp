@@ -55,4 +55,10 @@ FormattedDictionaryWords FormattedDictionariesStorage::getDictionaryWords(const 
     }
     return {};
 }
+
+bool FormattedDictionariesStorage::dictionariesAreEmpty() const
+{
+    return dictionaries.empty();
+}
+
 }

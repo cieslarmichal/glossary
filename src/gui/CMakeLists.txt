@@ -12,9 +12,12 @@ set(SOURCES
         src/view/TranslatorTab.cpp
         src/view/StatisticsTab.cpp
         src/view/AboutDialog.cpp
+        src/view/AddDictionaryPrompt.cpp
+        src/view/AddDictionaryWordPrompt.cpp
         src/view/WordDescriptionDialog.cpp
         src/view/WordDescriptionFormatter.cpp
         src/view/DictionaryFormatter.cpp
+        src/view/DictionaryWordAccumulator.cpp
         src/view/FormattedDictionariesStorage.cpp
         src/viewManager/CheckWordDescriptionTabViewManager.cpp
         src/viewManager/GuessTabViewManager.cpp
@@ -30,6 +33,7 @@ set(UT_SOURCES
         src/view/WordDescriptionFormatterTest.cpp
         src/view/DictionaryFormatterTest.cpp
         src/view/FormattedDictionariesStorageTest.cpp
+        src/view/DictionaryWordAccumulatorTest.cpp
         )
 
 add_executable(gui ${SOURCES} Main.cpp)

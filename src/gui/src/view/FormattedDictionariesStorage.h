@@ -15,6 +15,7 @@ public:
     QList<FormattedDictionary> getDictionaries() const;
     QStringList getDictionaryNames() const;
     FormattedDictionaryWords getDictionaryWords(const QString& dictionaryName) const;
+    bool dictionariesAreEmpty() const;
 
 private:
     QList<FormattedDictionary> dictionaries;
