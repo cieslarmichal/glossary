@@ -33,8 +33,7 @@ TEST_F(CurlHttpHandlerTest, givenIncorrectUrlAddress_shouldThrowConnectionFailed
 TEST_F(CurlHttpHandlerTest, givenCorrectUrlAddressWithHeaders_shouldReturnOkAndContentOfTheHtmlFile)
 {
     const std::string correctUrlAddress = "https://wordsapiv1.p.rapidapi.com/words/fetch/synonyms";
-    const std::vector<std::string> headers{
-        "x-rapidapi-host: wordsapiv1.p.rapidapi.com"};
+    const std::vector<std::string> headers{"x-rapidapi-host: wordsapiv1.p.rapidapi.com"};
 
     const auto response = httpHandler.get(correctUrlAddress, headers);
 

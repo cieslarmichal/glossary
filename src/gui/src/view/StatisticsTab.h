@@ -2,7 +2,6 @@
 
 #include <QWidget>
 
-
 namespace glossary::gui::view
 {
 namespace Ui

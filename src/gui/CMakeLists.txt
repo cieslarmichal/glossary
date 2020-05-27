@@ -12,8 +12,8 @@ set(SOURCES
         src/view/TranslatorTab.cpp
         src/view/StatisticsTab.cpp
         src/view/AboutDialog.cpp
-        src/view/AddDictionaryPrompt.cpp
-        src/view/AddDictionaryWordPrompt.cpp
+        src/view/AddDictionaryDialog.cpp
+        src/view/AddDictionaryWordDialog.cpp
         src/view/WordDescriptionDialog.cpp
         src/view/WordDescriptionFormatter.cpp
         src/view/DictionaryFormatter.cpp

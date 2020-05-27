@@ -17,8 +17,8 @@ DictionariesTabViewManager::DictionariesTabViewManager(
             &GlossaryAdapter::onDictionaryAddedFromFile);
     connect(dictionariesTab.get(), &DictionariesTab::notifyRemoveDictionary, glossaryAdapter.get(),
             &GlossaryAdapter::onDictionaryRemoved);
-    connect(dictionariesTab.get(), &DictionariesTab::notifyUpdateDictionaryTranslationsRequest, glossaryAdapter.get(),
-            &GlossaryAdapter::onDictionaryTranslationsUpdateRequest);
+    connect(dictionariesTab.get(), &DictionariesTab::notifyUpdateDictionaryTranslationsRequest,
+            glossaryAdapter.get(), &GlossaryAdapter::onDictionaryTranslationsUpdateRequest);
     connect(dictionariesTab.get(), &DictionariesTab::notifyAddWordWithTranslation, glossaryAdapter.get(),
             &GlossaryAdapter::onWordWithTranslationAdded);
     connect(dictionariesTab.get(), &DictionariesTab::notifyAddWordWithoutTranslation, glossaryAdapter.get(),

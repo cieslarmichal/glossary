@@ -1,140 +1,140 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>glossary::gui::view::WordDescriptionDialog</class>
- <widget class="QDialog" name="glossary::gui::view::WordDescriptionDialog">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>555</width>
-    <height>529</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Word description</string>
-  </property>
-  <widget class="QDialogButtonBox" name="buttonOk">
-   <property name="geometry">
-    <rect>
-     <x>260</x>
-     <y>490</y>
-     <width>81</width>
-     <height>21</height>
-    </rect>
-   </property>
-   <property name="layoutDirection">
-    <enum>Qt::LeftToRight</enum>
-   </property>
-   <property name="orientation">
-    <enum>Qt::Horizontal</enum>
-   </property>
-   <property name="standardButtons">
-    <set>QDialogButtonBox::Ok</set>
-   </property>
-  </widget>
-  <widget class="QListView" name="listWithExamples">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>200</y>
-     <width>511</width>
-     <height>131</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QListView" name="listWithDefinitions">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>40</y>
-     <width>511</width>
-     <height>131</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelExamples">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>180</y>
-     <width>759</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Example of usage %1:</string>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelDefinitions">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>10</y>
-     <width>759</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Definitions of %1:</string>
-   </property>
-  </widget>
-  <widget class="QListView" name="listWithSynonyms">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>360</y>
-     <width>511</width>
-     <height>101</height>
-    </rect>
-   </property>
-  </widget>
-  <widget class="QLabel" name="labelSynonyms">
-   <property name="geometry">
-    <rect>
-     <x>20</x>
-     <y>340</y>
-     <width>759</width>
-     <height>17</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>Synonyms of %1:</string>
-   </property>
-  </widget>
- </widget>
- <resources/>
- <connections>
-  <connection>
-   <sender>buttonOk</sender>
-   <signal>accepted()</signal>
-   <receiver>glossary::gui::view::WordDescriptionDialog</receiver>
-   <slot>accept()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>248</x>
-     <y>254</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>157</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>buttonOk</sender>
-   <signal>rejected()</signal>
-   <receiver>glossary::gui::view::WordDescriptionDialog</receiver>
-   <slot>reject()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>316</x>
-     <y>260</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>286</x>
-     <y>274</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+    <class>glossary::gui::view::WordDescriptionDialog</class>
+    <widget class="QDialog" name="glossary::gui::view::WordDescriptionDialog">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>511</width>
+                <height>529</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Word description</string>
+        </property>
+        <widget class="QDialogButtonBox" name="buttonOk">
+            <property name="geometry">
+                <rect>
+                    <x>220</x>
+                    <y>500</y>
+                    <width>81</width>
+                    <height>21</height>
+                </rect>
+            </property>
+            <property name="layoutDirection">
+                <enum>Qt::LeftToRight</enum>
+            </property>
+            <property name="orientation">
+                <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="standardButtons">
+                <set>QDialogButtonBox::Ok</set>
+            </property>
+        </widget>
+        <widget class="QListView" name="listWithExamples">
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>230</y>
+                    <width>471</width>
+                    <height>111</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QListView" name="listWithDefinitions">
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>30</y>
+                    <width>471</width>
+                    <height>171</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QLabel" name="labelExamples">
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>210</y>
+                    <width>759</width>
+                    <height>17</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Example of usage %1:</string>
+            </property>
+        </widget>
+        <widget class="QLabel" name="labelDefinitions">
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>10</y>
+                    <width>759</width>
+                    <height>17</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Definitions of %1:</string>
+            </property>
+        </widget>
+        <widget class="QListView" name="listWithSynonyms">
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>370</y>
+                    <width>471</width>
+                    <height>121</height>
+                </rect>
+            </property>
+        </widget>
+        <widget class="QLabel" name="labelSynonyms">
+            <property name="geometry">
+                <rect>
+                    <x>20</x>
+                    <y>350</y>
+                    <width>759</width>
+                    <height>17</height>
+                </rect>
+            </property>
+            <property name="text">
+                <string>Synonyms of %1:</string>
+            </property>
+        </widget>
+    </widget>
+    <resources/>
+    <connections>
+        <connection>
+            <sender>buttonOk</sender>
+            <signal>accepted()</signal>
+            <receiver>glossary::gui::view::WordDescriptionDialog</receiver>
+            <slot>accept()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>248</x>
+                    <y>254</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>157</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+        <connection>
+            <sender>buttonOk</sender>
+            <signal>rejected()</signal>
+            <receiver>glossary::gui::view::WordDescriptionDialog</receiver>
+            <slot>reject()</slot>
+            <hints>
+                <hint type="sourcelabel">
+                    <x>316</x>
+                    <y>260</y>
+                </hint>
+                <hint type="destinationlabel">
+                    <x>286</x>
+                    <y>274</y>
+                </hint>
+            </hints>
+        </connection>
+    </connections>
 </ui>

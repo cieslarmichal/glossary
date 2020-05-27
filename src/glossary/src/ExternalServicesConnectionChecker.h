@@ -12,7 +12,8 @@ class ExternalServicesConnectionChecker : public ConnectionChecker
 {
 public:
     ExternalServicesConnectionChecker(
-        std::shared_ptr<translationService::TranslationRetrieverService>, std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>);
+        std::shared_ptr<translationService::TranslationRetrieverService>,
+        std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>);
 
     ExternalServicesStatus checkExternalServicesAvailabilityStatus() const override;
 

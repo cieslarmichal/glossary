@@ -39,11 +39,13 @@ public slots:
     void onDictionaryAddedFromFile(const QString& dictionaryName, const QString& pathToDictionaryWords) const;
     void onDictionaryRemoved(const QString& dictionaryName) const;
     void onDictionaryTranslationsUpdateRequest(const QString& dictionaryName) const;
-    void onWordWithTranslationAdded(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void onWordWithTranslationAdded(const QString& dictionaryName, const QString& englishWord,
+                                    const QString& translation) const;
     void onWordWithoutTranslationAdded(const QString& dictionaryName, const QString& englishWord) const;
     void onWordRemoved(const QString& dictionaryName, const QString& englishWord) const;
     void onWordTranslationUpdateRequest(const QString& dictionaryName, const QString& englishWord) const;
-    void onWordTranslationChanged(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void onWordTranslationChanged(const QString& dictionaryName, const QString& englishWord,
+                                  const QString& translation) const;
 
 private:
     std::unique_ptr<glossary::Glossary> glossary;

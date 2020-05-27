@@ -1,7 +1,7 @@
 #pragma once
 
-#include "wordDescriptionService/WordsApiStatus.h"
 #include "translationService/TranslationApiStatus.h"
+#include "wordDescriptionService/WordsApiStatus.h"
 
 namespace glossary
 {
@@ -11,10 +11,8 @@ struct ExternalServicesStatus
     translationService::TranslationApiStatus translationApiStatus;
 };
 
-inline bool operator==(const ExternalServicesStatus& lhs,
-                       const ExternalServicesStatus& rhs)
+inline bool operator==(const ExternalServicesStatus& lhs, const ExternalServicesStatus& rhs)
 {
-    return lhs.wordsApiStatus == rhs.wordsApiStatus &&
-           lhs.translationApiStatus == rhs.translationApiStatus;
+    return lhs.wordsApiStatus == rhs.wordsApiStatus && lhs.translationApiStatus == rhs.translationApiStatus;
 }
 }

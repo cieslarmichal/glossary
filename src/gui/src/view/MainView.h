@@ -9,7 +9,6 @@
 #include "StatisticsTab.h"
 #include "TranslatorTab.h"
 
-
 namespace glossary::gui::view
 {
 namespace Ui

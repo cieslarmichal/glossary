@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>739</width>
-    <height>540</height>
+    <width>592</width>
+    <height>502</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,8 +19,8 @@
    </property>
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>50</y>
+     <x>20</x>
+     <y>40</y>
      <width>151</width>
      <height>301</height>
     </rect>
@@ -32,7 +32,7 @@
   <widget class="QLabel" name="labelDictionaries">
    <property name="geometry">
     <rect>
-     <x>90</x>
+     <x>50</x>
      <y>20</y>
      <width>101</width>
      <height>16</height>
@@ -45,8 +45,8 @@
   <widget class="QLabel" name="labelDictionaryWords">
    <property name="geometry">
     <rect>
-     <x>370</x>
-     <y>20</y>
+     <x>270</x>
+     <y>10</y>
      <width>131</width>
      <height>21</height>
     </rect>
@@ -58,8 +58,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>590</x>
-     <y>130</y>
+     <x>450</x>
+     <y>120</y>
      <width>121</width>
      <height>91</height>
     </rect>
@@ -106,8 +106,8 @@
   <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
-     <x>70</x>
-     <y>360</y>
+     <x>20</x>
+     <y>350</y>
      <width>152</width>
      <height>118</height>
     </rect>
@@ -170,10 +170,10 @@
   <widget class="QListView" name="listOfDictionaryWords">
    <property name="geometry">
     <rect>
-     <x>330</x>
-     <y>50</y>
+     <x>230</x>
+     <y>40</y>
      <width>211</width>
-     <height>421</height>
+     <height>431</height>
     </rect>
    </property>
   </widget>

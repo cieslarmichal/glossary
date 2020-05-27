@@ -81,7 +81,7 @@ WordDescriptionConcurrentUpdater::downloadWordDescription(
     {
         return wordDescriptionDownloader->tryDownloadWordDescription(englishWord);
     }
-    catch(const std::exception&)
+    catch (const std::exception&)
     {
         return boost::none;
     }

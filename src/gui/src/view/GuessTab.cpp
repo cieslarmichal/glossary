@@ -23,6 +23,9 @@ GuessTab::GuessTab(QWidget* parent) : QWidget(parent), ui(new Ui::GuessTab)
     ui->setupUi(this);
     ui->boxWithDictionaryNames->setModel(&dictionaryNamesToRandomizeWordFromModel);
     ui->buttonNextRandomWord->setIcon(QIcon(nextIcon.c_str()));
+    ui->editEnglishTranslation->setEnabled(false);
+    ui->buttonCheckWordDescription->setEnabled(false);
+    ui->buttonCheckTranslationCorrectness->setEnabled(false);
 }
 
 GuessTab::~GuessTab()
@@ -69,6 +72,9 @@ void GuessTab::onCheckedTranslationVerdictReceived(bool translationCorrect) cons
 
 void GuessTab::on_buttonNextRandomWord_clicked() const
 {
+    ui->editEnglishTranslation->setText("");
+    ui->buttonCheckWordDescription->setEnabled(false);
+    ui->buttonCheckTranslationCorrectness->setEnabled(false);
     if (selectedDictionaryName)
     {
         emit notifyNextRandomWordFromDictionaryClicked(*selectedDictionaryName);
@@ -92,7 +98,7 @@ void GuessTab::on_boxWithDictionaryNames_activated(const QString& dictionaryName
 void GuessTab::on_buttonCheckWordDescription_clicked()
 {
     const auto currentlyInsertedEnglishWord = ui->editEnglishTranslation->text();
-    if(currentlyInsertedEnglishWord.toStdString().empty())
+    if (currentlyInsertedEnglishWord.toStdString().empty())
     {
         ui->labelWordDescriptionError->setText("Insert english word");
         return;
@@ -105,6 +111,17 @@ void GuessTab::on_buttonCheckTranslationCorrectness_clicked()
     const auto currentPolishWord = ui->editPolishWord->text();
     const auto currentlyInsertedEnglishWord = ui->editEnglishTranslation->text();
     emit notifyCheckTranslationCorrectnessClicked(currentPolishWord, currentlyInsertedEnglishWord.trimmed());
+}
+
+void GuessTab::on_editPolishWord_textChanged(QString)
+{
+    ui->editEnglishTranslation->setEnabled(true);
+}
+
+void GuessTab::on_editEnglishTranslation_textChanged(QString)
+{
+    ui->buttonCheckWordDescription->setEnabled(true);
+    ui->buttonCheckTranslationCorrectness->setEnabled(true);
 }
 
 }

@@ -11,14 +11,17 @@ public:
     const FormattedDictionaryWord formattedDictionaryWord1{"englishWord1", "translation1"};
     const FormattedDictionaryWord formattedDictionaryWord2{"englishWord2", "translation2"};
     const FormattedDictionaryWord formattedDictionaryWord3{"englishWord3", ""};
-    const FormattedDictionaryWords formattedDictionaryWords{formattedDictionaryWord1, formattedDictionaryWord2, formattedDictionaryWord3};
-    const FormattedDictionaryWords formattedDictionaryWordsAfterUpdate{formattedDictionaryWord1, formattedDictionaryWord3};
+    const FormattedDictionaryWords formattedDictionaryWords{
+        formattedDictionaryWord1, formattedDictionaryWord2, formattedDictionaryWord3};
+    const FormattedDictionaryWords formattedDictionaryWordsAfterUpdate{formattedDictionaryWord1,
+                                                                       formattedDictionaryWord3};
     const FormattedDictionaryWords emptyFormattedDictionaryWords{};
     const QString dictionaryName1{"dictionaryName1"};
     const QString dictionaryName2{"dictionaryName2"};
     const QStringList dictionaryNames{dictionaryName1, dictionaryName2};
     const FormattedDictionary formattedDictionary1{dictionaryName1, formattedDictionaryWords};
-    const FormattedDictionary formattedDictionary1AfterUpdate{dictionaryName1, formattedDictionaryWordsAfterUpdate};
+    const FormattedDictionary formattedDictionary1AfterUpdate{dictionaryName1,
+                                                              formattedDictionaryWordsAfterUpdate};
     const FormattedDictionary formattedDictionary2{dictionaryName2, emptyFormattedDictionaryWords};
     const QList<FormattedDictionary> dictionaries1{formattedDictionary1};
     const QList<FormattedDictionary> dictionariesAfterUpdate{formattedDictionary1AfterUpdate};
@@ -44,7 +47,8 @@ TEST_F(FormattedDictionariesStorageTest, givenNonEmptyDictionaries_shouldReturnD
     ASSERT_EQ(actualDictionaries, dictionaries1);
 }
 
-TEST_F(FormattedDictionariesStorageTest, givenDictionaryNameNonExistingInDictionaries_shouldNotUpdateDictionaryWords)
+TEST_F(FormattedDictionariesStorageTest,
+       givenDictionaryNameNonExistingInDictionaries_shouldNotUpdateDictionaryWords)
 {
     FormattedDictionariesStorage dictionariesStorage{dictionaries1};
 
@@ -54,7 +58,8 @@ TEST_F(FormattedDictionariesStorageTest, givenDictionaryNameNonExistingInDiction
     ASSERT_EQ(actualDictionaries, dictionaries1);
 }
 
-TEST_F(FormattedDictionariesStorageTest, givenDictionaryNameExistingInDictionaries_shouldUpdateDictionaryWords)
+TEST_F(FormattedDictionariesStorageTest,
+       givenDictionaryNameExistingInDictionaries_shouldUpdateDictionaryWords)
 {
     FormattedDictionariesStorage dictionariesStorage{dictionaries1};
 
@@ -118,4 +123,3 @@ TEST_F(FormattedDictionariesStorageTest, givenNonEmptyDictionaries_shouldReturnF
 
     ASSERT_FALSE(actualDictionariesEmpty);
 }
-

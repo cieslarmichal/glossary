@@ -4,17 +4,18 @@
 
 namespace glossary::gui::view
 {
-namespace Ui {
-class AddDictionaryPrompt;
+namespace Ui
+{
+class AddDictionaryDialog;
 }
 
-class AddDictionaryPrompt : public QDialog
+class AddDictionaryDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit AddDictionaryPrompt();
-    ~AddDictionaryPrompt();
+    explicit AddDictionaryDialog();
+    ~AddDictionaryDialog();
 
     QString getDictionaryName() const;
 
@@ -22,7 +23,7 @@ private slots:
     void on_editDictionaryName_editingFinished();
 
 private:
-    Ui::AddDictionaryPrompt *ui;
+    Ui::AddDictionaryDialog* ui;
     QString dictionaryName;
 };
 }

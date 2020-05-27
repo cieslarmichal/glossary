@@ -4,6 +4,7 @@
 
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
+
 #include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 

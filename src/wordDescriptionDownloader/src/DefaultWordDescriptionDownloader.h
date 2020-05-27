@@ -22,10 +22,8 @@ public:
 private:
     wordDescriptionRepository::Definitions
     downloadDefinitions(const wordDescriptionRepository::EnglishWord&) const;
-    wordDescriptionRepository::Examples
-    downloadExamples(const wordDescriptionRepository::EnglishWord&) const;
-    wordDescriptionRepository::Synonyms
-    downloadSynonyms(const wordDescriptionRepository::EnglishWord&) const;
+    wordDescriptionRepository::Examples downloadExamples(const wordDescriptionRepository::EnglishWord&) const;
+    wordDescriptionRepository::Synonyms downloadSynonyms(const wordDescriptionRepository::EnglishWord&) const;
     bool responseCodeIsOk(webConnection::ResponseCode) const;
 
     std::unique_ptr<const ApiResponseFetcher> apiResponseFetcher;

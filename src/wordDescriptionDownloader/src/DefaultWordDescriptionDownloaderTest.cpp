@@ -93,7 +93,8 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwConnectionFaile
     EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),webConnection::exceptions::ConnectionFailed);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),
+                 webConnection::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_shouldThrowInvalidApiKey)
@@ -104,7 +105,8 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_s
     ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest,
+       getDefinitions_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
     EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
         .WillOnce(Return(errorResponse));
@@ -122,7 +124,8 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwConnectionFailed_s
     EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),webConnection::exceptions::ConnectionFailed);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),
+                 webConnection::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shouldThrowInvalidApiKey)
@@ -134,7 +137,8 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shou
     ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest,
+       getExamples_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
     expectDownloadedEmptyDefinitions();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord)).WillOnce(Return(errorResponse));
@@ -152,7 +156,8 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwConnectionFailed_s
     EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),webConnection::exceptions::ConnectionFailed);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),
+                 webConnection::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shouldReturnThrowInvalidApiKey)
@@ -165,7 +170,8 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shou
     ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
 }
 
-TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
+TEST_F(DefaultWordDescriptionDownloaderTest,
+       getSynonyms_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
     expectDownloadedEmptyDefinitions();
     expectDownloadedEmptyExamples();

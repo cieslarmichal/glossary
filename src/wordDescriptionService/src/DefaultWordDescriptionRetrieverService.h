@@ -3,9 +3,9 @@
 #include <memory>
 
 #include "WordDescriptionRetrieverService.h"
+#include "WordsApiConnectionChecker.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
-#include "WordsApiConnectionChecker.h"
 
 namespace glossary::wordDescriptionService
 {
@@ -14,7 +14,8 @@ class DefaultWordDescriptionRetrieverService : public WordDescriptionRetrieverSe
 public:
     DefaultWordDescriptionRetrieverService(
         std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
-        std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>, std::unique_ptr<WordsApiConnectionChecker>);
+        std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>,
+        std::unique_ptr<WordsApiConnectionChecker>);
 
     wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) override;

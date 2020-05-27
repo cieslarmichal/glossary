@@ -7,7 +7,6 @@
 
 #include "WordDescription.h"
 
-
 namespace glossary::gui::view
 {
 namespace Ui
@@ -42,6 +41,8 @@ private slots:
     void on_boxWithDictionaryNames_activated(const QString& dictionaryName);
     void on_buttonCheckWordDescription_clicked();
     void on_buttonCheckTranslationCorrectness_clicked();
+    void on_editPolishWord_textChanged(QString);
+    void on_editEnglishTranslation_textChanged(QString);
 
 private:
     QStringListModel dictionaryNamesToRandomizeWordFromModel;

@@ -21,7 +21,8 @@ const Dictionaries dictionaries{dictionary1, dictionary2};
 const FormattedDictionaryWord formattedDictionaryWord1{"englishWord1", "translation1"};
 const FormattedDictionaryWord formattedDictionaryWord2{"englishWord2", "translation2"};
 const FormattedDictionaryWord formattedDictionaryWord3{"englishWord3", ""};
-const FormattedDictionaryWords formattedDictionaryWords{formattedDictionaryWord1, formattedDictionaryWord2, formattedDictionaryWord3};
+const FormattedDictionaryWords formattedDictionaryWords{formattedDictionaryWord1, formattedDictionaryWord2,
+                                                        formattedDictionaryWord3};
 const FormattedDictionaryWords emptyFormattedDictionaryWords{};
 const FormattedDictionary formattedDictionary1{"dictionaryName1", formattedDictionaryWords};
 const FormattedDictionary formattedDictionary2{"dictionaryName2", emptyFormattedDictionaryWords};

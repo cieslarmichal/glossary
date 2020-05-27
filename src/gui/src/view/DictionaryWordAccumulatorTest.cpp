@@ -20,8 +20,7 @@ public:
     DictionaryWordAccumulator dictionaryWordAccumulator;
 };
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenEmptyDictionaryWord_shouldReturnEmpty)
+TEST_F(DictionaryWordAccumulatorTest, givenEmptyDictionaryWord_shouldReturnEmpty)
 {
     const auto actualAccumulatedDictionaryWord =
         dictionaryWordAccumulator.accumulateDictionaryWord(emptyDictionaryWord);
@@ -47,8 +46,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     ASSERT_EQ(actualAccumulatedDictionaryWord, accumulatedDictionaryWordWithoutTranslation);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenEmptyString_shouldReturnNone)
+TEST_F(DictionaryWordAccumulatorTest, givenEmptyString_shouldReturnNone)
 {
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedEmptyDictionaryWord);
@@ -56,8 +54,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     ASSERT_EQ(actualDictionaryWord, boost::none);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenWordWithoutDash_shouldReturnNone)
+TEST_F(DictionaryWordAccumulatorTest, givenWordWithoutDash_shouldReturnNone)
 {
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedWordWithoutDash);
@@ -65,8 +62,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     ASSERT_EQ(actualDictionaryWord, boost::none);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenStringWithTwoWordsSeparetedBySpaces_shouldReturnNone)
+TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedBySpaces_shouldReturnNone)
 {
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedTwoWordsSeparatedWithSpace);
@@ -83,8 +79,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     ASSERT_EQ(actualDictionaryWord, boost::none);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenStringWithTwoWordsSeparetedByDash_shouldReturnDictionaryWord)
+TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedByDash_shouldReturnDictionaryWord)
 {
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedDictionaryWordWithTranslation);
@@ -92,8 +87,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     ASSERT_EQ(*actualDictionaryWord, dictionaryWordWithTranslation);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenStringWithWordAndDash_shouldReturnDictionaryWordWithoutTranslation)
+TEST_F(DictionaryWordAccumulatorTest, givenStringWithWordAndDash_shouldReturnDictionaryWordWithoutTranslation)
 {
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedDictionaryWordWithoutTranslation);

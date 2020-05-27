@@ -1,10 +1,11 @@
 #include "DictionariesTab.h"
 
-#include "ui_DictionariesTab.h"
-#include "AddDictionaryPrompt.h"
-#include "AddDictionaryWordPrompt.h"
-#include <QFileDialog>
 #include <QDir>
+#include <QFileDialog>
+
+#include "AddDictionaryDialog.h"
+#include "AddDictionaryWordDialog.h"
+#include "ui_DictionariesTab.h"
 
 namespace glossary::gui::view
 {
@@ -31,7 +32,8 @@ void DictionariesTab::setDictionaries(const Dictionaries& dictionaries)
     synchronizeDictionariesModel();
 }
 
-void DictionariesTab::onDictionaryWordsUpdate(const DictionaryName & dictionaryName, const DictionaryWords & dictionaryWords)
+void DictionariesTab::onDictionaryWordsUpdate(const DictionaryName& dictionaryName,
+                                              const DictionaryWords& dictionaryWords)
 {
     auto formattedDictionaryName = dictionaryFormatter.getFormattedDictionaryName(dictionaryName);
     auto formattedDictionaryWords = dictionaryFormatter.getFormattedDictionaryWords(dictionaryWords);
@@ -39,7 +41,7 @@ void DictionariesTab::onDictionaryWordsUpdate(const DictionaryName & dictionaryN
     synchronizeDictionaryWordsModel(QString::fromStdString(dictionaryName));
 }
 
-void DictionariesTab::onDictionariesUpdate(const Dictionaries & dictionaries)
+void DictionariesTab::onDictionariesUpdate(const Dictionaries& dictionaries)
 {
     auto formattedDictionaries = dictionaryFormatter.getFormattedDictionaries(dictionaries);
     dictionariesStorage.updateDictionaries(formattedDictionaries);
@@ -48,9 +50,9 @@ void DictionariesTab::onDictionariesUpdate(const Dictionaries & dictionaries)
 
 void DictionariesTab::on_buttonAddNewDictionary_clicked()
 {
-    AddDictionaryPrompt addDictionaryPrompt;
+    AddDictionaryDialog addDictionaryPrompt;
     addDictionaryPrompt.show();
-    if(addDictionaryPrompt.exec() == QDialog::Accepted)
+    if (addDictionaryPrompt.exec() == QDialog::Accepted)
     {
         auto addedDictionaryName = addDictionaryPrompt.getDictionaryName();
         emit notifyAddNewDictionary(addedDictionaryName);
@@ -61,13 +63,13 @@ void DictionariesTab::on_buttonAddDictionaryFromFile_clicked()
 {
     auto pathToDictionaryWords = QFileDialog::getOpenFileName(this, "Open file with dictionary words");
     auto dictionaryFileName = QFileInfo{pathToDictionaryWords}.fileName();
-    QString dictionaryName = dictionaryFileName.section(".",0,0);
+    QString dictionaryName = dictionaryFileName.section(".", 0, 0);
     emit notifyAddDictionaryFromFile(dictionaryName, pathToDictionaryWords);
 }
 
 void DictionariesTab::on_buttonRemoveDictionary_clicked()
 {
-    if(currentDictionaryName)
+    if (currentDictionaryName)
     {
         emit notifyRemoveDictionary(*currentDictionaryName);
         currentDictionaryName = boost::none;
@@ -80,7 +82,7 @@ void DictionariesTab::on_buttonRemoveDictionary_clicked()
 
 void DictionariesTab::on_buttonUpdateTranslations_clicked()
 {
-    if(currentDictionaryName)
+    if (currentDictionaryName)
     {
         emit notifyUpdateDictionaryTranslationsRequest(*currentDictionaryName);
     }
@@ -88,13 +90,13 @@ void DictionariesTab::on_buttonUpdateTranslations_clicked()
 
 void DictionariesTab::on_buttonAddWord_clicked()
 {
-    AddDictionaryWordPrompt addDictionaryWordPrompt;
+    AddDictionaryWordDialog addDictionaryWordPrompt;
     addDictionaryWordPrompt.show();
-    if(addDictionaryWordPrompt.exec() == QDialog::Accepted)
+    if (addDictionaryWordPrompt.exec() == QDialog::Accepted)
     {
         auto addedEnglishWord = addDictionaryWordPrompt.getEnglishWord();
         auto addedTranlsation = addDictionaryWordPrompt.getTranslation();
-        if(addedTranlsation.isEmpty() && currentDictionaryName)
+        if (addedTranlsation.isEmpty() && currentDictionaryName)
         {
             emit notifyAddWordWithoutTranslation(*currentDictionaryName, addedEnglishWord);
         }
@@ -109,35 +111,35 @@ void DictionariesTab::on_buttonAddWord_clicked()
 
 void DictionariesTab::on_buttonUpdateTranslation_clicked()
 {
-    if(currentDictionaryName && currentEnglishWord)
+    if (currentDictionaryName && currentEnglishWord)
     {
         emit notifyUpdateTranslationRequest(*currentDictionaryName, *currentEnglishWord);
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentEnglishWord =boost::none;
+    currentEnglishWord = boost::none;
 }
 
 void DictionariesTab::on_buttonRemoveWord_clicked()
 {
-    if(currentDictionaryName && currentEnglishWord)
+    if (currentDictionaryName && currentEnglishWord)
     {
         emit notifyRemoveWord(*currentDictionaryName, *currentEnglishWord);
         currentEnglishWord = boost::none;
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentEnglishWord =boost::none;
+    currentEnglishWord = boost::none;
 }
 
 void DictionariesTab::synchronizeDictionariesModel()
 {
-    if(dictionariesStorage.dictionariesAreEmpty())
+    if (dictionariesStorage.dictionariesAreEmpty())
     {
         setDictionaryButtonsEnabled(false);
     }
     else
     {
         dictionaryNames.setStringList(dictionariesStorage.getDictionaryNames());
-        if(currentDictionaryName)
+        if (currentDictionaryName)
         {
             synchronizeDictionaryWordsModel(*currentDictionaryName);
         }
@@ -148,7 +150,7 @@ void DictionariesTab::synchronizeDictionariesModel()
     }
 }
 
-void DictionariesTab::synchronizeDictionaryWordsModel(const QString &dictionaryName)
+void DictionariesTab::synchronizeDictionaryWordsModel(const QString& dictionaryName)
 {
     auto formattedDictionaryWords = dictionariesStorage.getDictionaryWords(dictionaryName);
     auto accumulatedDictionaryWords = getAccumulatedFormattedDictionaryWords(formattedDictionaryWords);
@@ -177,7 +179,7 @@ void DictionariesTab::setDictionaryButtonsEnabled(bool enabled)
     ui->buttonUpdateTranslations->setEnabled(enabled);
 }
 
-void DictionariesTab::on_listOfDictionaries_clicked(const QModelIndex & dictionaryNameIndex)
+void DictionariesTab::on_listOfDictionaries_clicked(const QModelIndex& dictionaryNameIndex)
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
     currentDictionaryName = dictionaryName;
@@ -189,10 +191,11 @@ void DictionariesTab::on_listOfDictionaries_clicked(const QModelIndex & dictiona
     setDictionaryWordsWithFocusButtonsEnabled(false);
 }
 
-void DictionariesTab::on_listOfDictionaryWords_clicked(const QModelIndex &dictionaryWordIndex)
+void DictionariesTab::on_listOfDictionaryWords_clicked(const QModelIndex& dictionaryWordIndex)
 {
     QString dictionaryWordAccumulated = dictionaryWordIndex.data(Qt::DisplayRole).toString();
-    if(const auto dictionaryWord = dictionaryWordAccumulator.separateDictionaryWord(dictionaryWordAccumulated))
+    if (const auto dictionaryWord =
+            dictionaryWordAccumulator.separateDictionaryWord(dictionaryWordAccumulated))
     {
         currentEnglishWord = dictionaryWord->englishWord;
         setDictionaryWordsWithFocusButtonsEnabled(true);
@@ -200,4 +203,3 @@ void DictionariesTab::on_listOfDictionaryWords_clicked(const QModelIndex &dictio
 }
 
 }
-

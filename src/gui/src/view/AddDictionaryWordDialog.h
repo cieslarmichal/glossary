@@ -4,17 +4,18 @@
 
 namespace glossary::gui::view
 {
-namespace Ui {
-class AddDictionaryWordPrompt;
+namespace Ui
+{
+class AddDictionaryWordDialog;
 }
 
-class AddDictionaryWordPrompt : public QDialog
+class AddDictionaryWordDialog : public QDialog
 {
     Q_OBJECT
 
 public:
-    AddDictionaryWordPrompt();
-    ~AddDictionaryWordPrompt();
+    AddDictionaryWordDialog();
+    ~AddDictionaryWordDialog();
 
     QString getEnglishWord() const;
     QString getTranslation() const;
@@ -24,7 +25,7 @@ private slots:
     void on_editTranslation_editingFinished();
 
 private:
-    Ui::AddDictionaryWordPrompt *ui;
+    Ui::AddDictionaryWordDialog* ui;
     QString englishWord;
     QString translation;
 };

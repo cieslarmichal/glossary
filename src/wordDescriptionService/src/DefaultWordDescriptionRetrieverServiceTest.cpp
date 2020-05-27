@@ -2,11 +2,12 @@
 
 #include "gtest/gtest.h"
 
+#include "WordsApiConnectionCheckerMock.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
+
 #include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
-#include "WordsApiConnectionCheckerMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -33,8 +34,8 @@ public:
     std::unique_ptr<WordsApiConnectionCheckerMock> connectionCheckerInit =
         std::make_unique<StrictMock<WordsApiConnectionCheckerMock>>();
     WordsApiConnectionCheckerMock* connectionChecker = connectionCheckerInit.get();
-    DefaultWordDescriptionRetrieverService wordDescriptionService{wordDescriptionDownloader,
-                                                                  wordDescriptionRepository, std::move(connectionCheckerInit)};
+    DefaultWordDescriptionRetrieverService wordDescriptionService{
+        wordDescriptionDownloader, wordDescriptionRepository, std::move(connectionCheckerInit)};
 };
 
 TEST_F(DefaultWordDescriptionRetrieverServiceTest,
@@ -62,8 +63,9 @@ TEST_F(
     ASSERT_EQ(actualWordDescription, wordDescriptionFromDownloader);
 }
 
-TEST_F(DefaultWordDescriptionRetrieverServiceTest,
-       repositoryDoesNotReturnWordDescriptionAndDownloaderThrowsConnectionFailed_shouldReturnEmptyWordDescriptionWithEnglishWord)
+TEST_F(
+    DefaultWordDescriptionRetrieverServiceTest,
+    repositoryDoesNotReturnWordDescriptionAndDownloaderThrowsConnectionFailed_shouldReturnEmptyWordDescriptionWithEnglishWord)
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
@@ -75,8 +77,9 @@ TEST_F(DefaultWordDescriptionRetrieverServiceTest,
     ASSERT_EQ(actualWordDescription, emptyWordDescription);
 }
 
-TEST_F(DefaultWordDescriptionRetrieverServiceTest,
-       repositoryDoesNotReturnWordDescriptionAndDownloaderThrowsInvalidApiKey_shouldReturnEmptyWordDescriptionWithEnglishWord)
+TEST_F(
+    DefaultWordDescriptionRetrieverServiceTest,
+    repositoryDoesNotReturnWordDescriptionAndDownloaderThrowsInvalidApiKey_shouldReturnEmptyWordDescriptionWithEnglishWord)
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
@@ -88,8 +91,7 @@ TEST_F(DefaultWordDescriptionRetrieverServiceTest,
     ASSERT_EQ(actualWordDescription, emptyWordDescription);
 }
 
-TEST_F(DefaultWordDescriptionRetrieverServiceTest,
-       shouldReturnWordsApiConnectionAvailabilityStatus)
+TEST_F(DefaultWordDescriptionRetrieverServiceTest, shouldReturnWordsApiConnectionAvailabilityStatus)
 {
     EXPECT_CALL(*connectionChecker, connectionToWordsApiAvailable()).WillOnce(Return(apiAvailabilityStatus));
 

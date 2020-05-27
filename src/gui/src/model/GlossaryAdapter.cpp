@@ -82,43 +82,46 @@ void GlossaryAdapter::onWordDescriptionTriggered(const QString& englishName) con
 }
 
 void GlossaryAdapter::onTranslationCorrectnessTriggered(const QString& polishWord,
-                                                       const QString& englishWord) const
+                                                        const QString& englishWord) const
 {
     auto translationCorrectnessVerification = verifyCorrectnessOfTranslation(polishWord, englishWord);
     emit notifyAboutTranslationVerdict(translationCorrectnessVerification);
 }
 
-void GlossaryAdapter::onDictionaryAdded(const QString &dictionaryName) const
+void GlossaryAdapter::onDictionaryAdded(const QString& dictionaryName) const
 {
     glossary->addDictionary(dictionaryName.toStdString());
     auto currentDictionaries = getDictionaries();
     emit notifyAboutDictionariesUpdate(currentDictionaries);
 }
 
-void GlossaryAdapter::onDictionaryAddedFromFile(const QString &dictionaryName, const QString &pathToDictionaryWords) const
+void GlossaryAdapter::onDictionaryAddedFromFile(const QString& dictionaryName,
+                                                const QString& pathToDictionaryWords) const
 {
     glossary->addDictionaryFromFile(dictionaryName.toStdString(), pathToDictionaryWords.toStdString());
     auto currentDictionaries = getDictionaries();
     emit notifyAboutDictionariesUpdate(currentDictionaries);
 }
 
-void GlossaryAdapter::onDictionaryRemoved(const QString &dictionaryName) const
+void GlossaryAdapter::onDictionaryRemoved(const QString& dictionaryName) const
 {
     glossary->removeDictionary(dictionaryName.toStdString());
     auto currentDictionaries = getDictionaries();
     emit notifyAboutDictionariesUpdate(currentDictionaries);
 }
 
-void GlossaryAdapter::onDictionaryTranslationsUpdateRequest(const QString &dictionaryName) const
+void GlossaryAdapter::onDictionaryTranslationsUpdateRequest(const QString& dictionaryName) const
 {
     glossary->updateDictionaryTranslationsAutomatically(dictionaryName.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
 
-void GlossaryAdapter::onWordWithTranslationAdded(const QString &dictionaryName, const QString &englishWord, const QString &translation) const
+void GlossaryAdapter::onWordWithTranslationAdded(const QString& dictionaryName, const QString& englishWord,
+                                                 const QString& translation) const
 {
-    glossary->addEnglishWordToDictionary(englishWord.toStdString(), translation.toStdString(), dictionaryName.toStdString());
+    glossary->addEnglishWordToDictionary(englishWord.toStdString(), translation.toStdString(),
+                                         dictionaryName.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
@@ -131,23 +134,27 @@ void GlossaryAdapter::onWordWithoutTranslationAdded(const QString& dictionaryNam
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
 
-void GlossaryAdapter::onWordRemoved(const QString &dictionaryName, const QString &englishWord) const
+void GlossaryAdapter::onWordRemoved(const QString& dictionaryName, const QString& englishWord) const
 {
     glossary->removeEnglishWordFromDictionary(englishWord.toStdString(), dictionaryName.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
 
-void GlossaryAdapter::onWordTranslationUpdateRequest(const QString &dictionaryName, const QString &englishWord) const
+void GlossaryAdapter::onWordTranslationUpdateRequest(const QString& dictionaryName,
+                                                     const QString& englishWord) const
 {
-    glossary->updateDictionaryWordTranslationAutomatically(dictionaryName.toStdString(), englishWord.toStdString());
+    glossary->updateDictionaryWordTranslationAutomatically(dictionaryName.toStdString(),
+                                                           englishWord.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
 
-void GlossaryAdapter::onWordTranslationChanged(const QString &dictionaryName, const QString &englishWord, const QString &translation) const
+void GlossaryAdapter::onWordTranslationChanged(const QString& dictionaryName, const QString& englishWord,
+                                               const QString& translation) const
 {
-    glossary->updateDictionaryWordTranslationManually(dictionaryName.toStdString(), englishWord.toStdString(), translation.toStdString());
+    glossary->updateDictionaryWordTranslationManually(dictionaryName.toStdString(), englishWord.toStdString(),
+                                                      translation.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }

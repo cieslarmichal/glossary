@@ -35,7 +35,8 @@ public:
     void addDictionary(const DictionaryName&) const override;
     void removeDictionary(const DictionaryName&) const override;
     void addEnglishWordToDictionary(const EnglishWord&, const DictionaryName&) const override;
-    void addEnglishWordToDictionary(const EnglishWord&,const std::string& translation, const DictionaryName&) const override;
+    void addEnglishWordToDictionary(const EnglishWord&, const std::string& translation,
+                                    const DictionaryName&) const override;
     void removeEnglishWordFromDictionary(const EnglishWord&, const DictionaryName&) const override;
     void addDictionaryFromFile(const DictionaryName&,
                                const std::string& pathToFileWithDictionaryWords) const override;

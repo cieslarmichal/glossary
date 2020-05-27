@@ -1,11 +1,12 @@
 #pragma once
 
-#include <QWidget>
 #include <QStringList>
 #include <QStringListModel>
+#include <QWidget>
+
 #include "DictionaryFormatter.h"
-#include "FormattedDictionariesStorage.h"
 #include "DictionaryWordAccumulator.h"
+#include "FormattedDictionariesStorage.h"
 
 namespace glossary::gui::view
 {
@@ -25,14 +26,17 @@ public:
 
 signals:
     void notifyAddNewDictionary(const QString& dictionaryName) const;
-    void notifyAddDictionaryFromFile(const QString& dictionaryName, const QString& pathToDictionaryWords) const;
+    void notifyAddDictionaryFromFile(const QString& dictionaryName,
+                                     const QString& pathToDictionaryWords) const;
     void notifyRemoveDictionary(const QString& dictionaryName) const;
     void notifyUpdateDictionaryTranslationsRequest(const QString& dictionaryName) const;
-    void notifyAddWordWithTranslation(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void notifyAddWordWithTranslation(const QString& dictionaryName, const QString& englishWord,
+                                      const QString& translation) const;
     void notifyAddWordWithoutTranslation(const QString& dictionaryName, const QString& englishWord) const;
     void notifyRemoveWord(const QString& dictionaryName, const QString& englishWord) const;
     void notifyUpdateTranslationRequest(const QString& dictionaryName, const QString& englishWord) const;
-    void notifyModifyWord(const QString& dictionaryName, const QString& englishWord, const QString& translation) const;
+    void notifyModifyWord(const QString& dictionaryName, const QString& englishWord,
+                          const QString& translation) const;
 
 public slots:
     void onDictionaryWordsUpdate(const DictionaryName&, const DictionaryWords&);
@@ -46,8 +50,8 @@ private slots:
     void on_buttonAddWord_clicked();
     void on_buttonUpdateTranslation_clicked();
     void on_buttonRemoveWord_clicked();
-    void on_listOfDictionaries_clicked(const QModelIndex &index);
-    void on_listOfDictionaryWords_clicked(const QModelIndex &index);
+    void on_listOfDictionaries_clicked(const QModelIndex& index);
+    void on_listOfDictionaryWords_clicked(const QModelIndex& index);
 
 private:
     void synchronizeDictionariesModel();

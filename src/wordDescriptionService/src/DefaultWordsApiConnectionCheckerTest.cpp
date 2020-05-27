@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
+
 #include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 
@@ -30,27 +31,33 @@ public:
     DefaultWordsApiConnectionChecker connectionChecker{wordDescriptionDownloader};
 };
 
-TEST_F(DefaultWordsApiConnectionCheckerTest, wordDescriptionDownloaderThrowsConnectionFailed_shouldReturnConnectionUnavailableStatus)
+TEST_F(DefaultWordsApiConnectionCheckerTest,
+       wordDescriptionDownloaderThrowsConnectionFailed_shouldReturnConnectionUnavailableStatus)
 {
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord)).WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
     const auto actualStatus = connectionChecker.connectionToWordsApiAvailable();
 
     ASSERT_EQ(actualStatus, unavailableStatus);
 }
 
-TEST_F(DefaultWordsApiConnectionCheckerTest, wordDescriptionDownloaderThrowsInvalidApiKey_shouldReturnInvalidApiKeyStatus)
+TEST_F(DefaultWordsApiConnectionCheckerTest,
+       wordDescriptionDownloaderThrowsInvalidApiKey_shouldReturnInvalidApiKeyStatus)
 {
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord)).WillOnce(Throw(wordDescriptionDownloader::exceptions::InvalidApiKey{""}));
+    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
+        .WillOnce(Throw(wordDescriptionDownloader::exceptions::InvalidApiKey{""}));
 
     const auto actualStatus = connectionChecker.connectionToWordsApiAvailable();
 
     ASSERT_EQ(actualStatus, invalidApiKeyStatus);
 }
 
-TEST_F(DefaultWordsApiConnectionCheckerTest, wordDescriptionDownloaderReturnsWordDescription_shouldReturnConnectionAvailableStatus)
+TEST_F(DefaultWordsApiConnectionCheckerTest,
+       wordDescriptionDownloaderReturnsWordDescription_shouldReturnConnectionAvailableStatus)
 {
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord)).WillOnce(Return(wordDescription));
+    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
+        .WillOnce(Return(wordDescription));
 
     const auto actualStatus = connectionChecker.connectionToWordsApiAvailable();
 

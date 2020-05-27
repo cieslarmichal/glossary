@@ -1,4 +1,5 @@
 #include "DefaultWordsApiConnectionChecker.h"
+
 #include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 
@@ -24,7 +25,7 @@ WordsApiStatus DefaultWordsApiConnectionChecker::connectionToWordsApiAvailable()
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)
     {
-        std::cerr << "Connection to words api is not availavile"<< e.what();
+        std::cerr << "Connection to words api is not availavile" << e.what();
         return WordsApiStatus::Unavailable;
     }
     catch (const wordDescriptionDownloader::exceptions::InvalidApiKey& e)

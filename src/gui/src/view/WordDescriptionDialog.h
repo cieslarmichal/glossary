@@ -6,7 +6,6 @@
 #include "WordDescription.h"
 #include "WordDescriptionFormatter.h"
 
-
 namespace glossary::gui::view
 {
 namespace Ui

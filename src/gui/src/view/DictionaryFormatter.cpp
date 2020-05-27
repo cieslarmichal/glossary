@@ -3,7 +3,7 @@
 namespace glossary::gui::view
 {
 
-FormattedDictionaries DictionaryFormatter::getFormattedDictionaries(const Dictionaries & dictionaries) const
+FormattedDictionaries DictionaryFormatter::getFormattedDictionaries(const Dictionaries& dictionaries) const
 {
     FormattedDictionaries formattedDictionaries;
     for (const auto& dictionary : dictionaries)
@@ -25,17 +25,18 @@ QString DictionaryFormatter::getFormattedDictionaryName(const DictionaryName& di
     return QString::fromStdString(dictionaryName);
 }
 
-FormattedDictionaryWords DictionaryFormatter::getFormattedDictionaryWords(const DictionaryWords& dictionaryWords) const
+FormattedDictionaryWords
+DictionaryFormatter::getFormattedDictionaryWords(const DictionaryWords& dictionaryWords) const
 {
     FormattedDictionaryWords formattedDictionaryWords;
     for (const auto& dictionaryWord : dictionaryWords)
     {
         QString englishWord = QString::fromStdString(dictionaryWord.englishWord);
-        QString translation = dictionaryWord.translation? QString::fromStdString(*dictionaryWord.translation) : "";
+        QString translation =
+            dictionaryWord.translation ? QString::fromStdString(*dictionaryWord.translation) : "";
         formattedDictionaryWords.push_back({englishWord, translation});
     }
     return formattedDictionaryWords;
 }
 
 }
-

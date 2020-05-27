@@ -16,8 +16,7 @@ DefaultGlossary::DefaultGlossary(
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
-    std::unique_ptr<ConnectionChecker> connectionCheckerInit,
-    std::unique_ptr<AnswerValidator> validator)
+    std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
@@ -132,12 +131,14 @@ void DefaultGlossary::removeDictionary(const DictionaryName& dictionaryName) con
     dictionaryService->removeDictionary(dictionaryName);
 }
 
-void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord, const DictionaryName& dictionaryName) const
+void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord,
+                                                 const DictionaryName& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, boost::none}, dictionaryName);
 }
 
-void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord, const std::string& translation,
+void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord,
+                                                 const std::string& translation,
                                                  const DictionaryName& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, translation}, dictionaryName);

@@ -2,9 +2,9 @@
 
 #include "boost/optional.hpp"
 
+#include "WordsApiStatus.h"
 #include "wordDescriptionRepository/EnglishWord.h"
 #include "wordDescriptionRepository/WordDescription.h"
-#include "WordsApiStatus.h"
 
 namespace glossary::wordDescriptionService
 {

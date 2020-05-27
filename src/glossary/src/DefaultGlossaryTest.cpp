@@ -51,8 +51,7 @@ const WordDescription wordDescription{EnglishWord{"computer"}, definitions, exam
 const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
 const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
-auto availableStatus =
-    ExternalServicesStatus{WordsApiStatus::Available, TranslationApiStatus::Available};
+auto availableStatus = ExternalServicesStatus{WordsApiStatus::Available, TranslationApiStatus::Available};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
 const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
 const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
@@ -83,8 +82,7 @@ public:
         std::make_shared<StrictMock<DictionaryTranslationUpdaterMock>>();
     std::unique_ptr<ConnectionCheckerMock> externalServicesConnectionCheckerInit =
         std::make_unique<StrictMock<ConnectionCheckerMock>>();
-    ConnectionCheckerMock* externalServicesConnectionChecker =
-        externalServicesConnectionCheckerInit.get();
+    ConnectionCheckerMock* externalServicesConnectionChecker = externalServicesConnectionCheckerInit.get();
     std::unique_ptr<AnswerValidatorMock> answerValidatorInit =
         std::make_unique<StrictMock<AnswerValidatorMock>>();
     AnswerValidatorMock* answerValidator = answerValidatorInit.get();
@@ -219,7 +217,7 @@ TEST_F(DefaultGlossaryTest, shouldReturnDictionaries)
 {
     EXPECT_CALL(*dictionaryService, getDictionaries).WillOnce(Return(dictionaries));
 
-    const auto actualDictionaries= glossary.getDictionaries();
+    const auto actualDictionaries = glossary.getDictionaries();
 
     ASSERT_EQ(actualDictionaries, dictionaries);
 }
