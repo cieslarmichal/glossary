@@ -4,6 +4,7 @@
 #include "AddDictionaryPrompt.h"
 #include "AddDictionaryWordPrompt.h"
 #include <QFileDialog>
+#include <QDir>
 
 namespace glossary::gui::view
 {
@@ -58,7 +59,10 @@ void DictionariesTab::on_buttonAddNewDictionary_clicked()
 
 void DictionariesTab::on_buttonAddDictionaryFromFile_clicked()
 {
-    QString fileWithDictionaryWords = QFileDialog::getSaveFileName(this, "Open file with dictionary words");
+    auto pathToDictionaryWords = QFileDialog::getOpenFileName(this, "Open file with dictionary words");
+    auto dictionaryFileName = QFileInfo{pathToDictionaryWords}.fileName();
+    QString dictionaryName = dictionaryFileName.section(".",0,0);
+    emit notifyAddDictionaryFromFile(dictionaryName, pathToDictionaryWords);
 }
 
 void DictionariesTab::on_buttonRemoveDictionary_clicked()
@@ -67,7 +71,7 @@ void DictionariesTab::on_buttonRemoveDictionary_clicked()
     {
         emit notifyRemoveDictionary(*currentDictionaryName);
         currentDictionaryName = boost::none;
-        currentDictionaryWord = boost::none;
+        currentEnglishWord = boost::none;
         setDictionaryButtonsEnabled(false);
         setDictionaryWordsNoFocusButtonsEnabled(false);
         setDictionaryWordsWithFocusButtonsEnabled(false);
@@ -100,29 +104,28 @@ void DictionariesTab::on_buttonAddWord_clicked()
         }
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentDictionaryWord = boost::none;
+    currentEnglishWord = boost::none;
 }
 
 void DictionariesTab::on_buttonUpdateTranslation_clicked()
 {
-    if(currentDictionaryName && currentDictionaryWord)
+    if(currentDictionaryName && currentEnglishWord)
     {
-        emit notifyUpdateTranslationRequest(*currentDictionaryName, *currentDictionaryWord);
+        emit notifyUpdateTranslationRequest(*currentDictionaryName, *currentEnglishWord);
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentDictionaryWord =boost::none;
+    currentEnglishWord =boost::none;
 }
 
 void DictionariesTab::on_buttonRemoveWord_clicked()
 {
-    if(currentDictionaryName && currentDictionaryWord)
+    if(currentDictionaryName && currentEnglishWord)
     {
-        // TODO: handle englishword - translation
-        emit notifyRemoveWord(*currentDictionaryName, *currentDictionaryWord);
-        currentDictionaryWord = boost::none;
+        emit notifyRemoveWord(*currentDictionaryName, *currentEnglishWord);
+        currentEnglishWord = boost::none;
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentDictionaryWord =boost::none;
+    currentEnglishWord =boost::none;
 }
 
 void DictionariesTab::synchronizeDictionariesModel()
@@ -178,7 +181,7 @@ void DictionariesTab::on_listOfDictionaries_clicked(const QModelIndex & dictiona
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
     currentDictionaryName = dictionaryName;
-    currentDictionaryWord = boost::none;
+    currentEnglishWord = boost::none;
     synchronizeDictionaryWordsModel(dictionaryName);
 
     setDictionaryButtonsEnabled(true);
@@ -188,9 +191,12 @@ void DictionariesTab::on_listOfDictionaries_clicked(const QModelIndex & dictiona
 
 void DictionariesTab::on_listOfDictionaryWords_clicked(const QModelIndex &dictionaryWordIndex)
 {
-    QString dictionaryWord = dictionaryWordIndex.data(Qt::DisplayRole).toString();
-    currentDictionaryWord = dictionaryWord;
-    setDictionaryWordsWithFocusButtonsEnabled(true);
+    QString dictionaryWordAccumulated = dictionaryWordIndex.data(Qt::DisplayRole).toString();
+    if(const auto dictionaryWord = dictionaryWordAccumulator.separateDictionaryWord(dictionaryWordAccumulated))
+    {
+        currentEnglishWord = dictionaryWord->englishWord;
+        setDictionaryWordsWithFocusButtonsEnabled(true);
+    }
 }
 
 }

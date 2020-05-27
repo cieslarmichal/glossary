@@ -5,6 +5,7 @@
 #include <QStringListModel>
 #include "DictionaryFormatter.h"
 #include "FormattedDictionariesStorage.h"
+#include "DictionaryWordAccumulator.h"
 
 namespace glossary::gui::view
 {
@@ -58,10 +59,12 @@ private:
 
     Ui::DictionariesTab* ui;
     DictionaryFormatter dictionaryFormatter;
+    DictionaryWordAccumulator dictionaryWordAccumulator;
+
     FormattedDictionariesStorage dictionariesStorage;
     QStringListModel dictionaryNames;
     boost::optional<QString> currentDictionaryName;
     QStringListModel currentDctionaryWords;
-    boost::optional<QString> currentDictionaryWord;
+    boost::optional<QString> currentEnglishWord;
 };
 }
