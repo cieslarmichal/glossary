@@ -12,6 +12,10 @@ CheckWordDescriptionTabViewManager::CheckWordDescriptionTabViewManager(
       wordDescriptionTab{std::move(wordDescriptionTabInit)},
       glossaryAdapter{std::move(adapter)}
 {
+    connect(wordDescriptionTab.get(), &view::CheckWordDescriptionTab::notifyCheckWordDescriptionClicked,
+            glossaryAdapter.get(), &model::GlossaryAdapter::onWordDescriptionTriggeredFromWordDescriptionTab);
+    connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyWordDescriptionTabAboutWordDescription,
+            wordDescriptionTab.get(), &view::CheckWordDescriptionTab::onWordDescriptionReceived);
 }
 
 }

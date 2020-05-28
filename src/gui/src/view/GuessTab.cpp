@@ -103,6 +103,7 @@ void GuessTab::on_buttonCheckWordDescription_clicked()
         ui->labelWordDescriptionError->setText("Insert english word");
         return;
     }
+    ui->labelWordDescriptionError->setText("");
     emit notifyCheckWordDescriptionClicked(currentlyInsertedEnglishWord);
 }
 
@@ -122,6 +123,7 @@ void GuessTab::on_editEnglishTranslation_textChanged(QString)
 {
     ui->buttonCheckWordDescription->setEnabled(true);
     ui->buttonCheckTranslationCorrectness->setEnabled(true);
+    ui->labelWordDescriptionError->setText("");
 }
 
 }

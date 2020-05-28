@@ -75,10 +75,16 @@ void GlossaryAdapter::onRandomPolishWordFromDictionaryTriggered(const QString& d
     emit notifyAboutRandomPolishWord(randomPolishWord);
 }
 
-void GlossaryAdapter::onWordDescriptionTriggered(const QString& englishName) const
+void GlossaryAdapter::onWordDescriptionTriggeredFromGuessTab(const QString& englishWord) const
 {
-    auto wordDescription = getWordDescription(englishName);
-    emit notifyAboutWordDescription(wordDescription);
+    auto wordDescription = getWordDescription(englishWord);
+    emit notifyGuessTabAboutWordDescription(wordDescription);
+}
+
+void GlossaryAdapter::onWordDescriptionTriggeredFromWordDescriptionTab(const QString& englishWord) const
+{
+    auto wordDescription = getWordDescription(englishWord);
+    emit notifyWordDescriptionTabAboutWordDescription(wordDescription);
 }
 
 void GlossaryAdapter::onTranslationCorrectnessTriggered(const QString& polishWord,

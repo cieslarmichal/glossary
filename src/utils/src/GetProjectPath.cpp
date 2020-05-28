@@ -20,7 +20,7 @@ std::string getProjectPath(const std::string& projectName)
         throw exceptions::FileNotFound{fileNotFoundMessage + currentPath};
     }
 
-    const auto projectPath = utils::substring(currentPath, 0, projectNamePosition + projectName.length() + 1);
+    auto projectPath = utils::substring(currentPath, 0, projectNamePosition + projectName.length() + 1);
     return projectPath;
 }
 }

@@ -7,6 +7,11 @@ namespace glossary::gui::view
 {
 struct FormattedWordDescription
 {
+    bool isEmpty() const
+    {
+        return definitions.isEmpty() && examples.isEmpty() && synonyms.isEmpty();
+    }
+
     QString englishWord;
     QList<QString> definitions;
     QList<QString> examples;

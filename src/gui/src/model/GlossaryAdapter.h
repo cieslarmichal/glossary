@@ -25,7 +25,8 @@ public:
 
 signals:
     void notifyAboutRandomPolishWord(const QString&) const;
-    void notifyAboutWordDescription(const WordDescription&) const;
+    void notifyGuessTabAboutWordDescription(const WordDescription&) const;
+    void notifyWordDescriptionTabAboutWordDescription(const WordDescription&) const;
     void notifyAboutTranslationVerdict(bool) const;
     void notifyAboutDictionaryWordsUpdate(const DictionaryName&, const DictionaryWords&) const;
     void notifyAboutDictionariesUpdate(const Dictionaries&) const;
@@ -33,7 +34,8 @@ signals:
 public slots:
     void onRandomPolishWordTriggered() const;
     void onRandomPolishWordFromDictionaryTriggered(const QString& dictionaryName) const;
-    void onWordDescriptionTriggered(const QString& englishWord) const;
+    void onWordDescriptionTriggeredFromGuessTab(const QString& englishWord) const;
+    void onWordDescriptionTriggeredFromWordDescriptionTab(const QString& englishWord) const;
     void onTranslationCorrectnessTriggered(const QString& polishWord, const QString& englishWord) const;
     void onDictionaryAdded(const QString& dictionaryName) const;
     void onDictionaryAddedFromFile(const QString& dictionaryName, const QString& pathToDictionaryWords) const;

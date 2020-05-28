@@ -16,9 +16,9 @@ GuessTabViewManager::GuessTabViewManager(QObject* parent, std::shared_ptr<view::
             &view::GuessTab::onNextRandomWordReceived);
 
     connect(guessTab.get(), &view::GuessTab::notifyCheckWordDescriptionClicked, glossaryAdapter.get(),
-            &model::GlossaryAdapter::onWordDescriptionTriggered);
-    connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyAboutWordDescription, guessTab.get(),
-            &view::GuessTab::onWordDescriptionReceived);
+            &model::GlossaryAdapter::onWordDescriptionTriggeredFromGuessTab);
+    connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyGuessTabAboutWordDescription,
+            guessTab.get(), &view::GuessTab::onWordDescriptionReceived);
 
     connect(guessTab.get(), &view::GuessTab::notifyCheckTranslationCorrectnessClicked, glossaryAdapter.get(),
             &model::GlossaryAdapter::onTranslationCorrectnessTriggered);
