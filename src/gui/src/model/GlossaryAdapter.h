@@ -22,14 +22,18 @@ public:
     QList<QString> getDictionaryNames() const;
     Dictionaries getDictionaries() const;
     DictionaryWords getDictionaryWords(const QString& dictionaryName) const;
+    QStringList getAvailableLanguages() const;
+    QString getTranslation(const QString& textToTranslate, const QString& sourceLanguage, const QString& targetLanguage) const;
 
 signals:
-    void notifyAboutRandomPolishWord(const QString&) const;
+    void notifyAboutRandomPolishWord(const QString& polishWord) const;
     void notifyGuessTabAboutWordDescription(const WordDescription&) const;
     void notifyWordDescriptionTabAboutWordDescription(const WordDescription&) const;
-    void notifyAboutTranslationVerdict(bool) const;
+    void notifyAboutTranslationVerdict(bool translationVerdict) const;
     void notifyAboutDictionaryWordsUpdate(const DictionaryName&, const DictionaryWords&) const;
     void notifyAboutDictionariesUpdate(const Dictionaries&) const;
+    void notifyAboutTranslation(const QString& translatedText) const;
+    void notifyAboutAvailableLanguages(const QStringList& availableLanguages) const;
 
 public slots:
     void onRandomPolishWordTriggered() const;
@@ -48,6 +52,8 @@ public slots:
     void onWordTranslationUpdateRequest(const QString& dictionaryName, const QString& englishWord) const;
     void onWordTranslationChanged(const QString& dictionaryName, const QString& englishWord,
                                   const QString& translation) const;
+    void onTextTranslateRequest(const QString& textToTranslate, const QString& sourceLanguage, const QString& targetLanguage) const;
+    void onTranslatorAvailableLanguagesRequest() const;
 
 private:
     std::unique_ptr<glossary::Glossary> glossary;

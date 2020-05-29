@@ -7,6 +7,7 @@ set(SOURCES
         src/TranslationConcurrentUpdater.cpp
         src/DefaultDictionaryTranslationUpdater.cpp
         src/ExternalServicesConnectionChecker.cpp
+        src/DefaultDictionaryStatisticsCounter.cpp
         )
 
 set(UT_SOURCES
@@ -16,6 +17,7 @@ set(UT_SOURCES
         src/DefaultDictionaryTranslationUpdaterTest.cpp
         src/DefaultGlossaryTest.cpp
         src/ExternalServicesConnectionCheckerTest.cpp
+        src/DefaultDictionaryStatisticsCounterTest.cpp
         )
 
 add_library(glossary ${SOURCES})

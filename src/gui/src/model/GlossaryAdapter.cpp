@@ -63,6 +63,28 @@ DictionaryWords GlossaryAdapter::getDictionaryWords(const QString& dictionaryNam
     return glossary->getDictionaryWords(dictionaryName.toStdString());
 }
 
+QStringList GlossaryAdapter::getAvailableLanguages() const
+{
+    const auto availableTranslatorLanguages = glossary->getSupportedTranslatorLanguages();
+
+    QList<QString> availableLanguages;
+    for (const auto& availableLanguage : availableTranslatorLanguages)
+    {
+        availableLanguages.push_back(QString::fromStdString(availableLanguage));
+    }
+
+    return availableLanguages;
+}
+
+QString GlossaryAdapter::getTranslation(const QString &textToTranslate, const QString &sourceLanguage, const QString &targetLanguage) const
+{
+    if (auto translation = glossary->translate(textToTranslate.toStdString(), sourceLanguage.toStdString(), targetLanguage.toStdString()))
+    {
+        return QString::fromStdString(*translation);
+    }
+    return {};
+}
+
 void GlossaryAdapter::onRandomPolishWordTriggered() const
 {
     auto randomPolishWord = getRandomPolishWord();
@@ -163,6 +185,18 @@ void GlossaryAdapter::onWordTranslationChanged(const QString& dictionaryName, co
                                                       translation.toStdString());
     auto currentDictionaryWords = getDictionaryWords(dictionaryName);
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
+}
+
+void GlossaryAdapter::onTextTranslateRequest(const QString &textToTranslate, const QString &sourceLanguage, const QString &targetLanguage) const
+{
+    auto translation = getTranslation(textToTranslate, sourceLanguage, targetLanguage);
+    emit notifyAboutTranslation(translation);
+}
+
+void GlossaryAdapter::onTranslatorAvailableLanguagesRequest() const
+{
+    auto availableLanguages = getAvailableLanguages();
+    emit notifyAboutAvailableLanguages(availableLanguages);
 }
 
 }

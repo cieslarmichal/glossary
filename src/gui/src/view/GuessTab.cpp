@@ -98,7 +98,7 @@ void GuessTab::on_boxWithDictionaryNames_activated(const QString& dictionaryName
 void GuessTab::on_buttonCheckWordDescription_clicked()
 {
     const auto currentlyInsertedEnglishWord = ui->editEnglishTranslation->text();
-    if (currentlyInsertedEnglishWord.toStdString().empty())
+    if (currentlyInsertedEnglishWord.isEmpty())
     {
         ui->labelWordDescriptionError->setText("Insert english word");
         return;
