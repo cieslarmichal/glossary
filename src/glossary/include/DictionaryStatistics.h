@@ -1,13 +1,36 @@
 #pragma once
 
+#include <ostream>
+
 #include "dictionaryService/DictionaryName.h"
+#include <vector>
 
 namespace glossary
 {
 struct DictionaryStatistics
 {
-    dictionaryService::DictionaryName name;
+    dictionaryService::DictionaryName dictionaryName;
     unsigned correctAnswers;
     unsigned incorrectAnswers;
 };
+
+using DictionariesStatistics = std::vector<DictionaryStatistics>;
+
+inline bool operator==(const DictionaryStatistics& lhs, const DictionaryStatistics& rhs)
+{
+    return lhs.dictionaryName == rhs.dictionaryName && lhs.correctAnswers == rhs.correctAnswers &&
+           lhs.incorrectAnswers == rhs.incorrectAnswers;
+}
+
+inline std::string toString(const DictionaryStatistics& dictionaryStatistics)
+{
+    return "{dictionaryName:" + dictionaryStatistics.dictionaryName +
+           ",correctAnswers:" + std::to_string(dictionaryStatistics.correctAnswers) +
+           ",incorrectAnswers:" + std::to_string(dictionaryStatistics.incorrectAnswers) + "}";
+}
+
+inline std::ostream& operator<<(std::ostream& os, const DictionaryStatistics& dictionaryStatistics)
+{
+    return os << toString(dictionaryStatistics);
+}
 }

@@ -10,6 +10,7 @@
 #include "statisticsRepository/StatisticsRepository.h"
 #include "translationService/TranslationRetrieverService.h"
 #include "wordDescriptionService/WordDescriptionRetrieverService.h"
+#include "DictionaryStatisticsCounter.h"
 
 namespace glossary
 {
@@ -22,6 +23,7 @@ public:
                     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>,
                     std::shared_ptr<DictionaryTranslationUpdater>,
                     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>>,
+                    std::unique_ptr<DictionaryStatisticsCounter>,
                     std::unique_ptr<ConnectionChecker>, std::unique_ptr<AnswerValidator>);
 
     ExternalServicesStatus checkConnectionToExternalServices() const override;
@@ -50,7 +52,8 @@ public:
                                            const std::string& sourceLanguage,
                                            const std::string& targetLanguage) const override;
     std::vector<std::string> getSupportedTranslatorLanguages() const override;
-    Statistics getStatistics() const override;
+    boost::optional<DictionaryStatistics> getDictionaryStatistics(const DictionaryName&) const override;
+    DictionariesStatistics getDictionariesStatistics() const override;
     void resetStatistics() const override;
 
 private:
@@ -62,6 +65,7 @@ private:
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionRetrieverService;
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdater;
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObservers;
+    std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounter;
 
     std::unique_ptr<ConnectionChecker> externalServicesConnectionChecker;
     std::unique_ptr<AnswerValidator> answerValidator;

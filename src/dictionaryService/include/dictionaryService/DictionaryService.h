@@ -10,6 +10,7 @@ class DictionaryService : public ObservableDictionary
 public:
     virtual ~DictionaryService() = default;
 
+    virtual boost::optional<Dictionary> getDictionary(const DictionaryName&) const = 0;
     virtual Dictionaries getDictionaries() const = 0;
     virtual DictionaryNames getDictionaryNames() const = 0;
     virtual boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const = 0;

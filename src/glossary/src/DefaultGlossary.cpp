@@ -16,6 +16,7 @@ DefaultGlossary::DefaultGlossary(
     std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
+    std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounterInit,
     std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
@@ -23,6 +24,7 @@ DefaultGlossary::DefaultGlossary(
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
       dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
       dictionaryObservers(std::move(dictionaryObserversInit)),
+      dictionaryStatisticsCounter{std::move(dictionaryStatisticsCounterInit)},
       externalServicesConnectionChecker{std::move(connectionCheckerInit)},
       answerValidator{std::move(validator)}
 {
@@ -222,9 +224,22 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
     return translationRetrieverService->retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
 }
 
-Statistics DefaultGlossary::getStatistics() const
+boost::optional<DictionaryStatistics>
+DefaultGlossary::getDictionaryStatistics(const DictionaryName& dictionaryName) const
 {
-    return statisticsRepository->getStatistics();
+    if (auto dictionary = dictionaryService->getDictionary(dictionaryName))
+    {
+        auto statistics = statisticsRepository->getStatistics();
+        return dictionaryStatisticsCounter->countDictionaryStatistics(*dictionary, statistics);
+    }
+    return boost::none;
+}
+
+DictionariesStatistics DefaultGlossary::getDictionariesStatistics() const
+{
+    auto dictionaries = dictionaryService->getDictionaries();
+    auto statistics = statisticsRepository->getStatistics();
+    return dictionaryStatisticsCounter->countDictionariesStatistics(dictionaries, statistics);
 }
 
 void DefaultGlossary::resetStatistics() const

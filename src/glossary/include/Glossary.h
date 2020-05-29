@@ -9,6 +9,7 @@
 #include "ExternalServicesStatus.h"
 #include "Statistics.h"
 #include "WordDescription.h"
+#include "DictionaryStatistics.h"
 
 namespace glossary
 {
@@ -17,6 +18,7 @@ class Glossary
 public:
     virtual ~Glossary() = default;
 
+    //TODO: check connection in gui
     virtual ExternalServicesStatus checkConnectionToExternalServices() const = 0;
     virtual boost::optional<std::string> getRandomPolishWord() const = 0;
     virtual boost::optional<std::string> getRandomPolishWord(const DictionaryName&) const = 0;
@@ -43,7 +45,8 @@ public:
     virtual boost::optional<std::string> translate(const std::string& textToTranslate,
                                                    const std::string& sourceLanguage,
                                                    const std::string& targetLanguage) const = 0;
-    virtual Statistics getStatistics() const = 0;
+    virtual boost::optional<DictionaryStatistics> getDictionaryStatistics(const DictionaryName&) const = 0;
+    virtual DictionariesStatistics getDictionariesStatistics() const = 0;
     virtual void resetStatistics() const = 0;
 };
 }

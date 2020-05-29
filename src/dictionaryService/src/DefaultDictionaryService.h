@@ -22,6 +22,7 @@ public:
                              std::unique_ptr<csvFileReading::DictionaryWordsReader>,
                              std::unique_ptr<ObserverService>);
 
+    boost::optional<Dictionary> getDictionary(const DictionaryName&) const override;
     Dictionaries getDictionaries() const override;
     DictionaryNames getDictionaryNames() const override;
     boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const override;

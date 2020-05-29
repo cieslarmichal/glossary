@@ -35,7 +35,8 @@ public:
     MOCK_CONST_METHOD3(translate, boost::optional<std::string>(const std::string& textToTranslate,
                                                                const std::string& sourceLanguage,
                                                                const std::string& targetLanguage));
-    MOCK_CONST_METHOD0(getStatistics, Statistics());
+    MOCK_CONST_METHOD1(getDictionaryStatistics, boost::optional<DictionaryStatistics>(const DictionaryName&));
+    MOCK_CONST_METHOD0(getDictionariesStatistics, DictionariesStatistics());
     MOCK_CONST_METHOD0(resetStatistics, void());
 };
 }

@@ -2,7 +2,6 @@
 
 #include "GlossaryFactory.h"
 
-// TODO: add GuiFactory class
 namespace glossary::gui::model
 {
 

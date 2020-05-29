@@ -5,11 +5,11 @@
 #include "AnswerValidatorMock.h"
 #include "ConnectionCheckerMock.h"
 #include "DictionaryTranslationUpdaterMock.h"
-#include "GlossaryMock.h"
 #include "dictionaryService/DictionaryServiceMock.h"
 #include "statisticsRepository/StatisticsRepositoryMock.h"
 #include "translationService/TranslationRetrieverServiceMock.h"
 #include "wordDescriptionService/WordDescriptionRetrieverServiceMock.h"
+#include "DictionaryStatisticsCounterMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -60,6 +60,9 @@ const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionaries dictionaries{dictionary1, dictionary2};
+const DictionaryStatistics dictionaryStatistics1{dictionaryName1, 15, 4};
+const DictionaryStatistics dictionaryStatistics2{dictionaryName2, 5, 55};
+const DictionariesStatistics dictionariesStatistics{dictionaryStatistics1, dictionaryStatistics2};
 }
 
 class DefaultGlossaryTest_Base : public Test
@@ -80,6 +83,9 @@ public:
         std::make_shared<StrictMock<WordDescriptionRetrieverServiceMock>>();
     std::shared_ptr<DictionaryTranslationUpdaterMock> dictionaryTranslationUpdater =
         std::make_shared<StrictMock<DictionaryTranslationUpdaterMock>>();
+    std::unique_ptr<DictionaryStatisticsCounterMock> dictionaryStatisticsCounterInit =
+        std::make_unique<StrictMock<DictionaryStatisticsCounterMock>>();
+    DictionaryStatisticsCounterMock* dictionaryStatisticsCounter = dictionaryStatisticsCounterInit.get();
     std::unique_ptr<ConnectionCheckerMock> externalServicesConnectionCheckerInit =
         std::make_unique<StrictMock<ConnectionCheckerMock>>();
     ConnectionCheckerMock* externalServicesConnectionChecker = externalServicesConnectionCheckerInit.get();
@@ -97,6 +103,7 @@ public:
                              wordDescriptionService,
                              dictionaryTranslationUpdater,
                              {},
+                             std::move(dictionaryStatisticsCounterInit),
                              std::move(externalServicesConnectionCheckerInit),
                              std::move(answerValidatorInit)};
 };
@@ -378,13 +385,35 @@ TEST_F(DefaultGlossaryTest, shouldReturnWordDescription)
     ASSERT_EQ(actualWordDescription, wordDescription);
 }
 
-TEST_F(DefaultGlossaryTest, shouldReturnStatistics)
+TEST_F(DefaultGlossaryTest, givenNonExistingDictionary_shouldReturnNoneDictionaryStatistics)
 {
+    EXPECT_CALL(*dictionaryService, getDictionary(dictionaryName1)).WillOnce(Return(boost::none));
+
+    const auto actualDictionaryStatistics = glossary.getDictionaryStatistics(dictionaryName1);
+
+    ASSERT_EQ(actualDictionaryStatistics, boost::none);
+}
+
+TEST_F(DefaultGlossaryTest, givenExistingDictionary_shouldReturnDictionaryStatistics)
+{
+    EXPECT_CALL(*dictionaryService, getDictionary(dictionaryName1)).WillOnce(Return(dictionary1));
     EXPECT_CALL(*statisticsRepository, getStatistics()).WillOnce(Return(statistics));
+    EXPECT_CALL(*dictionaryStatisticsCounter, countDictionaryStatistics(dictionary1, statistics)).WillOnce(Return(dictionaryStatistics1));
 
-    const auto actualStatistics = glossary.getStatistics();
+    const auto actualDictionaryStatistics = glossary.getDictionaryStatistics(dictionaryName1);
 
-    ASSERT_EQ(actualStatistics, statistics);
+    ASSERT_EQ(*actualDictionaryStatistics, dictionaryStatistics1);
+}
+
+TEST_F(DefaultGlossaryTest, shouldReturnDictionariesStatistics)
+{
+    EXPECT_CALL(*dictionaryService, getDictionaries()).WillOnce(Return(dictionaries));
+    EXPECT_CALL(*statisticsRepository, getStatistics()).WillOnce(Return(statistics));
+    EXPECT_CALL(*dictionaryStatisticsCounter, countDictionariesStatistics(dictionaries, statistics)).WillOnce(Return(dictionariesStatistics));
+
+    const auto actualDictionariesStatistics = glossary.getDictionariesStatistics();
+
+    ASSERT_EQ(actualDictionariesStatistics, dictionariesStatistics);
 }
 
 TEST_F(DefaultGlossaryTest, shouldResetStatistics)

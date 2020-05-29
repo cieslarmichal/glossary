@@ -71,6 +71,15 @@ public:
                                      std::move(readerInit),         std::move(observerServiceInit)};
 };
 
+TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionary)
+{
+    EXPECT_CALL(*dictionaryRepository, getDictionary(dictionaryName1)).WillOnce(Return(dictionary1));
+
+    const auto actualDictionary = service.getDictionary(dictionaryName1);
+
+    ASSERT_EQ(actualDictionary, dictionary1);
+}
+
 TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaries)
 {
     EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));

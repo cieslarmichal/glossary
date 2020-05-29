@@ -1,6 +1,7 @@
 #include "DefaultGlossaryFactory.h"
 
 #include "DefaultAnswerValidator.h"
+#include "DefaultDictionaryStatisticsCounter.h"
 #include "DefaultDictionaryTranslationUpdater.h"
 #include "DefaultGlossary.h"
 #include "ExternalServicesConnectionChecker.h"
@@ -53,6 +54,7 @@ createTranslationUpdater(const std::shared_ptr<translationService::TranslationRe
 std::shared_ptr<DictionaryTranslationUpdater>
 createDictionaryTranslationUpdater(const std::shared_ptr<dictionaryService::DictionaryService>&,
                                    const std::shared_ptr<translationService::TranslationRetrieverService>&);
+std::unique_ptr<DictionaryStatisticsCounter> createDictionaryStatisticsCounter();
 std::unique_ptr<ConnectionChecker> createExternalServicesConnectionChecker(
     const std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>&,
     const std::shared_ptr<translationService::TranslationRetrieverService>&);
@@ -87,14 +89,16 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> observers{wordDescriptionUpdater,
                                                                                   translationUpdater};
 
+    auto dictionaryStatisticsCounter = createDictionaryStatisticsCounter();
+
     auto externalServicesConnectionChecker =
         createExternalServicesConnectionChecker(wordDescriptionRetrieverService, translationRetrieverService);
     auto answerValidator = createAnswerValidator();
 
     return std::make_unique<DefaultGlossary>(
         dictionaryService, translationRetrieverService, statisticsRepository, wordDescriptionRetrieverService,
-        dictionaryTranslationUpdater, observers, std::move(externalServicesConnectionChecker),
-        std::move(answerValidator));
+        dictionaryTranslationUpdater, observers, std::move(dictionaryStatisticsCounter),
+        std::move(externalServicesConnectionChecker), std::move(answerValidator));
 }
 
 namespace
@@ -201,6 +205,11 @@ std::shared_ptr<DictionaryTranslationUpdater> createDictionaryTranslationUpdater
     const std::shared_ptr<translationService::TranslationRetrieverService>& translationService)
 {
     return std::make_shared<DefaultDictionaryTranslationUpdater>(dictionaryService, translationService);
+}
+
+std::unique_ptr<DictionaryStatisticsCounter> createDictionaryStatisticsCounter()
+{
+    return std::make_unique<DefaultDictionaryStatisticsCounter>();
 }
 
 std::unique_ptr<ConnectionChecker> createExternalServicesConnectionChecker(
