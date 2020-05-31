@@ -19,6 +19,7 @@ class GuessTab : public QWidget
     Q_OBJECT
 
 public:
+    // TODO: change dictionary combo into list
     explicit GuessTab(QWidget* parent = nullptr);
     ~GuessTab();
 

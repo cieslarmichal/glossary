@@ -5,8 +5,8 @@
 namespace glossary::gui::model
 {
 
-GlossaryAdapter::GlossaryAdapter(QObject* parent)
-    : QObject(parent), glossary{glossary::GlossaryFactory::createGlossaryFactory()->createGlossary()}
+GlossaryAdapter::GlossaryAdapter(std::unique_ptr<Glossary> glossaryInit)
+    : QObject(nullptr), glossary{std::move(glossaryInit)}
 {
 }
 

@@ -2,39 +2,50 @@
 
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
-
+#include <QtCharts/QBarCategoryAxis>
 #include "ui_StatisticsTab.h"
+#include <QtCharts/QPieSeries>
+#include <QPen>
 
 namespace glossary::gui::view
 {
-StatisticsTab::StatisticsTab(QWidget* parent) : QWidget(parent), ui(new Ui::StatisticsTab)
+StatisticsTab::StatisticsTab(QWidget* parent) : QChartView(parent), ui(new Ui::StatisticsTab)
 {
     ui->setupUi(this);
-    chartView = new QChartView{this};
+    chartView= new QChartView{this};
 
-    QBarSet* set0 = new QBarSet("bar1");
-
-    *set0 << 1 << 4 << 3 << 7 << 2 << 5 << 1 << 3 << 3 << 2 << 1 << 6 << 7 << 5;
-
-    QBarSeries* series = new QBarSeries;
-    series->append(set0);
-
-    QChart* chart = new QChart;
+    QChart* chart = new QChart();
+    setChart(chart);
     chartView->setChart(chart);
-    chart->addSeries(series);
 
-    // filter items
-    QList<QGraphicsRectItem*> rect_items;
-    for (QGraphicsItem* it : chartView->items())
-    {
-        if (QGraphicsRectItem* rect = qgraphicsitem_cast<QGraphicsRectItem*>(it))
-        {
-            if (rect->parentItem() != chart && rect->parentItem()->parentItem() == chart)
-            {
-                rect_items << rect;
-            }
-        }
-    }
+    ui->layoutChartView->addWidget(chartView,0,0);
+
+    QPieSeries * series = new QPieSeries();
+
+    series->append("Correct answers", .60);
+    series->append("Incorrect answers", .40);
+
+    QPieSlice * slice = series->slices().at(0);
+//    slice->setLabelVisible();
+    slice->setLabel("Correct answers");
+    slice->setPen(QPen(Qt::darkGreen, 2));
+    slice->setBrush(Qt::green);
+
+    QPieSlice *slice1 = series->slices().at(1);
+//    slice1->setLabelVisible();
+    slice1->setLabel("Incorrect answers");
+//    slice1->setLabel(QString("%1%").arg(100*slice1->percentage(), 0, 'f', 1));
+    slice1->setPen(QPen(Qt::darkRed, 2));
+    slice1->setBrush(Qt::red);
+
+//    series->setLabelsVisible();
+    series->setLabelsPosition(QPieSlice::LabelOutside);
+
+    chart->addSeries(series);
+    chart->setTitle("Dictionary statistics");
+//    chart->legend()->hide();
+
+    chartView->setRenderHint(QPainter::Antialiasing);
     chartView->show();
 }
 

@@ -1,5 +1,6 @@
 #include "Gui.h"
 
+#include "GlossaryFactory.h"
 #include "model/GlossaryAdapter.h"
 #include "view/CheckWordDescriptionTab.h"
 #include "view/DictionariesTab.h"
@@ -29,7 +30,8 @@ void Gui::initialize()
     mainView = std::make_unique<view::MainView>(nullptr, guessTab, dictionariesTab, checkWordDescriptionTab,
                                                 translatorTab, statisticsTab);
 
-    auto glossaryAdapter = std::make_shared<model::GlossaryAdapter>();
+    auto glossaryAdapter =
+        std::make_shared<model::GlossaryAdapter>(GlossaryFactory::createGlossaryFactory()->createGlossary());
 
     guessViewManager = std::make_unique<viewManager::GuessTabViewManager>(this, guessTab, glossaryAdapter);
     dictionariesViewManager =

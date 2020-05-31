@@ -13,7 +13,7 @@ namespace Ui
 class StatisticsTab;
 }
 
-class StatisticsTab : public QWidget
+class StatisticsTab : public QChartView
 {
     Q_OBJECT
 

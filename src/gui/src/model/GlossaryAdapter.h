@@ -13,7 +13,7 @@ class GlossaryAdapter : public QObject
 {
     Q_OBJECT
 public:
-    explicit GlossaryAdapter(QObject* parent = nullptr);
+    explicit GlossaryAdapter(std::unique_ptr<Glossary>);
 
     QString getRandomPolishWord() const;
     QString getRandomPolishWord(const QString& dictionaryName) const;
