@@ -29,10 +29,10 @@ before_install:
   - if [ "$QT_BASE" = "512" ]; then sudo add-apt-repository ppa:beineri/opt-qt-5.12.3-$TRAVIS_DIST_NAME -y; sudo apt-get update -qq ; fi
 
 install:
-  # Qt
   - if [ "$QT_BASE" = "55"  ]; then sudo apt-get install -qq qt55base  qt55multimedia  qt55translations  qt55tools  ; source /opt/qt55/bin/qt55-env.sh   ; export QTHOME=/opt/qt55  ; fi
   - if [ "$QT_BASE" = "510" ]; then sudo apt-get install -qq qt510base qt510multimedia qt510translations qt510tools ; source /opt/qt510/bin/qt510-env.sh ; export QTHOME=/opt/qt510 ; fi
   - if [ "$QT_BASE" = "512" ]; then sudo apt-get install -qq qt512base qt512multimedia qt512translations qt512tools ; source /opt/qt512/bin/qt512-env.sh ; export QTHOME=/opt/qt512 ; fi
+  - sudo apt install libqt5charts5-dev
 
 script:
   - mkdir build
