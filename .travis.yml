@@ -21,7 +21,7 @@ matrix:
       - TRAVIS_DIST_NAME=xenial
       - QT_BASE=512
       
-dist: xenial
+dist: bionic
 
 before_install:
   - sudo add-apt-repository main
@@ -37,7 +37,7 @@ install:
   - if [ "$QT_BASE" = "55"  ]; then sudo apt-get install -qq qt55base  qt55multimedia  qt55translations  qt55tools  ; source /opt/qt55/bin/qt55-env.sh   ; export QTHOME=/opt/qt55  ; fi
   - if [ "$QT_BASE" = "510" ]; then sudo apt-get install -qq qt510base qt510multimedia qt510translations qt510tools ; source /opt/qt510/bin/qt510-env.sh ; export QTHOME=/opt/qt510 ; fi
   - if [ "$QT_BASE" = "512" ]; then sudo apt-get install -qq qt512base qt512multimedia qt512translations qt512tools ; source /opt/qt512/bin/qt512-env.sh ; export QTHOME=/opt/qt512 ; fi
-  - sudo apt-get -y install libqt5charts5 libqt5charts5-dev
+  - sudo apt-get install libqt5charts5 libqt5charts5-dev -y
 
 script:
   - mkdir build
