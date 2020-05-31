@@ -16,10 +16,9 @@ class DefaultTranslationService : public TranslationService
 {
 public:
     DefaultTranslationService(std::shared_ptr<translator::Translator>,
-                                       std::shared_ptr<translationRepository::TranslationRepository>,
-                                       std::unique_ptr<ApiKeyFileReader>,
-                                       std::unique_ptr<TranslatorConnectionChecker>,
-                                       std::unique_ptr<ApiKeyLocationUpdater>);
+                              std::shared_ptr<translationRepository::TranslationRepository>,
+                              std::unique_ptr<ApiKeyFileReader>, std::unique_ptr<TranslatorConnectionChecker>,
+                              std::unique_ptr<ApiKeyLocationUpdater>);
 
     boost::optional<translator::TranslatedText> retrieveTranslation(const translator::SourceText&,
                                                                     translator::SourceLanguage,

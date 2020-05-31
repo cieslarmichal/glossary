@@ -1,3 +1,5 @@
+#include "DefaultWordDescriptionService.h"
+
 #include "gtest/gtest.h"
 
 #include "ApiKeyLocationUpdaterMock.h"
@@ -6,7 +8,6 @@
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
 
-#include "DefaultWordDescriptionService.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 
@@ -124,8 +125,7 @@ TEST_F(
     ASSERT_EQ(actualWordDescription, emptyWordDescription);
 }
 
-TEST_F(DefaultWordDescriptionServiceTest_WithApiKey,
-       shouldReturnDownloadedWordDescriptionFromDownloader)
+TEST_F(DefaultWordDescriptionServiceTest_WithApiKey, shouldReturnDownloadedWordDescriptionFromDownloader)
 {
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Return(wordDescriptionFromDownloader));
@@ -135,8 +135,7 @@ TEST_F(DefaultWordDescriptionServiceTest_WithApiKey,
     ASSERT_EQ(*actualWordDescription, wordDescriptionFromDownloader);
 }
 
-TEST_F(DefaultWordDescriptionServiceTest_WithApiKey,
-       shouldReturnWordsApiConnectionAvailabilityStatus)
+TEST_F(DefaultWordDescriptionServiceTest_WithApiKey, shouldReturnWordsApiConnectionAvailabilityStatus)
 {
     EXPECT_CALL(*connectionChecker, connectionToWordsApiAvailable(apiKey))
         .WillOnce(Return(apiAvailabilityStatus));

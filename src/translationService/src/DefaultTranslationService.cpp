@@ -21,8 +21,8 @@ DefaultTranslationService::DefaultTranslationService(
 
 boost::optional<translator::TranslatedText>
 DefaultTranslationService::retrieveTranslation(const translator::SourceText& sourceText,
-                                                        translator::SourceLanguage sourceLanguage,
-                                                        translator::TargetLanguage targetLanguage)
+                                               translator::SourceLanguage sourceLanguage,
+                                               translator::TargetLanguage targetLanguage)
 {
     if (auto translationFromRepository = getTranslationFromRepository(sourceText))
     {
@@ -64,9 +64,9 @@ DefaultTranslationService::getTranslationFromRepository(const std::string& sourc
 }
 
 boost::optional<translator::TranslatedText>
-DefaultTranslationService::getTranslationFromTranslator(
-    const std::string& sourceText, translator::SourceLanguage sourceLanguage,
-    translator::TargetLanguage targetLanguage) const
+DefaultTranslationService::getTranslationFromTranslator(const std::string& sourceText,
+                                                        translator::SourceLanguage sourceLanguage,
+                                                        translator::TargetLanguage targetLanguage) const
 {
     if (translatorApiKey)
     {
@@ -77,8 +77,8 @@ DefaultTranslationService::getTranslationFromTranslator(
     return boost::none;
 }
 
-void DefaultTranslationService::saveTranslationInRepository(
-    const std::string& sourceText, const translator::TranslatedText& translatedText)
+void DefaultTranslationService::saveTranslationInRepository(const std::string& sourceText,
+                                                            const translator::TranslatedText& translatedText)
 {
     auto newTranslation = translationRepository::Translation{
         translationRepository::SourceText{sourceText}, translationRepository::TranslatedText{translatedText}};

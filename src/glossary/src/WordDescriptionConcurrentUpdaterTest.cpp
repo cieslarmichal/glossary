@@ -2,11 +2,11 @@
 
 #include "gtest/gtest.h"
 
-#include "wordDescriptionService/WordDescriptionServiceMock.h"
+#include "utils/FileAccessMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
+#include "wordDescriptionService/WordDescriptionServiceMock.h"
 
 #include "webConnection/exceptions/ConnectionFailed.h"
-#include "utils/FileAccessMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -50,10 +50,8 @@ TEST_F(WordDescriptionConcurrentUpdaterTest,
 
     EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord1))
         .WillOnce(Return(wordDescription1));
-    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord2))
-        .WillOnce(Return(boost::none));
-    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord3))
-        .WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord2)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord3)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescription1));
 
     updater.update(englishWords);

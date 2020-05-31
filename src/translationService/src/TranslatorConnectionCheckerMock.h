@@ -10,6 +10,6 @@ class TranslatorConnectionCheckerMock : public TranslatorConnectionChecker
 {
 public:
     MOCK_CONST_METHOD1(connectionToTranslatorWithApiKeyIsAvailable,
-                 TranslationApiStatus(const std::string& apiKey));
+                       TranslationApiStatus(const std::string& apiKey));
 };
 }

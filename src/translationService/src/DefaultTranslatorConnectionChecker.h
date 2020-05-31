@@ -12,7 +12,8 @@ class DefaultTranslatorConnectionChecker : public TranslatorConnectionChecker
 public:
     explicit DefaultTranslatorConnectionChecker(std::shared_ptr<translator::Translator>);
 
-    TranslationApiStatus connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) const override;
+    TranslationApiStatus
+    connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) const override;
 
 private:
     std::shared_ptr<translator::Translator> translator;

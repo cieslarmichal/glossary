@@ -14,8 +14,7 @@ DefaultWordDescriptionServiceFactory::DefaultWordDescriptionServiceFactory(
 {
 }
 
-std::unique_ptr<WordDescriptionService>
-DefaultWordDescriptionServiceFactory::createWordDescriptionService(
+std::unique_ptr<WordDescriptionService> DefaultWordDescriptionServiceFactory::createWordDescriptionService(
     const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>& wordDescriptionDownloader,
     const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>& wordDescriptionRepository)
     const

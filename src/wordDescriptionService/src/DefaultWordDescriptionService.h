@@ -14,11 +14,10 @@ namespace glossary::wordDescriptionService
 class DefaultWordDescriptionService : public WordDescriptionService
 {
 public:
-    DefaultWordDescriptionService(
-        std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
-        std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>,
-        std::unique_ptr<WordsApiConnectionChecker>, std::unique_ptr<ApiKeyReader>,
-        std::unique_ptr<ApiKeyLocationUpdater>);
+    DefaultWordDescriptionService(std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
+                                  std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>,
+                                  std::unique_ptr<WordsApiConnectionChecker>, std::unique_ptr<ApiKeyReader>,
+                                  std::unique_ptr<ApiKeyLocationUpdater>);
 
     wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) noexcept override;

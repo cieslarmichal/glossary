@@ -11,9 +11,8 @@ namespace glossary
 class ExternalServicesConnectionChecker : public ConnectionChecker
 {
 public:
-    ExternalServicesConnectionChecker(
-        std::shared_ptr<translationService::TranslationService>,
-        std::shared_ptr<wordDescriptionService::WordDescriptionService>);
+    ExternalServicesConnectionChecker(std::shared_ptr<translationService::TranslationService>,
+                                      std::shared_ptr<wordDescriptionService::WordDescriptionService>);
 
     ExternalServicesStatus checkExternalServicesAvailabilityStatus() const override;
 

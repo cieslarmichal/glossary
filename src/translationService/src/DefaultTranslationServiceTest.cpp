@@ -1,3 +1,5 @@
+#include "DefaultTranslationService.h"
+
 #include "gtest/gtest.h"
 
 #include "ApiKeyFileReaderMock.h"
@@ -5,8 +7,6 @@
 #include "TranslatorConnectionCheckerMock.h"
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translator/TranslatorMock.h"
-
-#include "DefaultTranslationService.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -47,8 +47,7 @@ public:
     ApiKeyLocationUpdaterMock* apiKeyLocationUpdater = apiKeyLocationUpdaterInit.get();
 };
 
-class DefaultTranslationServiceTest_WithApiKey_Base
-    : public DefaultTranslationServiceTest_Base
+class DefaultTranslationServiceTest_WithApiKey_Base : public DefaultTranslationServiceTest_Base
 {
 public:
     DefaultTranslationServiceTest_WithApiKey_Base()
@@ -57,8 +56,7 @@ public:
     }
 };
 
-class DefaultTranslationServiceTest_WithoutApiKey_Base
-    : public DefaultTranslationServiceTest_Base
+class DefaultTranslationServiceTest_WithoutApiKey_Base : public DefaultTranslationServiceTest_Base
 {
 public:
     DefaultTranslationServiceTest_WithoutApiKey_Base()
@@ -67,8 +65,7 @@ public:
     }
 };
 
-class DefaultTranslationServiceTest_WithApiKey
-    : public DefaultTranslationServiceTest_WithApiKey_Base
+class DefaultTranslationServiceTest_WithApiKey : public DefaultTranslationServiceTest_WithApiKey_Base
 {
 public:
     DefaultTranslationService translationService{
@@ -163,8 +160,7 @@ TEST_F(DefaultTranslationServiceTest_WithApiKey, shouldUpdateApiKeyLocationAndRe
     translationService.updateApiKeyLocation(apiKeyLocation);
 }
 
-class DefaultTranslationServiceTest_WithoutApiKey
-    : public DefaultTranslationServiceTest_WithoutApiKey_Base
+class DefaultTranslationServiceTest_WithoutApiKey : public DefaultTranslationServiceTest_WithoutApiKey_Base
 {
 public:
     DefaultTranslationService translationService{
@@ -172,8 +168,7 @@ public:
         std::move(apiKeyLocationUpdaterInit)};
 };
 
-TEST_F(DefaultTranslationServiceTest_WithoutApiKey,
-       repositoryReturnsNoneTranslation_shouldReturnNone)
+TEST_F(DefaultTranslationServiceTest_WithoutApiKey, repositoryReturnsNoneTranslation_shouldReturnNone)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
 
