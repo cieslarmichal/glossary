@@ -1,4 +1,4 @@
-sudo: required
+lsudo: required
 language: cpp
 
 matrix:
@@ -18,7 +18,7 @@ matrix:
       env:
       - C_COMPILER=gcc-8
       - CXX_COMPILER=g++-8
-      - TRAVIS_DIST_NAME=xenial
+      - TRAVIS_DIST_NAME=bionic
       - QT_BASE=512
       
 dist: bionic
