@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
-#include "translationService/TranslationRetrieverServiceMock.h"
-#include "wordDescriptionService/WordDescriptionRetrieverServiceMock.h"
+#include "translationService/TranslationServiceMock.h"
+#include "wordDescriptionService/WordDescriptionServiceMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -18,10 +18,10 @@ auto availableStatus = ExternalServicesStatus{WordsApiStatus::Available, Transla
 class ExternalServicesConnectionCheckerTest : public Test
 {
 public:
-    std::shared_ptr<WordDescriptionRetrieverServiceMock> wordDescriptionService =
-        std::make_shared<StrictMock<WordDescriptionRetrieverServiceMock>>();
-    std::shared_ptr<TranslationRetrieverServiceMock> translationService =
-        std::make_shared<StrictMock<TranslationRetrieverServiceMock>>();
+    std::shared_ptr<WordDescriptionServiceMock> wordDescriptionService =
+        std::make_shared<StrictMock<WordDescriptionServiceMock>>();
+    std::shared_ptr<TranslationServiceMock> translationService =
+        std::make_shared<StrictMock<TranslationServiceMock>>();
     ExternalServicesConnectionChecker servicesAvailabilityChecker{translationService, wordDescriptionService};
 };
 

@@ -11,15 +11,16 @@
 
 namespace glossary::translationService
 {
-class TranslationRetrieverService
+class TranslationService
 {
 public:
-    virtual ~TranslationRetrieverService() = default;
+    virtual ~TranslationService() = default;
 
     virtual boost::optional<translator::TranslatedText> retrieveTranslation(const translator::SourceText&,
                                                                             translator::SourceLanguage,
                                                                             translator::TargetLanguage) = 0;
     virtual std::vector<std::string> retrieveSupportedLanguages() const = 0;
-    virtual TranslationApiStatus connectionToTranslateApiAvailable() = 0;
+    virtual TranslationApiStatus connectionToTranslateApiAvailable() const = 0;
+    virtual void updateApiKeyLocation(const std::string& apiKeyLocation) = 0;
 };
 }

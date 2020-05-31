@@ -1,11 +1,12 @@
-#include "DefaultTranslationRetrieverService.h"
-
 #include "gtest/gtest.h"
 
 #include "ApiKeyFileReaderMock.h"
+#include "ApiKeyLocationUpdaterMock.h"
 #include "TranslatorConnectionCheckerMock.h"
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translator/TranslatorMock.h"
+
+#include "DefaultTranslationService.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -26,9 +27,10 @@ const auto sourceLanguage = SourceLanguage::Polish;
 const auto targetLanguage = TargetLanguage::English;
 const std::vector<std::string> supportedLanguages{"Polish", "English"};
 const std::string apiKey{"topSecretKey"};
+const std::string apiKeyLocation{"apiKeyLocation"};
 }
 
-class DefaultTranslationRetrieverServiceTest_Base : public Test
+class DefaultTranslationServiceTest_Base : public Test
 {
 public:
     std::shared_ptr<TranslatorMock> translator = std::make_shared<StrictMock<TranslatorMock>>();
@@ -40,37 +42,41 @@ public:
     std::unique_ptr<TranslatorConnectionCheckerMock> connectionCheckerInit =
         std::make_unique<StrictMock<TranslatorConnectionCheckerMock>>();
     TranslatorConnectionCheckerMock* translatorConnectionChecker = connectionCheckerInit.get();
+    std::unique_ptr<ApiKeyLocationUpdaterMock> apiKeyLocationUpdaterInit =
+        std::make_unique<StrictMock<ApiKeyLocationUpdaterMock>>();
+    ApiKeyLocationUpdaterMock* apiKeyLocationUpdater = apiKeyLocationUpdaterInit.get();
 };
 
-class DefaultTranslationRetrieverServiceTest_WithApiKey_Base
-    : public DefaultTranslationRetrieverServiceTest_Base
+class DefaultTranslationServiceTest_WithApiKey_Base
+    : public DefaultTranslationServiceTest_Base
 {
 public:
-    DefaultTranslationRetrieverServiceTest_WithApiKey_Base()
+    DefaultTranslationServiceTest_WithApiKey_Base()
     {
         EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(apiKey));
     }
 };
 
-class DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base
-    : public DefaultTranslationRetrieverServiceTest_Base
+class DefaultTranslationServiceTest_WithoutApiKey_Base
+    : public DefaultTranslationServiceTest_Base
 {
 public:
-    DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base()
+    DefaultTranslationServiceTest_WithoutApiKey_Base()
     {
         EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(boost::none));
     }
 };
 
-class DefaultTranslationRetrieverServiceTest_WithApiKey
-    : public DefaultTranslationRetrieverServiceTest_WithApiKey_Base
+class DefaultTranslationServiceTest_WithApiKey
+    : public DefaultTranslationServiceTest_WithApiKey_Base
 {
 public:
-    DefaultTranslationRetrieverService translationService{
-        translator, translationRepository, std::move(apiKeyReaderInit), std::move(connectionCheckerInit)};
+    DefaultTranslationService translationService{
+        translator, translationRepository, std::move(apiKeyReaderInit), std::move(connectionCheckerInit),
+        std::move(apiKeyLocationUpdaterInit)};
 };
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+TEST_F(DefaultTranslationServiceTest_WithApiKey,
        repositoryContainsTranslation_shouldReturnTranslationFromRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate))
@@ -83,7 +89,7 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
 }
 
 TEST_F(
-    DefaultTranslationRetrieverServiceTest_WithApiKey,
+    DefaultTranslationServiceTest_WithApiKey,
     repositoryDoesNotContainTranslation_shouldReturnTranslationFromTranslatorAndSaveTranslationInRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
@@ -97,7 +103,7 @@ TEST_F(
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+TEST_F(DefaultTranslationServiceTest_WithApiKey,
        repositoryAndTranslatorReturnNoneTranslation_shouldReturnNone)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
@@ -109,14 +115,14 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
     ASSERT_EQ(actualTranslation, boost::none);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey, shouldReturnSupportedLanguages)
+TEST_F(DefaultTranslationServiceTest_WithApiKey, shouldReturnSupportedLanguages)
 {
     const auto actualSupportedLanguages = translationService.retrieveSupportedLanguages();
 
     ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+TEST_F(DefaultTranslationServiceTest_WithApiKey,
        givenConnectionNotAvailableFromTranslatorConnectionChecker_shouldReturnConnectionUnavailableStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
@@ -127,7 +133,7 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
     ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::Unavailable);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+TEST_F(DefaultTranslationServiceTest_WithApiKey,
        givenConnectionAvailableFromTranslatorConnectionChecker_shouldReturnConnectionAvailableStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
@@ -138,7 +144,7 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
     ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::Available);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
+TEST_F(DefaultTranslationServiceTest_WithApiKey,
        givenInvalidApiKeyStatusFromTranslatorConnectionChecker_shouldReturnInvalidApiKeyStatus)
 {
     EXPECT_CALL(*translatorConnectionChecker, connectionToTranslatorWithApiKeyIsAvailable(_))
@@ -149,15 +155,24 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithApiKey,
     ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::InvalidApiKey);
 }
 
-class DefaultTranslationRetrieverServiceTest_WithoutApiKey
-    : public DefaultTranslationRetrieverServiceTest_WithoutApiKey_Base
+TEST_F(DefaultTranslationServiceTest_WithApiKey, shouldUpdateApiKeyLocationAndReadNewApiKey)
+{
+    EXPECT_CALL(*apiKeyLocationUpdater, updateApiKeyLocation(apiKeyLocation));
+    EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(apiKey));
+
+    translationService.updateApiKeyLocation(apiKeyLocation);
+}
+
+class DefaultTranslationServiceTest_WithoutApiKey
+    : public DefaultTranslationServiceTest_WithoutApiKey_Base
 {
 public:
-    DefaultTranslationRetrieverService translationService{
-        translator, translationRepository, std::move(apiKeyReaderInit), std::move(connectionCheckerInit)};
+    DefaultTranslationService translationService{
+        translator, translationRepository, std::move(apiKeyReaderInit), std::move(connectionCheckerInit),
+        std::move(apiKeyLocationUpdaterInit)};
 };
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
+TEST_F(DefaultTranslationServiceTest_WithoutApiKey,
        repositoryReturnsNoneTranslation_shouldReturnNone)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate)).WillOnce(Return(boost::none));
@@ -168,7 +183,7 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
     ASSERT_EQ(actualTranslation, boost::none);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
+TEST_F(DefaultTranslationServiceTest_WithoutApiKey,
        repositoryReturnsTranslation_shouldReturnTranslationFromRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(textToTranslate))
@@ -180,16 +195,24 @@ TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey,
     ASSERT_EQ(*actualTranslation, expectedTranslatedText);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, shouldReturnSupportedLanguages)
+TEST_F(DefaultTranslationServiceTest_WithoutApiKey, shouldReturnSupportedLanguages)
 {
     const auto actualSupportedLanguages = translationService.retrieveSupportedLanguages();
 
     ASSERT_EQ(actualSupportedLanguages, supportedLanguages);
 }
 
-TEST_F(DefaultTranslationRetrieverServiceTest_WithoutApiKey, noApiKey_shouldReturnInvalidApiKeyStatus)
+TEST_F(DefaultTranslationServiceTest_WithoutApiKey, noApiKey_shouldReturnInvalidApiKeyStatus)
 {
     const auto connectionAvailableStatus = translationService.connectionToTranslateApiAvailable();
 
     ASSERT_EQ(connectionAvailableStatus, TranslationApiStatus::InvalidApiKey);
+}
+
+TEST_F(DefaultTranslationServiceTest_WithoutApiKey, shouldUpdateApiKeyLocationAndReadNewApiKey)
+{
+    EXPECT_CALL(*apiKeyLocationUpdater, updateApiKeyLocation(apiKeyLocation));
+    EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(apiKey));
+
+    translationService.updateApiKeyLocation(apiKeyLocation);
 }

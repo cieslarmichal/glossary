@@ -20,7 +20,9 @@ boost::optional<std::string> TranslateApiKeyFileReader::readApiKey() const
     if (const auto filePathWithApiKey = readPathToFileWithApiKey())
     {
         if (const auto fileContentWithApiKey = readApiKeyFromFile(*filePathWithApiKey))
+        {
             return apiKeyFromFileContentRetriever.retrieveApiKeyFromFileContent(*fileContentWithApiKey);
+        }
     }
     return boost::none;
 }

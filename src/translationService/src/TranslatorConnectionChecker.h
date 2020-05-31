@@ -11,6 +11,6 @@ class TranslatorConnectionChecker
 public:
     virtual ~TranslatorConnectionChecker() = default;
 
-    virtual TranslationApiStatus connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) = 0;
+    virtual TranslationApiStatus connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) const = 0;
 };
 }

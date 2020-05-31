@@ -2,16 +2,16 @@
 
 #include "gtest/gtest.h"
 
-#include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
+#include "wordDescriptionService/WordDescriptionServiceMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
 
 #include "webConnection/exceptions/ConnectionFailed.h"
-#include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
+#include "utils/FileAccessMock.h"
 
 using namespace ::testing;
 using namespace glossary;
 using namespace wordDescriptionRepository;
-using namespace wordDescriptionDownloader;
+using namespace wordDescriptionService;
 
 namespace
 {
@@ -25,11 +25,11 @@ const WordDescription wordDescription1{englishWord1, {}, {}, {}};
 class WordDescriptionConcurrentUpdaterTest : public Test
 {
 public:
-    std::shared_ptr<WordDescriptionDownloaderMock> wordDescriptionDownloader =
-        std::make_shared<StrictMock<WordDescriptionDownloaderMock>>();
+    std::shared_ptr<WordDescriptionServiceMock> wordDescriptionService =
+        std::make_shared<StrictMock<WordDescriptionServiceMock>>();
     std::shared_ptr<WordDescriptionRepositoryMock> wordDescriptionRepository =
         std::make_shared<StrictMock<WordDescriptionRepositoryMock>>();
-    WordDescriptionConcurrentUpdater updater{wordDescriptionDownloader, wordDescriptionRepository};
+    WordDescriptionConcurrentUpdater updater{wordDescriptionService, wordDescriptionRepository};
 };
 
 TEST_F(WordDescriptionConcurrentUpdaterTest, givenEnglishWordsExistingInRepository_shouldNotLoadAnything)
@@ -48,13 +48,12 @@ TEST_F(WordDescriptionConcurrentUpdaterTest,
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord2)).WillOnce(Return(false));
     EXPECT_CALL(*wordDescriptionRepository, contains(englishWord3)).WillOnce(Return(false));
 
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord1))
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord1))
         .WillOnce(Return(wordDescription1));
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord2))
-        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord3))
-        .WillOnce(Throw(wordDescriptionDownloader::exceptions::InvalidApiKey{""}));
-
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord2))
+        .WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord3))
+        .WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescription1));
 
     updater.update(englishWords);

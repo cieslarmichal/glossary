@@ -9,11 +9,11 @@ TranslatorTabViewManager::TranslatorTabViewManager(QObject* parent,
 {
     connect(translatorTab.get(), &view::TranslatorTab::notifyAboutTextTranslateRequest, glossaryAdapter.get(),
             &model::GlossaryAdapter::onTextTranslateRequest);
-    connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyAboutTranslation,
-            translatorTab.get(), &view::TranslatorTab::onTranslationReceived);
+    connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyAboutTranslation, translatorTab.get(),
+            &view::TranslatorTab::onTranslationReceived);
 
-    connect(translatorTab.get(), &view::TranslatorTab::notifyAboutAvailableLanguagesRequest, glossaryAdapter.get(),
-            &model::GlossaryAdapter::onTranslatorAvailableLanguagesRequest);
+    connect(translatorTab.get(), &view::TranslatorTab::notifyAboutAvailableLanguagesRequest,
+            glossaryAdapter.get(), &model::GlossaryAdapter::onTranslatorAvailableLanguagesRequest);
     connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyAboutAvailableLanguages,
             translatorTab.get(), &view::TranslatorTab::onAvailableLanguagesReceived);
 

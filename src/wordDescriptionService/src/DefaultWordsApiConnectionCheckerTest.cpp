@@ -15,6 +15,7 @@ using namespace wordDescriptionService;
 
 namespace
 {
+const std::string apiKey{"topSecretApiKey"};
 const EnglishWord englishWord{"fish"};
 const WordDescription wordDescription{englishWord, {}, {}, {}};
 const auto availableStatus = WordsApiStatus::Available;
@@ -34,10 +35,10 @@ public:
 TEST_F(DefaultWordsApiConnectionCheckerTest,
        wordDescriptionDownloaderThrowsConnectionFailed_shouldReturnConnectionUnavailableStatus)
 {
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
+    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    const auto actualStatus = connectionChecker.connectionToWordsApiAvailable();
+    const auto actualStatus = connectionChecker.connectionToWordsApiAvailable(apiKey);
 
     ASSERT_EQ(actualStatus, unavailableStatus);
 }
@@ -45,10 +46,10 @@ TEST_F(DefaultWordsApiConnectionCheckerTest,
 TEST_F(DefaultWordsApiConnectionCheckerTest,
        wordDescriptionDownloaderThrowsInvalidApiKey_shouldReturnInvalidApiKeyStatus)
 {
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
+    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Throw(wordDescriptionDownloader::exceptions::InvalidApiKey{""}));
 
-    const auto actualStatus = connectionChecker.connectionToWordsApiAvailable();
+    const auto actualStatus = connectionChecker.connectionToWordsApiAvailable(apiKey);
 
     ASSERT_EQ(actualStatus, invalidApiKeyStatus);
 }
@@ -56,10 +57,10 @@ TEST_F(DefaultWordsApiConnectionCheckerTest,
 TEST_F(DefaultWordsApiConnectionCheckerTest,
        wordDescriptionDownloaderReturnsWordDescription_shouldReturnConnectionAvailableStatus)
 {
-    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord))
+    EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Return(wordDescription));
 
-    const auto actualStatus = connectionChecker.connectionToWordsApiAvailable();
+    const auto actualStatus = connectionChecker.connectionToWordsApiAvailable(apiKey);
 
     ASSERT_EQ(actualStatus, availableStatus);
 }

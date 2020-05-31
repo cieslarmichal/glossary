@@ -4,7 +4,7 @@
 
 #include "boost/optional.hpp"
 
-namespace glossary::wordDescriptionDownloader
+namespace glossary::wordDescriptionService
 {
 class ApiKeyReader
 {

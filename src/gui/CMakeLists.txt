@@ -1,3 +1,4 @@
+find_package(Qt5Charts)
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
@@ -42,8 +43,8 @@ add_executable(guiUT ${UT_SOURCES} ${SOURCES})
 target_include_directories(gui PUBLIC "src/")
 target_include_directories(guiUT PUBLIC "src/")
 
-target_link_libraries(gui PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets glossary)
-target_link_libraries(guiUT PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets gtest_main gmock glossary)
+target_link_libraries(gui PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts glossary)
+target_link_libraries(guiUT PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts gtest_main gmock glossary)
 
 target_compile_options(gui PUBLIC ${FLAGS})
 target_compile_options(guiUT PUBLIC -Wall -Wextra -Werror)

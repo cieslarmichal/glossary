@@ -20,7 +20,7 @@ DefaultTranslatorConnectionChecker::DefaultTranslatorConnectionChecker(
 }
 
 TranslationApiStatus
-DefaultTranslatorConnectionChecker::connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey)
+DefaultTranslatorConnectionChecker::connectionToTranslatorWithApiKeyIsAvailable(const std::string& apiKey) const
 {
     try
     {

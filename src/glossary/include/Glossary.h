@@ -6,10 +6,10 @@
 #include "boost/optional.hpp"
 
 #include "Dictionaries.h"
+#include "DictionaryStatistics.h"
 #include "ExternalServicesStatus.h"
 #include "Statistics.h"
 #include "WordDescription.h"
-#include "DictionaryStatistics.h"
 
 namespace glossary
 {
@@ -18,8 +18,11 @@ class Glossary
 public:
     virtual ~Glossary() = default;
 
-    //TODO: check connection in gui
+    // TODO: check connection in gui
     virtual ExternalServicesStatus checkConnectionToExternalServices() const = 0;
+    virtual void updateTranslateApiKeyLocation(const std::string& apiKeyLocation) const = 0;
+    virtual void updateWordsApiKeyLocation(const std::string& apiKeyLocation) const = 0;
+
     virtual boost::optional<std::string> getRandomPolishWord() const = 0;
     virtual boost::optional<std::string> getRandomPolishWord(const DictionaryName&) const = 0;
     virtual bool verifyPolishWordTranslation(const std::string& polishWord,

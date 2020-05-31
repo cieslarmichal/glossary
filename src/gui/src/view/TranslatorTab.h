@@ -1,7 +1,8 @@
 #pragma once
 
-#include <QWidget>
 #include <QStringListModel>
+#include <QWidget>
+
 #include "boost/optional.hpp"
 
 namespace glossary::gui::view
@@ -22,7 +23,8 @@ public:
     void setAvailableLanguages(const QStringList&);
 
 signals:
-    void notifyAboutTextTranslateRequest(const QString& textToTranslate, const QString& sourceLanguage, const QString& targetLanguage) const;
+    void notifyAboutTextTranslateRequest(const QString& textToTranslate, const QString& sourceLanguage,
+                                         const QString& targetLanguage) const;
     void notifyAboutAvailableLanguagesRequest() const;
 
 public slots:

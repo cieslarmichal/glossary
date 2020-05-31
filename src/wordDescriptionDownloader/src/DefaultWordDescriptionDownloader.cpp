@@ -1,9 +1,6 @@
 #include "DefaultWordDescriptionDownloader.h"
 
-#include <iostream>
-
 #include "exceptions/InvalidApiKey.h"
-#include "webConnection/exceptions/ConnectionFailed.h"
 
 namespace glossary::wordDescriptionDownloader
 {
@@ -20,18 +17,19 @@ DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
 }
 
 wordDescriptionRepository::WordDescription DefaultWordDescriptionDownloader::tryDownloadWordDescription(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+    const wordDescriptionRepository::EnglishWord& englishWord, const std::string& wordsApiKey) const
 {
-    auto definitions = downloadDefinitions(englishWord);
-    auto examples = downloadExamples(englishWord);
-    auto synonyms = downloadSynonyms(englishWord);
+    auto definitions = downloadDefinitions(englishWord, wordsApiKey);
+    auto examples = downloadExamples(englishWord, wordsApiKey);
+    auto synonyms = downloadSynonyms(englishWord, wordsApiKey);
     return wordDescriptionRepository::WordDescription{englishWord, definitions, examples, synonyms};
 }
 
 wordDescriptionRepository::Definitions DefaultWordDescriptionDownloader::downloadDefinitions(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+    const wordDescriptionRepository::EnglishWord& englishWord, const std::string& wordsApiKey) const
 {
-    const auto definitionsApiResponse = apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord);
+    const auto definitionsApiResponse =
+        apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord, wordsApiKey);
     if (responseCodeIsOk(definitionsApiResponse.code))
     {
         return responseDeserializer->deserializeDefinitions(definitionsApiResponse.content);
@@ -39,10 +37,11 @@ wordDescriptionRepository::Definitions DefaultWordDescriptionDownloader::downloa
     return {};
 }
 
-wordDescriptionRepository::Examples DefaultWordDescriptionDownloader::downloadExamples(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+wordDescriptionRepository::Examples
+DefaultWordDescriptionDownloader::downloadExamples(const wordDescriptionRepository::EnglishWord& englishWord,
+                                                   const std::string& wordsApiKey) const
 {
-    const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord);
+    const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord, wordsApiKey);
     if (responseCodeIsOk(examplesApiResponse.code))
     {
         return responseDeserializer->deserializeExamples(examplesApiResponse.content);
@@ -50,11 +49,12 @@ wordDescriptionRepository::Examples DefaultWordDescriptionDownloader::downloadEx
     return {};
 }
 
-wordDescriptionRepository::Synonyms DefaultWordDescriptionDownloader::downloadSynonyms(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+wordDescriptionRepository::Synonyms
+DefaultWordDescriptionDownloader::downloadSynonyms(const wordDescriptionRepository::EnglishWord& englishWord,
+                                                   const std::string& wordsApiKey) const
 {
 
-    const auto synonymsApiResponse = apiResponseFetcher->tryGetWordSynonymsResponse(englishWord);
+    const auto synonymsApiResponse = apiResponseFetcher->tryGetWordSynonymsResponse(englishWord, wordsApiKey);
     if (responseCodeIsOk(synonymsApiResponse.code))
     {
         return responseDeserializer->deserializeSynonyms(synonymsApiResponse.content);

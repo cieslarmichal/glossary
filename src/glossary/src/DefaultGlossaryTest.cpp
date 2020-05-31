@@ -4,12 +4,12 @@
 
 #include "AnswerValidatorMock.h"
 #include "ConnectionCheckerMock.h"
+#include "DictionaryStatisticsCounterMock.h"
 #include "DictionaryTranslationUpdaterMock.h"
 #include "dictionaryService/DictionaryServiceMock.h"
 #include "statisticsRepository/StatisticsRepositoryMock.h"
-#include "translationService/TranslationRetrieverServiceMock.h"
-#include "wordDescriptionService/WordDescriptionRetrieverServiceMock.h"
-#include "DictionaryStatisticsCounterMock.h"
+#include "translationService/TranslationServiceMock.h"
+#include "wordDescriptionService/WordDescriptionServiceMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -63,6 +63,7 @@ const Dictionaries dictionaries{dictionary1, dictionary2};
 const DictionaryStatistics dictionaryStatistics1{dictionaryName1, 15, 4};
 const DictionaryStatistics dictionaryStatistics2{dictionaryName2, 5, 55};
 const DictionariesStatistics dictionariesStatistics{dictionaryStatistics1, dictionaryStatistics2};
+const std::string apiKeyLocation{"apiKeyLocation"};
 }
 
 class DefaultGlossaryTest_Base : public Test
@@ -75,12 +76,12 @@ public:
 
     std::shared_ptr<DictionaryServiceMock> dictionaryService =
         std::make_shared<StrictMock<DictionaryServiceMock>>();
-    std::shared_ptr<TranslationRetrieverServiceMock> translationService =
-        std::make_shared<StrictMock<TranslationRetrieverServiceMock>>();
+    std::shared_ptr<TranslationServiceMock> translationService =
+        std::make_shared<StrictMock<TranslationServiceMock>>();
     std::shared_ptr<StatisticsRepositoryMock> statisticsRepository =
         std::make_shared<StrictMock<StatisticsRepositoryMock>>();
-    std::shared_ptr<WordDescriptionRetrieverServiceMock> wordDescriptionService =
-        std::make_shared<StrictMock<WordDescriptionRetrieverServiceMock>>();
+    std::shared_ptr<WordDescriptionServiceMock> wordDescriptionService =
+        std::make_shared<StrictMock<WordDescriptionServiceMock>>();
     std::shared_ptr<DictionaryTranslationUpdaterMock> dictionaryTranslationUpdater =
         std::make_shared<StrictMock<DictionaryTranslationUpdaterMock>>();
     std::unique_ptr<DictionaryStatisticsCounterMock> dictionaryStatisticsCounterInit =
@@ -116,6 +117,20 @@ TEST_F(DefaultGlossaryTest, shouldReturnExternalServicesAvailabilityStatus)
     const auto actualAvailabilityStatus = glossary.checkConnectionToExternalServices();
 
     ASSERT_EQ(actualAvailabilityStatus, availableStatus);
+}
+
+TEST_F(DefaultGlossaryTest, shouldUpdateTranslateApiKeyLocation)
+{
+    EXPECT_CALL(*translationService, updateApiKeyLocation(apiKeyLocation));
+
+    glossary.updateTranslateApiKeyLocation(apiKeyLocation);
+}
+
+TEST_F(DefaultGlossaryTest, shouldUpdateWordsApiKeyLocation)
+{
+    EXPECT_CALL(*wordDescriptionService, updateApiKeyLocation(apiKeyLocation));
+
+    glossary.updateWordsApiKeyLocation(apiKeyLocation);
 }
 
 TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWord_shouldReturnNone)
@@ -398,7 +413,8 @@ TEST_F(DefaultGlossaryTest, givenExistingDictionary_shouldReturnDictionaryStatis
 {
     EXPECT_CALL(*dictionaryService, getDictionary(dictionaryName1)).WillOnce(Return(dictionary1));
     EXPECT_CALL(*statisticsRepository, getStatistics()).WillOnce(Return(statistics));
-    EXPECT_CALL(*dictionaryStatisticsCounter, countDictionaryStatistics(dictionary1, statistics)).WillOnce(Return(dictionaryStatistics1));
+    EXPECT_CALL(*dictionaryStatisticsCounter, countDictionaryStatistics(dictionary1, statistics))
+        .WillOnce(Return(dictionaryStatistics1));
 
     const auto actualDictionaryStatistics = glossary.getDictionaryStatistics(dictionaryName1);
 
@@ -409,7 +425,8 @@ TEST_F(DefaultGlossaryTest, shouldReturnDictionariesStatistics)
 {
     EXPECT_CALL(*dictionaryService, getDictionaries()).WillOnce(Return(dictionaries));
     EXPECT_CALL(*statisticsRepository, getStatistics()).WillOnce(Return(statistics));
-    EXPECT_CALL(*dictionaryStatisticsCounter, countDictionariesStatistics(dictionaries, statistics)).WillOnce(Return(dictionariesStatistics));
+    EXPECT_CALL(*dictionaryStatisticsCounter, countDictionariesStatistics(dictionaries, statistics))
+        .WillOnce(Return(dictionariesStatistics));
 
     const auto actualDictionariesStatistics = glossary.getDictionariesStatistics();
 

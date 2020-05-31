@@ -16,11 +16,12 @@ DefaultWordsApiConnectionChecker::DefaultWordsApiConnectionChecker(
 {
 }
 
-WordsApiStatus DefaultWordsApiConnectionChecker::connectionToWordsApiAvailable()
+WordsApiStatus
+DefaultWordsApiConnectionChecker::connectionToWordsApiAvailable(const std::string& wordsApiKey) const
 {
     try
     {
-        wordDescriptionDownloader->tryDownloadWordDescription(exampleEnglishWord);
+        wordDescriptionDownloader->tryDownloadWordDescription(exampleEnglishWord, wordsApiKey);
         return WordsApiStatus::Available;
     }
     catch (const webConnection::exceptions::ConnectionFailed& e)

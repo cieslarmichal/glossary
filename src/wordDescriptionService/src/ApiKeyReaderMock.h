@@ -4,7 +4,7 @@
 
 #include "ApiKeyReader.h"
 
-namespace glossary::wordDescriptionDownloader
+namespace glossary::wordDescriptionService
 {
 class ApiKeyReaderMock : public ApiKeyReader
 {

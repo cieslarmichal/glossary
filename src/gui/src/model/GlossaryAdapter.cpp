@@ -75,13 +75,29 @@ QStringList GlossaryAdapter::getAvailableLanguages() const
     return availableLanguages;
 }
 
-QString GlossaryAdapter::getTranslation(const QString &textToTranslate, const QString &sourceLanguage, const QString &targetLanguage) const
+QString GlossaryAdapter::getTranslation(const QString& textToTranslate, const QString& sourceLanguage,
+                                        const QString& targetLanguage) const
 {
-    if (auto translation = glossary->translate(textToTranslate.toStdString(), sourceLanguage.toStdString(), targetLanguage.toStdString()))
+    if (auto translation = glossary->translate(textToTranslate.toStdString(), sourceLanguage.toStdString(),
+                                               targetLanguage.toStdString()))
     {
         return QString::fromStdString(*translation);
     }
     return {};
+}
+
+DictionaryStatistics GlossaryAdapter::getDictionaryStatistics(const QString& dictionaryName) const
+{
+    if (auto dictionaryStatistics = glossary->getDictionaryStatistics(dictionaryName.toStdString()))
+    {
+        return *dictionaryStatistics;
+    }
+    return DictionaryStatistics{dictionaryName.toStdString(), 0, 0};
+}
+
+DictionariesStatistics GlossaryAdapter::getDictionariesStatistics() const
+{
+    return glossary->getDictionariesStatistics();
 }
 
 void GlossaryAdapter::onRandomPolishWordTriggered() const
@@ -186,7 +202,8 @@ void GlossaryAdapter::onWordTranslationChanged(const QString& dictionaryName, co
     emit notifyAboutDictionaryWordsUpdate(dictionaryName.toStdString(), currentDictionaryWords);
 }
 
-void GlossaryAdapter::onTextTranslateRequest(const QString &textToTranslate, const QString &sourceLanguage, const QString &targetLanguage) const
+void GlossaryAdapter::onTextTranslateRequest(const QString& textToTranslate, const QString& sourceLanguage,
+                                             const QString& targetLanguage) const
 {
     auto translation = getTranslation(textToTranslate, sourceLanguage, targetLanguage);
     emit notifyAboutTranslation(translation);
@@ -196,6 +213,18 @@ void GlossaryAdapter::onTranslatorAvailableLanguagesRequest() const
 {
     auto availableLanguages = getAvailableLanguages();
     emit notifyAboutAvailableLanguages(availableLanguages);
+}
+
+void GlossaryAdapter::onDictionaryStatisticsRequest(const QString& dictionaryName) const
+{
+    auto dictionaryStatistics = getDictionaryStatistics(dictionaryName);
+    emit notifyAboutDictionaryStatistics(dictionaryStatistics);
+}
+
+void GlossaryAdapter::onDictionariesStatisticsRequest() const
+{
+    auto dictionariesStatistics = getDictionariesStatistics();
+    emit notifyAboutDictionariesStatistics(dictionariesStatistics);
 }
 
 }

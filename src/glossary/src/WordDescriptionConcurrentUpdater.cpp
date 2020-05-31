@@ -7,9 +7,9 @@ namespace glossary
 {
 
 WordDescriptionConcurrentUpdater::WordDescriptionConcurrentUpdater(
-    std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloaderInit,
+    std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepositoryInit)
-    : wordDescriptionDownloader{std::move(wordDescriptionDownloaderInit)},
+    : wordDescriptionService{std::move(wordDescriptionServiceInit)},
       wordDescriptionRepository{std::move(wordDescriptionRepositoryInit)}
 {
 }
@@ -77,14 +77,7 @@ boost::optional<wordDescriptionRepository::WordDescription>
 WordDescriptionConcurrentUpdater::downloadWordDescription(
     const wordDescriptionRepository::EnglishWord& englishWord)
 {
-    try
-    {
-        return wordDescriptionDownloader->tryDownloadWordDescription(englishWord);
-    }
-    catch (const std::exception&)
-    {
-        return boost::none;
-    }
+    return wordDescriptionService->downloadWordDescription(englishWord);
 }
 
 void WordDescriptionConcurrentUpdater::loadWordsDescriptionsIntoRepository(

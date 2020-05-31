@@ -7,13 +7,14 @@
 #include "utils/ThreadSafeQueue.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
+#include "wordDescriptionService/WordDescriptionService.h"
 
 namespace glossary
 {
 class WordDescriptionConcurrentUpdater : public dictionaryService::DictionaryObserver
 {
 public:
-    WordDescriptionConcurrentUpdater(std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>,
+    WordDescriptionConcurrentUpdater(std::shared_ptr<wordDescriptionService::WordDescriptionService>,
                                      std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
     void update(const dictionaryService::EnglishWords&) override;
@@ -28,7 +29,7 @@ private:
     downloadWordDescription(const wordDescriptionRepository::EnglishWord&);
     void loadWordsDescriptionsIntoRepository(const wordDescriptionRepository::WordsDescriptions&);
 
-    std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;
+    std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionService;
     std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepository;
     utils::SupportedThreadsCalculator supportedThreadsCalculator;
 };

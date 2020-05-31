@@ -19,7 +19,8 @@ DefaultDictionaryService::DefaultDictionaryService(
 {
 }
 
-boost::optional<Dictionary> DefaultDictionaryService::getDictionary(const DictionaryName& dictionaryName) const
+boost::optional<Dictionary>
+DefaultDictionaryService::getDictionary(const DictionaryName& dictionaryName) const
 {
     return dictionaryRepository->getDictionary(dictionaryName);
 }

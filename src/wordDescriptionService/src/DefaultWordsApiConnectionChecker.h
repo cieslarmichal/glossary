@@ -13,7 +13,7 @@ public:
     explicit DefaultWordsApiConnectionChecker(
         std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>);
 
-    WordsApiStatus connectionToWordsApiAvailable() override;
+    WordsApiStatus connectionToWordsApiAvailable(const std::string& wordsApiKey) const override;
 
 private:
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;

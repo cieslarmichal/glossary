@@ -1,155 +1,163 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>glossary::gui::view::MainView</class>
- <widget class="QMainWindow" name="glossary::gui::view::MainView">
-  <property name="geometry">
-   <rect>
-    <x>0</x>
-    <y>0</y>
-    <width>695</width>
-    <height>587</height>
-   </rect>
-  </property>
-  <property name="windowTitle">
-   <string>Glossary</string>
-  </property>
-  <widget class="QWidget" name="centralwidget">
-   <widget class="QTabWidget" name="glossaryFunctionsTab">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>0</y>
-      <width>661</width>
-      <height>551</height>
-     </rect>
-    </property>
-    <property name="currentIndex">
-     <number>0</number>
-    </property>
-    <widget class="QWidget" name="guessTab">
-     <attribute name="title">
-      <string>Guess word</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>10</y>
-        <width>631</width>
-        <height>481</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="guessTabLayout"/>
-     </widget>
+    <class>glossary::gui::view::MainView</class>
+    <widget class="QMainWindow" name="glossary::gui::view::MainView">
+        <property name="geometry">
+            <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>723</width>
+                <height>587</height>
+            </rect>
+        </property>
+        <property name="windowTitle">
+            <string>Glossary</string>
+        </property>
+        <widget class="QWidget" name="centralwidget">
+            <widget class="QTabWidget" name="glossaryFunctionsTab">
+                <property name="geometry">
+                    <rect>
+                        <x>10</x>
+                        <y>0</y>
+                        <width>681</width>
+                        <height>551</height>
+                    </rect>
+                </property>
+                <property name="styleSheet">
+                    <string notr="true">color:rgb(114, 159, 207)</string>
+                </property>
+                <property name="currentIndex">
+                    <number>0</number>
+                </property>
+                <widget class="QWidget" name="welcomeTab">
+                    <attribute name="title">
+                        <string>Welcome</string>
+                    </attribute>
+                </widget>
+                <widget class="QWidget" name="guessTab">
+                    <attribute name="title">
+                        <string>Guess word</string>
+                    </attribute>
+                    <widget class="QWidget" name="verticalLayoutWidget">
+                        <property name="geometry">
+                            <rect>
+                                <x>10</x>
+                                <y>10</y>
+                                <width>631</width>
+                                <height>481</height>
+                            </rect>
+                        </property>
+                        <layout class="QVBoxLayout" name="guessTabLayout"/>
+                    </widget>
+                </widget>
+                <widget class="QWidget" name="dictionariesTab">
+                    <attribute name="title">
+                        <string>Manage dictionaries</string>
+                    </attribute>
+                    <widget class="QWidget" name="verticalLayoutWidget_2">
+                        <property name="geometry">
+                            <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>651</width>
+                                <height>511</height>
+                            </rect>
+                        </property>
+                        <layout class="QVBoxLayout" name="dictionariesTabLayout"/>
+                    </widget>
+                </widget>
+                <widget class="QWidget" name="wordDescriptionTab">
+                    <attribute name="title">
+                        <string>Word description</string>
+                    </attribute>
+                    <widget class="QWidget" name="verticalLayoutWidget_3">
+                        <property name="geometry">
+                            <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>651</width>
+                                <height>511</height>
+                            </rect>
+                        </property>
+                        <layout class="QVBoxLayout" name="wordDescriptionTabLayout"/>
+                    </widget>
+                </widget>
+                <widget class="QWidget" name="translatorTab">
+                    <attribute name="title">
+                        <string>Translator</string>
+                    </attribute>
+                    <widget class="QWidget" name="verticalLayoutWidget_4">
+                        <property name="geometry">
+                            <rect>
+                                <x>120</x>
+                                <y>50</y>
+                                <width>391</width>
+                                <height>331</height>
+                            </rect>
+                        </property>
+                        <layout class="QVBoxLayout" name="translatorTabLayout"/>
+                    </widget>
+                </widget>
+                <widget class="QWidget" name="statisticsTab">
+                    <attribute name="title">
+                        <string>Statistics</string>
+                    </attribute>
+                    <widget class="QWidget" name="verticalLayoutWidget_5">
+                        <property name="geometry">
+                            <rect>
+                                <x>0</x>
+                                <y>0</y>
+                                <width>651</width>
+                                <height>511</height>
+                            </rect>
+                        </property>
+                        <layout class="QVBoxLayout" name="statisticsTabLayout"/>
+                    </widget>
+                </widget>
+            </widget>
+        </widget>
+        <widget class="QMenuBar" name="menubar">
+            <property name="geometry">
+                <rect>
+                    <x>0</x>
+                    <y>0</y>
+                    <width>723</width>
+                    <height>22</height>
+                </rect>
+            </property>
+            <widget class="QMenu" name="menuFile">
+                <property name="title">
+                    <string>File</string>
+                </property>
+                <addaction name="actionLoadDictionary"/>
+                <addaction name="actionExit"/>
+            </widget>
+            <widget class="QMenu" name="menuHelp">
+                <property name="title">
+                    <string>Help</string>
+                </property>
+                <addaction name="actionAbout"/>
+            </widget>
+            <addaction name="menuFile"/>
+            <addaction name="menuHelp"/>
+        </widget>
+        <widget class="QStatusBar" name="statusbar"/>
+        <action name="actionLoadDictionary">
+            <property name="text">
+                <string>Load dictionary</string>
+            </property>
+        </action>
+        <action name="actionAbout">
+            <property name="text">
+                <string>About</string>
+            </property>
+        </action>
+        <action name="actionExit">
+            <property name="text">
+                <string>Exit</string>
+            </property>
+        </action>
     </widget>
-    <widget class="QWidget" name="dictionariesTab">
-     <attribute name="title">
-      <string>Manage dictionaries</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget_2">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>651</width>
-        <height>511</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="dictionariesTabLayout"/>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="wordDescriptionTab">
-     <attribute name="title">
-      <string>Word description</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget_3">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>651</width>
-        <height>511</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="wordDescriptionTabLayout"/>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="translatorTab">
-     <attribute name="title">
-      <string>Translator</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget_4">
-      <property name="geometry">
-       <rect>
-        <x>120</x>
-        <y>50</y>
-        <width>391</width>
-        <height>331</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="translatorTabLayout"/>
-     </widget>
-    </widget>
-    <widget class="QWidget" name="statisticsTab">
-     <attribute name="title">
-      <string>Statistics</string>
-     </attribute>
-     <widget class="QWidget" name="verticalLayoutWidget_5">
-      <property name="geometry">
-       <rect>
-        <x>0</x>
-        <y>0</y>
-        <width>651</width>
-        <height>511</height>
-       </rect>
-      </property>
-      <layout class="QVBoxLayout" name="statisticsTabLayout"/>
-     </widget>
-    </widget>
-   </widget>
-  </widget>
-  <widget class="QMenuBar" name="menubar">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>695</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <widget class="QMenu" name="menuFile">
-    <property name="title">
-     <string>File</string>
-    </property>
-    <addaction name="actionLoadDictionary"/>
-    <addaction name="actionExit"/>
-   </widget>
-   <widget class="QMenu" name="menuHelp">
-    <property name="title">
-     <string>Help</string>
-    </property>
-    <addaction name="actionAbout"/>
-   </widget>
-   <addaction name="menuFile"/>
-   <addaction name="menuHelp"/>
-  </widget>
-  <widget class="QStatusBar" name="statusbar"/>
-  <action name="actionLoadDictionary">
-   <property name="text">
-    <string>Load dictionary</string>
-   </property>
-  </action>
-  <action name="actionAbout">
-   <property name="text">
-    <string>About</string>
-   </property>
-  </action>
-  <action name="actionExit">
-   <property name="text">
-    <string>Exit</string>
-   </property>
-  </action>
- </widget>
- <resources/>
- <connections/>
+    <resources/>
+    <connections/>
 </ui>

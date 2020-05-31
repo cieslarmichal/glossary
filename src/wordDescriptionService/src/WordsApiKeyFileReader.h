@@ -8,7 +8,7 @@
 #include "ApiKeyReader.h"
 #include "utils/FileAccess.h"
 
-namespace glossary::wordDescriptionDownloader
+namespace glossary::wordDescriptionService
 {
 class WordsApiKeyFileReader : public ApiKeyReader
 {

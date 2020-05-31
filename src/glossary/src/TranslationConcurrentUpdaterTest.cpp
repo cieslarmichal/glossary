@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "translationRepository/TranslationRepositoryMock.h"
-#include "translationService/TranslationRetrieverServiceMock.h"
+#include "translationService/TranslationServiceMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -29,8 +29,8 @@ const TargetLanguage targetLanguage = Language::Polish;
 class TranslationConcurrentUpdaterTest : public Test
 {
 public:
-    std::shared_ptr<TranslationRetrieverServiceMock> translationService =
-        std::make_shared<StrictMock<TranslationRetrieverServiceMock>>();
+    std::shared_ptr<TranslationServiceMock> translationService =
+        std::make_shared<StrictMock<TranslationServiceMock>>();
     std::shared_ptr<TranslationRepositoryMock> translationRepository =
         std::make_shared<StrictMock<TranslationRepositoryMock>>();
     TranslationConcurrentUpdater updater{translationService, translationRepository};

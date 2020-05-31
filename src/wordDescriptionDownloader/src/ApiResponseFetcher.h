@@ -9,8 +9,11 @@ class ApiResponseFetcher
 public:
     virtual ~ApiResponseFetcher() = default;
 
-    virtual webConnection::Response tryGetWordDefinitionsResponse(const std::string& englishWord) const = 0;
-    virtual webConnection::Response tryGetWordExamplesResponse(const std::string& englishWord) const = 0;
-    virtual webConnection::Response tryGetWordSynonymsResponse(const std::string& englishWord) const = 0;
+    virtual webConnection::Response tryGetWordDefinitionsResponse(const std::string& englishWord,
+                                                                  const std::string& wordsApiKey) const = 0;
+    virtual webConnection::Response tryGetWordExamplesResponse(const std::string& englishWord,
+                                                               const std::string& wordsApiKey) const = 0;
+    virtual webConnection::Response tryGetWordSynonymsResponse(const std::string& englishWord,
+                                                               const std::string& wordsApiKey) const = 0;
 };
 }

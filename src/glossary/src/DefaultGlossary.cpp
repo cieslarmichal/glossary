@@ -11,9 +11,9 @@ namespace glossary
 
 DefaultGlossary::DefaultGlossary(
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
-    std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
+    std::shared_ptr<translationService::TranslationService> translationServiceInit,
     std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
-    std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionServiceInit,
+    std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
     std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounterInit,
@@ -44,6 +44,16 @@ void DefaultGlossary::initialize()
 ExternalServicesStatus DefaultGlossary::checkConnectionToExternalServices() const
 {
     return externalServicesConnectionChecker->checkExternalServicesAvailabilityStatus();
+}
+
+void DefaultGlossary::updateTranslateApiKeyLocation(const std::string& apiKeyLocation) const
+{
+    translationRetrieverService->updateApiKeyLocation(apiKeyLocation);
+}
+
+void DefaultGlossary::updateWordsApiKeyLocation(const std::string& apiKeyLocation) const
+{
+    wordDescriptionRetrieverService->updateApiKeyLocation(apiKeyLocation);
 }
 
 boost::optional<std::string> DefaultGlossary::getRandomPolishWord() const

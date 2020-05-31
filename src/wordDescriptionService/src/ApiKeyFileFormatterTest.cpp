@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 using namespace ::testing;
-using namespace glossary::wordDescriptionDownloader;
+using namespace glossary::wordDescriptionService;
 
 namespace
 {

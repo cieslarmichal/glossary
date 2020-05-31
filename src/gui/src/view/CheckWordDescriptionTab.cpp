@@ -1,7 +1,8 @@
 #include "CheckWordDescriptionTab.h"
 
-#include "ui_CheckWordDescriptionTab.h"
 #include <QShortcut>
+
+#include "ui_CheckWordDescriptionTab.h"
 
 namespace glossary::gui::view
 {

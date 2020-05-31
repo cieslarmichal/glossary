@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "dictionaryService/DictionaryServiceMock.h"
-#include "translationService/TranslationRetrieverServiceMock.h"
+#include "translationService/TranslationServiceMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -32,8 +32,8 @@ class DefaultDictionaryTranslationUpdaterTest : public Test
 public:
     std::shared_ptr<DictionaryServiceMock> dictionaryService =
         std::make_shared<StrictMock<DictionaryServiceMock>>();
-    std::shared_ptr<TranslationRetrieverServiceMock> translationService =
-        std::make_shared<StrictMock<TranslationRetrieverServiceMock>>();
+    std::shared_ptr<TranslationServiceMock> translationService =
+        std::make_shared<StrictMock<TranslationServiceMock>>();
     DefaultDictionaryTranslationUpdater updater{dictionaryService, translationService};
 };
 

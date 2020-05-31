@@ -10,7 +10,7 @@ class DefaultTranslationServiceFactory : public TranslationServiceFactory
 public:
     explicit DefaultTranslationServiceFactory(std::shared_ptr<const utils::FileAccess>);
 
-    std::unique_ptr<TranslationRetrieverService> createTranslationService(
+    std::unique_ptr<TranslationService> createTranslationService(
         const std::shared_ptr<translator::Translator>&,
         const std::shared_ptr<translationRepository::TranslationRepository>&) const override;
 

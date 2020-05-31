@@ -3,8 +3,8 @@
 #include <memory>
 
 #include "ConnectionChecker.h"
-#include "translationService/TranslationRetrieverService.h"
-#include "wordDescriptionService/WordDescriptionRetrieverService.h"
+#include "translationService/TranslationService.h"
+#include "wordDescriptionService/WordDescriptionService.h"
 
 namespace glossary
 {
@@ -12,13 +12,13 @@ class ExternalServicesConnectionChecker : public ConnectionChecker
 {
 public:
     ExternalServicesConnectionChecker(
-        std::shared_ptr<translationService::TranslationRetrieverService>,
-        std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService>);
+        std::shared_ptr<translationService::TranslationService>,
+        std::shared_ptr<wordDescriptionService::WordDescriptionService>);
 
     ExternalServicesStatus checkExternalServicesAvailabilityStatus() const override;
 
 private:
-    std::shared_ptr<translationService::TranslationRetrieverService> translationService;
-    std::shared_ptr<wordDescriptionService::WordDescriptionRetrieverService> wordDescriptionService;
+    std::shared_ptr<translationService::TranslationService> translationService;
+    std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionService;
 };
 }

@@ -4,16 +4,12 @@ set(SOURCES
         src/DefaultWordDescriptionDownloaderFactory.cpp
         src/WordsApiJsonResponseDeserializer.cpp
         src/WordsApiResponseFetcher.cpp
-        src/WordsApiKeyFileReader.cpp
-        src/ApiKeyFileFormatter.cpp
         )
 
 set(UT_SOURCES
         src/DefaultWordDescriptionDownloaderTest.cpp
         src/WordsApiJsonResponseDeserializerTest.cpp
         src/WordsApiResponseFetcherTest.cpp
-        src/WordsApiKeyFileReaderTest.cpp
-        src/ApiKeyFileFormatterTest.cpp
         )
 
 add_library(wordDescriptionDownloader ${SOURCES})

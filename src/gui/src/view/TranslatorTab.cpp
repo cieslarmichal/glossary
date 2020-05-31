@@ -27,7 +27,7 @@ TranslatorTab::~TranslatorTab()
     delete ui;
 }
 
-void TranslatorTab::setAvailableLanguages(const QStringList & availableLanguagesInit)
+void TranslatorTab::setAvailableLanguages(const QStringList& availableLanguagesInit)
 {
     availableLanguages.setStringList(availableLanguagesInit);
 }
@@ -37,7 +37,7 @@ void TranslatorTab::onTranslationReceived(const QString& translation) const
     ui->editTranslatedText->setText(translation.toLower());
 }
 
-void TranslatorTab::onAvailableLanguagesReceived(const QStringList &availableLanguages)
+void TranslatorTab::onAvailableLanguagesReceived(const QStringList& availableLanguages)
 {
     setAvailableLanguages(availableLanguages);
 }
@@ -45,7 +45,7 @@ void TranslatorTab::onAvailableLanguagesReceived(const QStringList &availableLan
 void TranslatorTab::on_buttonTranslate_clicked() const
 {
     auto insertedText = ui->editTextToTranslate->text();
-    if(not insertedText.isEmpty() && selectedSourceLanguage && selectedTargetLanguage)
+    if (not insertedText.isEmpty() && selectedSourceLanguage && selectedTargetLanguage)
     {
         emit notifyAboutTextTranslateRequest(insertedText, *selectedSourceLanguage, *selectedTargetLanguage);
     }
@@ -53,14 +53,16 @@ void TranslatorTab::on_buttonTranslate_clicked() const
 
 void TranslatorTab::on_buttonSwitchLanguages_clicked()
 {
-    if(selectedSourceLanguage && selectedTargetLanguage)
+    if (selectedSourceLanguage && selectedTargetLanguage)
     {
-        if (const int sourceLanguageIndex = ui->boxSourceLanguages->findText(*selectedTargetLanguage); sourceLanguageIndex != -1)
+        if (const int sourceLanguageIndex = ui->boxSourceLanguages->findText(*selectedTargetLanguage);
+            sourceLanguageIndex != -1)
         {
             ui->boxSourceLanguages->setCurrentIndex(sourceLanguageIndex);
         }
 
-        if (const int targetLanguageIndex = ui->boxTargetLanguages->findText(*selectedSourceLanguage); targetLanguageIndex != -1)
+        if (const int targetLanguageIndex = ui->boxTargetLanguages->findText(*selectedSourceLanguage);
+            targetLanguageIndex != -1)
         {
             ui->boxTargetLanguages->setCurrentIndex(targetLanguageIndex);
         }
@@ -75,25 +77,24 @@ void TranslatorTab::on_buttonSwitchLanguages_clicked()
     }
 }
 
-void TranslatorTab::on_boxSourceLanguages_activated(const QString &sourceLanguage)
+void TranslatorTab::on_boxSourceLanguages_activated(const QString& sourceLanguage)
 {
     selectedSourceLanguage = sourceLanguage;
-    if(selectedSourceLanguage && selectedTargetLanguage)
+    if (selectedSourceLanguage && selectedTargetLanguage)
     {
         ui->buttonSwitchLanguages->setEnabled(true);
         ui->buttonTranslate->setEnabled(true);
     }
 }
 
-void TranslatorTab::on_boxTargetLanguages_activated(const QString &targetLanguage)
+void TranslatorTab::on_boxTargetLanguages_activated(const QString& targetLanguage)
 {
     selectedTargetLanguage = targetLanguage;
-    if(selectedSourceLanguage && selectedTargetLanguage)
+    if (selectedSourceLanguage && selectedTargetLanguage)
     {
         ui->buttonSwitchLanguages->setEnabled(true);
         ui->buttonTranslate->setEnabled(true);
     }
 }
-
 
 }

@@ -10,6 +10,9 @@ class GlossaryMock : public Glossary
 {
 public:
     MOCK_CONST_METHOD0(checkConnectionToExternalServices, ExternalServicesStatus());
+    MOCK_CONST_METHOD1(updateTranslateApiKeyLocation, void(const std::string& apiKeyLocation));
+    MOCK_CONST_METHOD1(updateWordsApiKeyLocation, void(const std::string& apiKeyLocation));
+
     MOCK_CONST_METHOD0(getRandomPolishWord, boost::optional<std::string>());
     MOCK_CONST_METHOD1(getRandomPolishWord, boost::optional<std::string>(const DictionaryName&));
     MOCK_CONST_METHOD2(verifyPolishWordTranslation,

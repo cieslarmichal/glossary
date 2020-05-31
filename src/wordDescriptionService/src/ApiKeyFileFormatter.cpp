@@ -2,7 +2,7 @@
 
 #include "utils/StringHelper.h"
 
-namespace glossary::wordDescriptionDownloader
+namespace glossary::wordDescriptionService
 {
 std::string ApiKeyFileFormatter::getFormattedApiKey(const std::string& fileContentWithApiKey) const
 {

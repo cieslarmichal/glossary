@@ -4,7 +4,7 @@
 
 #include "utils/GetProjectPath.h"
 
-namespace glossary::wordDescriptionDownloader
+namespace glossary::wordDescriptionService
 {
 
 const std::string WordsApiKeyFileReader::filePathContainingPathToFileWithApiKey{
@@ -20,7 +20,9 @@ boost::optional<std::string> WordsApiKeyFileReader::readApiKey() const
     if (const auto filePathWithApiKey = readPathToFileWithApiKey())
     {
         if (const auto fileContentWithApiKey = readApiKeyFromFile(*filePathWithApiKey))
+        {
             return apiKeyFileFormatter.getFormattedApiKey(*fileContentWithApiKey);
+        }
     }
     return boost::none;
 }

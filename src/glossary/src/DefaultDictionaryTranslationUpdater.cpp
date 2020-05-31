@@ -5,7 +5,7 @@ namespace glossary
 
 DefaultDictionaryTranslationUpdater::DefaultDictionaryTranslationUpdater(
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
-    std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit)
+    std::shared_ptr<translationService::TranslationService> translationServiceInit)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationService{std::move(translationServiceInit)}
 {
@@ -23,7 +23,9 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
     const dictionaryService::DictionaryName& dictionaryName)
 {
     if (const auto translation = getTranslation(englishWord))
+    {
         dictionaryService->updateWordTranslationFromDictionary(englishWord, *translation, dictionaryName);
+    }
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
@@ -34,7 +36,9 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
         for (const auto& dictionaryWord : *dictionaryWords)
         {
             if (dictionaryWordHasNoTranslation(dictionaryWord))
+            {
                 updateDictionaryWordTranslation(dictionaryWord.englishWord, dictionaryName);
+            }
         }
     }
 }
@@ -52,7 +56,9 @@ bool DefaultDictionaryTranslationUpdater::dictionaryWordHasNoTranslation(
     if (const auto translation = dictionaryWord.translation)
     {
         if (not translation->empty())
+        {
             return false;
+        }
     }
     return true;
 }

@@ -4,7 +4,7 @@
 
 #include "DictionaryTranslationUpdater.h"
 #include "dictionaryService/DictionaryService.h"
-#include "translationService/TranslationRetrieverService.h"
+#include "translationService/TranslationService.h"
 
 namespace glossary
 {
@@ -12,7 +12,7 @@ class DefaultDictionaryTranslationUpdater : public DictionaryTranslationUpdater
 {
 public:
     DefaultDictionaryTranslationUpdater(std::shared_ptr<dictionaryService::DictionaryService>,
-                                        std::shared_ptr<translationService::TranslationRetrieverService>);
+                                        std::shared_ptr<translationService::TranslationService>);
 
     void updateDictionaryWordTranslation(const dictionaryService::EnglishWord&,
                                          const std::string& updatedTranslation,
@@ -26,6 +26,6 @@ private:
     bool dictionaryWordHasNoTranslation(const dictionaryService::DictionaryWord&) const;
 
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
-    std::shared_ptr<translationService::TranslationRetrieverService> translationService;
+    std::shared_ptr<translationService::TranslationService> translationService;
 };
 }

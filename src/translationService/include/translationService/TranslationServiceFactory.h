@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "TranslationRetrieverService.h"
+#include "TranslationService.h"
 #include "translationRepository/TranslationRepository.h"
 #include "translator/Translator.h"
 #include "utils/FileAccess.h"
@@ -14,7 +14,7 @@ class TranslationServiceFactory
 public:
     virtual ~TranslationServiceFactory() = default;
 
-    virtual std::unique_ptr<TranslationRetrieverService>
+    virtual std::unique_ptr<TranslationService>
     createTranslationService(const std::shared_ptr<translator::Translator>&,
                              const std::shared_ptr<translationRepository::TranslationRepository>&) const = 0;
 

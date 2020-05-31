@@ -15,6 +15,7 @@ using namespace wordDescriptionRepository;
 
 namespace
 {
+const std::string apiKey{"topSecretKey"};
 const EnglishWord englishWord{"englishWord"};
 const webConnection::Response okResponse{200, "content"};
 const webConnection::Response errorResponse{400, ""};
@@ -32,7 +33,7 @@ class DefaultWordDescriptionDownloaderTest : public Test
 public:
     void expectDownloadedDefinitions() const
     {
-        EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord, apiKey))
             .WillOnce(Return(okResponse));
         EXPECT_CALL(*responseDeserializer, deserializeDefinitions(okResponse.content))
             .WillOnce(Return(definitions));
@@ -40,7 +41,7 @@ public:
 
     void expectDownloadedExamples() const
     {
-        EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord, apiKey))
             .WillOnce(Return(okResponse));
         EXPECT_CALL(*responseDeserializer, deserializeExamples(okResponse.content))
             .WillOnce(Return(examples));
@@ -48,7 +49,7 @@ public:
 
     void expectDownloadedSynonyms() const
     {
-        EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord, apiKey))
             .WillOnce(Return(okResponse));
         EXPECT_CALL(*responseDeserializer, deserializeSynonyms(okResponse.content))
             .WillOnce(Return(synonyms));
@@ -56,7 +57,7 @@ public:
 
     void expectDownloadedEmptyDefinitions() const
     {
-        EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord, apiKey))
             .WillOnce(Return(okResponse));
         EXPECT_CALL(*responseDeserializer, deserializeDefinitions(okResponse.content))
             .WillOnce(Return(emptyDefinitions));
@@ -64,7 +65,7 @@ public:
 
     void expectDownloadedEmptyExamples() const
     {
-        EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord, apiKey))
             .WillOnce(Return(okResponse));
         EXPECT_CALL(*responseDeserializer, deserializeExamples(okResponse.content))
             .WillOnce(Return(emptyExamples));
@@ -72,7 +73,7 @@ public:
 
     void expectDownloadedEmptySynonyms() const
     {
-        EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+        EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord, apiKey))
             .WillOnce(Return(okResponse));
         EXPECT_CALL(*responseDeserializer, deserializeSynonyms(okResponse.content))
             .WillOnce(Return(emptySynonyms));
@@ -90,30 +91,30 @@ public:
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwConnectionFailed_shouldThrowConnectionFailed)
 {
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord, apiKey))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey),
                  webConnection::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_shouldThrowInvalidApiKey)
 {
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord, apiKey))
         .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey), exceptions::InvalidApiKey);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest,
        getDefinitions_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord, apiKey))
         .WillOnce(Return(errorResponse));
     expectDownloadedEmptyExamples();
     expectDownloadedEmptySynonyms();
 
-    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord, apiKey);
 
     ASSERT_TRUE(actualWordDescription.empty());
 }
@@ -121,30 +122,31 @@ TEST_F(DefaultWordDescriptionDownloaderTest,
 TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwConnectionFailed_shouldThrowConnectionFailed)
 {
     expectDownloadedDefinitions();
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord, apiKey))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey),
                  webConnection::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shouldThrowInvalidApiKey)
 {
     expectDownloadedDefinitions();
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord, apiKey))
         .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey), exceptions::InvalidApiKey);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest,
        getExamples_ReturnsNotOkResponseCode_shouldReturnEmptyWordDescription)
 {
     expectDownloadedEmptyDefinitions();
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord)).WillOnce(Return(errorResponse));
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord, apiKey))
+        .WillOnce(Return(errorResponse));
     expectDownloadedEmptySynonyms();
 
-    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord, apiKey);
 
     ASSERT_TRUE(actualWordDescription.empty());
 }
@@ -153,10 +155,10 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwConnectionFailed_s
 {
     expectDownloadedDefinitions();
     expectDownloadedExamples();
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord, apiKey))
         .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord),
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey),
                  webConnection::exceptions::ConnectionFailed);
 }
 
@@ -164,10 +166,10 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shou
 {
     expectDownloadedDefinitions();
     expectDownloadedExamples();
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord))
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord, apiKey))
         .WillOnce(Throw(exceptions::InvalidApiKey{""}));
 
-    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord), exceptions::InvalidApiKey);
+    ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey), exceptions::InvalidApiKey);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest,
@@ -175,9 +177,10 @@ TEST_F(DefaultWordDescriptionDownloaderTest,
 {
     expectDownloadedEmptyDefinitions();
     expectDownloadedEmptyExamples();
-    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord)).WillOnce(Return(errorResponse));
+    EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord, apiKey))
+        .WillOnce(Return(errorResponse));
 
-    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord, apiKey);
 
     ASSERT_TRUE(actualWordDescription.empty());
 }
@@ -189,7 +192,7 @@ TEST_F(DefaultWordDescriptionDownloaderTest,
     expectDownloadedExamples();
     expectDownloadedSynonyms();
 
-    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord);
+    const auto actualWordDescription = downloader.tryDownloadWordDescription(englishWord, apiKey);
 
     ASSERT_EQ(actualWordDescription, wordDescription);
 }

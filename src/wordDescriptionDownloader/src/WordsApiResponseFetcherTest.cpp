@@ -2,10 +2,11 @@
 
 #include "gtest/gtest.h"
 
-#include "ApiKeyReaderMock.h"
 #include "webConnection/HttpHandlerMock.h"
+#include "wordDescriptionService/src/ApiKeyReaderMock.h"
 
 #include "exceptions/InvalidApiKey.h"
+#include "webConnection/exceptions/ConnectionFailed.h"
 
 using namespace glossary::wordDescriptionDownloader;
 using namespace ::testing;
@@ -20,86 +21,93 @@ const std::string wordsApiDefinitionsUrl{"https://wordsapiv1.p.rapidapi.com/word
 const std::string wordsApiExamplesUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/examples"};
 const std::string wordsApiSynonymsUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/synonyms"};
 const webConnection::Response response{200, "content"};
+const webConnection::Response unauthorizedResponse{401, ""};
 }
 
-class WordsApiResponseFetcherTest_Base : public Test
+class WordsApiResponseFetcherTest : public Test
 {
 public:
     std::shared_ptr<webConnection::HttpHandlerMock> httpHandler =
         std::make_shared<StrictMock<webConnection::HttpHandlerMock>>();
-    std::unique_ptr<ApiKeyReaderMock> apiKeyReaderInit = std::make_unique<StrictMock<ApiKeyReaderMock>>();
-    ApiKeyReaderMock* apiKeyReader = apiKeyReaderInit.get();
+    WordsApiResponseFetcher wordsApiResponseFetcher{httpHandler};
 };
 
-class WordsApiResponseFetcherTest_WithApiKey_Base : public WordsApiResponseFetcherTest_Base
+TEST_F(WordsApiResponseFetcherTest,
+       getDefinitions_httpHandlerThrowConnectionFailed_shouldThrowConnectionFailed)
 {
-public:
-    WordsApiResponseFetcherTest_WithApiKey_Base()
-    {
-        EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(apiKey));
-    }
-};
+    EXPECT_CALL(*httpHandler, get(wordsApiDefinitionsUrl, headers))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
 
-class WordsApiResponseFetcherTest_WithoutApiKey_Base : public WordsApiResponseFetcherTest_Base
-{
-public:
-    WordsApiResponseFetcherTest_WithoutApiKey_Base()
-    {
-        EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(boost::none));
-    }
-};
-
-class WordsApiResponseFetcherTest_WithApiKey : public WordsApiResponseFetcherTest_WithApiKey_Base
-{
-public:
-    WordsApiResponseFetcher wordsApiResponseFetcher{httpHandler, std::move(apiKeyReaderInit)};
-};
-
-TEST_F(WordsApiResponseFetcherTest_WithApiKey, getDefinitions_shouldInvokeHttpResponseWithDefinitionsUrl)
-{
-    EXPECT_CALL(*httpHandler, get(wordsApiDefinitionsUrl, headers)).WillOnce(Return(response));
-
-    const auto actualResponse = wordsApiResponseFetcher.tryGetWordDefinitionsResponse(englishWord);
-
-    ASSERT_EQ(actualResponse, response);
+    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordDefinitionsResponse(englishWord, apiKey),
+                 webConnection::exceptions::ConnectionFailed);
 }
 
-TEST_F(WordsApiResponseFetcherTest_WithApiKey, getExamples_shouldInvokeHttpResponseWithExamplesUrl)
+TEST_F(WordsApiResponseFetcherTest,
+       getDefinitions_httpResponseReturnsUnautorizedCode_shouldThrowInvalidApiKey)
 {
-    EXPECT_CALL(*httpHandler, get(wordsApiExamplesUrl, headers)).WillOnce(Return(response));
+    EXPECT_CALL(*httpHandler, get(wordsApiDefinitionsUrl, headers)).WillOnce(Return(unauthorizedResponse));
 
-    const auto actualResponse = wordsApiResponseFetcher.tryGetWordExamplesResponse(englishWord);
-
-    ASSERT_EQ(actualResponse, response);
-}
-
-TEST_F(WordsApiResponseFetcherTest_WithApiKey, getSynonyms_shouldInvokeHttpResponseWithSynonymsUrl)
-{
-    EXPECT_CALL(*httpHandler, get(wordsApiSynonymsUrl, headers)).WillOnce(Return(response));
-
-    const auto actualResponse = wordsApiResponseFetcher.tryGetWordSynonymsResponse(englishWord);
-
-    ASSERT_EQ(actualResponse, response);
-}
-
-class WordsApiResponseFetcherTest_WithoutApiKey : public WordsApiResponseFetcherTest_WithoutApiKey_Base
-{
-public:
-    WordsApiResponseFetcher wordsApiResponseFetcher{httpHandler, std::move(apiKeyReaderInit)};
-};
-
-TEST_F(WordsApiResponseFetcherTest_WithoutApiKey, getDefinitions_shouldThrowInvalidApiKey)
-{
-    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordDefinitionsResponse(englishWord),
+    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordDefinitionsResponse(englishWord, apiKey),
                  exceptions::InvalidApiKey);
 }
 
-TEST_F(WordsApiResponseFetcherTest_WithoutApiKey, getExamples_shouldThrowInvalidApiKey)
+TEST_F(WordsApiResponseFetcherTest, getDefinitions_shouldInvokeHttpResponseWithDefinitionsUrl)
 {
-    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordExamplesResponse(englishWord), exceptions::InvalidApiKey);
+    EXPECT_CALL(*httpHandler, get(wordsApiDefinitionsUrl, headers)).WillOnce(Return(response));
+
+    const auto actualResponse = wordsApiResponseFetcher.tryGetWordDefinitionsResponse(englishWord, apiKey);
+
+    ASSERT_EQ(actualResponse, response);
 }
 
-TEST_F(WordsApiResponseFetcherTest_WithoutApiKey, getSentences_shouldThrowInvalidApiKey)
+TEST_F(WordsApiResponseFetcherTest, getExamples_httpHandlerThrowConnectionFailed_shouldThrowConnectionFailed)
 {
-    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordSynonymsResponse(englishWord), exceptions::InvalidApiKey);
+    EXPECT_CALL(*httpHandler, get(wordsApiExamplesUrl, headers))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+
+    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordExamplesResponse(englishWord, apiKey),
+                 webConnection::exceptions::ConnectionFailed);
+}
+
+TEST_F(WordsApiResponseFetcherTest, getExamples_httpResponseReturnsUnautorizedCode_shouldThrowInvalidApiKey)
+{
+    EXPECT_CALL(*httpHandler, get(wordsApiExamplesUrl, headers)).WillOnce(Return(unauthorizedResponse));
+
+    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordExamplesResponse(englishWord, apiKey),
+                 exceptions::InvalidApiKey);
+}
+
+TEST_F(WordsApiResponseFetcherTest, getExamples_shouldInvokeHttpResponseWithExamplesUrl)
+{
+    EXPECT_CALL(*httpHandler, get(wordsApiExamplesUrl, headers)).WillOnce(Return(response));
+
+    const auto actualResponse = wordsApiResponseFetcher.tryGetWordExamplesResponse(englishWord, apiKey);
+
+    ASSERT_EQ(actualResponse, response);
+}
+
+TEST_F(WordsApiResponseFetcherTest, getSynonyms_httpHandlerThrowConnectionFailed_shouldThrowConnectionFailed)
+{
+    EXPECT_CALL(*httpHandler, get(wordsApiSynonymsUrl, headers))
+        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+
+    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordSynonymsResponse(englishWord, apiKey),
+                 webConnection::exceptions::ConnectionFailed);
+}
+
+TEST_F(WordsApiResponseFetcherTest, getSynonyms_httpResponseReturnsUnautorizedCode_shouldThrowInvalidApiKey)
+{
+    EXPECT_CALL(*httpHandler, get(wordsApiSynonymsUrl, headers)).WillOnce(Return(unauthorizedResponse));
+
+    ASSERT_THROW(wordsApiResponseFetcher.tryGetWordSynonymsResponse(englishWord, apiKey),
+                 exceptions::InvalidApiKey);
+}
+
+TEST_F(WordsApiResponseFetcherTest, getSynonyms_shouldInvokeHttpResponseWithSynonymsUrl)
+{
+    EXPECT_CALL(*httpHandler, get(wordsApiSynonymsUrl, headers)).WillOnce(Return(response));
+
+    const auto actualResponse = wordsApiResponseFetcher.tryGetWordSynonymsResponse(englishWord, apiKey);
+
+    ASSERT_EQ(actualResponse, response);
 }

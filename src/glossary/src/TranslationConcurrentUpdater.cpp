@@ -6,7 +6,7 @@ namespace glossary
 {
 
 TranslationConcurrentUpdater::TranslationConcurrentUpdater(
-    std::shared_ptr<translationService::TranslationRetrieverService> translationServiceInit,
+    std::shared_ptr<translationService::TranslationService> translationServiceInit,
     std::shared_ptr<translationRepository::TranslationRepository> repository)
     : translationService{std::move(translationServiceInit)}, translationRepository{std::move(repository)}
 {

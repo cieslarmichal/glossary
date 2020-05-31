@@ -2,7 +2,7 @@
 
 #include <string>
 
-namespace glossary::wordDescriptionDownloader
+namespace glossary::wordDescriptionService
 {
 class ApiKeyFileFormatter
 {

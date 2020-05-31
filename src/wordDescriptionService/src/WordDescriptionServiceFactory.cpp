@@ -6,8 +6,10 @@ namespace glossary::wordDescriptionService
 {
 
 std::unique_ptr<WordDescriptionServiceFactory>
-WordDescriptionServiceFactory::createWordDescriptionServiceFactory()
+WordDescriptionServiceFactory::createWordDescriptionServiceFactory(
+    const std::shared_ptr<const utils::FileAccess>& fileAccess)
 {
-    return std::make_unique<DefaultWordDescriptionServiceFactory>();
+    return std::make_unique<DefaultWordDescriptionServiceFactory>(fileAccess);
 }
+
 }

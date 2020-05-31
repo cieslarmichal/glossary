@@ -1,14 +1,20 @@
 
 set(SOURCES
-        src/DefaultWordDescriptionRetrieverService.cpp
+        src/DefaultWordDescriptionService.cpp
         src/WordDescriptionServiceFactory.cpp
         src/DefaultWordDescriptionServiceFactory.cpp
         src/DefaultWordsApiConnectionChecker.cpp
+        src/WordsApiKeyFileReader.cpp
+        src/ApiKeyFileFormatter.cpp
+        src/DefaultApiKeyLocationUpdater.cpp
         )
 
 set(UT_SOURCES
-        src/DefaultWordDescriptionRetrieverServiceTest.cpp
+        src/DefaultWordDescriptionServiceTest.cpp
         src/DefaultWordsApiConnectionCheckerTest.cpp
+        src/WordsApiKeyFileReaderTest.cpp
+        src/ApiKeyFileFormatterTest.cpp
+        src/DefaultApiKeyLocationUpdaterTest.cpp
         )
 
 add_library(wordDescriptionService ${SOURCES})
