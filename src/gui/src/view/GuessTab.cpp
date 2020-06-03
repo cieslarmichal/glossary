@@ -21,7 +21,7 @@ namespace glossary::gui::view
 GuessTab::GuessTab(QWidget* parent) : QWidget(parent), ui(new Ui::GuessTab)
 {
     ui->setupUi(this);
-    ui->boxWithDictionaryNames->setModel(&dictionaryNamesToRandomizeWordFromModel);
+    ui->listWithDictionaryNames->setModel(&dictionaryNamesToRandomizeWordFromModel);
     ui->buttonNextRandomWord->setIcon(QIcon(nextIcon.c_str()));
     ui->editEnglishTranslation->setEnabled(false);
     ui->buttonCheckWordDescription->setEnabled(false);
@@ -83,8 +83,9 @@ void GuessTab::on_buttonNextRandomWord_clicked() const
     emit notifyNextRandomWordClicked();
 }
 
-void GuessTab::on_boxWithDictionaryNames_activated(const QString& dictionaryName)
+void GuessTab::on_listWithDictionaryNames_clicked(const QModelIndex &dictionaryNameIndex)
 {
+    QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
     if (dictionaryName != noneDictionaryName)
     {
         selectedDictionaryName = dictionaryName;

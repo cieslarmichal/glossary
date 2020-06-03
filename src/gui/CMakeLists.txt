@@ -12,6 +12,7 @@ set(SOURCES
         src/view/CheckWordDescriptionTab.cpp
         src/view/TranslatorTab.cpp
         src/view/StatisticsTab.cpp
+        src/view/WelcomeTab.cpp
         src/view/AboutDialog.cpp
         src/view/AddDictionaryDialog.cpp
         src/view/AddDictionaryWordDialog.cpp
@@ -25,6 +26,7 @@ set(SOURCES
         src/viewManager/DictionariesTabViewManager.cpp
         src/viewManager/TranslatorTabViewManager.cpp
         src/viewManager/StatisticsTabViewManager.cpp
+        src/viewManager/WelcomeTabViewManager.cpp
         src/view/MainView.cpp
         src/model/GlossaryAdapter.cpp
         src/Gui.cpp

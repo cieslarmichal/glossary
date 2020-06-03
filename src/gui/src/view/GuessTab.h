@@ -19,7 +19,6 @@ class GuessTab : public QWidget
     Q_OBJECT
 
 public:
-    // TODO: change dictionary combo into list
     explicit GuessTab(QWidget* parent = nullptr);
     ~GuessTab();
 
@@ -39,7 +38,7 @@ public slots:
 
 private slots:
     void on_buttonNextRandomWord_clicked() const;
-    void on_boxWithDictionaryNames_activated(const QString& dictionaryName);
+    void on_listWithDictionaryNames_clicked(const QModelIndex& dictionaryNameIndex);
     void on_buttonCheckWordDescription_clicked();
     void on_buttonCheckTranslationCorrectness_clicked();
     void on_editPolishWord_textChanged(QString);
