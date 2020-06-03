@@ -100,6 +100,11 @@ DictionariesStatistics GlossaryAdapter::getDictionariesStatistics() const
     return glossary->getDictionariesStatistics();
 }
 
+ExternalServicesStatus GlossaryAdapter::getStatusOfConnectionToExternalServices() const
+{
+    return glossary->checkConnectionToExternalServices();
+}
+
 void GlossaryAdapter::onRandomPolishWordTriggered() const
 {
     auto randomPolishWord = getRandomPolishWord();
@@ -225,6 +230,22 @@ void GlossaryAdapter::onDictionariesStatisticsRequest() const
 {
     auto dictionariesStatistics = getDictionariesStatistics();
     emit notifyAboutDictionariesStatistics(dictionariesStatistics);
+}
+
+void GlossaryAdapter::onUpdateTranslateApiKeyLocationRequest(const QString &translateApiKeyLocation) const
+{
+    glossary->updateTranslateApiKeyLocation(translateApiKeyLocation.toStdString());
+
+    auto externalServicesStatus = getStatusOfConnectionToExternalServices();
+    emit notifyAboutExternalServicesStatus(externalServicesStatus);
+}
+
+void GlossaryAdapter::onUpdateWordsApiKeyLocationRequest(const QString &wordsApiKeyLocation) const
+{
+    glossary->updateWordsApiKeyLocation(wordsApiKeyLocation.toStdString());
+
+    auto externalServicesStatus = getStatusOfConnectionToExternalServices();
+    emit notifyAboutExternalServicesStatus(externalServicesStatus);
 }
 
 }

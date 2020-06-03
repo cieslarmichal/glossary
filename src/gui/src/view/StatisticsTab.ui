@@ -47,7 +47,7 @@
    </property>
    <layout class="QVBoxLayout" name="layoutChartView"/>
   </widget>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -76,7 +76,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>5</width>
+          <width>50</width>
           <height>20</height>
          </size>
         </property>
@@ -95,6 +95,22 @@
          <string>Incorrect answers:</string>
         </property>
        </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
       </item>
       <item>
        <widget class="QLineEdit" name="editIncorrectAnswers"/>
@@ -120,7 +136,7 @@
         </property>
         <property name="sizeHint" stdset="0">
          <size>
-          <width>47</width>
+          <width>93</width>
           <height>20</height>
          </size>
         </property>

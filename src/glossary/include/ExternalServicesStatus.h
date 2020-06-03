@@ -5,10 +5,14 @@
 
 namespace glossary
 {
+
+using WordsApiStatus = wordDescriptionService::WordsApiStatus;
+using TranslationApiStatus = translationService::TranslationApiStatus;
+
 struct ExternalServicesStatus
 {
-    wordDescriptionService::WordsApiStatus wordsApiStatus;
-    translationService::TranslationApiStatus translationApiStatus;
+    WordsApiStatus wordsApiStatus;
+    TranslationApiStatus translationApiStatus;
 };
 
 inline bool operator==(const ExternalServicesStatus& lhs, const ExternalServicesStatus& rhs)

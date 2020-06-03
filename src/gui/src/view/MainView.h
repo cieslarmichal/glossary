@@ -8,6 +8,7 @@
 #include "GuessTab.h"
 #include "StatisticsTab.h"
 #include "TranslatorTab.h"
+#include "WelcomeTab.h"
 
 namespace glossary::gui::view
 {
@@ -21,9 +22,9 @@ class MainView : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainView(QWidget* parent, std::shared_ptr<GuessTab>, std::shared_ptr<DictionariesTab>,
-                      std::shared_ptr<CheckWordDescriptionTab>, std::shared_ptr<TranslatorTab>,
-                      std::shared_ptr<StatisticsTab>);
+    explicit MainView(QWidget* parent, std::shared_ptr<WelcomeTab>, std::shared_ptr<GuessTab>,
+                      std::shared_ptr<DictionariesTab>, std::shared_ptr<CheckWordDescriptionTab>,
+                      std::shared_ptr<TranslatorTab>, std::shared_ptr<StatisticsTab>);
     ~MainView();
 
 private slots:
@@ -32,6 +33,7 @@ private slots:
     void on_actionLoadDictionary_triggered();
 
 private:
+    std::shared_ptr<WelcomeTab> welcomeTab;
     std::shared_ptr<GuessTab> guessTab;
     std::shared_ptr<DictionariesTab> dictionariesTab;
     std::shared_ptr<CheckWordDescriptionTab> checkWordDescriptionTab;

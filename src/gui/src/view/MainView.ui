@@ -27,37 +27,22 @@
      <string notr="true"/>
     </property>
     <property name="currentIndex">
-     <number>5</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="welcomeTab">
      <attribute name="title">
       <string>Welcome</string>
      </attribute>
-     <widget class="QPushButton" name="pushButton">
+     <widget class="QWidget" name="verticalLayoutWidget_6">
       <property name="geometry">
        <rect>
-        <x>350</x>
-        <y>110</y>
-        <width>89</width>
-        <height>25</height>
+        <x>10</x>
+        <y>10</y>
+        <width>661</width>
+        <height>501</height>
        </rect>
       </property>
-      <property name="text">
-       <string>PushButton</string>
-      </property>
-     </widget>
-     <widget class="QPushButton" name="pushButton_2">
-      <property name="geometry">
-       <rect>
-        <x>350</x>
-        <y>160</y>
-        <width>89</width>
-        <height>25</height>
-       </rect>
-      </property>
-      <property name="text">
-       <string>PushButton</string>
-      </property>
+      <layout class="QVBoxLayout" name="welcomeTabLayout"/>
      </widget>
     </widget>
     <widget class="QWidget" name="guessTab">

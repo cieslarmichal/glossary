@@ -9,6 +9,7 @@
 #include "viewManager/GuessTabViewManager.h"
 #include "viewManager/StatisticsTabViewManager.h"
 #include "viewManager/TranslatorTabViewManager.h"
+#include "viewManager/WelcomeTabViewManager.h"
 
 namespace glossary::gui
 {
@@ -24,6 +25,7 @@ private:
     void initialize();
 
     std::unique_ptr<view::MainView> mainView;
+    std::unique_ptr<viewManager::WelcomeTabViewManager> welcomeViewManager;
     std::unique_ptr<viewManager::GuessTabViewManager> guessViewManager;
     std::unique_ptr<viewManager::DictionariesTabViewManager> dictionariesViewManager;
     std::unique_ptr<viewManager::CheckWordDescriptionTabViewManager> wordDescriptionViewManager;

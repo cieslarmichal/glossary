@@ -7,6 +7,7 @@
 #include "view/GuessTab.h"
 #include "view/StatisticsTab.h"
 #include "view/TranslatorTab.h"
+#include "view/WelcomeTab.h"
 
 namespace glossary::gui
 {
@@ -22,17 +23,19 @@ void Gui::show() const
 
 void Gui::initialize()
 {
+    auto welcomeTab = std::make_shared<view::WelcomeTab>();
     auto guessTab = std::make_shared<view::GuessTab>();
     auto dictionariesTab = std::make_shared<view::DictionariesTab>();
     auto checkWordDescriptionTab = std::make_shared<view::CheckWordDescriptionTab>();
     auto translatorTab = std::make_shared<view::TranslatorTab>();
     auto statisticsTab = std::make_shared<view::StatisticsTab>();
-    mainView = std::make_unique<view::MainView>(nullptr, guessTab, dictionariesTab, checkWordDescriptionTab,
+    mainView = std::make_unique<view::MainView>(nullptr, welcomeTab, guessTab, dictionariesTab, checkWordDescriptionTab,
                                                 translatorTab, statisticsTab);
 
     auto glossaryAdapter =
         std::make_shared<model::GlossaryAdapter>(GlossaryFactory::createGlossaryFactory()->createGlossary());
 
+    welcomeViewManager = std::make_unique<viewManager::WelcomeTabViewManager>(this, welcomeTab, glossaryAdapter);
     guessViewManager = std::make_unique<viewManager::GuessTabViewManager>(this, guessTab, glossaryAdapter);
     dictionariesViewManager =
         std::make_unique<viewManager::DictionariesTabViewManager>(this, dictionariesTab, glossaryAdapter);

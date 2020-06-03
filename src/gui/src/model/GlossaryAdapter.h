@@ -27,6 +27,7 @@ public:
                            const QString& targetLanguage) const;
     DictionaryStatistics getDictionaryStatistics(const QString& dictionaryName) const;
     DictionariesStatistics getDictionariesStatistics() const;
+    ExternalServicesStatus getStatusOfConnectionToExternalServices() const;
 
 signals:
     void notifyAboutRandomPolishWord(const QString& polishWord) const;
@@ -39,6 +40,7 @@ signals:
     void notifyAboutAvailableLanguages(const QStringList& availableLanguages) const;
     void notifyAboutDictionaryStatistics(const DictionaryStatistics&) const;
     void notifyAboutDictionariesStatistics(const DictionariesStatistics&) const;
+    void notifyAboutExternalServicesStatus(const ExternalServicesStatus&) const;
 
 public slots:
     void onRandomPolishWordTriggered() const;
@@ -62,6 +64,8 @@ public slots:
     void onTranslatorAvailableLanguagesRequest() const;
     void onDictionaryStatisticsRequest(const QString& dictionaryName) const;
     void onDictionariesStatisticsRequest() const;
+    void onUpdateTranslateApiKeyLocationRequest(const QString& translateApiKeyLocation) const;
+    void onUpdateWordsApiKeyLocationRequest(const QString& wordsApiKeyLocation) const;
 
 private:
     std::unique_ptr<glossary::Glossary> glossary;
