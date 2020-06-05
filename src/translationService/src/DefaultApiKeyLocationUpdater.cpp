@@ -6,7 +6,7 @@ namespace glossary::translationService
 {
 
 const std::string DefaultApiKeyLocationUpdater::filePathContainingPathToFileWithApiKey{
-    utils::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
+    utils::getProjectPath("glossary") + "config/translatorApiKeyLocation.txt"};
 
 DefaultApiKeyLocationUpdater::DefaultApiKeyLocationUpdater(
     std::shared_ptr<const utils::FileAccess> fileAccessInit)

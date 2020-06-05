@@ -35,6 +35,19 @@ DictionaryNames DefaultDictionaryService::getDictionaryNames() const
     return dictionaryNamesRetriever->retrieveDictionaryNames();
 }
 
+DictionaryNames
+DefaultDictionaryService::getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const
+{
+    return dictionaryNamesRetriever->retrieveDictionaryNamesContainingEnglishWord(englishWord);
+}
+
+DictionaryNames DefaultDictionaryService::getDictionaryNamesContainingEnglishWordTranslation(
+    const std::string& englishWordTranslation) const
+{
+    return dictionaryNamesRetriever->retrieveDictionaryNamesContainingEnglishWordTranslation(
+        englishWordTranslation);
+}
+
 boost::optional<DictionaryWords>
 DefaultDictionaryService::getDictionaryWords(const DictionaryName& dictionaryName) const
 {

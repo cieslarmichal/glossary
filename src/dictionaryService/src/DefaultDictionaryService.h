@@ -25,6 +25,9 @@ public:
     boost::optional<Dictionary> getDictionary(const DictionaryName&) const override;
     Dictionaries getDictionaries() const override;
     DictionaryNames getDictionaryNames() const override;
+    DictionaryNames getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const override;
+    DictionaryNames getDictionaryNamesContainingEnglishWordTranslation(
+        const std::string& englishWordTranslation) const override;
     boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const override;
     boost::optional<EnglishWords> getEnglishWords(const DictionaryName&) const override;
     EnglishWords getEnglishWords() const override;

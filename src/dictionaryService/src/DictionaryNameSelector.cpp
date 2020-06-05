@@ -7,7 +7,9 @@ DictionaryNames DictionaryNameSelector::selectNames(const Dictionaries& dictiona
 {
     DictionaryNames dictionaryNames;
     for (const auto& dictionary : dictionaries)
+    {
         dictionaryNames.emplace_back(dictionary.name);
+    }
     return dictionaryNames;
 }
 

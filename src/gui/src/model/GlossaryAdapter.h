@@ -47,7 +47,8 @@ public slots:
     void onRandomPolishWordFromDictionaryTriggered(const QString& dictionaryName) const;
     void onWordDescriptionTriggeredFromGuessTab(const QString& englishWord) const;
     void onWordDescriptionTriggeredFromWordDescriptionTab(const QString& englishWord) const;
-    void onTranslationCorrectnessTriggered(const QString& polishWord, const QString& englishWord) const;
+    void onTranslationCorrectnessTriggered(const QString& dictionaryName, const QString& polishWord,
+                                           const QString& englishWord) const;
     void onDictionaryAdded(const QString& dictionaryName) const;
     void onDictionaryAddedFromFile(const QString& dictionaryName, const QString& pathToDictionaryWords) const;
     void onDictionaryRemoved(const QString& dictionaryName) const;
@@ -66,6 +67,7 @@ public slots:
     void onDictionariesStatisticsRequest() const;
     void onUpdateTranslateApiKeyLocationRequest(const QString& translateApiKeyLocation) const;
     void onUpdateWordsApiKeyLocationRequest(const QString& wordsApiKeyLocation) const;
+    void onResetStatistics() const;
 
 private:
     std::unique_ptr<glossary::Glossary> glossary;

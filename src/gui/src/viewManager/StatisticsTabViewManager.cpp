@@ -11,6 +11,8 @@ StatisticsTabViewManager::StatisticsTabViewManager(QObject* parent,
             glossaryAdapter.get(), &model::GlossaryAdapter::onDictionaryStatisticsRequest);
     connect(statisticsTab.get(), &view::StatisticsTab::notifyAboutDictionariesStatisticsRequest,
             glossaryAdapter.get(), &model::GlossaryAdapter::onDictionariesStatisticsRequest);
+    connect(statisticsTab.get(), &view::StatisticsTab::notifyAboutResetStatistics,
+            glossaryAdapter.get(), &model::GlossaryAdapter::onResetStatistics);
 
     connect(glossaryAdapter.get(), &model::GlossaryAdapter::notifyAboutDictionaryStatistics,
             statisticsTab.get(), &view::StatisticsTab::onDictionaryStatisticsReceived);

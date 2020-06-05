@@ -13,6 +13,9 @@ public:
     virtual boost::optional<Dictionary> getDictionary(const DictionaryName&) const = 0;
     virtual Dictionaries getDictionaries() const = 0;
     virtual DictionaryNames getDictionaryNames() const = 0;
+    virtual DictionaryNames getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const = 0;
+    virtual DictionaryNames
+    getDictionaryNamesContainingEnglishWordTranslation(const std::string& englishWordTranslation) const = 0;
     virtual boost::optional<DictionaryWords> getDictionaryWords(const DictionaryName&) const = 0;
     virtual boost::optional<EnglishWords> getEnglishWords(const DictionaryName&) const = 0;
     virtual EnglishWords getEnglishWords() const = 0;

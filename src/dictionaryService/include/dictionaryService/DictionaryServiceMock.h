@@ -12,6 +12,10 @@ public:
     MOCK_CONST_METHOD1(getDictionary, boost::optional<Dictionary>(const DictionaryName&));
     MOCK_CONST_METHOD0(getDictionaries, Dictionaries());
     MOCK_CONST_METHOD0(getDictionaryNames, DictionaryNames());
+    MOCK_CONST_METHOD1(getDictionaryNamesContainingEnglishWord,
+                       DictionaryNames(const std::string& englishWord));
+    MOCK_CONST_METHOD1(getDictionaryNamesContainingEnglishWordTranslation,
+                       DictionaryNames(const std::string& englishWordTranslation));
     MOCK_CONST_METHOD1(getDictionaryWords, boost::optional<DictionaryWords>(const DictionaryName&));
     MOCK_CONST_METHOD1(getEnglishWords, boost::optional<EnglishWords>(const DictionaryName&));
     MOCK_CONST_METHOD0(getEnglishWords, EnglishWords());

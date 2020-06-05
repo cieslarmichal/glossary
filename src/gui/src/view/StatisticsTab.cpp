@@ -11,6 +11,7 @@ namespace glossary::gui::view
 {
 StatisticsTab::StatisticsTab(QWidget* parent)
     : QChartView(parent),
+      currentDictionaryName{boost::none},
       ui(new Ui::StatisticsTab),
       chartView{std::make_unique<QChartView>(this)},
       chart{std::make_unique<QChart>()},
@@ -55,6 +56,12 @@ void StatisticsTab::onDictionaryStatisticsReceived(const DictionaryStatistics& u
             dictionaryStatistics = updatedDictionaryStatistics;
         }
     }
+
+    if (currentDictionaryName &&
+        currentDictionaryName->toStdString() == updatedDictionaryStatistics.dictionaryName)
+    {
+        updateCurrentDictionaryStatistics(updatedDictionaryStatistics);
+    }
 }
 
 void StatisticsTab::onDictionariesStatisticsReceived(const DictionariesStatistics& dictionaryStatistics)
@@ -65,6 +72,7 @@ void StatisticsTab::onDictionariesStatisticsReceived(const DictionariesStatistic
 void StatisticsTab::on_listOfDictionaries_clicked(const QModelIndex& dictionaryNameIndex)
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
+    currentDictionaryName = dictionaryName;
 
     auto dictionaryStatistics = getDictionaryStatistics(dictionaryName);
 
@@ -132,4 +140,11 @@ DictionaryStatistics StatisticsTab::getDictionaryStatistics(const QString& dicti
     return {};
 }
 
+void StatisticsTab::on_buttonResetDictionaries_clicked()
+{
+    emit notifyAboutResetStatistics();
 }
+
+}
+
+

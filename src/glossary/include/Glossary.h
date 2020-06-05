@@ -18,7 +18,6 @@ class Glossary
 public:
     virtual ~Glossary() = default;
 
-    // TODO: check connection in gui
     virtual ExternalServicesStatus checkConnectionToExternalServices() const = 0;
     virtual void updateTranslateApiKeyLocation(const std::string& apiKeyLocation) const = 0;
     virtual void updateWordsApiKeyLocation(const std::string& apiKeyLocation) const = 0;

@@ -7,6 +7,8 @@
 #include <QtCharts/QPieSeries>
 #include <memory>
 
+#include "boost/optional.hpp"
+
 #include "DictionaryStatistics.h"
 QT_CHARTS_USE_NAMESPACE
 
@@ -30,12 +32,14 @@ public:
 signals:
     void notifyAboutDictionaryStatisticsRequest(const QString& dictionaryName) const;
     void notifyAboutDictionariesStatisticsRequest() const;
+    void notifyAboutResetStatistics() const;
 
 public slots:
     void onDictionaryStatisticsReceived(const DictionaryStatistics&);
     void onDictionariesStatisticsReceived(const DictionariesStatistics&);
 
 private slots:
+    void on_buttonResetDictionaries_clicked();
     void on_listOfDictionaries_clicked(const QModelIndex& dictionaryNameIndex);
 
 private:
@@ -45,6 +49,7 @@ private:
 
     DictionariesStatistics dictionariesStatistics;
     QStringListModel dictionaryNames;
+    boost::optional<QString> currentDictionaryName;
 
     Ui::StatisticsTab* ui;
     std::unique_ptr<QChartView> chartView;

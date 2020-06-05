@@ -27,6 +27,12 @@ public:
                       std::shared_ptr<TranslatorTab>, std::shared_ptr<StatisticsTab>);
     ~MainView();
 
+public slots:
+    void onSetEnabledGuessTabRequest(bool tabEnabled) const;
+    void onSetEnabledDictionariesTabRequest(bool tabEnabled) const;
+    void onSetEnabledWordDescriptionTabTabRequest(bool tabEnabled) const;
+    void onSetEnabledTranslatorTab(bool tabEnabled) const;
+
 private slots:
     void on_actionExit_triggered();
     void on_actionAbout_triggered();

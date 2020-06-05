@@ -8,10 +8,17 @@
 #include "view/StatisticsTab.h"
 #include "view/TranslatorTab.h"
 #include "view/WelcomeTab.h"
+#include "utils/GetProjectPath.h"
 
 namespace glossary::gui
 {
-Gui::Gui() : QObject(nullptr)
+namespace
+{
+const auto resourceDirectoryPath = utils::getProjectPath("glossary") + "src/gui/resources/";
+const auto glossaryIconPath = resourceDirectoryPath + "glossaryIcon.png";
+}
+
+Gui::Gui(QApplication& applicationInit) : QObject(nullptr), application{applicationInit}
 {
     initialize();
 }
@@ -23,6 +30,8 @@ void Gui::show() const
 
 void Gui::initialize()
 {
+    application.setWindowIcon(QIcon(glossaryIconPath.c_str()));
+
     auto welcomeTab = std::make_shared<view::WelcomeTab>();
     auto guessTab = std::make_shared<view::GuessTab>();
     auto dictionariesTab = std::make_shared<view::DictionariesTab>();

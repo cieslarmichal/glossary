@@ -14,4 +14,19 @@ DictionaryNames DefaultDictionaryNamesRetriever::retrieveDictionaryNames() const
     const auto dictionaries = dictionaryRepository->getDictionaries();
     return dictionaryNameSelector.selectNames(dictionaries);
 }
+
+DictionaryNames DefaultDictionaryNamesRetriever::retrieveDictionaryNamesContainingEnglishWord(
+    const std::string& englishWord) const
+{
+    const auto dictionaries = dictionaryRepository->getDictionaries();
+    return wordsDictionaryMembershipFinder.findDictionariesContainingEnglishWord(englishWord, dictionaries);
+}
+
+DictionaryNames DefaultDictionaryNamesRetriever::retrieveDictionaryNamesContainingEnglishWordTranslation(
+    const std::string& englishWordTranslation) const
+{
+    const auto dictionaries = dictionaryRepository->getDictionaries();
+    return wordsDictionaryMembershipFinder.findDictionariesContainingEnglishWordTranslation(
+        englishWordTranslation, dictionaries);
+}
 }

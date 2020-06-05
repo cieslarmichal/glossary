@@ -14,7 +14,7 @@
             <string>Glossary</string>
         </property>
         <widget class="QWidget" name="centralwidget">
-            <widget class="QTabWidget" name="glossaryFunctionsTab">
+            <widget class="QTabWidget" name="glossaryModesTabs">
                 <property name="geometry">
                     <rect>
                         <x>10</x>

@@ -28,7 +28,7 @@ signals:
     void notifyNextRandomWordClicked() const;
     void notifyNextRandomWordFromDictionaryClicked(const QString& dictionaryName) const;
     void notifyCheckWordDescriptionClicked(const QString& englishWord) const;
-    void notifyCheckTranslationCorrectnessClicked(const QString& polishWord,
+    void notifyCheckTranslationCorrectnessClicked(const QString& dictionaryName, const QString& polishWord,
                                                   const QString& englishWordInput) const;
 
 public slots:

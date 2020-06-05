@@ -36,6 +36,8 @@ const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2, dictiona
 const EnglishWords englishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
                                 dictionaryWord3.englishWord};
 const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
+const std::string englishWord{"englishWord"};
+const std::string englishWordTranslation{"englishWordTranslation"};
 }
 
 class DefaultDictionaryServiceTest : public Test
@@ -94,6 +96,28 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNames)
     EXPECT_CALL(*dictionaryNamesRetriever, retrieveDictionaryNames()).WillOnce(Return(dictionaryNames));
 
     const auto actualDictionaryNames = service.getDictionaryNames();
+
+    ASSERT_EQ(actualDictionaryNames, dictionaryNames);
+}
+
+TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNamesContainingEnglishWord)
+{
+    EXPECT_CALL(*dictionaryNamesRetriever, retrieveDictionaryNamesContainingEnglishWord(englishWord))
+        .WillOnce(Return(dictionaryNames));
+
+    const auto actualDictionaryNames = service.getDictionaryNamesContainingEnglishWord(englishWord);
+
+    ASSERT_EQ(actualDictionaryNames, dictionaryNames);
+}
+
+TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNamesContainingEnglishWordTranslation)
+{
+    EXPECT_CALL(*dictionaryNamesRetriever,
+                retrieveDictionaryNamesContainingEnglishWordTranslation(englishWordTranslation))
+        .WillOnce(Return(dictionaryNames));
+
+    const auto actualDictionaryNames =
+        service.getDictionaryNamesContainingEnglishWordTranslation(englishWordTranslation);
 
     ASSERT_EQ(actualDictionaryNames, dictionaryNames);
 }

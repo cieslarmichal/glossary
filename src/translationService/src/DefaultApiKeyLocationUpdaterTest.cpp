@@ -10,7 +10,7 @@ using namespace glossary::translationService;
 namespace
 {
 const std::string filePathWithPathToFileWithApiKey{utils::getProjectPath("glossary") +
-                                                   "config/wordsApiKeyLocation.txt"};
+                                                   "config/translatorApiKeyLocation.txt"};
 const std::string exampleApiKey{"apiKey"};
 const std::string apiKeyLocation{"apiKeyLocation"};
 }

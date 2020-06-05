@@ -129,11 +129,16 @@ void GlossaryAdapter::onWordDescriptionTriggeredFromWordDescriptionTab(const QSt
     emit notifyWordDescriptionTabAboutWordDescription(wordDescription);
 }
 
-void GlossaryAdapter::onTranslationCorrectnessTriggered(const QString& polishWord,
+void GlossaryAdapter::onTranslationCorrectnessTriggered(const QString& dictionaryName,
+                                                        const QString& polishWord,
                                                         const QString& englishWord) const
 {
     auto translationCorrectnessVerification = verifyCorrectnessOfTranslation(polishWord, englishWord);
     emit notifyAboutTranslationVerdict(translationCorrectnessVerification);
+    if (not dictionaryName.isEmpty())
+    {
+        emit onDictionaryStatisticsRequest(dictionaryName);
+    }
 }
 
 void GlossaryAdapter::onDictionaryAdded(const QString& dictionaryName) const
@@ -246,6 +251,12 @@ void GlossaryAdapter::onUpdateWordsApiKeyLocationRequest(const QString& wordsApi
 
     auto externalServicesStatus = getStatusOfConnectionToExternalServices();
     emit notifyAboutExternalServicesStatus(externalServicesStatus);
+}
+
+void GlossaryAdapter::onResetStatistics() const
+{
+    glossary->resetStatistics();
+    onDictionariesStatisticsRequest();
 }
 
 }

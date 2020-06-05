@@ -2,6 +2,7 @@
 
 #include <QDir>
 #include <QFileDialog>
+#include <iostream>
 
 #include "ui_WelcomeTab.h"
 #include "utils/GetProjectPath.h"
@@ -40,19 +41,23 @@ void WelcomeTab::onExternalServicesStatusReceived(const ExternalServicesStatus& 
     if (wordsApiValid(externalServicesStatus.wordsApiStatus))
     {
         setValidApiKeyIcon(ui->labelWordsApiKeyValid);
+        setWordsApiRelatedTabsEnabled(true);
     }
     else
     {
         setInvalidApiKeyIcon(ui->labelWordsApiKeyValid);
+        setWordsApiRelatedTabsEnabled(false);
     }
 
     if (translationApiValid(externalServicesStatus.translationApiStatus))
     {
         setValidApiKeyIcon(ui->labelTranslateApiKeyValid);
+        setTranslateApiRelatedTabsEnabled(true);
     }
     else
     {
         setInvalidApiKeyIcon(ui->labelTranslateApiKeyValid);
+        setTranslateApiRelatedTabsEnabled(false);
     }
 }
 
@@ -93,6 +98,18 @@ void WelcomeTab::setInvalidApiKeyIcon(QLabel* label)
     int width = label->width();
     int height = label->height();
     label->setPixmap(invalidTranslateApiKeyIcon.scaled(width, height, Qt::KeepAspectRatio));
+}
+
+void WelcomeTab::setWordsApiRelatedTabsEnabled(bool tabsEnabled) const
+{
+    emit notifyAboutSetGuessTabEnabledRequest(tabsEnabled);
+    emit notifyAboutSetDictionariesTabEnabledRequest(tabsEnabled);
+    emit notifyAboutSetWordDescriptionTabEnabledRequest(tabsEnabled);
+}
+
+void WelcomeTab::setTranslateApiRelatedTabsEnabled(bool tabsEnabled) const
+{
+    emit notifyAboutSetTranslatorTabEnabledRequest(tabsEnabled);
 }
 
 }

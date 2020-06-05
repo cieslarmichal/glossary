@@ -13,7 +13,9 @@ boost::optional<DictionaryWords>
 DefaultDictionaryWordsRetriever::retrieveDictionaryWords(const DictionaryName& dictionaryName) const
 {
     if (const auto dictionary = getDictionary(dictionaryName))
+    {
         return dictionaryWordAccumulator.accumulateDictionaryWords(*dictionary);
+    }
     return boost::none;
 }
 
@@ -21,7 +23,9 @@ boost::optional<EnglishWords>
 DefaultDictionaryWordsRetriever::retrieveEnglishWords(const DictionaryName& dictionaryName) const
 {
     if (const auto dictionary = getDictionary(dictionaryName))
+    {
         return dictionaryWordAccumulator.accumulateEnglishWords(*dictionary);
+    }
     return boost::none;
 }
 

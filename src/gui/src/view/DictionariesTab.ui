@@ -1,183 +1,160 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
-    <class>glossary::gui::view::DictionariesTab</class>
-    <widget class="QWidget" name="glossary::gui::view::DictionariesTab">
-        <property name="geometry">
-            <rect>
-                <x>0</x>
-                <y>0</y>
-                <width>592</width>
-                <height>502</height>
-            </rect>
-        </property>
-        <property name="windowTitle">
-            <string>Form</string>
-        </property>
-        <widget class="QListView" name="listOfDictionaries">
-            <property name="enabled">
-                <bool>true</bool>
-            </property>
-            <property name="geometry">
-                <rect>
-                    <x>20</x>
-                    <y>40</y>
-                    <width>151</width>
-                    <height>301</height>
-                </rect>
-            </property>
-            <property name="modelColumn">
-                <number>0</number>
-            </property>
-        </widget>
-        <widget class="QLabel" name="labelDictionaries">
-            <property name="geometry">
-                <rect>
-                    <x>50</x>
-                    <y>20</y>
-                    <width>101</width>
-                    <height>16</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Dictionaries:</string>
-            </property>
-        </widget>
-        <widget class="QLabel" name="labelDictionaryWords">
-            <property name="geometry">
-                <rect>
-                    <x>270</x>
-                    <y>10</y>
-                    <width>131</width>
-                    <height>21</height>
-                </rect>
-            </property>
-            <property name="text">
-                <string>Dictionary words:</string>
-            </property>
-        </widget>
-        <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-                <rect>
-                    <x>450</x>
-                    <y>120</y>
-                    <width>121</width>
-                    <height>91</height>
-                </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout">
-                <item>
-                    <widget class="QPushButton" name="buttonAddWord">
-                        <property name="font">
-                            <font>
-                                <pointsize>10</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Add word</string>
-                        </property>
-                    </widget>
-                </item>
-                <item>
-                    <widget class="QPushButton" name="buttonRemoveWord">
-                        <property name="font">
-                            <font>
-                                <pointsize>10</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Remove word</string>
-                        </property>
-                    </widget>
-                </item>
-                <item>
-                    <widget class="QPushButton" name="buttonUpdateTranslation">
-                        <property name="font">
-                            <font>
-                                <pointsize>10</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Update translation</string>
-                        </property>
-                    </widget>
-                </item>
-            </layout>
-        </widget>
-        <widget class="QWidget" name="layoutWidget">
-            <property name="geometry">
-                <rect>
-                    <x>20</x>
-                    <y>350</y>
-                    <width>152</width>
-                    <height>118</height>
-                </rect>
-            </property>
-            <layout class="QVBoxLayout" name="verticalLayout_3">
-                <item>
-                    <layout class="QVBoxLayout" name="verticalLayout_2">
-                        <item>
-                            <widget class="QPushButton" name="buttonAddNewDictionary">
-                                <property name="font">
-                                    <font>
-                                        <pointsize>10</pointsize>
-                                    </font>
-                                </property>
-                                <property name="text">
-                                    <string>Add new dictionary</string>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QPushButton" name="buttonAddDictionaryFromFile">
-                                <property name="font">
-                                    <font>
-                                        <pointsize>10</pointsize>
-                                    </font>
-                                </property>
-                                <property name="text">
-                                    <string>Add dictionary from file</string>
-                                </property>
-                            </widget>
-                        </item>
-                        <item>
-                            <widget class="QPushButton" name="buttonRemoveDictionary">
-                                <property name="font">
-                                    <font>
-                                        <pointsize>10</pointsize>
-                                    </font>
-                                </property>
-                                <property name="text">
-                                    <string>Remove dictionary</string>
-                                </property>
-                            </widget>
-                        </item>
-                    </layout>
-                </item>
-                <item>
-                    <widget class="QPushButton" name="buttonUpdateTranslations">
-                        <property name="font">
-                            <font>
-                                <pointsize>10</pointsize>
-                            </font>
-                        </property>
-                        <property name="text">
-                            <string>Update translations</string>
-                        </property>
-                    </widget>
-                </item>
-            </layout>
-        </widget>
-        <widget class="QListView" name="listOfDictionaryWords">
-            <property name="geometry">
-                <rect>
-                    <x>230</x>
-                    <y>40</y>
-                    <width>211</width>
-                    <height>431</height>
-                </rect>
-            </property>
-        </widget>
+ <class>glossary::gui::view::DictionariesTab</class>
+ <widget class="QWidget" name="glossary::gui::view::DictionariesTab">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>592</width>
+    <height>502</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QLabel" name="labelDictionaries">
+     <property name="text">
+      <string>Dictionaries:</string>
+     </property>
     </widget>
-    <resources/>
-    <connections/>
+   </item>
+   <item row="2" column="0">
+    <layout class="QVBoxLayout" name="verticalLayout_3">
+     <item>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QPushButton" name="buttonAddNewDictionary">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Add new dictionary</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonAddDictionaryFromFile">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Add dictionary from file</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonRemoveDictionary">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Remove dictionary</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QPushButton" name="buttonUpdateTranslations">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+          </font>
+         </property>
+         <property name="text">
+          <string>Update translations</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </item>
+    </layout>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLabel" name="labelDictionaryWords">
+     <property name="text">
+      <string>Dictionary words:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" rowspan="3">
+    <widget class="QListView" name="listOfDictionaryWords"/>
+   </item>
+   <item row="2" column="2">
+    <spacer name="verticalSpacer">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+     <property name="sizeType">
+      <enum>QSizePolicy::Fixed</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>100</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="2">
+    <layout class="QVBoxLayout" name="verticalLayout">
+     <item>
+      <widget class="QPushButton" name="buttonAddWord">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Add word</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonRemoveWord">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Remove word</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="buttonUpdateTranslation">
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Update translation</string>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="0">
+    <widget class="QListView" name="listOfDictionaries">
+     <property name="enabled">
+      <bool>true</bool>
+     </property>
+     <property name="modelColumn">
+      <number>0</number>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
 </ui>

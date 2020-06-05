@@ -25,6 +25,10 @@ public:
 signals:
     void notifyAboutUpdateTranslateApiKeyLocationRequest(const QString& translateApiKeyLocation) const;
     void notifyAboutUpdateWordsApiKeyLocationRequest(const QString& wordsApiKeyLocation) const;
+    void notifyAboutSetGuessTabEnabledRequest(bool tabEnabled) const;
+    void notifyAboutSetDictionariesTabEnabledRequest(bool tabEnabled) const;
+    void notifyAboutSetWordDescriptionTabEnabledRequest(bool tabEnabled) const;
+    void notifyAboutSetTranslatorTabEnabledRequest(bool tabEnabled) const;
 
 public slots:
     void onExternalServicesStatusReceived(const ExternalServicesStatus&);
@@ -38,6 +42,8 @@ private:
     bool translationApiValid(TranslationApiStatus) const;
     void setValidApiKeyIcon(QLabel*);
     void setInvalidApiKeyIcon(QLabel*);
+    void setWordsApiRelatedTabsEnabled(bool tabsEnabled) const;
+    void setTranslateApiRelatedTabsEnabled(bool tabsEnabled) const;
 
     Ui::WelcomeTab* ui;
 };

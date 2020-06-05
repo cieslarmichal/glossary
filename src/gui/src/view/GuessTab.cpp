@@ -8,7 +8,7 @@
 
 namespace
 {
-constexpr auto noneDictionaryName = "none";
+constexpr auto anyDictionaryName = "any";
 const auto resourceDirectoryPath = utils::getProjectPath("glossary") + "src/gui/resources/";
 const auto incorrectAnswerIconPath = resourceDirectoryPath + "incorrectAnswer.png";
 const auto correctAnswerIconPath = resourceDirectoryPath + "correctAnswer.png";
@@ -36,7 +36,7 @@ GuessTab::~GuessTab()
 void GuessTab::setAvailableDictionaryNames(const QList<QString>& dictionaryNames)
 {
     dictionaryNamesToRandomizeWordFrom = dictionaryNames;
-    dictionaryNamesToRandomizeWordFrom.push_front(noneDictionaryName);
+    dictionaryNamesToRandomizeWordFrom.push_front(anyDictionaryName);
     dictionaryNamesToRandomizeWordFromModel.setStringList(dictionaryNamesToRandomizeWordFrom);
 }
 
@@ -86,7 +86,7 @@ void GuessTab::on_buttonNextRandomWord_clicked() const
 void GuessTab::on_listWithDictionaryNames_clicked(const QModelIndex& dictionaryNameIndex)
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
-    if (dictionaryName != noneDictionaryName)
+    if (dictionaryName != anyDictionaryName)
     {
         selectedDictionaryName = dictionaryName;
     }
@@ -112,7 +112,10 @@ void GuessTab::on_buttonCheckTranslationCorrectness_clicked()
 {
     const auto currentPolishWord = ui->editPolishWord->text();
     const auto currentlyInsertedEnglishWord = ui->editEnglishTranslation->text();
-    emit notifyCheckTranslationCorrectnessClicked(currentPolishWord, currentlyInsertedEnglishWord.trimmed());
+    auto wordsDictionary = selectedDictionaryName ? *selectedDictionaryName : "";
+    emit notifyCheckTranslationCorrectnessClicked(wordsDictionary, currentPolishWord,
+                                                  currentlyInsertedEnglishWord.trimmed());
+    on_buttonNextRandomWord_clicked();
 }
 
 void GuessTab::on_editPolishWord_textChanged(QString)

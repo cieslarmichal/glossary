@@ -1,6 +1,7 @@
 #pragma once
 
 #include <QObject>
+#include <QApplication>
 #include <memory>
 
 #include "view/MainView.h"
@@ -17,13 +18,14 @@ class Gui : public QObject
 {
     Q_OBJECT
 public:
-    explicit Gui();
+    explicit Gui(QApplication&);
 
     void show() const;
 
 private:
     void initialize();
 
+    QApplication& application;
     std::unique_ptr<view::MainView> mainView;
     std::unique_ptr<viewManager::WelcomeTabViewManager> welcomeViewManager;
     std::unique_ptr<viewManager::GuessTabViewManager> guessViewManager;

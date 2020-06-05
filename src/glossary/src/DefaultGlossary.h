@@ -17,7 +17,6 @@ namespace glossary
 class DefaultGlossary : public Glossary
 {
 public:
-    // TODO: block updating/synchronizing if apiKeys are not provided
     DefaultGlossary(std::shared_ptr<dictionaryService::DictionaryService>,
                     std::shared_ptr<translationService::TranslationService>,
                     std::shared_ptr<statisticsRepository::StatisticsRepository>,
