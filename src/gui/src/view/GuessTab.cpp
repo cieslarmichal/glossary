@@ -83,7 +83,7 @@ void GuessTab::on_buttonNextRandomWord_clicked() const
     emit notifyNextRandomWordClicked();
 }
 
-void GuessTab::on_listWithDictionaryNames_clicked(const QModelIndex &dictionaryNameIndex)
+void GuessTab::on_listWithDictionaryNames_clicked(const QModelIndex& dictionaryNameIndex)
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
     if (dictionaryName != noneDictionaryName)

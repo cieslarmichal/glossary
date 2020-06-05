@@ -1,8 +1,10 @@
 #include "WelcomeTab.h"
-#include "ui_WelcomeTab.h"
-#include "utils/GetProjectPath.h"
+
 #include <QDir>
 #include <QFileDialog>
+
+#include "ui_WelcomeTab.h"
+#include "utils/GetProjectPath.h"
 
 namespace
 {
@@ -14,9 +16,7 @@ const auto invalidApiKeyIconPath = resourceDirectoryPath + "incorrectAnswer.png"
 
 namespace glossary::gui::view
 {
-WelcomeTab::WelcomeTab(QWidget *parent) :
-    QWidget(parent),
-    ui(new Ui::WelcomeTab)
+WelcomeTab::WelcomeTab(QWidget* parent) : QWidget(parent), ui(new Ui::WelcomeTab)
 {
     ui->setupUi(this);
     ui->buttonLoadWordsApiKey->setIcon(QIcon(loadApiKeyIconPath.c_str()));
@@ -30,7 +30,7 @@ WelcomeTab::~WelcomeTab()
     delete ui;
 }
 
-void WelcomeTab::setExternalServicesStatus(const ExternalServicesStatus & externalServicesStatus)
+void WelcomeTab::setExternalServicesStatus(const ExternalServicesStatus& externalServicesStatus)
 {
     onExternalServicesStatusReceived(externalServicesStatus);
 }
@@ -58,7 +58,8 @@ void WelcomeTab::onExternalServicesStatusReceived(const ExternalServicesStatus& 
 
 void WelcomeTab::on_buttonLoadTranslateApiKey_clicked()
 {
-    auto pathToFileWithTranslateApiKey = QFileDialog::getOpenFileName(this, "Open file with translate api key");
+    auto pathToFileWithTranslateApiKey =
+        QFileDialog::getOpenFileName(this, "Open file with translate api key");
     emit notifyAboutUpdateTranslateApiKeyLocationRequest(pathToFileWithTranslateApiKey);
 }
 

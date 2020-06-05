@@ -232,7 +232,7 @@ void GlossaryAdapter::onDictionariesStatisticsRequest() const
     emit notifyAboutDictionariesStatistics(dictionariesStatistics);
 }
 
-void GlossaryAdapter::onUpdateTranslateApiKeyLocationRequest(const QString &translateApiKeyLocation) const
+void GlossaryAdapter::onUpdateTranslateApiKeyLocationRequest(const QString& translateApiKeyLocation) const
 {
     glossary->updateTranslateApiKeyLocation(translateApiKeyLocation.toStdString());
 
@@ -240,7 +240,7 @@ void GlossaryAdapter::onUpdateTranslateApiKeyLocationRequest(const QString &tran
     emit notifyAboutExternalServicesStatus(externalServicesStatus);
 }
 
-void GlossaryAdapter::onUpdateWordsApiKeyLocationRequest(const QString &wordsApiKeyLocation) const
+void GlossaryAdapter::onUpdateWordsApiKeyLocationRequest(const QString& wordsApiKeyLocation) const
 {
     glossary->updateWordsApiKeyLocation(wordsApiKeyLocation.toStdString());
 

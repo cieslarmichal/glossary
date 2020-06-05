@@ -1,43 +1,60 @@
 #include "StatisticsTab.h"
 
+#include <QPen>
+#include <QtCharts/QBarCategoryAxis>
 #include <QtCharts/QBarSeries>
 #include <QtCharts/QBarSet>
-#include <QtCharts/QBarCategoryAxis>
+
 #include "ui_StatisticsTab.h"
-#include <QtCharts/QPieSeries>
-#include <QPen>
 
 namespace glossary::gui::view
 {
-StatisticsTab::StatisticsTab(QWidget* parent) : QChartView(parent), ui(new Ui::StatisticsTab)
+StatisticsTab::StatisticsTab(QWidget* parent)
+    : QChartView(parent),
+      ui(new Ui::StatisticsTab),
+      chartView{std::make_unique<QChartView>(this)},
+      chart{std::make_unique<QChart>()},
+      pieSeries{nullptr}
 {
     ui->setupUi(this);
     ui->listOfDictionaries->setModel(&dictionaryNames);
-    chartView= new QChartView{this};
+    setChart(chart.get());
+    chartView->setChart(chart.get());
+    ui->layoutChartView->addWidget(chartView.get());
     chartView->setRenderHint(QPainter::Antialiasing);
+    chartView->show();
 }
 
 StatisticsTab::~StatisticsTab()
 {
-    delete chartView;
+    if (pieSeries)
+    {
+        chart->removeSeries(pieSeries.get());
+    }
     delete ui;
 }
 
-void StatisticsTab::setDictionariesStatistics(const DictionariesStatistics & dictionariesStatisticsInit)
+void StatisticsTab::setDictionariesStatistics(const DictionariesStatistics& dictionariesStatisticsInit)
 {
     dictionariesStatistics = dictionariesStatisticsInit;
 
     QStringList dictionaryNamesFromStatistics;
-    for(const auto& dictionaryStatistics : dictionariesStatistics)
+    for (const auto& dictionaryStatistics : dictionariesStatistics)
     {
         dictionaryNamesFromStatistics.push_back(QString::fromStdString(dictionaryStatistics.dictionaryName));
     }
     dictionaryNames.setStringList(dictionaryNamesFromStatistics);
 }
 
-void StatisticsTab::onDictionaryStatisticsReceived(const DictionaryStatistics&)
+void StatisticsTab::onDictionaryStatisticsReceived(const DictionaryStatistics& updatedDictionaryStatistics)
 {
-
+    for (auto& dictionaryStatistics : dictionariesStatistics)
+    {
+        if (dictionaryStatistics.dictionaryName == updatedDictionaryStatistics.dictionaryName)
+        {
+            dictionaryStatistics = updatedDictionaryStatistics;
+        }
+    }
 }
 
 void StatisticsTab::onDictionariesStatisticsReceived(const DictionariesStatistics& dictionaryStatistics)
@@ -45,7 +62,7 @@ void StatisticsTab::onDictionariesStatisticsReceived(const DictionariesStatistic
     setDictionariesStatistics(dictionaryStatistics);
 }
 
-void StatisticsTab::on_listOfDictionaries_clicked(const QModelIndex &dictionaryNameIndex)
+void StatisticsTab::on_listOfDictionaries_clicked(const QModelIndex& dictionaryNameIndex)
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
 
@@ -54,50 +71,60 @@ void StatisticsTab::on_listOfDictionaries_clicked(const QModelIndex &dictionaryN
     updateCurrentDictionaryStatistics(dictionaryStatistics);
 }
 
-void StatisticsTab::updateCurrentDictionaryStatistics(const DictionaryStatistics & dictionaryStatistics)
+void StatisticsTab::updateCurrentDictionaryStatistics(const DictionaryStatistics& dictionaryStatistics)
 {
-    ui->editCorrectAnswers->setText(QString::fromStdString(std::to_string(dictionaryStatistics.correctAnswers)));
-    ui->editIncorrectAnswers->setText(QString::fromStdString(std::to_string(dictionaryStatistics.incorrectAnswers)));
-    double efficiency = dictionaryStatistics.correctAnswers / dictionaryStatistics.incorrectAnswers;
-    ui->editEfficiency->setText(QString::fromStdString(std::to_string(efficiency)));
+    ui->editCorrectAnswers->setText(
+        QString::fromStdString(std::to_string(dictionaryStatistics.correctAnswers)));
+    ui->editIncorrectAnswers->setText(
+        QString::fromStdString(std::to_string(dictionaryStatistics.incorrectAnswers)));
+    double efficiency = static_cast<double>(dictionaryStatistics.correctAnswers) /
+                        (dictionaryStatistics.correctAnswers + dictionaryStatistics.incorrectAnswers);
+    int efficiencyPercents = static_cast<int>(efficiency * 100);
+    ui->editEfficiency->setText(QString::fromStdString(std::to_string(efficiencyPercents) + "%"));
     updateChartView(dictionaryStatistics);
 }
 
-void StatisticsTab::updateChartView(const DictionaryStatistics &)
+void StatisticsTab::updateChartView(const DictionaryStatistics& dictionaryStatistics)
 {
-    QChart* chart = new QChart();
-    setChart(chart);
-    chartView->setChart(chart);
-    ui->layoutChartView->addWidget(chartView,0,0);
+    if (pieSeries)
+    {
+        chart->removeSeries(pieSeries.get());
+    }
 
-    QPieSeries * series = new QPieSeries();
+    pieSeries = std::make_unique<QPieSeries>();
 
-    series->append("Correct answers", .60);
-    series->append("Incorrect answers", .40);
+    double amountOfALlAnswers =
+        static_cast<double>(dictionaryStatistics.correctAnswers + dictionaryStatistics.incorrectAnswers);
+    double percentOfCorrectAnswers =
+        static_cast<double>(dictionaryStatistics.correctAnswers) / amountOfALlAnswers;
+    double percentOfIncorrectAnswers =
+        static_cast<double>(dictionaryStatistics.incorrectAnswers) / amountOfALlAnswers;
+    pieSeries->append("Correct answers", percentOfCorrectAnswers);
+    pieSeries->append("Incorrect answers", percentOfIncorrectAnswers);
 
-    QPieSlice * slice = series->slices().at(0);
-    slice->setLabel("Correct answers");
-    slice->setPen(QPen(Qt::darkGreen, 2));
-    slice->setBrush(Qt::green);
+    QPieSlice* correctAnswersSlice = pieSeries->slices().at(0);
+    correctAnswersSlice->setLabel("Correct answers");
+    correctAnswersSlice->setPen(QPen(Qt::darkGreen, 2));
+    correctAnswersSlice->setBrush(Qt::green);
 
-    QPieSlice *slice1 = series->slices().at(1);
-    slice1->setLabel("Incorrect answers");
-    slice1->setPen(QPen(Qt::darkRed, 2));
-    slice1->setBrush(Qt::red);
+    QPieSlice* incorrectAnswersSlice = pieSeries->slices().at(1);
+    incorrectAnswersSlice->setLabel("Incorrect answers");
+    incorrectAnswersSlice->setPen(QPen(Qt::darkRed, 2));
+    incorrectAnswersSlice->setBrush(Qt::red);
 
-    series->setLabelsPosition(QPieSlice::LabelOutside);
+    pieSeries->setLabelsPosition(QPieSlice::LabelOutside);
 
-    chart->addSeries(series);
-    chart->setTitle("Dictionary statistics");
-
+    chart->addSeries(pieSeries.get());
+    chart->setTitle("Dictionary statistics - answers from guessing english words");
     chartView->show();
 }
 
-DictionaryStatistics StatisticsTab::getDictionaryStatistics(const QString &dictionaryName) const
+DictionaryStatistics StatisticsTab::getDictionaryStatistics(const QString& dictionaryName) const
 {
-    auto foundDictionarStatistics =
-        std::find_if(dictionariesStatistics.begin(), dictionariesStatistics.end(),
-                     [&](const DictionaryStatistics& stats) { return stats.dictionaryName == dictionaryName.toStdString(); });
+    auto foundDictionarStatistics = std::find_if(
+        dictionariesStatistics.begin(), dictionariesStatistics.end(), [&](const DictionaryStatistics& stats) {
+            return stats.dictionaryName == dictionaryName.toStdString();
+        });
     if (foundDictionarStatistics != dictionariesStatistics.end())
     {
         return *foundDictionarStatistics;

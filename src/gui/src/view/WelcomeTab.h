@@ -1,12 +1,14 @@
 #pragma once
 
-#include <QWidget>
 #include <QLabel>
+#include <QWidget>
+
 #include "ExternalServicesStatus.h"
 
 namespace glossary::gui::view
 {
-namespace Ui {
+namespace Ui
+{
 class WelcomeTab;
 }
 
@@ -15,7 +17,7 @@ class WelcomeTab : public QWidget
     Q_OBJECT
 
 public:
-    explicit WelcomeTab(QWidget *parent = nullptr);
+    explicit WelcomeTab(QWidget* parent = nullptr);
     ~WelcomeTab();
 
     void setExternalServicesStatus(const ExternalServicesStatus&);
@@ -25,11 +27,11 @@ signals:
     void notifyAboutUpdateWordsApiKeyLocationRequest(const QString& wordsApiKeyLocation) const;
 
 public slots:
-        void onExternalServicesStatusReceived(const ExternalServicesStatus&);
+    void onExternalServicesStatusReceived(const ExternalServicesStatus&);
 
 private slots:
-        void on_buttonLoadTranslateApiKey_clicked();
-        void on_buttonLoadWordsApiKey_clicked();
+    void on_buttonLoadTranslateApiKey_clicked();
+    void on_buttonLoadWordsApiKey_clicked();
 
 private:
     bool wordsApiValid(WordsApiStatus) const;
@@ -37,6 +39,6 @@ private:
     void setValidApiKeyIcon(QLabel*);
     void setInvalidApiKeyIcon(QLabel*);
 
-    Ui::WelcomeTab *ui;
+    Ui::WelcomeTab* ui;
 };
 }

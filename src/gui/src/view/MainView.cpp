@@ -7,7 +7,8 @@
 
 namespace glossary::gui::view
 {
-MainView::MainView(QWidget* parent, std::shared_ptr<WelcomeTab> welcomeTabInit, std::shared_ptr<GuessTab> guessTabInit,
+MainView::MainView(QWidget* parent, std::shared_ptr<WelcomeTab> welcomeTabInit,
+                   std::shared_ptr<GuessTab> guessTabInit,
                    std::shared_ptr<DictionariesTab> dictionatiesTabInit,
                    std::shared_ptr<CheckWordDescriptionTab> checkWordDescriptionTabInit,
                    std::shared_ptr<TranslatorTab> translatorTabInit,

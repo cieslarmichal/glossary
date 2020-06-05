@@ -1,8 +1,11 @@
 #pragma once
 
 #include <QChartView>
-#include <QWidget>
 #include <QStringListModel>
+#include <QWidget>
+#include <QtCharts/QChart>
+#include <QtCharts/QPieSeries>
+#include <memory>
 
 #include "DictionaryStatistics.h"
 QT_CHARTS_USE_NAMESPACE
@@ -44,6 +47,8 @@ private:
     QStringListModel dictionaryNames;
 
     Ui::StatisticsTab* ui;
-    QChartView* chartView;
+    std::unique_ptr<QChartView> chartView;
+    std::unique_ptr<QChart> chart;
+    std::unique_ptr<QPieSeries> pieSeries;
 };
 }
