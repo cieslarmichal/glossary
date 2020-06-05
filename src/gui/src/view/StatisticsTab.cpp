@@ -146,5 +146,3 @@ void StatisticsTab::on_buttonResetDictionaries_clicked()
 }
 
 }
-
-

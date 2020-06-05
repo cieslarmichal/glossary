@@ -218,7 +218,7 @@ TEST_F(DefaultGlossaryTest, givenIncorrectPolishWordsTranslation_shouldAddIncorr
     EXPECT_CALL(*translationService, retrieveTranslation(polishWord, polishLanguage, englishLanguage))
         .WillOnce(Return(wordTranslation));
     EXPECT_CALL(*answerValidator, validateAnswer(wordTranslation, englishWord1)).WillOnce(Return(false));
-    EXPECT_CALL(*statisticsRepository, addIncorrectAnswer(englishWord1));
+    EXPECT_CALL(*statisticsRepository, addIncorrectAnswer(wordTranslation));
 
     const auto verificationResult = glossary.verifyPolishWordTranslation(polishWord, englishWord1);
 

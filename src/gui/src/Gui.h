@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QObject>
 #include <QApplication>
+#include <QObject>
 #include <memory>
 
 #include "view/MainView.h"

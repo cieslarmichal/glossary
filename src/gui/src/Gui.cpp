@@ -2,13 +2,13 @@
 
 #include "GlossaryFactory.h"
 #include "model/GlossaryAdapter.h"
+#include "utils/GetProjectPath.h"
 #include "view/CheckWordDescriptionTab.h"
 #include "view/DictionariesTab.h"
 #include "view/GuessTab.h"
 #include "view/StatisticsTab.h"
 #include "view/TranslatorTab.h"
 #include "view/WelcomeTab.h"
-#include "utils/GetProjectPath.h"
 
 namespace glossary::gui
 {

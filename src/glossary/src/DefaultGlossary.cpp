@@ -110,7 +110,7 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
         return true;
     }
 
-    statisticsRepository->addIncorrectAnswer(englishWord);
+    statisticsRepository->addIncorrectAnswer(*englishTranslationFromPolishWord);
     return false;
 }
 
