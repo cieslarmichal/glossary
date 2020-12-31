@@ -2,13 +2,14 @@
 
 #include <string>
 #include <vector>
+#include "UtilsApi.h"
 
 namespace utils
 {
 class HtmlTagsDeleter
 {
 public:
-    std::vector<std::string> deleteTags(const std::vector<std::string>&) const;
+    UTILS_API std::vector<std::string> deleteTags(const std::vector<std::string>&) const;
 
 private:
     void clear(std::vector<std::string>&) const;

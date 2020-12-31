@@ -4,10 +4,11 @@
 
 #include "Translator.h"
 #include "webConnection/HttpHandler.h"
+#include "TranslatorApi.h"
 
 namespace glossary::translator
 {
-class TranslatorFactory
+class TRANSLATOR_API TranslatorFactory
 {
 public:
     virtual ~TranslatorFactory() = default;

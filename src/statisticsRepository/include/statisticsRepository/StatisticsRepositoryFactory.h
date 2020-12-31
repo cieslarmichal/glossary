@@ -4,10 +4,11 @@
 
 #include "StatisticsRepository.h"
 #include "utils/FileAccess.h"
+#include "StatisticsRepositoryApi.h"
 
 namespace glossary::statisticsRepository
 {
-class StatisticsRepositoryFactory
+class STATISTICS_REPOSITORY_API StatisticsRepositoryFactory
 {
 public:
     virtual ~StatisticsRepositoryFactory() = default;

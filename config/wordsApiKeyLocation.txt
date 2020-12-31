@@ -1,1 +1,1 @@
-/home/michal/repos/glossary/config/wordsApiKey.txt
+C:\\repos\\glossary\\config\\wordsApiKey.txt

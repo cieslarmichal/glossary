@@ -4,10 +4,11 @@
 #include <vector>
 
 #include "EnglishWord.h"
+#include "StatisticsRepositoryApi.h"
 
 namespace glossary::statisticsRepository
 {
-class WordStatistics
+class STATISTICS_REPOSITORY_API WordStatistics
 {
 public:
     WordStatistics(EnglishWord);
@@ -26,7 +27,7 @@ private:
     int incorrectAnswers;
 };
 
-bool operator==(const WordStatistics& lhs, const WordStatistics& rhs);
-std::string toString(const WordStatistics&);
-std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics);
+STATISTICS_REPOSITORY_API bool operator==(const WordStatistics& lhs, const WordStatistics& rhs);
+STATISTICS_REPOSITORY_API std::string toString(const WordStatistics&);
+STATISTICS_REPOSITORY_API std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics);
 }

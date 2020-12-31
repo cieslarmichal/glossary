@@ -7,6 +7,7 @@
 
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::statisticsRepository;

@@ -20,12 +20,12 @@ boost::optional<std::string> FilenamePathFilter::getFilename(const fs::path& fil
 {
     if (isFile(filePath))
     {
-        return static_cast<std::string>(filePath.filename());
+        return filePath.filename().string();
     }
     return boost::none;
 }
 
-bool FilenamePathFilter::isFile(const std::experimental::filesystem::path& path) const
+bool FilenamePathFilter::isFile(const std::filesystem::path& path) const
 {
     return fs::is_regular_file(path);
 }

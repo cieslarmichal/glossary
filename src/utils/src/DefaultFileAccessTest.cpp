@@ -13,12 +13,22 @@ using namespace utils;
 namespace
 {
 const std::string projectPath{getProjectPath("glossary")};
+
+#ifdef _WIN32
+const std::string testDirectory = projectPath + R"(src\utils\src\testDirectory\testFiles\)";
+const std::string testExperimentalDirectory =
+    projectPath + R"(src\utils\src\testDirectory\testExperimental\)";
+const std::string slashDelimiter = "\\";
+#else
+const std::string testDirectory = projectPath + "src/utils/src/testDirectory/testFiles/";
+const std::string testExperimentalDirectory = projectPath + "src/utils/src/testDirectory/testExperimental/";
+const std::string slashDelimiter = "/";
+#endif
+
 const std::string textToWrite{"Hello this text should be written\nby write method"};
 const std::string textToAppend{"\nand this text should be written\nby append method"};
 const std::string textAfterWriteAndAppend{textToWrite + textToAppend};
 const std::string exampleContent{"this is example file created\nin order to check readContent\nmethod"};
-const std::string testDirectory = projectPath + "src/utils/src/testDirectory/testFiles/";
-const std::string testExperimentalDirectory = projectPath + "src/utils/src/testDirectory/testExperimental/";
 const std::string filenameForReading = "testFileForReading.txt";
 const std::string filenameForWriting = "testFileForWriting.txt";
 const std::string dummyDirectoryName{"dummyDir"};
@@ -28,7 +38,7 @@ const std::string pdfFile{"pdfFile.pdf"};
 const std::string pathForReading{testDirectory + filenameForReading};
 const std::string pathForWriting{testDirectory + filenameForWriting};
 const std::string dummyDirectoryPath{testDirectory + dummyDirectoryName};
-const std::string fileInsideDummyDirPath{dummyDirectoryPath + "/" + fileInsideDummyDir};
+const std::string fileInsideDummyDirPath{dummyDirectoryPath + slashDelimiter + fileInsideDummyDir};
 const std::string jpgPath{testDirectory + jpgFile};
 const std::string pdfPath{testDirectory + pdfFile};
 const std::vector<std::string> filenamesWithoutFiltering{

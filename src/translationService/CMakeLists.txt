@@ -19,15 +19,23 @@ set(UT_SOURCES
         )
 
 add_library(translationService ${SOURCES})
-add_executable(translationServiceUT ${UT_SOURCES})
+add_executable(translationServiceUT ${SOURCES} ${UT_SOURCES})
+
+target_compile_definitions(translationServiceUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 target_include_directories(translationService
-        PUBLIC "include"
-        PRIVATE "include/translationService"
+        PUBLIC
+        "include"
+        ${Boost_INCLUDE_DIR}
+        PRIVATE
+        "include/translationService"
         )
 target_include_directories(translationServiceUT PRIVATE
         "include"
         "include/translationService"
+        ${Boost_INCLUDE_DIR}
+        ${GMOCK_INCLUDE_DIR}
+        ${GTEST_INCLUDE_DIR}
         )
 
 target_link_libraries(translationService PRIVATE
@@ -36,15 +44,14 @@ target_link_libraries(translationService PRIVATE
         translator
         )
 target_link_libraries(translationServiceUT PRIVATE
-        gtest_main
-        gmock
+        gmock_main
+        gtest
         utils
-        translationService
         translationRepository
         translator
         )
 
 target_compile_options(translationService PUBLIC ${FLAGS})
-target_compile_options(translationServiceUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(translationServiceUT PUBLIC)
 
 add_test(translationServiceUT translationServiceUT --gtest_color=yes)

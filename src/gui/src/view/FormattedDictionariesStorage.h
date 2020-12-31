@@ -1,6 +1,8 @@
 #pragma once
 
 #include "FormattedDictionary.h"
+#include <string>
+#include <sstream>
 
 namespace glossary::gui::view
 {

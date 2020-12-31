@@ -1,6 +1,7 @@
 #pragma once
 
 #include "WordsApiStatus.h"
+#include <string>
 
 namespace glossary::wordDescriptionService
 {

@@ -4,6 +4,9 @@
 
 #include "repository/DictionaryRepositoryMock.h"
 
+#include <boost/optional/optional_io.hpp>
+
+
 using namespace ::testing;
 using namespace glossary::dictionaryService;
 

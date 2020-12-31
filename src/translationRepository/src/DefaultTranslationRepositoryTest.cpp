@@ -3,6 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "TranslationsStorageMock.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::translationRepository;

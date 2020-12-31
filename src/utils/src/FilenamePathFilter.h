@@ -1,14 +1,13 @@
 #pragma once
 
-#include <experimental/filesystem>
+#include <filesystem>
 #include <string>
 #include <vector>
-
-#include "boost/optional.hpp"
+#include <boost/optional.hpp>
 
 namespace utils
 {
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 using FilePaths = std::vector<std::string>;
 
 class FilenamePathFilter

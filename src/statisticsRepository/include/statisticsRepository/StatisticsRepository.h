@@ -4,10 +4,11 @@
 
 #include "EnglishWord.h"
 #include "Statistics.h"
+#include "StatisticsRepositoryApi.h"
 
 namespace glossary::statisticsRepository
 {
-class StatisticsRepository
+class STATISTICS_REPOSITORY_API StatisticsRepository
 {
 public:
     virtual ~StatisticsRepository() = default;

@@ -42,13 +42,29 @@ set(UT_SOURCES
 add_executable(gui ${SOURCES} Main.cpp)
 add_executable(guiUT ${UT_SOURCES} ${SOURCES})
 
+target_compile_definitions(guiUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
+
 target_include_directories(gui PUBLIC "src/")
 target_include_directories(guiUT PUBLIC "src/")
 
-target_link_libraries(gui PUBLIC Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts glossary)
-target_link_libraries(guiUT PRIVATE Qt5::Core Qt5::Gui Qt5::Widgets Qt5::Charts gtest_main gmock glossary)
+target_link_libraries(gui PUBLIC
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Widgets
+        Qt5::Charts
+        glossary
+        )
+target_link_libraries(guiUT PRIVATE
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Widgets
+        Qt5::Charts
+        gmock_main
+        gtest
+        glossary
+        )
 
 target_compile_options(gui PUBLIC ${FLAGS})
-target_compile_options(guiUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(guiUT PUBLIC)
 
 add_test(guiUT guiUT --gtest_color=yes)

@@ -4,10 +4,11 @@
 
 #include "TranslationRepository.h"
 #include "utils/FileAccess.h"
+#include "TranslationRepositoryApi.h"
 
 namespace glossary::translationRepository
 {
-class TranslationRepositoryFactory
+class TRANSLATOR_REPOSITORY_API TranslationRepositoryFactory
 {
 public:
     virtual ~TranslationRepositoryFactory() = default;

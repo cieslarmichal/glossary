@@ -1,12 +1,12 @@
 #pragma once
 
-#include <experimental/filesystem>
+#include <filesystem>
 #include <string>
 #include <vector>
 
 namespace utils
 {
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 using FilePaths = std::vector<std::string>;
 
 class FileExtensionsFilter

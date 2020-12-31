@@ -3,10 +3,11 @@
 #include "gtest/gtest.h"
 
 #include "TranslationsSerializerMock.h"
-#include "utils/include/utils/FileAccessMock.h"
+#include "utils/FileAccessMock.h"
 
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::translationRepository;

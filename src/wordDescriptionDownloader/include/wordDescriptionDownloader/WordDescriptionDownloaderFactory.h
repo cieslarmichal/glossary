@@ -5,10 +5,11 @@
 #include "WordDescriptionDownloader.h"
 #include "utils/FileAccess.h"
 #include "webConnection/HttpHandler.h"
+#include "WordDescriptionDownloaderApi.h"
 
 namespace glossary::wordDescriptionDownloader
 {
-class WordDescriptionDownloaderFactory
+class WORD_DESCRIPTION_DOWNLOADER_API WordDescriptionDownloaderFactory
 {
 public:
     virtual ~WordDescriptionDownloaderFactory() = default;

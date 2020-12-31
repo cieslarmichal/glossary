@@ -3,12 +3,15 @@
 #include "curl/curl.h"
 
 #include "exceptions/ConnectionFailed.h"
+#include "utils/GetProjectPath.h"
 
 namespace webConnection
 {
 
 namespace
 {
+const std::string configPath{utils::getProjectPath("glossary") + "config"};
+const std::string certificatePath{configPath + utils::slash + "cacert.pem"};
 size_t curlWriterCallback(char* data, size_t size, size_t nmemb, std::string*);
 }
 
@@ -23,15 +26,18 @@ Response CurlHttpHandler::get(const Request& urlAddress) const
     }
 
     Response response;
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_URL, urlAddress.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response.content);
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlWriterCallback);
 
-    if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
+    auto code = curl_easy_perform(curl);
+    if ((code != CURLE_OK) || (response.content.empty()))
     {
         curl_easy_cleanup(curl);
         curl_global_cleanup();
-        throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress);
+        throw exceptions::ConnectionFailed("Error while connecting to: " + urlAddress + " " +
+                                           curl_easy_strerror(code));
     }
 
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.code);
@@ -53,6 +59,7 @@ Response CurlHttpHandler::get(const std::string& url, const std::vector<std::str
     }
 
     Response response;
+    curl_easy_setopt(curl, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "GET");
     curl_easy_setopt(curl, CURLOPT_URL, url.c_str());
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response.content);
@@ -66,12 +73,14 @@ Response CurlHttpHandler::get(const std::string& url, const std::vector<std::str
 
     curl_easy_setopt(curl, CURLOPT_HTTPHEADER, curlHeaders);
 
-    if ((curl_easy_perform(curl) != CURLE_OK) || (response.content.empty()))
+    auto code = curl_easy_perform(curl);
+    if ((code != CURLE_OK) || (response.content.empty()))
     {
         curl_slist_free_all(curlHeaders);
         curl_easy_cleanup(curl);
         curl_global_cleanup();
-        throw exceptions::ConnectionFailed("Error while connecting to: " + url);
+        throw exceptions::ConnectionFailed("Error while connecting to: " + url + " " +
+                                           curl_easy_strerror(code));
     }
 
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response.code);

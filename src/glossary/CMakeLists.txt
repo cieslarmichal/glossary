@@ -21,14 +21,15 @@ set(UT_SOURCES
         )
 
 add_library(glossary ${SOURCES})
-add_executable(glossaryUT ${UT_SOURCES})
+add_executable(glossaryUT ${SOURCES} ${UT_SOURCES})
+
+target_compile_definitions(glossaryUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 target_include_directories(glossary PUBLIC "include")
 target_include_directories(glossaryUT PUBLIC "include")
 
 target_link_libraries(glossary PUBLIC
         ${Boost_LIBRARIES}
-        nlohmann_json
         webConnection
         wordDescriptionService
         dictionaryService
@@ -41,10 +42,8 @@ target_link_libraries(glossary PUBLIC
         utils
         )
 target_link_libraries(glossaryUT PUBLIC
-        gtest_main
-        gmock
-        pthread
-        nlohmann_json
+        gmock_main
+        gtest
         webConnection
         wordDescriptionService
         dictionaryService
@@ -55,10 +54,9 @@ target_link_libraries(glossaryUT PUBLIC
         wordDescriptionRepository
         wordDescriptionDownloader
         utils
-        glossary
         )
 
 target_compile_options(glossary PUBLIC ${FLAGS})
-target_compile_options(glossaryUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(glossaryUT PUBLIC)
 
 add_test(glossaryUT glossaryUT --gtest_color=yes)

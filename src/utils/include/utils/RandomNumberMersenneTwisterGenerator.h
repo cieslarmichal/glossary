@@ -3,15 +3,16 @@
 #include <random>
 
 #include "RandomNumberGenerator.h"
+#include "UtilsApi.h"
 
 namespace utils
 {
 class RandomNumberMersenneTwisterGenerator : public RandomNumberGenerator
 {
 public:
-    RandomNumberMersenneTwisterGenerator();
+    UTILS_API RandomNumberMersenneTwisterGenerator();
 
-    int generate(int rangeStart, int rangeEnd) override;
+    UTILS_API int generate(int rangeStart, int rangeEnd) override;
 
 private:
     std::random_device randomDevice;

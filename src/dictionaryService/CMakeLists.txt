@@ -17,7 +17,7 @@ set(SOURCES
         src/DefaultRandomDictionaryWordRetriever.cpp
         src/DictionaryObserverService.cpp
         src/WordsDictionaryMembershipFinder.cpp
-        )
+        include/dictionaryService/DictionaryServiceApi.h)
 
 set(UT_SOURCES
         src/repository/DefaultDictionaryRepositoryTest.cpp
@@ -39,29 +39,36 @@ set(UT_SOURCES
         )
 
 add_library(dictionaryService ${SOURCES})
-add_executable(dictionaryServiceUT ${UT_SOURCES})
+add_executable(dictionaryServiceUT ${SOURCES} ${UT_SOURCES})
+
+target_compile_definitions(dictionaryServiceUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 target_include_directories(dictionaryService
         PUBLIC "include"
-        PRIVATE ${JSON_INCLUDE_DIR} "include/dictionaryService" "src/"
-        )
-target_include_directories(dictionaryServiceUT PRIVATE
-        "include"
-        ${INTERNAL_LIBS_INCLUDE_PATH}
+        PRIVATE
         ${JSON_INCLUDE_DIR}
         "include/dictionaryService"
         "src/"
+        ${Boost_INCLUDE_DIR}
+        )
+target_include_directories(dictionaryServiceUT PRIVATE
+        "include"
+        "include/dictionaryService"
+        "src/"
+        ${JSON_INCLUDE_DIR}
+        ${GMOCK_INCLUDE_DIR}
+        ${GTEST_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIR}
         )
 
 target_link_libraries(dictionaryService PUBLIC utils)
 target_link_libraries(dictionaryServiceUT PRIVATE
-        gtest_main
-        gmock
-        dictionaryService
+        gmock_main
+        gtest
         utils
         )
 
 target_compile_options(dictionaryService PUBLIC ${FLAGS})
-target_compile_options(dictionaryServiceUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(dictionaryServiceUT PUBLIC)
 
 add_test(dictionaryServiceUT dictionaryServiceUT --gtest_color=yes)

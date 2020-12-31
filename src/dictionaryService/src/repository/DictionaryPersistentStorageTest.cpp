@@ -4,6 +4,7 @@
 
 #include "serialization/DictionarySerializerMock.h"
 #include "utils/FileAccessMock.h"
+#include <boost/optional/optional_io.hpp>
 
 #include "utils/GetProjectPath.h"
 

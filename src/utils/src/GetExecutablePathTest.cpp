@@ -6,15 +6,18 @@
 using namespace ::testing;
 using namespace utils;
 
-class GetExecutablePathTest : public Test
+namespace
 {
-public:
-    const std::string utilsExecutableName{"utilsUT"};
-};
+#ifdef _WIN32
+const std::string utilsExecutableName{"utilsUT.exe"};
+#else
+const std::string utilsExecutableName{"utilsUT"};
+#endif
+}
 
-TEST_F(GetExecutablePathTest, shouldReturnAbsolutePathToProject)
+TEST(GetExecutablePathTest, shouldReturnAbsolutePathToProject)
 {
     const auto actualPath = getExecutablePath();
-
+    std::cerr << actualPath;
     ASSERT_TRUE(boost::algorithm::ends_with(actualPath, utilsExecutableName));
 }

@@ -3,6 +3,7 @@
 #include "utils/FileAccessMock.h"
 
 #include "utils/GetProjectPath.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::translationService;

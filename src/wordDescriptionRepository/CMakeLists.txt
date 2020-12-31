@@ -15,29 +15,37 @@ set(UT_SOURCES
         )
 
 add_library(wordDescriptionRepository ${SOURCES})
-add_executable(wordDescriptionRepositoryUT ${UT_SOURCES})
+add_executable(wordDescriptionRepositoryUT ${SOURCES} ${UT_SOURCES})
+
+target_compile_definitions(wordDescriptionRepositoryUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 target_include_directories(wordDescriptionRepository
-        PUBLIC "include"
-        PRIVATE ${JSON_INCLUDE_DIR} "include/wordDescriptionRepository"
-        )
-target_include_directories(wordDescriptionRepositoryUT PRIVATE
+        PUBLIC
         "include"
-        ${INTERNAL_LIBS_INCLUDE_PATH}
-        ${JSON_INCLUDE_DIR}
+        PRIVATE
         "include/wordDescriptionRepository"
+        ${Boost_INCLUDE_DIR}
+        ${JSON_INCLUDE_DIR}
+        )
+target_include_directories(wordDescriptionRepositoryUT
+        PRIVATE
+        "include"
+        "include/wordDescriptionRepository"
+        ${Boost_INCLUDE_DIR}
+        ${JSON_INCLUDE_DIR}
+        ${GMOCK_INCLUDE_DIR}
+        ${GTEST_INCLUDE_DIR}
         )
 
 target_link_libraries(wordDescriptionRepository PUBLIC utils)
 target_link_libraries(wordDescriptionRepositoryUT PRIVATE
-        gtest_main
-        gmock
-        wordDescriptionRepository
+        gmock_main
+        gtest
         utils
         )
 
 target_compile_options(wordDescriptionRepository PUBLIC ${FLAGS})
-target_compile_options(wordDescriptionRepositoryUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(wordDescriptionRepositoryUT PUBLIC)
 
 add_test(wordDescriptionRepositoryUT wordDescriptionRepositoryUT --gtest_color=yes)
 

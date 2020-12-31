@@ -18,15 +18,24 @@ set(UT_SOURCES
         )
 
 add_library(wordDescriptionService ${SOURCES})
-add_executable(wordDescriptionServiceUT ${UT_SOURCES})
+add_executable(wordDescriptionServiceUT ${SOURCES} ${UT_SOURCES})
+
+target_compile_definitions(wordDescriptionServiceUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 target_include_directories(wordDescriptionService
-        PUBLIC "include"
-        PRIVATE "include/wordDescriptionService"
+        PUBLIC
+        "include"
+        PRIVATE
+        "include/wordDescriptionService"
+        ${Boost_INCLUDE_DIR}
         )
-target_include_directories(wordDescriptionServiceUT PRIVATE
+target_include_directories(wordDescriptionServiceUT
+        PRIVATE
         "include"
         "include/wordDescriptionService"
+        ${GMOCK_INCLUDE_DIR}
+        ${GTEST_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIR}
         )
 
 target_link_libraries(wordDescriptionService PUBLIC
@@ -35,15 +44,14 @@ target_link_libraries(wordDescriptionService PUBLIC
         wordDescriptionRepository
         )
 target_link_libraries(wordDescriptionServiceUT PRIVATE
-        gtest_main
-        gmock
+        gmock_main
+        gtest
         utils
-        wordDescriptionService
         wordDescriptionDownloader
         wordDescriptionRepository
         )
 
 target_compile_options(wordDescriptionService PUBLIC ${FLAGS})
-target_compile_options(wordDescriptionServiceUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(wordDescriptionServiceUT PUBLIC)
 
 add_test(wordDescriptionServiceUT wordDescriptionServiceUT --gtest_color=yes)

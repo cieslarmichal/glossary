@@ -6,6 +6,7 @@
 
 #include "webConnection/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;

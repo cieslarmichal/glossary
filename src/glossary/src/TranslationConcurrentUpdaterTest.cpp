@@ -4,6 +4,7 @@
 
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translationService/TranslationServiceMock.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;

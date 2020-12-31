@@ -3,10 +3,11 @@
 #include "boost/optional.hpp"
 
 #include "WordDescription.h"
+#include "WordDescriptionRepositoryApi.h"
 
 namespace glossary::wordDescriptionRepository
 {
-class WordDescriptionRepository
+class WORD_DESCRIPTION_REPOSITORY_API WordDescriptionRepository
 {
 public:
     virtual ~WordDescriptionRepository() = default;

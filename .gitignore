@@ -4,3 +4,7 @@ build/
 config/googleTranslateApiKey.txt
 config/wordsApiKey.txt
 CMakeLists.txt.user
+CMakeSettings.json
+out/
+config/cacert.pem
+.vs/

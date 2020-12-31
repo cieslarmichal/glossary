@@ -4,10 +4,11 @@
 
 #include "DictionaryService.h"
 #include "utils/FileAccess.h"
+#include "DictionaryServiceApi.h"
 
 namespace glossary::dictionaryService
 {
-class DictionaryServiceFactory
+class DICTIONARY_SERVICE_API DictionaryServiceFactory
 {
 public:
     virtual ~DictionaryServiceFactory() = default;

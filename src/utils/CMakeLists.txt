@@ -27,25 +27,27 @@ set(UT_SOURCES
 
 
 add_library(utils ${SOURCES})
-add_executable(utilsUT ${UT_SOURCES})
+add_executable(utilsUT ${SOURCES} ${UT_SOURCES})
 
 target_include_directories(utils
         PUBLIC "include"
         PRIVATE "include/utils"
+        ${Boost_INCLUDE_DIR}
         )
 target_include_directories(utilsUT PRIVATE
         "include"
         "include/utils"
+        ${Boost_INCLUDE_DIR}
+        ${GTEST_INCLUDE_DIR}
         )
 
-target_link_libraries(utils PUBLIC stdc++fs)
+target_link_libraries(utils PUBLIC)
+
 target_link_libraries(utilsUT PRIVATE
         gtest_main
-        gmock
-        utils
         )
 
 target_compile_options(utils PUBLIC ${FLAGS})
-target_compile_options(utilsUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(utilsUT PUBLIC ${FLAGS})
 
 add_test(utilsUT utilsUT --gtest_color=yes)

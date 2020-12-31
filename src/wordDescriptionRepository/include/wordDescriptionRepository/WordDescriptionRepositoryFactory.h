@@ -4,10 +4,11 @@
 
 #include "WordDescriptionRepository.h"
 #include "utils/FileAccess.h"
+#include "WordDescriptionRepositoryApi.h"
 
 namespace glossary::wordDescriptionRepository
 {
-class WordDescriptionRepositoryFactory
+class WORD_DESCRIPTION_REPOSITORY_API WordDescriptionRepositoryFactory
 {
 public:
     virtual ~WordDescriptionRepositoryFactory() = default;

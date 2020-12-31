@@ -3,10 +3,10 @@
 #include "gtest/gtest.h"
 
 #include "webConnection/HttpHandlerMock.h"
-#include "wordDescriptionService/src/ApiKeyReaderMock.h"
 
 #include "exceptions/InvalidApiKey.h"
 #include "webConnection/exceptions/ConnectionFailed.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace glossary::wordDescriptionDownloader;
 using namespace ::testing;

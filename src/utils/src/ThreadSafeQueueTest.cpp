@@ -5,6 +5,7 @@
 #include "gtest/gtest.h"
 
 #include "testDirectory/testVariables/TestStrings.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace utils;

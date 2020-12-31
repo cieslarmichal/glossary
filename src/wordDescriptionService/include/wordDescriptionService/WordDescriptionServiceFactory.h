@@ -6,10 +6,11 @@
 #include "utils/FileAccess.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
+#include "WordDescriptionServiceApi.h"
 
 namespace glossary::wordDescriptionService
 {
-class WordDescriptionServiceFactory
+class WORD_DESCRIPTION_SERVICE_API WordDescriptionServiceFactory
 {
 public:
     virtual ~WordDescriptionServiceFactory() = default;

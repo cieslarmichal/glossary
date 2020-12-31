@@ -13,17 +13,26 @@ set(UT_SOURCES
         )
 
 add_library(wordDescriptionDownloader ${SOURCES})
-add_executable(wordDescriptionDownloaderUT ${UT_SOURCES})
+add_executable(wordDescriptionDownloaderUT ${SOURCES} ${UT_SOURCES})
+
+target_compile_definitions(wordDescriptionDownloaderUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
 
 target_include_directories(wordDescriptionDownloader
-        PUBLIC "include"
-        PRIVATE "include/wordDescriptionDownloader" ${JSON_INCLUDE_DIR}
+        PUBLIC
+        "include"
+        PRIVATE
+        "include/wordDescriptionDownloader"
+        ${JSON_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIR}
+
         )
 target_include_directories(wordDescriptionDownloaderUT PRIVATE
-        ${INTERNAL_LIBS_INCLUDE_PATH}
-        ${JSON_INCLUDE_DIR}
         "include"
         "include/wordDescriptionDownloader"
+        ${GMOCK_INCLUDE_DIR}
+        ${GTEST_INCLUDE_DIR}
+        ${Boost_INCLUDE_DIR}
+        ${JSON_INCLUDE_DIR}
         )
 
 target_link_libraries(wordDescriptionDownloader
@@ -31,16 +40,15 @@ target_link_libraries(wordDescriptionDownloader
         PRIVATE utils wordDescriptionRepository
         )
 target_link_libraries(wordDescriptionDownloaderUT PRIVATE
-        gtest_main
-        gmock
-        wordDescriptionDownloader
-        wordDescriptionRepository
+        gmock_main
+        gtest
         utils
         webConnection
+        wordDescriptionRepository
         )
 
 target_compile_options(wordDescriptionDownloader PUBLIC ${FLAGS})
-target_compile_options(wordDescriptionDownloaderUT PUBLIC -Wall -Wextra -Werror)
+target_compile_options(wordDescriptionDownloaderUT PUBLIC)
 
 add_test(wordDescriptionDownloaderUT wordDescriptionDownloaderUT --gtest_color=yes)
 

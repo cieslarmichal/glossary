@@ -3,13 +3,14 @@
 #include <memory>
 
 #include "TranslationService.h"
+#include "TranslationServiceApi.h"
 #include "translationRepository/TranslationRepository.h"
 #include "translator/Translator.h"
 #include "utils/FileAccess.h"
 
 namespace glossary::translationService
 {
-class TranslationServiceFactory
+class TRANSLATOR_SERVICE_API TranslationServiceFactory
 {
 public:
     virtual ~TranslationServiceFactory() = default;

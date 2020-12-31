@@ -14,7 +14,8 @@ std::string getExecutablePath()
 #ifdef _WIN32
     wchar_t path[MAX_PATH] = {0};
     GetModuleFileNameW(NULL, path, MAX_PATH);
-    return path;
+    std::wstring wpath(path);
+    return std::string(wpath.begin(), wpath.end());
 #else
     char result[PATH_MAX];
     ssize_t count = readlink("/proc/self/exe", result, PATH_MAX);

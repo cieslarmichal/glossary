@@ -7,6 +7,7 @@
 #include "TranslatorConnectionCheckerMock.h"
 #include "translationRepository/TranslationRepositoryMock.h"
 #include "translator/TranslatorMock.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;

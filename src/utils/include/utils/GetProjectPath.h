@@ -1,8 +1,15 @@
 #pragma once
 
 #include <string>
+#include "UtilsApi.h"
 
 namespace utils
 {
-std::string getProjectPath(const std::string&);
+UTILS_API std::string getProjectPath(const std::string&);
+
+#ifdef _WIN32
+const std::string slash{"\\"};
+#else
+const std::string slash{"/"};
+#endif
 }

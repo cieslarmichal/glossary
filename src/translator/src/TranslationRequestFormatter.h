@@ -1,6 +1,6 @@
 #pragma once
 
-#include "boost/optional.hpp"
+#include <boost/optional.hpp>
 
 #include "Language.h"
 #include "SourceText.h"

@@ -1,10 +1,10 @@
 #include "FileExtensionsFilter.h"
 
-#include <experimental/filesystem>
+#include <filesystem>
 
-#include "boost/algorithm/cxx11/any_of.hpp"
+#include <boost/algorithm/cxx11/any_of.hpp>
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace utils
 {

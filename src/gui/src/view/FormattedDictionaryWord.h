@@ -28,4 +28,16 @@ inline bool operator==(const FormattedDictionaryWord& lhs, const FormattedDictio
 {
     return lhs.englishWord == rhs.englishWord && lhs.translation == rhs.translation;
 }
+
+inline std::string toString(const FormattedDictionaryWord& formattedDictionaryWord)
+{
+    return "{englishWord:" + formattedDictionaryWord.englishWord.toStdString()
+                              + ",translation:" + formattedDictionaryWord.translation.toStdString() + "}";
+}
+
+inline std::ostream& operator<<(std::ostream& os, const FormattedDictionaryWord& formattedDictionaryWord)
+{
+    return os << toString(formattedDictionaryWord);
+}
+
 }

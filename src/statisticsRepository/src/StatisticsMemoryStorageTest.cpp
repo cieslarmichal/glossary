@@ -2,6 +2,7 @@
 
 #include "boost/algorithm/cxx11/any_of.hpp"
 #include "gtest/gtest.h"
+#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::statisticsRepository;

@@ -1,13 +1,14 @@
 #pragma once
 
 #include "boost/optional.hpp"
+#include "UtilsApi.h"
 
 namespace utils
 {
 class SupportedThreadsCalculator
 {
 public:
-    unsigned calculate() const;
+    UTILS_API unsigned calculate() const;
 
 private:
     boost::optional<unsigned> getAmountOfSupportedThreads() const;

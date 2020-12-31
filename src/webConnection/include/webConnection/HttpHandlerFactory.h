@@ -3,10 +3,11 @@
 #include <memory>
 
 #include "HttpHandler.h"
+#include "WebConnectionApi.h"
 
 namespace webConnection
 {
-class HttpHandlerFactory
+class WEB_CONNECTION_API HttpHandlerFactory
 {
 public:
     virtual ~HttpHandlerFactory() = default;

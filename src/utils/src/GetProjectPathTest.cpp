@@ -8,22 +8,26 @@
 using namespace ::testing;
 using namespace utils;
 
-class GetProjectPathTest : public Test
+namespace
 {
-public:
-    const std::string validProjectName{"glossary"};
-    const std::string validPathEnd{"glossary/"};
-    const std::string invalidProjectName{"nasjxanxjqq"};
-};
+#ifdef _WIN32
+const std::string validPathEnd{"glossary\\"};
+#else
+const std::string validPathEnd{"glossary/"};
+#endif
 
-TEST_F(GetProjectPathTest, givenValidProjectName_shouldReturnProjectPath)
+const std::string validProjectName{"glossary"};
+const std::string invalidProjectName{"nasjxanxjqq"};
+}
+
+TEST(GetProjectPathTest, givenValidProjectName_shouldReturnProjectPath)
 {
     const auto actualProjectPath = getProjectPath(validProjectName);
 
     ASSERT_TRUE(boost::algorithm::ends_with(actualProjectPath, validPathEnd));
 }
 
-TEST_F(GetProjectPathTest, givenInvalidProjectName_shouldThrowFileNotFound)
+TEST(GetProjectPathTest, givenInvalidProjectName_shouldThrowFileNotFound)
 {
     ASSERT_THROW(getProjectPath(invalidProjectName), exceptions::FileNotFound);
 }
