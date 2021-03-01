@@ -8,7 +8,7 @@
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
 
-namespace fs = std::experimental::filesystem;
+namespace fs = std::filesystem;
 
 namespace utils
 {

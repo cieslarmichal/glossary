@@ -2,6 +2,6 @@
 
 #ifdef _WIN32
 #    define GLOSSARY_API __declspec(dllexport)
-#elif
+#else
 #    define GLOSSARY_API
 #endif
