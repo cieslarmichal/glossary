@@ -1,9 +1,6 @@
 [submodule "json"]
 	path = externals/json
 	url = https://github.com/nlohmann/json.git
-[submodule "googletest"]
-	path = externals/googletest
-	url = https://github.com/michalovsky/googletest.git
 [submodule "curl"]
 	path = externals/curl
 	url = https://github.com/curl/curl.git
