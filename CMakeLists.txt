@@ -1,10 +1,8 @@
 cmake_minimum_required(VERSION 3.12)
 
 set(PROJECT_NAME glossary)
-project(${PROJECT_NAME})
+project(${PROJECT_NAME} CXX)
 
-set (CMAKE_PREFIX_PATH "C:\\Qt\\5.15.2\\msvc2019_64")
-#-DQt5_DIR="C:\Qt\5.15.2\msvc2019_64\lib\cmake\Qt5"
 find_package(Qt5 COMPONENTS Core Widgets Gui Charts REQUIRED)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -15,7 +13,12 @@ add_subdirectory(externals)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_FLAGS_DEBUG)
-set(FLAGS -std:c++17 /permissive-)
+
+if(MSVC)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std:c++17 /permissive- /W4")
+else()
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Wall -Wextra -Werror")
+endif()
 
 set(GMOCK_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googlemock/include")
 set(GTEST_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googletest/include")
