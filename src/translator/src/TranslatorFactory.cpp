@@ -5,7 +5,7 @@
 namespace glossary::translator
 {
 std::unique_ptr<TranslatorFactory> TranslatorFactory::createTranslatorFactory(
-    const std::shared_ptr<const webConnection::HttpHandler>& httpHandler)
+    const std::shared_ptr<const httpClient::HttpClient>& httpHandler)
 {
     return std::make_unique<DefaultTranslatorFactory>(httpHandler);
 }

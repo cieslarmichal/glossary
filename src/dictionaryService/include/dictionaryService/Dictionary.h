@@ -25,6 +25,7 @@ inline bool operator==(const Dictionary& lhs, const Dictionary& rhs)
 inline std::ostream& operator<<(std::ostream& os, const Dictionary& dictionary)
 {
     os << "{name: " << dictionary.name << ", words: " << dictionary.words << "}";
+
     return os;
 }
 }

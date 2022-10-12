@@ -4,6 +4,7 @@
 #include <iostream>
 #include <iterator>
 #include <map>
+#include <optional>
 #include <set>
 #include <sstream>
 #include <vector>
@@ -30,6 +31,17 @@ template <typename T>
 std::ostream& operator<<(std::ostream& os, const std::vector<T>& v)
 {
     return ::printRange(os, v.begin(), v.end());
+}
+
+template <typename T>
+std::ostream& operator<<(std::ostream& os, const std::optional<std::vector<T>>& vOpt)
+{
+    if (vOpt)
+    {
+        return ::printRange(os, vOpt->begin(), vOpt->end());
+    }
+
+    return os << "none";
 }
 
 template <typename T, typename S>

@@ -3,17 +3,12 @@
 #include <iostream>
 
 #include "exceptions/InvalidApiKey.h"
+#include "httpClient/HttpStatusCode.h"
 
 namespace glossary::translator
 {
-namespace
-{
-constexpr int successCode = 200;
-constexpr int invalidApiKeyCode1 = 400;
-constexpr int invalidApiKeyCode2 = 401;
-}
 
-DefaultTranslator::DefaultTranslator(std::shared_ptr<const webConnection::HttpHandler> handler,
+DefaultTranslator::DefaultTranslator(std::shared_ptr<const httpClient::HttpClient> handler,
                                      std::unique_ptr<TranslationDeserializer> deserializer,
                                      std::unique_ptr<TranslationRequestFormatter> formatter)
     : httpHandler{std::move(handler)},
@@ -23,52 +18,47 @@ DefaultTranslator::DefaultTranslator(std::shared_ptr<const webConnection::HttpHa
 }
 
 boost::optional<TranslatedText> DefaultTranslator::translate(const std::string& sourceText,
-                                                             translator::SourceLanguage sourceLanguage,
-                                                             translator::TargetLanguage targetLanguage,
+                                                             Language sourceLanguage, Language targetLanguage,
                                                              const std::string& apiKey) const
 {
     const auto request =
         requestFormatter->getFormattedRequest(sourceText, sourceLanguage, targetLanguage, apiKey);
-    if (requestIsNotValid(request))
+
+    if (request == boost::none)
     {
         return boost::none;
     }
 
     const auto response = tryGetResponseFromTranslationApi(*request);
+
+    if (translationSucceeded(response.statusCode))
     {
-        if (translationSucceeded(response.code))
-        {
-            return translationDeserializer->deserialize(response.content);
-        }
-        else if (translationFailedDueToInvalidApiKey(response.code))
-        {
-            throw exceptions::InvalidApiKey{"Invalid api key"};
-        }
+        return translationDeserializer->deserialize(response.data);
+    }
+    else if (translationFailedDueToInvalidApiKey(response.statusCode))
+    {
+        throw exceptions::InvalidApiKey{"Invalid api key"};
     }
 
     std::cerr << "Error while translating text: " << sourceText;
+
     return boost::none;
 }
 
-webConnection::Response
-DefaultTranslator::tryGetResponseFromTranslationApi(const webConnection::Request& request) const
+httpClient::HttpResponse DefaultTranslator::tryGetResponseFromTranslationApi(const std::string& request) const
 {
-    return httpHandler->get(request);
+    return httpHandler->get({request});
 }
 
-bool DefaultTranslator::requestIsNotValid(const boost::optional<webConnection::Request>& request) const
+bool DefaultTranslator::translationSucceeded(int statusCode) const
 {
-    return request == boost::none;
+    return statusCode == httpClient::HttpStatusCode::Ok;
 }
 
-bool DefaultTranslator::translationSucceeded(webConnection::ResponseCode responseCode) const
+bool DefaultTranslator::translationFailedDueToInvalidApiKey(int responseCode) const
 {
-    return responseCode == successCode;
-}
-
-bool DefaultTranslator::translationFailedDueToInvalidApiKey(webConnection::ResponseCode responseCode) const
-{
-    return responseCode == invalidApiKeyCode1 || responseCode == invalidApiKeyCode2;
+    return responseCode == httpClient::HttpStatusCode::BadRequest ||
+           responseCode == httpClient::HttpStatusCode::Unauthorized;
 }
 
 }

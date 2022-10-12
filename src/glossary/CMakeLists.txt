@@ -30,7 +30,7 @@ target_include_directories(glossaryUT PUBLIC "include")
 
 target_link_libraries(glossary PUBLIC
         ${Boost_LIBRARIES}
-        webConnection
+        httpClient
         wordDescriptionService
         dictionaryService
         translationService
@@ -44,7 +44,7 @@ target_link_libraries(glossary PUBLIC
 target_link_libraries(glossaryUT PUBLIC
         gmock_main
         gtest
-        webConnection
+        httpClient
         wordDescriptionService
         dictionaryService
         translationService

@@ -1,6 +1,6 @@
 #include "DefaultWordDescriptionService.h"
 
-#include "webConnection/exceptions/ConnectionFailed.h"
+#include "httpClient/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 
 namespace glossary::wordDescriptionService
@@ -68,7 +68,7 @@ DefaultWordDescriptionService::downloadWordDescriptionFromDownloader(
     {
         return wordDescriptionDownloader->tryDownloadWordDescription(englishWord, *wordsApiKey);
     }
-    catch (const webConnection::exceptions::ConnectionFailed& e)
+    catch (const httpClient::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Connection failed: " << e.what();
     }

@@ -6,7 +6,7 @@ namespace glossary::wordDescriptionDownloader
 {
 namespace
 {
-const webConnection::ResponseCode okResponse{200};
+const int okResponse{200};
 }
 
 DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
@@ -20,8 +20,11 @@ wordDescriptionRepository::WordDescription DefaultWordDescriptionDownloader::try
     const wordDescriptionRepository::EnglishWord& englishWord, const std::string& wordsApiKey) const
 {
     auto definitions = downloadDefinitions(englishWord, wordsApiKey);
+
     auto examples = downloadExamples(englishWord, wordsApiKey);
+
     auto synonyms = downloadSynonyms(englishWord, wordsApiKey);
+
     return wordDescriptionRepository::WordDescription{englishWord, definitions, examples, synonyms};
 }
 
@@ -30,9 +33,10 @@ wordDescriptionRepository::Definitions DefaultWordDescriptionDownloader::downloa
 {
     const auto definitionsApiResponse =
         apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord, wordsApiKey);
-    if (responseCodeIsOk(definitionsApiResponse.code))
+
+    if (responseCodeIsOk(definitionsApiResponse.statusCode))
     {
-        return responseDeserializer->deserializeDefinitions(definitionsApiResponse.content);
+        return responseDeserializer->deserializeDefinitions(definitionsApiResponse.data);
     }
     return {};
 }
@@ -42,9 +46,10 @@ DefaultWordDescriptionDownloader::downloadExamples(const wordDescriptionReposito
                                                    const std::string& wordsApiKey) const
 {
     const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord, wordsApiKey);
-    if (responseCodeIsOk(examplesApiResponse.code))
+
+    if (responseCodeIsOk(examplesApiResponse.statusCode))
     {
-        return responseDeserializer->deserializeExamples(examplesApiResponse.content);
+        return responseDeserializer->deserializeExamples(examplesApiResponse.data);
     }
     return {};
 }
@@ -55,14 +60,15 @@ DefaultWordDescriptionDownloader::downloadSynonyms(const wordDescriptionReposito
 {
 
     const auto synonymsApiResponse = apiResponseFetcher->tryGetWordSynonymsResponse(englishWord, wordsApiKey);
-    if (responseCodeIsOk(synonymsApiResponse.code))
+
+    if (responseCodeIsOk(synonymsApiResponse.statusCode))
     {
-        return responseDeserializer->deserializeSynonyms(synonymsApiResponse.content);
+        return responseDeserializer->deserializeSynonyms(synonymsApiResponse.data);
     }
     return {};
 }
 
-bool DefaultWordDescriptionDownloader::responseCodeIsOk(const webConnection::ResponseCode responseCode) const
+bool DefaultWordDescriptionDownloader::responseCodeIsOk(const int responseCode) const
 {
     return responseCode == okResponse;
 }

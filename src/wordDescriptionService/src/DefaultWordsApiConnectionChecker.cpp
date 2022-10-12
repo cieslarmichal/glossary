@@ -1,6 +1,6 @@
 #include "DefaultWordsApiConnectionChecker.h"
 
-#include "webConnection/exceptions/ConnectionFailed.h"
+#include "httpClient/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 
 namespace glossary::wordDescriptionService
@@ -24,7 +24,7 @@ DefaultWordsApiConnectionChecker::connectionToWordsApiAvailable(const std::strin
         wordDescriptionDownloader->tryDownloadWordDescription(exampleEnglishWord, wordsApiKey);
         return WordsApiStatus::Available;
     }
-    catch (const webConnection::exceptions::ConnectionFailed& e)
+    catch (const httpClient::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Connection to words api is not availavile" << e.what();
         return WordsApiStatus::Unavailable;

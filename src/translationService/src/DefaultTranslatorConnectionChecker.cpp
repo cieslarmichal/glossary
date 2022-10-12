@@ -1,7 +1,7 @@
 #include "DefaultTranslatorConnectionChecker.h"
 
 #include "translator/exceptions/InvalidApiKey.h"
-#include "webConnection/exceptions/ConnectionFailed.h"
+#include "httpClient/exceptions/ConnectionFailed.h"
 
 namespace glossary::translationService
 {
@@ -31,7 +31,7 @@ TranslationApiStatus DefaultTranslatorConnectionChecker::connectionToTranslatorW
     {
         return TranslationApiStatus::InvalidApiKey;
     }
-    catch (const webConnection::exceptions::ConnectionFailed&)
+    catch (const httpClient::exceptions::ConnectionFailed&)
     {
         return TranslationApiStatus::Unavailable;
     }

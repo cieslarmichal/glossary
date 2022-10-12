@@ -34,14 +34,14 @@ target_include_directories(translatorUT PRIVATE
         )
 
 target_link_libraries(translator
-        PUBLIC webConnection
+        PUBLIC httpClient
         PRIVATE utils
         )
 target_link_libraries(translatorUT PRIVATE
         gmock_main
         gtest
         utils
-        webConnection
+        httpClient
         )
 
 target_compile_options(translator PUBLIC ${FLAGS})

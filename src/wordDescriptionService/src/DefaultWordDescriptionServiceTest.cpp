@@ -8,7 +8,7 @@
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
 
-#include "webConnection/exceptions/ConnectionFailed.h"
+#include "httpClient/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
 #include <boost/optional/optional_io.hpp>
 
@@ -104,7 +104,7 @@ TEST_F(
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
-        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(emptyWordDescription));
 
     const auto actualWordDescription = wordDescriptionService.retrieveWordDescription(englishWord);

@@ -1,6 +1,7 @@
 #include "WordsApiResponseFetcher.h"
 
 #include "exceptions/InvalidApiKey.h"
+#include "httpClient/HttpStatusCode.h"
 
 namespace glossary::wordDescriptionDownloader
 {
@@ -12,69 +13,73 @@ const std::string synonyms{"synonyms"};
 const std::string hostHeader{"x-rapidapi-host: "};
 const std::string host{"wordsapiv1.p.rapidapi.com"};
 const std::string keyHeader{"x-rapidapi-key: "};
-constexpr int invalidApiKeyCode1 = 400;
-constexpr int invalidApiKeyCode2 = 401;
 }
 
 const std::string WordsApiResponseFetcher::wordsApiUrl{"https://wordsapiv1.p.rapidapi.com/words/"};
 
 WordsApiResponseFetcher::WordsApiResponseFetcher(
-    std::shared_ptr<const webConnection::HttpHandler> httpHandlerInit)
+    std::shared_ptr<const httpClient::HttpClient> httpHandlerInit)
     : httpHandler{std::move(httpHandlerInit)}
 {
 }
 
-webConnection::Response
+httpClient::HttpResponse
 WordsApiResponseFetcher::tryGetWordDefinitionsResponse(const std::string& englishWord,
                                                        const std::string& wordsApiKey) const
 {
     const auto wordDefinitionsUrl = wordsApiUrl + englishWord + "/" + definitions;
+
     const std::vector<std::string> headers{hostHeader + host, keyHeader + wordsApiKey};
 
-    auto response = httpHandler->get(wordDefinitionsUrl, headers);
+    auto response = httpHandler->get({wordDefinitionsUrl, headers});
 
-    if (responseFailedDueToInvalidApiKey(response.code))
+    if (responseFailedDueToInvalidApiKey(response.statusCode))
     {
         throw exceptions::InvalidApiKey{"Invalid api key"};
     }
     return response;
 }
 
-webConnection::Response
+httpClient::HttpResponse
 WordsApiResponseFetcher::tryGetWordExamplesResponse(const std::string& englishWord,
                                                     const std::string& wordsApiKey) const
 {
     const auto wordExamplesUrl = wordsApiUrl + englishWord + "/" + examples;
+
     const std::vector<std::string> headers{hostHeader + host, keyHeader + wordsApiKey};
 
-    auto response = httpHandler->get(wordExamplesUrl, headers);
+    auto response = httpHandler->get({wordExamplesUrl, headers});
 
-    if (responseFailedDueToInvalidApiKey(response.code))
+    if (responseFailedDueToInvalidApiKey(response.statusCode))
     {
         throw exceptions::InvalidApiKey{"Invalid api key"};
     }
+
     return response;
 }
 
-webConnection::Response
+httpClient::HttpResponse
 WordsApiResponseFetcher::tryGetWordSynonymsResponse(const std::string& englishWord,
                                                     const std::string& wordsApiKey) const
 {
     const auto wordSynonymsUrl = wordsApiUrl + englishWord + "/" + synonyms;
+
     const std::vector<std::string> headers{hostHeader + host, keyHeader + wordsApiKey};
 
-    auto response = httpHandler->get(wordSynonymsUrl, headers);
+    auto response = httpHandler->get({wordSynonymsUrl, headers});
 
-    if (responseFailedDueToInvalidApiKey(response.code))
+    if (responseFailedDueToInvalidApiKey(response.statusCode))
     {
         throw exceptions::InvalidApiKey{"Invalid api key"};
     }
+
     return response;
 }
 
-bool WordsApiResponseFetcher::responseFailedDueToInvalidApiKey(webConnection::ResponseCode responseCode) const
+bool WordsApiResponseFetcher::responseFailedDueToInvalidApiKey(int responseCode) const
 {
-    return responseCode == invalidApiKeyCode1 || responseCode == invalidApiKeyCode2;
+    return responseCode == httpClient::HttpStatusCode::Unauthorized ||
+           responseCode == httpClient::HttpStatusCode::BadRequest;
 }
 
 }

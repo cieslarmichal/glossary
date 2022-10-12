@@ -1,6 +1,6 @@
 set(INTERNAL_LIBS_INCLUDE_PATH ${CMAKE_CURRENT_LIST_DIR})
 
-add_subdirectory(webConnection)
+add_subdirectory(httpClient)
 add_subdirectory(utils)
 add_subdirectory(dictionaryService)
 add_subdirectory(translator)

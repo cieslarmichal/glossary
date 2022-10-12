@@ -1,6 +1,6 @@
 #pragma once
 
-#include "webConnection/Response.h"
+#include "httpClient/HttpResponse.h"
 
 namespace glossary::wordDescriptionDownloader
 {
@@ -9,11 +9,11 @@ class ApiResponseFetcher
 public:
     virtual ~ApiResponseFetcher() = default;
 
-    virtual webConnection::Response tryGetWordDefinitionsResponse(const std::string& englishWord,
+    virtual httpClient::HttpResponse tryGetWordDefinitionsResponse(const std::string& englishWord,
                                                                   const std::string& wordsApiKey) const = 0;
-    virtual webConnection::Response tryGetWordExamplesResponse(const std::string& englishWord,
+    virtual httpClient::HttpResponse tryGetWordExamplesResponse(const std::string& englishWord,
                                                                const std::string& wordsApiKey) const = 0;
-    virtual webConnection::Response tryGetWordSynonymsResponse(const std::string& englishWord,
+    virtual httpClient::HttpResponse tryGetWordSynonymsResponse(const std::string& englishWord,
                                                                const std::string& wordsApiKey) const = 0;
 };
 }

@@ -36,14 +36,14 @@ target_include_directories(wordDescriptionDownloaderUT PRIVATE
         )
 
 target_link_libraries(wordDescriptionDownloader
-        PUBLIC webConnection
+        PUBLIC httpClient
         PRIVATE utils wordDescriptionRepository
         )
 target_link_libraries(wordDescriptionDownloaderUT PRIVATE
         gmock_main
         gtest
         utils
-        webConnection
+        httpClient
         wordDescriptionRepository
         )
 

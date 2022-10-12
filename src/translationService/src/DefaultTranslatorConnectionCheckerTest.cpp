@@ -5,7 +5,7 @@
 #include "translator/TranslatorMock.h"
 
 #include "translator/exceptions/InvalidApiKey.h"
-#include "webConnection/exceptions/ConnectionFailed.h"
+#include "httpClient/exceptions/ConnectionFailed.h"
 #include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
@@ -33,7 +33,7 @@ public:
 TEST_F(DefaultTranslatorConnectionCheckerTest, connectionToTranslatorFailed_shouldReturnConnectionUnavailable)
 {
     EXPECT_CALL(*translator, translate(examplePolishWord, sourceLanguage, targetLanguage, apiKey))
-        .WillOnce(Throw(webConnection::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
 
     const auto connectionAvailableStatus =
         connectionChecker.connectionToTranslatorWithApiKeyIsAvailable(apiKey);

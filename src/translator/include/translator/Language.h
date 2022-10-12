@@ -12,9 +12,6 @@ enum class Language
     English
 };
 
-using SourceLanguage = Language;
-using TargetLanguage = Language;
-
 inline std::string toString(Language language)
 {
     std::map<Language, std::string> languageString{{Language::Polish, "Polish"},
@@ -30,6 +27,7 @@ inline std::ostream& operator<<(std::ostream& os, Language language)
 inline std::string toLanguageCode(Language language)
 {
     std::map<Language, std::string> languageCodes{{Language::English, "en"}, {Language::Polish, "pl"}};
+
     return languageCodes.at(language);
 }
 }

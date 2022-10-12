@@ -5,7 +5,7 @@
 #include "ApiResponseFetcher.h"
 #include "WordDescriptionDownloader.h"
 #include "WordDescriptionResponseDeserializer.h"
-#include "webConnection/HttpHandler.h"
+#include "httpClient/HttpClient.h"
 #include "wordDescriptionRepository/EnglishWord.h"
 
 namespace glossary::wordDescriptionDownloader
@@ -27,7 +27,7 @@ private:
                                                          const std::string& wordsApiKey) const;
     wordDescriptionRepository::Synonyms downloadSynonyms(const wordDescriptionRepository::EnglishWord&,
                                                          const std::string& wordsApiKey) const;
-    bool responseCodeIsOk(webConnection::ResponseCode) const;
+    bool responseCodeIsOk(int) const;
 
     std::unique_ptr<const ApiResponseFetcher> apiResponseFetcher;
     std::unique_ptr<const WordDescriptionResponseDeserializer> responseDeserializer;

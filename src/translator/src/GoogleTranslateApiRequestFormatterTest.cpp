@@ -13,8 +13,8 @@ const std::string apiKey = {"topSecretKey"};
 const std::string keyField = {"key=" + apiKey};
 const auto sourceField = R"(&source=pl)";
 const auto targetField = R"(&target=en)";
-const webConnection::Request requestWithSingleWord = url + keyField + "&q=piwo" + sourceField + targetField;
-const webConnection::Request requestWithMultipleWord =
+const std::string requestWithSingleWord = url + keyField + "&q=piwo" + sourceField + targetField;
+const std::string requestWithMultipleWord =
     url + keyField + "&q=piwo+jest+pyszne" + sourceField + targetField;
 const auto emptyText = "";
 const auto singleWordText = "piwo";

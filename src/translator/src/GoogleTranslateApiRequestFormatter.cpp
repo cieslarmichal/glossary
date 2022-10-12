@@ -11,9 +11,10 @@ const std::string stringToSplitBy{" "};
 const std::string stringToJoinWith{"+"};
 }
 
-boost::optional<webConnection::Request> GoogleTranslateApiRequestFormatter::getFormattedRequest(
-    const SourceText& sourceText, SourceLanguage sourceLanguage, TargetLanguage targetLanguage,
-    const std::string& apiKey) const
+boost::optional<std::string>
+GoogleTranslateApiRequestFormatter::getFormattedRequest(const SourceText& sourceText, Language sourceLanguage,
+                                                        Language targetLanguage,
+                                                        const std::string& apiKey) const
 {
     if (sourceText.empty())
         return boost::none;
@@ -28,16 +29,19 @@ SourceText GoogleTranslateApiRequestFormatter::getFormattedSourceText(const Sour
     return utils::join(splitText, stringToJoinWith);
 }
 
-webConnection::Request
-GoogleTranslateApiRequestFormatter::getRequest(const SourceText& sourceText, SourceLanguage sourceLanguage,
-                                               translator::TargetLanguage targetLanguage,
-                                               const std::string& apiKey) const
+std::string GoogleTranslateApiRequestFormatter::getRequest(const SourceText& sourceText,
+                                                           Language sourceLanguage, Language targetLanguage,
+                                                           const std::string& apiKey) const
 {
     const auto keyField = "key=" + apiKey;
+
     const auto text = "q=" + sourceText;
+
     const auto source = "source=" + toLanguageCode(sourceLanguage);
+
     const auto target = "target=" + toLanguageCode(targetLanguage);
-    return webConnection::Request{urlAddress + keyField + "&" + text + "&" + source + "&" + target};
+
+    return std::string{urlAddress + keyField + "&" + text + "&" + source + "&" + target};
 }
 
 }

@@ -5,26 +5,26 @@
 #include "TranslationDeserializer.h"
 #include "TranslationRequestFormatter.h"
 #include "Translator.h"
-#include "webConnection/HttpHandler.h"
+#include "httpClient/HttpClient.h"
 
 namespace glossary::translator
 {
 class DefaultTranslator : public Translator
 {
 public:
-    DefaultTranslator(std::shared_ptr<const webConnection::HttpHandler>,
-                      std::unique_ptr<TranslationDeserializer>, std::unique_ptr<TranslationRequestFormatter>);
+    DefaultTranslator(std::shared_ptr<const httpClient::HttpClient>, std::unique_ptr<TranslationDeserializer>,
+                      std::unique_ptr<TranslationRequestFormatter>);
 
-    boost::optional<TranslatedText> translate(const std::string&, SourceLanguage, TargetLanguage,
+    boost::optional<TranslatedText> translate(const std::string&, Language sourceLanguage,
+                                              Language targetLanguage,
                                               const std::string& apiKey) const override;
 
 private:
-    webConnection::Response tryGetResponseFromTranslationApi(const webConnection::Request&) const;
-    bool requestIsNotValid(const boost::optional<webConnection::Request>&) const;
-    bool translationSucceeded(webConnection::ResponseCode) const;
-    bool translationFailedDueToInvalidApiKey(webConnection::ResponseCode) const;
+    httpClient::HttpResponse tryGetResponseFromTranslationApi(const std::string&) const;
+    bool translationSucceeded(int statusCode) const;
+    bool translationFailedDueToInvalidApiKey(int) const;
 
-    std::shared_ptr<const webConnection::HttpHandler> httpHandler;
+    std::shared_ptr<const httpClient::HttpClient> httpHandler;
     std::unique_ptr<TranslationDeserializer> translationDeserializer;
     std::unique_ptr<TranslationRequestFormatter> requestFormatter;
 };
