@@ -61,7 +61,7 @@ void TranslationConcurrentUpdater::loadingTranslationsWorker(
 void TranslationConcurrentUpdater::loadTranslationFromTranslationService(
     const dictionaryService::EnglishWord& englishWord)
 {
-    translationService->retrieveTranslation(englishWord, translator::SourceLanguage::English,
-                                            translator::TargetLanguage::Polish);
+    translationService->retrieveTranslation(englishWord, translation::SourceLanguage::English,
+                                            translation::TargetLanguage::Polish);
 }
 }

@@ -68,8 +68,8 @@ boost::optional<std::string> DefaultGlossary::getRandomPolishWord() const
     if (not dictionaryWord->translation)
     {
         return translationRetrieverService->retrieveTranslation(dictionaryWord->englishWord,
-                                                                translator::SourceLanguage::English,
-                                                                translator::TargetLanguage::Polish);
+                                                                translation::SourceLanguage::English,
+                                                                translation::TargetLanguage::Polish);
     }
 
     return dictionaryWord->translation;
@@ -87,8 +87,8 @@ boost::optional<std::string> DefaultGlossary::getRandomPolishWord(const Dictiona
     if (not dictionaryWord->translation)
     {
         return translationRetrieverService->retrieveTranslation(dictionaryWord->englishWord,
-                                                                translator::SourceLanguage::English,
-                                                                translator::TargetLanguage::Polish);
+                                                                translation::SourceLanguage::English,
+                                                                translation::TargetLanguage::Polish);
     }
 
     return dictionaryWord->translation;
@@ -98,7 +98,7 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
                                                   const std::string& englishWord) const
 {
     const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(
-        polishWord, translator::SourceLanguage::Polish, translator::TargetLanguage::English);
+        polishWord, translation::SourceLanguage::Polish, translation::TargetLanguage::English);
     if (englishTranslationFromPolishWord == boost::none)
     {
         return false;
@@ -201,14 +201,14 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
                                                         const std::string& sourceLanguageText,
                                                         const std::string& targetLanguageText) const
 {
-    translator::SourceLanguage sourceLanguage;
+    translation::SourceLanguage sourceLanguage;
     if (answerValidator->validateAnswer(sourceLanguageText, "Polish"))
     {
-        sourceLanguage = translator::Language::Polish;
+        sourceLanguage = translation::Language::Polish;
     }
     else if (answerValidator->validateAnswer(sourceLanguageText, "English"))
     {
-        sourceLanguage = translator::Language::English;
+        sourceLanguage = translation::Language::English;
     }
     else
     {
@@ -216,14 +216,14 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
         return boost::none;
     }
 
-    translator::TargetLanguage targetLanguage;
+    translation::TargetLanguage targetLanguage;
     if (answerValidator->validateAnswer(targetLanguageText, "Polish"))
     {
-        targetLanguage = translator::Language::Polish;
+        targetLanguage = translation::Language::Polish;
     }
     else if (answerValidator->validateAnswer(targetLanguageText, "English"))
     {
-        targetLanguage = translator::Language::English;
+        targetLanguage = translation::Language::English;
     }
     else
     {

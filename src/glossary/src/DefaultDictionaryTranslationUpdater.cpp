@@ -43,11 +43,11 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
     }
 }
 
-boost::optional<translator::TranslatedText>
+boost::optional<translation::TranslatedText>
 DefaultDictionaryTranslationUpdater::getTranslation(const dictionaryService::EnglishWord& englishWord)
 {
-    return translationService->retrieveTranslation(englishWord, translator::SourceLanguage::English,
-                                                   translator::TargetLanguage::Polish);
+    return translationService->retrieveTranslation(englishWord, translation::SourceLanguage::English,
+                                                   translation::TargetLanguage::Polish);
 }
 
 bool DefaultDictionaryTranslationUpdater::dictionaryWordHasNoTranslation(

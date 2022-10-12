@@ -22,7 +22,7 @@ public:
     void updateDictionaryTranslations(const dictionaryService::DictionaryName&) override;
 
 private:
-    boost::optional<translator::TranslatedText> getTranslation(const dictionaryService::EnglishWord&);
+    boost::optional<translation::TranslatedText> getTranslation(const dictionaryService::EnglishWord&);
     bool dictionaryWordHasNoTranslation(const dictionaryService::DictionaryWord&) const;
 
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;

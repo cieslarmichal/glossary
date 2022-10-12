@@ -1,10 +1,11 @@
 #include "DefaultDictionaryTranslationUpdater.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "dictionaryService/DictionaryServiceMock.h"
 #include "translationService/TranslationServiceMock.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;
@@ -24,8 +25,8 @@ const DictionaryWords dictionaryWords{dictionaryWord1, dictionaryWord2};
 const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 const std::string translationFromService1{"translationFromService1"};
 const std::string translationFromService2{"translationFromService2"};
-const auto sourceLanguage = translator::SourceLanguage::English;
-const auto targetLanguage = translator::TargetLanguage::Polish;
+const auto sourceLanguage = translation::SourceLanguage::English;
+const auto targetLanguage = translation::TargetLanguage::Polish;
 }
 
 class DefaultDictionaryTranslationUpdaterTest : public Test

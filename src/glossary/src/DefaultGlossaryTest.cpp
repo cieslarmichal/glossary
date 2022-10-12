@@ -1,5 +1,7 @@
 #include "DefaultGlossary.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "AnswerValidatorMock.h"
@@ -10,7 +12,6 @@
 #include "statisticsRepository/StatisticsRepositoryMock.h"
 #include "translationService/TranslationServiceMock.h"
 #include "wordDescriptionService/WordDescriptionServiceMock.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;
@@ -29,8 +30,8 @@ const std::string validSourceLanguage{"validSourceLanguage"};
 const std::string validTargetLanguage{"validTargetLanguage"};
 const std::string polishLanguageString{"Polish"};
 const std::string englishLanguageString{"English"};
-const auto polishLanguage = translator::Language::Polish;
-const auto englishLanguage = translator::Language::English;
+const auto polishLanguage = translation::Language::Polish;
+const auto englishLanguage = translation::Language::English;
 const std::string textToTranslate{"textToTranslate"};
 const std::string translatedText{"translatedText"};
 const DictionaryName dictionaryName1{"dictionary1"};

@@ -1,5 +1,6 @@
 #include "DefaultGlossaryFactory.h"
 
+#include "../../domain/translation/include/TranslatorFactory.h"
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionaryStatisticsCounter.h"
 #include "DefaultDictionaryTranslationUpdater.h"
@@ -12,7 +13,6 @@
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
 #include "translationRepository/TranslationRepositoryFactory.h"
 #include "translationService/TranslationServiceFactory.h"
-#include "translator/TranslatorFactory.h"
 #include "utils/FileAccessFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryFactory.h"
@@ -26,12 +26,12 @@ std::shared_ptr<utils::FileAccess> createFileAccess();
 std::shared_ptr<const httpClient::HttpClient> createHttpHandler();
 std::shared_ptr<dictionaryService::DictionaryService>
 createDictionaryService(const std::shared_ptr<utils::FileAccess>&);
-std::shared_ptr<translator::Translator>
+std::shared_ptr<translation::TranslationService>
 createTranslator(const std::shared_ptr<const httpClient::HttpClient>&);
 std::shared_ptr<translationRepository::TranslationRepository>
 createTranslationRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<translationService::TranslationService>
-createTranslationService(const std::shared_ptr<translator::Translator>&,
+createTranslationService(const std::shared_ptr<translation::TranslationService>&,
                          const std::shared_ptr<translationRepository::TranslationRepository>&,
                          const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<statisticsRepository::StatisticsRepository>
@@ -120,10 +120,10 @@ createDictionaryService(const std::shared_ptr<utils::FileAccess>& fileAccess)
     return dictionaryServiceFactory->createDictionaryService();
 }
 
-std::shared_ptr<translator::Translator>
+std::shared_ptr<translation::TranslationService>
 createTranslator(const std::shared_ptr<const httpClient::HttpClient>& httpHandler)
 {
-    auto translatorFactory = translator::TranslatorFactory::createTranslatorFactory(httpHandler);
+    auto translatorFactory = translation::TranslatorFactory::createTranslatorFactory(httpHandler);
     return translatorFactory->createTranslator();
 }
 
@@ -136,7 +136,7 @@ createTranslationRepository(const std::shared_ptr<utils::FileAccess>& fileAccess
 }
 
 std::shared_ptr<translationService::TranslationService> createTranslationService(
-    const std::shared_ptr<translator::Translator>& translator,
+    const std::shared_ptr<translation::TranslationService>& translator,
     const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository,
     const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
