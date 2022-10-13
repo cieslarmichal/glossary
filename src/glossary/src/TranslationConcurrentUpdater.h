@@ -2,8 +2,8 @@
 
 #include <memory>
 
+#include "../../domain/translation/include/TranslationRepository.h"
 #include "dictionaryService/DictionaryObserver.h"
-#include "translationRepository/TranslationRepository.h"
 #include "translationService/TranslationService.h"
 #include "utils/SupportedThreadsCalculator.h"
 #include "utils/ThreadSafeQueue.h"
@@ -14,7 +14,7 @@ class TranslationConcurrentUpdater : public dictionaryService::DictionaryObserve
 {
 public:
     TranslationConcurrentUpdater(std::shared_ptr<translationService::TranslationService>,
-                                 std::shared_ptr<translationRepository::TranslationRepository>);
+                                 std::shared_ptr<translation::TranslationRepository>);
 
     void update(const dictionaryService::EnglishWords&) override;
 
@@ -26,7 +26,7 @@ private:
     void loadTranslationFromTranslationService(const dictionaryService::EnglishWord&);
 
     std::shared_ptr<translationService::TranslationService> translationService;
-    std::shared_ptr<translationRepository::TranslationRepository> translationRepository;
+    std::shared_ptr<translation::TranslationRepository> translationRepository;
     utils::SupportedThreadsCalculator supportedThreadsCalculator;
 };
 }

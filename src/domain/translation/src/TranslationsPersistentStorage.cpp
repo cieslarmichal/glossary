@@ -5,9 +5,8 @@
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
-
 const std::string TranslationsPersistentStorage::directory{utils::getProjectPath("glossary") +
                                                            "repositoryFiles/"};
 const std::string TranslationsPersistentStorage::filename{directory + "translations.txt"};
@@ -29,22 +28,22 @@ void TranslationsPersistentStorage::addTranslation(Translation translation)
     }
 }
 
-boost::optional<Translation> TranslationsPersistentStorage::getTranslation(const SourceText& polishWord) const
+std::optional<Translation> TranslationsPersistentStorage::getTranslation(const std::string& polishWord) const
 {
     return storage.getTranslation(polishWord);
 }
 
-Translations TranslationsPersistentStorage::getTranslations() const
+std::vector<Translation> TranslationsPersistentStorage::getTranslations() const
 {
     return storage.getTranslations();
 }
 
-bool TranslationsPersistentStorage::contains(const SourceText& polishWord) const
+bool TranslationsPersistentStorage::contains(const std::string& polishWord) const
 {
     return storage.contains(polishWord);
 }
 
-Translations::size_type TranslationsPersistentStorage::size() const
+std::vector<Translation>::size_type TranslationsPersistentStorage::size() const
 {
     return storage.size();
 }
@@ -56,7 +55,8 @@ bool TranslationsPersistentStorage::empty() const
 
 void TranslationsPersistentStorage::loadFile()
 {
-    Translations translations;
+    std::vector<Translation> translations;
+
     try
     {
         translations = serializer->deserialize(fileAccess->readContent(filename));

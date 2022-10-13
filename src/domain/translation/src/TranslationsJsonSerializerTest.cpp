@@ -1,22 +1,21 @@
 #include "TranslationsJsonSerializer.h"
 
 #include "gtest/gtest.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
-using namespace glossary::translationRepository;
+using namespace glossary::translation;
 
 namespace
 {
-const SourceText polishWord1{"polishWord1"};
-const SourceText polishWord2{"polishWord2"};
-const TranslatedText englishWord1{"englishWord1"};
-const TranslatedText englishWord2{"englishWord2"};
+const std::string polishWord1{"polishWord1"};
+const std::string polishWord2{"polishWord2"};
+const std::string englishWord1{"englishWord1"};
+const std::string englishWord2{"englishWord2"};
 const Translation translation1{polishWord1, englishWord1};
 const Translation translation2{polishWord2, englishWord2};
-const Translations translations{translation1, translation2};
-const Translations translationsWithOneTranslation{translation1};
-const Translations emptyTranslations{};
+const std::vector<Translation> translations{translation1, translation2};
+const std::vector<Translation> translationsWithOneTranslation{translation1};
+const std::vector<Translation> emptyTranslations{};
 const std::string invalidJson{"{."};
 const std::string serializedTranslations{
     R"({"translations":[{"englishWord":"englishWord1","polishWord":"polishWord1"},{"englishWord":"englishWord2","polishWord":"polishWord2"}]})"};

@@ -1,6 +1,6 @@
 #include "DefaultTranslationRepository.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
 DefaultTranslationRepository::DefaultTranslationRepository(std::unique_ptr<TranslationsStorage> storageInit)
     : storage{std::move(storageInit)}
@@ -13,13 +13,13 @@ void DefaultTranslationRepository::addTranslation(Translation translation)
     storage->addTranslation(std::move(translation));
 }
 
-boost::optional<Translation> DefaultTranslationRepository::getTranslation(const SourceText& sourceText) const
+std::optional<Translation> DefaultTranslationRepository::getTranslation(const std::string& sourceText) const
 {
     std::lock_guard<std::mutex> lockGuard(lock);
     return storage->getTranslation(sourceText);
 }
 
-bool DefaultTranslationRepository::containsTranslation(const SourceText& sourceText) const
+bool DefaultTranslationRepository::containsTranslation(const std::string& sourceText) const
 {
     std::lock_guard<std::mutex> lockGuard(lock);
     return storage->contains(sourceText);

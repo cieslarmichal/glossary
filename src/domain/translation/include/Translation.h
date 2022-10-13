@@ -3,18 +3,13 @@
 #include <ostream>
 #include <vector>
 
-#include "SourceText.h"
-#include "TranslatedText.h"
-
-namespace glossary::translationRepository
+namespace glossary::translation
 {
 struct Translation
 {
-    SourceText sourceText;
-    TranslatedText translatedText;
+    std::string sourceText;
+    std::string translatedText;
 };
-
-using Translations = std::vector<Translation>;
 
 inline bool operator==(const Translation& lhs, const Translation& rhs)
 {
@@ -23,7 +18,7 @@ inline bool operator==(const Translation& lhs, const Translation& rhs)
 
 inline std::string toString(const Translation& translation)
 {
-    return "{sourceText:" + translation.sourceText + ".translatedText:" + translation.translatedText + "}";
+    return "{sourceText:" + translation.sourceText + ",translatedText:" + translation.translatedText + "}";
 }
 
 inline std::ostream& operator<<(std::ostream& os, const Translation& translation)

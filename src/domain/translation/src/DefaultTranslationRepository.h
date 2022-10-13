@@ -6,7 +6,7 @@
 #include "TranslationRepository.h"
 #include "TranslationsStorage.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
 class DefaultTranslationRepository : public TranslationRepository
 {
@@ -14,8 +14,8 @@ public:
     explicit DefaultTranslationRepository(std::unique_ptr<TranslationsStorage>);
 
     void addTranslation(Translation) override;
-    boost::optional<Translation> getTranslation(const SourceText&) const override;
-    bool containsTranslation(const SourceText&) const override;
+    std::optional<Translation> getTranslation(const std::string&) const override;
+    bool containsTranslation(const std::string&) const override;
 
 private:
     std::unique_ptr<TranslationsStorage> storage;

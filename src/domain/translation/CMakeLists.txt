@@ -3,11 +3,21 @@ set(SOURCES
         src/GoogleTranslateApiJsonResponseDeserializer.cpp
         src/TranslatorFactory.cpp
         src/DefaultTranslationServiceFactory.cpp
+        src/DefaultTranslationRepository.cpp
+        src/TranslationsJsonSerializer.cpp
+        src/TranslationsMemoryStorage.cpp
+        src/TranslationsPersistentStorage.cpp
+        src/TranslationRepositoryFactory.cpp
+        src/DefaultTranslationRepositoryFactory.cpp
         )
 
 set(UT_SOURCES
         src/DefaultTranslationServiceTest.cpp
         src/GoogleTranslateApiJsonResponseDeserializerTest.cpp
+        src/DefaultTranslationRepositoryTest.cpp
+        src/TranslationsJsonSerializerTest.cpp
+        src/TranslationsMemoryStorageTest.cpp
+        src/TranslationsPersistentStorageTest.cpp
         )
 
 add_library(translation ${SOURCES})

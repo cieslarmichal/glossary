@@ -4,9 +4,8 @@
 #include "TranslationsJsonSerializer.h"
 #include "TranslationsPersistentStorage.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
-
 DefaultTranslationRepositoryFactory::DefaultTranslationRepositoryFactory(
     std::shared_ptr<const utils::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
@@ -19,5 +18,4 @@ DefaultTranslationRepositoryFactory::createTranslationRepository() const
     return std::make_unique<DefaultTranslationRepository>(std::make_unique<TranslationsPersistentStorage>(
         fileAccess, std::make_shared<TranslationsJsonSerializer>()));
 }
-
 }

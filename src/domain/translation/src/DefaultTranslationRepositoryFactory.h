@@ -2,7 +2,7 @@
 
 #include "TranslationRepositoryFactory.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
 class DefaultTranslationRepositoryFactory : public TranslationRepositoryFactory
 {

@@ -7,7 +7,7 @@
 #include "TranslationsStorage.h"
 #include "utils/FileAccess.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
 class TranslationsPersistentStorage : public TranslationsStorage
 {
@@ -16,10 +16,10 @@ public:
                                   std::shared_ptr<const TranslationsSerializer>);
 
     void addTranslation(Translation) override;
-    boost::optional<Translation> getTranslation(const SourceText&) const override;
-    Translations getTranslations() const override;
-    bool contains(const SourceText&) const override;
-    Translations::size_type size() const override;
+    std::optional<Translation> getTranslation(const std::string&) const override;
+    std::vector<Translation> getTranslations() const override;
+    bool contains(const std::string&) const override;
+    std::vector<Translation>::size_type size() const override;
     bool empty() const override;
 
 private:

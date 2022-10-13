@@ -1,5 +1,6 @@
 #include "DefaultGlossaryFactory.h"
 
+#include "../../domain/translation/include/TranslationRepositoryFactory.h"
 #include "../../domain/translation/include/TranslatorFactory.h"
 #include "DefaultAnswerValidator.h"
 #include "DefaultDictionaryStatisticsCounter.h"
@@ -11,7 +12,6 @@
 #include "dictionaryService/DictionaryServiceFactory.h"
 #include "httpClient/HttpClientFactory.h"
 #include "statisticsRepository/StatisticsRepositoryFactory.h"
-#include "translationRepository/TranslationRepositoryFactory.h"
 #include "translationService/TranslationServiceFactory.h"
 #include "utils/FileAccessFactory.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloaderFactory.h"
@@ -28,11 +28,11 @@ std::shared_ptr<dictionaryService::DictionaryService>
 createDictionaryService(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<translation::TranslationService>
 createTranslator(const std::shared_ptr<const httpClient::HttpClient>&);
-std::shared_ptr<translationRepository::TranslationRepository>
+std::shared_ptr<translation::TranslationRepository>
 createTranslationRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<translationService::TranslationService>
 createTranslationService(const std::shared_ptr<translation::TranslationService>&,
-                         const std::shared_ptr<translationRepository::TranslationRepository>&,
+                         const std::shared_ptr<translation::TranslationRepository>&,
                          const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<statisticsRepository::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>&);
@@ -49,7 +49,7 @@ createWordDescriptionUpdater(const std::shared_ptr<wordDescriptionService::WordD
                              const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
 std::shared_ptr<dictionaryService::DictionaryObserver>
 createTranslationUpdater(const std::shared_ptr<translationService::TranslationService>&,
-                         const std::shared_ptr<translationRepository::TranslationRepository>&);
+                         const std::shared_ptr<translation::TranslationRepository>&);
 std::shared_ptr<DictionaryTranslationUpdater>
 createDictionaryTranslationUpdater(const std::shared_ptr<dictionaryService::DictionaryService>&,
                                    const std::shared_ptr<translationService::TranslationService>&);
@@ -127,17 +127,17 @@ createTranslator(const std::shared_ptr<const httpClient::HttpClient>& httpHandle
     return translatorFactory->createTranslator();
 }
 
-std::shared_ptr<translationRepository::TranslationRepository>
+std::shared_ptr<translation::TranslationRepository>
 createTranslationRepository(const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
     auto translationRepositoryFactory =
-        translationRepository::TranslationRepositoryFactory::createTranslationRepositoryFactory(fileAccess);
+        translation::TranslationRepositoryFactory::createTranslationRepositoryFactory(fileAccess);
     return translationRepositoryFactory->createTranslationRepository();
 }
 
 std::shared_ptr<translationService::TranslationService> createTranslationService(
     const std::shared_ptr<translation::TranslationService>& translator,
-    const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository,
+    const std::shared_ptr<translation::TranslationRepository>& translationRepository,
     const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
     auto translationServiceFactory =
@@ -193,7 +193,7 @@ std::shared_ptr<dictionaryService::DictionaryObserver> createWordDescriptionUpda
 
 std::shared_ptr<dictionaryService::DictionaryObserver> createTranslationUpdater(
     const std::shared_ptr<translationService::TranslationService>& translationService,
-    const std::shared_ptr<translationRepository::TranslationRepository>& translationRepository)
+    const std::shared_ptr<translation::TranslationRepository>& translationRepository)
 {
     return std::make_shared<TranslationConcurrentUpdater>(translationService, translationRepository);
 }

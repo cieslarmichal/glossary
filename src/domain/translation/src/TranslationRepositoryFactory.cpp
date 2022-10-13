@@ -2,7 +2,7 @@
 
 #include "DefaultTranslationRepositoryFactory.h"
 
-namespace glossary::translationRepository
+namespace glossary::translation
 {
 std::unique_ptr<TranslationRepositoryFactory>
 TranslationRepositoryFactory::createTranslationRepositoryFactory(
