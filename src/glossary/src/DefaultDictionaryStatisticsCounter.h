@@ -8,13 +8,13 @@ class DefaultDictionaryStatisticsCounter : public DictionaryStatisticsCounter
 {
 public:
     DictionaryStatistics countDictionaryStatistics(const dictionaryService::Dictionary&,
-                                                   const statisticsRepository::Statistics&) const override;
+                                                   const statistics::Statistics&) const override;
     DictionariesStatistics
     countDictionariesStatistics(const dictionaryService::Dictionaries&,
-                                const statisticsRepository::Statistics&) const override;
+                                const statistics::Statistics&) const override;
 
 private:
-    bool englishWordExistsInDictionary(const dictionaryService::EnglishWord&,
+    bool englishWordExistsInDictionary(const dictionaryService::std::string&,
                                        const dictionaryService::Dictionary&) const;
 };
 }

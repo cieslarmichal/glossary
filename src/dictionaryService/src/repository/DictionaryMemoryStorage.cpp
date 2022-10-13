@@ -60,7 +60,7 @@ void DictionaryMemoryStorage::removeWordFromDictionary(const std::string& englis
     }
 }
 
-void DictionaryMemoryStorage::changeWordTranslationFromDictionary(const EnglishWord& englishWord,
+void DictionaryMemoryStorage::changeWordTranslationFromDictionary(const std::string& englishWord,
                                                                   const std::string& translation,
                                                                   const DictionaryName& dictionaryName)
 {
@@ -105,9 +105,8 @@ Dictionaries::const_iterator
 DictionaryMemoryStorage::findDictionaryPosition(const DictionaryName& dictionaryNameToFind) const
 {
     return std::find_if(dictionaries.begin(), dictionaries.end(),
-                        [&dictionaryNameToFind](const Dictionary& dictionary) {
-                            return dictionary.name == dictionaryNameToFind;
-                        });
+                        [&dictionaryNameToFind](const Dictionary& dictionary)
+                        { return dictionary.name == dictionaryNameToFind; });
 }
 
 DictionaryWords::const_iterator
@@ -115,9 +114,8 @@ DictionaryMemoryStorage::findWordInsideDictionaryPosition(const std::string& eng
                                                           const Dictionary& dictionary) const
 {
     return std::find_if(dictionary.words.begin(), dictionary.words.end(),
-                        [&englishWordToFind](const DictionaryWord& dictionaryWord) {
-                            return dictionaryWord.englishWord == englishWordToFind;
-                        });
+                        [&englishWordToFind](const DictionaryWord& dictionaryWord)
+                        { return dictionaryWord.englishWord == englishWordToFind; });
 }
 
 bool DictionaryMemoryStorage::dictionaryExists(const DictionaryName& dictionaryName) const
@@ -125,7 +123,7 @@ bool DictionaryMemoryStorage::dictionaryExists(const DictionaryName& dictionaryN
     return containsDictionary(dictionaryName);
 }
 
-bool DictionaryMemoryStorage::englishWordExistsInDictionary(const EnglishWord& englishWord,
+bool DictionaryMemoryStorage::englishWordExistsInDictionary(const std::string& englishWord,
                                                             const DictionaryName& dictionaryName) const
 {
     if (dictionaryExists(dictionaryName))

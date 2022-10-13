@@ -34,7 +34,7 @@ std::shared_ptr<translationService::TranslationService>
 createTranslationService(const std::shared_ptr<translation::TranslationService>&,
                          const std::shared_ptr<translation::TranslationRepository>&,
                          const std::shared_ptr<utils::FileAccess>&);
-std::shared_ptr<statisticsRepository::StatisticsRepository>
+std::shared_ptr<statistics::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>&);
 std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
 createWordDescriptionDownloader(const std::shared_ptr<const httpClient::HttpClient>&);
@@ -145,11 +145,11 @@ std::shared_ptr<translationService::TranslationService> createTranslationService
     return translationServiceFactory->createTranslationService(translator, translationRepository);
 }
 
-std::shared_ptr<statisticsRepository::StatisticsRepository>
+std::shared_ptr<statistics::StatisticsRepository>
 createStatisticsRepository(const std::shared_ptr<utils::FileAccess>& fileAccess)
 {
     auto statisticsRepositoryFactory =
-        statisticsRepository::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
+        statistics::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
     return statisticsRepositoryFactory->createStatisticsRepository();
 }
 

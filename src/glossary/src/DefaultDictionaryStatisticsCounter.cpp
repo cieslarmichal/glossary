@@ -6,7 +6,7 @@ namespace glossary
 {
 
 DictionaryStatistics DefaultDictionaryStatisticsCounter::countDictionaryStatistics(
-    const dictionaryService::Dictionary& dictionary, const statisticsRepository::Statistics& statistics) const
+    const dictionaryService::Dictionary& dictionary, const statistics::Statistics& statistics) const
 {
     DictionaryStatistics dictionaryStatistics{dictionary.name, 0, 0};
 
@@ -24,7 +24,7 @@ DictionaryStatistics DefaultDictionaryStatisticsCounter::countDictionaryStatisti
 
 DictionariesStatistics DefaultDictionaryStatisticsCounter::countDictionariesStatistics(
     const dictionaryService::Dictionaries& dictionaries,
-    const statisticsRepository::Statistics& statistics) const
+    const statistics::Statistics& statistics) const
 {
     DictionariesStatistics dictionariesStatistics;
     for (const auto& dictionary : dictionaries)
@@ -36,12 +36,12 @@ DictionariesStatistics DefaultDictionaryStatisticsCounter::countDictionariesStat
 }
 
 bool DefaultDictionaryStatisticsCounter::englishWordExistsInDictionary(
-    const dictionaryService::EnglishWord& englishWord, const dictionaryService::Dictionary& dictionary) const
+    const dictionaryService::std::string& englishWord, const dictionaryService::Dictionary& dictionary) const
 {
     const auto& dictionaryWords = dictionary.words;
-    auto foundEnglishWord = std::find_if(
-        dictionaryWords.begin(), dictionaryWords.end(),
-        [&englishWord](const auto& dictionaryWord) { return dictionaryWord.englishWord == englishWord; });
+    auto foundEnglishWord = std::find_if(dictionaryWords.begin(), dictionaryWords.end(),
+                                         [&englishWord](const auto& dictionaryWord)
+                                         { return dictionaryWord.englishWord == englishWord; });
     return foundEnglishWord != dictionaryWords.end();
 }
 }

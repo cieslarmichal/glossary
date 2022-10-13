@@ -49,9 +49,9 @@ const DictionaryWords dictionaryWords{dictionaryWordWithoutTranslation, dictiona
 const Definitions definitions{"definition1", "definition2"};
 const Examples examples{"example1", "example2"};
 const Synonyms synonyms{"synonym1", "synonym2", "synonym1000000"};
-const WordDescription wordDescription{EnglishWord{"computer"}, definitions, examples, synonyms};
-const WordStatistics statisticsPerWord1{EnglishWord{"cat"}, 7, 0};
-const WordStatistics statisticsPerWord2{EnglishWord{"dog"}, 2, 1};
+const WordDescription wordDescription{std::string{"computer"}, definitions, examples, synonyms};
+const WordStatistics statisticsPerWord1{std::string{"cat"}, 7, 0};
+const WordStatistics statisticsPerWord2{std::string{"dog"}, 2, 1};
 const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
 auto availableStatus = ExternalServicesStatus{WordsApiStatus::Available, TranslationApiStatus::Available};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};

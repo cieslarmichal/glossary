@@ -1,5 +1,7 @@
 #include "DefaultWordDescriptionService.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "ApiKeyLocationUpdaterMock.h"
@@ -10,7 +12,6 @@
 
 #include "httpClient/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;
@@ -21,7 +22,7 @@ using namespace wordDescriptionService;
 namespace
 {
 const std::string apiKey{"apiKey"};
-const EnglishWord englishWord{"englishWord1"};
+const std::string englishWord{"englishWord1"};
 const WordDescription wordDescriptionFromRepository{englishWord, {"def1"}, {}, {}};
 const WordDescription wordDescriptionFromDownloader{englishWord, {"def2"}, {}, {}};
 const WordDescription emptyWordDescription{englishWord, {}, {}, {}};

@@ -1,14 +1,10 @@
 set(SOURCES
         src/DefaultTranslationService.cpp
         src/GoogleTranslateApiJsonResponseDeserializer.cpp
-        src/TranslatorFactory.cpp
-        src/DefaultTranslationServiceFactory.cpp
         src/DefaultTranslationRepository.cpp
         src/TranslationsJsonSerializer.cpp
         src/TranslationsMemoryStorage.cpp
         src/TranslationsPersistentStorage.cpp
-        src/TranslationRepositoryFactory.cpp
-        src/DefaultTranslationRepositoryFactory.cpp
         )
 
 set(UT_SOURCES

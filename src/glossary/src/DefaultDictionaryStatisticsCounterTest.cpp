@@ -1,7 +1,8 @@
 #include "DefaultDictionaryStatisticsCounter.h"
 
-#include "gtest/gtest.h"
 #include <boost/optional/optional_io.hpp>
+
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -10,12 +11,12 @@ using namespace statisticsRepository;
 
 namespace
 {
-const EnglishWord englishWord1{"englishWord1"};
-const EnglishWord englishWord2{"englishWord2"};
-const EnglishWord englishWord3{"englishWord3"};
-const EnglishWord englishWord4{"englishWord4"};
-const EnglishWord englishWord5{"englishWord5"};
-const EnglishWord englishWord6{"englishWord6"};
+const std::string englishWord1{"englishWord1"};
+const std::string englishWord2{"englishWord2"};
+const std::string englishWord3{"englishWord3"};
+const std::string englishWord4{"englishWord4"};
+const std::string englishWord5{"englishWord5"};
+const std::string englishWord6{"englishWord6"};
 const WordStatistics wordStats1{englishWord1, 7, 5};
 const WordStatistics wordStats2{englishWord2, 8, 2};
 const WordStatistics wordStats3{englishWord3, 1, 4};

@@ -1,5 +1,7 @@
 #include "DefaultWordDescriptionDownloader.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "ApiResponseFetcherMock.h"
@@ -7,7 +9,6 @@
 
 #include "exceptions/InvalidApiKey.h"
 #include "httpClient/exceptions/ConnectionFailed.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;
@@ -17,7 +18,7 @@ using namespace wordDescriptionRepository;
 namespace
 {
 const std::string apiKey{"topSecretKey"};
-const EnglishWord englishWord{"englishWord"};
+const std::string englishWord{"englishWord"};
 const httpClient::HttpResponse okResponse{200, "content"};
 const httpClient::HttpResponse errorResponse{400, ""};
 const Definitions definitions{"definition1", "definition2"};

@@ -20,19 +20,19 @@ public:
                                   std::unique_ptr<ApiKeyLocationUpdater>);
 
     wordDescriptionRepository::WordDescription
-    retrieveWordDescription(const wordDescriptionRepository::EnglishWord&) noexcept override;
+    retrieveWordDescription(const wordDescriptionRepository::std::string&) noexcept override;
     boost::optional<wordDescriptionRepository::WordDescription>
-    downloadWordDescription(const wordDescriptionRepository::EnglishWord&) override;
+    downloadWordDescription(const wordDescriptionRepository::std::string&) override;
     WordsApiStatus connectionToWordsApiAvailable() const override;
     void updateApiKeyLocation(const std::string& apiKeyLocation) override;
 
 private:
     boost::optional<wordDescriptionRepository::WordDescription>
-    getWordDescriptionFromRepository(const wordDescriptionRepository::EnglishWord& englishWord) const;
+    getWordDescriptionFromRepository(const wordDescriptionRepository::std::string& englishWord) const;
     boost::optional<wordDescriptionRepository::WordDescription>
-    downloadWordDescriptionFromDownloader(const wordDescriptionRepository::EnglishWord& englishWord) const;
+    downloadWordDescriptionFromDownloader(const wordDescriptionRepository::std::string& englishWord) const;
     wordDescriptionRepository::WordDescription
-    getEmptyWordDescriptionWithEnglishWord(const wordDescriptionRepository::EnglishWord& englishWord) const;
+    getEmptyWordDescriptionWithEnglishWord(const wordDescriptionRepository::std::string& englishWord) const;
     void saveWordDescriptionInRepository(const wordDescriptionRepository::WordDescription&);
 
     std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader> wordDescriptionDownloader;

@@ -25,8 +25,8 @@ public:
     virtual void addDictionaryFromFile(const DictionaryName&, const std::string& dictionaryWordsPath) = 0;
     virtual void addWordToDictionary(const DictionaryWord&, const DictionaryName&) = 0;
     virtual void removeDictionary(const DictionaryName&) = 0;
-    virtual void removeWordFromDictionary(const EnglishWord&, const DictionaryName&) = 0;
-    virtual void updateWordTranslationFromDictionary(const EnglishWord&, const std::string& newTranslation,
+    virtual void removeWordFromDictionary(const std::string&, const DictionaryName&) = 0;
+    virtual void updateWordTranslationFromDictionary(const std::string&, const std::string& newTranslation,
                                                      const DictionaryName&) = 0;
     virtual void synchronizeDictionaries() = 0;
 };

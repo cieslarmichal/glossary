@@ -25,9 +25,9 @@ public:
     MOCK_METHOD2(addDictionaryFromFile, void(const DictionaryName&, const std::string& filePath));
     MOCK_METHOD2(addWordToDictionary, void(const DictionaryWord&, const DictionaryName&));
     MOCK_METHOD1(removeDictionary, void(const DictionaryName&));
-    MOCK_METHOD2(removeWordFromDictionary, void(const EnglishWord&, const DictionaryName&));
+    MOCK_METHOD2(removeWordFromDictionary, void(const std::string&, const DictionaryName&));
     MOCK_METHOD3(updateWordTranslationFromDictionary,
-                 void(const EnglishWord&, const std::string&, const DictionaryName&));
+                 void(const std::string&, const std::string&, const DictionaryName&));
     MOCK_METHOD0(synchronizeDictionaries, void());
     MOCK_METHOD1(registerObserver, void(DictionaryObserver*));
     MOCK_METHOD1(removeObserver, void(DictionaryObserver*));

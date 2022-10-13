@@ -10,9 +10,9 @@ class WordDescriptionServiceMock : public WordDescriptionService
 {
 public:
     MOCK_METHOD(wordDescriptionRepository::WordDescription, retrieveWordDescription,
-                (const wordDescriptionRepository::EnglishWord&), (noexcept));
+                (const wordDescriptionRepository::std::string&), (noexcept));
     MOCK_METHOD(boost::optional<wordDescriptionRepository::WordDescription>, downloadWordDescription,
-                (const wordDescriptionRepository::EnglishWord&), ());
+                (const wordDescriptionRepository::std::string&), ());
     MOCK_METHOD(WordsApiStatus, connectionToWordsApiAvailable, (), (const));
     MOCK_METHOD(void, updateApiKeyLocation, (const std::string& apiKeyLocation), ());
 };

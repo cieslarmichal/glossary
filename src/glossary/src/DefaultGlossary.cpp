@@ -12,7 +12,7 @@ namespace glossary
 DefaultGlossary::DefaultGlossary(
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
     std::shared_ptr<translationService::TranslationService> translationServiceInit,
-    std::shared_ptr<statisticsRepository::StatisticsRepository> statisticsRepoInit,
+    std::shared_ptr<statistics::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
@@ -143,20 +143,20 @@ void DefaultGlossary::removeDictionary(const DictionaryName& dictionaryName) con
     dictionaryService->removeDictionary(dictionaryName);
 }
 
-void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord,
+void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
                                                  const DictionaryName& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, boost::none}, dictionaryName);
 }
 
-void DefaultGlossary::addEnglishWordToDictionary(const EnglishWord& englishWord,
+void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
                                                  const std::string& translation,
                                                  const DictionaryName& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, translation}, dictionaryName);
 }
 
-void DefaultGlossary::removeEnglishWordFromDictionary(const EnglishWord& englishWord,
+void DefaultGlossary::removeEnglishWordFromDictionary(const std::string& englishWord,
                                                       const DictionaryName& dictionaryName) const
 {
     dictionaryService->removeWordFromDictionary(englishWord, dictionaryName);
@@ -169,7 +169,7 @@ void DefaultGlossary::addDictionaryFromFile(const DictionaryName& dictionaryName
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationManually(const DictionaryName& dictionaryName,
-                                                              const EnglishWord& englishWord,
+                                                              const std::string& englishWord,
                                                               const std::string& newTranslation) const
 {
     dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, newTranslation,
@@ -177,7 +177,7 @@ void DefaultGlossary::updateDictionaryWordTranslationManually(const DictionaryNa
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationAutomatically(const DictionaryName& dictionaryName,
-                                                                   const EnglishWord& englishWord) const
+                                                                   const std::string& englishWord) const
 {
     dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, dictionaryName);
 }
@@ -187,7 +187,7 @@ void DefaultGlossary::updateDictionaryTranslationsAutomatically(const Dictionary
     dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
 }
 
-WordDescription DefaultGlossary::getEnglishWordDescription(const EnglishWord& englishWord) const
+WordDescription DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
 {
     return wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
 }

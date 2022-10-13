@@ -37,8 +37,8 @@ public:
     void addDictionaryFromFile(const DictionaryName&, const std::string& dictionaryWordsPath) override;
     void addWordToDictionary(const DictionaryWord&, const DictionaryName&) override;
     void removeDictionary(const DictionaryName&) override;
-    void removeWordFromDictionary(const EnglishWord& word, const DictionaryName&) override;
-    void updateWordTranslationFromDictionary(const EnglishWord&, const std::string&,
+    void removeWordFromDictionary(const std::string& word, const DictionaryName&) override;
+    void updateWordTranslationFromDictionary(const std::string&, const std::string&,
                                              const DictionaryName&) override;
     void synchronizeDictionaries() override;
     void registerObserver(DictionaryObserver*) override;

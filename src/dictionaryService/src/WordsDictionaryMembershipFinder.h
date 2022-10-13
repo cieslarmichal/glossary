@@ -7,13 +7,13 @@ namespace glossary::dictionaryService
 class WordsDictionaryMembershipFinder
 {
 public:
-    DictionaryNames findDictionariesContainingEnglishWord(const EnglishWord&, const Dictionaries&) const;
+    DictionaryNames findDictionariesContainingEnglishWord(const std::string&, const Dictionaries&) const;
     DictionaryNames
     findDictionariesContainingEnglishWordTranslation(const std::string& englishWordTranslation,
                                                      const Dictionaries&) const;
 
 private:
-    bool englishWordExistsInDictionary(const EnglishWord&, const Dictionary&) const;
+    bool englishWordExistsInDictionary(const std::string&, const Dictionary&) const;
     bool englishWordTranslationExistsInDictionary(const std::string& englishWordTranslation,
                                                   const Dictionary&) const;
 };

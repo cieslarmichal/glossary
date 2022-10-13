@@ -1,7 +1,7 @@
 #pragma once
 
 #include "DictionaryObserver.h"
-#include "EnglishWord.h"
+
 
 namespace glossary::dictionaryService
 {

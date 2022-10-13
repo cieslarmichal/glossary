@@ -11,6 +11,6 @@ class WordDescriptionDownloaderMock : public WordDescriptionDownloader
 public:
     MOCK_CONST_METHOD2(tryDownloadWordDescription,
                        wordDescriptionRepository::WordDescription(
-                           const wordDescriptionRepository::EnglishWord&, const std::string& wordsApiKey));
+                           const wordDescriptionRepository::std::string&, const std::string& wordsApiKey));
 };
 }

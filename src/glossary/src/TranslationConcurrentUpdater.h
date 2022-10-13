@@ -22,8 +22,8 @@ private:
     unsigned getAmountOfThreads() const;
     dictionaryService::EnglishWords
     getEnglishWordsWithoutTranslation(const dictionaryService::EnglishWords&) const;
-    void loadingTranslationsWorker(utils::ThreadSafeQueue<dictionaryService::EnglishWord>&);
-    void loadTranslationFromTranslationService(const dictionaryService::EnglishWord&);
+    void loadingTranslationsWorker(utils::ThreadSafeQueue<dictionaryService::std::string>&);
+    void loadTranslationFromTranslationService(const dictionaryService::std::string&);
 
     std::shared_ptr<translationService::TranslationService> translationService;
     std::shared_ptr<translation::TranslationRepository> translationRepository;

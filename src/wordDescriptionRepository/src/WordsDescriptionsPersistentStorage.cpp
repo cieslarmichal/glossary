@@ -26,7 +26,7 @@ void WordsDescriptionsPersistentStorage::addWordDescription(const WordDescriptio
 }
 
 boost::optional<WordDescription>
-WordsDescriptionsPersistentStorage::getWordDescription(const EnglishWord& englishName) const
+WordsDescriptionsPersistentStorage::getWordDescription(const std::string& englishName) const
 {
     return storage.getWordDescription(englishName);
 }
@@ -36,7 +36,7 @@ WordsDescriptions WordsDescriptionsPersistentStorage::getWordsDescriptions() con
     return storage.getWordsDescriptions();
 }
 
-bool WordsDescriptionsPersistentStorage::contains(const EnglishWord& englishWord) const
+bool WordsDescriptionsPersistentStorage::contains(const std::string& englishWord) const
 {
     return storage.contains(englishWord);
 }

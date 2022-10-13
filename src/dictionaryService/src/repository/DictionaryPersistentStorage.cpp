@@ -44,14 +44,14 @@ void DictionaryPersistentStorage::removeDictionary(const DictionaryName& diction
     serialize();
 }
 
-void DictionaryPersistentStorage::removeWordFromDictionary(const EnglishWord& englishWord,
+void DictionaryPersistentStorage::removeWordFromDictionary(const std::string& englishWord,
                                                            const DictionaryName& dictionaryName)
 {
     storage.removeWordFromDictionary(englishWord, dictionaryName);
     serialize();
 }
 
-void DictionaryPersistentStorage::changeWordTranslationFromDictionary(const EnglishWord& englishWord,
+void DictionaryPersistentStorage::changeWordTranslationFromDictionary(const std::string& englishWord,
                                                                       const std::string& translation,
                                                                       const DictionaryName& dictionaryName)
 {

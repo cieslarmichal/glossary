@@ -15,12 +15,12 @@ void DefaultWordDescriptionRepository::addWordDescription(const WordDescription&
 }
 
 boost::optional<WordDescription>
-DefaultWordDescriptionRepository::getWordDescription(const EnglishWord& englishWord) const
+DefaultWordDescriptionRepository::getWordDescription(const std::string& englishWord) const
 {
     std::lock_guard<std::mutex> lockGuard(lock);
     return storage->getWordDescription(englishWord);
 }
-bool DefaultWordDescriptionRepository::contains(const EnglishWord& englishWord) const
+bool DefaultWordDescriptionRepository::contains(const std::string& englishWord) const
 {
     std::lock_guard<std::mutex> lockGuard(lock);
     return storage->contains(englishWord);

@@ -1,16 +1,17 @@
 #include "DefaultWordDescriptionRepository.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "WordsDescriptionsStorageMock.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::wordDescriptionRepository;
 
 namespace
 {
-const EnglishWord englishWord{"englishWord"};
+const std::string englishWord{"englishWord"};
 const WordDescription wordDescription{englishWord, {}, {}, {}};
 const WordsDescriptions wordsDescriptions{wordDescription};
 }

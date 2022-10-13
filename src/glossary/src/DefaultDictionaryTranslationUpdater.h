@@ -14,15 +14,15 @@ public:
     DefaultDictionaryTranslationUpdater(std::shared_ptr<dictionaryService::DictionaryService>,
                                         std::shared_ptr<translationService::TranslationService>);
 
-    void updateDictionaryWordTranslation(const dictionaryService::EnglishWord&,
+    void updateDictionaryWordTranslation(const dictionaryService::std::string&,
                                          const std::string& updatedTranslation,
                                          const dictionaryService::DictionaryName&) override;
-    void updateDictionaryWordTranslation(const dictionaryService::EnglishWord&,
+    void updateDictionaryWordTranslation(const dictionaryService::std::string&,
                                          const dictionaryService::DictionaryName&) override;
     void updateDictionaryTranslations(const dictionaryService::DictionaryName&) override;
 
 private:
-    boost::optional<translation::TranslatedText> getTranslation(const dictionaryService::EnglishWord&);
+    boost::optional<translation::TranslatedText> getTranslation(const dictionaryService::std::string&);
     bool dictionaryWordHasNoTranslation(const dictionaryService::DictionaryWord&) const;
 
     std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;

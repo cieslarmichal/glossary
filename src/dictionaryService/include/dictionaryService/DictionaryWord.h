@@ -1,18 +1,17 @@
 #pragma once
 
+#include <boost/optional.hpp>
 #include <ostream>
 #include <string>
 #include <vector>
 
-#include <boost/optional.hpp>
 
-#include "EnglishWord.h"
 
 namespace glossary::dictionaryService
 {
 struct DictionaryWord
 {
-    EnglishWord englishWord;
+    std::string englishWord;
     boost::optional<std::string> translation;
 };
 

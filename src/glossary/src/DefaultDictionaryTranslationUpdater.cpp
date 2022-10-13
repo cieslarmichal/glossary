@@ -12,14 +12,14 @@ DefaultDictionaryTranslationUpdater::DefaultDictionaryTranslationUpdater(
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
-    const dictionaryService::EnglishWord& englishWord, const std::string& updatedTranslation,
+    const dictionaryService::std::string& englishWord, const std::string& updatedTranslation,
     const dictionaryService::DictionaryName& dictionaryName)
 {
     dictionaryService->updateWordTranslationFromDictionary(englishWord, updatedTranslation, dictionaryName);
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
-    const dictionaryService::EnglishWord& englishWord,
+    const dictionaryService::std::string& englishWord,
     const dictionaryService::DictionaryName& dictionaryName)
 {
     if (const auto translation = getTranslation(englishWord))
@@ -44,7 +44,7 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
 }
 
 boost::optional<translation::TranslatedText>
-DefaultDictionaryTranslationUpdater::getTranslation(const dictionaryService::EnglishWord& englishWord)
+DefaultDictionaryTranslationUpdater::getTranslation(const dictionaryService::std::string& englishWord)
 {
     return translationService->retrieveTranslation(englishWord, translation::SourceLanguage::English,
                                                    translation::TargetLanguage::Polish);

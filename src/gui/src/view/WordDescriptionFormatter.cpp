@@ -13,7 +13,7 @@ WordDescriptionFormatter::formatWordDescription(const WordDescription& wordDescr
     return {englishWord, definitions, examples, synonyms};
 }
 
-QString WordDescriptionFormatter::formatEnglishWord(const EnglishWord& englishWord) const
+QString WordDescriptionFormatter::formatEnglishWord(const std::string& englishWord) const
 {
     return QString::fromStdString(englishWord);
 }

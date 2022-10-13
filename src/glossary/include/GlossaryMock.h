@@ -22,18 +22,18 @@ public:
     MOCK_CONST_METHOD1(getDictionaryWords, DictionaryWords(const DictionaryName&));
     MOCK_CONST_METHOD1(addDictionary, void(const DictionaryName&));
     MOCK_CONST_METHOD1(removeDictionary, void(const DictionaryName&));
-    MOCK_CONST_METHOD2(addEnglishWordToDictionary, void(const EnglishWord&, const DictionaryName&));
+    MOCK_CONST_METHOD2(addEnglishWordToDictionary, void(const std::string&, const DictionaryName&));
     MOCK_CONST_METHOD3(addEnglishWordToDictionary,
-                       void(const EnglishWord&, const std::string& translation, const DictionaryName&));
-    MOCK_CONST_METHOD2(removeEnglishWordFromDictionary, void(const EnglishWord&, const DictionaryName&));
+                       void(const std::string&, const std::string& translation, const DictionaryName&));
+    MOCK_CONST_METHOD2(removeEnglishWordFromDictionary, void(const std::string&, const DictionaryName&));
     MOCK_CONST_METHOD2(addDictionaryFromFile,
                        void(const DictionaryName&, const std::string& pathToFileWithDictionaryWords));
     MOCK_CONST_METHOD3(updateDictionaryWordTranslationManually,
-                       void(const DictionaryName&, const EnglishWord&, const std::string& newTranslation));
+                       void(const DictionaryName&, const std::string&, const std::string& newTranslation));
     MOCK_CONST_METHOD2(updateDictionaryWordTranslationAutomatically,
-                       void(const DictionaryName&, const EnglishWord&));
+                       void(const DictionaryName&, const std::string&));
     MOCK_CONST_METHOD1(updateDictionaryTranslationsAutomatically, void(const DictionaryName&));
-    MOCK_CONST_METHOD1(getEnglishWordDescription, WordDescription(const EnglishWord&));
+    MOCK_CONST_METHOD1(getEnglishWordDescription, WordDescription(const std::string&));
     MOCK_CONST_METHOD0(getSupportedTranslatorLanguages, std::vector<std::string>());
     MOCK_CONST_METHOD3(translate, boost::optional<std::string>(const std::string& textToTranslate,
                                                                const std::string& sourceLanguage,

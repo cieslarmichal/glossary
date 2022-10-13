@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Definition.h"
-#include "EnglishWord.h"
 #include "Example.h"
 #include "Synonym.h"
+
 #include "utils/StlOperators.h"
 
 namespace glossary::wordDescriptionRepository
@@ -15,7 +15,7 @@ struct WordDescription
         return definitions.empty() && examples.empty() && synonyms.empty();
     }
 
-    EnglishWord englishWord;
+    std::string englishWord;
     Definitions definitions;
     Examples examples;
     Synonyms synonyms;

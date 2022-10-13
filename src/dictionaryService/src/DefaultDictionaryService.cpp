@@ -106,13 +106,13 @@ void DefaultDictionaryService::removeDictionary(const DictionaryName& dictionary
     dictionaryRepository->removeDictionary(dictionaryName);
 }
 
-void DefaultDictionaryService::removeWordFromDictionary(const EnglishWord& englishWord,
+void DefaultDictionaryService::removeWordFromDictionary(const std::string& englishWord,
                                                         const DictionaryName& dictionaryName)
 {
     dictionaryRepository->removeWordFromDictionary(englishWord, dictionaryName);
 }
 
-void DefaultDictionaryService::updateWordTranslationFromDictionary(const EnglishWord& englishWord,
+void DefaultDictionaryService::updateWordTranslationFromDictionary(const std::string& englishWord,
                                                                    const std::string& translation,
                                                                    const DictionaryName& dictionaryName)
 {

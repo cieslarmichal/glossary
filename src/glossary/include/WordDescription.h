@@ -4,7 +4,7 @@
 
 namespace glossary
 {
-using EnglishWord = wordDescriptionRepository::EnglishWord;
+using std::string = wordDescriptionRepository::std::string;
 using Definitions = wordDescriptionRepository::Definitions;
 using Examples = wordDescriptionRepository::Examples;
 using Synonyms = wordDescriptionRepository::Synonyms;

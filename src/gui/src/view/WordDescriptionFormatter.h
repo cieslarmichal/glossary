@@ -11,7 +11,7 @@ public:
     FormattedWordDescription formatWordDescription(const WordDescription&) const;
 
 private:
-    QString formatEnglishWord(const EnglishWord&) const;
+    QString formatEnglishWord(const std::string&) const;
     QList<QString> formatDefinitions(const Definitions&) const;
     QList<QString> formatExamples(const Examples&) const;
     QList<QString> formatSynonyms(const Synonyms&) const;

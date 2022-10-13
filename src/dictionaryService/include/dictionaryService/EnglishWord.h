@@ -5,6 +5,6 @@
 
 namespace glossary::dictionaryService
 {
-using EnglishWord = std::string;
-using EnglishWords = std::vector<EnglishWord>;
+using std::string = std::string;
+using EnglishWords = std::vector<std::string>;
 }

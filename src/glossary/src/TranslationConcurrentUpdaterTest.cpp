@@ -16,9 +16,9 @@ using namespace translator;
 
 namespace
 {
-const EnglishWord englishWord1{"englishWord1"};
-const EnglishWord englishWord2{"englishWord2"};
-const EnglishWord englishWord3{"englishWord3"};
+const std::string englishWord1{"englishWord1"};
+const std::string englishWord2{"englishWord2"};
+const std::string englishWord3{"englishWord3"};
 const TranslatedText translatedText1{"translation1"};
 const TranslatedText translatedText3{"translation3"};
 const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};

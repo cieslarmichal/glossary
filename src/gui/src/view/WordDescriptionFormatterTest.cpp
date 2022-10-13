@@ -1,7 +1,8 @@
 #include "WordDescriptionFormatter.h"
 
-#include "gtest/gtest.h"
 #include <boost/optional/optional_io.hpp>
+
+#include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -9,7 +10,7 @@ using namespace gui::view;
 
 namespace
 {
-const EnglishWord englishWord{"englishWord"};
+const std::string englishWord{"englishWord"};
 const Definitions definitions{"definition1", "definition2"};
 const Examples examples{"example1", "example2"};
 const Synonyms synonyms{"synonym420"};

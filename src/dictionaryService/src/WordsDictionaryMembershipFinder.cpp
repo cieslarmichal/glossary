@@ -4,7 +4,7 @@ namespace glossary::dictionaryService
 {
 
 DictionaryNames
-WordsDictionaryMembershipFinder::findDictionariesContainingEnglishWord(const EnglishWord& englishWord,
+WordsDictionaryMembershipFinder::findDictionariesContainingEnglishWord(const std::string& englishWord,
                                                                        const Dictionaries& dictionaries) const
 {
     DictionaryNames dictionariesContainingEnglishWord;
@@ -34,13 +34,12 @@ DictionaryNames WordsDictionaryMembershipFinder::findDictionariesContainingEngli
     return dictionariesContainingEnglishWordTranslation;
 }
 
-bool WordsDictionaryMembershipFinder::englishWordExistsInDictionary(const EnglishWord& englishWordToFind,
+bool WordsDictionaryMembershipFinder::englishWordExistsInDictionary(const std::string& englishWordToFind,
                                                                     const Dictionary& dictionary) const
 {
     auto englishWordExists = std::find_if(dictionary.words.begin(), dictionary.words.end(),
-                                          [&englishWordToFind](const DictionaryWord& dictionaryWord) {
-                                              return dictionaryWord.englishWord == englishWordToFind;
-                                          });
+                                          [&englishWordToFind](const DictionaryWord& dictionaryWord)
+                                          { return dictionaryWord.englishWord == englishWordToFind; });
     return englishWordExists != dictionary.words.end();
 }
 
@@ -49,9 +48,8 @@ bool WordsDictionaryMembershipFinder::englishWordTranslationExistsInDictionary(
 {
     auto englishWordTranslationExists = std::find_if(
         dictionary.words.begin(), dictionary.words.end(),
-        [&englishWordTranslation](const DictionaryWord& dictionaryWord) {
-            return dictionaryWord.translation && (*dictionaryWord.translation == englishWordTranslation);
-        });
+        [&englishWordTranslation](const DictionaryWord& dictionaryWord)
+        { return dictionaryWord.translation && (*dictionaryWord.translation == englishWordTranslation); });
     return englishWordTranslationExists != dictionary.words.end();
 }
 

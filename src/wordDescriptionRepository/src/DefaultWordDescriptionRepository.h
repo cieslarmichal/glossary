@@ -14,8 +14,8 @@ public:
     explicit DefaultWordDescriptionRepository(std::unique_ptr<WordsDescriptionsStorage>);
 
     void addWordDescription(const WordDescription&) override;
-    boost::optional<WordDescription> getWordDescription(const EnglishWord&) const override;
-    bool contains(const EnglishWord&) const override;
+    boost::optional<WordDescription> getWordDescription(const std::string&) const override;
+    bool contains(const std::string&) const override;
 
 private:
     std::unique_ptr<WordsDescriptionsStorage> storage;

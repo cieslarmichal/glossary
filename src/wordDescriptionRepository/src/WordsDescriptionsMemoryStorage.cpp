@@ -11,7 +11,7 @@ void WordsDescriptionsMemoryStorage::addWordDescription(const WordDescription& w
 }
 
 boost::optional<WordDescription>
-WordsDescriptionsMemoryStorage::getWordDescription(const EnglishWord& englishWord) const
+WordsDescriptionsMemoryStorage::getWordDescription(const std::string& englishWord) const
 {
     const auto wordDescriptionIter = getWordsDescriptionsIter(englishWord);
 
@@ -27,7 +27,7 @@ WordsDescriptions WordsDescriptionsMemoryStorage::getWordsDescriptions() const
     return wordsDescriptions;
 }
 
-bool WordsDescriptionsMemoryStorage::contains(const EnglishWord& wordToFind) const
+bool WordsDescriptionsMemoryStorage::contains(const std::string& wordToFind) const
 {
     return getWordsDescriptionsIter(wordToFind) != wordsDescriptions.end();
 }
@@ -43,12 +43,11 @@ bool WordsDescriptionsMemoryStorage::empty() const
 }
 
 WordsDescriptions::const_iterator
-WordsDescriptionsMemoryStorage::getWordsDescriptionsIter(const EnglishWord& wordToFind) const
+WordsDescriptionsMemoryStorage::getWordsDescriptionsIter(const std::string& wordToFind) const
 {
     return std::find_if(wordsDescriptions.begin(), wordsDescriptions.end(),
-                        [wordToFind](const WordDescription& wordDescription) {
-                            return wordDescription.englishWord == wordToFind;
-                        });
+                        [wordToFind](const WordDescription& wordDescription)
+                        { return wordDescription.englishWord == wordToFind; });
 }
 
 }

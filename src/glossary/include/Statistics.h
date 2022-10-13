@@ -4,5 +4,5 @@
 
 namespace glossary
 {
-using Statistics = statisticsRepository::Statistics;
+using Statistics = statistics::Statistics;
 }

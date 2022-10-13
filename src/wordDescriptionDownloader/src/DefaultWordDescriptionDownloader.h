@@ -6,7 +6,7 @@
 #include "WordDescriptionDownloader.h"
 #include "WordDescriptionResponseDeserializer.h"
 #include "httpClient/HttpClient.h"
-#include "wordDescriptionRepository/EnglishWord.h"
+#include "wordDescriptionRepository/std::string.h"
 
 namespace glossary::wordDescriptionDownloader
 {
@@ -17,15 +17,15 @@ public:
                                      std::unique_ptr<const WordDescriptionResponseDeserializer>);
 
     wordDescriptionRepository::WordDescription
-    tryDownloadWordDescription(const wordDescriptionRepository::EnglishWord&,
+    tryDownloadWordDescription(const wordDescriptionRepository::std::string&,
                                const std::string& wordsApiKey) const override;
 
 private:
-    wordDescriptionRepository::Definitions downloadDefinitions(const wordDescriptionRepository::EnglishWord&,
+    wordDescriptionRepository::Definitions downloadDefinitions(const wordDescriptionRepository::std::string&,
                                                                const std::string& wordsApiKey) const;
-    wordDescriptionRepository::Examples downloadExamples(const wordDescriptionRepository::EnglishWord&,
+    wordDescriptionRepository::Examples downloadExamples(const wordDescriptionRepository::std::string&,
                                                          const std::string& wordsApiKey) const;
-    wordDescriptionRepository::Synonyms downloadSynonyms(const wordDescriptionRepository::EnglishWord&,
+    wordDescriptionRepository::Synonyms downloadSynonyms(const wordDescriptionRepository::std::string&,
                                                          const std::string& wordsApiKey) const;
     bool responseCodeIsOk(int) const;
 

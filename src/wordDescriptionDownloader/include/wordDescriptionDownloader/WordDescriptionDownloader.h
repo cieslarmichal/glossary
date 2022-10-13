@@ -12,7 +12,7 @@ public:
     virtual ~WordDescriptionDownloader() = default;
 
     virtual wordDescriptionRepository::WordDescription
-    tryDownloadWordDescription(const wordDescriptionRepository::EnglishWord&,
+    tryDownloadWordDescription(const wordDescriptionRepository::std::string&,
                                const std::string& wordsApiKey) const = 0;
 };
 }

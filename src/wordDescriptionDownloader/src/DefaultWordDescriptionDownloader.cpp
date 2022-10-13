@@ -17,7 +17,7 @@ DefaultWordDescriptionDownloader::DefaultWordDescriptionDownloader(
 }
 
 wordDescriptionRepository::WordDescription DefaultWordDescriptionDownloader::tryDownloadWordDescription(
-    const wordDescriptionRepository::EnglishWord& englishWord, const std::string& wordsApiKey) const
+    const wordDescriptionRepository::std::string& englishWord, const std::string& wordsApiKey) const
 {
     auto definitions = downloadDefinitions(englishWord, wordsApiKey);
 
@@ -29,7 +29,7 @@ wordDescriptionRepository::WordDescription DefaultWordDescriptionDownloader::try
 }
 
 wordDescriptionRepository::Definitions DefaultWordDescriptionDownloader::downloadDefinitions(
-    const wordDescriptionRepository::EnglishWord& englishWord, const std::string& wordsApiKey) const
+    const wordDescriptionRepository::std::string& englishWord, const std::string& wordsApiKey) const
 {
     const auto definitionsApiResponse =
         apiResponseFetcher->tryGetWordDefinitionsResponse(englishWord, wordsApiKey);
@@ -42,7 +42,7 @@ wordDescriptionRepository::Definitions DefaultWordDescriptionDownloader::downloa
 }
 
 wordDescriptionRepository::Examples
-DefaultWordDescriptionDownloader::downloadExamples(const wordDescriptionRepository::EnglishWord& englishWord,
+DefaultWordDescriptionDownloader::downloadExamples(const wordDescriptionRepository::std::string& englishWord,
                                                    const std::string& wordsApiKey) const
 {
     const auto examplesApiResponse = apiResponseFetcher->tryGetWordExamplesResponse(englishWord, wordsApiKey);
@@ -55,7 +55,7 @@ DefaultWordDescriptionDownloader::downloadExamples(const wordDescriptionReposito
 }
 
 wordDescriptionRepository::Synonyms
-DefaultWordDescriptionDownloader::downloadSynonyms(const wordDescriptionRepository::EnglishWord& englishWord,
+DefaultWordDescriptionDownloader::downloadSynonyms(const wordDescriptionRepository::std::string& englishWord,
                                                    const std::string& wordsApiKey) const
 {
 

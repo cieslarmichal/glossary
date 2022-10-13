@@ -1,12 +1,13 @@
 #include "DefaultWordsApiConnectionChecker.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "wordDescriptionDownloader/WordDescriptionDownloaderMock.h"
 
 #include "httpClient/exceptions/ConnectionFailed.h"
 #include "wordDescriptionDownloader/exceptions/InvalidApiKey.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;
@@ -17,7 +18,7 @@ using namespace wordDescriptionService;
 namespace
 {
 const std::string apiKey{"topSecretApiKey"};
-const EnglishWord englishWord{"fish"};
+const std::string englishWord{"fish"};
 const WordDescription wordDescription{englishWord, {}, {}, {}};
 const auto availableStatus = WordsApiStatus::Available;
 const auto unavailableStatus = WordsApiStatus::Unavailable;

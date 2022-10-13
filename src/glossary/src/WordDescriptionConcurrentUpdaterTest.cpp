@@ -1,5 +1,7 @@
 #include "WordDescriptionConcurrentUpdater.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "utils/FileAccessMock.h"
@@ -7,7 +9,6 @@
 #include "wordDescriptionService/WordDescriptionServiceMock.h"
 
 #include "httpClient/exceptions/ConnectionFailed.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary;
@@ -16,9 +17,9 @@ using namespace wordDescriptionService;
 
 namespace
 {
-const EnglishWord englishWord1{"englishWord1"};
-const EnglishWord englishWord2{"englishWord2"};
-const EnglishWord englishWord3{"englishWord3"};
+const std::string englishWord1{"englishWord1"};
+const std::string englishWord2{"englishWord2"};
+const std::string englishWord3{"englishWord3"};
 const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
 const WordDescription wordDescription1{englishWord1, {}, {}, {}};
 }

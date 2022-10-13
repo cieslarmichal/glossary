@@ -1,5 +1,7 @@
 #include "WordsDescriptionsPersistentStorage.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
 #include "WordsDescriptionsSerializerMock.h"
@@ -7,7 +9,6 @@
 
 #include "utils/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::wordDescriptionRepository;
@@ -15,9 +16,9 @@ using namespace glossary::wordDescriptionRepository;
 namespace
 {
 const std::string filePath{utils::getProjectPath("glossary") + "repositoryFiles/wordsDescriptions.txt"};
-const EnglishWord nonExistingWord("nonExistingWord");
-const EnglishWord englishWord1("englishWord1");
-const EnglishWord englishWord2("englishWord2");
+const std::string nonExistingWord("nonExistingWord");
+const std::string englishWord1("englishWord1");
+const std::string englishWord2("englishWord2");
 const WordDescription word1{englishWord1, {}, {}, {}};
 const WordDescription word2{englishWord2, {}, {}, {}};
 const WordsDescriptions words{word1, word2};

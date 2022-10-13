@@ -1,8 +1,10 @@
 #include "DefaultDictionaryNamesRetriever.h"
 
-#include "gtest/gtest.h"
-#include "repository/DictionaryRepositoryMock.h"
 #include <boost/optional/optional_io.hpp>
+
+#include "gtest/gtest.h"
+
+#include "repository/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
@@ -17,12 +19,12 @@ const Dictionary dictionary1{dictionaryName1, {}};
 const Dictionary dictionary2{dictionaryName2, {}};
 const Dictionaries dictionaries1{dictionary1, dictionary2};
 const DictionaryNames dictionaryNames1{dictionaryName1, dictionaryName2};
-const EnglishWord englishWord1{"englishWord1"};
-const EnglishWord englishWord2{"englishWord2"};
-const EnglishWord englishWord3{"englishWord3"};
-const EnglishWord englishWord4{"englishWord4"};
-const EnglishWord englishWordTranslation1{"translation1"};
-const EnglishWord englishWordTranslation2{"translation2"};
+const std::string englishWord1{"englishWord1"};
+const std::string englishWord2{"englishWord2"};
+const std::string englishWord3{"englishWord3"};
+const std::string englishWord4{"englishWord4"};
+const std::string englishWordTranslation1{"translation1"};
+const std::string englishWordTranslation2{"translation2"};
 const DictionaryWord dictionaryWord1{englishWord1, englishWordTranslation1};
 const DictionaryWord dictionaryWord2{englishWord2, englishWordTranslation2};
 const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2};

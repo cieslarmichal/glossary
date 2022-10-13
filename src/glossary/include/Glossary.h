@@ -31,18 +31,18 @@ public:
     virtual DictionaryWords getDictionaryWords(const DictionaryName&) const = 0;
     virtual void addDictionary(const DictionaryName&) const = 0;
     virtual void removeDictionary(const DictionaryName&) const = 0;
-    virtual void addEnglishWordToDictionary(const EnglishWord&, const DictionaryName&) const = 0;
-    virtual void addEnglishWordToDictionary(const EnglishWord&, const std::string& translation,
+    virtual void addEnglishWordToDictionary(const std::string&, const DictionaryName&) const = 0;
+    virtual void addEnglishWordToDictionary(const std::string&, const std::string& translation,
                                             const DictionaryName&) const = 0;
-    virtual void removeEnglishWordFromDictionary(const EnglishWord&, const DictionaryName&) const = 0;
+    virtual void removeEnglishWordFromDictionary(const std::string&, const DictionaryName&) const = 0;
     virtual void addDictionaryFromFile(const DictionaryName&,
                                        const std::string& pathToFileWithDictionaryWords) const = 0;
-    virtual void updateDictionaryWordTranslationManually(const DictionaryName&, const EnglishWord&,
+    virtual void updateDictionaryWordTranslationManually(const DictionaryName&, const std::string&,
                                                          const std::string& newTranslation) const = 0;
     virtual void updateDictionaryWordTranslationAutomatically(const DictionaryName&,
-                                                              const EnglishWord&) const = 0;
+                                                              const std::string&) const = 0;
     virtual void updateDictionaryTranslationsAutomatically(const DictionaryName&) const = 0;
-    virtual WordDescription getEnglishWordDescription(const EnglishWord&) const = 0;
+    virtual WordDescription getEnglishWordDescription(const std::string&) const = 0;
     virtual std::vector<std::string> getSupportedTranslatorLanguages() const = 0;
     virtual boost::optional<std::string> translate(const std::string& textToTranslate,
                                                    const std::string& sourceLanguage,

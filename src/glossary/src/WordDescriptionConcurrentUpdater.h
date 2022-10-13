@@ -23,10 +23,10 @@ private:
     unsigned getAmountOfThreads() const;
     wordDescriptionRepository::EnglishWords
     getEnglishWordsWithoutWordDescription(const wordDescriptionRepository::EnglishWords&) const;
-    void loadingWordDescriptionWorker(utils::ThreadSafeQueue<wordDescriptionRepository::EnglishWord>&,
+    void loadingWordDescriptionWorker(utils::ThreadSafeQueue<wordDescriptionRepository::std::string>&,
                                       utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>&);
     boost::optional<wordDescriptionRepository::WordDescription>
-    downloadWordDescription(const wordDescriptionRepository::EnglishWord&);
+    downloadWordDescription(const wordDescriptionRepository::std::string&);
     void loadWordsDescriptionsIntoRepository(const wordDescriptionRepository::WordsDescriptions&);
 
     std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionService;

@@ -20,7 +20,7 @@ DefaultWordDescriptionService::DefaultWordDescriptionService(
 }
 
 wordDescriptionRepository::WordDescription DefaultWordDescriptionService::retrieveWordDescription(
-    const wordDescriptionRepository::EnglishWord& englishWord) noexcept
+    const wordDescriptionRepository::std::string& englishWord) noexcept
 {
     if (const auto wordDescriptionFromRepository = getWordDescriptionFromRepository(englishWord))
     {
@@ -43,21 +43,21 @@ wordDescriptionRepository::WordDescription DefaultWordDescriptionService::retrie
 
 boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::downloadWordDescription(
-    const wordDescriptionRepository::EnglishWord& englishWord)
+    const wordDescriptionRepository::std::string& englishWord)
 {
     return downloadWordDescriptionFromDownloader(englishWord);
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::getWordDescriptionFromRepository(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+    const wordDescriptionRepository::std::string& englishWord) const
 {
     return wordDescriptionRepository->getWordDescription(englishWord);
 }
 
 boost::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::downloadWordDescriptionFromDownloader(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+    const wordDescriptionRepository::std::string& englishWord) const
 {
     if (not wordsApiKey)
     {
@@ -87,7 +87,7 @@ void DefaultWordDescriptionService::saveWordDescriptionInRepository(
 
 wordDescriptionRepository::WordDescription
 DefaultWordDescriptionService::getEmptyWordDescriptionWithEnglishWord(
-    const wordDescriptionRepository::EnglishWord& englishWord) const
+    const wordDescriptionRepository::std::string& englishWord) const
 {
     return wordDescriptionRepository::WordDescription{englishWord, {}, {}, {}};
 }

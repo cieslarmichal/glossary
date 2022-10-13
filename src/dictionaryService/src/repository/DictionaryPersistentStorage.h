@@ -19,8 +19,8 @@ public:
     void addDictionary(const Dictionary&) override;
     void addWordToDictionary(const DictionaryWord&, const DictionaryName&) override;
     void removeDictionary(const DictionaryName&) override;
-    void removeWordFromDictionary(const EnglishWord&, const DictionaryName&) override;
-    void changeWordTranslationFromDictionary(const EnglishWord&, const std::string&,
+    void removeWordFromDictionary(const std::string&, const DictionaryName&) override;
+    void changeWordTranslationFromDictionary(const std::string&, const std::string&,
                                              const DictionaryName&) override;
     boost::optional<Dictionary> getDictionary(const DictionaryName&) const override;
     Dictionaries getDictionaries() const override;

@@ -15,8 +15,8 @@ public:
     virtual void addDictionary(const Dictionary&) = 0;
     virtual void addWordToDictionary(const DictionaryWord&, const DictionaryName&) = 0;
     virtual void removeDictionary(const DictionaryName&) = 0;
-    virtual void removeWordFromDictionary(const EnglishWord&, const DictionaryName&) = 0;
-    virtual void changeWordTranslationFromDictionary(const EnglishWord&, const std::string&,
+    virtual void removeWordFromDictionary(const std::string&, const DictionaryName&) = 0;
+    virtual void changeWordTranslationFromDictionary(const std::string&, const std::string&,
                                                      const DictionaryName&) = 0;
     virtual boost::optional<Dictionary> getDictionary(const DictionaryName&) const = 0;
     virtual Dictionaries getDictionaries() const = 0;
