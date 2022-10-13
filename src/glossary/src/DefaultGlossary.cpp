@@ -3,8 +3,8 @@
 #include <iostream>
 #include <utility>
 
-#include "utils/GetProjectPath.h"
-#include "utils/StlOperators.h"
+#include "../../common/collection/include/StlOperators.h"
+#include "../../common/fileSystem/include/GetProjectPath.h"
 
 namespace glossary
 {

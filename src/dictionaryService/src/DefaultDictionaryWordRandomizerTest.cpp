@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "utils/RandomNumberGeneratorMock.h"
+#include "../../common/random/include/RandomNumberGeneratorMock.h"
 
 using namespace ::testing;
 using namespace glossary;
@@ -23,8 +23,8 @@ const int wordsLastWordIndex{2};
 class DefaultDictionaryWordRandomizerTest : public Test
 {
 public:
-    std::shared_ptr<utils::RandomNumberGeneratorMock> randomNumberGenerator =
-        std::make_shared<StrictMock<utils::RandomNumberGeneratorMock>>();
+    std::shared_ptr<common::RandomNumberGeneratorMock> randomNumberGenerator =
+        std::make_shared<StrictMock<common::RandomNumberGeneratorMock>>();
     DefaultDictionaryWordRandomizer wordRandomizer{randomNumberGenerator};
 };
 

@@ -1,5 +1,6 @@
 #include "DefaultDictionaryServiceFactory.h"
 
+#include "../../common/random/include/RandomNumberMersenneTwisterGenerator.h"
 #include "DefaultDictionaryNamesRetriever.h"
 #include "DefaultDictionaryService.h"
 #include "DefaultDictionaryWordRandomizer.h"
@@ -10,12 +11,11 @@
 #include "repository/DefaultDictionaryRepository.h"
 #include "repository/DictionaryPersistentStorage.h"
 #include "serialization/DictionaryJsonSerializer.h"
-#include "utils/RandomNumberMersenneTwisterGenerator.h"
 
 namespace glossary::dictionaryService
 {
 DefaultDictionaryServiceFactory::DefaultDictionaryServiceFactory(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit)
+    std::shared_ptr<const common::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }
@@ -32,7 +32,7 @@ std::unique_ptr<DictionaryService> DefaultDictionaryServiceFactory::createDictio
 
     auto randomDictionaryWordRetriever = std::make_unique<DefaultRandomDictionaryWordRetriever>(
         dictionaryRepository, std::make_unique<DefaultDictionaryWordRandomizer>(
-                                  std::make_shared<utils::RandomNumberMersenneTwisterGenerator>()));
+                                  std::make_shared<common::RandomNumberMersenneTwisterGenerator>()));
 
     auto dictionaryWordsFileReader =
         std::make_unique<csvFileReading::DictionaryWordsCsvFileReader>(fileAccess);

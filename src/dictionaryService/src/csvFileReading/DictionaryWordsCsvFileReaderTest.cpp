@@ -1,11 +1,12 @@
 #include "DictionaryWordsCsvFileReader.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
-#include "utils/FileAccessMock.h"
+#include "../../../common/fileSystem/include/FileAccessMock.h"
 
 #include "utils/exceptions/FileNotFound.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
@@ -35,7 +36,8 @@ const std::string emptyContent{};
 class DictionaryWordsCsvFileReaderTest : public Test
 {
 public:
-    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
+    std::shared_ptr<common::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::FileAccessMock>>();
     DictionaryWordsCsvFileReader reader{fileAccess};
 };
 

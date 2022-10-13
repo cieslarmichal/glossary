@@ -1,6 +1,6 @@
 #include "DictionaryWordsCsvFileContentValidator.h"
 
-#include "utils/StringHelper.h"
+#include "../../../common/collection/include/StringHelper.h"
 
 namespace glossary::dictionaryService::csvFileReading
 {
@@ -21,7 +21,7 @@ ValidationResult DictionaryWordsCsvFileContentValidator::validate(const std::str
 bool DictionaryWordsCsvFileContentValidator::dictionaryWordsContentIsValid(
     const std::string& dictionaryWordsContent) const
 {
-    for (const auto& line : utils::split(dictionaryWordsContent))
+    for (const auto& line : common::split(dictionaryWordsContent))
     {
         if (not dictionaryWordLineIsValid(line))
             return false;
@@ -34,8 +34,8 @@ bool DictionaryWordsCsvFileContentValidator::dictionaryWordLineIsValid(
     if (dictionaryWordLine.empty())
         return true;
 
-    auto separatedWords = utils::split(dictionaryWordLine, wordSeparator);
-    utils::trim(separatedWords);
+    auto separatedWords = common::split(dictionaryWordLine, wordSeparator);
+    common::trim(separatedWords);
 
     auto lineContainsBothRequiredWords = separatedWords.size() == requiredAmountOfWordsInLine;
     auto englishWordIsNotEmpty = not separatedWords.at(englishWordIndex).empty();

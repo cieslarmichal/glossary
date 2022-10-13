@@ -2,17 +2,17 @@
 
 #include <memory>
 
+#include "../../common/fileSystem/include/FileAccess.h"
 #include "WordsDescriptionsMemoryStorage.h"
 #include "WordsDescriptionsSerializer.h"
 #include "WordsDescriptionsStorage.h"
-#include "utils/FileAccess.h"
 
 namespace glossary::wordDescriptionRepository
 {
 class WordsDescriptionsPersistentStorage : public WordsDescriptionsStorage
 {
 public:
-    WordsDescriptionsPersistentStorage(std::shared_ptr<const utils::FileAccess>,
+    WordsDescriptionsPersistentStorage(std::shared_ptr<const common::FileAccess>,
                                        std::shared_ptr<const WordsDescriptionsSerializer>);
 
     void addWordDescription(const WordDescription&) override;
@@ -26,7 +26,7 @@ private:
     void loadFile();
     void serialize() const;
 
-    std::shared_ptr<const utils::FileAccess> fileAccess;
+    std::shared_ptr<const common::FileAccess> fileAccess;
     std::shared_ptr<const WordsDescriptionsSerializer> serializer;
     WordsDescriptionsMemoryStorage storage;
 

@@ -21,9 +21,9 @@ void WordDescriptionConcurrentUpdater::update(const dictionaryService::EnglishWo
     threadPool.reserve(amountOfThreads);
 
     const auto englishWordsWithoutWordDescriptions = getEnglishWordsWithoutWordDescription(englishWords);
-    utils::ThreadSafeQueue<wordDescriptionRepository::std::string> englishWordsQueue{
+    common::ThreadSafeQueue<wordDescriptionRepository::std::string> englishWordsQueue{
         englishWordsWithoutWordDescriptions};
-    utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription> wordsDescriptions;
+    common::ThreadSafeQueue<wordDescriptionRepository::WordDescription> wordsDescriptions;
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
@@ -61,8 +61,8 @@ WordDescriptionConcurrentUpdater::getEnglishWordsWithoutWordDescription(
 }
 
 void WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker(
-    utils::ThreadSafeQueue<wordDescriptionRepository::std::string>& englishWords,
-    utils::ThreadSafeQueue<wordDescriptionRepository::WordDescription>& wordsDescriptions)
+    common::ThreadSafeQueue<wordDescriptionRepository::std::string>& englishWords,
+    common::ThreadSafeQueue<wordDescriptionRepository::WordDescription>& wordsDescriptions)
 {
     while (const auto currentEnglishWord = englishWords.pop())
     {

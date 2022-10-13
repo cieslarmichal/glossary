@@ -2,11 +2,11 @@
 
 #include <memory>
 
+#include "../../common/collection/include/ThreadSafeQueue.h"
+#include "../../common/concurrency/include/SupportedThreadsCalculator.h"
 #include "../../domain/translation/include/TranslationRepository.h"
 #include "dictionaryService/DictionaryObserver.h"
 #include "translationService/TranslationService.h"
-#include "utils/SupportedThreadsCalculator.h"
-#include "utils/ThreadSafeQueue.h"
 
 namespace glossary
 {
@@ -22,11 +22,11 @@ private:
     unsigned getAmountOfThreads() const;
     dictionaryService::EnglishWords
     getEnglishWordsWithoutTranslation(const dictionaryService::EnglishWords&) const;
-    void loadingTranslationsWorker(utils::ThreadSafeQueue<dictionaryService::std::string>&);
+    void loadingTranslationsWorker(common::ThreadSafeQueue<dictionaryService::std::string>&);
     void loadTranslationFromTranslationService(const dictionaryService::std::string&);
 
     std::shared_ptr<translationService::TranslationService> translationService;
     std::shared_ptr<translation::TranslationRepository> translationRepository;
-    utils::SupportedThreadsCalculator supportedThreadsCalculator;
+    common::SupportedThreadsCalculator supportedThreadsCalculator;
 };
 }

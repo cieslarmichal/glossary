@@ -2,16 +2,16 @@
 
 #include <iostream>
 
-#include "utils/GetProjectPath.h"
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 
 namespace glossary::dictionaryService::repository
 {
-const std::string DictionaryPersistentStorage::directory{utils::getProjectPath("glossary") +
+const std::string DictionaryPersistentStorage::directory{common::getProjectPath("glossary") +
                                                          "repositoryFiles/"};
 const std::string DictionaryPersistentStorage::filename{directory + "dictionaries.txt"};
 
 DictionaryPersistentStorage::DictionaryPersistentStorage(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit,
+    std::shared_ptr<const common::FileAccess> fileAccessInit,
     std::shared_ptr<const serialization::DictionarySerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 

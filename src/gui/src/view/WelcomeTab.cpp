@@ -4,12 +4,12 @@
 #include <QFileDialog>
 #include <iostream>
 
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 #include "ui_WelcomeTab.h"
-#include "utils/GetProjectPath.h"
 
 namespace
 {
-const auto resourceDirectoryPath = utils::getProjectPath("glossary") + "src/gui/resources/";
+const auto resourceDirectoryPath = common::getProjectPath("glossary") + "src/gui/resources/";
 const auto loadApiKeyIconPath = resourceDirectoryPath + "settings.png";
 const auto validApiKeyIconPath = resourceDirectoryPath + "correctAnswer.png";
 const auto invalidApiKeyIconPath = resourceDirectoryPath + "incorrectAnswer.png";

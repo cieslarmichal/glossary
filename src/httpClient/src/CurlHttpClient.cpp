@@ -2,8 +2,8 @@
 
 #include "curl/curl.h"
 
+#include "../../common/fileSystem/include/GetProjectPath.h"
 #include "exceptions/ConnectionFailed.h"
-#include "utils/GetProjectPath.h"
 
 namespace httpClient
 {
@@ -38,7 +38,8 @@ HttpResponse CurlHttpClient::get(const GetPayload& payload) const
 
     struct curl_slist* curlHeaders = nullptr;
 
-    if (payload.headers) {
+    if (payload.headers)
+    {
         for (const auto& header : *payload.headers)
         {
             curlHeaders = curl_slist_append(curlHeaders, header.c_str());

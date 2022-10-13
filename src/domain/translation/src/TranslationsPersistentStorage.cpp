@@ -2,17 +2,17 @@
 
 #include <iostream>
 
-#include "utils/GetProjectPath.h"
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
 namespace glossary::translation
 {
-const std::string TranslationsPersistentStorage::directory{utils::getProjectPath("glossary") +
+const std::string TranslationsPersistentStorage::directory{common::getProjectPath("glossary") +
                                                            "repositoryFiles/"};
 const std::string TranslationsPersistentStorage::filename{directory + "translations.txt"};
 
 TranslationsPersistentStorage::TranslationsPersistentStorage(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit,
+    std::shared_ptr<const common::FileAccess> fileAccessInit,
     std::shared_ptr<const TranslationsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
@@ -61,7 +61,7 @@ void TranslationsPersistentStorage::loadFile()
     {
         translations = serializer->deserialize(fileAccess->readContent(filename));
     }
-    catch (const utils::exceptions::FileNotFound& e)
+    catch (const common::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while deserializing translations " << e.what();
         return;
@@ -79,7 +79,7 @@ void TranslationsPersistentStorage::serialize() const
     {
         fileAccess->write(filename, serializer->serialize(storage.getTranslations()));
     }
-    catch (const utils::exceptions::FileNotFound& e)
+    catch (const common::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while serializing translations " << e.what();
     }

@@ -3,9 +3,9 @@
 #include <fmt/core.h>
 #include <iostream>
 
+#include "../../../common/collection/include/StringHelper.h"
 #include "exceptions/InvalidApiKey.h"
 #include "httpClient/HttpStatusCode.h"
-#include "utils/StringHelper.h"
 
 namespace
 {
@@ -58,9 +58,9 @@ std::string DefaultTranslationService::formatTranslationRequestUrl(const std::st
                                                                    Language targetLanguage,
                                                                    const std::string& apiKey) const
 {
-    const auto splitText = utils::split(sourceText, " ");
+    const auto splitText = common::split(sourceText, " ");
 
-    const auto formattedSourceText = utils::join(splitText, "+");
+    const auto formattedSourceText = common::join(splitText, "+");
 
     const auto keyField = "key=" + apiKey;
 

@@ -2,17 +2,17 @@
 
 #include <iostream>
 
-#include "utils/GetProjectPath.h"
+#include "../../common/fileSystem/include/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
 namespace glossary::wordDescriptionRepository
 {
-const std::string WordsDescriptionsPersistentStorage::directory{utils::getProjectPath("glossary") +
+const std::string WordsDescriptionsPersistentStorage::directory{common::getProjectPath("glossary") +
                                                                 "repositoryFiles/"};
 const std::string WordsDescriptionsPersistentStorage::filename{directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit,
+    std::shared_ptr<const common::FileAccess> fileAccessInit,
     std::shared_ptr<const WordsDescriptionsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
@@ -58,7 +58,7 @@ void WordsDescriptionsPersistentStorage::loadFile()
     {
         words = serializer->deserialize(fileAccess->readContent(filename));
     }
-    catch (const utils::exceptions::FileNotFound& e)
+    catch (const common::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while serializing words descriptions " << e.what();
         return;
@@ -76,7 +76,7 @@ void WordsDescriptionsPersistentStorage::serialize() const
     {
         fileAccess->write(filename, serializer->serialize(storage.getWordsDescriptions()));
     }
-    catch (const utils::exceptions::FileNotFound& e)
+    catch (const common::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while serializing words descriptions " << e.what();
     }

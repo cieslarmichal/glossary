@@ -3,9 +3,9 @@
 #include <ostream>
 #include <vector>
 
+#include "../../../common/collection/include/StlOperators.h"
 #include "DictionaryName.h"
 #include "DictionaryWord.h"
-#include "utils/StlOperators.h"
 
 namespace glossary::dictionaryService
 {

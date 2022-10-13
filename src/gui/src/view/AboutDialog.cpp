@@ -1,13 +1,13 @@
 #include "AboutDialog.h"
 
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 #include "ui_AboutDialog.h"
-#include "utils/GetProjectPath.h"
 
 namespace glossary::gui::view
 {
 namespace
 {
-const auto resourceDirectoryPath = utils::getProjectPath("glossary") + "src/gui/resources/";
+const auto resourceDirectoryPath = common::getProjectPath("glossary") + "src/gui/resources/";
 const auto glossaryIconPath = resourceDirectoryPath + "glossaryIcon.png";
 }
 

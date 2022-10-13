@@ -1,8 +1,8 @@
 #include "Gui.h"
 
+#include "../../common/fileSystem/include/GetProjectPath.h"
 #include "GlossaryFactory.h"
 #include "model/GlossaryAdapter.h"
-#include "utils/GetProjectPath.h"
 #include "view/CheckWordDescriptionTab.h"
 #include "view/DictionariesTab.h"
 #include "view/GuessTab.h"
@@ -14,7 +14,7 @@ namespace glossary::gui
 {
 namespace
 {
-const auto resourceDirectoryPath = utils::getProjectPath("glossary") + "src/gui/resources/";
+const auto resourceDirectoryPath = common::getProjectPath("glossary") + "src/gui/resources/";
 const auto glossaryIconPath = resourceDirectoryPath + "glossaryIcon.png";
 }
 

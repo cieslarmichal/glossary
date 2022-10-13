@@ -4,16 +4,16 @@
 
 #include "boost/optional.hpp"
 
+#include "../../../common/fileSystem/include/FileAccess.h"
 #include "DictionaryWordsCsvFileContentValidator.h"
 #include "DictionaryWordsReader.h"
-#include "utils/FileAccess.h"
 
 namespace glossary::dictionaryService::csvFileReading
 {
 class DictionaryWordsCsvFileReader : public DictionaryWordsReader
 {
 public:
-    explicit DictionaryWordsCsvFileReader(std::shared_ptr<const utils::FileAccess>);
+    explicit DictionaryWordsCsvFileReader(std::shared_ptr<const common::FileAccess>);
 
     boost::optional<DictionaryWords> readDictionaryWords(const std::string& absolutePath) const override;
 
@@ -23,6 +23,6 @@ private:
     boost::optional<DictionaryWord> getDictionaryWord(const std::string&) const;
 
     DictionaryWordsCsvFileContentValidator validator;
-    std::shared_ptr<const utils::FileAccess> fileAccess;
+    std::shared_ptr<const common::FileAccess> fileAccess;
 };
 }

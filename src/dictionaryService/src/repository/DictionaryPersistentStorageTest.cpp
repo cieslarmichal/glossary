@@ -1,12 +1,13 @@
 #include "DictionaryPersistentStorage.h"
 
-#include "gtest/gtest.h"
-
-#include "serialization/DictionarySerializerMock.h"
-#include "utils/FileAccessMock.h"
 #include <boost/optional/optional_io.hpp>
 
-#include "utils/GetProjectPath.h"
+#include "gtest/gtest.h"
+
+#include "../../../common/fileSystem/include/FileAccessMock.h"
+#include "serialization/DictionarySerializerMock.h"
+
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::dictionaryService;
@@ -14,7 +15,7 @@ using namespace repository;
 
 namespace
 {
-const std::string filePath{utils::getProjectPath("glossary") + "repositoryFiles/dictionaries.txt"};
+const std::string filePath{common::getProjectPath("glossary") + "repositoryFiles/dictionaries.txt"};
 const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 const DictionaryName dictionaryName1{"dictionaryName1"};
 const DictionaryName dictionaryName2{"dictionaryName2"};
@@ -74,7 +75,8 @@ public:
         EXPECT_CALL(*fileAccess, write(filePath, "dictionaries"));
     }
 
-    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
+    std::shared_ptr<common::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::FileAccessMock>>();
     std::shared_ptr<serialization::DictionarySerializerMock> serializer =
         std::make_shared<StrictMock<serialization::DictionarySerializerMock>>();
 };

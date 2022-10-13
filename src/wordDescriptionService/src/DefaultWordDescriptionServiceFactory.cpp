@@ -9,7 +9,7 @@ namespace glossary::wordDescriptionService
 {
 
 DefaultWordDescriptionServiceFactory::DefaultWordDescriptionServiceFactory(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit)
+    std::shared_ptr<const common::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }

@@ -2,10 +2,10 @@
 
 #include "gtest/gtest.h"
 
+#include "../../../common/fileSystem/include/FileAccessMock.h"
 #include "StatisticsSerializerMock.h"
-#include "utils/FileAccessMock.h"
 
-#include "utils/GetProjectPath.h"
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 #include "utils/exceptions/FileNotFound.h"
 
 using namespace ::testing;
@@ -13,7 +13,7 @@ using namespace glossary::statistics;
 
 namespace
 {
-const std::string filepath{utils::getProjectPath("glossary") + "repositoryFiles/statistics.txt"};
+const std::string filepath{common::getProjectPath("glossary") + "repositoryFiles/statistics.txt"};
 const std::string englishWord1{"englishWord1"};
 const std::string englishWord2{"englishWord2"};
 const std::string englishWord3{"englishWord3"};
@@ -53,7 +53,8 @@ public:
         EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(twoWordsStatistics));
     }
 
-    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
+    std::shared_ptr<common::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::FileAccessMock>>();
     std::shared_ptr<StatisticsSerializerMock> serializer =
         std::make_shared<StrictMock<StatisticsSerializerMock>>();
 };
@@ -79,7 +80,7 @@ TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithFileWithStatis
 
 TEST_F(StatisticsPersistentStorageTest, givenInvalidFile_shouldReturnNoStats)
 {
-    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Throw(common::exceptions::FileNotFound{""}));
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualStats = persistentStorage.getStatistics();
@@ -104,7 +105,7 @@ TEST_F(StatisticsPersistentStorageTest,
 {
     expectNoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
-    EXPECT_CALL(*fileAccess, write(filepath, "words")).WillOnce(Throw(utils::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, write(filepath, "words")).WillOnce(Throw(common::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(oneWordStatistics)).WillOnce(Return("words"));
 
     persistentStorage.addWordStatistics(wordStats1);

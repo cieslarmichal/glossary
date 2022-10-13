@@ -3,7 +3,7 @@
 #include <optional>
 #include <string>
 
-#include "utils/StlOperators.h"
+#include "../../../common/collection/include/StlOperators.h"
 
 namespace httpClient
 {

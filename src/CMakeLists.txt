@@ -1,7 +1,7 @@
 set(INTERNAL_LIBS_INCLUDE_PATH ${CMAKE_CURRENT_LIST_DIR})
 
 add_subdirectory(httpClient)
-add_subdirectory(utils)
+add_subdirectory(common)
 add_subdirectory(dictionaryService)
 add_subdirectory(domain)
 add_subdirectory(wordDescriptionRepository)

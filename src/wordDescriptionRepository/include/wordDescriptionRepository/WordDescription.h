@@ -1,10 +1,9 @@
 #pragma once
 
+#include "../../../common/collection/include/StlOperators.h"
 #include "Definition.h"
 #include "Example.h"
 #include "Synonym.h"
-
-#include "utils/StlOperators.h"
 
 namespace glossary::wordDescriptionRepository
 {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../../../../externals/googletest/googlemock/include/gmock/gmock.h"
+#include "gmock/gmock.h"
 
 #include "TranslationService.h"
 

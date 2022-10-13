@@ -4,7 +4,7 @@
 
 #include "gtest/gtest.h"
 
-#include "utils/FileAccessMock.h"
+#include "../../common/fileSystem/include/FileAccessMock.h"
 #include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
 #include "wordDescriptionService/WordDescriptionServiceMock.h"
 

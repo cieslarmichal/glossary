@@ -2,14 +2,14 @@
 
 #include <QDebug>
 
+#include "../../../common/fileSystem/include/GetProjectPath.h"
 #include "WordDescriptionDialog.h"
 #include "ui_GuessTab.h"
-#include "utils/GetProjectPath.h"
 
 namespace
 {
 constexpr auto anyDictionaryName = "any";
-const auto resourceDirectoryPath = utils::getProjectPath("glossary") + "src/gui/resources/";
+const auto resourceDirectoryPath = common::getProjectPath("glossary") + "src/gui/resources/";
 const auto incorrectAnswerIconPath = resourceDirectoryPath + "incorrectAnswer.png";
 const auto correctAnswerIconPath = resourceDirectoryPath + "correctAnswer.png";
 const auto nextIcon = resourceDirectoryPath + "next.png";

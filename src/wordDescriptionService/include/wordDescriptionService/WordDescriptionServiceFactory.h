@@ -2,11 +2,11 @@
 
 #include <memory>
 
+#include "../../../common/fileSystem/include/FileAccess.h"
 #include "WordDescriptionService.h"
-#include "utils/FileAccess.h"
+#include "WordDescriptionServiceApi.h"
 #include "wordDescriptionDownloader/WordDescriptionDownloader.h"
 #include "wordDescriptionRepository/WordDescriptionRepository.h"
-#include "WordDescriptionServiceApi.h"
 
 namespace glossary::wordDescriptionService
 {
@@ -20,6 +20,6 @@ public:
         const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&) const = 0;
 
     static std::unique_ptr<WordDescriptionServiceFactory>
-    createWordDescriptionServiceFactory(const std::shared_ptr<const utils::FileAccess>&);
+    createWordDescriptionServiceFactory(const std::shared_ptr<const common::FileAccess>&);
 };
 }

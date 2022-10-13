@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "utils/StringHelper.h"
+#include "../../../common/collection/include/StringHelper.h"
 #include "utils/exceptions/FileNotFound.h"
 
 namespace glossary::dictionaryService::csvFileReading
@@ -15,7 +15,7 @@ constexpr auto translationIndex{1};
 }
 
 DictionaryWordsCsvFileReader::DictionaryWordsCsvFileReader(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit)
+    std::shared_ptr<const common::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }
@@ -47,7 +47,7 @@ bool DictionaryWordsCsvFileReader::dictionaryWordsContentIsValid(
 DictionaryWords DictionaryWordsCsvFileReader::getDictionaryWords(const std::string& dictionaryContent) const
 {
     DictionaryWords dictionaryWords{};
-    for (const auto& line : utils::split(dictionaryContent))
+    for (const auto& line : common::split(dictionaryContent))
     {
         if (const auto wordWithTranslation = getDictionaryWord(line))
         {
@@ -62,8 +62,8 @@ boost::optional<DictionaryWord> DictionaryWordsCsvFileReader::getDictionaryWord(
     if (line.empty())
         return boost::none;
 
-    auto separatedWords = utils::split(line, wordSeparator);
-    utils::trim(separatedWords);
+    auto separatedWords = common::split(line, wordSeparator);
+    common::trim(separatedWords);
     std::string englishWord = separatedWords.at(englishWordIndex);
     std::string polishTranslation = separatedWords.at(translationIndex);
 

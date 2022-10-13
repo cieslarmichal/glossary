@@ -19,7 +19,7 @@ void TranslationConcurrentUpdater::update(const dictionaryService::EnglishWords&
     threadPool.reserve(amountOfThreads);
 
     const auto englishWordsWithoutTranslation = getEnglishWordsWithoutTranslation(englishWords);
-    utils::ThreadSafeQueue<dictionaryService::std::string> englishWordsQueue{englishWordsWithoutTranslation};
+    common::ThreadSafeQueue<dictionaryService::std::string> englishWordsQueue{englishWordsWithoutTranslation};
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
@@ -50,7 +50,7 @@ dictionaryService::EnglishWords TranslationConcurrentUpdater::getEnglishWordsWit
 }
 
 void TranslationConcurrentUpdater::loadingTranslationsWorker(
-    utils::ThreadSafeQueue<dictionaryService::std::string>& englishWords)
+    common::ThreadSafeQueue<dictionaryService::std::string>& englishWords)
 {
     while (const auto currentEnglishWord = englishWords.pop())
     {

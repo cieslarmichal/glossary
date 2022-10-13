@@ -2,8 +2,8 @@
 
 #include <memory>
 
+#include "../../../common/fileSystem/include/FileAccess.h"
 #include "WordDescriptionRepository.h"
-#include "utils/FileAccess.h"
 #include "WordDescriptionRepositoryApi.h"
 
 namespace glossary::wordDescriptionRepository
@@ -16,6 +16,6 @@ public:
     virtual std::unique_ptr<WordDescriptionRepository> createWordDescriptionRepository() const = 0;
 
     static std::unique_ptr<WordDescriptionRepositoryFactory>
-    createWordDescriptionRepositoryFactory(const std::shared_ptr<const utils::FileAccess>&);
+    createWordDescriptionRepositoryFactory(const std::shared_ptr<const common::FileAccess>&);
 };
 }

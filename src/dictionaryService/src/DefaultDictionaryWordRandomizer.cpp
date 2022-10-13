@@ -6,7 +6,7 @@
 namespace glossary::dictionaryService
 {
 DefaultDictionaryWordRandomizer::DefaultDictionaryWordRandomizer(
-    std::shared_ptr<utils::RandomNumberGenerator> randomNumberGeneratorInit)
+    std::shared_ptr<common::RandomNumberGenerator> randomNumberGeneratorInit)
     : randomNumberGenerator{std::move(randomNumberGeneratorInit)}
 {
 }

@@ -1,18 +1,19 @@
 #include "WordsApiKeyFileReader.h"
 
+#include <boost/optional/optional_io.hpp>
+
 #include "gtest/gtest.h"
 
-#include "utils/FileAccessMock.h"
+#include "../../common/fileSystem/include/FileAccessMock.h"
 
-#include "utils/GetProjectPath.h"
-#include <boost/optional/optional_io.hpp>
+#include "../../common/fileSystem/include/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::wordDescriptionService;
 
 namespace
 {
-const std::string filePathWithPathToFileWithApiKey{utils::getProjectPath("glossary") +
+const std::string filePathWithPathToFileWithApiKey{common::getProjectPath("glossary") +
                                                    "config/wordsApiKeyLocation.txt"};
 const std::string invalidFilePathWithApiKey{"home/invalidApiKeyFilePath.txt"};
 const std::string validFilePathWithApiKey{"home/validApiKeyFilePath.txt"};
@@ -22,7 +23,8 @@ const std::string exampleApiKey{"apiKey"};
 class WordsApiKeyFileReaderTest : public Test
 {
 public:
-    std::shared_ptr<utils::FileAccessMock> fileAccess = std::make_shared<StrictMock<utils::FileAccessMock>>();
+    std::shared_ptr<common::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::FileAccessMock>>();
     WordsApiKeyFileReader apiKeyFileReader{fileAccess};
 };
 

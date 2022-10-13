@@ -1,15 +1,15 @@
 #include "DefaultApiKeyLocationUpdater.h"
 
-#include "utils/GetProjectPath.h"
+#include "../../common/fileSystem/include/GetProjectPath.h"
 
 namespace glossary::wordDescriptionService
 {
 
 const std::string DefaultApiKeyLocationUpdater::filePathContainingPathToFileWithApiKey{
-    utils::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
+    common::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
 
 DefaultApiKeyLocationUpdater::DefaultApiKeyLocationUpdater(
-    std::shared_ptr<const utils::FileAccess> fileAccessInit)
+    std::shared_ptr<const common::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }

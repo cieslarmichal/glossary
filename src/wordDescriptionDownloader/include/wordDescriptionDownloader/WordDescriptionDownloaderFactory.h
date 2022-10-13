@@ -2,10 +2,10 @@
 
 #include <memory>
 
+#include "../../../common/fileSystem/include/FileAccess.h"
 #include "WordDescriptionDownloader.h"
 #include "WordDescriptionDownloaderApi.h"
 #include "httpClient/HttpClient.h"
-#include "utils/FileAccess.h"
 
 namespace glossary::wordDescriptionDownloader
 {
