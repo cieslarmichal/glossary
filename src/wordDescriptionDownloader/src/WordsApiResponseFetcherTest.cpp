@@ -21,15 +21,15 @@ const std::vector<std::string> headers{"x-rapidapi-host: wordsapiv1.p.rapidapi.c
 const std::string wordsApiDefinitionsUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/definitions"};
 const std::string wordsApiExamplesUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/examples"};
 const std::string wordsApiSynonymsUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/synonyms"};
-const httpClient::HttpResponse response{200, "content"};
-const httpClient::HttpResponse unauthorizedResponse{401, ""};
+const common::httpClient::HttpResponse response{200, "content"};
+const common::httpClient::HttpResponse unauthorizedResponse{401, ""};
 }
 
 class WordsApiResponseFetcherTest : public Test
 {
 public:
-    std::shared_ptr<httpClient::HttpClientMock> httpHandler =
-        std::make_shared<StrictMock<httpClient::HttpClientMock>>();
+    std::shared_ptr<common::httpClient::HttpClientMock> httpHandler =
+        std::make_shared<StrictMock<common::httpClient::HttpClientMock>>();
     WordsApiResponseFetcher wordsApiResponseFetcher{httpHandler};
 };
 
@@ -37,10 +37,10 @@ TEST_F(WordsApiResponseFetcherTest,
        getDefinitions_httpHandlerThrowConnectionFailed_shouldThrowConnectionFailed)
 {
     EXPECT_CALL(*httpHandler, get(wordsApiDefinitionsUrl, headers))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(wordsApiResponseFetcher.tryGetWordDefinitionsResponse(englishWord, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(WordsApiResponseFetcherTest,
@@ -64,10 +64,10 @@ TEST_F(WordsApiResponseFetcherTest, getDefinitions_shouldInvokeHttpResponseWithD
 TEST_F(WordsApiResponseFetcherTest, getExamples_httpHandlerThrowConnectionFailed_shouldThrowConnectionFailed)
 {
     EXPECT_CALL(*httpHandler, get(wordsApiExamplesUrl, headers))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(wordsApiResponseFetcher.tryGetWordExamplesResponse(englishWord, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(WordsApiResponseFetcherTest, getExamples_httpResponseReturnsUnautorizedCode_shouldThrowInvalidApiKey)
@@ -90,10 +90,10 @@ TEST_F(WordsApiResponseFetcherTest, getExamples_shouldInvokeHttpResponseWithExam
 TEST_F(WordsApiResponseFetcherTest, getSynonyms_httpHandlerThrowConnectionFailed_shouldThrowConnectionFailed)
 {
     EXPECT_CALL(*httpHandler, get(wordsApiSynonymsUrl, headers))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(wordsApiResponseFetcher.tryGetWordSynonymsResponse(englishWord, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(WordsApiResponseFetcherTest, getSynonyms_httpResponseReturnsUnautorizedCode_shouldThrowInvalidApiKey)

@@ -105,7 +105,7 @@ TEST_F(
 {
     EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(emptyWordDescription));
 
     const auto actualWordDescription = wordDescriptionService.retrieveWordDescription(englishWord);

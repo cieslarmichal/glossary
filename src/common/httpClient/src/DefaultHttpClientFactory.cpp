@@ -2,7 +2,7 @@
 
 #include "CurlHttpClient.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 std::unique_ptr<HttpClient> DefaultHttpClientFactory::createHttpClient() const
 {

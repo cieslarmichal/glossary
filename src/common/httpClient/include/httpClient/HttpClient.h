@@ -5,7 +5,7 @@
 #include "GetPayload.h"
 #include "HttpResponse.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 class HttpClient
 {

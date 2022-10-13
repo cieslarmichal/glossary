@@ -2,7 +2,7 @@
 
 #include "HttpClientFactory.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 class DefaultHttpClientFactory : public HttpClientFactory
 {

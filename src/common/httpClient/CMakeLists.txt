@@ -27,13 +27,13 @@ target_include_directories(httpClientUT
 target_link_libraries(httpClient
         PUBLIC
         libcurl
-        utils
+        collection
         )
 target_link_libraries(httpClientUT
         PUBLIC
         libcurl
         gtest_main
-        utils
+        collection
         )
 
 target_compile_options(httpClient PUBLIC ${FLAGS})

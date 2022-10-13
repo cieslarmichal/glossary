@@ -20,20 +20,20 @@ const auto sourceField = R"(&source=pl)";
 const auto targetField = R"(&target=en)";
 const std::string url = baseUrl + keyField + "&q=piwo" + sourceField + targetField;
 const auto responseContent = R"({"code":200,"lang":"pl-en","text":["beer"]})";
-const httpClient::HttpResponse successResponse{200, responseContent};
-const httpClient::HttpResponse failureResponse{400, ""};
+const common::httpClient::HttpResponse successResponse{200, responseContent};
+const common::httpClient::HttpResponse failureResponse{400, ""};
 const std::string polishText = "piwo";
 const auto englishText = "beer";
 const auto sourceLanguage = Language::Polish;
 const auto targetLanguage = Language::English;
-const httpClient::GetPayload getPayload{url, std::nullopt};
+const common::httpClient::GetPayload getPayload{url, std::nullopt};
 }
 
 class DefaultTranslatorTest : public Test
 {
 public:
-    std::shared_ptr<httpClient::HttpClientMock> httpClient =
-        std::make_shared<StrictMock<httpClient::HttpClientMock>>();
+    std::shared_ptr<common::httpClient::HttpClientMock> httpClient =
+        std::make_shared<StrictMock<common::httpClient::HttpClientMock>>();
     std::unique_ptr<TranslationDeserializerMock> deserializerInit =
         std::make_unique<StrictMock<TranslationDeserializerMock>>();
     TranslationDeserializerMock* deserializer = deserializerInit.get();
@@ -42,10 +42,11 @@ public:
 
 TEST_F(DefaultTranslatorTest, whenConnectionFails_shouldThrowConnectionFailedException)
 {
-    EXPECT_CALL(*httpClient, get(getPayload)).WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+    EXPECT_CALL(*httpClient, get(getPayload))
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(translator.translate(polishText, sourceLanguage, targetLanguage, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultTranslatorTest, givenInvalidKeyResponseFromTranslationApi_throwInvalidApiKeyException)

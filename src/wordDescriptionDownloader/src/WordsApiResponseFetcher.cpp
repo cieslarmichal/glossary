@@ -18,12 +18,12 @@ const std::string keyHeader{"x-rapidapi-key: "};
 const std::string WordsApiResponseFetcher::wordsApiUrl{"https://wordsapiv1.p.rapidapi.com/words/"};
 
 WordsApiResponseFetcher::WordsApiResponseFetcher(
-    std::shared_ptr<const httpClient::HttpClient> httpHandlerInit)
+    std::shared_ptr<const common::httpClient::HttpClient> httpHandlerInit)
     : httpHandler{std::move(httpHandlerInit)}
 {
 }
 
-httpClient::HttpResponse
+common::httpClient::HttpResponse
 WordsApiResponseFetcher::tryGetWordDefinitionsResponse(const std::string& englishWord,
                                                        const std::string& wordsApiKey) const
 {
@@ -40,7 +40,7 @@ WordsApiResponseFetcher::tryGetWordDefinitionsResponse(const std::string& englis
     return response;
 }
 
-httpClient::HttpResponse
+common::httpClient::HttpResponse
 WordsApiResponseFetcher::tryGetWordExamplesResponse(const std::string& englishWord,
                                                     const std::string& wordsApiKey) const
 {
@@ -58,7 +58,7 @@ WordsApiResponseFetcher::tryGetWordExamplesResponse(const std::string& englishWo
     return response;
 }
 
-httpClient::HttpResponse
+common::httpClient::HttpResponse
 WordsApiResponseFetcher::tryGetWordSynonymsResponse(const std::string& englishWord,
                                                     const std::string& wordsApiKey) const
 {
@@ -78,8 +78,8 @@ WordsApiResponseFetcher::tryGetWordSynonymsResponse(const std::string& englishWo
 
 bool WordsApiResponseFetcher::responseFailedDueToInvalidApiKey(int responseCode) const
 {
-    return responseCode == httpClient::HttpStatusCode::Unauthorized ||
-           responseCode == httpClient::HttpStatusCode::BadRequest;
+    return responseCode == common::httpClient::HttpStatusCode::Unauthorized ||
+           responseCode == common::httpClient::HttpStatusCode::BadRequest;
 }
 
 }

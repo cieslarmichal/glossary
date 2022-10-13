@@ -2,10 +2,9 @@
 
 #include "curl/curl.h"
 
-#include "../../common/fileSystem/include/GetProjectPath.h"
 #include "exceptions/ConnectionFailed.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 
 namespace

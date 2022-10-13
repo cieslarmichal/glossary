@@ -3,9 +3,9 @@
 #include <optional>
 #include <string>
 
-#include "../../../common/collection/include/StlOperators.h"
+#include "StlOperators.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 struct GetPayload
 {

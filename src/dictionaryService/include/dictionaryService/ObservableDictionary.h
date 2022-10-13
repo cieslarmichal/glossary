@@ -2,7 +2,6 @@
 
 #include "DictionaryObserver.h"
 
-
 namespace glossary::dictionaryService
 {
 class ObservableDictionary

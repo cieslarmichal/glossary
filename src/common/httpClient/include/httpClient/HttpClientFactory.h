@@ -4,7 +4,7 @@
 
 #include "HttpClient.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 class HttpClientFactory
 {

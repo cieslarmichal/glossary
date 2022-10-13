@@ -68,7 +68,7 @@ DefaultWordDescriptionService::downloadWordDescriptionFromDownloader(
     {
         return wordDescriptionDownloader->tryDownloadWordDescription(englishWord, *wordsApiKey);
     }
-    catch (const httpClient::exceptions::ConnectionFailed& e)
+    catch (const common::httpClient::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Connection failed: " << e.what();
     }

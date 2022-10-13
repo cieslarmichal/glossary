@@ -1,10 +1,11 @@
+#include "CurlHttpClient.h"
+
 #include "gtest/gtest.h"
 
-#include "CurlHttpClient.h"
 #include "exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
-using namespace httpClient;
+using namespace common::httpClient;
 
 class CurlHttpHandlerTest : public Test
 {

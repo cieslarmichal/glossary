@@ -19,8 +19,8 @@ namespace
 {
 const std::string apiKey{"topSecretKey"};
 const std::string englishWord{"englishWord"};
-const httpClient::HttpResponse okResponse{200, "content"};
-const httpClient::HttpResponse errorResponse{400, ""};
+const common::httpClient::HttpResponse okResponse{200, "content"};
+const common::httpClient::HttpResponse errorResponse{400, ""};
 const Definitions definitions{"definition1", "definition2"};
 const Examples examples{"example1", "example2"};
 const Synonyms synonyms{"synonym1"};
@@ -94,10 +94,10 @@ public:
 TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwConnectionFailed_shouldThrowConnectionFailed)
 {
     EXPECT_CALL(*apiResponseFetcher, tryGetWordDefinitionsResponse(englishWord, apiKey))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getDefinitions_throwInvalidApiKey_shouldThrowInvalidApiKey)
@@ -125,10 +125,10 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwConnectionFailed_s
 {
     expectDownloadedDefinitions();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordExamplesResponse(englishWord, apiKey))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getExamples_throwInvalidApiKey_shouldThrowInvalidApiKey)
@@ -158,10 +158,10 @@ TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwConnectionFailed_s
     expectDownloadedDefinitions();
     expectDownloadedExamples();
     EXPECT_CALL(*apiResponseFetcher, tryGetWordSynonymsResponse(englishWord, apiKey))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     ASSERT_THROW(downloader.tryDownloadWordDescription(englishWord, apiKey),
-                 httpClient::exceptions::ConnectionFailed);
+                 common::httpClient::exceptions::ConnectionFailed);
 }
 
 TEST_F(DefaultWordDescriptionDownloaderTest, getSynonyms_throwInvalidApiKey_shouldReturnThrowInvalidApiKey)

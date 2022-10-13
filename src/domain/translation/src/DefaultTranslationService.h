@@ -11,7 +11,7 @@ namespace glossary::translation
 class DefaultTranslationService : public TranslationService
 {
 public:
-    DefaultTranslationService(std::shared_ptr<const httpClient::HttpClient>,
+    DefaultTranslationService(std::shared_ptr<const common::httpClient::HttpClient>,
                               std::unique_ptr<TranslationDeserializer>);
 
     std::optional<std::string> translate(const std::string&, Language sourceLanguage, Language targetLanguage,
@@ -22,7 +22,7 @@ private:
     std::string formatTranslationRequestUrl(const std::string&, Language sourceLanguage,
                                             Language targetLanguage, const std::string& apiKey) const;
 
-    std::shared_ptr<const httpClient::HttpClient> httpClient;
+    std::shared_ptr<const common::httpClient::HttpClient> httpClient;
     std::unique_ptr<TranslationDeserializer> translationDeserializer;
 
     static const std::vector<translation::Language> supportedLanguages;

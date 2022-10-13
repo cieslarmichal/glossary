@@ -11,19 +11,20 @@ namespace glossary::wordDescriptionDownloader
 class WordsApiResponseFetcher : public ApiResponseFetcher
 {
 public:
-    explicit WordsApiResponseFetcher(std::shared_ptr<const httpClient::HttpClient>);
+    explicit WordsApiResponseFetcher(std::shared_ptr<const common::httpClient::HttpClient>);
 
-    httpClient::HttpResponse tryGetWordDefinitionsResponse(const std::string& englishWord,
-                                                          const std::string& wordsApiKey) const override;
-    httpClient::HttpResponse tryGetWordExamplesResponse(const std::string& englishWord,
-                                                       const std::string& wordsApiKey) const override;
-    httpClient::HttpResponse tryGetWordSynonymsResponse(const std::string& englishWord,
-                                                       const std::string& wordsApiKey) const override;
+    common::httpClient::HttpResponse
+    tryGetWordDefinitionsResponse(const std::string& englishWord,
+                                  const std::string& wordsApiKey) const override;
+    common::httpClient::HttpResponse
+    tryGetWordExamplesResponse(const std::string& englishWord, const std::string& wordsApiKey) const override;
+    common::httpClient::HttpResponse
+    tryGetWordSynonymsResponse(const std::string& englishWord, const std::string& wordsApiKey) const override;
 
 private:
     bool responseFailedDueToInvalidApiKey(int) const;
 
-    std::shared_ptr<const httpClient::HttpClient> httpHandler;
+    std::shared_ptr<const common::httpClient::HttpClient> httpHandler;
 
     static const std::string wordsApiUrl;
 };

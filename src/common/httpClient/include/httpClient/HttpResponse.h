@@ -2,7 +2,7 @@
 
 #include <ostream>
 
-namespace httpClient
+namespace common::httpClient
 {
 struct HttpResponse
 {

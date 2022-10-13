@@ -2,7 +2,7 @@
 
 #include <stdexcept>
 
-namespace httpClient::exceptions
+namespace common::httpClient::exceptions
 {
 struct ConnectionFailed : std::runtime_error
 {

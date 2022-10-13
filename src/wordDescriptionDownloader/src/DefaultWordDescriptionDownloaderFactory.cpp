@@ -8,7 +8,7 @@ namespace glossary::wordDescriptionDownloader
 {
 
 DefaultWordDescriptionDownloaderFactory::DefaultWordDescriptionDownloaderFactory(
-    std::shared_ptr<const httpClient::HttpClient> httpHandlerInit)
+    std::shared_ptr<const common::httpClient::HttpClient> httpHandlerInit)
     : httpHandler{std::move(httpHandlerInit)}
 {
 }

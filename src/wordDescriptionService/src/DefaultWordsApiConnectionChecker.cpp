@@ -24,7 +24,7 @@ DefaultWordsApiConnectionChecker::connectionToWordsApiAvailable(const std::strin
         wordDescriptionDownloader->tryDownloadWordDescription(exampleEnglishWord, wordsApiKey);
         return WordsApiStatus::Available;
     }
-    catch (const httpClient::exceptions::ConnectionFailed& e)
+    catch (const common::httpClient::exceptions::ConnectionFailed& e)
     {
         std::cerr << "Connection to words api is not availavile" << e.what();
         return WordsApiStatus::Unavailable;

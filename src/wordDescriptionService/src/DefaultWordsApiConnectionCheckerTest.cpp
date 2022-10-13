@@ -38,7 +38,7 @@ TEST_F(DefaultWordsApiConnectionCheckerTest,
        wordDescriptionDownloaderThrowsConnectionFailed_shouldReturnConnectionUnavailableStatus)
 {
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
-        .WillOnce(Throw(httpClient::exceptions::ConnectionFailed{""}));
+        .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
 
     const auto actualStatus = connectionChecker.connectionToWordsApiAvailable(apiKey);
 

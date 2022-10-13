@@ -18,7 +18,7 @@ const std::vector<translation::Language> DefaultTranslationService::supportedLan
     translation::Language::Polish, translation::Language::English};
 
 DefaultTranslationService::DefaultTranslationService(
-    std::shared_ptr<const httpClient::HttpClient> httpClientInit,
+    std::shared_ptr<const common::httpClient::HttpClient> httpClientInit,
     std::unique_ptr<TranslationDeserializer> deserializer)
     : httpClient{std::move(httpClientInit)}, translationDeserializer{std::move(deserializer)}
 {
@@ -38,12 +38,12 @@ std::optional<std::string> DefaultTranslationService::translate(const std::strin
 
     const auto response = httpClient->get({url});
 
-    if (response.statusCode == httpClient::HttpStatusCode::Ok)
+    if (response.statusCode == common::httpClient::HttpStatusCode::Ok)
     {
         return translationDeserializer->deserialize(response.data);
     }
-    else if (response.statusCode == httpClient::HttpStatusCode::BadRequest ||
-             response.statusCode == httpClient::HttpStatusCode::Unauthorized)
+    else if (response.statusCode == common::httpClient::HttpStatusCode::BadRequest ||
+             response.statusCode == common::httpClient::HttpStatusCode::Unauthorized)
     {
         throw exceptions::InvalidApiKey{"Invalid api key"};
     }

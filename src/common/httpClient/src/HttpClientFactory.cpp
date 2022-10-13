@@ -2,7 +2,7 @@
 
 #include "DefaultHttpClientFactory.h"
 
-namespace httpClient
+namespace common::httpClient
 {
 std::unique_ptr<HttpClientFactory> HttpClientFactory::createHttpClientFactory()
 {
