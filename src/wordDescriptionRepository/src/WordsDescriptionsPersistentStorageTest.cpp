@@ -1,21 +1,20 @@
 #include "WordsDescriptionsPersistentStorage.h"
 
-#include <boost/optional/optional_io.hpp>
-
 #include "gtest/gtest.h"
 
 #include "../../common/fileSystem/include/FileAccessMock.h"
 #include "WordsDescriptionsSerializerMock.h"
 
 #include "../../common/fileSystem/include/GetProjectPath.h"
-#include "utils/exceptions/FileNotFound.h"
+#include "exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace glossary::wordDescriptionRepository;
 
 namespace
 {
-const std::string filePath{common::getProjectPath("glossary") + "repositoryFiles/wordsDescriptions.txt"};
+const std::string filePath{common::fileSystem::getProjectPath("glossary") +
+                           "repositoryFiles/wordsDescriptions.txt"};
 const std::string nonExistingWord("nonExistingWord");
 const std::string englishWord1("englishWord1");
 const std::string englishWord2("englishWord2");
@@ -35,8 +34,8 @@ public:
         EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(words));
     }
 
-    std::shared_ptr<common::FileAccessMock> fileAccess =
-        std::make_shared<StrictMock<common::FileAccessMock>>();
+    std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
     std::shared_ptr<WordsDescriptionsSerializerMock> serializer =
         std::make_shared<StrictMock<WordsDescriptionsSerializerMock>>();
 };
@@ -62,7 +61,8 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithFileWit
 
 TEST_F(WordsDescriptionsPersistentStorageTest, givenInvalidFile_shouldReturnNoWords)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Throw(common::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filePath))
+        .WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualWords = persistentStorage.getWordsDescriptions();
@@ -87,7 +87,8 @@ TEST_F(WordsDescriptionsPersistentStorageTest,
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
-    EXPECT_CALL(*fileAccess, write(filePath, "words")).WillOnce(Throw(common::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"))
+        .WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(wordsAfterAddition)).WillOnce(Return("words"));
 
     persistentStorage.addWordDescription(word3);
@@ -112,7 +113,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenNonExistingEnglishWord_shoul
 
     const auto actualWord = persistentStorage.getWordDescription(nonExistingWord);
 
-    ASSERT_EQ(actualWord, boost::none);
+    ASSERT_EQ(actualWord, std::nullopt);
 }
 
 TEST_F(WordsDescriptionsPersistentStorageTest,

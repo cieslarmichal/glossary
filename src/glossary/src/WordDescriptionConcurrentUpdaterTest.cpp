@@ -1,7 +1,5 @@
 #include "WordDescriptionConcurrentUpdater.h"
 
-#include <boost/optional/optional_io.hpp>
-
 #include "gtest/gtest.h"
 
 #include "../../common/fileSystem/include/FileAccessMock.h"
@@ -20,7 +18,7 @@ namespace
 const std::string englishWord1{"englishWord1"};
 const std::string englishWord2{"englishWord2"};
 const std::string englishWord3{"englishWord3"};
-const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
+const std::vector<std::string> englishWords{englishWord1, englishWord2, englishWord3};
 const WordDescription wordDescription1{englishWord1, {}, {}, {}};
 }
 
@@ -52,8 +50,10 @@ TEST_F(WordDescriptionConcurrentUpdaterTest,
 
     EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord1))
         .WillOnce(Return(wordDescription1));
-    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord2)).WillOnce(Return(boost::none));
-    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord3)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord2))
+        .WillOnce(Return(std::nullopt));
+    EXPECT_CALL(*wordDescriptionService, downloadWordDescription(englishWord3))
+        .WillOnce(Return(std::nullopt));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescription1));
 
     updater.update(englishWords);

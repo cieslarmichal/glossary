@@ -2,18 +2,18 @@
 
 #include <iostream>
 
-#include "../../../common/fileSystem/include/GetProjectPath.h"
-#include "utils/exceptions/FileNotFound.h"
+#include "GetProjectPath.h"
+#include "exceptions/FileNotFound.h"
 
 namespace glossary::statistics
 {
 
-const std::string StatisticsPersistentStorage::directory{common::getProjectPath("glossary") +
+const std::string StatisticsPersistentStorage::directory{common::fileSystem::getProjectPath("glossary") +
                                                          "repositoryFiles/"};
 const std::string StatisticsPersistentStorage::filename{directory + "statistics.txt"};
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(
-    std::shared_ptr<const common::FileAccess> fileAccessInit,
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit,
     std::shared_ptr<const StatisticsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
@@ -80,7 +80,7 @@ void StatisticsPersistentStorage::loadFile()
     {
         statistics = serializer->deserialize(fileAccess->readContent(filename));
     }
-    catch (const common::exceptions::FileNotFound& e)
+    catch (const common::fileSystem::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while deserializing statistics " << e.what();
         return;
@@ -98,7 +98,7 @@ void StatisticsPersistentStorage::serialize() const
     {
         fileAccess->write(filename, serializer->serialize(storage.getStatistics()));
     }
-    catch (const common::exceptions::FileNotFound& e)
+    catch (const common::fileSystem::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while serializing statistics " << e.what();
     }

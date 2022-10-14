@@ -3,16 +3,16 @@
 #include <iostream>
 
 #include "../../common/fileSystem/include/GetProjectPath.h"
-#include "utils/exceptions/FileNotFound.h"
+#include "exceptions/FileNotFound.h"
 
 namespace glossary::wordDescriptionRepository
 {
-const std::string WordsDescriptionsPersistentStorage::directory{common::getProjectPath("glossary") +
-                                                                "repositoryFiles/"};
+const std::string WordsDescriptionsPersistentStorage::directory{
+    common::fileSystem::getProjectPath("glossary") + "repositoryFiles/"};
 const std::string WordsDescriptionsPersistentStorage::filename{directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(
-    std::shared_ptr<const common::FileAccess> fileAccessInit,
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit,
     std::shared_ptr<const WordsDescriptionsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
@@ -25,7 +25,7 @@ void WordsDescriptionsPersistentStorage::addWordDescription(const WordDescriptio
     serialize();
 }
 
-boost::optional<WordDescription>
+std::optional<WordDescription>
 WordsDescriptionsPersistentStorage::getWordDescription(const std::string& englishName) const
 {
     return storage.getWordDescription(englishName);
@@ -58,7 +58,7 @@ void WordsDescriptionsPersistentStorage::loadFile()
     {
         words = serializer->deserialize(fileAccess->readContent(filename));
     }
-    catch (const common::exceptions::FileNotFound& e)
+    catch (const common::fileSystem::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while serializing words descriptions " << e.what();
         return;
@@ -76,7 +76,7 @@ void WordsDescriptionsPersistentStorage::serialize() const
     {
         fileAccess->write(filename, serializer->serialize(storage.getWordsDescriptions()));
     }
-    catch (const common::exceptions::FileNotFound& e)
+    catch (const common::fileSystem::exceptions::FileNotFound& e)
     {
         std::cerr << "Error while serializing words descriptions " << e.what();
     }

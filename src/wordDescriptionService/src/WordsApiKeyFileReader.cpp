@@ -8,14 +8,15 @@ namespace glossary::wordDescriptionService
 {
 
 const std::string WordsApiKeyFileReader::filePathContainingPathToFileWithApiKey{
-    common::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
+    common::fileSystem::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
 
-WordsApiKeyFileReader::WordsApiKeyFileReader(std::shared_ptr<const common::FileAccess> fileAccessInit)
+WordsApiKeyFileReader::WordsApiKeyFileReader(
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }
 
-boost::optional<std::string> WordsApiKeyFileReader::readApiKey() const
+std::optional<std::string> WordsApiKeyFileReader::readApiKey() const
 {
     if (const auto filePathWithApiKey = readPathToFileWithApiKey())
     {
@@ -24,27 +25,27 @@ boost::optional<std::string> WordsApiKeyFileReader::readApiKey() const
             return apiKeyFileFormatter.getFormattedApiKey(*fileContentWithApiKey);
         }
     }
-    return boost::none;
+    return std::nullopt;
 }
 
-boost::optional<std::string> WordsApiKeyFileReader::readPathToFileWithApiKey() const
+std::optional<std::string> WordsApiKeyFileReader::readPathToFileWithApiKey() const
 {
     if (not fileAccess->exists(filePathContainingPathToFileWithApiKey))
     {
         std::cerr << "Config file does not exist: " << filePathContainingPathToFileWithApiKey;
-        return boost::none;
+        return std::nullopt;
     }
     return fileAccess->readContent(filePathContainingPathToFileWithApiKey);
 }
 
-boost::optional<std::string>
+std::optional<std::string>
 WordsApiKeyFileReader::readApiKeyFromFile(const std::string& filePathWithApiKey) const
 {
     if (not fileAccess->exists(filePathWithApiKey))
     {
         std::cerr << "File from config file: " << filePathContainingPathToFileWithApiKey
                   << " does not exist: " << filePathWithApiKey;
-        return boost::none;
+        return std::nullopt;
     }
     return fileAccess->readContent(filePathWithApiKey);
 }

@@ -5,15 +5,16 @@
 #include "../../../common/fileSystem/include/FileAccessMock.h"
 #include "TranslationsSerializerMock.h"
 
-#include "../../../common/fileSystem/include/GetProjectPath.h"
-#include "utils/exceptions/FileNotFound.h"
+#include "GetProjectPath.h"
+#include "exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace glossary::translation;
 
 namespace
 {
-const std::string filePath{common::getProjectPath("glossary") + "repositoryFiles/translations.txt"};
+const std::string filePath{common::fileSystem::getProjectPath("glossary") +
+                           "repositoryFiles/translations.txt"};
 const std::string polishWord1{"polishWord1"};
 const std::string polishWord2{"polishWord2"};
 const std::string nonExistingPolishWord{"nonExisting"};
@@ -42,8 +43,8 @@ public:
         EXPECT_CALL(*serializer, deserialize("some content")).WillOnce(Return(emptyTranslations));
     }
 
-    std::shared_ptr<common::FileAccessMock> fileAccess =
-        std::make_shared<StrictMock<common::FileAccessMock>>();
+    std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
     std::shared_ptr<TranslationsSerializerMock> serializer =
         std::make_shared<StrictMock<TranslationsSerializerMock>>();
 };
@@ -69,7 +70,8 @@ TEST_F(TranslationsPersistentStorageTest, givenPersistentStorageWithFileWithStat
 
 TEST_F(TranslationsPersistentStorageTest, givenInvalidFile_shouldReturnNoTranslations)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Throw(common::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filePath))
+        .WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualTranslations = persistentStorage.getTranslations();
@@ -94,7 +96,8 @@ TEST_F(TranslationsPersistentStorageTest,
 {
     expectNoTranslationsLoad();
     TranslationsPersistentStorage persistentStorage{fileAccess, serializer};
-    EXPECT_CALL(*fileAccess, write(filePath, "words")).WillOnce(Throw(common::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, write(filePath, "words"))
+        .WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
     EXPECT_CALL(*serializer, serialize(translationsWithOneTranslation)).WillOnce(Return("words"));
 
     persistentStorage.addTranslation(translation1);

@@ -14,7 +14,7 @@ namespace glossary::gui
 {
 namespace
 {
-const auto resourceDirectoryPath = common::getProjectPath("glossary") + "src/gui/resources/";
+const auto resourceDirectoryPath = common::fileSystem::getProjectPath("glossary") + "src/gui/resources/";
 const auto glossaryIconPath = resourceDirectoryPath + "glossaryIcon.png";
 }
 

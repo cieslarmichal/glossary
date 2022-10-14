@@ -3,7 +3,8 @@
 namespace glossary::gui::view
 {
 
-FormattedDictionaries DictionaryFormatter::getFormattedDictionaries(const Dictionaries& dictionaries) const
+FormattedDictionaries
+DictionaryFormatter::getFormattedDictionaries(const std::vector<Dictionary>& dictionaries) const
 {
     FormattedDictionaries formattedDictionaries;
     for (const auto& dictionary : dictionaries)
@@ -20,13 +21,13 @@ FormattedDictionary DictionaryFormatter::getFormattedDictionary(const Dictionary
     return {dictionaryName, formattedDictionaryWords};
 }
 
-QString DictionaryFormatter::getFormattedDictionaryName(const DictionaryName& dictionaryName) const
+QString DictionaryFormatter::getFormattedDictionaryName(const std::string& dictionaryName) const
 {
     return QString::fromStdString(dictionaryName);
 }
 
 FormattedDictionaryWords
-DictionaryFormatter::getFormattedDictionaryWords(const DictionaryWords& dictionaryWords) const
+DictionaryFormatter::getFormattedDictionaryWords(const std::vector<DictionaryWord>& dictionaryWords) const
 {
     FormattedDictionaryWords formattedDictionaryWords;
     for (const auto& dictionaryWord : dictionaryWords)

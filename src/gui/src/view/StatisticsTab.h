@@ -7,7 +7,7 @@
 #include <QtCharts/QPieSeries>
 #include <memory>
 
-#include "boost/optional.hpp"
+#include <optional>
 
 #include "DictionaryStatistics.h"
 QT_CHARTS_USE_NAMESPACE
@@ -49,7 +49,7 @@ private:
 
     DictionariesStatistics dictionariesStatistics;
     QStringListModel dictionaryNames;
-    boost::optional<QString> currentDictionaryName;
+    std::optional<QString> currentDictionaryName;
 
     Ui::StatisticsTab* ui;
     std::unique_ptr<QChartView> chartView;

@@ -21,7 +21,7 @@ public:
     bool verifyCorrectnessOfTranslation(const QString& polishWord, const QString& englishWord) const;
     QList<QString> getDictionaryNames() const;
     Dictionaries getDictionaries() const;
-    DictionaryWords getDictionaryWords(const QString& dictionaryName) const;
+    std::vector<DictionaryWord> getDictionaryWords(const QString& dictionaryName) const;
     QStringList getAvailableLanguages() const;
     QString getTranslation(const QString& textToTranslate, const QString& sourceLanguage,
                            const QString& targetLanguage) const;
@@ -34,7 +34,7 @@ signals:
     void notifyGuessTabAboutWordDescription(const WordDescription&) const;
     void notifyWordDescriptionTabAboutWordDescription(const WordDescription&) const;
     void notifyAboutTranslationVerdict(bool translationVerdict) const;
-    void notifyAboutDictionaryWordsUpdate(const DictionaryName&, const DictionaryWords&) const;
+    void notifyAboutDictionaryWordsUpdate(const std::string&, const std::vector<DictionaryWord>&) const;
     void notifyAboutDictionariesUpdate(const Dictionaries&) const;
     void notifyAboutTranslation(const QString& translatedText) const;
     void notifyAboutAvailableLanguages(const QStringList& availableLanguages) const;

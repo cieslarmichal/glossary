@@ -7,14 +7,14 @@ namespace glossary
 class DefaultDictionaryStatisticsCounter : public DictionaryStatisticsCounter
 {
 public:
-    DictionaryStatistics countDictionaryStatistics(const dictionaryService::Dictionary&,
+    DictionaryStatistics countDictionaryStatistics(const dictionary::Dictionary&,
                                                    const statistics::Statistics&) const override;
     DictionariesStatistics
-    countDictionariesStatistics(const dictionaryService::Dictionaries&,
+    countDictionariesStatistics(const dictionary::Dictionaries&,
                                 const statistics::Statistics&) const override;
 
 private:
-    bool englishWordExistsInDictionary(const dictionaryService::std::string&,
-                                       const dictionaryService::Dictionary&) const;
+    bool englishWordExistsInDictionary(const dictionary::std::string&,
+                                       const dictionary::Dictionary&) const;
 };
 }

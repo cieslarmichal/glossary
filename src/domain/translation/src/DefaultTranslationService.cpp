@@ -58,9 +58,9 @@ std::string DefaultTranslationService::formatTranslationRequestUrl(const std::st
                                                                    Language targetLanguage,
                                                                    const std::string& apiKey) const
 {
-    const auto splitText = common::split(sourceText, " ");
+    const auto splitText = common::collection::split(sourceText, " ");
 
-    const auto formattedSourceText = common::join(splitText, "+");
+    const auto formattedSourceText = common::collection::join(splitText, "+");
 
     const auto keyField = "key=" + apiKey;
 

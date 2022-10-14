@@ -1,6 +1,6 @@
 #pragma once
 
-#include "boost/optional.hpp"
+#include <optional>
 
 #include "FormattedDictionaryWord.h"
 
@@ -10,6 +10,6 @@ class DictionaryWordAccumulator
 {
 public:
     QString accumulateDictionaryWord(const FormattedDictionaryWord&) const;
-    boost::optional<FormattedDictionaryWord> separateDictionaryWord(const QString&) const;
+    std::optional<FormattedDictionaryWord> separateDictionaryWord(const QString&) const;
 };
 }

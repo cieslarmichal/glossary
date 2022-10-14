@@ -14,7 +14,7 @@ void DefaultWordDescriptionRepository::addWordDescription(const WordDescription&
     storage->addWordDescription(wordDescription);
 }
 
-boost::optional<WordDescription>
+std::optional<WordDescription>
 DefaultWordDescriptionRepository::getWordDescription(const std::string& englishWord) const
 {
     std::lock_guard<std::mutex> lockGuard(lock);

@@ -1,7 +1,8 @@
 #include "WordsDescriptionsMemoryStorage.h"
 
+
+
 #include "gtest/gtest.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::wordDescriptionRepository;
@@ -49,7 +50,7 @@ TEST_F(WordsDescriptionsMemoryStorageTest, givenEmptyStorage_getShouldNotReturnW
 {
     const auto result = storage.getWordDescription("someword");
 
-    ASSERT_EQ(result, boost::none);
+    ASSERT_EQ(result, std::nullopt);
 }
 
 TEST_F(WordsDescriptionsMemoryStorageTest, givenStorageWithExactWord_shouldReturnWord)

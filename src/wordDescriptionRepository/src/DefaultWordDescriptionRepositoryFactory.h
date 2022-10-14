@@ -7,11 +7,11 @@ namespace glossary::wordDescriptionRepository
 class DefaultWordDescriptionRepositoryFactory : public WordDescriptionRepositoryFactory
 {
 public:
-    explicit DefaultWordDescriptionRepositoryFactory(std::shared_ptr<const common::FileAccess>);
+    explicit DefaultWordDescriptionRepositoryFactory(std::shared_ptr<const common::fileSystem::FileAccess>);
 
     std::unique_ptr<WordDescriptionRepository> createWordDescriptionRepository() const override;
 
 private:
-    std::shared_ptr<const common::FileAccess> fileAccess;
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
 };
 }

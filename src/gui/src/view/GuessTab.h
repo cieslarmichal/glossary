@@ -3,7 +3,7 @@
 #include <QStringListModel>
 #include <QWidget>
 
-#include "boost/optional.hpp"
+#include <optional>
 
 #include "WordDescription.h"
 
@@ -47,7 +47,7 @@ private slots:
 private:
     QStringListModel dictionaryNamesToRandomizeWordFromModel;
     QList<QString> dictionaryNamesToRandomizeWordFrom;
-    boost::optional<QString> selectedDictionaryName;
+    std::optional<QString> selectedDictionaryName;
 
     Ui::GuessTab* ui;
 };

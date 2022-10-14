@@ -3,7 +3,7 @@
 #include <QStringListModel>
 #include <QWidget>
 
-#include "boost/optional.hpp"
+#include <optional>
 
 namespace glossary::gui::view
 {
@@ -41,7 +41,7 @@ private:
     Ui::TranslatorTab* ui;
 
     QStringListModel availableLanguages;
-    boost::optional<QString> selectedSourceLanguage;
-    boost::optional<QString> selectedTargetLanguage;
+    std::optional<QString> selectedSourceLanguage;
+    std::optional<QString> selectedTargetLanguage;
 };
 }

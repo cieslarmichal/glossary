@@ -1,7 +1,8 @@
 #include "DictionaryWordAccumulator.h"
 
+
+
 #include "gtest/gtest.h"
-#include <boost/optional/optional_io.hpp>
 
 using namespace ::testing;
 using namespace glossary::gui::view;
@@ -52,7 +53,7 @@ TEST_F(DictionaryWordAccumulatorTest, givenEmptyString_shouldReturnNone)
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedEmptyDictionaryWord);
 
-    ASSERT_EQ(actualDictionaryWord, boost::none);
+    ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
 
 TEST_F(DictionaryWordAccumulatorTest, givenWordWithoutDash_shouldReturnNone)
@@ -60,7 +61,7 @@ TEST_F(DictionaryWordAccumulatorTest, givenWordWithoutDash_shouldReturnNone)
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedWordWithoutDash);
 
-    ASSERT_EQ(actualDictionaryWord, boost::none);
+    ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
 
 TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedBySpaces_shouldReturnNone)
@@ -68,7 +69,7 @@ TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedBySpaces_s
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedTwoWordsSeparatedWithSpace);
 
-    ASSERT_EQ(actualDictionaryWord, boost::none);
+    ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
 
 TEST_F(DictionaryWordAccumulatorTest,
@@ -77,7 +78,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedTwoWordsSeparatedWithColon);
 
-    ASSERT_EQ(actualDictionaryWord, boost::none);
+    ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
 
 TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedByDash_shouldReturnDictionaryWord)

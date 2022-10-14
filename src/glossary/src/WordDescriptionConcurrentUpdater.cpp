@@ -14,7 +14,7 @@ WordDescriptionConcurrentUpdater::WordDescriptionConcurrentUpdater(
 {
 }
 
-void WordDescriptionConcurrentUpdater::update(const dictionaryService::EnglishWords& englishWords)
+void WordDescriptionConcurrentUpdater::update(const dictionary::std::vector<std::string>& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
     std::vector<std::thread> threadPool;
@@ -44,11 +44,11 @@ unsigned WordDescriptionConcurrentUpdater::getAmountOfThreads() const
     return supportedThreadsCalculator.calculate();
 }
 
-wordDescriptionRepository::EnglishWords
+wordDescriptionRepository::std::vector<std::string>
 WordDescriptionConcurrentUpdater::getEnglishWordsWithoutWordDescription(
-    const wordDescriptionRepository::EnglishWords& englishWords) const
+    const wordDescriptionRepository::std::vector<std::string>& englishWords) const
 {
-    wordDescriptionRepository::EnglishWords englishWordsWithoutWordDescription;
+    wordDescriptionRepository::std::vector<std::string> englishWordsWithoutWordDescription;
 
     for (const auto& englishWord : englishWords)
     {
@@ -73,7 +73,7 @@ void WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker(
     }
 }
 
-boost::optional<wordDescriptionRepository::WordDescription>
+std::optional<wordDescriptionRepository::WordDescription>
 WordDescriptionConcurrentUpdater::downloadWordDescription(
     const wordDescriptionRepository::std::string& englishWord)
 {

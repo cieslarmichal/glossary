@@ -11,21 +11,21 @@
 
 namespace glossary
 {
-class WordDescriptionConcurrentUpdater : public dictionaryService::DictionaryObserver
+class WordDescriptionConcurrentUpdater : public dictionary::DictionaryObserver
 {
 public:
     WordDescriptionConcurrentUpdater(std::shared_ptr<wordDescriptionService::WordDescriptionService>,
                                      std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>);
 
-    void update(const dictionaryService::EnglishWords&) override;
+    void update(const dictionary::std::vector<std::string>&) override;
 
 private:
     unsigned getAmountOfThreads() const;
-    wordDescriptionRepository::EnglishWords
-    getEnglishWordsWithoutWordDescription(const wordDescriptionRepository::EnglishWords&) const;
+    wordDescriptionRepository::std::vector<std::string>
+    getEnglishWordsWithoutWordDescription(const wordDescriptionRepository::std::vector<std::string>&) const;
     void loadingWordDescriptionWorker(common::ThreadSafeQueue<wordDescriptionRepository::std::string>&,
                                       common::ThreadSafeQueue<wordDescriptionRepository::WordDescription>&);
-    boost::optional<wordDescriptionRepository::WordDescription>
+    std::optional<wordDescriptionRepository::WordDescription>
     downloadWordDescription(const wordDescriptionRepository::std::string&);
     void loadWordsDescriptionsIntoRepository(const wordDescriptionRepository::WordsDescriptions&);
 

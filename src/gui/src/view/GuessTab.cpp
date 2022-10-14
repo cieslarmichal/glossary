@@ -2,14 +2,14 @@
 
 #include <QDebug>
 
-#include "../../../common/fileSystem/include/GetProjectPath.h"
+#include "GetProjectPath.h"
 #include "WordDescriptionDialog.h"
 #include "ui_GuessTab.h"
 
 namespace
 {
 constexpr auto anyDictionaryName = "any";
-const auto resourceDirectoryPath = common::getProjectPath("glossary") + "src/gui/resources/";
+const auto resourceDirectoryPath = common::fileSystem::getProjectPath("glossary") + "src/gui/resources/";
 const auto incorrectAnswerIconPath = resourceDirectoryPath + "incorrectAnswer.png";
 const auto correctAnswerIconPath = resourceDirectoryPath + "correctAnswer.png";
 const auto nextIcon = resourceDirectoryPath + "next.png";
@@ -92,7 +92,7 @@ void GuessTab::on_listWithDictionaryNames_clicked(const QModelIndex& dictionaryN
     }
     else
     {
-        selectedDictionaryName = boost::none;
+        selectedDictionaryName = std::nullopt;
     }
 }
 

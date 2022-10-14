@@ -1,7 +1,5 @@
 #include "WordsApiKeyFileReader.h"
 
-#include <boost/optional/optional_io.hpp>
-
 #include "gtest/gtest.h"
 
 #include "../../common/fileSystem/include/FileAccessMock.h"
@@ -13,7 +11,7 @@ using namespace glossary::wordDescriptionService;
 
 namespace
 {
-const std::string filePathWithPathToFileWithApiKey{common::getProjectPath("glossary") +
+const std::string filePathWithPathToFileWithApiKey{common::fileSystem::getProjectPath("glossary") +
                                                    "config/wordsApiKeyLocation.txt"};
 const std::string invalidFilePathWithApiKey{"home/invalidApiKeyFilePath.txt"};
 const std::string validFilePathWithApiKey{"home/validApiKeyFilePath.txt"};
@@ -23,8 +21,8 @@ const std::string exampleApiKey{"apiKey"};
 class WordsApiKeyFileReaderTest : public Test
 {
 public:
-    std::shared_ptr<common::FileAccessMock> fileAccess =
-        std::make_shared<StrictMock<common::FileAccessMock>>();
+    std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
     WordsApiKeyFileReader apiKeyFileReader{fileAccess};
 };
 
@@ -34,7 +32,7 @@ TEST_F(WordsApiKeyFileReaderTest, configFileWithPathToFileWithApiKeyNotExists_sh
 
     const auto actualApiKey = apiKeyFileReader.readApiKey();
 
-    ASSERT_EQ(actualApiKey, boost::none);
+    ASSERT_EQ(actualApiKey, std::nullopt);
 }
 
 TEST_F(WordsApiKeyFileReaderTest,
@@ -47,7 +45,7 @@ TEST_F(WordsApiKeyFileReaderTest,
 
     const auto actualApiKey = apiKeyFileReader.readApiKey();
 
-    ASSERT_EQ(actualApiKey, boost::none);
+    ASSERT_EQ(actualApiKey, std::nullopt);
 }
 
 TEST_F(WordsApiKeyFileReaderTest,

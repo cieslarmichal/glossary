@@ -10,7 +10,7 @@ void WordsDescriptionsMemoryStorage::addWordDescription(const WordDescription& w
     }
 }
 
-boost::optional<WordDescription>
+std::optional<WordDescription>
 WordsDescriptionsMemoryStorage::getWordDescription(const std::string& englishWord) const
 {
     const auto wordDescriptionIter = getWordsDescriptionsIter(englishWord);
@@ -19,7 +19,7 @@ WordsDescriptionsMemoryStorage::getWordDescription(const std::string& englishWor
     {
         return *wordDescriptionIter;
     }
-    return boost::none;
+    return std::nullopt;
 }
 
 WordsDescriptions WordsDescriptionsMemoryStorage::getWordsDescriptions() const

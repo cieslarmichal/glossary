@@ -1,6 +1,6 @@
 #pragma once
 
-#include "boost/optional.hpp"
+#include <optional>
 
 #include "wordDescriptionRepository/WordDescription.h"
 

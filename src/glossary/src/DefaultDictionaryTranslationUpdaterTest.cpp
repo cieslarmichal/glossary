@@ -1,6 +1,6 @@
 #include "DefaultDictionaryTranslationUpdater.h"
 
-#include <boost/optional/optional_io.hpp>
+
 
 #include "gtest/gtest.h"
 
@@ -9,19 +9,19 @@
 
 using namespace ::testing;
 using namespace glossary;
-using namespace dictionaryService;
+using namespace dictionary;
 using namespace translationService;
 
 namespace
 {
-const DictionaryName dictionaryName{"dictionaryName"};
-const DictionaryName nonExistingDictionaryName{"nonExisting"};
+const std::string dictionaryName{"dictionaryName"};
+const std::string nonExistingDictionaryName{"nonExisting"};
 const std::string englishWord1{"englishWord1"};
 const std::string englishWord2{"englishWord2"};
 const std::string translation1{"translation1"};
 const DictionaryWord dictionaryWord1{englishWord1, translation1};
-const DictionaryWord dictionaryWord2{englishWord2, boost::none};
-const DictionaryWords dictionaryWords{dictionaryWord1, dictionaryWord2};
+const DictionaryWord dictionaryWord2{englishWord2, std::nullopt};
+const std::vector<DictionaryWord> dictionaryWords{dictionaryWord1, dictionaryWord2};
 const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 const std::string translationFromService1{"translationFromService1"};
 const std::string translationFromService2{"translationFromService2"};
@@ -51,7 +51,7 @@ TEST_F(DefaultDictionaryTranslationUpdaterTest,
        givenNonExistingTranslationInService_shouldNotUpdateDictionaryWordTranslation)
 {
     EXPECT_CALL(*translationService, retrieveTranslation(englishWord1, sourceLanguage, targetLanguage))
-        .WillOnce(Return(boost::none));
+        .WillOnce(Return(std::nullopt));
 
     updater.updateDictionaryWordTranslation(englishWord1, dictionaryName);
 }
@@ -70,7 +70,7 @@ TEST_F(DefaultDictionaryTranslationUpdaterTest,
 TEST_F(DefaultDictionaryTranslationUpdaterTest,
        givenNonExistingDictionaryWordsFromDictionary_shouldNotUpdateDictionaryTranslations)
 {
-    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName)).WillOnce(Return(std::nullopt));
 
     updater.updateDictionaryTranslations(dictionaryName);
 }

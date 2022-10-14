@@ -1,8 +1,7 @@
 #pragma once
 
 #include <memory>
-
-#include "boost/optional.hpp"
+#include <optional>
 
 #include "../../common/fileSystem/include/FileAccess.h"
 #include "ApiKeyFileFormatter.h"
@@ -13,15 +12,15 @@ namespace glossary::wordDescriptionService
 class WordsApiKeyFileReader : public ApiKeyReader
 {
 public:
-    explicit WordsApiKeyFileReader(std::shared_ptr<const common::FileAccess>);
+    explicit WordsApiKeyFileReader(std::shared_ptr<const common::fileSystem::FileAccess>);
 
-    boost::optional<std::string> readApiKey() const override;
+    std::optional<std::string> readApiKey() const override;
 
 private:
-    boost::optional<std::string> readPathToFileWithApiKey() const;
-    boost::optional<std::string> readApiKeyFromFile(const std::string&) const;
+    std::optional<std::string> readPathToFileWithApiKey() const;
+    std::optional<std::string> readApiKeyFromFile(const std::string&) const;
 
-    std::shared_ptr<const common::FileAccess> fileAccess;
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
     ApiKeyFileFormatter apiKeyFileFormatter;
 
     static const std::string filePathContainingPathToFileWithApiKey;

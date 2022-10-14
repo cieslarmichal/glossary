@@ -1,6 +1,6 @@
 #include "DefaultWordDescriptionRepository.h"
 
-#include <boost/optional/optional_io.hpp>
+
 
 #include "gtest/gtest.h"
 
@@ -34,11 +34,11 @@ TEST_F(DefaultWordDescriptionRepositoryTest, givenWordDescritpionAddition_should
 
 TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordDescriptionNotExistingInStorage_shouldReturnNone)
 {
-    EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(std::nullopt));
 
     const auto actualWord = repository.getWordDescription(englishWord);
 
-    ASSERT_EQ(actualWord, boost::none);
+    ASSERT_EQ(actualWord, std::nullopt);
 }
 
 TEST_F(DefaultWordDescriptionRepositoryTest,

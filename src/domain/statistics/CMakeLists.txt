@@ -34,11 +34,11 @@ target_include_directories(statisticsUT PRIVATE
         "include/statistics"
         )
 
-target_link_libraries(statistics PUBLIC utils)
+target_link_libraries(statistics PUBLIC fileSystem)
 target_link_libraries(statisticsUT PRIVATE
         gmock_main
         gtest
-        utils
+        fileSystem
         )
 
 target_compile_options(statistics PUBLIC ${FLAGS})

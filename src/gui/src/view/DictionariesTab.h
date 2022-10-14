@@ -39,7 +39,7 @@ signals:
                           const QString& translation) const;
 
 public slots:
-    void onDictionaryWordsUpdate(const DictionaryName&, const DictionaryWords&);
+    void onDictionaryWordsUpdate(const std::string&, const std::vector<DictionaryWord>&);
     void onDictionariesUpdate(const Dictionaries&);
 
 private slots:
@@ -67,8 +67,8 @@ private:
 
     FormattedDictionariesStorage dictionariesStorage;
     QStringListModel dictionaryNames;
-    boost::optional<QString> currentDictionaryName;
+    std::optional<QString> currentDictionaryName;
     QStringListModel currentDctionaryWords;
-    boost::optional<QString> currentEnglishWord;
+    std::optional<QString> currentEnglishWord;
 };
 }

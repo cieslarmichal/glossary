@@ -6,10 +6,10 @@ namespace glossary::wordDescriptionService
 {
 
 const std::string DefaultApiKeyLocationUpdater::filePathContainingPathToFileWithApiKey{
-    common::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
+    common::fileSystem::getProjectPath("glossary") + "config/wordsApiKeyLocation.txt"};
 
 DefaultApiKeyLocationUpdater::DefaultApiKeyLocationUpdater(
-    std::shared_ptr<const common::FileAccess> fileAccessInit)
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }

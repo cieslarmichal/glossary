@@ -10,20 +10,20 @@
 
 namespace glossary
 {
-class TranslationConcurrentUpdater : public dictionaryService::DictionaryObserver
+class TranslationConcurrentUpdater : public dictionary::DictionaryObserver
 {
 public:
     TranslationConcurrentUpdater(std::shared_ptr<translationService::TranslationService>,
                                  std::shared_ptr<translation::TranslationRepository>);
 
-    void update(const dictionaryService::EnglishWords&) override;
+    void update(const dictionary::std::vector<std::string>&) override;
 
 private:
     unsigned getAmountOfThreads() const;
-    dictionaryService::EnglishWords
-    getEnglishWordsWithoutTranslation(const dictionaryService::EnglishWords&) const;
-    void loadingTranslationsWorker(common::ThreadSafeQueue<dictionaryService::std::string>&);
-    void loadTranslationFromTranslationService(const dictionaryService::std::string&);
+    dictionary::std::vector<std::string>
+    getEnglishWordsWithoutTranslation(const dictionary::std::vector<std::string>&) const;
+    void loadingTranslationsWorker(common::ThreadSafeQueue<dictionary::std::string>&);
+    void loadTranslationFromTranslationService(const dictionary::std::string&);
 
     std::shared_ptr<translationService::TranslationService> translationService;
     std::shared_ptr<translation::TranslationRepository> translationRepository;

@@ -10,12 +10,12 @@ namespace glossary
 {
 
 DefaultGlossary::DefaultGlossary(
-    std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
+    std::shared_ptr<dictionary::DictionaryService> dictionaryServiceInit,
     std::shared_ptr<translationService::TranslationService> translationServiceInit,
     std::shared_ptr<statistics::StatisticsRepository> statisticsRepoInit,
     std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
-    std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> dictionaryObserversInit,
+    std::vector<std::shared_ptr<dictionary::DictionaryObserver>> dictionaryObserversInit,
     std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounterInit,
     std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator)
     : dictionaryService{std::move(dictionaryServiceInit)},
@@ -56,13 +56,13 @@ void DefaultGlossary::updateWordsApiKeyLocation(const std::string& apiKeyLocatio
     wordDescriptionRetrieverService->updateApiKeyLocation(apiKeyLocation);
 }
 
-boost::optional<std::string> DefaultGlossary::getRandomPolishWord() const
+std::optional<std::string> DefaultGlossary::getRandomPolishWord() const
 {
     auto dictionaryWord = dictionaryService->getRandomDictionaryWord();
-    if (dictionaryWord == boost::none)
+    if (dictionaryWord == std::nullopt)
     {
         std::cerr << "No available dictionary words";
-        return boost::none;
+        return std::nullopt;
     }
 
     if (not dictionaryWord->translation)
@@ -75,13 +75,13 @@ boost::optional<std::string> DefaultGlossary::getRandomPolishWord() const
     return dictionaryWord->translation;
 }
 
-boost::optional<std::string> DefaultGlossary::getRandomPolishWord(const DictionaryName& dictionaryName) const
+std::optional<std::string> DefaultGlossary::getRandomPolishWord(const std::string& dictionaryName) const
 {
     auto dictionaryWord = dictionaryService->getRandomDictionaryWord(dictionaryName);
-    if (dictionaryWord == boost::none)
+    if (dictionaryWord == std::nullopt)
     {
         std::cerr << "No available dictionary words";
-        return boost::none;
+        return std::nullopt;
     }
 
     if (not dictionaryWord->translation)
@@ -99,7 +99,7 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
 {
     const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(
         polishWord, translation::SourceLanguage::Polish, translation::TargetLanguage::English);
-    if (englishTranslationFromPolishWord == boost::none)
+    if (englishTranslationFromPolishWord == std::nullopt)
     {
         return false;
     }
@@ -114,17 +114,17 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
     return false;
 }
 
-Dictionaries DefaultGlossary::getDictionaries() const
+std::vector<Dictionary> DefaultGlossary::getDictionaries() const
 {
     return dictionaryService->getDictionaries();
 }
 
-DictionaryNames DefaultGlossary::getDictionariesNames() const
+std::vector<std::string> DefaultGlossary::getDictionariesNames() const
 {
     return dictionaryService->getDictionaryNames();
 }
 
-DictionaryWords DefaultGlossary::getDictionaryWords(const DictionaryName& dictionaryName) const
+std::vector<DictionaryWord> DefaultGlossary::getDictionaryWords(const std::string& dictionaryName) const
 {
     if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
     {
@@ -133,42 +133,42 @@ DictionaryWords DefaultGlossary::getDictionaryWords(const DictionaryName& dictio
     return {};
 }
 
-void DefaultGlossary::addDictionary(const DictionaryName& dictionaryName) const
+void DefaultGlossary::addDictionary(const std::string& dictionaryName) const
 {
     dictionaryService->addDictionary(dictionaryName);
 }
 
-void DefaultGlossary::removeDictionary(const DictionaryName& dictionaryName) const
+void DefaultGlossary::removeDictionary(const std::string& dictionaryName) const
 {
     dictionaryService->removeDictionary(dictionaryName);
 }
 
 void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
-                                                 const DictionaryName& dictionaryName) const
+                                                 const std::string& dictionaryName) const
 {
-    dictionaryService->addWordToDictionary({englishWord, boost::none}, dictionaryName);
+    dictionaryService->addWordToDictionary({englishWord, std::nullopt}, dictionaryName);
 }
 
 void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
                                                  const std::string& translation,
-                                                 const DictionaryName& dictionaryName) const
+                                                 const std::string& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, translation}, dictionaryName);
 }
 
 void DefaultGlossary::removeEnglishWordFromDictionary(const std::string& englishWord,
-                                                      const DictionaryName& dictionaryName) const
+                                                      const std::string& dictionaryName) const
 {
     dictionaryService->removeWordFromDictionary(englishWord, dictionaryName);
 }
 
-void DefaultGlossary::addDictionaryFromFile(const DictionaryName& dictionaryName,
+void DefaultGlossary::addDictionaryFromFile(const std::string& dictionaryName,
                                             const std::string& pathToFileWithDictionaryWords) const
 {
     dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
 }
 
-void DefaultGlossary::updateDictionaryWordTranslationManually(const DictionaryName& dictionaryName,
+void DefaultGlossary::updateDictionaryWordTranslationManually(const std::string& dictionaryName,
                                                               const std::string& englishWord,
                                                               const std::string& newTranslation) const
 {
@@ -176,13 +176,13 @@ void DefaultGlossary::updateDictionaryWordTranslationManually(const DictionaryNa
                                                                   dictionaryName);
 }
 
-void DefaultGlossary::updateDictionaryWordTranslationAutomatically(const DictionaryName& dictionaryName,
+void DefaultGlossary::updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
                                                                    const std::string& englishWord) const
 {
     dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, dictionaryName);
 }
 
-void DefaultGlossary::updateDictionaryTranslationsAutomatically(const DictionaryName& dictionaryName) const
+void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const
 {
     dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
 }
@@ -197,9 +197,9 @@ std::vector<std::string> DefaultGlossary::getSupportedTranslatorLanguages() cons
     return translationRetrieverService->retrieveSupportedLanguages();
 }
 
-boost::optional<std::string> DefaultGlossary::translate(const std::string& textToTranslate,
-                                                        const std::string& sourceLanguageText,
-                                                        const std::string& targetLanguageText) const
+std::optional<std::string> DefaultGlossary::translate(const std::string& textToTranslate,
+                                                      const std::string& sourceLanguageText,
+                                                      const std::string& targetLanguageText) const
 {
     translation::SourceLanguage sourceLanguage;
     if (answerValidator->validateAnswer(sourceLanguageText, "Polish"))
@@ -213,7 +213,7 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
     else
     {
         std::cerr << "Invalid source language\n";
-        return boost::none;
+        return std::nullopt;
     }
 
     translation::TargetLanguage targetLanguage;
@@ -228,21 +228,21 @@ boost::optional<std::string> DefaultGlossary::translate(const std::string& textT
     else
     {
         std::cerr << "Invalid target language\n";
-        return boost::none;
+        return std::nullopt;
     }
 
     return translationRetrieverService->retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
 }
 
-boost::optional<DictionaryStatistics>
-DefaultGlossary::getDictionaryStatistics(const DictionaryName& dictionaryName) const
+std::optional<DictionaryStatistics>
+DefaultGlossary::getDictionaryStatistics(const std::string& dictionaryName) const
 {
     if (auto dictionary = dictionaryService->getDictionary(dictionaryName))
     {
         auto statistics = statisticsRepository->getStatistics();
         return dictionaryStatisticsCounter->countDictionaryStatistics(*dictionary, statistics);
     }
-    return boost::none;
+    return std::nullopt;
 }
 
 DictionariesStatistics DefaultGlossary::getDictionariesStatistics() const

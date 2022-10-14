@@ -5,8 +5,9 @@
 namespace glossary
 {
 
-DictionaryStatistics DefaultDictionaryStatisticsCounter::countDictionaryStatistics(
-    const dictionaryService::Dictionary& dictionary, const statistics::Statistics& statistics) const
+DictionaryStatistics
+DefaultDictionaryStatisticsCounter::countDictionaryStatistics(const dictionary::Dictionary& dictionary,
+                                                              const statistics::Statistics& statistics) const
 {
     DictionaryStatistics dictionaryStatistics{dictionary.name, 0, 0};
 
@@ -23,7 +24,7 @@ DictionaryStatistics DefaultDictionaryStatisticsCounter::countDictionaryStatisti
 }
 
 DictionariesStatistics DefaultDictionaryStatisticsCounter::countDictionariesStatistics(
-    const dictionaryService::Dictionaries& dictionaries,
+    const dictionary::std::vector<Dictionary>& dictionaries,
     const statistics::Statistics& statistics) const
 {
     DictionariesStatistics dictionariesStatistics;
@@ -36,7 +37,7 @@ DictionariesStatistics DefaultDictionaryStatisticsCounter::countDictionariesStat
 }
 
 bool DefaultDictionaryStatisticsCounter::englishWordExistsInDictionary(
-    const dictionaryService::std::string& englishWord, const dictionaryService::Dictionary& dictionary) const
+    const dictionary::std::string& englishWord, const dictionary::Dictionary& dictionary) const
 {
     const auto& dictionaryWords = dictionary.words;
     auto foundEnglishWord = std::find_if(dictionaryWords.begin(), dictionaryWords.end(),

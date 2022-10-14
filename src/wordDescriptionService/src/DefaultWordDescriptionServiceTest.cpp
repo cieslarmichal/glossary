@@ -1,6 +1,6 @@
 #include "DefaultWordDescriptionService.h"
 
-#include <boost/optional/optional_io.hpp>
+
 
 #include "gtest/gtest.h"
 
@@ -62,7 +62,7 @@ class DefaultWordDescriptionServiceTest_WithoutApiKey_Base : public DefaultWordD
 public:
     DefaultWordDescriptionServiceTest_WithoutApiKey_Base()
     {
-        EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(boost::none));
+        EXPECT_CALL(*apiKeyReader, readApiKey()).WillOnce(Return(std::nullopt));
     }
 };
 
@@ -89,7 +89,7 @@ TEST_F(
     DefaultWordDescriptionServiceTest_WithApiKey,
     repositoryDoesNotContainWordDescription_shouldReturnWordDescriptionFromDownloaderAndSaveWordDescriptionInRepository)
 {
-    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(std::nullopt));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Return(wordDescriptionFromDownloader));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(wordDescriptionFromDownloader));
@@ -103,7 +103,7 @@ TEST_F(
     DefaultWordDescriptionServiceTest_WithApiKey,
     repositoryDoesNotReturnWordDescriptionAndDownloaderThrowsConnectionFailed_shouldReturnEmptyWordDescriptionWithEnglishWord)
 {
-    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(std::nullopt));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Throw(common::httpClient::exceptions::ConnectionFailed{""}));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(emptyWordDescription));
@@ -117,7 +117,7 @@ TEST_F(
     DefaultWordDescriptionServiceTest_WithApiKey,
     repositoryDoesNotReturnWordDescriptionAndDownloaderThrowsInvalidApiKey_shouldReturnEmptyWordDescriptionWithEnglishWord)
 {
-    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(std::nullopt));
     EXPECT_CALL(*wordDescriptionDownloader, tryDownloadWordDescription(englishWord, apiKey))
         .WillOnce(Throw(wordDescriptionDownloader::exceptions::InvalidApiKey{""}));
     EXPECT_CALL(*wordDescriptionRepository, addWordDescription(emptyWordDescription));
@@ -178,7 +178,7 @@ TEST_F(DefaultWordDescriptionServiceTest_WithoutApiKey,
 TEST_F(DefaultWordDescriptionServiceTest_WithoutApiKey,
        repositoryDoesNotContainWordDescription_shouldReturnEmptyDictionaryWord)
 {
-    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*wordDescriptionRepository, getWordDescription(englishWord)).WillOnce(Return(std::nullopt));
 
     const auto actualWordDescription = wordDescriptionService.retrieveWordDescription(englishWord);
 
@@ -189,7 +189,7 @@ TEST_F(DefaultWordDescriptionServiceTest_WithoutApiKey, downloadWordDescription_
 {
     const auto actualWordDescription = wordDescriptionService.downloadWordDescription(englishWord);
 
-    ASSERT_EQ(actualWordDescription, boost::none);
+    ASSERT_EQ(actualWordDescription, std::nullopt);
 }
 
 TEST_F(DefaultWordDescriptionServiceTest_WithoutApiKey, shouldReturnInvalidApiKeyAvailabilityStatus)

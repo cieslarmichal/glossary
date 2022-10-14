@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "boost/optional.hpp"
+#include <optional>
 
 namespace glossary::wordDescriptionService
 {
@@ -11,6 +11,6 @@ class ApiKeyReader
 public:
     virtual ~ApiKeyReader() = default;
 
-    virtual boost::optional<std::string> readApiKey() const = 0;
+    virtual std::optional<std::string> readApiKey() const = 0;
 };
 }

@@ -21,15 +21,15 @@ public:
 
     wordDescriptionRepository::WordDescription
     retrieveWordDescription(const wordDescriptionRepository::std::string&) noexcept override;
-    boost::optional<wordDescriptionRepository::WordDescription>
+    std::optional<wordDescriptionRepository::WordDescription>
     downloadWordDescription(const wordDescriptionRepository::std::string&) override;
     WordsApiStatus connectionToWordsApiAvailable() const override;
     void updateApiKeyLocation(const std::string& apiKeyLocation) override;
 
 private:
-    boost::optional<wordDescriptionRepository::WordDescription>
+    std::optional<wordDescriptionRepository::WordDescription>
     getWordDescriptionFromRepository(const wordDescriptionRepository::std::string& englishWord) const;
-    boost::optional<wordDescriptionRepository::WordDescription>
+    std::optional<wordDescriptionRepository::WordDescription>
     downloadWordDescriptionFromDownloader(const wordDescriptionRepository::std::string& englishWord) const;
     wordDescriptionRepository::WordDescription
     getEmptyWordDescriptionWithEnglishWord(const wordDescriptionRepository::std::string& englishWord) const;
@@ -40,6 +40,6 @@ private:
     std::unique_ptr<WordsApiConnectionChecker> connectionChecker;
     std::unique_ptr<ApiKeyReader> apiKeyReader;
     std::unique_ptr<ApiKeyLocationUpdater> apiKeyLocationUpdater;
-    boost::optional<std::string> wordsApiKey;
+    std::optional<std::string> wordsApiKey;
 };
 }

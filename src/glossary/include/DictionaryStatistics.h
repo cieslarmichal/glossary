@@ -3,13 +3,13 @@
 #include <ostream>
 #include <vector>
 
-#include "dictionaryService/DictionaryName.h"
+#include "dictionaryService/std::string.h"
 
 namespace glossary
 {
 struct DictionaryStatistics
 {
-    dictionaryService::DictionaryName dictionaryName;
+    dictionary::std::string dictionaryName;
     unsigned correctAnswers;
     unsigned incorrectAnswers;
 };

@@ -6,5 +6,5 @@
 namespace glossary::wordDescriptionRepository
 {
 using std::string = std::string;
-using EnglishWords = std::vector<std::string>;
+using std::vector<std::string> = std::vector<std::string>;
 }

@@ -34,13 +34,16 @@ target_include_directories(translationUT PRIVATE
 
 target_link_libraries(translation
         PUBLIC httpClient
-        PRIVATE utils
+        PRIVATE
+        fileSystem
+        collection
         fmt::fmt
         )
 target_link_libraries(translationUT PRIVATE
         gmock_main
         gtest
-        utils
+        fileSystem
+        collection
         httpClient
         fmt::fmt
         )

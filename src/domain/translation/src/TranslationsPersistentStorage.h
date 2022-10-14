@@ -12,7 +12,7 @@ namespace glossary::translation
 class TranslationsPersistentStorage : public TranslationsStorage
 {
 public:
-    TranslationsPersistentStorage(std::shared_ptr<const common::FileAccess>,
+    TranslationsPersistentStorage(std::shared_ptr<const common::fileSystem::FileAccess>,
                                   std::shared_ptr<const TranslationsSerializer>);
 
     void addTranslation(Translation) override;
@@ -26,7 +26,7 @@ private:
     void loadFile();
     void serialize() const;
 
-    std::shared_ptr<const common::FileAccess> fileAccess;
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
     std::shared_ptr<const TranslationsSerializer> serializer;
     TranslationsMemoryStorage storage;
 

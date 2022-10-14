@@ -1,6 +1,6 @@
 #include "DefaultGlossary.h"
 
-#include <boost/optional/optional_io.hpp>
+
 
 #include "gtest/gtest.h"
 
@@ -15,7 +15,7 @@
 
 using namespace ::testing;
 using namespace glossary;
-using namespace dictionaryService;
+using namespace dictionary;
 using namespace translationService;
 using namespace statisticsRepository;
 using namespace wordDescriptionService;
@@ -34,18 +34,19 @@ const auto polishLanguage = translation::Language::Polish;
 const auto englishLanguage = translation::Language::English;
 const std::string textToTranslate{"textToTranslate"};
 const std::string translatedText{"translatedText"};
-const DictionaryName dictionaryName1{"dictionary1"};
-const DictionaryName dictionaryName2{"dictionary2"};
-const DictionaryNames dictionaryNames{dictionaryName1, dictionaryName2};
+const std::string dictionaryName1{"dictionary1"};
+const std::string dictionaryName2{"dictionary2"};
+const std::vector<std::string> dictionaryNames{dictionaryName1, dictionaryName2};
 const std::string englishWord1{"englishWord1"};
 const std::string englishWord2{"englishWord2"};
 const std::string polishWord{"polishWord"};
 const std::string wordTranslation{"wordTranslation"};
 const std::string inputTranslation{"inputTranslation"};
 const std::string pathToDictionaryWords{"/home/words.txt"};
-const DictionaryWord dictionaryWordWithoutTranslation{englishWord1, boost::none};
+const DictionaryWord dictionaryWordWithoutTranslation{englishWord1, std::nullopt};
 const DictionaryWord dictionaryWordWithTranslation{englishWord2, wordTranslation};
-const DictionaryWords dictionaryWords{dictionaryWordWithoutTranslation, dictionaryWordWithTranslation};
+const std::vector<DictionaryWord> dictionaryWords{dictionaryWordWithoutTranslation,
+                                                  dictionaryWordWithTranslation};
 const Definitions definitions{"definition1", "definition2"};
 const Examples examples{"example1", "example2"};
 const Synonyms synonyms{"synonym1", "synonym2", "synonym1000000"};
@@ -56,12 +57,12 @@ const Statistics statistics{statisticsPerWord1, statisticsPerWord2};
 auto availableStatus = ExternalServicesStatus{WordsApiStatus::Available, TranslationApiStatus::Available};
 const DictionaryWord dictionaryWord1{"englishWord1", std::string{"translation1"}};
 const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}};
-const DictionaryWord dictionaryWord3{"englishWord3", boost::none};
-const DictionaryWords dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
-const DictionaryWords dictionaryWords2{dictionaryWord1, dictionaryWord2};
+const DictionaryWord dictionaryWord3{"englishWord3", std::nullopt};
+const std::vector<DictionaryWord> dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
+const std::vector<DictionaryWord> dictionaryWords2{dictionaryWord1, dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
-const Dictionaries dictionaries{dictionary1, dictionary2};
+const std::vector<Dictionary> dictionaries{dictionary1, dictionary2};
 const DictionaryStatistics dictionaryStatistics1{dictionaryName1, 15, 4};
 const DictionaryStatistics dictionaryStatistics2{dictionaryName2, 5, 55};
 const DictionariesStatistics dictionariesStatistics{dictionaryStatistics1, dictionaryStatistics2};
@@ -137,11 +138,11 @@ TEST_F(DefaultGlossaryTest, shouldUpdateWordsApiKeyLocation)
 
 TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWord_shouldReturnNone)
 {
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord()).WillOnce(Return(boost::none));
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord()).WillOnce(Return(std::nullopt));
 
     const auto actualPolishWord = glossary.getRandomPolishWord();
 
-    ASSERT_EQ(actualPolishWord, boost::none);
+    ASSERT_EQ(actualPolishWord, std::nullopt);
 }
 
 TEST_F(DefaultGlossaryTest,
@@ -170,11 +171,11 @@ TEST_F(DefaultGlossaryTest, givenRandomDictionaryWordWithTranslation_shouldRetur
 
 TEST_F(DefaultGlossaryTest, givenNoneRandomDictionaryWordFromSpecificDictionary_shouldReturnNone)
 {
-    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord(dictionaryName1)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*dictionaryService, getRandomDictionaryWord(dictionaryName1)).WillOnce(Return(std::nullopt));
 
     const auto actualPolishWord = glossary.getRandomPolishWord(dictionaryName1);
 
-    ASSERT_EQ(actualPolishWord, boost::none);
+    ASSERT_EQ(actualPolishWord, std::nullopt);
 }
 
 TEST_F(
@@ -230,7 +231,7 @@ TEST_F(DefaultGlossaryTest, givenIncorrectPolishWordsTranslation_shouldAddIncorr
 TEST_F(DefaultGlossaryTest, givenNoneTranslationFromTranslationService_shouldNotModifyAnswersAndReturnFalse)
 {
     EXPECT_CALL(*translationService, retrieveTranslation(polishWord, polishLanguage, englishLanguage))
-        .WillOnce(Return(boost::none));
+        .WillOnce(Return(std::nullopt));
 
     const auto verificationResult = glossary.verifyPolishWordTranslation(polishWord, englishWord1);
 
@@ -257,7 +258,7 @@ TEST_F(DefaultGlossaryTest, shouldReturnNamesOfDictionaries)
 
 TEST_F(DefaultGlossaryTest, givenNoneDictionaryWords_shouldReturnEmptyDictionaryWords)
 {
-    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*dictionaryService, getDictionaryWords(dictionaryName1)).WillOnce(Return(std::nullopt));
 
     const auto actualDictionaryWords = glossary.getDictionaryWords(dictionaryName1);
 
@@ -357,7 +358,7 @@ TEST_F(DefaultGlossaryTest, givenIncorrectSourceLanguage_shouldReturnNone)
     const auto actualTranslation =
         glossary.translate(textToTranslate, invalidSourceLanguage, validTargetLanguage);
 
-    ASSERT_EQ(actualTranslation, boost::none);
+    ASSERT_EQ(actualTranslation, std::nullopt);
 }
 
 TEST_F(DefaultGlossaryTest, givenIncorrectTargetLanguage_shouldReturnNone)
@@ -372,7 +373,7 @@ TEST_F(DefaultGlossaryTest, givenIncorrectTargetLanguage_shouldReturnNone)
     const auto actualTranslation =
         glossary.translate(textToTranslate, validSourceLanguage, invalidTargetLanguage);
 
-    ASSERT_EQ(actualTranslation, boost::none);
+    ASSERT_EQ(actualTranslation, std::nullopt);
 }
 
 TEST_F(DefaultGlossaryTest, givenTranslationFromTranslationService_shouldReturnTranslation)
@@ -404,11 +405,11 @@ TEST_F(DefaultGlossaryTest, shouldReturnWordDescription)
 
 TEST_F(DefaultGlossaryTest, givenNonExistingDictionary_shouldReturnNoneDictionaryStatistics)
 {
-    EXPECT_CALL(*dictionaryService, getDictionary(dictionaryName1)).WillOnce(Return(boost::none));
+    EXPECT_CALL(*dictionaryService, getDictionary(dictionaryName1)).WillOnce(Return(std::nullopt));
 
     const auto actualDictionaryStatistics = glossary.getDictionaryStatistics(dictionaryName1);
 
-    ASSERT_EQ(actualDictionaryStatistics, boost::none);
+    ASSERT_EQ(actualDictionaryStatistics, std::nullopt);
 }
 
 TEST_F(DefaultGlossaryTest, givenExistingDictionary_shouldReturnDictionaryStatistics)

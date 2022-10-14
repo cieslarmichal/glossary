@@ -11,7 +11,7 @@ namespace glossary::gui::view
 {
 StatisticsTab::StatisticsTab(QWidget* parent)
     : QChartView(parent),
-      currentDictionaryName{boost::none},
+      currentDictionaryName{std::nullopt},
       ui(new Ui::StatisticsTab),
       chartView{std::make_unique<QChartView>(this)},
       chart{std::make_unique<QChart>()},
@@ -129,10 +129,10 @@ void StatisticsTab::updateChartView(const DictionaryStatistics& dictionaryStatis
 
 DictionaryStatistics StatisticsTab::getDictionaryStatistics(const QString& dictionaryName) const
 {
-    auto foundDictionarStatistics = std::find_if(
-        dictionariesStatistics.begin(), dictionariesStatistics.end(), [&](const DictionaryStatistics& stats) {
-            return stats.dictionaryName == dictionaryName.toStdString();
-        });
+    auto foundDictionarStatistics =
+        std::find_if(dictionariesStatistics.begin(), dictionariesStatistics.end(),
+                     [&](const DictionaryStatistics& stats)
+                     { return stats.dictionaryName == dictionaryName.toStdString(); });
     if (foundDictionarStatistics != dictionariesStatistics.end())
     {
         return *foundDictionarStatistics;

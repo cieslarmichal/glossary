@@ -7,7 +7,7 @@
 namespace glossary::wordDescriptionRepository
 {
 DefaultWordDescriptionRepositoryFactory::DefaultWordDescriptionRepositoryFactory(
-    std::shared_ptr<const common::FileAccess> fileAccessInit)
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }

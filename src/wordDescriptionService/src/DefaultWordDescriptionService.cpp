@@ -41,27 +41,27 @@ wordDescriptionRepository::WordDescription DefaultWordDescriptionService::retrie
     return emptyWordDescriptionWithEnglishWord;
 }
 
-boost::optional<wordDescriptionRepository::WordDescription>
+std::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::downloadWordDescription(
     const wordDescriptionRepository::std::string& englishWord)
 {
     return downloadWordDescriptionFromDownloader(englishWord);
 }
 
-boost::optional<wordDescriptionRepository::WordDescription>
+std::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::getWordDescriptionFromRepository(
     const wordDescriptionRepository::std::string& englishWord) const
 {
     return wordDescriptionRepository->getWordDescription(englishWord);
 }
 
-boost::optional<wordDescriptionRepository::WordDescription>
+std::optional<wordDescriptionRepository::WordDescription>
 DefaultWordDescriptionService::downloadWordDescriptionFromDownloader(
     const wordDescriptionRepository::std::string& englishWord) const
 {
     if (not wordsApiKey)
     {
-        return boost::none;
+        return std::nullopt;
     }
 
     try
@@ -76,7 +76,7 @@ DefaultWordDescriptionService::downloadWordDescriptionFromDownloader(
     {
         std::cerr << "Invalid api key: " << e.what();
     }
-    return boost::none;
+    return std::nullopt;
 }
 
 void DefaultWordDescriptionService::saveWordDescriptionInRepository(

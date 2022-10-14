@@ -8,7 +8,7 @@ class WordsDescriptionsMemoryStorage : public WordsDescriptionsStorage
 {
 public:
     void addWordDescription(const WordDescription&) override;
-    boost::optional<WordDescription> getWordDescription(const std::string&) const override;
+    std::optional<WordDescription> getWordDescription(const std::string&) const override;
     WordsDescriptions getWordsDescriptions() const override;
     bool contains(const std::string&) const override;
     WordsDescriptions::size_type size() const override;

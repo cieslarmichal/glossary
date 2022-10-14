@@ -12,14 +12,14 @@ TranslationConcurrentUpdater::TranslationConcurrentUpdater(
 {
 }
 
-void TranslationConcurrentUpdater::update(const dictionaryService::EnglishWords& englishWords)
+void TranslationConcurrentUpdater::update(const dictionary::std::vector<std::string>& englishWords)
 {
     const auto amountOfThreads = getAmountOfThreads();
     std::vector<std::thread> threadPool;
     threadPool.reserve(amountOfThreads);
 
     const auto englishWordsWithoutTranslation = getEnglishWordsWithoutTranslation(englishWords);
-    common::ThreadSafeQueue<dictionaryService::std::string> englishWordsQueue{englishWordsWithoutTranslation};
+    common::ThreadSafeQueue<dictionary::std::string> englishWordsQueue{englishWordsWithoutTranslation};
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
@@ -36,10 +36,10 @@ unsigned TranslationConcurrentUpdater::getAmountOfThreads() const
     return supportedThreadsCalculator.calculate();
 }
 
-dictionaryService::EnglishWords TranslationConcurrentUpdater::getEnglishWordsWithoutTranslation(
-    const dictionaryService::EnglishWords& englishWords) const
+dictionary::std::vector<std::string> TranslationConcurrentUpdater::getEnglishWordsWithoutTranslation(
+    const dictionary::std::vector<std::string>& englishWords) const
 {
-    dictionaryService::EnglishWords englishWordsWithoutTranslation;
+    dictionary::std::vector<std::string> englishWordsWithoutTranslation;
 
     for (const auto& englishWord : englishWords)
     {
@@ -50,7 +50,7 @@ dictionaryService::EnglishWords TranslationConcurrentUpdater::getEnglishWordsWit
 }
 
 void TranslationConcurrentUpdater::loadingTranslationsWorker(
-    common::ThreadSafeQueue<dictionaryService::std::string>& englishWords)
+    common::ThreadSafeQueue<dictionary::std::string>& englishWords)
 {
     while (const auto currentEnglishWord = englishWords.pop())
     {
@@ -59,7 +59,7 @@ void TranslationConcurrentUpdater::loadingTranslationsWorker(
 }
 
 void TranslationConcurrentUpdater::loadTranslationFromTranslationService(
-    const dictionaryService::std::string& englishWord)
+    const dictionary::std::string& englishWord)
 {
     translationService->retrieveTranslation(englishWord, translation::SourceLanguage::English,
                                             translation::TargetLanguage::Polish);

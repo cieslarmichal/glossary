@@ -4,7 +4,7 @@ namespace glossary
 {
 
 DefaultDictionaryTranslationUpdater::DefaultDictionaryTranslationUpdater(
-    std::shared_ptr<dictionaryService::DictionaryService> dictionaryServiceInit,
+    std::shared_ptr<dictionary::DictionaryService> dictionaryServiceInit,
     std::shared_ptr<translationService::TranslationService> translationServiceInit)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationService{std::move(translationServiceInit)}
@@ -12,15 +12,15 @@ DefaultDictionaryTranslationUpdater::DefaultDictionaryTranslationUpdater(
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
-    const dictionaryService::std::string& englishWord, const std::string& updatedTranslation,
-    const dictionaryService::DictionaryName& dictionaryName)
+    const dictionary::std::string& englishWord, const std::string& updatedTranslation,
+    const dictionary::std::string& dictionaryName)
 {
     dictionaryService->updateWordTranslationFromDictionary(englishWord, updatedTranslation, dictionaryName);
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
-    const dictionaryService::std::string& englishWord,
-    const dictionaryService::DictionaryName& dictionaryName)
+    const dictionary::std::string& englishWord,
+    const dictionary::std::string& dictionaryName)
 {
     if (const auto translation = getTranslation(englishWord))
     {
@@ -29,7 +29,7 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
-    const dictionaryService::DictionaryName& dictionaryName)
+    const dictionary::std::string& dictionaryName)
 {
     if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
     {
@@ -43,15 +43,15 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
     }
 }
 
-boost::optional<translation::TranslatedText>
-DefaultDictionaryTranslationUpdater::getTranslation(const dictionaryService::std::string& englishWord)
+std::optional<translation::TranslatedText>
+DefaultDictionaryTranslationUpdater::getTranslation(const dictionary::std::string& englishWord)
 {
     return translationService->retrieveTranslation(englishWord, translation::SourceLanguage::English,
                                                    translation::TargetLanguage::Polish);
 }
 
 bool DefaultDictionaryTranslationUpdater::dictionaryWordHasNoTranslation(
-    const dictionaryService::DictionaryWord& dictionaryWord) const
+    const dictionary::DictionaryWord& dictionaryWord) const
 {
     if (const auto translation = dictionaryWord.translation)
     {

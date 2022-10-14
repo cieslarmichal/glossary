@@ -24,12 +24,12 @@ DictionaryWordAccumulator::accumulateDictionaryWord(const FormattedDictionaryWor
     return accumulatedDictionaryWord;
 }
 
-boost::optional<FormattedDictionaryWord>
+std::optional<FormattedDictionaryWord>
 DictionaryWordAccumulator::separateDictionaryWord(const QString& accumulatedDictionaryWord) const
 {
     if (accumulatedDictionaryWord.isEmpty())
     {
-        return boost::none;
+        return std::nullopt;
     }
     std::stringstream dictionaryWordStream{accumulatedDictionaryWord.toStdString()};
     std::string englishWord, translation;
@@ -37,7 +37,7 @@ DictionaryWordAccumulator::separateDictionaryWord(const QString& accumulatedDict
     dictionaryWordStream >> englishWord >> separator >> translation;
     if (englishWord.empty() || separator != dashSeparator)
     {
-        return boost::none;
+        return std::nullopt;
     }
     return FormattedDictionaryWord{QString::fromStdString(englishWord), QString::fromStdString(translation)};
 }

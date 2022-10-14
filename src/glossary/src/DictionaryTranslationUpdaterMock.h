@@ -10,10 +10,10 @@ class DictionaryTranslationUpdaterMock : public DictionaryTranslationUpdater
 {
 public:
     MOCK_METHOD3(updateDictionaryWordTranslation,
-                 void(const dictionaryService::std::string&, const std::string& updatedTranslation,
-                      const dictionaryService::DictionaryName&));
+                 void(const dictionary::std::string&, const std::string& updatedTranslation,
+                      const dictionary::std::string&));
     MOCK_METHOD2(updateDictionaryWordTranslation,
-                 void(const dictionaryService::std::string&, const dictionaryService::DictionaryName&));
-    MOCK_METHOD1(updateDictionaryTranslations, void(const dictionaryService::DictionaryName&));
+                 void(const dictionary::std::string&, const dictionary::std::string&));
+    MOCK_METHOD1(updateDictionaryTranslations, void(const dictionary::std::string&));
 };
 }

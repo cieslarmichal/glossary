@@ -11,21 +11,21 @@ namespace glossary
 class DefaultDictionaryTranslationUpdater : public DictionaryTranslationUpdater
 {
 public:
-    DefaultDictionaryTranslationUpdater(std::shared_ptr<dictionaryService::DictionaryService>,
+    DefaultDictionaryTranslationUpdater(std::shared_ptr<dictionary::DictionaryService>,
                                         std::shared_ptr<translationService::TranslationService>);
 
-    void updateDictionaryWordTranslation(const dictionaryService::std::string&,
+    void updateDictionaryWordTranslation(const dictionary::std::string&,
                                          const std::string& updatedTranslation,
-                                         const dictionaryService::DictionaryName&) override;
-    void updateDictionaryWordTranslation(const dictionaryService::std::string&,
-                                         const dictionaryService::DictionaryName&) override;
-    void updateDictionaryTranslations(const dictionaryService::DictionaryName&) override;
+                                         const dictionary::std::string&) override;
+    void updateDictionaryWordTranslation(const dictionary::std::string&,
+                                         const dictionary::std::string&) override;
+    void updateDictionaryTranslations(const dictionary::std::string&) override;
 
 private:
-    boost::optional<translation::TranslatedText> getTranslation(const dictionaryService::std::string&);
-    bool dictionaryWordHasNoTranslation(const dictionaryService::DictionaryWord&) const;
+    std::optional<translation::TranslatedText> getTranslation(const dictionary::std::string&);
+    bool dictionaryWordHasNoTranslation(const dictionary::DictionaryWord&) const;
 
-    std::shared_ptr<dictionaryService::DictionaryService> dictionaryService;
+    std::shared_ptr<dictionary::DictionaryService> dictionaryService;
     std::shared_ptr<translationService::TranslationService> translationService;
 };
 }

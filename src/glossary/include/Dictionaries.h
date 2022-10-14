@@ -4,10 +4,10 @@
 
 namespace glossary
 {
-using DictionaryWord = dictionaryService::DictionaryWord;
-using DictionaryWords = dictionaryService::DictionaryWords;
-using DictionaryName = dictionaryService::DictionaryName;
-using DictionaryNames = dictionaryService::DictionaryNames;
-using Dictionary = dictionaryService::Dictionary;
-using Dictionaries = dictionaryService::Dictionaries;
+using DictionaryWord = dictionary::DictionaryWord;
+using std::vector<DictionaryWord> = dictionary::std::vector<DictionaryWord>;
+using std::string = dictionary::std::string;
+using std::vector<std::string> = dictionary::std::vector<std::string>;
+using Dictionary = dictionary::Dictionary;
+using Dictionaries = dictionary::Dictionaries;
 }

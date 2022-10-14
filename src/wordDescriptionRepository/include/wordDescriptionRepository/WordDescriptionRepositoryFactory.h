@@ -16,6 +16,6 @@ public:
     virtual std::unique_ptr<WordDescriptionRepository> createWordDescriptionRepository() const = 0;
 
     static std::unique_ptr<WordDescriptionRepositoryFactory>
-    createWordDescriptionRepositoryFactory(const std::shared_ptr<const common::FileAccess>&);
+    createWordDescriptionRepositoryFactory(const std::shared_ptr<const common::fileSystem::FileAccess>&);
 };
 }

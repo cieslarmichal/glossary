@@ -25,15 +25,15 @@ DictionariesTab::~DictionariesTab()
     delete ui;
 }
 
-void DictionariesTab::setDictionaries(const Dictionaries& dictionaries)
+void DictionariesTab::setDictionaries(const std::vector<Dictionary>& dictionaries)
 {
     auto formattedDictionaries = dictionaryFormatter.getFormattedDictionaries(dictionaries);
     dictionariesStorage.updateDictionaries(formattedDictionaries);
     synchronizeDictionariesModel();
 }
 
-void DictionariesTab::onDictionaryWordsUpdate(const DictionaryName& dictionaryName,
-                                              const DictionaryWords& dictionaryWords)
+void DictionariesTab::onDictionaryWordsUpdate(const std::string& dictionaryName,
+                                              const std::vector<DictionaryWord>& dictionaryWords)
 {
     auto formattedDictionaryName = dictionaryFormatter.getFormattedDictionaryName(dictionaryName);
     auto formattedDictionaryWords = dictionaryFormatter.getFormattedDictionaryWords(dictionaryWords);
@@ -41,7 +41,7 @@ void DictionariesTab::onDictionaryWordsUpdate(const DictionaryName& dictionaryNa
     synchronizeDictionaryWordsModel(QString::fromStdString(dictionaryName));
 }
 
-void DictionariesTab::onDictionariesUpdate(const Dictionaries& dictionaries)
+void DictionariesTab::onDictionariesUpdate(const std::vector<Dictionary>& dictionaries)
 {
     auto formattedDictionaries = dictionaryFormatter.getFormattedDictionaries(dictionaries);
     dictionariesStorage.updateDictionaries(formattedDictionaries);
@@ -72,8 +72,8 @@ void DictionariesTab::on_buttonRemoveDictionary_clicked()
     if (currentDictionaryName)
     {
         emit notifyRemoveDictionary(*currentDictionaryName);
-        currentDictionaryName = boost::none;
-        currentEnglishWord = boost::none;
+        currentDictionaryName = std::nullopt;
+        currentEnglishWord = std::nullopt;
         setDictionaryButtonsEnabled(false);
         setDictionaryWordsNoFocusButtonsEnabled(false);
         setDictionaryWordsWithFocusButtonsEnabled(false);
@@ -106,7 +106,7 @@ void DictionariesTab::on_buttonAddWord_clicked()
         }
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentEnglishWord = boost::none;
+    currentEnglishWord = std::nullopt;
 }
 
 void DictionariesTab::on_buttonUpdateTranslation_clicked()
@@ -116,7 +116,7 @@ void DictionariesTab::on_buttonUpdateTranslation_clicked()
         emit notifyUpdateTranslationRequest(*currentDictionaryName, *currentEnglishWord);
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentEnglishWord = boost::none;
+    currentEnglishWord = std::nullopt;
 }
 
 void DictionariesTab::on_buttonRemoveWord_clicked()
@@ -124,10 +124,10 @@ void DictionariesTab::on_buttonRemoveWord_clicked()
     if (currentDictionaryName && currentEnglishWord)
     {
         emit notifyRemoveWord(*currentDictionaryName, *currentEnglishWord);
-        currentEnglishWord = boost::none;
+        currentEnglishWord = std::nullopt;
     }
     setDictionaryWordsWithFocusButtonsEnabled(false);
-    currentEnglishWord = boost::none;
+    currentEnglishWord = std::nullopt;
 }
 
 void DictionariesTab::synchronizeDictionariesModel()
@@ -183,7 +183,7 @@ void DictionariesTab::on_listOfDictionaries_clicked(const QModelIndex& dictionar
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
     currentDictionaryName = dictionaryName;
-    currentEnglishWord = boost::none;
+    currentEnglishWord = std::nullopt;
     synchronizeDictionaryWordsModel(dictionaryName);
 
     setDictionaryButtonsEnabled(true);

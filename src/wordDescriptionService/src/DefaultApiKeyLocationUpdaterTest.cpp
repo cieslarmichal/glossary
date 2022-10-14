@@ -1,7 +1,5 @@
 #include "DefaultApiKeyLocationUpdater.h"
 
-#include <boost/optional/optional_io.hpp>
-
 #include "../../common/fileSystem/include/FileAccessMock.h"
 
 #include "../../common/fileSystem/include/GetProjectPath.h"
@@ -11,7 +9,7 @@ using namespace glossary::wordDescriptionService;
 
 namespace
 {
-const std::string filePathWithPathToFileWithApiKey{common::getProjectPath("glossary") +
+const std::string filePathWithPathToFileWithApiKey{common::fileSystem::getProjectPath("glossary") +
                                                    "config/wordsApiKeyLocation.txt"};
 const std::string exampleApiKey{"apiKey"};
 const std::string apiKeyLocation{"apiKeyLocation"};
@@ -20,8 +18,8 @@ const std::string apiKeyLocation{"apiKeyLocation"};
 class DefaultApiKeyLocationUpdaterTest : public Test
 {
 public:
-    std::shared_ptr<common::FileAccessMock> fileAccess =
-        std::make_shared<StrictMock<common::FileAccessMock>>();
+    std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
+        std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
     DefaultApiKeyLocationUpdater apiKeyLocationUpdater{fileAccess};
 };
 

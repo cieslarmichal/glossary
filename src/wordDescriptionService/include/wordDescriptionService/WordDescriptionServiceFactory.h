@@ -20,6 +20,6 @@ public:
         const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&) const = 0;
 
     static std::unique_ptr<WordDescriptionServiceFactory>
-    createWordDescriptionServiceFactory(const std::shared_ptr<const common::FileAccess>&);
+    createWordDescriptionServiceFactory(const std::shared_ptr<const common::fileSystem::FileAccess>&);
 };
 }

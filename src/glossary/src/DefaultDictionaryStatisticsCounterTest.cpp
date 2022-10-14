@@ -1,12 +1,12 @@
 #include "DefaultDictionaryStatisticsCounter.h"
 
-#include <boost/optional/optional_io.hpp>
+
 
 #include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace glossary;
-using namespace dictionaryService;
+using namespace dictionary;
 using namespace statisticsRepository;
 
 namespace
@@ -31,19 +31,20 @@ const DictionaryWord dictionaryWord2{englishWord2, std::string{"translation2"}};
 const DictionaryWord dictionaryWord3{englishWord3, std::string{"translation3"}};
 const DictionaryWord dictionaryWord4{englishWord4, std::string{"translation4"}};
 const DictionaryWord dictionaryWord5{englishWord5, std::string{"translation5"}};
-const DictionaryWord dictionaryWord6{englishWord6, boost::none};
-const DictionaryWords dictionaryWords1{dictionaryWord4, dictionaryWord5, dictionaryWord6};
-const DictionaryWords dictionaryWords2{dictionaryWord2, dictionaryWord3, dictionaryWord4, dictionaryWord5};
-const DictionaryWords dictionaryWords3{dictionaryWord4, dictionaryWord5};
-const DictionaryName dictionaryName1{"dictionaryName1"};
-const DictionaryName dictionaryName2{"dictionaryName2"};
-const DictionaryName dictionaryName3{"dictionaryName3"};
-const DictionaryName dictionaryName4{"dictionaryName4"};
+const DictionaryWord dictionaryWord6{englishWord6, std::nullopt};
+const std::vector<DictionaryWord> dictionaryWords1{dictionaryWord4, dictionaryWord5, dictionaryWord6};
+const std::vector<DictionaryWord> dictionaryWords2{dictionaryWord2, dictionaryWord3, dictionaryWord4,
+                                                   dictionaryWord5};
+const std::vector<DictionaryWord> dictionaryWords3{dictionaryWord4, dictionaryWord5};
+const std::string dictionaryName1{"dictionaryName1"};
+const std::string dictionaryName2{"dictionaryName2"};
+const std::string dictionaryName3{"dictionaryName3"};
+const std::string dictionaryName4{"dictionaryName4"};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
 const Dictionary dictionary3{dictionaryName3, dictionaryWords3};
 const Dictionary dictionary4{dictionaryName4, {}};
-const Dictionaries dictionaries{dictionary1, dictionary2, dictionary3, dictionary4};
+const std::vector<Dictionary> dictionaries{dictionary1, dictionary2, dictionary3, dictionary4};
 const DictionaryStatistics emptyDictionaryStatistics{dictionaryName1, 0, 0};
 const DictionaryStatistics dictionaryStatistics1{dictionaryName1, 15, 4};
 const DictionaryStatistics dictionaryStatistics2{dictionaryName2, 18, 7};

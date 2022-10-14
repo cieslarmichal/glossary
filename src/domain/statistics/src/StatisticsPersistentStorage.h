@@ -12,7 +12,7 @@ namespace glossary::statistics
 class StatisticsPersistentStorage : public StatisticsStorage
 {
 public:
-    StatisticsPersistentStorage(std::shared_ptr<const common::FileAccess>,
+    StatisticsPersistentStorage(std::shared_ptr<const common::fileSystem::FileAccess>,
                                 std::shared_ptr<const StatisticsSerializer>);
 
     std::optional<WordStatistics> getWordStatistics(const std::string&) const override;
@@ -29,7 +29,7 @@ private:
     void loadFile();
     void serialize() const;
 
-    std::shared_ptr<const common::FileAccess> fileAccess;
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
     std::shared_ptr<const StatisticsSerializer> serializer;
     StatisticsMemoryStorage storage;
 

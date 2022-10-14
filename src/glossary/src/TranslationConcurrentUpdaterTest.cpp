@@ -1,7 +1,5 @@
 #include "TranslationConcurrentUpdater.h"
 
-#include <boost/optional/optional_io.hpp>
-
 #include "gtest/gtest.h"
 
 #include "../../domain/translation/include/TranslationRepositoryMock.h"
@@ -11,7 +9,7 @@ using namespace ::testing;
 using namespace glossary;
 using namespace translationService;
 using namespace translationRepository;
-using namespace dictionaryService;
+using namespace dictionary;
 using namespace translator;
 
 namespace
@@ -21,7 +19,7 @@ const std::string englishWord2{"englishWord2"};
 const std::string englishWord3{"englishWord3"};
 const TranslatedText translatedText1{"translation1"};
 const TranslatedText translatedText3{"translation3"};
-const EnglishWords englishWords{englishWord1, englishWord2, englishWord3};
+const std::vector<std::string> englishWords{englishWord1, englishWord2, englishWord3};
 const Translation translation1{englishWord1, translatedText1};
 const Translation translation3{englishWord3, translatedText3};
 const SourceLanguage sourceLanguage = Language::English;
@@ -57,7 +55,7 @@ TEST_F(TranslationConcurrentUpdaterTest,
     EXPECT_CALL(*translationService, retrieveTranslation(englishWord1, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedText1));
     EXPECT_CALL(*translationService, retrieveTranslation(englishWord2, sourceLanguage, targetLanguage))
-        .WillOnce(Return(boost::none));
+        .WillOnce(Return(std::nullopt));
     EXPECT_CALL(*translationService, retrieveTranslation(englishWord3, sourceLanguage, targetLanguage))
         .WillOnce(Return(translatedText3));
 

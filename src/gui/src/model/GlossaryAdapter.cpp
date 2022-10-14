@@ -52,12 +52,12 @@ QList<QString> GlossaryAdapter::getDictionaryNames() const
     return listOfDictionaryNames;
 }
 
-Dictionaries GlossaryAdapter::getDictionaries() const
+std::vector<Dictionary> GlossaryAdapter::getDictionaries() const
 {
     return glossary->getDictionaries();
 }
 
-DictionaryWords GlossaryAdapter::getDictionaryWords(const QString& dictionaryName) const
+std::vector<DictionaryWord> GlossaryAdapter::getDictionaryWords(const QString& dictionaryName) const
 {
     return glossary->getDictionaryWords(dictionaryName.toStdString());
 }

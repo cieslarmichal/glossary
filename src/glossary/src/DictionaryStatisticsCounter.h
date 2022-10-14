@@ -11,10 +11,10 @@ class DictionaryStatisticsCounter
 public:
     virtual ~DictionaryStatisticsCounter() = default;
 
-    virtual DictionaryStatistics countDictionaryStatistics(const dictionaryService::Dictionary&,
+    virtual DictionaryStatistics countDictionaryStatistics(const dictionary::Dictionary&,
                                                            const statistics::Statistics&) const = 0;
     virtual DictionariesStatistics
-    countDictionariesStatistics(const dictionaryService::Dictionaries&,
+    countDictionariesStatistics(const dictionary::Dictionaries&,
                                 const statistics::Statistics&) const = 0;
 };
 }

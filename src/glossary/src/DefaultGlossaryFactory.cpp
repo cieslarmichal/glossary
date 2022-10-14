@@ -22,36 +22,36 @@ namespace glossary
 {
 namespace
 {
-std::shared_ptr<common::FileAccess> createFileAccess();
+std::shared_ptr<common::fileSystem::FileAccess> createFileAccess();
 std::shared_ptr<const common::httpClient::HttpClient> createHttpHandler();
-std::shared_ptr<dictionaryService::DictionaryService>
-createDictionaryService(const std::shared_ptr<common::FileAccess>&);
+std::shared_ptr<dictionary::DictionaryService>
+createDictionaryService(const std::shared_ptr<common::fileSystem::FileAccess>&);
 std::shared_ptr<translation::TranslationService>
 createTranslator(const std::shared_ptr<const common::httpClient::HttpClient>&);
 std::shared_ptr<translation::TranslationRepository>
-createTranslationRepository(const std::shared_ptr<common::FileAccess>&);
+createTranslationRepository(const std::shared_ptr<common::fileSystem::FileAccess>&);
 std::shared_ptr<translationService::TranslationService>
 createTranslationService(const std::shared_ptr<translation::TranslationService>&,
                          const std::shared_ptr<translation::TranslationRepository>&,
-                         const std::shared_ptr<common::FileAccess>&);
+                         const std::shared_ptr<common::fileSystem::FileAccess>&);
 std::shared_ptr<statistics::StatisticsRepository>
-createStatisticsRepository(const std::shared_ptr<common::FileAccess>&);
+createStatisticsRepository(const std::shared_ptr<common::fileSystem::FileAccess>&);
 std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>
 createWordDescriptionDownloader(const std::shared_ptr<const common::httpClient::HttpClient>&);
 std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>
-createWordDescriptionRepository(const std::shared_ptr<common::FileAccess>&);
+createWordDescriptionRepository(const std::shared_ptr<common::fileSystem::FileAccess>&);
 std::shared_ptr<wordDescriptionService::WordDescriptionService>
 createWordDescriptionService(const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>&,
                              const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&,
-                             const std::shared_ptr<common::FileAccess>&);
-std::shared_ptr<dictionaryService::DictionaryObserver>
+                             const std::shared_ptr<common::fileSystem::FileAccess>&);
+std::shared_ptr<dictionary::DictionaryObserver>
 createWordDescriptionUpdater(const std::shared_ptr<wordDescriptionService::WordDescriptionService>&,
                              const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>&);
-std::shared_ptr<dictionaryService::DictionaryObserver>
+std::shared_ptr<dictionary::DictionaryObserver>
 createTranslationUpdater(const std::shared_ptr<translationService::TranslationService>&,
                          const std::shared_ptr<translation::TranslationRepository>&);
 std::shared_ptr<DictionaryTranslationUpdater>
-createDictionaryTranslationUpdater(const std::shared_ptr<dictionaryService::DictionaryService>&,
+createDictionaryTranslationUpdater(const std::shared_ptr<dictionary::DictionaryService>&,
                                    const std::shared_ptr<translationService::TranslationService>&);
 std::unique_ptr<DictionaryStatisticsCounter> createDictionaryStatisticsCounter();
 std::unique_ptr<ConnectionChecker> createExternalServicesConnectionChecker(
@@ -84,7 +84,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     auto wordDescriptionUpdater =
         createWordDescriptionUpdater(wordDescriptionService, wordDescriptionRepository);
     auto translationUpdater = createTranslationUpdater(translationService, translationRepository);
-    std::vector<std::shared_ptr<dictionaryService::DictionaryObserver>> observers{wordDescriptionUpdater,
+    std::vector<std::shared_ptr<dictionary::DictionaryObserver>> observers{wordDescriptionUpdater,
                                                                                   translationUpdater};
 
     auto dictionaryStatisticsCounter = createDictionaryStatisticsCounter();
@@ -101,7 +101,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 
 namespace
 {
-std::shared_ptr<common::FileAccess> createFileAccess()
+std::shared_ptr<common::fileSystem::FileAccess> createFileAccess()
 {
     return common::FileAccessFactory::createFileAccessFactory()->createDefaultFileAccess();
 }
@@ -112,11 +112,11 @@ std::shared_ptr<const common::httpClient::HttpClient> createHttpHandler()
     return httpHandlerFactory->createHttpClient();
 }
 
-std::shared_ptr<dictionaryService::DictionaryService>
-createDictionaryService(const std::shared_ptr<common::FileAccess>& fileAccess)
+std::shared_ptr<dictionary::DictionaryService>
+createDictionaryService(const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess)
 {
     auto dictionaryServiceFactory =
-        dictionaryService::DictionaryServiceFactory::createDictionaryServiceFactory(fileAccess);
+        dictionary::DictionaryServiceFactory::createDictionaryServiceFactory(fileAccess);
     return dictionaryServiceFactory->createDictionaryService();
 }
 
@@ -128,7 +128,7 @@ createTranslator(const std::shared_ptr<const common::httpClient::HttpClient>& ht
 }
 
 std::shared_ptr<translation::TranslationRepository>
-createTranslationRepository(const std::shared_ptr<common::FileAccess>& fileAccess)
+createTranslationRepository(const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess)
 {
     auto translationRepositoryFactory =
         translation::TranslationRepositoryFactory::createTranslationRepositoryFactory(fileAccess);
@@ -138,7 +138,7 @@ createTranslationRepository(const std::shared_ptr<common::FileAccess>& fileAcces
 std::shared_ptr<translationService::TranslationService>
 createTranslationService(const std::shared_ptr<translation::TranslationService>& translator,
                          const std::shared_ptr<translation::TranslationRepository>& translationRepository,
-                         const std::shared_ptr<common::FileAccess>& fileAccess)
+                         const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess)
 {
     auto translationServiceFactory =
         translationService::TranslationServiceFactory::createTranslationServiceFactory(fileAccess);
@@ -146,7 +146,7 @@ createTranslationService(const std::shared_ptr<translation::TranslationService>&
 }
 
 std::shared_ptr<statistics::StatisticsRepository>
-createStatisticsRepository(const std::shared_ptr<common::FileAccess>& fileAccess)
+createStatisticsRepository(const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess)
 {
     auto statisticsRepositoryFactory =
         statistics::StatisticsRepositoryFactory::createStatisticsRepositoryFactory(fileAccess);
@@ -163,7 +163,7 @@ createWordDescriptionDownloader(const std::shared_ptr<const common::httpClient::
 }
 
 std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>
-createWordDescriptionRepository(const std::shared_ptr<common::FileAccess>& fileAccess)
+createWordDescriptionRepository(const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess)
 {
     auto wordDescriptionRepositoryFactory =
         wordDescriptionRepository::WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(
@@ -174,7 +174,7 @@ createWordDescriptionRepository(const std::shared_ptr<common::FileAccess>& fileA
 std::shared_ptr<wordDescriptionService::WordDescriptionService> createWordDescriptionService(
     const std::shared_ptr<wordDescriptionDownloader::WordDescriptionDownloader>& wordDescriptionDownloader,
     const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>& wordDescriptionRepository,
-    const std::shared_ptr<common::FileAccess>& fileAccess)
+    const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess)
 {
     auto wordDescriptionServiceFactory =
         wordDescriptionService::WordDescriptionServiceFactory::createWordDescriptionServiceFactory(
@@ -183,7 +183,7 @@ std::shared_ptr<wordDescriptionService::WordDescriptionService> createWordDescri
                                                                        wordDescriptionRepository);
 }
 
-std::shared_ptr<dictionaryService::DictionaryObserver> createWordDescriptionUpdater(
+std::shared_ptr<dictionary::DictionaryObserver> createWordDescriptionUpdater(
     const std::shared_ptr<wordDescriptionService::WordDescriptionService>& wordDescriptionService,
     const std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository>& wordDescriptionRepository)
 {
@@ -191,7 +191,7 @@ std::shared_ptr<dictionaryService::DictionaryObserver> createWordDescriptionUpda
                                                               wordDescriptionRepository);
 }
 
-std::shared_ptr<dictionaryService::DictionaryObserver>
+std::shared_ptr<dictionary::DictionaryObserver>
 createTranslationUpdater(const std::shared_ptr<translationService::TranslationService>& translationService,
                          const std::shared_ptr<translation::TranslationRepository>& translationRepository)
 {
@@ -199,7 +199,7 @@ createTranslationUpdater(const std::shared_ptr<translationService::TranslationSe
 }
 
 std::shared_ptr<DictionaryTranslationUpdater> createDictionaryTranslationUpdater(
-    const std::shared_ptr<dictionaryService::DictionaryService>& dictionaryService,
+    const std::shared_ptr<dictionary::DictionaryService>& dictionaryService,
     const std::shared_ptr<translationService::TranslationService>& translationService)
 {
     return std::make_shared<DefaultDictionaryTranslationUpdater>(dictionaryService, translationService);

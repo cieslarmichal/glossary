@@ -10,12 +10,12 @@ namespace glossary::wordDescriptionService
 class DefaultApiKeyLocationUpdater : public ApiKeyLocationUpdater
 {
 public:
-    explicit DefaultApiKeyLocationUpdater(std::shared_ptr<const common::FileAccess>);
+    explicit DefaultApiKeyLocationUpdater(std::shared_ptr<const common::fileSystem::FileAccess>);
 
     void updateApiKeyLocation(const std::string& apiKeyLocation) const override;
 
 private:
-    std::shared_ptr<const common::FileAccess> fileAccess;
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
 
     static const std::string filePathContainingPathToFileWithApiKey;
 };

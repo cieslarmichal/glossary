@@ -10,10 +10,10 @@ class DictionaryStatisticsCounterMock : public DictionaryStatisticsCounter
 {
 public:
     MOCK_CONST_METHOD2(countDictionaryStatistics,
-                       DictionaryStatistics(const dictionaryService::Dictionary&,
+                       DictionaryStatistics(const dictionary::Dictionary&,
                                             const statistics::Statistics&));
     MOCK_CONST_METHOD2(countDictionariesStatistics,
-                       DictionariesStatistics(const dictionaryService::Dictionaries&,
+                       DictionariesStatistics(const dictionary::Dictionaries&,
                                               const statistics::Statistics&));
 };
 }

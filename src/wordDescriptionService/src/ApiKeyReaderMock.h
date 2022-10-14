@@ -9,6 +9,6 @@ namespace glossary::wordDescriptionService
 class ApiKeyReaderMock : public ApiKeyReader
 {
 public:
-    MOCK_CONST_METHOD0(readApiKey, boost::optional<std::string>());
+    MOCK_CONST_METHOD0(readApiKey, std::optional<std::string>());
 };
 }

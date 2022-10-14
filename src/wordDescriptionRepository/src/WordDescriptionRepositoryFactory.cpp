@@ -7,7 +7,7 @@ namespace glossary::wordDescriptionRepository
 {
 std::unique_ptr<WordDescriptionRepositoryFactory>
 WordDescriptionRepositoryFactory::createWordDescriptionRepositoryFactory(
-    const std::shared_ptr<const common::FileAccess>& fileAccess)
+    const std::shared_ptr<const common::fileSystem::FileAccess>& fileAccess)
 {
     return std::make_unique<DefaultWordDescriptionRepositoryFactory>(fileAccess);
 }
