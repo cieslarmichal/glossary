@@ -37,7 +37,7 @@ DictionariesStatistics DefaultDictionaryStatisticsCounter::countDictionariesStat
 }
 
 bool DefaultDictionaryStatisticsCounter::englishWordExistsInDictionary(
-    const dictionary::std::string& englishWord, const dictionary::Dictionary& dictionary) const
+    const std::string& englishWord, const dictionary::Dictionary& dictionary) const
 {
     const auto& dictionaryWords = dictionary.words;
     auto foundEnglishWord = std::find_if(dictionaryWords.begin(), dictionaryWords.end(),

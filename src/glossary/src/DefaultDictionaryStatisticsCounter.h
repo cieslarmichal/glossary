@@ -14,7 +14,7 @@ public:
                                 const statistics::Statistics&) const override;
 
 private:
-    bool englishWordExistsInDictionary(const dictionary::std::string&,
+    bool englishWordExistsInDictionary(const std::string&,
                                        const dictionary::Dictionary&) const;
 };
 }

@@ -12,15 +12,15 @@ DefaultDictionaryTranslationUpdater::DefaultDictionaryTranslationUpdater(
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
-    const dictionary::std::string& englishWord, const std::string& updatedTranslation,
-    const dictionary::std::string& dictionaryName)
+    const std::string& englishWord, const std::string& updatedTranslation,
+    const std::string& dictionaryName)
 {
     dictionaryService->updateWordTranslationFromDictionary(englishWord, updatedTranslation, dictionaryName);
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
-    const dictionary::std::string& englishWord,
-    const dictionary::std::string& dictionaryName)
+    const std::string& englishWord,
+    const std::string& dictionaryName)
 {
     if (const auto translation = getTranslation(englishWord))
     {
@@ -29,7 +29,7 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryWordTranslation(
 }
 
 void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
-    const dictionary::std::string& dictionaryName)
+    const std::string& dictionaryName)
 {
     if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
     {
@@ -44,7 +44,7 @@ void DefaultDictionaryTranslationUpdater::updateDictionaryTranslations(
 }
 
 std::optional<translation::TranslatedText>
-DefaultDictionaryTranslationUpdater::getTranslation(const dictionary::std::string& englishWord)
+DefaultDictionaryTranslationUpdater::getTranslation(const std::string& englishWord)
 {
     return translationService->retrieveTranslation(englishWord, translation::SourceLanguage::English,
                                                    translation::TargetLanguage::Polish);

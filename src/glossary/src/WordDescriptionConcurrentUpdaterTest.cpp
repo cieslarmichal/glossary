@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "../../common/fileSystem/include/FileAccessMock.h"
-#include "wordDescriptionRepository/WordDescriptionRepositoryMock.h"
+#include "../../domain/dictionary/include/WordDescriptionRepositoryMock.h"
 #include "wordDescriptionService/WordDescriptionServiceMock.h"
 
 #include "httpClient/exceptions/ConnectionFailed.h"

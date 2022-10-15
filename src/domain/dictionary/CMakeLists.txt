@@ -17,6 +17,17 @@ set(SOURCES
         src/DefaultRandomDictionaryWordRetriever.cpp
         src/DictionaryObserverService.cpp
         src/WordsDictionaryMembershipFinder.cpp
+        src/DefaultWordDescriptionRepository.cpp
+        src/WordsDescriptionsMemoryStorage.cpp
+        src/WordsDescriptionsPersistentStorage.cpp
+        src/WordsDescriptionsJsonSerializer.cpp
+        src/WordDescriptionRepositoryFactory.cpp
+        src/DefaultWordDescriptionRepositoryFactory.cpp
+        src/DefaultWordDescriptionDownloader.cpp
+        src/WordDescriptionDownloaderFactory.cpp
+        src/DefaultWordDescriptionDownloaderFactory.cpp
+        src/WordsApiJsonResponseDeserializer.cpp
+        src/WordsApiResponseFetcher.cpp
         )
 
 set(UT_SOURCES
@@ -36,6 +47,13 @@ set(UT_SOURCES
         src/DefaultRandomDictionaryWordRetrieverTest.cpp
         src/DictionaryObserverServiceTest.cpp
         src/WordsDictionaryMembershipFinderTest.cpp
+        src/DefaultWordDescriptionRepositoryTest.cpp
+        src/WordsDescriptionsMemoryStorageTest.cpp
+        src/WordsDescriptionsPersistentStorageTest.cpp
+        src/WordsDescriptionsJsonSerializerTest.cpp
+        src/DefaultWordDescriptionDownloaderTest.cpp
+        src/WordsApiJsonResponseDeserializerTest.cpp
+        src/WordsApiResponseFetcherTest.cpp
         )
 
 add_library(dictionary ${SOURCES})
@@ -57,13 +75,14 @@ target_include_directories(dictionaryUT PRIVATE
         ${Boost_INCLUDE_DIR}
         )
 
-target_link_libraries(dictionary PUBLIC fileSystem collection random)
+target_link_libraries(dictionary PUBLIC fileSystem collection random httpClient)
 target_link_libraries(dictionaryUT PRIVATE
         gmock_main
         gtest
         fileSystem
         collection
         random
+        httpClient
         )
 
 target_compile_options(dictionary PUBLIC ${FLAGS})

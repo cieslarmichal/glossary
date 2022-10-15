@@ -9,11 +9,11 @@ class DictionaryTranslationUpdater
 public:
     virtual ~DictionaryTranslationUpdater() = default;
 
-    virtual void updateDictionaryWordTranslation(const dictionary::std::string&,
+    virtual void updateDictionaryWordTranslation(const std::string&,
                                                  const std::string& updatedTranslation,
-                                                 const dictionary::std::string&) = 0;
-    virtual void updateDictionaryWordTranslation(const dictionary::std::string&,
-                                                 const dictionary::std::string&) = 0;
-    virtual void updateDictionaryTranslations(const dictionary::std::string&) = 0;
+                                                 const std::string&) = 0;
+    virtual void updateDictionaryWordTranslation(const std::string&,
+                                                 const std::string&) = 0;
+    virtual void updateDictionaryTranslations(const std::string&) = 0;
 };
 }

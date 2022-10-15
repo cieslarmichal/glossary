@@ -6,7 +6,7 @@ namespace glossary
 {
 using DictionaryWord = dictionary::DictionaryWord;
 using std::vector<DictionaryWord> = dictionary::std::vector<DictionaryWord>;
-using std::string = dictionary::std::string;
+using std::string = std::string;
 using std::vector<std::string> = dictionary::std::vector<std::string>;
 using Dictionary = dictionary::Dictionary;
 using Dictionaries = dictionary::Dictionaries;

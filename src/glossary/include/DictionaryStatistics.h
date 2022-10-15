@@ -9,7 +9,7 @@ namespace glossary
 {
 struct DictionaryStatistics
 {
-    dictionary::std::string dictionaryName;
+    std::string dictionaryName;
     unsigned correctAnswers;
     unsigned incorrectAnswers;
 };

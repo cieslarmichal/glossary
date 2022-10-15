@@ -8,7 +8,7 @@ namespace glossary
 
 WordDescriptionConcurrentUpdater::WordDescriptionConcurrentUpdater(
     std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
-    std::shared_ptr<wordDescriptionRepository::WordDescriptionRepository> wordDescriptionRepositoryInit)
+    std::shared_ptr<dictionary::WordDescriptionRepository> wordDescriptionRepositoryInit)
     : wordDescriptionService{std::move(wordDescriptionServiceInit)},
       wordDescriptionRepository{std::move(wordDescriptionRepositoryInit)}
 {
@@ -21,9 +21,9 @@ void WordDescriptionConcurrentUpdater::update(const dictionary::std::vector<std:
     threadPool.reserve(amountOfThreads);
 
     const auto englishWordsWithoutWordDescriptions = getEnglishWordsWithoutWordDescription(englishWords);
-    common::ThreadSafeQueue<wordDescriptionRepository::std::string> englishWordsQueue{
+    common::ThreadSafeQueue<std::string> englishWordsQueue{
         englishWordsWithoutWordDescriptions};
-    common::ThreadSafeQueue<wordDescriptionRepository::WordDescription> wordsDescriptions;
+    common::ThreadSafeQueue<dictionary::WordDescription> wordsDescriptions;
 
     for (unsigned threadNumber = 0; threadNumber < amountOfThreads; threadNumber++)
     {
@@ -44,11 +44,11 @@ unsigned WordDescriptionConcurrentUpdater::getAmountOfThreads() const
     return supportedThreadsCalculator.calculate();
 }
 
-wordDescriptionRepository::std::vector<std::string>
+dictionary::std::vector<std::string>
 WordDescriptionConcurrentUpdater::getEnglishWordsWithoutWordDescription(
-    const wordDescriptionRepository::std::vector<std::string>& englishWords) const
+    const dictionary::std::vector<std::string>& englishWords) const
 {
-    wordDescriptionRepository::std::vector<std::string> englishWordsWithoutWordDescription;
+    dictionary::std::vector<std::string> englishWordsWithoutWordDescription;
 
     for (const auto& englishWord : englishWords)
     {
@@ -61,8 +61,8 @@ WordDescriptionConcurrentUpdater::getEnglishWordsWithoutWordDescription(
 }
 
 void WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker(
-    common::ThreadSafeQueue<wordDescriptionRepository::std::string>& englishWords,
-    common::ThreadSafeQueue<wordDescriptionRepository::WordDescription>& wordsDescriptions)
+    common::ThreadSafeQueue<std::string>& englishWords,
+    common::ThreadSafeQueue<dictionary::WordDescription>& wordsDescriptions)
 {
     while (const auto currentEnglishWord = englishWords.pop())
     {
@@ -73,15 +73,15 @@ void WordDescriptionConcurrentUpdater::loadingWordDescriptionWorker(
     }
 }
 
-std::optional<wordDescriptionRepository::WordDescription>
+std::optional<dictionary::WordDescription>
 WordDescriptionConcurrentUpdater::downloadWordDescription(
-    const wordDescriptionRepository::std::string& englishWord)
+    const std::string& englishWord)
 {
     return wordDescriptionService->downloadWordDescription(englishWord);
 }
 
 void WordDescriptionConcurrentUpdater::loadWordsDescriptionsIntoRepository(
-    const wordDescriptionRepository::WordsDescriptions& wordsDescriptions)
+    const dictionary::WordsDescriptions& wordsDescriptions)
 {
     for (const auto& wordDescription : wordsDescriptions)
     {
