@@ -30,9 +30,9 @@ target_include_directories(fileSystemUT PRIVATE
         ${GTEST_INCLUDE_DIR}
         )
 
-target_link_libraries(fileSystem PUBLIC collection)
+target_link_libraries(fileSystem PUBLIC collection fmt::fmt)
 
-target_link_libraries(fileSystemUT PRIVATE gtest_main collection)
+target_link_libraries(fileSystemUT PRIVATE gtest_main collection fmt::fmt)
 
 target_compile_options(fileSystem PUBLIC ${FLAGS})
 target_compile_options(fileSystemUT PUBLIC ${FLAGS})

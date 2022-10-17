@@ -19,9 +19,6 @@ public:
     std::vector<Language> getSupportedLanguages() const override;
 
 private:
-    std::string formatTranslationRequestUrl(const std::string& sourceText, Language sourceLanguage,
-                                            Language targetLanguage, const std::string& apiKey) const;
-
     std::shared_ptr<const common::httpClient::HttpClient> httpClient;
     std::unique_ptr<GoogleTranslateApiResponseDeserializer> translationDeserializer;
 

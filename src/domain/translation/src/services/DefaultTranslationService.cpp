@@ -34,9 +34,22 @@ std::optional<std::string> DefaultTranslationService::translate(const std::strin
         return std::nullopt;
     }
 
-    const auto url = formatTranslationRequestUrl(sourceText, sourceLanguage, targetLanguage, apiKey);
+    const auto splitText = common::collection::split(sourceText, " ");
 
-    const auto response = httpClient->get({url});
+    const auto formattedSourceText = common::collection::join(splitText, "+");
+
+    const auto keyField = "key=" + apiKey;
+
+    const auto textField = "q=" + formattedSourceText;
+
+    const auto sourceLanguageField = "source=" + toLanguageCode(sourceLanguage);
+
+    const auto targetLanguageField = "target=" + toLanguageCode(targetLanguage);
+
+    const auto response = httpClient->get({
+        urlAddress,
+        std::nullopt,
+    });
 
     if (response.statusCode == common::httpClient::HttpStatusCode::Ok)
     {
@@ -60,27 +73,6 @@ std::optional<std::string> DefaultTranslationService::translate(const std::strin
     std::cerr << "Error while translating text: " << sourceText;
 
     return std::nullopt;
-}
-
-std::string DefaultTranslationService::formatTranslationRequestUrl(const std::string& sourceText,
-                                                                   Language sourceLanguage,
-                                                                   Language targetLanguage,
-                                                                   const std::string& apiKey) const
-{
-    const auto splitText = common::collection::split(sourceText, " ");
-
-    const auto formattedSourceText = common::collection::join(splitText, "+");
-
-    const auto keyField = "key=" + apiKey;
-
-    const auto textField = "q=" + formattedSourceText;
-
-    const auto sourceLanguageField = "source=" + toLanguageCode(sourceLanguage);
-
-    const auto targetLanguageField = "target=" + toLanguageCode(targetLanguage);
-
-    return fmt::format("{}?{}&{}&{}&{}", urlAddress, keyField, textField, sourceLanguageField,
-                       targetLanguageField);
 }
 
 std::vector<Language> DefaultTranslationService::getSupportedLanguages() const

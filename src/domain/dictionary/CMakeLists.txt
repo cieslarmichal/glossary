@@ -75,7 +75,13 @@ target_include_directories(dictionaryUT PRIVATE
         ${Boost_INCLUDE_DIR}
         )
 
-target_link_libraries(dictionary PUBLIC fileSystem collection random httpClient)
+target_link_libraries(dictionary PUBLIC
+        fileSystem
+        collection
+        random
+        httpClient
+        fmt::fmt
+        )
 target_link_libraries(dictionaryUT PRIVATE
         gmock_main
         gtest
@@ -83,6 +89,7 @@ target_link_libraries(dictionaryUT PRIVATE
         collection
         random
         httpClient
+        fmt::fmt
         )
 
 target_compile_options(dictionary PUBLIC ${FLAGS})

@@ -28,12 +28,14 @@ target_link_libraries(httpClient
         PUBLIC
         libcurl
         collection
+        fmt::fmt
         )
 target_link_libraries(httpClientUT
         PUBLIC
         libcurl
         gtest_main
         collection
+        fmt::fmt
         )
 
 target_compile_options(httpClient PUBLIC ${FLAGS})

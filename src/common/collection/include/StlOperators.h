@@ -38,7 +38,7 @@ std::ostream& operator<<(std::ostream& os, const std::optional<std::vector<T>>& 
 {
     if (vOpt)
     {
-        return ::printRange(os, vOpt->begin(), vOpt->end());
+        return os << *vOpt;
     }
 
     return os << "none";
@@ -58,6 +58,17 @@ std::ostream& operator<<(std::ostream& os, const std::map<T, S>& m)
         }
     }
     return os << "}";
+}
+
+template <typename T, typename S>
+std::ostream& operator<<(std::ostream& os, const std::optional<std::map<T, S>>& mOpt)
+{
+    if (mOpt)
+    {
+        return os << *mOpt;
+    }
+    
+    return os << "none";
 }
 }
 
