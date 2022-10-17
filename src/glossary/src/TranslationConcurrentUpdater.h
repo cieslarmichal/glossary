@@ -2,11 +2,11 @@
 
 #include <memory>
 
-#include "../../common/collection/include/ThreadSafeQueue.h"
-#include "../../common/concurrency/include/SupportedThreadsCalculator.h"
-#include "../../domain/translation/include/TranslationRepository.h"
-#include "dictionaryService/DictionaryObserver.h"
-#include "translationService/TranslationService.h"
+#include "DictionaryObserver.h"
+#include "SupportedThreadsCalculator.h"
+#include "ThreadSafeQueue.h"
+#include "TranslationRepository.h"
+#include "TranslationService.h"
 
 namespace glossary
 {

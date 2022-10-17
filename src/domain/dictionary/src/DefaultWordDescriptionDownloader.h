@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "../include/WordDescriptionDownloader.h"
 #include "ApiResponseFetcher.h"
+#include "WordDescriptionDownloader.h"
 #include "WordDescriptionResponseDeserializer.h"
 #include "httpClient/HttpClient.h"
 

@@ -3,7 +3,7 @@
 #include <memory>
 #include <mutex>
 
-#include "../include/WordDescriptionRepository.h"
+#include "WordDescriptionRepository.h"
 #include "WordsDescriptionsStorage.h"
 
 namespace glossary::dictionary

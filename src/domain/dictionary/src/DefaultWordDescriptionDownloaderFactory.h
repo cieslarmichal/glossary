@@ -1,6 +1,6 @@
 #pragma once
 
-#include "../include/WordDescriptionDownloaderFactory.h"
+#include "WordDescriptionDownloaderFactory.h"
 
 namespace glossary::dictionary
 {

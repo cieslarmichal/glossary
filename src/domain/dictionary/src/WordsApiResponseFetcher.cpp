@@ -1,6 +1,6 @@
 #include "WordsApiResponseFetcher.h"
 
-#include "../include/exceptions/InvalidApiKey.h"
+#include "exceptions/InvalidApiKey.h"
 #include "httpClient/HttpStatusCode.h"
 
 namespace glossary::dictionary

@@ -1,6 +1,6 @@
 #include "Gui.h"
 
-#include "../../common/fileSystem/include/GetProjectPath.h"
+#include "GetProjectPath.h"
 #include "GlossaryFactory.h"
 #include "model/GlossaryAdapter.h"
 #include "view/CheckWordDescriptionTab.h"

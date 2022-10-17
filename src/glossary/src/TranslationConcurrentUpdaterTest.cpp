@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
-#include "../../domain/translation/include/TranslationRepositoryMock.h"
-#include "translationService/TranslationServiceMock.h"
+#include "TranslationRepositoryMock.h"
+#include "TranslationServiceMock.h"
 
 using namespace ::testing;
 using namespace glossary;

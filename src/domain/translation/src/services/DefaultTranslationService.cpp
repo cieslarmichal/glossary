@@ -1,10 +1,10 @@
 #include "DefaultTranslationService.h"
 
-#include <fmt/core.h>
 #include <iostream>
 
-#include "../../../common/collection/include/StringHelper.h"
+#include "StringHelper.h"
 #include "exceptions/InvalidApiKey.h"
+#include "fmt/core.h"
 #include "httpClient/HttpStatusCode.h"
 
 namespace
@@ -19,7 +19,7 @@ const std::vector<translation::Language> DefaultTranslationService::supportedLan
 
 DefaultTranslationService::DefaultTranslationService(
     std::shared_ptr<const common::httpClient::HttpClient> httpClientInit,
-    std::unique_ptr<TranslationDeserializer> deserializer)
+    std::unique_ptr<GoogleTranslateApiResponseDeserializer> deserializer)
     : httpClient{std::move(httpClientInit)}, translationDeserializer{std::move(deserializer)}
 {
 }
@@ -40,7 +40,16 @@ std::optional<std::string> DefaultTranslationService::translate(const std::strin
 
     if (response.statusCode == common::httpClient::HttpStatusCode::Ok)
     {
-        return translationDeserializer->deserialize(response.data);
+        const auto googleTranslateApiResponse = translationDeserializer->deserialize(response.data);
+
+        const auto translations = googleTranslateApiResponse.data.translations;
+
+        if (translations.empty())
+        {
+            return std::nullopt;
+        }
+
+        return googleTranslateApiResponse.data.translations[0].translatedText;
     }
     else if (response.statusCode == common::httpClient::HttpStatusCode::BadRequest ||
              response.statusCode == common::httpClient::HttpStatusCode::Unauthorized)

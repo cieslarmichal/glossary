@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../../../common/fileSystem/include/FileAccess.h"
+#include "FileAccess.h"
 #include "StatisticsMemoryStorage.h"
 #include "StatisticsSerializer.h"
 #include "StatisticsStorage.h"

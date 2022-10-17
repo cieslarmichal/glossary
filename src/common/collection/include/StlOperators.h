@@ -12,16 +12,16 @@
 template <typename Iterator>
 std::ostream& printRange(std::ostream& os, Iterator begin, Iterator end)
 {
-    os << "{";
+    os << "[";
     if (begin != end)
     {
         os << *begin;
         for (auto it = std::next(begin); it != end; ++it)
         {
-            os << ", " << *it;
+            os << "," << *it;
         }
     }
-    return os << "}";
+    return os << "]";
 }
 
 namespace std
@@ -83,22 +83,5 @@ std::string toStringArray(const std::vector<T>& v)
         }
     }
     ss << "]";
-    return ss.str();
-}
-
-template <typename T>
-std::string toStringSeparated(const std::vector<T>& v)
-{
-    std::stringstream ss;
-    ss << "{\n";
-    if (v.begin() != v.end())
-    {
-        ss << *v.begin();
-        for (auto it = std::next(v.begin()); it != v.end(); ++it)
-        {
-            ss << "\n" << *it;
-        }
-    }
-    ss << "}";
     return ss.str();
 }

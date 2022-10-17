@@ -1,4 +1,4 @@
-#include "../include/WordDescriptionRepositoryFactory.h"
+#include "WordDescriptionRepositoryFactory.h"
 
 #include "DefaultWordDescriptionRepositoryFactory.h"
 

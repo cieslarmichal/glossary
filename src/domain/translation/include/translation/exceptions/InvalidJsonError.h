@@ -1,10 +1,10 @@
 #pragma once
 
-#include <exception>
+#include <stdexcept>
 
 namespace glossary::translation::exceptions
 {
-struct InvalidApiKey : std::runtime_error
+struct InvalidJsonError : std::runtime_error
 {
     using std::runtime_error::runtime_error;
 };

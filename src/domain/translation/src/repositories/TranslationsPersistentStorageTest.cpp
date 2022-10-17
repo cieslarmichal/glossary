@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
-#include "../../../common/fileSystem/include/FileAccessMock.h"
-#include "TranslationsSerializerMock.h"
+#include "../serializers/TranslationsSerializerMock.h"
+#include "FileAccessMock.h"
 
 #include "GetProjectPath.h"
 #include "exceptions/FileNotFound.h"

@@ -2,9 +2,9 @@
 
 #include <memory>
 
-#include "../../../common/fileSystem/include/FileAccess.h"
+#include "../serializers/TranslationsSerializer.h"
+#include "FileAccess.h"
 #include "TranslationsMemoryStorage.h"
-#include "TranslationsSerializer.h"
 #include "TranslationsStorage.h"
 
 namespace glossary::translation

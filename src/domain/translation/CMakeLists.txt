@@ -1,31 +1,36 @@
 set(SOURCES
-        src/DefaultTranslationService.cpp
-        src/GoogleTranslateApiJsonResponseDeserializer.cpp
-        src/DefaultTranslationRepository.cpp
-        src/TranslationsJsonSerializer.cpp
-        src/TranslationsMemoryStorage.cpp
-        src/TranslationsPersistentStorage.cpp
+        src/services/DefaultTranslationService.cpp
+        src/serializers/GoogleTranslateApiJsonResponseDeserializer.cpp
+        src/repositories/DefaultTranslationRepository.cpp
+        src/serializers/TranslationsJsonSerializer.cpp
+        src/repositories/TranslationsMemoryStorage.cpp
+        src/repositories/TranslationsPersistentStorage.cpp
         )
 
 set(UT_SOURCES
-        src/DefaultTranslationServiceTest.cpp
-        src/GoogleTranslateApiJsonResponseDeserializerTest.cpp
-        src/DefaultTranslationRepositoryTest.cpp
-        src/TranslationsJsonSerializerTest.cpp
-        src/TranslationsMemoryStorageTest.cpp
-        src/TranslationsPersistentStorageTest.cpp
+        src/services/DefaultTranslationServiceTest.cpp
+        src/serializers/GoogleTranslateApiJsonResponseDeserializerTest.cpp
+        src/repositories/DefaultTranslationRepositoryTest.cpp
+        src/serializers/TranslationsJsonSerializerTest.cpp
+        src/repositories/TranslationsMemoryStorageTest.cpp
+        src/repositories/TranslationsPersistentStorageTest.cpp
         )
 
 add_library(translation ${SOURCES})
 add_executable(translationUT ${SOURCES} ${UT_SOURCES})
 
 target_include_directories(translation
-        PUBLIC "include"
+        PUBLIC
+        "include"
+        PRIVATE
+        "include/translation"
+        "include/translation/queries"
         ${JSON_INCLUDE_DIR}
         ${Boost_INCLUDE_DIR}
         )
 target_include_directories(translationUT PRIVATE
-        "include"
+        "include/translation"
+        "include/translation/queries"
         ${GMOCK_INCLUDE_DIR}
         ${GTEST_INCLUDE_DIR}
         ${JSON_INCLUDE_DIR}

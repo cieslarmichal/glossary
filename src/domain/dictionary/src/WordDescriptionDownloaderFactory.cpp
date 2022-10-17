@@ -1,4 +1,4 @@
-#include "../include/WordDescriptionDownloaderFactory.h"
+#include "WordDescriptionDownloaderFactory.h"
 
 #include "DefaultWordDescriptionDownloaderFactory.h"
 

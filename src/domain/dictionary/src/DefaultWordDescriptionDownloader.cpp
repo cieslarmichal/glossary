@@ -1,6 +1,6 @@
 #include "DefaultWordDescriptionDownloader.h"
 
-#include "../include/exceptions/InvalidApiKey.h"
+#include "exceptions/InvalidApiKey.h"
 
 namespace glossary::dictionary
 {

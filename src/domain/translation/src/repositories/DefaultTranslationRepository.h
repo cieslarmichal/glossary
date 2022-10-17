@@ -14,8 +14,8 @@ public:
     explicit DefaultTranslationRepository(std::unique_ptr<TranslationsStorage>);
 
     void addTranslation(Translation) override;
-    std::optional<Translation> getTranslation(const std::string&) const override;
-    bool containsTranslation(const std::string&) const override;
+    std::optional<Translation> getTranslation(const std::string& sourceText) const override;
+    bool containsTranslation(const std::string& sourceText) const override;
 
 private:
     std::unique_ptr<TranslationsStorage> storage;

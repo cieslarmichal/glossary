@@ -5,7 +5,7 @@
 #include "ApiResponseFetcherMock.h"
 #include "WordDescriptionResponseDeserializerMock.h"
 
-#include "../include/exceptions/InvalidApiKey.h"
+#include "exceptions/InvalidApiKey.h"
 #include "httpClient/exceptions/ConnectionFailed.h"
 
 using namespace ::testing;
