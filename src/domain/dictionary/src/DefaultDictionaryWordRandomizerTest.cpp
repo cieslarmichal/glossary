@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "RandomNumberGeneratorMock.h"
+#include "random/RandomNumberGeneratorMock.h"
 
 using namespace ::testing;
 using namespace glossary;

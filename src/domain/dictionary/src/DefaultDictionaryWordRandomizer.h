@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "DictionaryWordRandomizer.h"
-#include "RandomNumberGenerator.h"
+#include "random/RandomNumberGenerator.h"
 
 namespace glossary::dictionary
 {
