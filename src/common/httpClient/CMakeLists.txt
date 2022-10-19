@@ -14,14 +14,14 @@ target_include_directories(httpClient
         "include"
         PRIVATE
         "include/httpClient"
-        ${CURL_INCLUDE_DIR}
+        ${CPR_INCLUDE_DIR}
         )
 target_include_directories(httpClientUT
         PRIVATE
         "include"
         "include/httpClient"
         ${GTEST_INCLUDE_DIR}
-        ${CURL_INCLUDE_DIR}
+        ${CPR_INCLUDE_DIR}
         )
 
 target_link_libraries(httpClient
@@ -29,6 +29,7 @@ target_link_libraries(httpClient
         libcurl
         collection
         fmt::fmt
+        cpr::cpr
         )
 target_link_libraries(httpClientUT
         PUBLIC
@@ -36,6 +37,7 @@ target_link_libraries(httpClientUT
         gtest_main
         collection
         fmt::fmt
+        cpr::cpr
         )
 
 target_compile_options(httpClient PUBLIC ${FLAGS})

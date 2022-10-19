@@ -15,7 +15,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++20 -Wall -Wextra")
 set(GMOCK_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googlemock/include")
 set(GTEST_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/googletest/googletest/include")
 set(JSON_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/json/include")
-set(CURL_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/curl/include")
+set(CPR_INCLUDE_DIR "${CMAKE_SOURCE_DIR}/externals/cpr/include")
 
 enable_testing()
 
