@@ -1,11 +1,10 @@
-#include "CurlHttpClient.h"
-
 #include <cpr/cpr.h>
+
+#include "CprHttpClient.h"
 
 namespace common::httpClient
 {
-
-HttpResponse CurlHttpClient::get(const GetPayload& payload) const
+HttpResponse CprHttpClient::get(const GetPayload& payload) const
 {
     auto queryParameters = cpr::Parameters{};
 

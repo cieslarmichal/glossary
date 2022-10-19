@@ -1,7 +1,5 @@
 #pragma once
 
-#include <vector>
-
 #include "GetPayload.h"
 #include "HttpResponse.h"
 
