@@ -4,7 +4,7 @@
 #include <utility>
 
 #include "GetProjectPath.h"
-#include "StlOperators.h"
+#include "collection/StlOperators.h"
 
 namespace glossary
 {

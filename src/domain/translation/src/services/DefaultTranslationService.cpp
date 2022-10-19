@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "StringHelper.h"
+#include "collection/StringHelper.h"
 #include "exceptions/InvalidApiKey.h"
 #include "fmt/core.h"
 #include "httpClient/HttpStatusCode.h"

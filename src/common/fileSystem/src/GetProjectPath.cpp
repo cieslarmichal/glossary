@@ -1,7 +1,7 @@
 #include "GetProjectPath.h"
 
 #include "GetExecutablePath.h"
-#include "StringHelper.h"
+#include "collection/StringHelper.h"
 #include "exceptions/FileNotFound.h"
 
 namespace common::fileSystem

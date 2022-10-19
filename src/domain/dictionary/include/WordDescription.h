@@ -1,6 +1,6 @@
 #pragma once
 
-#include "StlOperators.h"
+#include "collection/StlOperators.h"
 
 namespace glossary::dictionary
 {

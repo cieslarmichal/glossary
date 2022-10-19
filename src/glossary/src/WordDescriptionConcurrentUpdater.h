@@ -4,10 +4,10 @@
 
 #include "DictionaryObserver.h"
 #include "SupportedThreadsCalculator.h"
-#include "ThreadSafeQueue.h"
 #include "WordDescriptionDownloader.h"
 #include "WordDescriptionRepository.h"
 #include "WordDescriptionService.h"
+#include "collection/ThreadSafeQueue.h"
 
 namespace glossary
 {

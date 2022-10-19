@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "GetProjectPath.h"
-#include "StlOperators.h"
+#include "collection/StlOperators.h"
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
 

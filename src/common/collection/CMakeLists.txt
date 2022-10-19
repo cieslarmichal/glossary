@@ -1,6 +1,6 @@
 set(SOURCES
         src/StringHelper.cpp
-        include/StlOperators.h
+        include/collection/StlOperators.h
         )
 
 set(UT_SOURCES
@@ -12,16 +12,17 @@ add_library(collection ${SOURCES})
 add_executable(collectionUT ${SOURCES} ${UT_SOURCES})
 
 target_include_directories(collection
-        PUBLIC "include"
+        PUBLIC
+        "include"
+        PRIVATE
+        "include/collection"
         ${Boost_INCLUDE_DIR}
         )
 target_include_directories(collectionUT PRIVATE
-        "include"
+        "include/collection"
         ${Boost_INCLUDE_DIR}
         ${GTEST_INCLUDE_DIR}
         )
-
-target_link_libraries(collection PUBLIC)
 
 target_link_libraries(collectionUT PRIVATE gtest_main)
 

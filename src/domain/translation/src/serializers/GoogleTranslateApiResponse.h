@@ -3,7 +3,7 @@
 #include <ostream>
 #include <vector>
 
-#include "StlOperators.h"
+#include "collection/StlOperators.h"
 #include "fmt/core.h"
 
 namespace glossary::translation

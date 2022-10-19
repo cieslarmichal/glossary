@@ -2,7 +2,7 @@
 
 #include "boost/algorithm/string.hpp"
 
-#include "StringHelper.h"
+#include "collection/StringHelper.h"
 
 namespace glossary
 {

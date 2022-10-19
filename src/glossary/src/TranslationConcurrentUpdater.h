@@ -4,9 +4,9 @@
 
 #include "DictionaryObserver.h"
 #include "SupportedThreadsCalculator.h"
-#include "ThreadSafeQueue.h"
 #include "TranslationRepository.h"
 #include "TranslationService.h"
+#include "collection/ThreadSafeQueue.h"
 
 namespace glossary
 {

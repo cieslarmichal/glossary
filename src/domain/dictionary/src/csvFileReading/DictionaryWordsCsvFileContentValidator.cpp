@@ -1,6 +1,6 @@
 #include "DictionaryWordsCsvFileContentValidator.h"
 
-#include "StringHelper.h"
+#include "collection/StringHelper.h"
 
 namespace glossary::dictionary::csvFileReading
 {
