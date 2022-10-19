@@ -2,11 +2,11 @@
 
 #include "gtest/gtest.h"
 
-#include "FileAccessMock.h"
 #include "WordsDescriptionsSerializerMock.h"
+#include "fileSystem/FileAccessMock.h"
 
-#include "GetProjectPath.h"
 #include "exceptions/FileNotFound.h"
+#include "fileSystem/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

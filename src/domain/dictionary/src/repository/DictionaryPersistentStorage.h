@@ -4,7 +4,7 @@
 
 #include "DictionaryMemoryStorage.h"
 #include "DictionaryStorage.h"
-#include "FileAccess.h"
+#include "fileSystem/FileAccess.h"
 #include "serialization/DictionarySerializer.h"
 
 namespace glossary::dictionary::repository

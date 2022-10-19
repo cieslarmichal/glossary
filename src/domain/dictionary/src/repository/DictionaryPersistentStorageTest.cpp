@@ -2,10 +2,10 @@
 
 #include "gtest/gtest.h"
 
-#include "FileAccessMock.h"
+#include "fileSystem/FileAccessMock.h"
 #include "serialization/DictionarySerializerMock.h"
 
-#include "GetProjectPath.h"
+#include "fileSystem/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

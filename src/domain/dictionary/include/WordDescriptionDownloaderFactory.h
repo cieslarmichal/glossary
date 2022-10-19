@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "FileAccess.h"
 #include "WordDescriptionDownloader.h"
+#include "fileSystem/FileAccess.h"
 #include "httpClient/HttpClient.h"
 
 namespace glossary::dictionary

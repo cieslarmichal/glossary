@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-#include "GetProjectPath.h"
+#include "fileSystem/GetProjectPath.h"
 
 namespace glossary::dictionary::repository
 {

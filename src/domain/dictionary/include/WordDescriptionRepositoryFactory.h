@@ -2,8 +2,8 @@
 
 #include <memory>
 
-#include "FileAccess.h"
 #include "WordDescriptionRepository.h"
+#include "fileSystem/FileAccess.h"
 
 namespace glossary::dictionary
 {

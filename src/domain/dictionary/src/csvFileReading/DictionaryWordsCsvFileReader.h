@@ -5,7 +5,7 @@
 
 #include "DictionaryWordsCsvFileContentValidator.h"
 #include "DictionaryWordsReader.h"
-#include "FileAccess.h"
+#include "fileSystem/FileAccess.h"
 
 namespace glossary::dictionary::csvFileReading
 {

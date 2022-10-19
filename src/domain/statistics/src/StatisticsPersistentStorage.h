@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "FileAccess.h"
 #include "StatisticsMemoryStorage.h"
 #include "StatisticsSerializer.h"
 #include "StatisticsStorage.h"
+#include "fileSystem/FileAccess.h"
 
 namespace glossary::statistics
 {

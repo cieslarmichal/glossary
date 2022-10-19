@@ -3,10 +3,10 @@
 #include "gtest/gtest.h"
 
 #include "../serializers/TranslationsSerializerMock.h"
-#include "FileAccessMock.h"
+#include "fileSystem/FileAccessMock.h"
 
-#include "GetProjectPath.h"
 #include "exceptions/FileNotFound.h"
+#include "fileSystem/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::translation;

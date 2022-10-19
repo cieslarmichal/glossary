@@ -22,10 +22,12 @@ add_executable(fileSystemUT ${SOURCES} ${UT_SOURCES})
 
 target_include_directories(fileSystem
         PUBLIC "include"
+        PRIVATE "include/fileSystem"
         ${Boost_INCLUDE_DIR}
         )
-target_include_directories(fileSystemUT PRIVATE
-        "include"
+target_include_directories(fileSystemUT
+        PRIVATE
+        "include/fileSystem"
         ${Boost_INCLUDE_DIR}
         ${GTEST_INCLUDE_DIR}
         )

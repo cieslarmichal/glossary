@@ -1,7 +1,7 @@
 #include "DictionaryServiceFactory.h"
 
 #include "DefaultDictionaryServiceFactory.h"
-#include "FileAccess.h"
+#include "fileSystem/FileAccess.h"
 
 namespace glossary::dictionary
 {

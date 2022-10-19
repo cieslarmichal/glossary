@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "DictionaryService.h"
-#include "FileAccess.h"
+#include "fileSystem/FileAccess.h"
 
 namespace glossary::dictionary
 {
