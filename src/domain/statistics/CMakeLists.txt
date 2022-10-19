@@ -26,7 +26,6 @@ target_include_directories(statistics
         ${Boost_INCLUDE_DIR}
         )
 target_include_directories(statisticsUT PRIVATE
-        "include"
         ${GMOCK_INCLUDE_DIR}
         ${GTEST_INCLUDE_DIR}
         ${JSON_INCLUDE_DIR}
@@ -43,5 +42,6 @@ target_link_libraries(statisticsUT PRIVATE
         )
 
 target_compile_options(statistics PUBLIC ${FLAGS})
+target_compile_options(statisticsUT PUBLIC ${FLAGS})
 
 add_test(statisticsUT statisticsUT --gtest_color=yes)
