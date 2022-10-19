@@ -60,15 +60,15 @@ add_library(dictionary ${SOURCES})
 add_executable(dictionaryUT ${SOURCES} ${UT_SOURCES})
 
 target_include_directories(dictionary
-        PUBLIC "include"
+        PUBLIC
+        "include"
         PRIVATE
+        "include/dictionary"
         ${JSON_INCLUDE_DIR}
-        "src"
         ${Boost_INCLUDE_DIR}
         )
 target_include_directories(dictionaryUT PRIVATE
-        "include"
-        "src"
+        "include/dictionary"
         ${JSON_INCLUDE_DIR}
         ${GMOCK_INCLUDE_DIR}
         ${GTEST_INCLUDE_DIR}
