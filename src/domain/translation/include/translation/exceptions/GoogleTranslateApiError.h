@@ -4,7 +4,7 @@
 
 namespace glossary::translation::exceptions
 {
-struct InvalidApiKey : std::runtime_error
+struct GoogleTranslateApiError : std::runtime_error
 {
     using std::runtime_error::runtime_error;
 };

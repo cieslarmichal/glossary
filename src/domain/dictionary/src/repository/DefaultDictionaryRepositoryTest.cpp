@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
-#include "csvFileReading/DictionaryWordsReaderMock.h"
-#include "repository/DictionaryStorageMock.h"
+#include "../csvFileReading/DictionaryWordsReaderMock.h"
+#include "DictionaryStorageMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

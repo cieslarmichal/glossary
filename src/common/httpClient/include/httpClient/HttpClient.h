@@ -1,6 +1,6 @@
 #pragma once
 
-#include "GetPayload.h"
+#include "HttpGetRequestPayload.h"
 #include "HttpResponse.h"
 
 namespace common::httpClient
@@ -10,6 +10,6 @@ class HttpClient
 public:
     virtual ~HttpClient() = default;
 
-    virtual HttpResponse get(const GetPayload&) const = 0;
+    virtual HttpResponse get(const HttpGetRequestPayload&) const = 0;
 };
 }

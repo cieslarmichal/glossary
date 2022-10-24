@@ -23,7 +23,7 @@ public:
 private:
     bool responseFailedDueToInvalidApiKey(int) const;
 
-    std::shared_ptr<const common::httpClient::HttpClient> httpHandler;
+    std::shared_ptr<const common::httpClient::HttpClient> httpClient;
 
     static const std::string wordsApiUrl;
 };

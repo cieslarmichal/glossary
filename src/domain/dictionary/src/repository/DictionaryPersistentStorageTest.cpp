@@ -2,8 +2,8 @@
 
 #include "gtest/gtest.h"
 
+#include "../serialization/DictionarySerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
-#include "serialization/DictionarySerializerMock.h"
 
 #include "fileSystem/GetProjectPath.h"
 

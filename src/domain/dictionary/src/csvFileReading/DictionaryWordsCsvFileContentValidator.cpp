@@ -32,6 +32,7 @@ bool DictionaryWordsCsvFileContentValidator::dictionaryWordsContentIsValid(
     }
     return true;
 }
+
 bool DictionaryWordsCsvFileContentValidator::dictionaryWordLineIsValid(
     const std::string& dictionaryWordLine) const
 {

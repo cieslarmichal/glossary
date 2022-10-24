@@ -1,8 +1,17 @@
-//
-// Created by michal on 16.10.22.
-//
+#pragma once
 
-#ifndef GLOSSARY_GETTRANSLATIONQUERY_H
-#define GLOSSARY_GETTRANSLATIONQUERY_H
+#include <optional>
+#include <string>
 
-#endif // GLOSSARY_GETTRANSLATIONQUERY_H
+#include "GetTranslationQueryPayload.h"
+
+namespace glossary::translation
+{
+class GetTranslationQuery
+{
+public:
+    virtual ~GetTranslationQuery() = default;
+
+    virtual std::optional<std::string> getTranslation(const GetTranslationQueryPayload&) const = 0;
+};
+}

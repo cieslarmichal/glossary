@@ -1,19 +1,21 @@
 set(SOURCES
-        src/services/DefaultTranslationService.cpp
-        src/serializers/GoogleTranslateApiJsonResponseDeserializer.cpp
+        src/clients/GoogleTranslateClientImpl.cpp
         src/repositories/DefaultTranslationRepository.cpp
         src/serializers/TranslationsJsonSerializer.cpp
         src/repositories/TranslationsMemoryStorage.cpp
         src/repositories/TranslationsPersistentStorage.cpp
+        src/queries/GetSupportedLanguagesQueryImpl.cpp
+        src/queries/GetTranslationQueryImpl.cpp
         )
 
 set(UT_SOURCES
-        src/services/DefaultTranslationServiceTest.cpp
-        src/serializers/GoogleTranslateApiJsonResponseDeserializerTest.cpp
+        src/clients/GoogleTranslateClientImplTest.cpp
         src/repositories/DefaultTranslationRepositoryTest.cpp
         src/serializers/TranslationsJsonSerializerTest.cpp
         src/repositories/TranslationsMemoryStorageTest.cpp
         src/repositories/TranslationsPersistentStorageTest.cpp
+        src/queries/GetSupportedLanguagesQueryImplTest.cpp
+        src/queries/GetTranslationQueryImplTest.cpp
         )
 
 add_library(translation ${SOURCES})
@@ -24,13 +26,11 @@ target_include_directories(translation
         "include"
         PRIVATE
         "include/translation"
-        "include/translation/queries"
         ${JSON_INCLUDE_DIR}
         ${Boost_INCLUDE_DIR}
         )
 target_include_directories(translationUT PRIVATE
         "include/translation"
-        "include/translation/queries"
         ${GMOCK_INCLUDE_DIR}
         ${GTEST_INCLUDE_DIR}
         ${JSON_INCLUDE_DIR}
@@ -54,5 +54,6 @@ target_link_libraries(translationUT PRIVATE
         )
 
 target_compile_options(translation PUBLIC ${FLAGS})
+target_compile_options(translationUT PUBLIC ${FLAGS})
 
 add_test(translationUT translationUT --gtest_color=yes)

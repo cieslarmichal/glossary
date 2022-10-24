@@ -14,16 +14,16 @@ namespace
 {
 const std::string englishWord{"herbal"};
 const std::string apiKey{"topSecretKey"};
-const std::vector<std::string> headers{"x-rapidapi-host: wordsapiv1.p.rapidapi.com",
-                                       "x-rapidapi-key: " + apiKey};
+const std::map<std::string, std::string> headers{{"x-rapidapi-host", "wordsapiv1.p.rapidapi.com"},
+                                                 {"x-rapidapi-key", apiKey}};
 const std::string wordsApiDefinitionsUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/definitions"};
 const std::string wordsApiExamplesUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/examples"};
 const std::string wordsApiSynonymsUrl{"https://wordsapiv1.p.rapidapi.com/words/herbal/synonyms"};
 const common::httpClient::HttpResponse response{200, "content"};
 const common::httpClient::HttpResponse unauthorizedResponse{401, ""};
-const common::httpClient::GetPayload definitionsGetPayload{wordsApiDefinitionsUrl, headers};
-const common::httpClient::GetPayload examplesGetPayload{wordsApiExamplesUrl, headers};
-const common::httpClient::GetPayload synonymsGetPayload{wordsApiSynonymsUrl, headers};
+const common::httpClient::HttpGetRequestPayload definitionsGetPayload{wordsApiDefinitionsUrl, headers};
+const common::httpClient::HttpGetRequestPayload examplesGetPayload{wordsApiExamplesUrl, headers};
+const common::httpClient::HttpGetRequestPayload synonymsGetPayload{wordsApiSynonymsUrl, headers};
 
 }
 

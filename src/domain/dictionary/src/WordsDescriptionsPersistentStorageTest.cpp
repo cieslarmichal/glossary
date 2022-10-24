@@ -5,8 +5,8 @@
 #include "WordsDescriptionsSerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
 
-#include "exceptions/FileNotFound.h"
 #include "fileSystem/GetProjectPath.h"
+#include "fileSystem/exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

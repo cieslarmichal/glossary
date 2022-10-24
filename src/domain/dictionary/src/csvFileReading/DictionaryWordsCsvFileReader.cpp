@@ -3,7 +3,6 @@
 #include <iostream>
 
 #include "collection/StringHelper.h"
-#include "exceptions/FileNotFound.h"
 
 namespace glossary::dictionary::csvFileReading
 {

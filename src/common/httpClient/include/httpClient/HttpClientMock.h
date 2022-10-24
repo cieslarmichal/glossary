@@ -9,6 +9,6 @@ namespace common::httpClient
 class HttpClientMock : public HttpClient
 {
 public:
-    MOCK_CONST_METHOD1(get, HttpResponse(const GetPayload&));
+    MOCK_CONST_METHOD1(get, HttpResponse(const HttpGetRequestPayload&));
 };
 }

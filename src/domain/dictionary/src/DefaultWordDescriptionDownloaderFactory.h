@@ -12,6 +12,6 @@ public:
     std::unique_ptr<WordDescriptionDownloader> createWordDescriptionDownloader() const override;
 
 private:
-    std::shared_ptr<const common::httpClient::HttpClient> httpHandler;
+    std::shared_ptr<const common::httpClient::HttpClient> httpClient;
 };
 }

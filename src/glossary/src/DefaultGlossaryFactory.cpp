@@ -63,17 +63,17 @@ std::unique_ptr<AnswerValidator> createAnswerValidator();
 std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 {
     auto fileAccess = createFileAccess();
-    auto httpHandler = createHttpHandler();
+    auto httpClient = createHttpHandler();
 
     auto dictionaryService = createDictionaryService(fileAccess);
 
-    auto translator = createTranslator(httpHandler);
+    auto translator = createTranslator(httpClient);
     auto translationRepository = createTranslationRepository(fileAccess);
     auto translationService = createTranslationService(translator, translationRepository, fileAccess);
 
     auto statisticsRepository = createStatisticsRepository(fileAccess);
 
-    auto wordDescriptionDownloader = createWordDescriptionDownloader(httpHandler);
+    auto wordDescriptionDownloader = createWordDescriptionDownloader(httpClient);
     auto wordDescriptionRepository = createWordDescriptionRepository(fileAccess);
     auto wordDescriptionService =
         createWordDescriptionService(wordDescriptionDownloader, wordDescriptionRepository, fileAccess);
@@ -121,9 +121,9 @@ createDictionaryService(const std::shared_ptr<common::fileSystem::FileAccess>& f
 }
 
 std::shared_ptr<translation::TranslationService>
-createTranslator(const std::shared_ptr<const common::httpClient::HttpClient>& httpHandler)
+createTranslator(const std::shared_ptr<const common::httpClient::HttpClient>& httpClient)
 {
-    auto translatorFactory = translation::TranslatorFactory::createTranslatorFactory(httpHandler);
+    auto translatorFactory = translation::TranslatorFactory::createTranslatorFactory(httpClient);
     return translatorFactory->createTranslator();
 }
 
@@ -154,10 +154,10 @@ createStatisticsRepository(const std::shared_ptr<common::fileSystem::FileAccess>
 }
 
 std::shared_ptr<dictionary::WordDescriptionDownloader>
-createWordDescriptionDownloader(const std::shared_ptr<const common::httpClient::HttpClient>& httpHandler)
+createWordDescriptionDownloader(const std::shared_ptr<const common::httpClient::HttpClient>& httpClient)
 {
     auto wordDescriptionDownloaderFactory =
-        dictionary::WordDescriptionDownloaderFactory::createWordDescriptionDownloaderFactory(httpHandler);
+        dictionary::WordDescriptionDownloaderFactory::createWordDescriptionDownloaderFactory(httpClient);
     return wordDescriptionDownloaderFactory->createWordDescriptionDownloader();
 }
 

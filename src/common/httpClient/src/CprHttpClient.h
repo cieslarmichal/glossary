@@ -7,6 +7,6 @@ namespace common::httpClient
 class CprHttpClient : public HttpClient
 {
 public:
-    HttpResponse get(const GetPayload&) const override;
+    HttpResponse get(const HttpGetRequestPayload&) const override;
 };
 }

@@ -5,7 +5,7 @@
 #include "../serializers/TranslationsSerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
 
-#include "exceptions/FileNotFound.h"
+#include "fileSystem/exceptions/FileNotFound.h"
 #include "fileSystem/GetProjectPath.h"
 
 using namespace ::testing;

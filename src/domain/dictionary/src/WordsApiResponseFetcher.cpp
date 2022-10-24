@@ -10,16 +10,16 @@ namespace
 const std::string definitions{"definitions"};
 const std::string examples{"examples"};
 const std::string synonyms{"synonyms"};
-const std::string hostHeader{"x-rapidapi-host: "};
+const std::string hostHeader{"x-rapidapi-host"};
 const std::string host{"wordsapiv1.p.rapidapi.com"};
-const std::string keyHeader{"x-rapidapi-key: "};
+const std::string keyHeader{"x-rapidapi-key"};
 }
 
 const std::string WordsApiResponseFetcher::wordsApiUrl{"https://wordsapiv1.p.rapidapi.com/words/"};
 
 WordsApiResponseFetcher::WordsApiResponseFetcher(
     std::shared_ptr<const common::httpClient::HttpClient> httpHandlerInit)
-    : httpHandler{std::move(httpHandlerInit)}
+    : httpClient{std::move(httpHandlerInit)}
 {
 }
 
@@ -29,9 +29,9 @@ WordsApiResponseFetcher::tryGetWordDefinitionsResponse(const std::string& englis
 {
     const auto wordDefinitionsUrl = wordsApiUrl + englishWord + "/" + definitions;
 
-    const std::vector<std::string> headers{hostHeader + host, keyHeader + wordsApiKey};
+    const std::map<std::string, std::string> headers{{hostHeader, host}, {keyHeader, wordsApiKey}};
 
-    auto response = httpHandler->get({wordDefinitionsUrl, headers});
+    auto response = httpClient->get({wordDefinitionsUrl, headers});
 
     if (responseFailedDueToInvalidApiKey(response.statusCode))
     {
@@ -46,9 +46,9 @@ WordsApiResponseFetcher::tryGetWordExamplesResponse(const std::string& englishWo
 {
     const auto wordExamplesUrl = wordsApiUrl + englishWord + "/" + examples;
 
-    const std::vector<std::string> headers{hostHeader + host, keyHeader + wordsApiKey};
+    const std::map<std::string, std::string> headers{{hostHeader, host}, {keyHeader, wordsApiKey}};
 
-    auto response = httpHandler->get({wordExamplesUrl, headers});
+    auto response = httpClient->get({wordExamplesUrl, headers});
 
     if (responseFailedDueToInvalidApiKey(response.statusCode))
     {
@@ -64,9 +64,9 @@ WordsApiResponseFetcher::tryGetWordSynonymsResponse(const std::string& englishWo
 {
     const auto wordSynonymsUrl = wordsApiUrl + englishWord + "/" + synonyms;
 
-    const std::vector<std::string> headers{hostHeader + host, keyHeader + wordsApiKey};
+    const std::map<std::string, std::string> headers{{hostHeader, host}, {keyHeader, wordsApiKey}};
 
-    auto response = httpHandler->get({wordSynonymsUrl, headers});
+    auto response = httpClient->get({wordSynonymsUrl, headers});
 
     if (responseFailedDueToInvalidApiKey(response.statusCode))
     {
