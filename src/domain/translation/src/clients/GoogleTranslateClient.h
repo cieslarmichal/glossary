@@ -13,6 +13,6 @@ class GoogleTranslateClient
 public:
     virtual ~GoogleTranslateClient() = default;
 
-    virtual std::string translate(const TranslatePayload&) const = 0;
+    virtual std::optional<std::string> translate(const TranslatePayload&) const = 0;
 };
 }

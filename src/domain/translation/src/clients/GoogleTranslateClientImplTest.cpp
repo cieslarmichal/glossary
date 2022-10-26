@@ -5,7 +5,6 @@
 #include "httpClient/HttpClientMock.h"
 
 #include "exceptions/GoogleTranslateApiError.h"
-#include "exceptions/GoogleTranslateApiTranslationsNotFoundError.h"
 #include "httpClient/HttpStatusCode.h"
 
 using namespace ::testing;
@@ -63,15 +62,16 @@ TEST_F(GoogleTranslateClientImplTest, whenApiResponseStatusCodeIsNotOk_shouldThr
                  glossary::translation::exceptions::GoogleTranslateApiError);
 }
 
-TEST_F(GoogleTranslateClientImplTest, whenApiResponseBodyDoesNotHaveAnyTranslations_shouldThrowError)
+TEST_F(GoogleTranslateClientImplTest, whenApiResponseBodyDoesNotHaveAnyTranslations_shouldNone)
 {
     const auto response =
         HttpResponse{common::httpClient::HttpStatusCode::Ok, responseBodyWithoutTranslations};
 
     EXPECT_CALL(*httpClient, get(getPayload)).WillOnce(Return(response));
 
-    ASSERT_THROW(googleTranslateClientImpl.translate({polishText, sourceLanguage, targetLanguage}),
-                 glossary::translation::exceptions::GoogleTranslateApiTranslationsNotFoundError);
+    const auto result = googleTranslateClientImpl.translate({polishText, sourceLanguage, targetLanguage});
+
+    ASSERT_EQ(result, std::nullopt);
 }
 
 TEST_F(GoogleTranslateClientImplTest, givenValidApiResponse_shouldReturnTranslatedText)

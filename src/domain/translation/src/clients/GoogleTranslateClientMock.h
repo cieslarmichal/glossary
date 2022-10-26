@@ -9,6 +9,6 @@ namespace glossary::translation
 class GoogleTranslateClientMock : public GoogleTranslateClient
 {
 public:
-    MOCK_METHOD(std::string, translate, (const TranslatePayload&), (const));
+    MOCK_METHOD(std::optional<std::string>, translate, (const TranslatePayload&), (const));
 };
 }

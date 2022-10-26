@@ -6,7 +6,6 @@
 #include "collection/StringHelper.h"
 #include "exceptions/GoogleTranslateApiError.h"
 #include "exceptions/GoogleTranslateApiJsonResponseMissingRequiredFieldsError.h"
-#include "exceptions/GoogleTranslateApiTranslationsNotFoundError.h"
 #include "exceptions/InvalidJsonError.h"
 #include "httpClient/HttpStatusCode.h"
 
@@ -31,7 +30,7 @@ GoogleTranslateClientImpl::GoogleTranslateClientImpl(
 {
 }
 
-std::string GoogleTranslateClientImpl::translate(const TranslatePayload& payload) const
+std::optional<std::string> GoogleTranslateClientImpl::translate(const TranslatePayload& payload) const
 {
     const auto httpGetRequestPayload = prepareRequestPayload(payload);
 
@@ -48,7 +47,7 @@ std::string GoogleTranslateClientImpl::translate(const TranslatePayload& payload
 
     if (translations.empty())
     {
-        throw exceptions::GoogleTranslateApiTranslationsNotFoundError{};
+        return std::nullopt;
     }
 
     return translations[0].translatedText;

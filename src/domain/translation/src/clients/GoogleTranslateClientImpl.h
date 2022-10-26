@@ -16,7 +16,7 @@ public:
     GoogleTranslateClientImpl(std::shared_ptr<const common::httpClient::HttpClient>,
                               GoogleTranslateClientConfig);
 
-    std::string translate(const TranslatePayload&) const override;
+    std::optional<std::string> translate(const TranslatePayload&) const override;
 
 private:
     common::httpClient::HttpGetRequestPayload prepareRequestPayload(const TranslatePayload&) const;
