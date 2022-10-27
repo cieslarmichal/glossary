@@ -4,14 +4,11 @@ set(SOURCES
         src/repositories/DictionaryPersistentStorage.cpp
         src/serializers/DictionaryJsonSerializer.cpp
         src/DictionaryWordsCsvReader.cpp
-        src/DefaultDictionaryWordRandomizer.cpp
         src/DefaultDictionaryService.cpp
-        src/DefaultDictionaryWordsRetriever.cpp
-        src/DefaultRandomDictionaryWordRetriever.cpp
         src/DictionaryObserverService.cpp
-        src/DefaultWordDescriptionRepository.cpp
-        src/WordsDescriptionsMemoryStorage.cpp
-        src/WordsDescriptionsPersistentStorage.cpp
+        src/repositories/DefaultWordDescriptionRepository.cpp
+        src/repositories/WordsDescriptionsMemoryStorage.cpp
+        src/repositories/WordsDescriptionsPersistentStorage.cpp
         src/serializers/WordsDescriptionsJsonSerializer.cpp
         src/clients/WordsApiClientImpl.cpp
         )
@@ -22,19 +19,11 @@ set(UT_SOURCES
         src/repositories/DictionaryPersistentStorageTest.cpp
         src/serializers/DictionaryJsonSerializerTest.cpp
         src/DictionaryWordsCsvReaderTest.cpp
-        src/DefaultDictionaryWordRandomizerTest.cpp
         src/DefaultDictionaryServiceTest.cpp
-        src/DictionaryNameSelectorTest.cpp
-        src/DictionaryFinderTest.cpp
-        src/DictionaryWordAccumulatorTest.cpp
-        src/DefaultDictionaryNamesRetrieverTest.cpp
-        src/DefaultDictionaryWordsRetrieverTest.cpp
-        src/DefaultRandomDictionaryWordRetrieverTest.cpp
         src/DictionaryObserverServiceTest.cpp
-        src/WordsDictionaryMembershipFinderTest.cpp
-        src/DefaultWordDescriptionRepositoryTest.cpp
-        src/WordsDescriptionsMemoryStorageTest.cpp
-        src/WordsDescriptionsPersistentStorageTest.cpp
+        src/repositories/DefaultWordDescriptionRepositoryTest.cpp
+        src/repositories/WordsDescriptionsMemoryStorageTest.cpp
+        src/repositories/WordsDescriptionsPersistentStorageTest.cpp
         src/serializers/WordsDescriptionsJsonSerializerTest.cpp
         src/clients/WordsApiClientImplTest.cpp
         )

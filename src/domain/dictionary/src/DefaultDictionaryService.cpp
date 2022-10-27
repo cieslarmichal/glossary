@@ -58,7 +58,14 @@ std::vector<std::string> DefaultDictionaryService::getDictionaryNamesContainingE
 std::optional<std::vector<DictionaryWord>>
 DefaultDictionaryService::getDictionaryWords(const std::string& dictionaryName) const
 {
-    return retrieveDictionaryWords(dictionaryName);
+    const auto dictionary = dictionaryRepository->getDictionary(dictionaryName);
+
+    if (dictionary)
+    {
+        return dictionary->words;
+    }
+
+    return std::nullopt;
 }
 
 std::optional<std::vector<std::string>>
@@ -93,6 +100,7 @@ void DefaultDictionaryService::addDictionaryFromFile(const std::string& dictiona
     const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath);
 
     dictionaryRepository->addDictionary({dictionaryName, dictionaryWordsFromFile});
+
     if (const auto englishWordsFromAddedDictionary = retrieveEnglishWords(dictionaryName))
     {
         notifyObservers(*englishWordsFromAddedDictionary);
@@ -172,6 +180,7 @@ std::vector<std::string> DefaultDictionaryService::findDictionariesContainingEng
             dictionariesContainingEnglishWordTranslation.emplace_back(dictionary.name);
         }
     }
+
     return dictionariesContainingEnglishWordTranslation;
 }
 
@@ -196,20 +205,10 @@ bool DefaultDictionaryService::englishWordTranslationExistsInDictionary(const st
     return englishWordTranslationExists != dictionary.words.end();
 }
 
-std::optional<std::vector<DictionaryWord>>
-DefaultDictionaryService::retrieveDictionaryWords(const std::string& dictionaryName) const
-{
-    if (const auto dictionary = getDictionary(dictionaryName))
-    {
-        return dictionary->words;
-    }
-    return std::nullopt;
-}
-
 std::optional<std::vector<std::string>>
 DefaultDictionaryService::retrieveEnglishWords(const std::string& dictionaryName) const
 {
-    const auto dictionary = getDictionary(dictionaryName);
+    const auto dictionary = dictionaryRepository->getDictionary(dictionaryName);
 
     if (dictionary)
     {
@@ -248,22 +247,6 @@ std::vector<std::string> DefaultDictionaryService::retrieveEnglishWords() const
     return allDictionaryEnglishWords;
 }
 
-std::optional<Dictionary> DefaultDictionaryService::findDictionary(const std::string& dictionaryName) const
-{
-    const auto dictionaries = dictionaryRepository->getDictionaries();
-
-    auto foundDictionary =
-        std::find_if(dictionaries.begin(), dictionaries.end(),
-                     [&dictionaryName](const auto& dictionary) { return dictionary.name == dictionaryName; });
-
-    if (foundDictionary != dictionaries.end())
-    {
-        return *foundDictionary;
-    }
-
-    return std::nullopt;
-}
-
 std::optional<DictionaryWord> DefaultDictionaryService::pickRandomDictionaryWord() const
 {
     const auto dictionaries = dictionaryRepository->getDictionaries();
@@ -273,6 +256,7 @@ std::optional<DictionaryWord> DefaultDictionaryService::pickRandomDictionaryWord
     for (const auto& dictionary : dictionaries)
     {
         const auto& dictionaryWords = dictionary.words;
+
         allDictionariesWords.insert(allDictionariesWords.end(), dictionaryWords.begin(), dictionaryWords.end());
     }
 
@@ -282,18 +266,14 @@ std::optional<DictionaryWord> DefaultDictionaryService::pickRandomDictionaryWord
 std::optional<DictionaryWord>
 DefaultDictionaryService::pickRandomDictionaryWord(const std::string& dictionaryName) const
 {
-    const auto dictionaries = dictionaryRepository->getDictionaries();
+    const auto dictionary = dictionaryRepository->getDictionary(dictionaryName);
 
-    auto dictionary =
-        std::find_if(dictionaries.begin(), dictionaries.end(),
-                     [&dictionaryName](const auto& dictionary) { return dictionary.name == dictionaryName; });
-
-    if (dictionary == dictionaries.end())
+    if (dictionary)
     {
-        return std::nullopt;
+        return randomizeDictionaryWord(dictionary->words);
     }
-
-    return randomizeDictionaryWord(dictionary->words);
+    
+    return std::nullopt;
 }
 
 std::optional<DictionaryWord>

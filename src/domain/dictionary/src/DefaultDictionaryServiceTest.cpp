@@ -48,18 +48,6 @@ public:
     std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
         std::make_shared<StrictMock<DictionaryRepositoryMock>>();
 
-    std::unique_ptr<DictionaryNamesRetrieverMock> namesRetrieverInit =
-        std::make_unique<StrictMock<DictionaryNamesRetrieverMock>>();
-    DictionaryNamesRetrieverMock* dictionaryNamesRetriever = namesRetrieverInit.get();
-
-    std::unique_ptr<DictionaryWordsRetrieverMock> wordsRetrieverInit =
-        std::make_unique<StrictMock<DictionaryWordsRetrieverMock>>();
-    DictionaryWordsRetrieverMock* dictionaryWordsRetriever = wordsRetrieverInit.get();
-
-    std::unique_ptr<RandomDictionaryWordRetrieverMock> randomWordRetrieverInit =
-        std::make_unique<StrictMock<RandomDictionaryWordRetrieverMock>>();
-    RandomDictionaryWordRetrieverMock* randomDictionaryWordRetriever = randomWordRetrieverInit.get();
-
     std::unique_ptr<DictionaryWordsReaderMock> readerInit = std::make_unique<StrictMock<DictionaryWordsReaderMock>>();
     DictionaryWordsReaderMock* reader = readerInit.get();
 

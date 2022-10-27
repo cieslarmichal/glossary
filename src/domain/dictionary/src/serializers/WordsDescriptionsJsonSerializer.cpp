@@ -1,9 +1,5 @@
 #include "WordsDescriptionsJsonSerializer.h"
 
-#include <iostream>
-
-#include "boost/algorithm/cxx11/all_of.hpp"
-
 namespace glossary::dictionary
 {
 namespace
@@ -43,8 +39,7 @@ WordsDescriptions WordsDescriptionsJsonSerializer::deserialize(const std::string
     return {};
 }
 
-nlohmann::json
-WordsDescriptionsJsonSerializer::getJsonFromWordDescription(const WordDescription& wordDescription) const
+nlohmann::json WordsDescriptionsJsonSerializer::getJsonFromWordDescription(const WordDescription& wordDescription) const
 {
     nlohmann::json json;
     json[englishWordField] = wordDescription.englishWord;
@@ -72,11 +67,10 @@ WordsDescriptionsJsonSerializer::parseWordsDescriptions(const nlohmann::json& wo
     {
         if (isWordDescriptionValid(wordDescriptionData))
         {
-            WordDescription wordDescription{
-                wordDescriptionData[englishWordField].get<std::string>(),
-                wordDescriptionData[definitionsField].get<std::vector<std::string>>(),
-                wordDescriptionData[examplesField].get<std::vector<std::string>>(),
-                wordDescriptionData[synonymsField].get<std::vector<std::string>>()};
+            WordDescription wordDescription{wordDescriptionData[englishWordField].get<std::string>(),
+                                            wordDescriptionData[definitionsField].get<std::vector<std::string>>(),
+                                            wordDescriptionData[examplesField].get<std::vector<std::string>>(),
+                                            wordDescriptionData[synonymsField].get<std::vector<std::string>>()};
             wordsDescriptions.emplace_back(wordDescription);
         }
         else
@@ -91,9 +85,9 @@ WordsDescriptionsJsonSerializer::parseWordsDescriptions(const nlohmann::json& wo
 bool WordsDescriptionsJsonSerializer::isWordDescriptionValid(const nlohmann::json& wordDescriptionData) const
 {
     const auto requiredFields = {englishWordField, definitionsField, examplesField, synonymsField};
-    auto wordDescriptionValid = boost::algorithm::all_of(requiredFields, [&](const auto& fieldName) {
-        return wordDescriptionData.find(fieldName) != wordDescriptionData.end();
-    });
+    auto wordDescriptionValid =
+        boost::algorithm::all_of(requiredFields, [&](const auto& fieldName)
+                                 { return wordDescriptionData.find(fieldName) != wordDescriptionData.end(); });
     return wordDescriptionValid;
 }
 
