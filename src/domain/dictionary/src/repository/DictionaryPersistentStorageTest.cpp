@@ -9,12 +9,10 @@
 
 using namespace ::testing;
 using namespace glossary::dictionary;
-using namespace repository;
 
 namespace
 {
-const std::string filePath{common::fileSystem::getProjectPath("glossary") +
-                           "repositoryFiles/dictionaries.txt"};
+const std::string filePath{common::fileSystem::getProjectPath("glossary") + "repositoryFiles/dictionaries.txt"};
 const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 const std::string dictionaryName1{"dictionaryName1"};
 const std::string dictionaryName2{"dictionaryName2"};
@@ -26,10 +24,10 @@ const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}
 const DictionaryWord dictionaryWord3{"englishWord3", std::nullopt};
 const DictionaryWord dictionaryWord4{"englishWord4", std::nullopt};
 const std::vector<DictionaryWord> dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
-const std::vector<DictionaryWord> dictionaryWords1AfterAddition{dictionaryWord1, dictionaryWord2,
-                                                                dictionaryWord3, dictionaryWord4};
-const std::vector<DictionaryWord> dictionaryWords1AfterTranslationChange{dictionaryWord1AfterChange,
-                                                                         dictionaryWord2, dictionaryWord3};
+const std::vector<DictionaryWord> dictionaryWords1AfterAddition{dictionaryWord1, dictionaryWord2, dictionaryWord3,
+                                                                dictionaryWord4};
+const std::vector<DictionaryWord> dictionaryWords1AfterTranslationChange{dictionaryWord1AfterChange, dictionaryWord2,
+                                                                         dictionaryWord3};
 const std::vector<DictionaryWord> dictionaryWords1AfterRemoval{dictionaryWord2, dictionaryWord3};
 const std::vector<DictionaryWord> dictionaryWords2{dictionaryWord1, dictionaryWord2};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
@@ -41,8 +39,7 @@ const Dictionary emptyDictionary1{dictionaryName1, {}};
 const Dictionary emptyDictionary2{dictionaryName2, {}};
 const std::vector<Dictionary> twoDictionaries{dictionary1, dictionary2};
 const std::vector<Dictionary> twoDictionariesAfterAddition{dictionary1AfterAddition, dictionary2};
-const std::vector<Dictionary> twoDictionariesAfterTranslationChange{dictionary1AfterTranslationChange,
-                                                                    dictionary2};
+const std::vector<Dictionary> twoDictionariesAfterTranslationChange{dictionary1AfterTranslationChange, dictionary2};
 const std::vector<Dictionary> twoDictionariesAfterRemoval{dictionary1AfterRemoval, dictionary2};
 const std::vector<Dictionary> dictionariesAfterRemoval{dictionary2};
 const std::vector<Dictionary> dictionariesWithOneDictionary{dictionary1};
@@ -145,8 +142,7 @@ TEST_F(DictionaryPersistentStorageTest,
     ASSERT_EQ(*persistentStorage.getDictionary(dictionaryName1), emptyDictionary1);
 }
 
-TEST_F(DictionaryPersistentStorageTest,
-       givenDictionaryAdditionAndNonExistingFile_shouldAddDictionaryAndNotSerialize)
+TEST_F(DictionaryPersistentStorageTest, givenDictionaryAdditionAndNonExistingFile_shouldAddDictionaryAndNotSerialize)
 {
     EXPECT_CALL(*fileAccess, exists(filePath)).WillOnce(Return(false));
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
@@ -178,8 +174,7 @@ TEST_F(DictionaryPersistentStorageTest, givenNonExistingDictionary_shouldNotAddW
     ASSERT_EQ(persistentStorage.getDictionary(dictionaryName1), std::nullopt);
 }
 
-TEST_F(DictionaryPersistentStorageTest,
-       givenExistingWordInDictionary_shouldNotAddWordToDictionaryAndSerialize)
+TEST_F(DictionaryPersistentStorageTest, givenExistingWordInDictionary_shouldNotAddWordToDictionaryAndSerialize)
 {
     expectTwoDictionariesLoad();
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
@@ -236,8 +231,7 @@ TEST_F(DictionaryPersistentStorageTest, givenExistingDictionary_shouldRemoveDict
     ASSERT_EQ(persistentStorage.getDictionaries(), dictionariesAfterRemoval);
 }
 
-TEST_F(DictionaryPersistentStorageTest,
-       givenExistingDictionaryAndNonExistingFile_shouldRemoveDictionaryAndNotSerialize)
+TEST_F(DictionaryPersistentStorageTest, givenExistingDictionaryAndNonExistingFile_shouldRemoveDictionaryAndNotSerialize)
 {
     expectTwoDictionariesLoad();
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
@@ -248,8 +242,7 @@ TEST_F(DictionaryPersistentStorageTest,
     ASSERT_EQ(persistentStorage.getDictionaries(), dictionariesWithOneDictionary);
 }
 
-TEST_F(DictionaryPersistentStorageTest,
-       givenNonExistingDictionary_shouldNotRemoveWordFromDictionaryAndSerialize)
+TEST_F(DictionaryPersistentStorageTest, givenNonExistingDictionary_shouldNotRemoveWordFromDictionaryAndSerialize)
 {
     expectNoDictionariesLoad();
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
@@ -260,8 +253,7 @@ TEST_F(DictionaryPersistentStorageTest,
     ASSERT_EQ(persistentStorage.getDictionary(dictionaryName1), std::nullopt);
 }
 
-TEST_F(DictionaryPersistentStorageTest,
-       givenNonExistingWordInDictionary_shouldNotRemoveWordFromDictionaryAndSerialize)
+TEST_F(DictionaryPersistentStorageTest, givenNonExistingWordInDictionary_shouldNotRemoveWordFromDictionaryAndSerialize)
 {
     expectTwoDictionariesLoad();
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
@@ -273,8 +265,7 @@ TEST_F(DictionaryPersistentStorageTest,
     ASSERT_EQ(actualDictionary->words, dictionaryWords1);
 }
 
-TEST_F(DictionaryPersistentStorageTest,
-       givenExistingWordInDictionary_shouldRemoveWordFromDictionaryAndSerialize)
+TEST_F(DictionaryPersistentStorageTest, givenExistingWordInDictionary_shouldRemoveWordFromDictionaryAndSerialize)
 {
     expectTwoDictionariesLoad();
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
@@ -305,8 +296,8 @@ TEST_F(DictionaryPersistentStorageTest, givenNonExistingDictionary_shouldNotChan
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
     expectSerializeDictionaries(noDictionaries);
 
-    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
-                                                          newDictionaryWordTranslation, dictionaryName1);
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                          dictionaryName1);
 
     ASSERT_EQ(persistentStorage.getDictionary(dictionaryName1), std::nullopt);
 }
@@ -318,8 +309,8 @@ TEST_F(DictionaryPersistentStorageTest,
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
     expectSerializeDictionaries(twoDictionariesAfterTranslationChange);
 
-    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
-                                                          newDictionaryWordTranslation, dictionaryName1);
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                          dictionaryName1);
 
     const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
     ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterTranslationChange);
@@ -332,8 +323,8 @@ TEST_F(DictionaryPersistentStorageTest,
     DictionaryPersistentStorage persistentStorage{fileAccess, serializer};
     EXPECT_CALL(*fileAccess, exists(filePath)).WillOnce(Return(false));
 
-    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
-                                                          newDictionaryWordTranslation, dictionaryName1);
+    persistentStorage.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                          dictionaryName1);
 
     const auto actualDictionary = persistentStorage.getDictionary(dictionaryName1);
     ASSERT_EQ(actualDictionary->words, dictionaryWords1AfterTranslationChange);

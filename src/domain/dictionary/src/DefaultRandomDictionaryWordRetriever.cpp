@@ -3,10 +3,9 @@
 namespace glossary::dictionary
 {
 DefaultRandomDictionaryWordRetriever::DefaultRandomDictionaryWordRetriever(
-    std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit,
+    std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit,
     std::unique_ptr<DictionaryWordRandomizer> randomizer)
-    : dictionaryRepository{std::move(dictionaryRepositoryInit)},
-      dictionaryWordRandomizer{std::move(randomizer)}
+    : dictionaryRepository{std::move(dictionaryRepositoryInit)}, dictionaryWordRandomizer{std::move(randomizer)}
 {
 }
 
@@ -29,8 +28,8 @@ DefaultRandomDictionaryWordRetriever::getRandomDictionaryWord(const std::string&
     return std::nullopt;
 }
 
-std::optional<DictionaryWord> DefaultRandomDictionaryWordRetriever::randomizeDictionaryWord(
-    const std::vector<DictionaryWord>& dictionaryWords) const
+std::optional<DictionaryWord>
+DefaultRandomDictionaryWordRetriever::randomizeDictionaryWord(const std::vector<DictionaryWord>& dictionaryWords) const
 {
     try
     {

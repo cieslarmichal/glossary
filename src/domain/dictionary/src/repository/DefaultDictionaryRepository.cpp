@@ -1,6 +1,6 @@
 #include "DefaultDictionaryRepository.h"
 
-namespace glossary::dictionary::repository
+namespace glossary::dictionary
 {
 DefaultDictionaryRepository::DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage> storageInit)
     : storage{std::move(storageInit)}
@@ -42,8 +42,7 @@ void DefaultDictionaryRepository::changeWordTranslationFromDictionary(const std:
     storage->changeWordTranslationFromDictionary(englishWord, translation, dictionaryName);
 }
 
-std::optional<Dictionary>
-DefaultDictionaryRepository::getDictionary(const std::string& dictionaryName) const
+std::optional<Dictionary> DefaultDictionaryRepository::getDictionary(const std::string& dictionaryName) const
 {
     return storage->getDictionary(dictionaryName);
 }

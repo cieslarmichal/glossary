@@ -4,7 +4,7 @@
 
 #include "Dictionary.h"
 
-namespace glossary::dictionary::repository
+namespace glossary::dictionary
 {
 class DictionaryStorage
 {
@@ -16,8 +16,7 @@ public:
     virtual void addWordToDictionary(const DictionaryWord&, const std::string&) = 0;
     virtual void removeDictionary(const std::string&) = 0;
     virtual void removeWordFromDictionary(const std::string&, const std::string&) = 0;
-    virtual void changeWordTranslationFromDictionary(const std::string&, const std::string&,
-                                                     const std::string&) = 0;
+    virtual void changeWordTranslationFromDictionary(const std::string&, const std::string&, const std::string&) = 0;
     virtual std::optional<Dictionary> getDictionary(const std::string&) const = 0;
     virtual Dictionaries getDictionaries() const = 0;
     virtual bool containsDictionary(const std::string&) const = 0;

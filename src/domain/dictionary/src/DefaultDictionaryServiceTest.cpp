@@ -2,12 +2,12 @@
 
 #include "gtest/gtest.h"
 
+#include "csvFileReading/DictionaryWordsReaderMock.h"
 #include "DictionaryNamesRetrieverMock.h"
 #include "DictionaryObserverMock.h"
 #include "DictionaryWordsRetrieverMock.h"
 #include "ObserverServiceMock.h"
 #include "RandomDictionaryWordRetrieverMock.h"
-#include "csvFileReading/DictionaryWordsReaderMock.h"
 #include "repository/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
@@ -25,8 +25,8 @@ const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}
 const DictionaryWord dictionaryWord3{"englishWord3", std::nullopt};
 const std::vector<DictionaryWord> dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
 const std::vector<DictionaryWord> dictionaryWords2{dictionaryWord1, dictionaryWord2};
-const std::vector<DictionaryWord> dictionaryWordsSum{dictionaryWord1, dictionaryWord2, dictionaryWord3,
-                                                     dictionaryWord1, dictionaryWord2};
+const std::vector<DictionaryWord> dictionaryWordsSum{dictionaryWord1, dictionaryWord2, dictionaryWord3, dictionaryWord1,
+                                                     dictionaryWord2};
 const std::vector<DictionaryWord> emptyDictionaryWords{};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
@@ -45,8 +45,8 @@ class DefaultDictionaryServiceTest : public Test
 public:
     std::shared_ptr<DictionaryObserverMock> observer = std::make_shared<StrictMock<DictionaryObserverMock>>();
 
-    std::shared_ptr<repository::DictionaryRepositoryMock> dictionaryRepository =
-        std::make_shared<StrictMock<repository::DictionaryRepositoryMock>>();
+    std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
+        std::make_shared<StrictMock<DictionaryRepositoryMock>>();
 
     std::unique_ptr<DictionaryNamesRetrieverMock> namesRetrieverInit =
         std::make_unique<StrictMock<DictionaryNamesRetrieverMock>>();
@@ -60,12 +60,10 @@ public:
         std::make_unique<StrictMock<RandomDictionaryWordRetrieverMock>>();
     RandomDictionaryWordRetrieverMock* randomDictionaryWordRetriever = randomWordRetrieverInit.get();
 
-    std::unique_ptr<csvFileReading::DictionaryWordsReaderMock> readerInit =
-        std::make_unique<StrictMock<csvFileReading::DictionaryWordsReaderMock>>();
-    csvFileReading::DictionaryWordsReaderMock* reader = readerInit.get();
+    std::unique_ptr<DictionaryWordsReaderMock> readerInit = std::make_unique<StrictMock<DictionaryWordsReaderMock>>();
+    DictionaryWordsReaderMock* reader = readerInit.get();
 
-    std::unique_ptr<ObserverServiceMock> observerServiceInit =
-        std::make_unique<StrictMock<ObserverServiceMock>>();
+    std::unique_ptr<ObserverServiceMock> observerServiceInit = std::make_unique<StrictMock<ObserverServiceMock>>();
     ObserverServiceMock* observerService = observerServiceInit.get();
 
     DefaultDictionaryService service{dictionaryRepository,          std::move(namesRetrieverInit),
@@ -124,8 +122,7 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNamesContainingEnglis
 
 TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryWords)
 {
-    EXPECT_CALL(*dictionaryWordsRetriever, retrieveDictionaryWords(dictionaryName1))
-        .WillOnce(Return(dictionaryWords1));
+    EXPECT_CALL(*dictionaryWordsRetriever, retrieveDictionaryWords(dictionaryName1)).WillOnce(Return(dictionaryWords1));
 
     const auto actualDictionaryWords = service.getDictionaryWords(dictionaryName1);
 
@@ -134,8 +131,7 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryWords)
 
 TEST_F(DefaultDictionaryServiceTest, shouldReturnEnglishWordsFromDictionary)
 {
-    EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords(dictionaryName1))
-        .WillOnce(Return(englishWords));
+    EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords(dictionaryName1)).WillOnce(Return(englishWords));
 
     const auto actualEnglishWords = service.getEnglishWords(dictionaryName1);
 
@@ -177,19 +173,11 @@ TEST_F(DefaultDictionaryServiceTest, shouldAddDictionaryByName)
     service.addDictionary(dictionaryName1);
 }
 
-TEST_F(DefaultDictionaryServiceTest, givenNoneDictionaryWordsFromFile_shouldNotAddDictionary)
-{
-    EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(std::nullopt));
-
-    service.addDictionaryFromFile(dictionaryName1, absoluteDictionaryWordsPath);
-}
-
 TEST_F(DefaultDictionaryServiceTest, givenDictionaryWordsFromFile_shouldAddDictionary)
 {
     EXPECT_CALL(*reader, readDictionaryWords(absoluteDictionaryWordsPath)).WillOnce(Return(dictionaryWords2));
     EXPECT_CALL(*dictionaryRepository, addDictionary(dictionary2));
-    EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords(dictionaryName2))
-        .WillOnce(Return(englishWords));
+    EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords(dictionaryName2)).WillOnce(Return(englishWords));
     EXPECT_CALL(*observerService, notifyObservers(englishWords));
 
     service.addDictionaryFromFile(dictionaryName2, absoluteDictionaryWordsPath);
@@ -211,24 +199,21 @@ TEST_F(DefaultDictionaryServiceTest, shouldRemoveDictionary)
 
 TEST_F(DefaultDictionaryServiceTest, shouldRemoveWordFromDictionary)
 {
-    EXPECT_CALL(*dictionaryRepository,
-                removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1));
+    EXPECT_CALL(*dictionaryRepository, removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1));
 
     service.removeWordFromDictionary(dictionaryWord1.englishWord, dictionaryName1);
 }
 
 TEST_F(DefaultDictionaryServiceTest, shouldUpdateWordTranslationFromDictionary)
 {
-    EXPECT_CALL(*dictionaryRepository,
-                changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
-                                                    dictionaryName1));
+    EXPECT_CALL(*dictionaryRepository, changeWordTranslationFromDictionary(
+                                           dictionaryWord1.englishWord, newDictionaryWordTranslation, dictionaryName1));
 
     service.updateWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
                                                 dictionaryName1);
 }
 
-TEST_F(DefaultDictionaryServiceTest,
-       synchronizeDictionaries_shouldNotifyObserversAboutAllDictionaryEnglishWords)
+TEST_F(DefaultDictionaryServiceTest, synchronizeDictionaries_shouldNotifyObserversAboutAllDictionaryEnglishWords)
 {
     EXPECT_CALL(*dictionaryWordsRetriever, retrieveEnglishWords()).WillOnce(Return(englishWords));
     EXPECT_CALL(*observerService, notifyObservers(englishWords));

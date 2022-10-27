@@ -18,8 +18,8 @@ const DictionaryWord dictionaryWord2{"englishWord2", std::string{"translation2"}
 const DictionaryWord dictionaryWord3{"englishWord3", std::nullopt};
 const std::vector<DictionaryWord> dictionaryWords1{dictionaryWord1, dictionaryWord2, dictionaryWord3};
 const std::vector<DictionaryWord> dictionaryWords2{dictionaryWord1, dictionaryWord2};
-const std::vector<DictionaryWord> dictionaryWordsSum{dictionaryWord1, dictionaryWord2, dictionaryWord3,
-                                                     dictionaryWord1, dictionaryWord2};
+const std::vector<DictionaryWord> dictionaryWordsSum{dictionaryWord1, dictionaryWord2, dictionaryWord3, dictionaryWord1,
+                                                     dictionaryWord2};
 const std::vector<DictionaryWord> emptyDictionaryWords{};
 const Dictionary dictionary1{dictionaryName1, dictionaryWords1};
 const Dictionary dictionary2{dictionaryName2, dictionaryWords2};
@@ -27,16 +27,16 @@ const Dictionary emptyDictionary{dictionaryName3, emptyDictionaryWords};
 const std::vector<Dictionary> dictionaries{dictionary1, dictionary2, emptyDictionary};
 const std::vector<std::string> englishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
                                             dictionaryWord3.englishWord};
-const std::vector<std::string> accumulatedEnglishWords{
-    dictionaryWord1.englishWord, dictionaryWord2.englishWord, dictionaryWord3.englishWord,
-    dictionaryWord1.englishWord, dictionaryWord2.englishWord};
+const std::vector<std::string> accumulatedEnglishWords{dictionaryWord1.englishWord, dictionaryWord2.englishWord,
+                                                       dictionaryWord3.englishWord, dictionaryWord1.englishWord,
+                                                       dictionaryWord2.englishWord};
 }
 
 class DefaultDictionaryWordsRetrieverTest : public Test
 {
 public:
-    std::shared_ptr<repository::DictionaryRepositoryMock> dictionaryRepository =
-        std::make_shared<StrictMock<repository::DictionaryRepositoryMock>>();
+    std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
+        std::make_shared<StrictMock<DictionaryRepositoryMock>>();
     DefaultDictionaryWordsRetriever retriever{dictionaryRepository};
 };
 

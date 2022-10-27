@@ -4,12 +4,11 @@
 
 #include "DictionaryWordsReader.h"
 
-namespace glossary::dictionary::csvFileReading
+namespace glossary::dictionary
 {
 class DictionaryWordsReaderMock : public DictionaryWordsReader
 {
 public:
-    MOCK_CONST_METHOD1(readDictionaryWords,
-                       std::optional<std::vector<DictionaryWord>>(const std::string& absolutePath));
+    MOCK_METHOD(std::vector<DictionaryWord>, readDictionaryWords, (const std::string& absolutePath), (const));
 };
 }

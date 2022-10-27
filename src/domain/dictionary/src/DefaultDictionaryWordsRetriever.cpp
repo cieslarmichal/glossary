@@ -4,7 +4,7 @@ namespace glossary::dictionary
 {
 
 DefaultDictionaryWordsRetriever::DefaultDictionaryWordsRetriever(
-    std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit)
+    std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)}
 {
 }
@@ -35,8 +35,7 @@ std::vector<std::string> DefaultDictionaryWordsRetriever::retrieveEnglishWords()
     return dictionaryWordAccumulator.accumulateEnglishWords(dictionaries);
 }
 
-std::optional<Dictionary>
-DefaultDictionaryWordsRetriever::getDictionary(const std::string& dictionaryName) const
+std::optional<Dictionary> DefaultDictionaryWordsRetriever::getDictionary(const std::string& dictionaryName) const
 {
     const auto dictionaries = dictionaryRepository->getDictionaries();
     return dictionaryFinder.findDictionary(dictionaryName, dictionaries);

@@ -38,8 +38,8 @@ const std::vector<std::string> dictionaryNames3{dictionaryName3, dictionaryName4
 class DefaultDictionaryNamesRetrieverTest : public Test
 {
 public:
-    std::shared_ptr<repository::DictionaryRepositoryMock> dictionaryRepository =
-        std::make_shared<StrictMock<repository::DictionaryRepositoryMock>>();
+    std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
+        std::make_shared<StrictMock<DictionaryRepositoryMock>>();
     DefaultDictionaryNamesRetriever retriever{dictionaryRepository};
 };
 
@@ -61,8 +61,7 @@ TEST_F(DefaultDictionaryNamesRetrieverTest, shouldReturnDictionaryNamesFromDicti
     ASSERT_EQ(actualDictionaryNames, dictionaryNames2);
 }
 
-TEST_F(DefaultDictionaryNamesRetrieverTest,
-       shouldReturnDictionaryNamesFromDictionariesContainingEnglishWordTranslation)
+TEST_F(DefaultDictionaryNamesRetrieverTest, shouldReturnDictionaryNamesFromDictionariesContainingEnglishWordTranslation)
 {
     EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries3));
 

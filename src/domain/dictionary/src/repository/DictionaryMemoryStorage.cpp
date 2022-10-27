@@ -1,6 +1,6 @@
 #include "DictionaryMemoryStorage.h"
 
-namespace glossary::dictionary::repository
+namespace glossary::dictionary
 {
 static auto& getDictionaryByPosition(std::vector<Dictionary>& dictionaries,
                                      std::vector<Dictionary>::const_iterator position)
@@ -19,8 +19,7 @@ static auto& getDictionaryByPosition(const std::vector<Dictionary>& dictionaries
 static auto& getDictionaryWordByPosition(std::vector<DictionaryWord>& dictionaryWords,
                                          std::vector<DictionaryWord>::const_iterator position)
 {
-    const auto distance =
-        std::vector<DictionaryWord>::size_type(std::distance(dictionaryWords.cbegin(), position));
+    const auto distance = std::vector<DictionaryWord>::size_type(std::distance(dictionaryWords.cbegin(), position));
     return dictionaryWords.at(distance);
 }
 
@@ -70,8 +69,8 @@ void DictionaryMemoryStorage::changeWordTranslationFromDictionary(const std::str
     if (dictionaryExists(dictionaryName) && englishWordExistsInDictionary(englishWord, dictionaryName))
     {
         auto& dictionary = getDictionaryByPosition(dictionaries, findDictionaryPosition(dictionaryName));
-        auto& dictionaryWord = getDictionaryWordByPosition(
-            dictionary.words, findWordInsideDictionaryPosition(englishWord, dictionary));
+        auto& dictionaryWord =
+            getDictionaryWordByPosition(dictionary.words, findWordInsideDictionaryPosition(englishWord, dictionary));
         dictionaryWord.translation = translation;
     }
 }

@@ -7,7 +7,6 @@
 
 using namespace ::testing;
 using namespace glossary::dictionary;
-using namespace repository;
 
 namespace
 {
@@ -28,8 +27,7 @@ const std::string newDictionaryWordTranslation{"newDictionaryWordTranslation"};
 class DefaultDictionaryRepositoryTest : public Test
 {
 public:
-    std::unique_ptr<DictionaryStorageMock> storageInit =
-        std::make_unique<StrictMock<DictionaryStorageMock>>();
+    std::unique_ptr<DictionaryStorageMock> storageInit = std::make_unique<StrictMock<DictionaryStorageMock>>();
     DictionaryStorageMock* storage = storageInit.get();
 
     DefaultDictionaryRepository repository{std::move(storageInit)};
@@ -72,8 +70,8 @@ TEST_F(DefaultDictionaryRepositoryTest, shouldRemoveWordFromDictionaryInStorage)
 
 TEST_F(DefaultDictionaryRepositoryTest, shouldChangeWordTranslationFromDictionaryInStorage)
 {
-    EXPECT_CALL(*storage, changeWordTranslationFromDictionary(dictionaryWord1.englishWord,
-                                                              newDictionaryWordTranslation, dictionaryName1));
+    EXPECT_CALL(*storage, changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
+                                                              dictionaryName1));
 
     repository.changeWordTranslationFromDictionary(dictionaryWord1.englishWord, newDictionaryWordTranslation,
                                                    dictionaryName1);

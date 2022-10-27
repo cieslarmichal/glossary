@@ -4,7 +4,7 @@
 
 #include "fileSystem/GetProjectPath.h"
 
-namespace glossary::dictionary::repository
+namespace glossary::dictionary
 {
 const std::string DictionaryPersistentStorage::directory{common::fileSystem::getProjectPath("glossary") +
                                                          "repositoryFiles/"};

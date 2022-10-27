@@ -3,13 +3,12 @@
 namespace glossary::dictionary
 {
 
-DefaultDictionaryService::DefaultDictionaryService(
-    std::shared_ptr<repository::DictionaryRepository> dictionaryRepositoryInit,
-    std::unique_ptr<DictionaryNamesRetriever> namesRetriever,
-    std::unique_ptr<DictionaryWordsRetriever> wordsRetriever,
-    std::unique_ptr<RandomDictionaryWordRetriever> randomWordRetriever,
-    std::unique_ptr<csvFileReading::DictionaryWordsReader> dictionaryWordsReaderInit,
-    std::unique_ptr<ObserverService> observerServiceInit)
+DefaultDictionaryService::DefaultDictionaryService(std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit,
+                                                   std::unique_ptr<DictionaryNamesRetriever> namesRetriever,
+                                                   std::unique_ptr<DictionaryWordsRetriever> wordsRetriever,
+                                                   std::unique_ptr<RandomDictionaryWordRetriever> randomWordRetriever,
+                                                   std::unique_ptr<DictionaryWordsReader> dictionaryWordsReaderInit,
+                                                   std::unique_ptr<ObserverService> observerServiceInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)},
       dictionaryNamesRetriever{std::move(namesRetriever)},
       dictionaryWordsRetriever{std::move(wordsRetriever)},
@@ -43,8 +42,7 @@ DefaultDictionaryService::getDictionaryNamesContainingEnglishWord(const std::str
 std::vector<std::string> DefaultDictionaryService::getDictionaryNamesContainingEnglishWordTranslation(
     const std::string& englishWordTranslation) const
 {
-    return dictionaryNamesRetriever->retrieveDictionaryNamesContainingEnglishWordTranslation(
-        englishWordTranslation);
+    return dictionaryNamesRetriever->retrieveDictionaryNamesContainingEnglishWordTranslation(englishWordTranslation);
 }
 
 std::optional<std::vector<DictionaryWord>>
@@ -69,8 +67,7 @@ std::optional<DictionaryWord> DefaultDictionaryService::getRandomDictionaryWord(
     return randomDictionaryWordRetriever->getRandomDictionaryWord();
 }
 
-std::optional<DictionaryWord>
-DefaultDictionaryService::getRandomDictionaryWord(const std::string& dictionaryName) const
+std::optional<DictionaryWord> DefaultDictionaryService::getRandomDictionaryWord(const std::string& dictionaryName) const
 {
     return randomDictionaryWordRetriever->getRandomDictionaryWord(dictionaryName);
 }
@@ -83,14 +80,12 @@ void DefaultDictionaryService::addDictionary(const std::string& dictionaryName)
 void DefaultDictionaryService::addDictionaryFromFile(const std::string& dictionaryName,
                                                      const std::string& dictionaryWordsPath)
 {
-    if (const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath))
+    const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath);
+    
+    dictionaryRepository->addDictionary({dictionaryName, dictionaryWordsFromFile});
+    if (const auto englishWordsFromAddedDictionary = dictionaryWordsRetriever->retrieveEnglishWords(dictionaryName))
     {
-        dictionaryRepository->addDictionary({dictionaryName, *dictionaryWordsFromFile});
-        if (const auto englishWordsFromAddedDictionary =
-                dictionaryWordsRetriever->retrieveEnglishWords(dictionaryName))
-        {
-            notifyObservers(*englishWordsFromAddedDictionary);
-        }
+        notifyObservers(*englishWordsFromAddedDictionary);
     }
 }
 

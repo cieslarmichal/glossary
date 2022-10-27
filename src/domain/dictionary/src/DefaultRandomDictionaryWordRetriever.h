@@ -13,7 +13,7 @@ namespace glossary::dictionary
 class DefaultRandomDictionaryWordRetriever : public RandomDictionaryWordRetriever
 {
 public:
-    DefaultRandomDictionaryWordRetriever(std::shared_ptr<repository::DictionaryRepository>,
+    DefaultRandomDictionaryWordRetriever(std::shared_ptr<DictionaryRepository>,
                                          std::unique_ptr<DictionaryWordRandomizer>);
 
     std::optional<DictionaryWord> getRandomDictionaryWord() const override;
@@ -22,7 +22,7 @@ public:
 private:
     std::optional<DictionaryWord> randomizeDictionaryWord(const std::vector<DictionaryWord>&) const;
 
-    std::shared_ptr<repository::DictionaryRepository> dictionaryRepository;
+    std::shared_ptr<DictionaryRepository> dictionaryRepository;
     std::unique_ptr<DictionaryWordRandomizer> dictionaryWordRandomizer;
     DictionaryWordAccumulator dictionaryWordAccumulator;
     DictionaryFinder dictionaryFinder;

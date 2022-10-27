@@ -1,17 +1,17 @@
 #pragma once
 
-#include <optional>
+#include <string>
+#include <vector>
 
-#include "Dictionary.h"
+#include "DictionaryWord.h"
 
-namespace glossary::dictionary::csvFileReading
+namespace glossary::dictionary
 {
 class DictionaryWordsReader
 {
 public:
     virtual ~DictionaryWordsReader() = default;
 
-    virtual std::optional<std::vector<DictionaryWord>>
-    readDictionaryWords(const std::string& absolutePath) const = 0;
+    virtual std::vector<DictionaryWord> readDictionaryWords(const std::string& absolutePath) const = 0;
 };
 }
