@@ -2,10 +2,10 @@
 
 #include <memory>
 
-#include "WordsDescriptionsMemoryStorage.h"
-#include "WordsDescriptionsSerializer.h"
-#include "WordsDescriptionsStorage.h"
 #include "fileSystem/FileAccess.h"
+#include "serializers/WordsDescriptionsSerializer.h"
+#include "WordsDescriptionsMemoryStorage.h"
+#include "WordsDescriptionsStorage.h"
 
 namespace glossary::dictionary
 {

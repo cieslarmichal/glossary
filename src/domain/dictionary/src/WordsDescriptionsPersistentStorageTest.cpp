@@ -2,19 +2,18 @@
 
 #include "gtest/gtest.h"
 
-#include "WordsDescriptionsSerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
+#include "serializers/WordsDescriptionsSerializerMock.h"
 
-#include "fileSystem/GetProjectPath.h"
 #include "fileSystem/exceptions/FileNotFound.h"
+#include "fileSystem/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;
 
 namespace
 {
-const std::string filePath{common::fileSystem::getProjectPath("glossary") +
-                           "repositoryFiles/wordsDescriptions.txt"};
+const std::string filePath{common::fileSystem::getProjectPath("glossary") + "repositoryFiles/wordsDescriptions.txt"};
 const std::string nonExistingWord("nonExistingWord");
 const std::string englishWord1("englishWord1");
 const std::string englishWord2("englishWord2");
@@ -61,8 +60,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithFileWit
 
 TEST_F(WordsDescriptionsPersistentStorageTest, givenInvalidFile_shouldReturnNoWords)
 {
-    EXPECT_CALL(*fileAccess, readContent(filePath))
-        .WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualWords = persistentStorage.getWordsDescriptions();
@@ -82,8 +80,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenWordAddition_shouldAddWordAn
     ASSERT_EQ(persistentStorage.size(), 3);
 }
 
-TEST_F(WordsDescriptionsPersistentStorageTest,
-       givenWordAdditionAndNonExistingFile_shouldAddWordAndNotSerialize)
+TEST_F(WordsDescriptionsPersistentStorageTest, givenWordAdditionAndNonExistingFile_shouldAddWordAndNotSerialize)
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
@@ -116,8 +113,7 @@ TEST_F(WordsDescriptionsPersistentStorageTest, givenNonExistingEnglishWord_shoul
     ASSERT_EQ(actualWord, std::nullopt);
 }
 
-TEST_F(WordsDescriptionsPersistentStorageTest,
-       givenTwoWordsDescriptions_shouldContainThoseTwoWordsDescriptions)
+TEST_F(WordsDescriptionsPersistentStorageTest, givenTwoWordsDescriptions_shouldContainThoseTwoWordsDescriptions)
 {
     expectTwoWordsDescriptionsLoad();
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};

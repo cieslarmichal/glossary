@@ -6,18 +6,13 @@ set(SOURCES
         src/DictionaryWordsCsvReader.cpp
         src/DefaultDictionaryWordRandomizer.cpp
         src/DefaultDictionaryService.cpp
-        src/DictionaryNameSelector.cpp
-        src/DictionaryFinder.cpp
-        src/DictionaryWordAccumulator.cpp
-        src/DefaultDictionaryNamesRetriever.cpp
         src/DefaultDictionaryWordsRetriever.cpp
         src/DefaultRandomDictionaryWordRetriever.cpp
         src/DictionaryObserverService.cpp
-        src/WordsDictionaryMembershipFinder.cpp
         src/DefaultWordDescriptionRepository.cpp
         src/WordsDescriptionsMemoryStorage.cpp
         src/WordsDescriptionsPersistentStorage.cpp
-        src/WordsDescriptionsJsonSerializer.cpp
+        src/serializers/WordsDescriptionsJsonSerializer.cpp
         src/clients/WordsApiClientImpl.cpp
         )
 
@@ -40,7 +35,7 @@ set(UT_SOURCES
         src/DefaultWordDescriptionRepositoryTest.cpp
         src/WordsDescriptionsMemoryStorageTest.cpp
         src/WordsDescriptionsPersistentStorageTest.cpp
-        src/WordsDescriptionsJsonSerializerTest.cpp
+        src/serializers/WordsDescriptionsJsonSerializerTest.cpp
         src/clients/WordsApiClientImplTest.cpp
         )
 
