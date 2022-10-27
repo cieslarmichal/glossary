@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "DictionaryWordRandomizerMock.h"
-#include "repository/DictionaryRepositoryMock.h"
+#include "repositories/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

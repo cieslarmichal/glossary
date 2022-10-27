@@ -7,6 +7,6 @@ namespace glossary::dictionary
 class DictionaryNameSelector
 {
 public:
-    std::vector<std::string> selectNames(const Dictionaries&) const;
+    std::vector<std::string> selectNames(const std::vector<Dictionary>&) const;
 };
 }

@@ -12,7 +12,7 @@ const std::string DictionaryPersistentStorage::filename{directory + "dictionarie
 
 DictionaryPersistentStorage::DictionaryPersistentStorage(
     std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit,
-    std::shared_ptr<const serialization::DictionarySerializer> serializerInit)
+    std::shared_ptr<const DictionarySerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 
 {

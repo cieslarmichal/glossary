@@ -19,7 +19,7 @@ public:
     void removeWordFromDictionary(const std::string&, const std::string&) override;
     void changeWordTranslationFromDictionary(const std::string&, const std::string&, const std::string&) override;
     std::optional<Dictionary> getDictionary(const std::string&) const override;
-    Dictionaries getDictionaries() const override;
+    std::vector<Dictionary> getDictionaries() const override;
     bool containsDictionary(const std::string&) const override;
 
 private:

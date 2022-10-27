@@ -2,13 +2,13 @@
 
 #include "gtest/gtest.h"
 
-#include "csvFileReading/DictionaryWordsReaderMock.h"
 #include "DictionaryNamesRetrieverMock.h"
 #include "DictionaryObserverMock.h"
+#include "DictionaryWordsReaderMock.h"
 #include "DictionaryWordsRetrieverMock.h"
 #include "ObserverServiceMock.h"
 #include "RandomDictionaryWordRetrieverMock.h"
-#include "repository/DictionaryRepositoryMock.h"
+#include "repositories/DictionaryRepositoryMock.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

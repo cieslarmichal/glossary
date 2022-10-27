@@ -5,7 +5,7 @@
 #include "DictionaryFinder.h"
 #include "DictionaryWordAccumulator.h"
 #include "DictionaryWordsRetriever.h"
-#include "repository/DictionaryRepository.h"
+#include "repositories/DictionaryRepository.h"
 
 namespace glossary::dictionary
 {

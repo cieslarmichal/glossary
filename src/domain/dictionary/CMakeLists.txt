@@ -1,9 +1,9 @@
 set(SOURCES
-        src/repository/DefaultDictionaryRepository.cpp
-        src/repository/DictionaryMemoryStorage.cpp
-        src/repository/DictionaryPersistentStorage.cpp
-        src/serialization/DictionaryJsonSerializer.cpp
-        src/csvFileReading/DictionaryWordsCsvReader.cpp
+        src/repositories/DefaultDictionaryRepository.cpp
+        src/repositories/DictionaryMemoryStorage.cpp
+        src/repositories/DictionaryPersistentStorage.cpp
+        src/serializers/DictionaryJsonSerializer.cpp
+        src/DictionaryWordsCsvReader.cpp
         src/DefaultDictionaryWordRandomizer.cpp
         src/DefaultDictionaryService.cpp
         src/DictionaryNameSelector.cpp
@@ -22,11 +22,11 @@ set(SOURCES
         )
 
 set(UT_SOURCES
-        src/repository/DefaultDictionaryRepositoryTest.cpp
-        src/repository/DictionaryMemoryStorageTest.cpp
-        src/repository/DictionaryPersistentStorageTest.cpp
-        src/serialization/DictionaryJsonSerializerTest.cpp
-        src/csvFileReading/DictionaryWordsCsvReaderTest.cpp
+        src/repositories/DefaultDictionaryRepositoryTest.cpp
+        src/repositories/DictionaryMemoryStorageTest.cpp
+        src/repositories/DictionaryPersistentStorageTest.cpp
+        src/serializers/DictionaryJsonSerializerTest.cpp
+        src/DictionaryWordsCsvReaderTest.cpp
         src/DefaultDictionaryWordRandomizerTest.cpp
         src/DefaultDictionaryServiceTest.cpp
         src/DictionaryNameSelectorTest.cpp

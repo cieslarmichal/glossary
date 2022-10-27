@@ -16,7 +16,7 @@ public:
     virtual void removeWordFromDictionary(const std::string&, const std::string&) = 0;
     virtual void changeWordTranslationFromDictionary(const std::string&, const std::string&, const std::string&) = 0;
     virtual std::optional<Dictionary> getDictionary(const std::string&) const = 0;
-    virtual Dictionaries getDictionaries() const = 0;
+    virtual std::vector<Dictionary> getDictionaries() const = 0;
     virtual bool containsDictionary(const std::string&) const = 0;
 };
 }

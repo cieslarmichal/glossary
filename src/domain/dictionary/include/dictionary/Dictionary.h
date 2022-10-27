@@ -3,8 +3,8 @@
 #include <ostream>
 #include <vector>
 
-#include "DictionaryWord.h"
 #include "collection/StlOperators.h"
+#include "DictionaryWord.h"
 
 namespace glossary::dictionary
 {
@@ -13,8 +13,6 @@ struct Dictionary
     std::string name;
     std::vector<DictionaryWord> words;
 };
-
-using Dictionaries = std::vector<Dictionary>;
 
 inline bool operator==(const Dictionary& lhs, const Dictionary& rhs)
 {

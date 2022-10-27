@@ -2,11 +2,11 @@
 
 #include "gmock/gmock.h"
 
-#include "DictionaryRepository.h"
+#include "DictionaryStorage.h"
 
 namespace glossary::dictionary
 {
-class DictionaryRepositoryMock : public DictionaryRepository
+class DictionaryStorageMock : public DictionaryStorage
 {
 public:
     MOCK_METHOD1(addDictionary, void(const std::string&));
@@ -16,7 +16,9 @@ public:
     MOCK_METHOD2(removeWordFromDictionary, void(const std::string&, const std::string&));
     MOCK_METHOD3(changeWordTranslationFromDictionary, void(const std::string&, const std::string&, const std::string&));
     MOCK_CONST_METHOD1(getDictionary, std::optional<Dictionary>(const std::string&));
-    MOCK_CONST_METHOD0(getDictionaries, Dictionaries());
+    MOCK_CONST_METHOD0(getDictionaries, std::vector<Dictionary>());
     MOCK_CONST_METHOD1(containsDictionary, bool(const std::string&));
+    MOCK_CONST_METHOD0(size, std::vector<Dictionary>::size_type());
+    MOCK_CONST_METHOD0(empty, bool());
 };
 }

@@ -10,8 +10,8 @@ class DictionaryWordAccumulator
 {
 public:
     std::vector<DictionaryWord> accumulateDictionaryWords(const Dictionary&) const;
-    std::vector<DictionaryWord> accumulateDictionaryWords(const Dictionaries&) const;
+    std::vector<DictionaryWord> accumulateDictionaryWords(const std::vector<Dictionary>&) const;
     std::vector<std::string> accumulateEnglishWords(const Dictionary&) const;
-    std::vector<std::string> accumulateEnglishWords(const Dictionaries&) const;
+    std::vector<std::string> accumulateEnglishWords(const std::vector<Dictionary>&) const;
 };
 }

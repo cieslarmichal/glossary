@@ -2,13 +2,13 @@
 
 #include <memory>
 
-#include "csvFileReading/DictionaryWordsReader.h"
 #include "DictionaryNamesRetriever.h"
 #include "DictionaryService.h"
+#include "DictionaryWordsReader.h"
 #include "DictionaryWordsRetriever.h"
 #include "ObserverService.h"
 #include "RandomDictionaryWordRetriever.h"
-#include "repository/DictionaryRepository.h"
+#include "repositories/DictionaryRepository.h"
 
 namespace glossary::dictionary
 {
@@ -20,7 +20,7 @@ public:
                              std::unique_ptr<DictionaryWordsReader>, std::unique_ptr<ObserverService>);
 
     std::optional<Dictionary> getDictionary(const std::string&) const override;
-    Dictionaries getDictionaries() const override;
+    std::vector<Dictionary> getDictionaries() const override;
     std::vector<std::string> getDictionaryNames() const override;
     std::vector<std::string> getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const override;
     std::vector<std::string>

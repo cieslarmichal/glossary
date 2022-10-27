@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../serialization/DictionarySerializerMock.h"
+#include "../serializers/DictionarySerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
 
 #include "fileSystem/GetProjectPath.h"
@@ -74,8 +74,7 @@ public:
 
     std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
         std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
-    std::shared_ptr<serialization::DictionarySerializerMock> serializer =
-        std::make_shared<StrictMock<serialization::DictionarySerializerMock>>();
+    std::shared_ptr<DictionarySerializerMock> serializer = std::make_shared<StrictMock<DictionarySerializerMock>>();
 };
 
 TEST_F(DictionaryPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
