@@ -24,8 +24,7 @@ constexpr auto detectedSourceLanguageField = "detectedSourceLanguage";
 }
 
 GoogleTranslateClientImpl::GoogleTranslateClientImpl(
-    std::shared_ptr<const common::httpClient::HttpClient> httpClientInit,
-    GoogleTranslateClientConfig configInit)
+    std::shared_ptr<const common::httpClient::HttpClient> httpClientInit, GoogleTranslateClientConfig configInit)
     : httpClient{std::move(httpClientInit)}, config(std::move(configInit))
 {
 }
@@ -75,11 +74,6 @@ GoogleTranslateApiResponse
 GoogleTranslateClientImpl::parseGoogleTranslateResponseBody(const std::string& responseBody) const
 {
     const auto json = parseJsonText(responseBody);
-
-    if (json.empty())
-    {
-        return {};
-    }
 
     validateFieldExistence(json, dataField);
 

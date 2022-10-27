@@ -5,8 +5,6 @@ set(SOURCES
         src/serialization/DictionaryJsonSerializer.cpp
         src/csvFileReading/DictionaryWordsCsvFileReader.cpp
         src/csvFileReading/DictionaryWordsCsvFileContentValidator.cpp
-        src/DictionaryServiceFactory.cpp
-        src/DefaultDictionaryServiceFactory.cpp
         src/DefaultDictionaryWordRandomizer.cpp
         src/DefaultDictionaryService.cpp
         src/DictionaryNameSelector.cpp
@@ -21,13 +19,7 @@ set(SOURCES
         src/WordsDescriptionsMemoryStorage.cpp
         src/WordsDescriptionsPersistentStorage.cpp
         src/WordsDescriptionsJsonSerializer.cpp
-        src/WordDescriptionRepositoryFactory.cpp
-        src/DefaultWordDescriptionRepositoryFactory.cpp
-        src/DefaultWordDescriptionDownloader.cpp
-        src/WordDescriptionDownloaderFactory.cpp
-        src/DefaultWordDescriptionDownloaderFactory.cpp
-        src/WordsApiJsonResponseDeserializer.cpp
-        src/WordsApiResponseFetcher.cpp
+        src/clients/WordsApiClientImpl.cpp
         )
 
 set(UT_SOURCES
@@ -51,9 +43,7 @@ set(UT_SOURCES
         src/WordsDescriptionsMemoryStorageTest.cpp
         src/WordsDescriptionsPersistentStorageTest.cpp
         src/WordsDescriptionsJsonSerializerTest.cpp
-        src/DefaultWordDescriptionDownloaderTest.cpp
-        src/WordsApiJsonResponseDeserializerTest.cpp
-        src/WordsApiResponseFetcherTest.cpp
+        src/clients/WordsApiClientImplTest.cpp
         )
 
 add_library(dictionary ${SOURCES})

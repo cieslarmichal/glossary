@@ -50,11 +50,11 @@ std::ostream& operator<<(std::ostream& os, const std::map<T, S>& m)
     os << "{";
     if (not m.empty())
     {
-        os << "[" << m.begin()->first << "->" << m.begin()->second << "]";
+        os << "[" << m.begin()->first << ": " << m.begin()->second << "]";
         for (auto it = std::next(m.begin()); it != m.end(); ++it)
         {
             os << ", "
-               << "[" << it->first << "->" << it->second << "]";
+               << "[" << it->first << ": " << it->second << "]";
         }
     }
     return os << "}";
@@ -67,7 +67,7 @@ std::ostream& operator<<(std::ostream& os, const std::optional<std::map<T, S>>& 
     {
         return os << *mOpt;
     }
-    
+
     return os << "none";
 }
 }

@@ -22,7 +22,7 @@ inline bool operator==(const HttpGetRequestPayload& lhs, const HttpGetRequestPay
 
 inline std::ostream& operator<<(std::ostream& os, const HttpGetRequestPayload& getPayload)
 {
-    return os << "{url:" << getPayload.url << ",headers:" << getPayload.headers
-              << ",queries:" << getPayload.queries << "}";
+    return os << "{url: " << getPayload.url << ", headers: " << getPayload.headers
+              << ", queries: " << getPayload.queries << "}";
 }
 }
