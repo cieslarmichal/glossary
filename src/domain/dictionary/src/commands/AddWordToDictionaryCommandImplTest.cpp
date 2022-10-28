@@ -22,7 +22,7 @@ public:
     AddWordToDictionaryCommandImpl command{dictionaryRepository};
 };
 
-TEST_F(AddWordToDictionaryCommandImplTest, shouldCreateDictionary)
+TEST_F(AddWordToDictionaryCommandImplTest, shouldAddWordToDictionary)
 {
     EXPECT_CALL(*dictionaryRepository, addWordToDictionary(dictionaryWord, dictionaryName));
 

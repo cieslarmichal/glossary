@@ -12,15 +12,16 @@ class DefaultDictionaryRepository : public DictionaryRepository
 public:
     explicit DefaultDictionaryRepository(std::unique_ptr<DictionaryStorage>);
 
-    void addDictionary(const std::string&) override;
+    void addDictionary(const std::string& dictionaryName) override;
     void addDictionary(const Dictionary&) override;
-    void addWordToDictionary(const DictionaryWord&, const std::string&) override;
-    void removeDictionary(const std::string&) override;
-    void removeWordFromDictionary(const std::string&, const std::string&) override;
-    void changeWordTranslationFromDictionary(const std::string&, const std::string&, const std::string&) override;
-    std::optional<Dictionary> getDictionary(const std::string&) const override;
+    void addWordToDictionary(const DictionaryWord&, const std::string& dictionaryName) override;
+    void removeDictionary(const std::string& dictionaryName) override;
+    void removeWordFromDictionary(const std::string& englishWord, const std::string& dictionaryName) override;
+    void changeWordTranslationFromDictionary(const std::string& englishWord, const std::string& translation,
+                                             const std::string& dictionaryName) override;
+    std::optional<Dictionary> getDictionary(const std::string& dictionaryName) const override;
     std::vector<Dictionary> getDictionaries() const override;
-    bool containsDictionary(const std::string&) const override;
+    bool containsDictionary(const std::string& dictionaryName) const override;
 
 private:
     std::unique_ptr<DictionaryStorage> storage;
