@@ -11,8 +11,8 @@ namespace glossary::dictionary
 class GetRandomWordFromDictionaryQueryImpl : public GetRandomWordFromDictionaryQuery
 {
 public:
-    explicit GetRandomWordFromDictionaryQueryImpl(std::shared_ptr<DictionaryRepository>,
-                                                  std::shared_ptr<common::random::RandomNumberGenerator>);
+    GetRandomWordFromDictionaryQueryImpl(std::shared_ptr<DictionaryRepository>,
+                                         std::shared_ptr<common::random::RandomNumberGenerator>);
 
     DictionaryWord getRandomWord(const std::string& dictionaryName) const override;
 
