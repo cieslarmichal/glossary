@@ -3,7 +3,7 @@ set(SOURCES
         src/repositories/DictionaryMemoryStorage.cpp
         src/repositories/DictionaryPersistentStorage.cpp
         src/serializers/DictionaryJsonSerializer.cpp
-        src/DictionaryWordsCsvReader.cpp
+        src/DictionaryWordsCsvReaderImpl.cpp
         src/DefaultDictionaryService.cpp
         src/DictionaryObserverService.cpp
         src/repositories/DefaultWordDescriptionRepository.cpp
@@ -18,7 +18,7 @@ set(UT_SOURCES
         src/repositories/DictionaryMemoryStorageTest.cpp
         src/repositories/DictionaryPersistentStorageTest.cpp
         src/serializers/DictionaryJsonSerializerTest.cpp
-        src/DictionaryWordsCsvReaderTest.cpp
+        src/DictionaryWordsCsvReaderImplTest.cpp
         src/DefaultDictionaryServiceTest.cpp
         src/DictionaryObserverServiceTest.cpp
         src/repositories/DefaultWordDescriptionRepositoryTest.cpp

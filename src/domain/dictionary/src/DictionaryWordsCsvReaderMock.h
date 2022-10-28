@@ -2,11 +2,11 @@
 
 #include "gmock/gmock.h"
 
-#include "DictionaryWordsReader.h"
+#include "DictionaryWordsCsvReader.h"
 
 namespace glossary::dictionary
 {
-class DictionaryWordsReaderMock : public DictionaryWordsReader
+class DictionaryWordsCsvReaderMock : public DictionaryWordsCsvReader
 {
 public:
     MOCK_METHOD(std::vector<DictionaryWord>, readDictionaryWords, (const std::string& absolutePath), (const));

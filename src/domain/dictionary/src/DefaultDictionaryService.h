@@ -3,7 +3,7 @@
 #include <memory>
 
 #include "DictionaryService.h"
-#include "DictionaryWordsReader.h"
+#include "DictionaryWordsCsvReader.h"
 #include "ObserverService.h"
 #include "random/RandomNumberGenerator.h"
 #include "repositories/DictionaryRepository.h"
@@ -13,7 +13,7 @@ namespace glossary::dictionary
 class DefaultDictionaryService : public DictionaryService
 {
 public:
-    DefaultDictionaryService(std::shared_ptr<DictionaryRepository>, std::unique_ptr<DictionaryWordsReader>,
+    DefaultDictionaryService(std::shared_ptr<DictionaryRepository>, std::unique_ptr<DictionaryWordsCsvReader>,
                              std::unique_ptr<ObserverService>, std::shared_ptr<common::random::RandomNumberGenerator>);
 
     std::optional<Dictionary> getDictionary(const std::string& dictionaryName) const override;
@@ -45,7 +45,7 @@ private:
     std::optional<DictionaryWord> randomizeDictionaryWord(const std::vector<DictionaryWord>&) const;
 
     std::shared_ptr<DictionaryRepository> dictionaryRepository;
-    std::unique_ptr<DictionaryWordsReader> dictionaryWordsReader;
+    std::unique_ptr<DictionaryWordsCsvReader> dictionaryWordsReader;
     std::unique_ptr<ObserverService> observerService;
     std::shared_ptr<common::random::RandomNumberGenerator> randomNumberGenerator;
 };

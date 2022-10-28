@@ -5,7 +5,7 @@ namespace glossary::dictionary
 
 DefaultDictionaryService::DefaultDictionaryService(
     std::shared_ptr<DictionaryRepository> dictionaryRepositoryInit,
-    std::unique_ptr<DictionaryWordsReader> dictionaryWordsReaderInit,
+    std::unique_ptr<DictionaryWordsCsvReader> dictionaryWordsReaderInit,
     std::unique_ptr<ObserverService> observerServiceInit,
     std::shared_ptr<common::random::RandomNumberGenerator> randomNumberGeneratorInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)},

@@ -3,7 +3,7 @@
 #include "gtest/gtest.h"
 
 #include "DictionaryObserverMock.h"
-#include "DictionaryWordsReaderMock.h"
+#include "DictionaryWordsCsvReaderMock.h"
 #include "ObserverServiceMock.h"
 #include "random/RandomNumberGeneratorMock.h"
 #include "repositories/DictionaryRepositoryMock.h"
@@ -49,8 +49,9 @@ public:
     std::shared_ptr<DictionaryRepositoryMock> dictionaryRepository =
         std::make_shared<StrictMock<DictionaryRepositoryMock>>();
 
-    std::unique_ptr<DictionaryWordsReaderMock> readerInit = std::make_unique<StrictMock<DictionaryWordsReaderMock>>();
-    DictionaryWordsReaderMock* reader = readerInit.get();
+    std::unique_ptr<DictionaryWordsCsvReaderMock> readerInit =
+        std::make_unique<StrictMock<DictionaryWordsCsvReaderMock>>();
+    DictionaryWordsCsvReaderMock* reader = readerInit.get();
 
     std::unique_ptr<ObserverServiceMock> observerServiceInit = std::make_unique<StrictMock<ObserverServiceMock>>();
     ObserverServiceMock* observerService = observerServiceInit.get();

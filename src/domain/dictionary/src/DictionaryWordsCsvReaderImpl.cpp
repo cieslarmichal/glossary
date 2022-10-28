@@ -1,4 +1,4 @@
-#include "DictionaryWordsCsvReader.h"
+#include "DictionaryWordsCsvReaderImpl.h"
 
 #include <algorithm>
 
@@ -15,12 +15,13 @@ constexpr auto translationIndex{1};
 constexpr auto requiredAmountOfWordsInLine{2};
 }
 
-DictionaryWordsCsvReader::DictionaryWordsCsvReader(std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit)
+DictionaryWordsCsvReaderImpl::DictionaryWordsCsvReaderImpl(
+    std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit)
     : fileAccess{std::move(fileAccessInit)}
 {
 }
 
-std::vector<DictionaryWord> DictionaryWordsCsvReader::readDictionaryWords(const std::string& absolutePath) const
+std::vector<DictionaryWord> DictionaryWordsCsvReaderImpl::readDictionaryWords(const std::string& absolutePath) const
 {
     const auto csvDictionaryWords = fileAccess->readContent(absolutePath);
 
@@ -55,7 +56,7 @@ std::vector<DictionaryWord> DictionaryWordsCsvReader::readDictionaryWords(const 
     return dictionaryWords;
 }
 
-bool DictionaryWordsCsvReader::dictionaryWordsCsvIsValid(const std::string& csvDictionaryWords) const
+bool DictionaryWordsCsvReaderImpl::dictionaryWordsCsvIsValid(const std::string& csvDictionaryWords) const
 {
     const auto cvsLines = common::collection::split(csvDictionaryWords);
 
@@ -66,7 +67,7 @@ bool DictionaryWordsCsvReader::dictionaryWordsCsvIsValid(const std::string& csvD
     return csvLinesAreValid;
 }
 
-bool DictionaryWordsCsvReader::dictionaryWordCsvLineIsValid(const std::string& csvDictionaryWordLine) const
+bool DictionaryWordsCsvReaderImpl::dictionaryWordCsvLineIsValid(const std::string& csvDictionaryWordLine) const
 {
     if (csvDictionaryWordLine.empty())
     {

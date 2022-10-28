@@ -1,23 +1,17 @@
 #pragma once
 
-#include <memory>
+#include <string>
+#include <vector>
 
-#include "DictionaryWordsReader.h"
-#include "fileSystem/FileAccess.h"
+#include "DictionaryWord.h"
 
 namespace glossary::dictionary
 {
-class DictionaryWordsCsvReader : public DictionaryWordsReader
+class DictionaryWordsCsvReader
 {
 public:
-    explicit DictionaryWordsCsvReader(std::shared_ptr<const common::fileSystem::FileAccess>);
+    virtual ~DictionaryWordsCsvReader() = default;
 
-    std::vector<DictionaryWord> readDictionaryWords(const std::string& absolutePath) const override;
-
-private:
-    bool dictionaryWordsCsvIsValid(const std::string& csvDictionaryWords) const;
-    bool dictionaryWordCsvLineIsValid(const std::string& csvDictionaryWordLine) const;
-
-    std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
+    virtual std::vector<DictionaryWord> readDictionaryWords(const std::string& absolutePath) const = 0;
 };
 }

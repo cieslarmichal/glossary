@@ -1,11 +1,11 @@
-#include "DictionaryWordsCsvReader.h"
+#include "DictionaryWordsCsvReaderImpl.h"
 
 #include "gtest/gtest.h"
 
 #include "fileSystem/FileAccessMock.h"
 
-#include "fileSystem/exceptions/FileNotFound.h"
 #include "exceptions/InvalidDictionaryWordsCsvFile.h"
+#include "fileSystem/exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;
@@ -31,31 +31,29 @@ const std::vector<DictionaryWord> dictionaryWords{dictionaryWord1, dictionaryWor
 const std::string emptyContent{};
 }
 
-class DictionaryWordsCsvFileReaderTest : public Test
+class DictionaryWordsCsvFileReaderImplTest : public Test
 {
 public:
     std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
         std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
-    DictionaryWordsCsvReader reader{fileAccess};
+    DictionaryWordsCsvReaderImpl reader{fileAccess};
 };
 
-
-TEST_F(DictionaryWordsCsvFileReaderTest, givenIncorrectFileContentFormat1_shouldReturnThrowError)
+TEST_F(DictionaryWordsCsvFileReaderImplTest, givenIncorrectFileContentFormat1_shouldReturnThrowError)
 {
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath)).WillOnce(Return(contentWithIncorrectFormat));
 
     ASSERT_THROW(reader.readDictionaryWords(absoluteDictionaryWordsPath), exceptions::InvalidDictionaryWordsCsvFile);
 }
 
-TEST_F(DictionaryWordsCsvFileReaderTest, givenIncorrectFileContentFormat2_shouldReturnThrowError)
+TEST_F(DictionaryWordsCsvFileReaderImplTest, givenIncorrectFileContentFormat2_shouldReturnThrowError)
 {
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath)).WillOnce(Return(contentWithoutSeparator));
 
     ASSERT_THROW(reader.readDictionaryWords(absoluteDictionaryWordsPath), exceptions::InvalidDictionaryWordsCsvFile);
 }
 
-
-TEST_F(DictionaryWordsCsvFileReaderTest, givenEmptyDictionaryWordsContent_shouldReturnEmptyDictionaryWords)
+TEST_F(DictionaryWordsCsvFileReaderImplTest, givenEmptyDictionaryWordsContent_shouldReturnEmptyDictionaryWords)
 {
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath)).WillOnce(Return(emptyContent));
 
@@ -64,7 +62,7 @@ TEST_F(DictionaryWordsCsvFileReaderTest, givenEmptyDictionaryWordsContent_should
     EXPECT_TRUE(actualDictionaryWords.empty());
 }
 
-TEST_F(DictionaryWordsCsvFileReaderTest,
+TEST_F(DictionaryWordsCsvFileReaderImplTest,
        givenContentWithEnglishWordWithoutTranslation_shouldReturnDictionaryWordsWithEnglishWordAndNoneTranslation)
 {
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath))
@@ -77,7 +75,7 @@ TEST_F(DictionaryWordsCsvFileReaderTest,
     EXPECT_EQ(actualDictionaryWords, expectedDictionaryWords);
 }
 
-TEST_F(DictionaryWordsCsvFileReaderTest, givenDictionaryWordsContent_shouldReadDictionaryWords)
+TEST_F(DictionaryWordsCsvFileReaderImplTest, givenDictionaryWordsContent_shouldReadDictionaryWords)
 {
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath)).WillOnce(Return(content));
 
@@ -86,7 +84,7 @@ TEST_F(DictionaryWordsCsvFileReaderTest, givenDictionaryWordsContent_shouldReadD
     EXPECT_EQ(actualDictionaryWords, dictionaryWords);
 }
 
-TEST_F(DictionaryWordsCsvFileReaderTest, givenDictionaryWordsContentWithWhiteSpaces_shouldReadDictionaryWords)
+TEST_F(DictionaryWordsCsvFileReaderImplTest, givenDictionaryWordsContentWithWhiteSpaces_shouldReadDictionaryWords)
 {
     EXPECT_CALL(*fileAccess, readContent(absoluteDictionaryWordsPath)).WillOnce(Return(contentWithWhiteSpaces));
 
