@@ -13,6 +13,7 @@ set(SOURCES
         src/clients/WordsApiClientImpl.cpp
         src/queries/GetDictionaryQueryImpl.cpp
         src/queries/GetDictionariesQueryImpl.cpp
+        src/queries/GetDictionariesNamesQueryImpl.cpp
         )
 
 set(UT_SOURCES
@@ -30,6 +31,7 @@ set(UT_SOURCES
         src/clients/WordsApiClientImplTest.cpp
         src/queries/GetDictionaryQueryImplTest.cpp
         src/queries/GetDictionariesQueryImplTest.cpp
+        src/queries/GetDictionariesNamesQueryImplTest.cpp
         )
 
 add_library(dictionary ${SOURCES})
