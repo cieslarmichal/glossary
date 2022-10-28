@@ -16,6 +16,7 @@ set(SOURCES
         src/queries/GetDictionariesNamesQueryImpl.cpp
         src/queries/GetDictionaryEnglishWordsQueryImpl.cpp
         src/queries/GetDictionariesEnglishWordsQueryImpl.cpp
+        src/queries/GetRandomWordFromDictionaryQueryImpl.cpp
         )
 
 set(UT_SOURCES
@@ -36,6 +37,7 @@ set(UT_SOURCES
         src/queries/GetDictionariesNamesQueryImplTest.cpp
         src/queries/GetDictionaryEnglishWordsQueryImplTest.cpp
         src/queries/GetDictionariesEnglishWordsQueryImplTest.cpp
+        src/queries/GetRandomWordFromDictionaryQueryImplTest.cpp
         )
 
 add_library(dictionary ${SOURCES})
