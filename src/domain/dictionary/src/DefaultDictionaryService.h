@@ -40,16 +40,8 @@ public:
 
 private:
     void notifyObservers(const std::vector<std::string>&) override;
-    std::vector<std::string> findDictionariesContainingEnglishWord(const std::string&,
-                                                                   const std::vector<Dictionary>&) const;
-    std::vector<std::string> findDictionariesContainingEnglishWordTranslation(const std::string& englishWordTranslation,
-                                                                              const std::vector<Dictionary>&) const;
     bool englishWordExistsInDictionary(const std::string&, const Dictionary&) const;
     bool englishWordTranslationExistsInDictionary(const std::string& englishWordTranslation, const Dictionary&) const;
-    std::optional<std::vector<std::string>> retrieveEnglishWords(const std::string&) const;
-    std::vector<std::string> retrieveEnglishWords() const;
-    std::optional<DictionaryWord> pickRandomDictionaryWord() const;
-    std::optional<DictionaryWord> pickRandomDictionaryWord(const std::string& dictionaryName) const;
     std::optional<DictionaryWord> randomizeDictionaryWord(const std::vector<DictionaryWord>&) const;
 
     std::shared_ptr<DictionaryRepository> dictionaryRepository;

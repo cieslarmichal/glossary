@@ -10,7 +10,7 @@ namespace glossary::dictionary
 class WordsDescriptionsSerializerMock : public WordsDescriptionsSerializer
 {
 public:
-    MOCK_CONST_METHOD1(serialize, std::string(const WordsDescriptions&));
-    MOCK_CONST_METHOD1(deserialize, WordsDescriptions(const std::string&));
+    MOCK_METHOD(std::string, serialize, (const std::vector<WordDescription>&), (const));
+    MOCK_METHOD(std::vector<WordDescription>, deserialize, (const std::string&), (const));
 };
 }

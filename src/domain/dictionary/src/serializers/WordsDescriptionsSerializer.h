@@ -9,7 +9,7 @@ class WordsDescriptionsSerializer
 public:
     virtual ~WordsDescriptionsSerializer() = default;
 
-    virtual std::string serialize(const WordsDescriptions&) const = 0;
-    virtual WordsDescriptions deserialize(const std::string&) const = 0;
+    virtual std::string serialize(const std::vector<WordDescription>&) const = 0;
+    virtual std::vector<WordDescription> deserialize(const std::string&) const = 0;
 };
 }

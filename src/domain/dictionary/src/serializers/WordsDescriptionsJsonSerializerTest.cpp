@@ -2,6 +2,9 @@
 
 #include "gtest/gtest.h"
 
+#include "exceptions/InvalidJsonError.h"
+#include "exceptions/WordDescriptionJsonMissingRequiredFieldsError.h"
+
 using namespace ::testing;
 using namespace glossary::dictionary;
 
@@ -13,22 +16,19 @@ const std::vector<std::string> synonyms{"synonym1", "synonym2"};
 const WordDescription wordDescription1{"computer", definitions, examples, synonyms};
 const WordDescription wordDescription2{"tea", {}, {}, {}};
 const WordsDescriptions wordsDescriptions1{wordDescription1, wordDescription2};
-const WordsDescriptions wordsDescriptions2{wordDescription2};
 const WordsDescriptions emptyWordsDescriptions{};
 const std::string invalidJson{"{."};
 const std::string expectedSerializedWordsDescriptions =
-    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
-const std::string serializedWordsDescriptionsWithoutWordsDescriptionsField =
-    R"({"error":[{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+    R"([{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}])";
 const std::string serializedWordsDescriptionsWithoutEnglishWordField =
-    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"error":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+    R"([{"definitions":["definition1","definition2"],"error":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}])";
 const std::string serializedWordsDescriptionsWithoutDefinitionsField =
-    R"({"wordsDescriptions":[{"error":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+    R"([{"error":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}])";
 const std::string serializedWordsDescriptionsWithoutExamplesField =
-    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"englishWord":"computer","error":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
+    R"([{"definitions":["definition1","definition2"],"englishWord":"computer","error":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}])";
 const std::string serializedWordsDescriptionsWithoutSynonymsField =
-    R"({"wordsDescriptions":[{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"error":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}]})";
-const std::string emptySerializedWordsDescriptions{};
+    R"([{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"error":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}])";
+const std::string emptySerializedWordsDescriptions{"[]"};
 }
 
 class WordsDescriptionsJsonSerializerTest : public Test
@@ -37,11 +37,11 @@ public:
     WordsDescriptionsJsonSerializer serializer;
 };
 
-TEST_F(WordsDescriptionsJsonSerializerTest, givenNoWordsDescriptions_shouldReturnEmptyString)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenNoWordsDescriptions_shouldReturnEmptyJson)
 {
     const auto actualSerializedWordsDescriptions = serializer.serialize(emptyWordsDescriptions);
 
-    EXPECT_TRUE(actualSerializedWordsDescriptions.empty());
+    EXPECT_EQ(actualSerializedWordsDescriptions, "{}");
 }
 
 TEST_F(WordsDescriptionsJsonSerializerTest, givenWordsDescriptions_shouldReturnSerializedWordsDescriptions)
@@ -51,69 +51,45 @@ TEST_F(WordsDescriptionsJsonSerializerTest, givenWordsDescriptions_shouldReturnS
     EXPECT_EQ(actualSerializedWordsDescriptions, expectedSerializedWordsDescriptions);
 }
 
-TEST_F(WordsDescriptionsJsonSerializerTest, givenInvalidJson_shouldReturnNoWordsDescriptions)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenInvalidJson_shouldThrow)
 {
-    const auto actualDescriptions = serializer.deserialize(invalidJson);
-
-    EXPECT_TRUE(actualDescriptions.empty());
+    ASSERT_THROW(serializer.deserialize(invalidJson), exceptions::InvalidJsonError);
 }
 
-TEST_F(WordsDescriptionsJsonSerializerTest,
-       givenJsonWithoutWordsDescriptionsField_shouldReturnNoWordsDescriptions)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenEmptySerializedWordsDescriptions_shouldReturnEmptyWordsDescriptions)
 {
-    const auto actualDescriptions =
-        serializer.deserialize(serializedWordsDescriptionsWithoutWordsDescriptionsField);
+    const auto actualWordsDescriptions = serializer.deserialize(emptySerializedWordsDescriptions);
 
-    EXPECT_TRUE(actualDescriptions.empty());
-}
-
-TEST_F(WordsDescriptionsJsonSerializerTest,
-       givenEmptySerializedWordsDescriptions_shouldReturnEmptyWordsDescriptions)
-{
-    const auto actualDescriptions = serializer.deserialize(emptySerializedWordsDescriptions);
-
-    EXPECT_TRUE(actualDescriptions.empty());
+    EXPECT_TRUE(actualWordsDescriptions.empty());
 }
 
 TEST_F(WordsDescriptionsJsonSerializerTest, givenSerializedWordsDescriptions_shouldReturnWordsDescriptions)
 {
-    const auto actualDescriptions = serializer.deserialize(expectedSerializedWordsDescriptions);
+    const auto actualWordsDescriptions = serializer.deserialize(expectedSerializedWordsDescriptions);
 
-    EXPECT_EQ(actualDescriptions, wordsDescriptions1);
+    EXPECT_EQ(actualWordsDescriptions, wordsDescriptions1);
 }
 
-TEST_F(
-    WordsDescriptionsJsonSerializerTest,
-    givenSerializedWordsDescriptionsFirstWithAndSecondWithoutEnglishWordField_shouldReturnFirstWordDescription)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenSerializedWordsDescriptionsWithoutEnglishWordField_shouldThrow)
 {
-    const auto actualDescriptions =
-        serializer.deserialize(serializedWordsDescriptionsWithoutEnglishWordField);
-
-    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
+    ASSERT_THROW(serializer.deserialize(serializedWordsDescriptionsWithoutEnglishWordField),
+                 exceptions::WordDescriptionJsonMissingRequiredFieldsError);
 }
 
-TEST_F(
-    WordsDescriptionsJsonSerializerTest,
-    givenSerializedWordsDescriptionsFirstWithAndSecondWithoutDefinitionsField_shouldReturnFirstWordDecription)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenSerializedWordsDescriptionsWithoutDefinitionsField_shouldThrow)
 {
-    const auto actualDescriptions =
-        serializer.deserialize(serializedWordsDescriptionsWithoutDefinitionsField);
-
-    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
+    ASSERT_THROW(serializer.deserialize(serializedWordsDescriptionsWithoutDefinitionsField),
+                 exceptions::WordDescriptionJsonMissingRequiredFieldsError);
 }
 
-TEST_F(WordsDescriptionsJsonSerializerTest,
-       givenSerializedWordsDescriptionsFirstWithAndSecondWithoutExamplesField_shouldReturnFirstWordDecription)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenSerializedWordsDescriptionsWithoutExamplesField_shouldThrow)
 {
-    const auto actualDescriptions = serializer.deserialize(serializedWordsDescriptionsWithoutExamplesField);
-
-    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
+    ASSERT_THROW(serializer.deserialize(serializedWordsDescriptionsWithoutExamplesField),
+                 exceptions::WordDescriptionJsonMissingRequiredFieldsError);
 }
 
-TEST_F(WordsDescriptionsJsonSerializerTest,
-       givenSerializedWordsDescriptionsFirstWithAndSecondWithoutSynonymsField_shouldReturnFirstWordDecription)
+TEST_F(WordsDescriptionsJsonSerializerTest, givenSerializedWordsDescriptionsWithoutSynonymsField_shouldThrow)
 {
-    const auto actualDescriptions = serializer.deserialize(serializedWordsDescriptionsWithoutSynonymsField);
-
-    EXPECT_EQ(actualDescriptions, wordsDescriptions2);
+    ASSERT_THROW(serializer.deserialize(serializedWordsDescriptionsWithoutSynonymsField),
+                 exceptions::WordDescriptionJsonMissingRequiredFieldsError);
 }

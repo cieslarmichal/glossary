@@ -9,13 +9,7 @@ namespace glossary::dictionary
 class WordsDescriptionsJsonSerializer : public WordsDescriptionsSerializer
 {
 public:
-    std::string serialize(const WordsDescriptions&) const override;
-    WordsDescriptions deserialize(const std::string&) const override;
-
-private:
-    nlohmann::json getJsonFromWordDescription(const WordDescription&) const;
-    WordsDescriptions readWordsDescriptions(const nlohmann::json&) const;
-    WordsDescriptions parseWordsDescriptions(const nlohmann::json&) const;
-    bool isWordDescriptionValid(const nlohmann::json&) const;
+    std::string serialize(const std::vector<WordDescription>&) const override;
+    std::vector<WordDescription> deserialize(const std::string&) const override;
 };
 }

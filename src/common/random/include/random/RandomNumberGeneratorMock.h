@@ -9,6 +9,6 @@ namespace common::random
 class RandomNumberGeneratorMock : public RandomNumberGenerator
 {
 public:
-    MOCK_METHOD2(generate, int(int rangeStart, int rangeEnd));
+    MOCK_METHOD(int, generate, (int rangeStart, int rangeEnd), ());
 };
 }

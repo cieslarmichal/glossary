@@ -1,94 +1,90 @@
 #include "WordsDescriptionsJsonSerializer.h"
 
+#include "fmt/core.h"
+
+#include "exceptions/InvalidJsonError.h"
+#include "exceptions/WordDescriptionJsonMissingRequiredFieldsError.h"
+
 namespace glossary::dictionary
 {
 namespace
 {
-constexpr auto wordsDescriptionsField = "wordsDescriptions";
+nlohmann::json parseJsonText(const std::string& jsonText);
+void validateFieldExistence(const nlohmann::json& data, const std::string& fieldName);
+
 constexpr auto englishWordField = "englishWord";
 constexpr auto definitionsField = "definitions";
 constexpr auto examplesField = "examples";
 constexpr auto synonymsField = "synonyms";
 }
 
-std::string WordsDescriptionsJsonSerializer::serialize(const WordsDescriptions& descriptions) const
+std::string WordsDescriptionsJsonSerializer::serialize(const std::vector<WordDescription>& wordsDescriptions) const
 {
-    nlohmann::json serialized;
-    for (const auto& wordDescription : descriptions)
+    nlohmann::json serializedWordsDescriptions = nlohmann::json::array();
+
+    for (const auto& wordDescription : wordsDescriptions)
     {
-        serialized[wordsDescriptionsField].push_back(getJsonFromWordDescription(wordDescription));
+        nlohmann::json wordDescriptionJson;
+
+        wordDescriptionJson[englishWordField] = wordDescription.englishWord;
+        wordDescriptionJson[definitionsField] = wordDescription.definitions;
+        wordDescriptionJson[examplesField] = wordDescription.examples;
+        wordDescriptionJson[synonymsField] = wordDescription.synonyms;
+
+        serializedWordsDescriptions.push_back(wordDescriptionJson);
     }
-    if (serialized.empty())
+
+    return serializedWordsDescriptions.empty() ? "{}" : serializedWordsDescriptions.dump();
+}
+
+std::vector<WordDescription> WordsDescriptionsJsonSerializer::deserialize(const std::string& jsonText) const
+{
+    const auto json = parseJsonText(jsonText);
+
+    if (json.empty())
     {
         return {};
     }
-    return serialized.dump();
-}
 
-WordsDescriptions WordsDescriptionsJsonSerializer::deserialize(const std::string& jsonText) const
-{
-    try
-    {
-        const auto json = nlohmann::json::parse(jsonText);
-        return readWordsDescriptions(json);
-    }
-    catch (const std::exception& e)
-    {
-        std::cerr << "Unable to parse wordsDescriptions:" << e.what();
-    }
-    return {};
-}
+    std::vector<WordDescription> wordsDescriptions;
 
-nlohmann::json WordsDescriptionsJsonSerializer::getJsonFromWordDescription(const WordDescription& wordDescription) const
-{
-    nlohmann::json json;
-    json[englishWordField] = wordDescription.englishWord;
-    json[definitionsField] = wordDescription.definitions;
-    json[examplesField] = wordDescription.examples;
-    json[synonymsField] = wordDescription.synonyms;
-    return json;
-}
-
-WordsDescriptions WordsDescriptionsJsonSerializer::readWordsDescriptions(const nlohmann::json& json) const
-{
-    if (json.find(wordsDescriptionsField) != json.end())
+    for (const auto& wordDescriptionData : json)
     {
-        return parseWordsDescriptions(json[wordsDescriptionsField]);
-    }
-    std::cerr << "There are no wordsDescriptions stored";
-    return {};
-}
+        validateFieldExistence(wordDescriptionData, englishWordField);
+        validateFieldExistence(wordDescriptionData, definitionsField);
+        validateFieldExistence(wordDescriptionData, examplesField);
+        validateFieldExistence(wordDescriptionData, synonymsField);
 
-WordsDescriptions
-WordsDescriptionsJsonSerializer::parseWordsDescriptions(const nlohmann::json& wordsDescriptionsJson) const
-{
-    WordsDescriptions wordsDescriptions;
-    for (const auto& wordDescriptionData : wordsDescriptionsJson)
-    {
-        if (isWordDescriptionValid(wordDescriptionData))
-        {
-            WordDescription wordDescription{wordDescriptionData[englishWordField].get<std::string>(),
-                                            wordDescriptionData[definitionsField].get<std::vector<std::string>>(),
-                                            wordDescriptionData[examplesField].get<std::vector<std::string>>(),
-                                            wordDescriptionData[synonymsField].get<std::vector<std::string>>()};
-            wordsDescriptions.emplace_back(wordDescription);
-        }
-        else
-        {
-            std::cerr << "WordDescription does not contain all required data fields";
-        }
+        WordDescription wordDescription{wordDescriptionData[englishWordField].get<std::string>(),
+                                        wordDescriptionData[definitionsField].get<std::vector<std::string>>(),
+                                        wordDescriptionData[examplesField].get<std::vector<std::string>>(),
+                                        wordDescriptionData[synonymsField].get<std::vector<std::string>>()};
+        wordsDescriptions.emplace_back(wordDescription);
     }
 
     return wordsDescriptions;
 }
 
-bool WordsDescriptionsJsonSerializer::isWordDescriptionValid(const nlohmann::json& wordDescriptionData) const
+namespace
 {
-    const auto requiredFields = {englishWordField, definitionsField, examplesField, synonymsField};
-    auto wordDescriptionValid =
-        boost::algorithm::all_of(requiredFields, [&](const auto& fieldName)
-                                 { return wordDescriptionData.find(fieldName) != wordDescriptionData.end(); });
-    return wordDescriptionValid;
+nlohmann::json parseJsonText(const std::string& jsonText)
+{
+    try
+    {
+        return nlohmann::json::parse(jsonText);
+    }
+    catch (const std::exception& e)
+    {
+        throw exceptions::InvalidJsonError{e.what()};
+    }
 }
 
+void validateFieldExistence(const nlohmann::json& data, const std::string& fieldName)
+{
+    if (data.find(fieldName) == data.end())
+    {
+        throw exceptions::WordDescriptionJsonMissingRequiredFieldsError{fmt::format("Missing {} field.", fieldName)};
+    }
+}
+}
 }
