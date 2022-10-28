@@ -20,6 +20,7 @@ set(SOURCES
         src/queries/GetRandomWordFromDictionariesQueryImpl.cpp
         src/commands/CreateDictionaryCommandImpl.cpp
         src/commands/CreateDictionaryFromCsvFileCommandImpl.cpp
+        src/commands/AddWordToDictionaryCommandImpl.cpp
         )
 
 set(UT_SOURCES
@@ -44,6 +45,7 @@ set(UT_SOURCES
         src/queries/GetRandomWordFromDictionariesQueryImplTest.cpp
         src/commands/CreateDictionaryCommandImplTest.cpp
         src/commands/CreateDictionaryFromCsvFileCommandImplTest.cpp
+        src/commands/AddWordToDictionaryCommandImplTest.cpp
         )
 
 add_library(dictionary ${SOURCES})
