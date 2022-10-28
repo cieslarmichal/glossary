@@ -6,7 +6,7 @@
 
 namespace glossary::dictionary
 {
-class GetDictionaryWordsQueryMock : public GetDictionaryEnglishWordsQuery
+class GetDictionaryEnglishWordsQueryMock : public GetDictionaryEnglishWordsQuery
 {
 public:
     MOCK_METHOD(std::vector<std::string>, getDictionaryWords, (const std::string&), (const));
