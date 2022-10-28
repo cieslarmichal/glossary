@@ -45,7 +45,7 @@ private:
     std::optional<DictionaryWord> randomizeDictionaryWord(const std::vector<DictionaryWord>&) const;
 
     std::shared_ptr<DictionaryRepository> dictionaryRepository;
-    std::unique_ptr<DictionaryWordsCsvReader> dictionaryWordsReader;
+    std::unique_ptr<DictionaryWordsCsvReader> dictionaryWordsCsvReader;
     std::unique_ptr<ObserverService> observerService;
     std::shared_ptr<common::random::RandomNumberGenerator> randomNumberGenerator;
 };

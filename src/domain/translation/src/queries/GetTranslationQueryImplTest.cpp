@@ -21,7 +21,7 @@ const Translation translation{polishText, englishText};
 const TranslatePayload translatePayload{polishText, sourceLanguage, targetLanguage};
 }
 
-class GetTranslationQueryImplTest : public Test
+class GetDictionaryQueryImplTest : public Test
 {
 public:
     std::unique_ptr<GoogleTranslateClientMock> googleTranslateClientInit =
@@ -33,7 +33,7 @@ public:
     GetTranslationQueryImpl query{std::move(googleTranslateClientInit), std::move(translationRepositoryInit)};
 };
 
-TEST_F(GetTranslationQueryImplTest, givenTranslationInRepository_shouldReturnTranslationFromRepository)
+TEST_F(GetDictionaryQueryImplTest, givenTranslationInRepository_shouldReturnTranslationFromRepository)
 {
     EXPECT_CALL(*translationRepository, getTranslation(polishText)).WillOnce(Return(translation));
 
@@ -42,8 +42,7 @@ TEST_F(GetTranslationQueryImplTest, givenTranslationInRepository_shouldReturnTra
     ASSERT_EQ(actualTranslation, englishText);
 }
 
-TEST_F(GetTranslationQueryImplTest,
-       givenNoTranslationInRepositoryAndNoTranslationFromTranslationClient_shouldReturnNone)
+TEST_F(GetDictionaryQueryImplTest, givenNoTranslationInRepositoryAndNoTranslationFromTranslationClient_shouldReturnNone)
 {
     EXPECT_CALL(*translationRepository, getTranslation(polishText)).WillOnce(Return(std::nullopt));
 
@@ -55,7 +54,7 @@ TEST_F(GetTranslationQueryImplTest,
 }
 
 TEST_F(
-    GetTranslationQueryImplTest,
+    GetDictionaryQueryImplTest,
     givenNoTranslationInRepositoryAndTranslationFromTranslationClient_shouldReturnTranslationFromGoogleTranslateClient)
 {
     EXPECT_CALL(*translationRepository, getTranslation(polishText)).WillOnce(Return(std::nullopt));

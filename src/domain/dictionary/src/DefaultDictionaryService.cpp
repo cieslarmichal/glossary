@@ -9,7 +9,7 @@ DefaultDictionaryService::DefaultDictionaryService(
     std::unique_ptr<ObserverService> observerServiceInit,
     std::shared_ptr<common::random::RandomNumberGenerator> randomNumberGeneratorInit)
     : dictionaryRepository{std::move(dictionaryRepositoryInit)},
-      dictionaryWordsReader{std::move(dictionaryWordsReaderInit)},
+      dictionaryWordsCsvReader{std::move(dictionaryWordsReaderInit)},
       observerService{std::move(observerServiceInit)},
       randomNumberGenerator{std::move(randomNumberGeneratorInit)}
 {
@@ -166,7 +166,7 @@ void DefaultDictionaryService::addDictionary(const std::string& dictionaryName)
 void DefaultDictionaryService::addDictionaryFromFile(const std::string& dictionaryName,
                                                      const std::string& dictionaryWordsPath)
 {
-    const auto dictionaryWordsFromFile = dictionaryWordsReader->readDictionaryWords(dictionaryWordsPath);
+    const auto dictionaryWordsFromFile = dictionaryWordsCsvReader->readDictionaryWords(dictionaryWordsPath);
 
     dictionaryRepository->addDictionary({dictionaryName, dictionaryWordsFromFile});
 
