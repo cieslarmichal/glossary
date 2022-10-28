@@ -5,7 +5,6 @@
 #include "fileSystem/FileAccessMock.h"
 
 #include "exceptions/InvalidDictionaryWordsCsvFile.h"
-#include "fileSystem/exceptions/FileNotFound.h"
 
 using namespace ::testing;
 using namespace glossary::dictionary;

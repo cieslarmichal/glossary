@@ -7,7 +7,7 @@ CreateDictionaryCommandImpl::CreateDictionaryCommandImpl(std::shared_ptr<Diction
 {
 }
 
-void CreateDictionaryCommandImpl::addDictionary(const std::string& dictionaryName)
+void CreateDictionaryCommandImpl::createDictionary(const std::string& dictionaryName)
 {
     dictionaryRepository->addDictionary(dictionaryName);
 }

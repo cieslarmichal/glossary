@@ -12,7 +12,7 @@ class CreateDictionaryCommandImpl : public CreateDictionaryCommand
 public:
     explicit CreateDictionaryCommandImpl(std::shared_ptr<DictionaryRepository>);
 
-    void addDictionary(const std::string& dictionaryName) override;
+    void createDictionary(const std::string& dictionaryName) override;
 
 private:
     std::shared_ptr<DictionaryRepository> dictionaryRepository;

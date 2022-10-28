@@ -25,5 +25,5 @@ TEST_F(CreateDictionaryCommandImplTest, shouldCreateDictionary)
 {
     EXPECT_CALL(*dictionaryRepository, addDictionary(dictionaryName));
 
-    command.addDictionary(dictionaryName);
+    command.createDictionary(dictionaryName);
 }

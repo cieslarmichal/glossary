@@ -6,9 +6,9 @@
 
 namespace glossary::dictionary
 {
-class AddDictionaryCommandMock : public AddDictionaryCommand
+class CreateDictionaryCommandMock : public CreateDictionaryCommand
 {
 public:
-    MOCK_METHOD(void, addDictionary, (const std::string& dictionaryName), ());
+    MOCK_METHOD(void, createDictionary, (const std::string& dictionaryName), ());
 };
 }
