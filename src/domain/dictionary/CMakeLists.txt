@@ -22,6 +22,7 @@ set(SOURCES
         src/commands/CreateDictionaryFromCsvFileCommandImpl.cpp
         src/commands/AddWordToDictionaryCommandImpl.cpp
         src/commands/RemoveWordFromDictionaryCommandImpl.cpp
+        src/commands/UpdateWordTranslationInDictionaryCommandImpl.cpp
         )
 
 set(UT_SOURCES
@@ -48,6 +49,7 @@ set(UT_SOURCES
         src/commands/CreateDictionaryFromCsvFileCommandImplTest.cpp
         src/commands/AddWordToDictionaryCommandImplTest.cpp
         src/commands/RemoveWordFromDictionaryCommandImplTest.cpp
+        src/commands/UpdateWordTranslationInDictionaryCommandImplTest.cpp
         )
 
 add_library(dictionary ${SOURCES})
