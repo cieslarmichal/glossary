@@ -12,6 +12,7 @@ set(SOURCES
         src/serializers/WordsDescriptionsJsonSerializer.cpp
         src/clients/WordsApiClientImpl.cpp
         src/queries/GetDictionaryQueryImpl.cpp
+        src/queries/GetDictionariesQueryImpl.cpp
         )
 
 set(UT_SOURCES
@@ -28,6 +29,7 @@ set(UT_SOURCES
         src/serializers/WordsDescriptionsJsonSerializerTest.cpp
         src/clients/WordsApiClientImplTest.cpp
         src/queries/GetDictionaryQueryImplTest.cpp
+        src/queries/GetDictionariesQueryImplTest.cpp
         )
 
 add_library(dictionary ${SOURCES})

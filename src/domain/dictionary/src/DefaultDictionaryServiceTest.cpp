@@ -90,29 +90,6 @@ TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNames)
     ASSERT_EQ(actualDictionaryNames, dictionaryNames);
 }
 
-TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNamesContainingEnglishWord)
-{
-    EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
-
-    const auto actualDictionaryNames = service.getDictionaryNamesContainingEnglishWord(englishWord);
-
-    const std::vector<std::string> expectedDictionaryNames{dictionaryName1};
-
-    ASSERT_EQ(actualDictionaryNames, expectedDictionaryNames);
-}
-
-TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryNamesContainingEnglishWordTranslation)
-{
-    EXPECT_CALL(*dictionaryRepository, getDictionaries()).WillOnce(Return(dictionaries));
-
-    const auto actualDictionaryNames =
-        service.getDictionaryNamesContainingEnglishWordTranslation(englishWordTranslation);
-
-    const std::vector<std::string> expectedDictionaryNames{dictionaryName1};
-
-    ASSERT_EQ(actualDictionaryNames, expectedDictionaryNames);
-}
-
 TEST_F(DefaultDictionaryServiceTest, shouldReturnDictionaryWords)
 {
     EXPECT_CALL(*dictionaryRepository, getDictionary(dictionaryName1)).WillOnce(Return(dictionary1));

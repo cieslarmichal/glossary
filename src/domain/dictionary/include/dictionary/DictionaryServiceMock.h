@@ -12,12 +12,7 @@ public:
     MOCK_CONST_METHOD1(getDictionary, std::optional<Dictionary>(const std::string&));
     MOCK_CONST_METHOD0(getDictionaries, Dictionaries());
     MOCK_CONST_METHOD0(getDictionaryNames, std::vector<std::string>());
-    MOCK_CONST_METHOD1(getDictionaryNamesContainingEnglishWord,
-                       std::vector<std::string>(const std::string& englishWord));
-    MOCK_CONST_METHOD1(getDictionaryNamesContainingEnglishWordTranslation,
-                       std::vector<std::string>(const std::string& englishWordTranslation));
-    MOCK_CONST_METHOD1(getDictionaryWords,
-                       std::optional<std::vector<DictionaryWord>>(const std::string&));
+    MOCK_CONST_METHOD1(getDictionaryWords, std::optional<std::vector<DictionaryWord>>(const std::string&));
     MOCK_CONST_METHOD1(getEnglishWords, std::optional<std::vector<std::string>>(const std::string&));
     MOCK_CONST_METHOD0(getEnglishWords, std::vector<std::string>());
     MOCK_CONST_METHOD0(getRandomDictionaryWord, std::optional<DictionaryWord>());
@@ -27,8 +22,7 @@ public:
     MOCK_METHOD2(addWordToDictionary, void(const DictionaryWord&, const std::string&));
     MOCK_METHOD1(removeDictionary, void(const std::string&));
     MOCK_METHOD2(removeWordFromDictionary, void(const std::string&, const std::string&));
-    MOCK_METHOD3(updateWordTranslationFromDictionary,
-                 void(const std::string&, const std::string&, const std::string&));
+    MOCK_METHOD3(updateWordTranslationFromDictionary, void(const std::string&, const std::string&, const std::string&));
     MOCK_METHOD0(synchronizeDictionaries, void());
     MOCK_METHOD1(registerObserver, void(DictionaryObserver*));
     MOCK_METHOD1(removeObserver, void(DictionaryObserver*));

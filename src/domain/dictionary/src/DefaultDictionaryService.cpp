@@ -39,42 +39,6 @@ std::vector<std::string> DefaultDictionaryService::getDictionaryNames() const
     return dictionaryNames;
 }
 
-std::vector<std::string>
-DefaultDictionaryService::getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const
-{
-    const auto dictionaries = dictionaryRepository->getDictionaries();
-
-    std::vector<std::string> dictionaryNamesContainingEnglishWord;
-
-    for (const auto& dictionary : dictionaries)
-    {
-        if (englishWordExistsInDictionary(englishWord, dictionary))
-        {
-            dictionaryNamesContainingEnglishWord.emplace_back(dictionary.name);
-        }
-    }
-
-    return dictionaryNamesContainingEnglishWord;
-}
-
-std::vector<std::string> DefaultDictionaryService::getDictionaryNamesContainingEnglishWordTranslation(
-    const std::string& englishWordTranslation) const
-{
-    const auto dictionaries = dictionaryRepository->getDictionaries();
-
-    std::vector<std::string> dictionaryNamesContainingEnglishWordTranslation;
-
-    for (const auto& dictionary : dictionaries)
-    {
-        if (englishWordTranslationExistsInDictionary(englishWordTranslation, dictionary))
-        {
-            dictionaryNamesContainingEnglishWordTranslation.emplace_back(dictionary.name);
-        }
-    }
-
-    return dictionaryNamesContainingEnglishWordTranslation;
-}
-
 std::optional<std::vector<DictionaryWord>>
 DefaultDictionaryService::getDictionaryWords(const std::string& dictionaryName) const
 {
@@ -218,27 +182,6 @@ void DefaultDictionaryService::removeObserver(DictionaryObserver* observer)
 void DefaultDictionaryService::notifyObservers(const std::vector<std::string>& englishWords)
 {
     observerService->notifyObservers(englishWords);
-}
-
-bool DefaultDictionaryService::englishWordExistsInDictionary(const std::string& englishWordToFind,
-                                                             const Dictionary& dictionary) const
-{
-    auto englishWordExists = std::find_if(dictionary.words.begin(), dictionary.words.end(),
-                                          [&englishWordToFind](const DictionaryWord& dictionaryWord)
-                                          { return dictionaryWord.englishWord == englishWordToFind; });
-
-    return englishWordExists != dictionary.words.end();
-}
-
-bool DefaultDictionaryService::englishWordTranslationExistsInDictionary(const std::string& englishWordTranslation,
-                                                                        const Dictionary& dictionary) const
-{
-    auto englishWordTranslationExists =
-        std::find_if(dictionary.words.begin(), dictionary.words.end(),
-                     [&englishWordTranslation](const DictionaryWord& dictionaryWord)
-                     { return dictionaryWord.translation && (*dictionaryWord.translation == englishWordTranslation); });
-
-    return englishWordTranslationExists != dictionary.words.end();
 }
 
 std::optional<DictionaryWord>

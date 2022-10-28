@@ -13,9 +13,6 @@ public:
     virtual std::optional<Dictionary> getDictionary(const std::string& name) const = 0;
     virtual std::vector<Dictionary> getDictionaries() const = 0;
     virtual std::vector<std::string> getDictionaryNames() const = 0;
-    virtual std::vector<std::string> getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const = 0;
-    virtual std::vector<std::string>
-    getDictionaryNamesContainingEnglishWordTranslation(const std::string& englishWordTranslation) const = 0;
     virtual std::optional<std::vector<DictionaryWord>> getDictionaryWords(const std::string& dictionaryName) const = 0;
     virtual std::optional<std::vector<std::string>> getEnglishWords(const std::string& dictionaryName) const = 0;
     virtual std::vector<std::string> getEnglishWords() const = 0;

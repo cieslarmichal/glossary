@@ -19,9 +19,6 @@ public:
     std::optional<Dictionary> getDictionary(const std::string& dictionaryName) const override;
     std::vector<Dictionary> getDictionaries() const override;
     std::vector<std::string> getDictionaryNames() const override;
-    std::vector<std::string> getDictionaryNamesContainingEnglishWord(const std::string& englishWord) const override;
-    std::vector<std::string>
-    getDictionaryNamesContainingEnglishWordTranslation(const std::string& englishWordTranslation) const override;
     std::optional<std::vector<DictionaryWord>> getDictionaryWords(const std::string& dictionaryName) const override;
     std::optional<std::vector<std::string>> getEnglishWords(const std::string& dictionaryName) const override;
     std::vector<std::string> getEnglishWords() const override;
@@ -40,8 +37,6 @@ public:
 
 private:
     void notifyObservers(const std::vector<std::string>&) override;
-    bool englishWordExistsInDictionary(const std::string&, const Dictionary&) const;
-    bool englishWordTranslationExistsInDictionary(const std::string& englishWordTranslation, const Dictionary&) const;
     std::optional<DictionaryWord> randomizeDictionaryWord(const std::vector<DictionaryWord>&) const;
 
     std::shared_ptr<DictionaryRepository> dictionaryRepository;
