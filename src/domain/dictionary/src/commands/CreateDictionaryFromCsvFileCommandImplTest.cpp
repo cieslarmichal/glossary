@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../DictionaryWordsCsvReaderMock.h"
+#include "../readers/DictionaryWordsCsvReaderMock.h"
 #include "../repositories/DictionaryRepositoryMock.h"
 
 using namespace ::testing;

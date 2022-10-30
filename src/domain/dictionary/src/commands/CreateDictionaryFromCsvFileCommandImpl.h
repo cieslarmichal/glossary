@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../DictionaryWordsCsvReader.h"
+#include "../readers/DictionaryWordsCsvReader.h"
 #include "../repositories/DictionaryRepository.h"
 #include "commands/CreateDictionaryFromCsvFileCommand.h"
 
