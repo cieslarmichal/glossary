@@ -11,7 +11,7 @@ namespace
 {
 const std::string englishWord{"englishWord"};
 const WordDescription wordDescription{englishWord, {}, {}, {}};
-const WordsDescriptions wordsDescriptions{wordDescription};
+const std::vector<WordDescription> wordsDescriptions{wordDescription};
 }
 
 class DefaultWordDescriptionRepositoryTest : public Test
@@ -39,8 +39,7 @@ TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordDescriptionNotExist
     ASSERT_EQ(actualWord, std::nullopt);
 }
 
-TEST_F(DefaultWordDescriptionRepositoryTest,
-       givenEnglishWordDescriptionExistingInStorage_shouldReturnWordDescription)
+TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordDescriptionExistingInStorage_shouldReturnWordDescription)
 {
     EXPECT_CALL(*storage, getWordDescription(englishWord)).WillOnce(Return(wordDescription));
 
@@ -49,16 +48,14 @@ TEST_F(DefaultWordDescriptionRepositoryTest,
     ASSERT_EQ(actualWord, wordDescription);
 }
 
-TEST_F(DefaultWordDescriptionRepositoryTest,
-       givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
+TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordExistingInStorage_shouldContainThisWordsDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(true));
 
     ASSERT_TRUE(repository.contains(englishWord));
 }
 
-TEST_F(DefaultWordDescriptionRepositoryTest,
-       givenEnglishWordNotExistingInStorage_shouldNotContainThisWordDescription)
+TEST_F(DefaultWordDescriptionRepositoryTest, givenEnglishWordNotExistingInStorage_shouldNotContainThisWordDescription)
 {
     EXPECT_CALL(*storage, contains(englishWord)).WillOnce(Return(false));
 

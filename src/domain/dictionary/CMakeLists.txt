@@ -16,6 +16,7 @@ set(SOURCES
         src/queries/GetDictionariesEnglishWordsQueryImpl.cpp
         src/queries/GetRandomWordFromDictionaryQueryImpl.cpp
         src/queries/GetRandomWordFromDictionariesQueryImpl.cpp
+        src/queries/GetWordDescriptionQueryImpl.cpp
         src/commands/CreateDictionaryCommandImpl.cpp
         src/commands/CreateDictionaryFromCsvFileCommandImpl.cpp
         src/commands/AddWordToDictionaryCommandImpl.cpp
@@ -41,6 +42,7 @@ set(UT_SOURCES
         src/queries/GetDictionariesEnglishWordsQueryImplTest.cpp
         src/queries/GetRandomWordFromDictionaryQueryImplTest.cpp
         src/queries/GetRandomWordFromDictionariesQueryImplTest.cpp
+        src/queries/GetWordDescriptionQueryImplTest.cpp
         src/commands/CreateDictionaryCommandImplTest.cpp
         src/commands/CreateDictionaryFromCsvFileCommandImplTest.cpp
         src/commands/AddWordToDictionaryCommandImplTest.cpp

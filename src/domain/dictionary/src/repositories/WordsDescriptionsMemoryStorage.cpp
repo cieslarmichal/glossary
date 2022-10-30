@@ -10,8 +10,7 @@ void WordsDescriptionsMemoryStorage::addWordDescription(const WordDescription& w
     }
 }
 
-std::optional<WordDescription>
-WordsDescriptionsMemoryStorage::getWordDescription(const std::string& englishWord) const
+std::optional<WordDescription> WordsDescriptionsMemoryStorage::getWordDescription(const std::string& englishWord) const
 {
     const auto wordDescriptionIter = getWordsDescriptionsIter(englishWord);
 
@@ -22,7 +21,7 @@ WordsDescriptionsMemoryStorage::getWordDescription(const std::string& englishWor
     return std::nullopt;
 }
 
-WordsDescriptions WordsDescriptionsMemoryStorage::getWordsDescriptions() const
+std::vector<WordDescription> WordsDescriptionsMemoryStorage::getWordsDescriptions() const
 {
     return wordsDescriptions;
 }
@@ -32,7 +31,7 @@ bool WordsDescriptionsMemoryStorage::contains(const std::string& wordToFind) con
     return getWordsDescriptionsIter(wordToFind) != wordsDescriptions.end();
 }
 
-WordsDescriptions::size_type WordsDescriptionsMemoryStorage::size() const
+std::vector<WordDescription>::size_type WordsDescriptionsMemoryStorage::size() const
 {
     return wordsDescriptions.size();
 }
@@ -42,7 +41,7 @@ bool WordsDescriptionsMemoryStorage::empty() const
     return wordsDescriptions.empty();
 }
 
-WordsDescriptions::const_iterator
+std::vector<WordDescription>::const_iterator
 WordsDescriptionsMemoryStorage::getWordsDescriptionsIter(const std::string& wordToFind) const
 {
     return std::find_if(wordsDescriptions.begin(), wordsDescriptions.end(),

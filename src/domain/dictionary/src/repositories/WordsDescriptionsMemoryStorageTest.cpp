@@ -9,7 +9,7 @@ namespace
 {
 const WordDescription word1{"xxx", {}, {}, {}};
 const WordDescription word2{"yyy", {}, {}, {}};
-const WordsDescriptions words{word1, word2};
+const std::vector<WordDescription> words{word1, word2};
 }
 
 class WordsDescriptionsMemoryStorageTest : public Test
@@ -23,7 +23,7 @@ TEST_F(WordsDescriptionsMemoryStorageTest, givenWordAddition_shouldAddWord)
     storage.addWordDescription(word1);
 
     ASSERT_FALSE(storage.empty());
-    ASSERT_EQ(storage.size(), WordsDescriptions::size_type{1});
+    ASSERT_EQ(storage.size(), std::vector<WordDescription>::size_type{1});
 }
 
 TEST_F(WordsDescriptionsMemoryStorageTest, addTwoDifferentWords_shouldAddTwoWords)
@@ -41,7 +41,7 @@ TEST_F(WordsDescriptionsMemoryStorageTest, addTwoSameWords_shouldAddOnlyOne)
     storage.addWordDescription(word1);
     storage.addWordDescription(word1);
 
-    ASSERT_EQ(storage.size(), WordsDescriptions::size_type{1});
+    ASSERT_EQ(storage.size(), std::vector<WordDescription>::size_type{1});
 }
 
 TEST_F(WordsDescriptionsMemoryStorageTest, givenEmptyStorage_getShouldNotReturnWord)

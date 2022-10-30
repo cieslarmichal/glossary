@@ -17,9 +17,9 @@ public:
 
     void addWordDescription(const WordDescription&) override;
     std::optional<WordDescription> getWordDescription(const std::string&) const override;
-    WordsDescriptions getWordsDescriptions() const override;
+    std::vector<WordDescription> getWordsDescriptions() const override;
     bool contains(const std::string&) const override;
-    WordsDescriptions::size_type size() const override;
+    std::vector<WordDescription>::size_type size() const override;
     bool empty() const override;
 
 private:

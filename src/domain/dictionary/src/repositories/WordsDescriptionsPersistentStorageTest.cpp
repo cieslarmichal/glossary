@@ -19,9 +19,9 @@ const std::string englishWord1("englishWord1");
 const std::string englishWord2("englishWord2");
 const WordDescription word1{englishWord1, {}, {}, {}};
 const WordDescription word2{englishWord2, {}, {}, {}};
-const WordsDescriptions words{word1, word2};
+const std::vector<WordDescription> words{word1, word2};
 const WordDescription word3{"yzzxc12yy", {}, {}, {}};
-const WordsDescriptions wordsAfterAddition{word1, word2, word3};
+const std::vector<WordDescription> wordsAfterAddition{word1, word2, word3};
 }
 
 class WordsDescriptionsPersistentStorageTest : public Test
@@ -42,7 +42,7 @@ public:
 TEST_F(WordsDescriptionsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
 {
     EXPECT_CALL(*fileAccess, readContent(filePath)).WillOnce(Return(""));
-    EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(WordsDescriptions{}));
+    EXPECT_CALL(*serializer, deserialize("")).WillOnce(Return(std::vector<WordDescription>{}));
     WordsDescriptionsPersistentStorage persistentStorage{fileAccess, serializer};
 
     ASSERT_TRUE(persistentStorage.empty());

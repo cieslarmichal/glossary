@@ -2,13 +2,13 @@
 
 #include <iostream>
 
-#include "fileSystem/GetProjectPath.h"
 #include "fileSystem/exceptions/FileNotFound.h"
+#include "fileSystem/GetProjectPath.h"
 
 namespace glossary::dictionary
 {
-const std::string WordsDescriptionsPersistentStorage::directory{
-    common::fileSystem::getProjectPath("glossary") + "repositoryFiles/"};
+const std::string WordsDescriptionsPersistentStorage::directory{common::fileSystem::getProjectPath("glossary") +
+                                                                "repositoryFiles/"};
 const std::string WordsDescriptionsPersistentStorage::filename{directory + "wordsDescriptions.txt"};
 
 WordsDescriptionsPersistentStorage::WordsDescriptionsPersistentStorage(
@@ -31,7 +31,7 @@ WordsDescriptionsPersistentStorage::getWordDescription(const std::string& englis
     return storage.getWordDescription(englishName);
 }
 
-WordsDescriptions WordsDescriptionsPersistentStorage::getWordsDescriptions() const
+std::vector<WordDescription> WordsDescriptionsPersistentStorage::getWordsDescriptions() const
 {
     return storage.getWordsDescriptions();
 }
@@ -41,7 +41,7 @@ bool WordsDescriptionsPersistentStorage::contains(const std::string& englishWord
     return storage.contains(englishWord);
 }
 
-WordsDescriptions::size_type WordsDescriptionsPersistentStorage::size() const
+std::vector<WordDescription>::size_type WordsDescriptionsPersistentStorage::size() const
 {
     return storage.size();
 }
@@ -53,7 +53,7 @@ bool WordsDescriptionsPersistentStorage::empty() const
 
 void WordsDescriptionsPersistentStorage::loadFile()
 {
-    WordsDescriptions words;
+    std::vector<WordDescription> words;
     try
     {
         words = serializer->deserialize(fileAccess->readContent(filename));

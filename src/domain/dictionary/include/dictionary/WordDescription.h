@@ -6,23 +6,22 @@ namespace glossary::dictionary
 {
 struct WordDescription
 {
+    std::string englishWord;
+    std::vector<std::string> definitions;
+    std::vector<std::string> examples;
+    std::vector<std::string> synonyms;
+
     bool empty() const
     {
         return definitions.empty() && examples.empty() && synonyms.empty();
     }
 
-    std::string englishWord;
-    std::vector<std::string> definitions;
-    std::vector<std::string> examples;
-    std::vector<std::string> synonyms;
 };
-
-using WordsDescriptions = std::vector<WordDescription>;
 
 inline bool operator==(const WordDescription& lhs, const WordDescription& rhs)
 {
-    return (lhs.englishWord == rhs.englishWord && lhs.definitions == rhs.definitions &&
-            lhs.examples == rhs.examples && lhs.synonyms == rhs.synonyms);
+    return (lhs.englishWord == rhs.englishWord && lhs.definitions == rhs.definitions && lhs.examples == rhs.examples &&
+            lhs.synonyms == rhs.synonyms);
 }
 
 inline bool operator<(const WordDescription& lhs, const WordDescription& rhs)

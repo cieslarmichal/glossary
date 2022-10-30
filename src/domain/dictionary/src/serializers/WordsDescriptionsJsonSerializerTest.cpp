@@ -15,8 +15,8 @@ const std::vector<std::string> examples{"example1", "example2"};
 const std::vector<std::string> synonyms{"synonym1", "synonym2"};
 const WordDescription wordDescription1{"computer", definitions, examples, synonyms};
 const WordDescription wordDescription2{"tea", {}, {}, {}};
-const WordsDescriptions wordsDescriptions1{wordDescription1, wordDescription2};
-const WordsDescriptions emptyWordsDescriptions{};
+const std::vector<WordDescription> wordsDescriptions1{wordDescription1, wordDescription2};
+const std::vector<WordDescription> emptyWordsDescriptions{};
 const std::string invalidJson{"{."};
 const std::string expectedSerializedWordsDescriptions =
     R"([{"definitions":["definition1","definition2"],"englishWord":"computer","examples":["example1","example2"],"synonyms":["synonym1","synonym2"]},{"definitions":[],"englishWord":"tea","examples":[],"synonyms":[]}])";
