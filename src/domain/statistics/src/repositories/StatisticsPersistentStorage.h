@@ -2,7 +2,7 @@
 
 #include <memory>
 
-#include "../serializers/StatisticsSerializer.h"
+#include "../serializers/WordsStatisticsSerializer.h"
 #include "fileSystem/FileAccess.h"
 #include "StatisticsMemoryStorage.h"
 #include "StatisticsStorage.h"
@@ -13,7 +13,7 @@ class StatisticsPersistentStorage : public StatisticsStorage
 {
 public:
     StatisticsPersistentStorage(std::shared_ptr<const common::fileSystem::FileAccess>,
-                                std::shared_ptr<const StatisticsSerializer>);
+                                std::shared_ptr<const WordsStatisticsSerializer>);
 
     std::optional<WordStatistics> getWordStatistics(const std::string&) const override;
     std::vector<WordStatistics> getStatistics() const override;
@@ -30,7 +30,7 @@ private:
     void serialize() const;
 
     std::shared_ptr<const common::fileSystem::FileAccess> fileAccess;
-    std::shared_ptr<const StatisticsSerializer> serializer;
+    std::shared_ptr<const WordsStatisticsSerializer> serializer;
     StatisticsMemoryStorage storage;
 
     static const std::string directory;

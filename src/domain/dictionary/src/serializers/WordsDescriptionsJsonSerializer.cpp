@@ -34,7 +34,7 @@ std::string WordsDescriptionsJsonSerializer::serialize(const std::vector<WordDes
         serializedWordsDescriptions.push_back(wordDescriptionJson);
     }
 
-    return serializedWordsDescriptions.empty() ? "{}" : serializedWordsDescriptions.dump();
+    return serializedWordsDescriptions.empty() ? "[]" : serializedWordsDescriptions.dump();
 }
 
 std::vector<WordDescription> WordsDescriptionsJsonSerializer::deserialize(const std::string& jsonText) const

@@ -41,7 +41,7 @@ TEST_F(WordsDescriptionsJsonSerializerTest, givenNoWordsDescriptions_shouldRetur
 {
     const auto actualSerializedWordsDescriptions = serializer.serialize(emptyWordsDescriptions);
 
-    EXPECT_EQ(actualSerializedWordsDescriptions, "{}");
+    EXPECT_EQ(actualSerializedWordsDescriptions, "[]");
 }
 
 TEST_F(WordsDescriptionsJsonSerializerTest, givenWordsDescriptions_shouldReturnSerializedWordsDescriptions)

@@ -4,10 +4,10 @@
 
 namespace glossary::statistics
 {
-class StatisticsSerializer
+class WordsStatisticsSerializer
 {
 public:
-    virtual ~StatisticsSerializer() = default;
+    virtual ~WordsStatisticsSerializer() = default;
 
     virtual std::string serialize(const std::vector<WordStatistics>&) const = 0;
     virtual std::vector<WordStatistics> deserialize(const std::string&) const = 0;

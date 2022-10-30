@@ -2,7 +2,7 @@
 
 #include "gtest/gtest.h"
 
-#include "../serializers/StatisticsSerializerMock.h"
+#include "../serializers/WordsStatisticsSerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
 
 #include "fileSystem/exceptions/FileNotFound.h"
@@ -55,7 +55,8 @@ public:
 
     std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
         std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
-    std::shared_ptr<StatisticsSerializerMock> serializer = std::make_shared<StrictMock<StatisticsSerializerMock>>();
+    std::shared_ptr<WordsStatisticsSerializerMock> serializer =
+        std::make_shared<StrictMock<WordsStatisticsSerializerMock>>();
 };
 
 TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)

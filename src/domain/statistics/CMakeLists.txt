@@ -1,6 +1,6 @@
 set(SOURCES
         src/repositories/DefaultStatisticsRepository.cpp
-        src/serializers/StatisticsJsonSerializer.cpp
+        src/serializers/WordsStatisticsJsonSerializer.cpp
         src/repositories/StatisticsMemoryStorage.cpp
         src/repositories/StatisticsPersistentStorage.cpp
         src/commands/AddWordStatisticsCommandImpl.cpp
@@ -12,7 +12,7 @@ set(SOURCES
 
 set(UT_SOURCES
         src/repositories/DefaultStatisticsRepositoryTest.cpp
-        src/serializers/StatisticsJsonSerializerTest.cpp
+        src/serializers/WordsStatisticsJsonSerializerTest.cpp
         src/repositories/StatisticsMemoryStorageTest.cpp
         src/repositories/StatisticsPersistentStorageTest.cpp
         src/commands/AddWordStatisticsCommandImplTest.cpp

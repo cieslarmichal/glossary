@@ -14,7 +14,7 @@ const std::string StatisticsPersistentStorage::filename{directory + "statistics.
 
 StatisticsPersistentStorage::StatisticsPersistentStorage(
     std::shared_ptr<const common::fileSystem::FileAccess> fileAccessInit,
-    std::shared_ptr<const StatisticsSerializer> serializerInit)
+    std::shared_ptr<const WordsStatisticsSerializer> serializerInit)
     : fileAccess{std::move(fileAccessInit)}, serializer{std::move(serializerInit)}
 {
     loadFile();

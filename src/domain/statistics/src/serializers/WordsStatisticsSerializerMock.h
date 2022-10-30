@@ -2,11 +2,11 @@
 
 #include "gmock/gmock.h"
 
-#include "StatisticsSerializer.h"
+#include "WordsStatisticsSerializer.h"
 
 namespace glossary::statistics
 {
-class StatisticsSerializerMock : public StatisticsSerializer
+class WordsStatisticsSerializerMock : public WordsStatisticsSerializer
 {
 public:
     MOCK_CONST_METHOD1(serialize, std::string(const std::vector<WordStatistics>&));
