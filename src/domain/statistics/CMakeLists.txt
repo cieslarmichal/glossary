@@ -4,6 +4,7 @@ set(SOURCES
         src/repositories/StatisticsMemoryStorage.cpp
         src/repositories/StatisticsPersistentStorage.cpp
         src/commands/AddWordStatisticsCommandImpl.cpp
+        src/commands/AddCorrectAnswerCommandImpl.cpp
         )
 
 set(UT_SOURCES
@@ -12,6 +13,7 @@ set(UT_SOURCES
         src/repositories/StatisticsMemoryStorageTest.cpp
         src/repositories/StatisticsPersistentStorageTest.cpp
         src/commands/AddWordStatisticsCommandImplTest.cpp
+        src/commands/AddCorrectAnswerCommandImplTest.cpp
         )
 
 add_library(statistics ${SOURCES})
