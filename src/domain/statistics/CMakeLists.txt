@@ -7,6 +7,7 @@ set(SOURCES
         src/commands/AddCorrectAnswerCommandImpl.cpp
         src/commands/AddIncorrectAnswerCommandImpl.cpp
         src/commands/ResetWordsStatisticsCommandImpl.cpp
+        src/queries/GetWordsStatisticsQueryImpl.cpp
         )
 
 set(UT_SOURCES
@@ -18,6 +19,7 @@ set(UT_SOURCES
         src/commands/AddCorrectAnswerCommandImplTest.cpp
         src/commands/AddIncorrectAnswerCommandImplTest.cpp
         src/commands/ResetWordsStatisticsCommandImplTest.cpp
+        src/queries/GetWordsStatisticsQueryImplTest.cpp
         )
 
 add_library(statistics ${SOURCES})
