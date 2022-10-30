@@ -2,11 +2,11 @@
 
 #include "gtest/gtest.h"
 
-#include "StatisticsSerializerMock.h"
+#include "../serializers/StatisticsSerializerMock.h"
 #include "fileSystem/FileAccessMock.h"
 
-#include "fileSystem/GetProjectPath.h"
 #include "fileSystem/exceptions/FileNotFound.h"
+#include "fileSystem/GetProjectPath.h"
 
 using namespace ::testing;
 using namespace glossary::statistics;
@@ -55,8 +55,7 @@ public:
 
     std::shared_ptr<common::fileSystem::FileAccessMock> fileAccess =
         std::make_shared<StrictMock<common::fileSystem::FileAccessMock>>();
-    std::shared_ptr<StatisticsSerializerMock> serializer =
-        std::make_shared<StrictMock<StatisticsSerializerMock>>();
+    std::shared_ptr<StatisticsSerializerMock> serializer = std::make_shared<StrictMock<StatisticsSerializerMock>>();
 };
 
 TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithEmptyFile_shouldBeEmpty)
@@ -80,8 +79,7 @@ TEST_F(StatisticsPersistentStorageTest, givenPersistentStorageWithFileWithStatis
 
 TEST_F(StatisticsPersistentStorageTest, givenInvalidFile_shouldReturnNoStats)
 {
-    EXPECT_CALL(*fileAccess, readContent(filepath))
-        .WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
+    EXPECT_CALL(*fileAccess, readContent(filepath)).WillOnce(Throw(common::fileSystem::exceptions::FileNotFound{""}));
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
 
     const auto actualStats = persistentStorage.getStatistics();
@@ -98,11 +96,10 @@ TEST_F(StatisticsPersistentStorageTest, givenWordStatsAddition_shouldAddWordStat
 
     persistentStorage.addWordStatistics(wordStats1);
 
-    ASSERT_TRUE(persistentStorage.contains(wordStats1.getEnglishWord()));
+    ASSERT_TRUE(persistentStorage.contains(wordStats1.englishWord));
 }
 
-TEST_F(StatisticsPersistentStorageTest,
-       givenWordStatsAdditionAndNonExistingFile_shouldAddWordStatsAndNotSerialize)
+TEST_F(StatisticsPersistentStorageTest, givenWordStatsAdditionAndNonExistingFile_shouldAddWordStatsAndNotSerialize)
 {
     expectNoWordStatisticsLoad();
     StatisticsPersistentStorage persistentStorage{fileAccess, serializer};
@@ -112,7 +109,7 @@ TEST_F(StatisticsPersistentStorageTest,
 
     persistentStorage.addWordStatistics(wordStats1);
 
-    ASSERT_TRUE(persistentStorage.contains(wordStats1.getEnglishWord()));
+    ASSERT_TRUE(persistentStorage.contains(wordStats1.englishWord));
 }
 
 TEST_F(StatisticsPersistentStorageTest, givenTwoSameWordsStats_shouldAddAndSerializeOnlyOne)

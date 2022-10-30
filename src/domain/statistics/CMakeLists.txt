@@ -1,17 +1,17 @@
 set(SOURCES
-        src/DefaultStatisticsRepository.cpp
-        src/StatisticsJsonSerializer.cpp
-        src/StatisticsMemoryStorage.cpp
-        src/StatisticsPersistentStorage.cpp
-        src/WordStatistics.cpp
+        src/repositories/DefaultStatisticsRepository.cpp
+        src/serializers/StatisticsJsonSerializer.cpp
+        src/repositories/StatisticsMemoryStorage.cpp
+        src/repositories/StatisticsPersistentStorage.cpp
+        src/commands/AddWordStatisticsCommandImpl.cpp
         )
 
 set(UT_SOURCES
-        src/DefaultStatisticsRepositoryTest.cpp
-        src/StatisticsJsonSerializerTest.cpp
-        src/StatisticsMemoryStorageTest.cpp
-        src/StatisticsPersistentStorageTest.cpp
-        src/WordStatisticsTest.cpp
+        src/repositories/DefaultStatisticsRepositoryTest.cpp
+        src/serializers/StatisticsJsonSerializerTest.cpp
+        src/repositories/StatisticsMemoryStorageTest.cpp
+        src/repositories/StatisticsPersistentStorageTest.cpp
+        src/commands/AddWordStatisticsCommandImplTest.cpp
         )
 
 add_library(statistics ${SOURCES})

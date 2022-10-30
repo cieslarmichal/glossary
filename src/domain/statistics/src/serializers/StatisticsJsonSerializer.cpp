@@ -45,9 +45,9 @@ std::vector<WordStatistics> StatisticsJsonSerializer::deserialize(const std::str
 nlohmann::json StatisticsJsonSerializer::getJsonFromWordStatistics(const WordStatistics& wordStatistics) const
 {
     nlohmann::json val = nlohmann::json::object();
-    val[englishWordField] = wordStatistics.getEnglishWord();
-    val[correctAnswersField] = wordStatistics.getAmountOfCorrectAnswers();
-    val[incorrectAnswersField] = wordStatistics.getAmountOfIncorrectAnswers();
+    val[englishWordField] = wordStatistics.englishWord;
+    val[correctAnswersField] = wordStatistics.correctAnswers;
+    val[incorrectAnswersField] = wordStatistics.incorrectAnswers;
     return val;
 }
 
@@ -61,8 +61,7 @@ std::vector<WordStatistics> StatisticsJsonSerializer::readStatistics(const nlohm
     return {};
 }
 
-std::vector<WordStatistics>
-StatisticsJsonSerializer::parseStatistics(const nlohmann::json& statisticsJson) const
+std::vector<WordStatistics> StatisticsJsonSerializer::parseStatistics(const nlohmann::json& statisticsJson) const
 {
     std::vector<WordStatistics> statistics;
     for (const auto& wordStatisticsData : statisticsJson)

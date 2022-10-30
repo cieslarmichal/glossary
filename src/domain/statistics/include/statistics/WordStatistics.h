@@ -5,26 +5,28 @@
 
 namespace glossary::statistics
 {
-class WordStatistics
+struct WordStatistics
 {
-public:
-    WordStatistics(std::string);
-    WordStatistics(std::string, int amountOfCorrectAnswers, int amountOfIncorrectAnswers);
-
-    void addCorrectAnswer();
-    void addIncorrectAnswer();
-    void resetAnswers();
-    std::string getEnglishWord() const;
-    int getAmountOfCorrectAnswers() const;
-    int getAmountOfIncorrectAnswers() const;
-
-private:
     std::string englishWord;
     int correctAnswers;
     int incorrectAnswers;
 };
 
-bool operator==(const WordStatistics& lhs, const WordStatistics& rhs);
-std::string toString(const WordStatistics&);
-std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics);
+inline bool operator==(const WordStatistics& lhs, const WordStatistics& rhs)
+{
+    return (lhs.englishWord == rhs.englishWord && lhs.correctAnswers == rhs.correctAnswers &&
+            lhs.incorrectAnswers == rhs.incorrectAnswers);
+}
+
+inline std::string toString(const WordStatistics& wordStatistics)
+{
+    return "{englishWord: " + wordStatistics.englishWord +
+           ", correctAnswers: " + std::to_string(wordStatistics.correctAnswers) +
+           ", incorrectAnswers: " + std::to_string(wordStatistics.incorrectAnswers) + "}";
+}
+
+inline std::ostream& operator<<(std::ostream& os, const WordStatistics& wordStatistics)
+{
+    return os << toString(wordStatistics);
+}
 }

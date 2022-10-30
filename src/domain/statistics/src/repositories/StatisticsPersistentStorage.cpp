@@ -2,8 +2,8 @@
 
 #include <iostream>
 
-#include "fileSystem/GetProjectPath.h"
 #include "fileSystem/exceptions/FileNotFound.h"
+#include "fileSystem/GetProjectPath.h"
 
 namespace glossary::statistics
 {
@@ -20,8 +20,7 @@ StatisticsPersistentStorage::StatisticsPersistentStorage(
     loadFile();
 }
 
-std::optional<WordStatistics>
-StatisticsPersistentStorage::getWordStatistics(const std::string& englishWord) const
+std::optional<WordStatistics> StatisticsPersistentStorage::getWordStatistics(const std::string& englishWord) const
 {
     return storage.getWordStatistics(englishWord);
 }
@@ -33,7 +32,7 @@ std::vector<WordStatistics> StatisticsPersistentStorage::getStatistics() const
 
 void StatisticsPersistentStorage::addWordStatistics(WordStatistics wordStatistics)
 {
-    if (not storage.contains(wordStatistics.getEnglishWord()))
+    if (not storage.contains(wordStatistics.englishWord))
     {
         storage.addWordStatistics(std::move(wordStatistics));
         serialize();
