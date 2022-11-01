@@ -1,8 +1,8 @@
 #pragma once
 
+#include <filesystem>
+
 #include "FileAccess.h"
-#include "FileExtensionsFilter.h"
-#include "FilenamePathFilter.h"
 
 namespace common::fileSystem
 {
@@ -25,7 +25,11 @@ public:
                                       const std::vector<std::string>& extensions) const override;
 
 private:
-    FilenamePathFilter filenamePathFilter;
-    FileExtensionsFilter fileExtensionsFilter;
+    std::vector<std::filesystem::path> getAllPaths(const std::string& directoryPath) const;
+    std::vector<std::string> filterByExtensions(const std::vector<std::string>& fileNames,
+                                                const std::vector<std::string>& extensions) const;
+    bool containsAnyOfExtensions(const std::filesystem::path& path,
+                                 const std::vector<std::string>& fileExtensions) const;
+    std::vector<std::string> filterFilenames(const std::vector<std::filesystem::path>& filePaths) const;
 };
 }

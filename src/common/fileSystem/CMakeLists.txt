@@ -4,16 +4,12 @@ set(SOURCES
         src/GetExecutablePath.cpp
         src/FileAccessFactory.cpp
         src/DefaultFileAccessFactory.cpp
-        src/FileExtensionsFilter.cpp
-        src/FilenamePathFilter.cpp
         )
 
 set(UT_SOURCES
         src/DefaultFileAccessTest.cpp
         src/GetExecutablePathTest.cpp
         src/GetProjectPathTest.cpp
-        src/FileExtensionsFilterTest.cpp
-        src/FilenamePathFilterTest.cpp
         )
 
 

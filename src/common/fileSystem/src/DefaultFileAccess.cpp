@@ -1,150 +1,180 @@
 #include "DefaultFileAccess.h"
 
+#include <boost/algorithm/cxx11/any_of.hpp>
 #include <filesystem>
 #include <fstream>
-#include <sstream>
 
-#include "GetProjectPath.h"
+#include "fmt/core.h"
+
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
-
-namespace fs = std::filesystem;
+#include "GetProjectPath.h"
 
 namespace common::fileSystem
 {
-namespace
-{
-enum class Result
-{
-    Success,
-    Failure
-};
-
-Result tryToWrite(std::ofstream& fileStream, const std::string& data);
-
-const std::string directoryNotFoundMessage{"Directory not found "};
-const std::string fileNotFoundMessage{"File not found "};
-const std::string fileNotFoundReadingMessage{fileNotFoundMessage + "while reading: "};
-const std::string fileNotFoundWritingMessage{fileNotFoundMessage + "while writing: "};
-const std::string fileNotFoundAppendingMessage{fileNotFoundMessage + "while appending: "};
-}
-
 void DefaultFileAccess::write(const std::string& absolutePath, const std::string& content) const
 {
     std::ofstream fileStream{absolutePath};
 
-    if (tryToWrite(fileStream, content) == Result::Failure)
+    if (!fileStream.is_open())
     {
-        throw exceptions::FileNotFound(fileNotFoundWritingMessage + absolutePath);
+        throw exceptions::FileNotFound(fmt::format("file not found", absolutePath));
     }
+
+    fileStream << content;
 }
 
 void DefaultFileAccess::append(const std::string& absolutePath, const std::string& content) const
 {
     std::ofstream fileStream{absolutePath, std::ofstream::app};
 
-    if (tryToWrite(fileStream, content) == Result::Failure)
+    if (!fileStream.is_open())
     {
-        throw exceptions::FileNotFound(fileNotFoundAppendingMessage + absolutePath);
+        throw exceptions::FileNotFound(fmt::format("file not found", absolutePath));
     }
+
+    fileStream << content;
 }
 
 std::string DefaultFileAccess::readContent(const std::string& absolutePath) const
 {
     std::ifstream fileStream{absolutePath};
+
     std::stringstream buffer;
 
-    if (fileStream.is_open())
+    if (!fileStream.is_open())
     {
-        buffer << fileStream.rdbuf();
+        throw exceptions::FileNotFound(fmt::format("file not found", absolutePath));
     }
-    else
-    {
-        throw exceptions::FileNotFound(fileNotFoundReadingMessage + absolutePath);
-    }
+
+    buffer << fileStream.rdbuf();
 
     return buffer.str();
 }
 
 void DefaultFileAccess::createDirectory(const std::string& absolutePath) const
 {
-    fs::create_directory(absolutePath);
+    std::filesystem::create_directory(absolutePath);
 }
 
 void DefaultFileAccess::remove(const std::string& absolutePath) const
 {
-    fs::remove_all(absolutePath);
+    std::filesystem::remove_all(absolutePath);
 }
 
 void DefaultFileAccess::rename(const std::string& absolutePath, const std::string& newAbsolutePath) const
 {
-    if (!exists(absolutePath))
+    if (exists(absolutePath))
     {
-        return;
+        std::filesystem::rename(absolutePath, newAbsolutePath);
     }
-    fs::rename(absolutePath, newAbsolutePath);
 }
 
 bool DefaultFileAccess::exists(const std::string& absolutePath) const
 {
-    return fs::exists(absolutePath);
+    return std::filesystem::exists(absolutePath);
 }
 
 bool DefaultFileAccess::isRegularFile(const std::string& absolutePath) const
 {
-    return fs::is_regular_file(absolutePath);
+    return std::filesystem::is_regular_file(absolutePath);
 }
 bool DefaultFileAccess::isDirectory(const std::string& absolutePath) const
 {
-    return fs::is_directory(absolutePath);
+    return std::filesystem::is_directory(absolutePath);
 }
 
 std::vector<std::string> DefaultFileAccess::getAllPathsFromDirectory(const std::string& absolutePath) const
 {
-    fs::path directoryPath(absolutePath);
+    const auto allPaths = getAllPaths(absolutePath);
 
-    std::vector<std::string> listOfFiles;
+    std::vector<std::string> pathsAsStrings;
 
-    if (not fs::exists(directoryPath) || not isDirectory(directoryPath.string()))
+    for (const auto& path : allPaths)
     {
-        throw exceptions::DirectoryNotFound{directoryNotFoundMessage + absolutePath};
+        pathsAsStrings.push_back(path.string());
     }
 
-    for (auto& p : fs::recursive_directory_iterator(directoryPath))
-    {
-        listOfFiles.push_back(p.path().string());
-    }
-
-    return listOfFiles;
+    return pathsAsStrings;
 }
 
-std::vector<std::string>
-DefaultFileAccess::getAllFilenamesFromDirectory(const std::string& absolutePath) const
+std::vector<std::string> DefaultFileAccess::getAllFilenamesFromDirectory(const std::string& absolutePath) const
 {
-    return filenamePathFilter.filterFilenames(getAllPathsFromDirectory(absolutePath));
+    return filterFilenames(getAllPaths(absolutePath));
 }
 
 std::vector<std::string>
 DefaultFileAccess::getFilteredFilenamesFromDirectory(const std::string& absolutePath,
                                                      const std::vector<std::string>& extensions) const
 {
-    const auto filenames = filenamePathFilter.filterFilenames(getAllPathsFromDirectory(absolutePath));
-    const auto filteredFilenames = fileExtensionsFilter.filterByExtensions(filenames, extensions);
+    const auto filenames = filterFilenames(getAllPaths(absolutePath));
+
+    auto filteredFilenames = filterByExtensions(filenames, extensions);
+
     return filteredFilenames;
 }
 
-namespace
+std::vector<std::string> DefaultFileAccess::filterByExtensions(const std::vector<std::string>& fileNames,
+                                                               const std::vector<std::string>& extensions) const
 {
+    std::vector<std::string> filteredFileNames;
 
-Result tryToWrite(std::ofstream& fileStream, const std::string& data)
-{
-    if (fileStream.is_open())
+    for (const auto& fileName : fileNames)
     {
-        fileStream << data;
-        return Result::Success;
+        if (containsAnyOfExtensions(fileName, extensions))
+        {
+            filteredFileNames.push_back(fileName);
+        }
     }
-    return Result::Failure;
+
+    if (filteredFileNames.empty())
+    {
+        return fileNames;
+    }
+
+    return filteredFileNames;
 }
 
+bool DefaultFileAccess::containsAnyOfExtensions(const std::filesystem::path& filename,
+                                                const std::vector<std::string>& extensions) const
+{
+    return boost::algorithm::any_of(extensions,
+                                    [&](const auto& extension) { return filename.extension() == extension; });
+}
+
+std::vector<std::string> DefaultFileAccess::filterFilenames(const std::vector<std::filesystem::path>& filePaths) const
+{
+    std::vector<std::string> fileNames;
+
+    for (const auto& filePath : filePaths)
+    {
+        if (std::filesystem::is_regular_file(filePath))
+        {
+            const auto fileName = filePath.filename().string();
+
+            fileNames.emplace_back(fileName);
+        }
+    }
+
+    return fileNames;
+}
+
+std::vector<std::filesystem::path> DefaultFileAccess::getAllPaths(const std::string& absolutePath) const
+{
+    std::filesystem::path directoryPath(absolutePath);
+
+    std::vector<std::filesystem::path> listOfFiles;
+
+    if (not std::filesystem::exists(directoryPath) || not isDirectory(directoryPath.string()))
+    {
+        throw exceptions::DirectoryNotFound(fmt::format("directory not found", absolutePath));
+    }
+
+    for (auto& p : std::filesystem::recursive_directory_iterator(directoryPath))
+    {
+        listOfFiles.push_back(p.path());
+    }
+
+    return listOfFiles;
 }
 }

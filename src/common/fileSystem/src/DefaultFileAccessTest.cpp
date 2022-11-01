@@ -2,10 +2,10 @@
 
 #include "gtest/gtest.h"
 
-#include "GetProjectPath.h"
 #include "collection/StlOperators.h"
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
+#include "GetProjectPath.h"
 
 using namespace ::testing;
 using namespace common::fileSystem;
@@ -33,8 +33,8 @@ const std::string dummyDirectoryPath{testFilesDirectory + dummyDirectoryName};
 const std::string fileInsideDummyDirPath{dummyDirectoryPath + slashDelimiter + fileInsideDummyDir};
 const std::string jpgPath{testFilesDirectory + jpgFile};
 const std::string pdfPath{testFilesDirectory + pdfFile};
-const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading, jpgFile, pdfFile,
-                                                           filenameForWriting, fileInsideDummyDir};
+const std::vector<std::string> filenamesAfterFileFiltering{filenameForReading, jpgFile, pdfFile, filenameForWriting,
+                                                           fileInsideDummyDir};
 const std::vector<std::string> filenamesAfterTxtAndFileFiltering{filenameForReading, filenameForWriting,
                                                                  fileInsideDummyDir};
 const std::vector<std::string> expectedFilePaths{pathForReading,         pathForWriting, dummyDirectoryPath,
@@ -214,17 +214,14 @@ TEST_F(DefaultFileAccessTest, givenDirectoryPath_shouldReturnAllFilenamesFromDir
     ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
 }
 
-TEST_F(DefaultFileAccessTest,
-       givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
+TEST_F(DefaultFileAccessTest, givenDirectoryPathWithoutFileExtensionsToFilter_shouldReturnAllFilenamesFromDirectory)
 {
-    const auto actualFilenames =
-        fileAccess.getFilteredFilenamesFromDirectory(testFilesDirectory, noExtensionsToFilter);
+    const auto actualFilenames = fileAccess.getFilteredFilenamesFromDirectory(testFilesDirectory, noExtensionsToFilter);
 
     ASSERT_TRUE(compareVectors(actualFilenames, filenamesAfterFileFiltering));
 }
 
-TEST_F(DefaultFileAccessTest,
-       givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
+TEST_F(DefaultFileAccessTest, givenDirectoryPathWithFileExtensionsToFilter_shouldReturnFilteredFilenamesFromDirectory)
 {
     const auto actualFilenames =
         fileAccess.getFilteredFilenamesFromDirectory(testFilesDirectory, txtExtensionsToFilter);
