@@ -77,4 +77,9 @@ void trim(std::string& line)
     boost::algorithm::trim(line);
 }
 
+bool compareCaseInsensitive(const std::string& s1, const std::string& s2)
+{
+    return getLowerCases(s1) == getLowerCases(s2);
+}
+
 }

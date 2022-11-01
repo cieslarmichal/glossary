@@ -3,11 +3,10 @@
 #include <memory>
 
 #include "Glossary.h"
-#include "GlossaryApi.h"
 
 namespace glossary
 {
-class GLOSSARY_API GlossaryFactory
+class GlossaryFactory
 {
 public:
     virtual ~GlossaryFactory() = default;

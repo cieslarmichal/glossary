@@ -3,8 +3,11 @@
 #include <iostream>
 #include <utility>
 
-#include "GetProjectPath.h"
+#include "../../domain/statistics/src/repositories/StatisticsRepository.h"
 #include "collection/StlOperators.h"
+#include "collection/StringHelper.h"
+#include "fileSystem/GetProjectPath.h"
+#include "translation/Language.h"
 
 namespace glossary
 {
@@ -16,17 +19,12 @@ DefaultGlossary::DefaultGlossary(
     std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
     std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
     std::vector<std::shared_ptr<dictionary::DictionaryObserver>> dictionaryObserversInit,
-    std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounterInit,
-    std::unique_ptr<ConnectionChecker> connectionCheckerInit, std::unique_ptr<AnswerValidator> validator)
+    std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounterInit)
     : dictionaryService{std::move(dictionaryServiceInit)},
       translationRetrieverService{std::move(translationServiceInit)},
       statisticsRepository{std::move(statisticsRepoInit)},
       wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
-      dictionaryTranslationUpdater{std::move(dictionaryTranslationUpdaterInit)},
-      dictionaryObservers(std::move(dictionaryObserversInit)),
       dictionaryStatisticsCounter{std::move(dictionaryStatisticsCounterInit)},
-      externalServicesConnectionChecker{std::move(connectionCheckerInit)},
-      answerValidator{std::move(validator)}
 {
     initialize();
 }
@@ -41,21 +39,6 @@ void DefaultGlossary::initialize()
     }
 }
 
-ExternalServicesStatus DefaultGlossary::checkConnectionToExternalServices() const
-{
-    return externalServicesConnectionChecker->checkExternalServicesAvailabilityStatus();
-}
-
-void DefaultGlossary::updateTranslateApiKeyLocation(const std::string& apiKeyLocation) const
-{
-    translationRetrieverService->updateApiKeyLocation(apiKeyLocation);
-}
-
-void DefaultGlossary::updateWordsApiKeyLocation(const std::string& apiKeyLocation) const
-{
-    wordDescriptionRetrieverService->updateApiKeyLocation(apiKeyLocation);
-}
-
 std::optional<std::string> DefaultGlossary::getRandomPolishWord() const
 {
     auto dictionaryWord = dictionaryService->getRandomDictionaryWord();
@@ -67,9 +50,8 @@ std::optional<std::string> DefaultGlossary::getRandomPolishWord() const
 
     if (not dictionaryWord->translation)
     {
-        return translationRetrieverService->retrieveTranslation(dictionaryWord->englishWord,
-                                                                translation::SourceLanguage::English,
-                                                                translation::TargetLanguage::Polish);
+        return translationRetrieverService->retrieveTranslation(
+            dictionaryWord->englishWord, translation::SourceLanguage::English, translation::TargetLanguage::Polish);
     }
 
     return dictionaryWord->translation;
@@ -86,16 +68,14 @@ std::optional<std::string> DefaultGlossary::getRandomPolishWord(const std::strin
 
     if (not dictionaryWord->translation)
     {
-        return translationRetrieverService->retrieveTranslation(dictionaryWord->englishWord,
-                                                                translation::SourceLanguage::English,
-                                                                translation::TargetLanguage::Polish);
+        return translationRetrieverService->retrieveTranslation(
+            dictionaryWord->englishWord, translation::SourceLanguage::English, translation::TargetLanguage::Polish);
     }
 
     return dictionaryWord->translation;
 }
 
-bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
-                                                  const std::string& englishWord) const
+bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord, const std::string& englishWord) const
 {
     const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(
         polishWord, translation::SourceLanguage::Polish, translation::TargetLanguage::English);
@@ -104,7 +84,7 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
         return false;
     }
 
-    if (answerValidator->validateAnswer(*englishTranslationFromPolishWord, englishWord))
+    if (common::collection::compareCaseInsensitive(*englishTranslationFromPolishWord, englishWord))
     {
         statisticsRepository->addCorrectAnswer(englishWord);
         return true;
@@ -149,8 +129,7 @@ void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
     dictionaryService->addWordToDictionary({englishWord, std::nullopt}, dictionaryName);
 }
 
-void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
-                                                 const std::string& translation,
+void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord, const std::string& translation,
                                                  const std::string& dictionaryName) const
 {
     dictionaryService->addWordToDictionary({englishWord, translation}, dictionaryName);
@@ -172,19 +151,35 @@ void DefaultGlossary::updateDictionaryWordTranslationManually(const std::string&
                                                               const std::string& englishWord,
                                                               const std::string& newTranslation) const
 {
-    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, newTranslation,
-                                                                  dictionaryName);
+    dictionaryService->updateWordTranslationFromDictionary(dictionaryName, englishWord, newTranslation);
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
                                                                    const std::string& englishWord) const
 {
-    dictionaryTranslationUpdater->updateDictionaryWordTranslation(englishWord, dictionaryName);
+    const auto translation = translationService->retrieveTranslation(englishWord, translation::Language::English,
+                                                                     translation::Language::Polish);
+
+    if (translation)
+    {
+        dictionaryService->updateWordTranslationFromDictionary(dictionaryName, englishWord, *translation);
+    }
 }
 
 void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const
 {
-    dictionaryTranslationUpdater->updateDictionaryTranslations(dictionaryName);
+    const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName);
+
+    if (dictionaryWords)
+    {
+        for (const auto& dictionaryWord : *dictionaryWords)
+        {
+            if (dictionaryWord.translation && dictionaryWord.translation->empty())
+            {
+                updateDictionaryWordTranslation(dictionaryWord.englishWord, dictionaryName);
+            }
+        }
+    }
 }
 
 WordDescription DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
@@ -201,12 +196,13 @@ std::optional<std::string> DefaultGlossary::translate(const std::string& textToT
                                                       const std::string& sourceLanguageText,
                                                       const std::string& targetLanguageText) const
 {
-    translation::SourceLanguage sourceLanguage;
-    if (answerValidator->validateAnswer(sourceLanguageText, "Polish"))
+    translation::Language sourceLanguage;
+
+    if (common::collection::compareCaseInsensitive(sourceLanguageText, "Polish"))
     {
         sourceLanguage = translation::Language::Polish;
     }
-    else if (answerValidator->validateAnswer(sourceLanguageText, "English"))
+    else if (common::collection::compareCaseInsensitive(sourceLanguageText, "English"))
     {
         sourceLanguage = translation::Language::English;
     }
@@ -216,12 +212,12 @@ std::optional<std::string> DefaultGlossary::translate(const std::string& textToT
         return std::nullopt;
     }
 
-    translation::TargetLanguage targetLanguage;
-    if (answerValidator->validateAnswer(targetLanguageText, "Polish"))
+    translation::Language targetLanguage;
+    if (common::collection::compareCaseInsensitive(targetLanguageText, "Polish"))
     {
         targetLanguage = translation::Language::Polish;
     }
-    else if (answerValidator->validateAnswer(targetLanguageText, "English"))
+    else if (common::collection::compareCaseInsensitive(targetLanguageText, "English"))
     {
         targetLanguage = translation::Language::English;
     }
@@ -234,21 +230,26 @@ std::optional<std::string> DefaultGlossary::translate(const std::string& textToT
     return translationRetrieverService->retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
 }
 
-std::optional<DictionaryStatistics>
-DefaultGlossary::getDictionaryStatistics(const std::string& dictionaryName) const
+std::optional<DictionaryStatistics> DefaultGlossary::getDictionaryStatistics(const std::string& dictionaryName) const
 {
-    if (auto dictionary = dictionaryService->getDictionary(dictionaryName))
+    const auto dictionary = dictionaryService->getDictionary(dictionaryName);
+
+    if (!dictionary)
     {
-        auto statistics = statisticsRepository->getStatistics();
-        return dictionaryStatisticsCounter->countDictionaryStatistics(*dictionary, statistics);
+        return std::nullopt;
     }
-    return std::nullopt;
+
+        auto statistics = statisticsRepository->getStatistics();
+
+        return dictionaryStatisticsCounter->countDictionaryStatistics(*dictionary, statistics);
 }
 
 DictionariesStatistics DefaultGlossary::getDictionariesStatistics() const
 {
     auto dictionaries = dictionaryService->getDictionaries();
+
     auto statistics = statisticsRepository->getStatistics();
+
     return dictionaryStatisticsCounter->countDictionariesStatistics(dictionaries, statistics);
 }
 

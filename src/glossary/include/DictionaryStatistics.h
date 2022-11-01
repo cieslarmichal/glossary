@@ -3,8 +3,6 @@
 #include <ostream>
 #include <vector>
 
-#include "dictionaryService/std::string.h"
-
 namespace glossary
 {
 struct DictionaryStatistics

@@ -18,4 +18,5 @@ void cutOffString(std::string& line, size_t startIndexToCut, size_t endIndexToCu
 std::string substring(const std::string& line, size_t startIndex, size_t endIndex);
 std::string getLowerCases(const std::string&);
 void trim(std::string&);
+bool compareCaseInsensitive(const std::string&, const std::string&);
 }
