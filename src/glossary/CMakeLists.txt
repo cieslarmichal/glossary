@@ -4,15 +4,12 @@ set(SOURCES
         src/GlossaryFactory.cpp
         src/DefaultGlossaryFactory.cpp
         src/TranslationConcurrentUpdater.cpp
-        src/DefaultDictionaryTranslationUpdater.cpp
         src/DefaultDictionaryStatisticsCounter.cpp
         )
 
 set(UT_SOURCES
         src/WordDescriptionConcurrentUpdaterTest.cpp
         src/TranslationConcurrentUpdaterTest.cpp
-        src/DefaultDictionaryTranslationUpdaterTest.cpp
-        src/DefaultGlossaryTest.cpp
         src/DefaultDictionaryStatisticsCounterTest.cpp
         )
 

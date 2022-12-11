@@ -3,9 +3,9 @@
 #include <iostream>
 #include <utility>
 
-#include "../../domain/statistics/src/repositories/StatisticsRepository.h"
 #include "collection/StlOperators.h"
 #include "collection/StringHelper.h"
+#include "dictionary/Dictionary.h"
 #include "fileSystem/GetProjectPath.h"
 #include "translation/Language.h"
 
@@ -13,72 +13,102 @@ namespace glossary
 {
 
 DefaultGlossary::DefaultGlossary(
-    std::shared_ptr<dictionary::DictionaryService> dictionaryServiceInit,
-    std::shared_ptr<translationService::TranslationService> translationServiceInit,
-    std::shared_ptr<statistics::StatisticsRepository> statisticsRepoInit,
-    std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionServiceInit,
-    std::shared_ptr<DictionaryTranslationUpdater> dictionaryTranslationUpdaterInit,
-    std::vector<std::shared_ptr<dictionary::DictionaryObserver>> dictionaryObserversInit,
-    std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounterInit)
-    : dictionaryService{std::move(dictionaryServiceInit)},
-      translationRetrieverService{std::move(translationServiceInit)},
-      statisticsRepository{std::move(statisticsRepoInit)},
-      wordDescriptionRetrieverService{std::move(wordDescriptionServiceInit)},
-      dictionaryStatisticsCounter{std::move(dictionaryStatisticsCounterInit)},
+    std::unique_ptr<DictionaryStatisticsCounter> counterInit,
+    std::unique_ptr<dictionary::AddWordToDictionaryCommand> addWordToDictionaryCommandInit,
+    std::unique_ptr<dictionary::CreateDictionaryCommand> createDictionaryCommandInit,
+    std::unique_ptr<dictionary::RemoveDictionaryCommand> removeDictionaryCommandInit,
+    std::unique_ptr<dictionary::CreateDictionaryFromCsvFileCommand> createDictionaryFromCsvFileCommandInit,
+    std::unique_ptr<dictionary::RemoveWordFromDictionaryCommand> removeWordFromDictionaryCommandInit,
+    std::unique_ptr<dictionary::UpdateWordTranslationInDictionaryCommand> updateWordTranslationInDictionaryCommandInit,
+    std::unique_ptr<dictionary::GetDictionariesEnglishWordsQuery> getDictionariesEnglishWordsQueryInit,
+    std::unique_ptr<dictionary::GetDictionariesNamesQuery> getDictionariesNamesQueryInit,
+    std::unique_ptr<dictionary::GetDictionariesQuery> getDictionariesQueryInit,
+    std::unique_ptr<dictionary::GetDictionaryEnglishWordsQuery> getDictionaryEnglishWordsQueryInit,
+    std::unique_ptr<dictionary::GetDictionaryQuery> getDictionaryQueryInit,
+    std::unique_ptr<dictionary::GetRandomWordFromDictionariesQuery> getRandomWordFromDictionariesQueryInit,
+    std::unique_ptr<dictionary::GetRandomWordFromDictionaryQuery> getRandomWordFromDictionaryQueryInit,
+    std::unique_ptr<dictionary::GetWordDescriptionQuery> getWordDescriptionQueryInit,
+    std::unique_ptr<statistics::AddCorrectAnswerCommand> addCorrectAnswerCommandInit,
+    std::unique_ptr<statistics::AddIncorrectAnswerCommand> addIncorrectAnswerCommandInit,
+    std::unique_ptr<statistics::AddWordStatisticsCommand> addWordStatisticsCommandInit,
+    std::unique_ptr<statistics::ResetWordsStatisticsCommand> resetWordsStatisticsCommandInit,
+    std::unique_ptr<statistics::GetWordsStatisticsQuery> getWordsStatisticsQueryInit,
+    std::unique_ptr<translation::GetTranslationQuery> getTranslationQueryInit,
+    std::unique_ptr<translation::GetSupportedLanguagesQuery> getSupportedLanguagesQueryInit)
+    : dictionaryStatisticsCounter{std::move(counterInit)},
+      addWordToDictionaryCommand{std::move(addWordToDictionaryCommandInit)},
+      createDictionaryCommand{std::move(createDictionaryCommandInit)},
+      removeDictionaryCommand{std::move(removeDictionaryCommandInit)},
+      createDictionaryFromCsvFileCommand{std::move(createDictionaryFromCsvFileCommandInit)},
+      removeWordFromDictionaryCommand{std::move(removeWordFromDictionaryCommandInit)},
+      updateWordTranslationInDictionaryCommand{std::move(updateWordTranslationInDictionaryCommandInit)},
+      getDictionariesEnglishWordsQuery{std::move(getDictionariesEnglishWordsQueryInit)},
+      getDictionariesNamesQuery{std::move(getDictionariesNamesQueryInit)},
+      getDictionariesQuery{std::move(getDictionariesQueryInit)},
+      getDictionaryEnglishWordsQuery{std::move(getDictionaryEnglishWordsQueryInit)},
+      getDictionaryQuery{std::move(getDictionaryQueryInit)},
+      getRandomWordFromDictionariesQuery{std::move(getRandomWordFromDictionariesQueryInit)},
+      getRandomWordFromDictionaryQuery{std::move(getRandomWordFromDictionaryQueryInit)},
+      getWordDescriptionQuery{std::move(getWordDescriptionQueryInit)},
+      addCorrectAnswerCommand{std::move(addCorrectAnswerCommandInit)},
+      addIncorrectAnswerCommand{std::move(addIncorrectAnswerCommandInit)},
+      addWordStatisticsCommand{std::move(addWordStatisticsCommandInit)},
+      resetWordsStatisticsCommand{std::move(resetWordsStatisticsCommandInit)},
+      getWordsStatisticsQuery{std::move(getWordsStatisticsQueryInit)},
+      getTranslationQuery{std::move(getTranslationQueryInit)},
+      getSupportedLanguagesQuery{std::move(getSupportedLanguagesQueryInit)}
 {
-    initialize();
-}
-
-void DefaultGlossary::initialize()
-{
-    dictionaryService->synchronizeDictionaries();
-
-    for (const auto& dictionaryObserver : dictionaryObservers)
-    {
-        dictionaryService->registerObserver(dictionaryObserver.get());
-    }
 }
 
 std::optional<std::string> DefaultGlossary::getRandomPolishWord() const
 {
-    auto dictionaryWord = dictionaryService->getRandomDictionaryWord();
-    if (dictionaryWord == std::nullopt)
+    try
     {
-        std::cerr << "No available dictionary words";
+        const auto dictionaryWord = getRandomWordFromDictionariesQuery->getRandomWord();
+
+        if (not dictionaryWord->translation)
+        {
+            return getTranslationQuery->getTranslation(
+                {dictionaryWord->englishWord, translation::Language::English, translation::Language::Polish});
+        }
+
+        return dictionaryWord->translation;
+    }
+    catch (const std::runtime_error& error)
+    {
+        std::cerr << error.what();
+
         return std::nullopt;
     }
-
-    if (not dictionaryWord->translation)
-    {
-        return translationRetrieverService->retrieveTranslation(
-            dictionaryWord->englishWord, translation::SourceLanguage::English, translation::TargetLanguage::Polish);
-    }
-
-    return dictionaryWord->translation;
 }
 
 std::optional<std::string> DefaultGlossary::getRandomPolishWord(const std::string& dictionaryName) const
 {
-    auto dictionaryWord = dictionaryService->getRandomDictionaryWord(dictionaryName);
-    if (dictionaryWord == std::nullopt)
+    try
     {
-        std::cerr << "No available dictionary words";
+        auto dictionaryWord = getRandomWordFromDictionaryQuery->getRandomWord(dictionaryName);
+
+        if (not dictionaryWord->translation)
+        {
+            return getTranslationQuery->getTranslation(
+                {dictionaryWord->englishWord, translation::Language::English, translation::Language::Polish});
+        }
+
+        return dictionaryWord->translation;
+    }
+    catch (const std::runtime_error& error)
+    {
+        std::cerr << error.what();
+
         return std::nullopt;
     }
-
-    if (not dictionaryWord->translation)
-    {
-        return translationRetrieverService->retrieveTranslation(
-            dictionaryWord->englishWord, translation::SourceLanguage::English, translation::TargetLanguage::Polish);
-    }
-
-    return dictionaryWord->translation;
 }
 
 bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord, const std::string& englishWord) const
 {
-    const auto englishTranslationFromPolishWord = translationRetrieverService->retrieveTranslation(
-        polishWord, translation::SourceLanguage::Polish, translation::TargetLanguage::English);
+    const auto englishTranslationFromPolishWord = getTranslationQuery->getTranslation(
+        {polishWord, translation::Language::Polish, translation::Language::English});
+
     if (englishTranslationFromPolishWord == std::nullopt)
     {
         return false;
@@ -86,93 +116,98 @@ bool DefaultGlossary::verifyPolishWordTranslation(const std::string& polishWord,
 
     if (common::collection::compareCaseInsensitive(*englishTranslationFromPolishWord, englishWord))
     {
-        statisticsRepository->addCorrectAnswer(englishWord);
+        addCorrectAnswerCommand->addCorrectAnswer(englishWord);
+
         return true;
     }
 
-    statisticsRepository->addIncorrectAnswer(*englishTranslationFromPolishWord);
+    addIncorrectAnswerCommand->addIncorrectAnswer(*englishTranslationFromPolishWord);
+
     return false;
 }
 
-std::vector<Dictionary> DefaultGlossary::getDictionaries() const
+std::vector<dictionary::Dictionary> DefaultGlossary::getDictionaries() const
 {
-    return dictionaryService->getDictionaries();
+    return getDictionariesQuery->getDictionaries();
 }
 
 std::vector<std::string> DefaultGlossary::getDictionariesNames() const
 {
-    return dictionaryService->getDictionaryNames();
+    return getDictionariesNamesQuery->getDictionariesNames();
 }
 
-std::vector<DictionaryWord> DefaultGlossary::getDictionaryWords(const std::string& dictionaryName) const
+std::vector<dictionary::DictionaryWord> DefaultGlossary::getDictionaryWords(const std::string& dictionaryName) const
 {
-    if (const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName))
+    const auto dictionary = getDictionaryQuery->getDictionary(dictionaryName);
+
+    if (!dictionary)
     {
-        return *dictionaryWords;
+        return {};
     }
-    return {};
+
+    return dictionary->words;
 }
 
 void DefaultGlossary::addDictionary(const std::string& dictionaryName) const
 {
-    dictionaryService->addDictionary(dictionaryName);
+    createDictionaryCommand->createDictionary(dictionaryName);
 }
 
 void DefaultGlossary::removeDictionary(const std::string& dictionaryName) const
 {
-    dictionaryService->removeDictionary(dictionaryName);
+    removeDictionaryCommand->removeDictionary(dictionaryName);
 }
 
 void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord,
                                                  const std::string& dictionaryName) const
 {
-    dictionaryService->addWordToDictionary({englishWord, std::nullopt}, dictionaryName);
+    addWordToDictionaryCommand->addWordToDictionary(dictionaryName, {englishWord, std::nullopt});
 }
 
 void DefaultGlossary::addEnglishWordToDictionary(const std::string& englishWord, const std::string& translation,
                                                  const std::string& dictionaryName) const
 {
-    dictionaryService->addWordToDictionary({englishWord, translation}, dictionaryName);
+    addWordToDictionaryCommand->addWordToDictionary(dictionaryName, {englishWord, translation});
 }
 
 void DefaultGlossary::removeEnglishWordFromDictionary(const std::string& englishWord,
                                                       const std::string& dictionaryName) const
 {
-    dictionaryService->removeWordFromDictionary(englishWord, dictionaryName);
+    removeWordFromDictionaryCommand->removeWordFromDictionary(dictionaryName, englishWord);
 }
 
 void DefaultGlossary::addDictionaryFromFile(const std::string& dictionaryName,
                                             const std::string& pathToFileWithDictionaryWords) const
 {
-    dictionaryService->addDictionaryFromFile(dictionaryName, pathToFileWithDictionaryWords);
+    createDictionaryFromCsvFileCommand->createDictionaryFromCsvFile(dictionaryName, pathToFileWithDictionaryWords);
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationManually(const std::string& dictionaryName,
                                                               const std::string& englishWord,
                                                               const std::string& newTranslation) const
 {
-    dictionaryService->updateWordTranslationFromDictionary(dictionaryName, englishWord, newTranslation);
+    updateWordTranslationInDictionaryCommand->updateWordTranslation(dictionaryName, englishWord, newTranslation);
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationAutomatically(const std::string& dictionaryName,
                                                                    const std::string& englishWord) const
 {
-    const auto translation = translationService->retrieveTranslation(englishWord, translation::Language::English,
-                                                                     translation::Language::Polish);
+    const auto translation = getTranslationQuery->getTranslation(
+        {englishWord, translation::Language::English, translation::Language::Polish});
 
     if (translation)
     {
-        dictionaryService->updateWordTranslationFromDictionary(dictionaryName, englishWord, *translation);
+        updateWordTranslationInDictionaryCommand->updateWordTranslation(dictionaryName, englishWord, *translation);
     }
 }
 
 void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::string& dictionaryName) const
 {
-    const auto dictionaryWords = dictionaryService->getDictionaryWords(dictionaryName);
+    const auto dictionary = getDictionaryQuery->getDictionary(dictionaryName);
 
-    if (dictionaryWords)
+    if (dictionary)
     {
-        for (const auto& dictionaryWord : *dictionaryWords)
+        for (const auto& dictionaryWord : dictionary->words)
         {
             if (dictionaryWord.translation && dictionaryWord.translation->empty())
             {
@@ -182,14 +217,14 @@ void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::strin
     }
 }
 
-WordDescription DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
+dictionary::WordDescription DefaultGlossary::getEnglishWordDescription(const std::string& englishWord) const
 {
-    return wordDescriptionRetrieverService->retrieveWordDescription(englishWord);
+    return getWordDescriptionQuery->getWordDescription(englishWord);
 }
 
 std::vector<std::string> DefaultGlossary::getSupportedTranslatorLanguages() const
 {
-    return translationRetrieverService->retrieveSupportedLanguages();
+    return getSupportedLanguagesQuery->getSupportedLanguages();
 }
 
 std::optional<std::string> DefaultGlossary::translate(const std::string& textToTranslate,
@@ -213,6 +248,7 @@ std::optional<std::string> DefaultGlossary::translate(const std::string& textToT
     }
 
     translation::Language targetLanguage;
+
     if (common::collection::compareCaseInsensitive(targetLanguageText, "Polish"))
     {
         targetLanguage = translation::Language::Polish;
@@ -227,35 +263,35 @@ std::optional<std::string> DefaultGlossary::translate(const std::string& textToT
         return std::nullopt;
     }
 
-    return translationRetrieverService->retrieveTranslation(textToTranslate, sourceLanguage, targetLanguage);
+    return getTranslationQuery->getTranslation({textToTranslate, sourceLanguage, targetLanguage});
 }
 
 std::optional<DictionaryStatistics> DefaultGlossary::getDictionaryStatistics(const std::string& dictionaryName) const
 {
-    const auto dictionary = dictionaryService->getDictionary(dictionaryName);
+    const auto dictionary = getDictionaryQuery->getDictionary(dictionaryName);
 
     if (!dictionary)
     {
         return std::nullopt;
     }
 
-        auto statistics = statisticsRepository->getStatistics();
+    auto statistics = getWordsStatisticsQuery->getWordsStatistics();
 
-        return dictionaryStatisticsCounter->countDictionaryStatistics(*dictionary, statistics);
+    return dictionaryStatisticsCounter->countDictionaryStatistics(*dictionary, statistics);
 }
 
 DictionariesStatistics DefaultGlossary::getDictionariesStatistics() const
 {
-    auto dictionaries = dictionaryService->getDictionaries();
+    auto dictionaries = getDictionariesQuery->getDictionaries();
 
-    auto statistics = statisticsRepository->getStatistics();
+    auto statistics = getWordsStatisticsQuery->getWordsStatistics();
 
     return dictionaryStatisticsCounter->countDictionariesStatistics(dictionaries, statistics);
 }
 
 void DefaultGlossary::resetStatistics() const
 {
-    statisticsRepository->resetStatistics();
+    resetWordsStatisticsCommand->resetWordsStatistics();
 }
 
 }

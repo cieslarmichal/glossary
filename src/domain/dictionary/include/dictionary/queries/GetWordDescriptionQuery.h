@@ -11,6 +11,6 @@ class GetWordDescriptionQuery
 public:
     virtual ~GetWordDescriptionQuery() = default;
 
-    virtual WordDescription getWordDescription(const std::string& englishName) const = 0;
+    virtual WordDescription getWordDescription(const std::string& englishWord) const = 0;
 };
 }
