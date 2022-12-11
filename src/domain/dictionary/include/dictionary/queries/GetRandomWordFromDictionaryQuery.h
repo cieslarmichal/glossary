@@ -3,6 +3,7 @@
 #include <string>
 
 #include "Dictionary.h"
+#include "DictionaryWord.h"
 
 namespace glossary::dictionary
 {
