@@ -2,34 +2,24 @@
 
 #include <memory>
 
-#include "DictionaryObserver.h"
-#include "SupportedThreadsCalculator.h"
-#include "WordDescriptionDownloader.h"
-#include "WordDescriptionRepository.h"
-#include "WordDescriptionService.h"
 #include "collection/ThreadSafeQueue.h"
+#include "concurrency/SupportedThreadsCalculator.h"
+#include "dictionary/queries/GetWordDescriptionQuery.h"
+#include "dictionary/WordDescription.h"
 
 namespace glossary
 {
-class WordDescriptionConcurrentUpdater : public dictionary::DictionaryObserver
+class WordDescriptionConcurrentUpdater
 {
 public:
-    WordDescriptionConcurrentUpdater(std::shared_ptr<wordDescriptionService::WordDescriptionService>,
-                                     std::shared_ptr<dictionary::WordDescriptionRepository>);
+    explicit WordDescriptionConcurrentUpdater(std::shared_ptr<dictionary::GetWordDescriptionQuery>);
 
-    void update(const dictionary::std::vector<std::string>&) override;
+    void update(const std::vector<std::string>& englishWords);
 
 private:
-    unsigned getAmountOfThreads() const;
-    dictionary::std::vector<std::string>
-    getEnglishWordsWithoutWordDescription(const dictionary::std::vector<std::string>&) const;
-    void loadingWordDescriptionWorker(common::ThreadSafeQueue<std::string>&,
-                                      common::ThreadSafeQueue<dictionary::WordDescription>&);
-    std::optional<dictionary::WordDescription> downloadWordDescription(const std::string&);
-    void loadWordsDescriptionsIntoRepository(const dictionary::WordsDescriptions&);
+    void getWordDescriptions(common::collection::ThreadSafeQueue<std::string>& englishWords);
 
-    std::shared_ptr<wordDescriptionService::WordDescriptionService> wordDescriptionService;
-    std::shared_ptr<dictionary::WordDescriptionRepository> wordDescriptionRepository;
-    common::SupportedThreadsCalculator supportedThreadsCalculator;
+    std::shared_ptr<dictionary::GetWordDescriptionQuery> getWordDescriptionQuery;
+    common::concurrency::SupportedThreadsCalculator supportedThreadsCalculator;
 };
 }

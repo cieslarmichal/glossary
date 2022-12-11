@@ -42,10 +42,10 @@ public:
         std::unique_ptr<dictionary::GetDictionaryEnglishWordsQuery>, std::unique_ptr<dictionary::GetDictionaryQuery>,
         std::unique_ptr<dictionary::GetRandomWordFromDictionariesQuery>,
         std::unique_ptr<dictionary::GetRandomWordFromDictionaryQuery>,
-        std::unique_ptr<dictionary::GetWordDescriptionQuery>, std::unique_ptr<statistics::AddCorrectAnswerCommand>,
+        std::shared_ptr<dictionary::GetWordDescriptionQuery>, std::unique_ptr<statistics::AddCorrectAnswerCommand>,
         std::unique_ptr<statistics::AddIncorrectAnswerCommand>, std::unique_ptr<statistics::AddWordStatisticsCommand>,
         std::unique_ptr<statistics::ResetWordsStatisticsCommand>, std::unique_ptr<statistics::GetWordsStatisticsQuery>,
-        std::unique_ptr<translation::GetTranslationQuery>, std::unique_ptr<translation::GetSupportedLanguagesQuery>);
+        std::shared_ptr<translation::GetTranslationQuery>, std::unique_ptr<translation::GetSupportedLanguagesQuery>);
 
     std::optional<std::string> getRandomPolishWord() const override;
     std::optional<std::string> getRandomPolishWord(const std::string&) const override;
@@ -86,13 +86,13 @@ public:
     std::unique_ptr<dictionary::GetDictionaryQuery> getDictionaryQuery;
     std::unique_ptr<dictionary::GetRandomWordFromDictionariesQuery> getRandomWordFromDictionariesQuery;
     std::unique_ptr<dictionary::GetRandomWordFromDictionaryQuery> getRandomWordFromDictionaryQuery;
-    std::unique_ptr<dictionary::GetWordDescriptionQuery> getWordDescriptionQuery;
+    std::shared_ptr<dictionary::GetWordDescriptionQuery> getWordDescriptionQuery;
     std::unique_ptr<statistics::AddCorrectAnswerCommand> addCorrectAnswerCommand;
     std::unique_ptr<statistics::AddIncorrectAnswerCommand> addIncorrectAnswerCommand;
     std::unique_ptr<statistics::AddWordStatisticsCommand> addWordStatisticsCommand;
     std::unique_ptr<statistics::ResetWordsStatisticsCommand> resetWordsStatisticsCommand;
     std::unique_ptr<statistics::GetWordsStatisticsQuery> getWordsStatisticsQuery;
-    std::unique_ptr<translation::GetTranslationQuery> getTranslationQuery;
+    std::shared_ptr<translation::GetTranslationQuery> getTranslationQuery;
     std::unique_ptr<translation::GetSupportedLanguagesQuery> getSupportedLanguagesQuery;
 };
 }

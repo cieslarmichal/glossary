@@ -9,6 +9,7 @@ namespace glossary::translation
 class GetTranslationQueryMock : public GetTranslationQuery
 {
 public:
-    MOCK_METHOD(std::optional<std::string>, getTranslation, (std::string textToTranslate), (const));
+    MOCK_METHOD(std::optional<std::string>, getTranslation, (const GetTranslationQueryPayload&), (const));
+
 };
 }

@@ -1,8 +1,8 @@
 #pragma once
 
+#include "dictionary/Dictionary.h"
 #include "DictionaryStatistics.h"
-#include "dictionaryService/Dictionary.h"
-#include "statisticsRepository/Statistics.h"
+#include "statistics/WordStatistics.h"
 
 namespace glossary
 {
@@ -12,9 +12,9 @@ public:
     virtual ~DictionaryStatisticsCounter() = default;
 
     virtual DictionaryStatistics countDictionaryStatistics(const dictionary::Dictionary&,
-                                                           const statistics::Statistics&) const = 0;
+                                                           const std::vector<statistics::WordStatistics>&) const = 0;
     virtual DictionariesStatistics
-    countDictionariesStatistics(const dictionary::Dictionaries&,
-                                const statistics::Statistics&) const = 0;
+    countDictionariesStatistics(const std::vector<dictionary::Dictionary>&,
+                                const std::vector<statistics::WordStatistics>&) const = 0;
 };
 }

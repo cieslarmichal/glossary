@@ -2,31 +2,23 @@
 
 #include <memory>
 
-#include "DictionaryObserver.h"
-#include "SupportedThreadsCalculator.h"
-#include "TranslationRepository.h"
-#include "TranslationService.h"
 #include "collection/ThreadSafeQueue.h"
+#include "concurrency/SupportedThreadsCalculator.h"
+#include "translation/queries/GetTranslationQuery.h"
 
 namespace glossary
 {
-class TranslationConcurrentUpdater : public dictionary::DictionaryObserver
+class TranslationConcurrentUpdater
 {
 public:
-    TranslationConcurrentUpdater(std::shared_ptr<translationService::TranslationService>,
-                                 std::shared_ptr<translation::TranslationRepository>);
+    explicit TranslationConcurrentUpdater(std::shared_ptr<translation::GetTranslationQuery>);
 
-    void update(const dictionary::std::vector<std::string>&) override;
+    void update(const std::vector<std::string>& englishWords);
 
 private:
-    unsigned getAmountOfThreads() const;
-    dictionary::std::vector<std::string>
-    getEnglishWordsWithoutTranslation(const dictionary::std::vector<std::string>&) const;
-    void loadingTranslationsWorker(common::ThreadSafeQueue<std::string>&);
-    void loadTranslationFromTranslationService(const std::string&);
+    void getTranslations(common::collection::ThreadSafeQueue<std::string>&);
 
-    std::shared_ptr<translationService::TranslationService> translationService;
-    std::shared_ptr<translation::TranslationRepository> translationRepository;
-    common::SupportedThreadsCalculator supportedThreadsCalculator;
+    std::shared_ptr<translation::GetTranslationQuery> getTranslationQuery;
+    common::concurrency::SupportedThreadsCalculator supportedThreadsCalculator;
 };
 }

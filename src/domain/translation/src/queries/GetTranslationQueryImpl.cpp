@@ -2,16 +2,15 @@
 
 namespace glossary::translation
 {
-GetTranslationQueryImpl::GetTranslationQueryImpl(
-    std::unique_ptr<GoogleTranslateClient> googleTranslateClientInit,
-    std::unique_ptr<TranslationRepository> translationRepositoryInit)
+GetTranslationQueryImpl::GetTranslationQueryImpl(std::unique_ptr<GoogleTranslateClient> googleTranslateClientInit,
+                                                 std::unique_ptr<TranslationRepository> translationRepositoryInit)
     : googleTranslateClient{std::move(googleTranslateClientInit)},
       translationRepository{std::move(translationRepositoryInit)}
 {
 }
 
-std::optional<std::string> GetTranslationQueryImpl::getTranslation(
-    const glossary::translation::GetTranslationQueryPayload& payload) const
+std::optional<std::string>
+GetTranslationQueryImpl::getTranslation(const glossary::translation::GetTranslationQueryPayload& payload) const
 {
     const auto cachedTranslation = translationRepository->getTranslation(payload.text);
 
@@ -20,7 +19,7 @@ std::optional<std::string> GetTranslationQueryImpl::getTranslation(
         return cachedTranslation->translatedText;
     }
 
-    const auto translationFromGoogleTranslate =
+    auto translationFromGoogleTranslate =
         googleTranslateClient->translate({payload.text, payload.sourceLanguage, payload.targetLanguage});
 
     if (translationFromGoogleTranslate)

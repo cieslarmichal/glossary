@@ -27,6 +27,7 @@ target_link_libraries(glossary PUBLIC
         statistics
         translation
         fileSystem
+        concurrency
         )
 target_link_libraries(glossaryUT PUBLIC
         gmock_main
@@ -37,6 +38,7 @@ target_link_libraries(glossaryUT PUBLIC
         statistics
         translation
         fileSystem
+        concurrency
         )
 
 target_compile_options(glossary PUBLIC ${FLAGS})
