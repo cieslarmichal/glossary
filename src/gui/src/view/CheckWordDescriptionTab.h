@@ -23,7 +23,7 @@ signals:
     void notifyCheckWordDescriptionClicked(const QString& englishWord) const;
 
 public slots:
-    void onWordDescriptionReceived(const WordDescription&);
+    void onWordDescriptionReceived(const dictionary::WordDescription&);
 
 private slots:
     void on_buttonCheckWordDescription_clicked() const;

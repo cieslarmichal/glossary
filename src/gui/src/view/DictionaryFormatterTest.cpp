@@ -1,11 +1,10 @@
 #include "DictionaryFormatter.h"
 
-
-
 #include "gtest/gtest.h"
 
 using namespace ::testing;
 using namespace glossary;
+using namespace glossary::dictionary;
 using namespace gui::view;
 
 namespace

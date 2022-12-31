@@ -12,7 +12,7 @@ QString synonymsLabel{"Synonyms of %1:"};
 }
 namespace glossary::gui::view
 {
-WordDescriptionDialog::WordDescriptionDialog(QWidget* parent, const WordDescription& wordDescription)
+WordDescriptionDialog::WordDescriptionDialog(QWidget* parent, const dictionary::WordDescription& wordDescription)
     : QDialog(parent), ui(new Ui::WordDescriptionDialog)
 {
     ui->setupUi(this);

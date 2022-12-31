@@ -1,11 +1,10 @@
 #pragma once
 
+#include <optional>
 #include <QStringListModel>
 #include <QWidget>
 
-#include <optional>
-
-#include "WordDescription.h"
+#include "dictionary/WordDescription.h"
 
 namespace glossary::gui::view
 {
@@ -33,7 +32,7 @@ signals:
 
 public slots:
     void onNextRandomWordReceived(const QString&) const;
-    void onWordDescriptionReceived(const WordDescription&) const;
+    void onWordDescriptionReceived(const dictionary::WordDescription&) const;
     void onCheckedTranslationVerdictReceived(bool) const;
 
 private slots:

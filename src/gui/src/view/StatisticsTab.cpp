@@ -32,6 +32,7 @@ StatisticsTab::~StatisticsTab()
     {
         chart->removeSeries(pieSeries.get());
     }
+
     delete ui;
 }
 
@@ -40,10 +41,12 @@ void StatisticsTab::setDictionariesStatistics(const DictionariesStatistics& dict
     dictionariesStatistics = dictionariesStatisticsInit;
 
     QStringList dictionaryNamesFromStatistics;
+
     for (const auto& dictionaryStatistics : dictionariesStatistics)
     {
         dictionaryNamesFromStatistics.push_back(QString::fromStdString(dictionaryStatistics.dictionaryName));
     }
+
     dictionaryNames.setStringList(dictionaryNamesFromStatistics);
 }
 
@@ -72,6 +75,7 @@ void StatisticsTab::onDictionariesStatisticsReceived(const DictionariesStatistic
 void StatisticsTab::on_listOfDictionaries_clicked(const QModelIndex& dictionaryNameIndex)
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
+
     currentDictionaryName = dictionaryName;
 
     auto dictionaryStatistics = getDictionaryStatistics(dictionaryName);
@@ -83,12 +87,17 @@ void StatisticsTab::updateCurrentDictionaryStatistics(const DictionaryStatistics
 {
     ui->editCorrectAnswers->setText(
         QString::fromStdString(std::to_string(dictionaryStatistics.correctAnswers)));
+
     ui->editIncorrectAnswers->setText(
         QString::fromStdString(std::to_string(dictionaryStatistics.incorrectAnswers)));
+
     double efficiency = static_cast<double>(dictionaryStatistics.correctAnswers) /
                         (dictionaryStatistics.correctAnswers + dictionaryStatistics.incorrectAnswers);
+
     int efficiencyPercents = static_cast<int>(efficiency * 100);
+
     ui->editEfficiency->setText(QString::fromStdString(std::to_string(efficiencyPercents) + "%"));
+
     updateChartView(dictionaryStatistics);
 }
 
@@ -103,11 +112,15 @@ void StatisticsTab::updateChartView(const DictionaryStatistics& dictionaryStatis
 
     double amountOfALlAnswers =
         static_cast<double>(dictionaryStatistics.correctAnswers + dictionaryStatistics.incorrectAnswers);
+
     double percentOfCorrectAnswers =
         static_cast<double>(dictionaryStatistics.correctAnswers) / amountOfALlAnswers;
+
     double percentOfIncorrectAnswers =
         static_cast<double>(dictionaryStatistics.incorrectAnswers) / amountOfALlAnswers;
+
     pieSeries->append("Correct answers", percentOfCorrectAnswers);
+
     pieSeries->append("Incorrect answers", percentOfIncorrectAnswers);
 
     QPieSlice* correctAnswersSlice = pieSeries->slices().at(0);
@@ -129,13 +142,13 @@ void StatisticsTab::updateChartView(const DictionaryStatistics& dictionaryStatis
 
 DictionaryStatistics StatisticsTab::getDictionaryStatistics(const QString& dictionaryName) const
 {
-    auto foundDictionarStatistics =
+    auto foundDictionaryStatistics =
         std::find_if(dictionariesStatistics.begin(), dictionariesStatistics.end(),
                      [&](const DictionaryStatistics& stats)
                      { return stats.dictionaryName == dictionaryName.toStdString(); });
-    if (foundDictionarStatistics != dictionariesStatistics.end())
+    if (foundDictionaryStatistics != dictionariesStatistics.end())
     {
-        return *foundDictionarStatistics;
+        return *foundDictionaryStatistics;
     }
     return {};
 }

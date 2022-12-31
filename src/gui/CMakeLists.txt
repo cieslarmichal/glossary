@@ -42,8 +42,6 @@ set(UT_SOURCES
 add_executable(gui ${SOURCES} Main.cpp)
 add_executable(guiUT ${UT_SOURCES} ${SOURCES})
 
-target_compile_definitions(guiUT PUBLIC -DGTEST_LINKED_AS_SHARED_LIBRARY)
-
 target_include_directories(gui PUBLIC "src/")
 target_include_directories(guiUT PUBLIC "src/")
 
@@ -53,6 +51,10 @@ target_link_libraries(gui PUBLIC
         Qt5::Widgets
         Qt5::Charts
         glossary
+        translation
+        statistics
+        dictionary
+        fileSystem
         )
 target_link_libraries(guiUT PRIVATE
         Qt5::Core
@@ -62,6 +64,10 @@ target_link_libraries(guiUT PRIVATE
         gmock_main
         gtest
         glossary
+        translation
+        statistics
+        dictionary
+        fileSystem
         )
 
 target_compile_options(gui PUBLIC ${FLAGS})

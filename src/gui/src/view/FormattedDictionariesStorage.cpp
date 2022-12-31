@@ -15,6 +15,7 @@ void FormattedDictionariesStorage::updateDictionaryWords(const QString& dictiona
     auto foundDictionary =
         std::find_if(dictionaries.begin(), dictionaries.end(),
                      [&](const FormattedDictionary& dict) { return dict.dictionaryName == dictionaryName; });
+
     if (foundDictionary != dictionaries.end())
     {
         foundDictionary->dictionaryWords = words;
@@ -37,10 +38,12 @@ QList<FormattedDictionary> FormattedDictionariesStorage::getDictionaries() const
 QStringList FormattedDictionariesStorage::getDictionaryNames() const
 {
     QStringList dictionaryNames;
+
     for (const auto& dictionary : dictionaries)
     {
         dictionaryNames.push_back(dictionary.dictionaryName);
     }
+
     return dictionaryNames;
 }
 
@@ -49,10 +52,12 @@ FormattedDictionaryWords FormattedDictionariesStorage::getDictionaryWords(const 
     auto foundDictionary =
         std::find_if(dictionaries.begin(), dictionaries.end(),
                      [&](const FormattedDictionary& dict) { return dict.dictionaryName == dictionaryName; });
+
     if (foundDictionary != dictionaries.end())
     {
         return foundDictionary->dictionaryWords;
     }
+
     return {};
 }
 

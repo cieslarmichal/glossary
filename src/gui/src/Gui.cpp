@@ -1,6 +1,6 @@
 #include "Gui.h"
 
-#include "GetProjectPath.h"
+#include "fileSystem/GetProjectPath.h"
 #include "GlossaryFactory.h"
 #include "model/GlossaryAdapter.h"
 #include "view/CheckWordDescriptionTab.h"
@@ -38,14 +38,13 @@ void Gui::initialize()
     auto checkWordDescriptionTab = std::make_shared<view::CheckWordDescriptionTab>();
     auto translatorTab = std::make_shared<view::TranslatorTab>();
     auto statisticsTab = std::make_shared<view::StatisticsTab>();
-    mainView = std::make_unique<view::MainView>(nullptr, welcomeTab, guessTab, dictionariesTab,
-                                                checkWordDescriptionTab, translatorTab, statisticsTab);
+    mainView = std::make_unique<view::MainView>(nullptr, welcomeTab, guessTab, dictionariesTab, checkWordDescriptionTab,
+                                                translatorTab, statisticsTab);
 
     auto glossaryAdapter =
         std::make_shared<model::GlossaryAdapter>(GlossaryFactory::createGlossaryFactory()->createGlossary());
 
-    welcomeViewManager =
-        std::make_unique<viewManager::WelcomeTabViewManager>(this, welcomeTab, glossaryAdapter);
+    welcomeViewManager = std::make_unique<viewManager::WelcomeTabViewManager>(this, welcomeTab, glossaryAdapter);
     guessViewManager = std::make_unique<viewManager::GuessTabViewManager>(this, guessTab, glossaryAdapter);
     dictionariesViewManager =
         std::make_unique<viewManager::DictionariesTabViewManager>(this, dictionariesTab, glossaryAdapter);

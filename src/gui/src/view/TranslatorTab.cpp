@@ -1,6 +1,6 @@
 #include "TranslatorTab.h"
 
-#include "GetProjectPath.h"
+#include "fileSystem/GetProjectPath.h"
 #include "ui_TranslatorTab.h"
 
 namespace glossary::gui::view
@@ -37,9 +37,9 @@ void TranslatorTab::onTranslationReceived(const QString& translation) const
     ui->editTranslatedText->setText(translation.toLower());
 }
 
-void TranslatorTab::onAvailableLanguagesReceived(const QStringList& availableLanguages)
+void TranslatorTab::onAvailableLanguagesReceived(const QStringList& availableLanguagesInput)
 {
-    setAvailableLanguages(availableLanguages);
+    setAvailableLanguages(availableLanguagesInput);
 }
 
 void TranslatorTab::on_buttonTranslate_clicked() const

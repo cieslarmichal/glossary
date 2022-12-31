@@ -16,11 +16,14 @@ DictionaryWordAccumulator::accumulateDictionaryWord(const FormattedDictionaryWor
     {
         return {};
     }
+
     QString accumulatedDictionaryWord = dictionaryWord.englishWord + " " + dashSeparator + " ";
+
     if (not dictionaryWord.translation.isEmpty())
     {
         accumulatedDictionaryWord += dictionaryWord.translation;
     }
+
     return accumulatedDictionaryWord;
 }
 
@@ -31,14 +34,20 @@ DictionaryWordAccumulator::separateDictionaryWord(const QString& accumulatedDict
     {
         return std::nullopt;
     }
+
     std::stringstream dictionaryWordStream{accumulatedDictionaryWord.toStdString()};
+
     std::string englishWord, translation;
+
     char separator;
+
     dictionaryWordStream >> englishWord >> separator >> translation;
+
     if (englishWord.empty() || separator != dashSeparator)
     {
         return std::nullopt;
     }
+
     return FormattedDictionaryWord{QString::fromStdString(englishWord), QString::fromStdString(translation)};
 }
 }

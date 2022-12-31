@@ -1,9 +1,9 @@
 #pragma once
 
+#include <memory>
 #include <QList>
 #include <QObject>
 #include <QString>
-#include <memory>
 
 #include "Glossary.h"
 
@@ -17,30 +17,28 @@ public:
 
     QString getRandomPolishWord() const;
     QString getRandomPolishWord(const QString& dictionaryName) const;
-    WordDescription getWordDescription(const QString& englishWord) const;
+    dictionary::WordDescription getWordDescription(const QString& englishWord) const;
     bool verifyCorrectnessOfTranslation(const QString& polishWord, const QString& englishWord) const;
     QList<QString> getDictionaryNames() const;
-    Dictionaries getDictionaries() const;
-    std::vector<DictionaryWord> getDictionaryWords(const QString& dictionaryName) const;
+    std::vector<dictionary::Dictionary> getDictionaries() const;
+    std::vector<dictionary::DictionaryWord> getDictionaryWords(const QString& dictionaryName) const;
     QStringList getAvailableLanguages() const;
     QString getTranslation(const QString& textToTranslate, const QString& sourceLanguage,
                            const QString& targetLanguage) const;
     DictionaryStatistics getDictionaryStatistics(const QString& dictionaryName) const;
     DictionariesStatistics getDictionariesStatistics() const;
-    ExternalServicesStatus getStatusOfConnectionToExternalServices() const;
 
 signals:
     void notifyAboutRandomPolishWord(const QString& polishWord) const;
-    void notifyGuessTabAboutWordDescription(const WordDescription&) const;
-    void notifyWordDescriptionTabAboutWordDescription(const WordDescription&) const;
+    void notifyGuessTabAboutWordDescription(const dictionary::WordDescription&) const;
+    void notifyWordDescriptionTabAboutWordDescription(const dictionary::WordDescription&) const;
     void notifyAboutTranslationVerdict(bool translationVerdict) const;
-    void notifyAboutDictionaryWordsUpdate(const std::string&, const std::vector<DictionaryWord>&) const;
-    void notifyAboutDictionariesUpdate(const Dictionaries&) const;
+    void notifyAboutDictionaryWordsUpdate(const std::string&, const std::vector<dictionary::DictionaryWord>&) const;
+    void notifyAboutDictionariesUpdate(const std::vector<dictionary::Dictionary>&) const;
     void notifyAboutTranslation(const QString& translatedText) const;
     void notifyAboutAvailableLanguages(const QStringList& availableLanguages) const;
     void notifyAboutDictionaryStatistics(const DictionaryStatistics&) const;
     void notifyAboutDictionariesStatistics(const DictionariesStatistics&) const;
-    void notifyAboutExternalServicesStatus(const ExternalServicesStatus&) const;
 
 public slots:
     void onRandomPolishWordTriggered() const;
@@ -65,8 +63,6 @@ public slots:
     void onTranslatorAvailableLanguagesRequest() const;
     void onDictionaryStatisticsRequest(const QString& dictionaryName) const;
     void onDictionariesStatisticsRequest() const;
-    void onUpdateTranslateApiKeyLocationRequest(const QString& translateApiKeyLocation) const;
-    void onUpdateWordsApiKeyLocationRequest(const QString& wordsApiKeyLocation) const;
     void onResetStatistics() const;
 
 private:

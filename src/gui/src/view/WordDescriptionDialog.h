@@ -3,7 +3,7 @@
 #include <QDialog>
 #include <QStringListModel>
 
-#include "WordDescription.h"
+#include "dictionary/WordDescription.h"
 #include "WordDescriptionFormatter.h"
 
 namespace glossary::gui::view
@@ -18,7 +18,7 @@ class WordDescriptionDialog : public QDialog
     Q_OBJECT
 
 public:
-    WordDescriptionDialog(QWidget* parent, const WordDescription&);
+    WordDescriptionDialog(QWidget* parent, const dictionary::WordDescription&);
     ~WordDescriptionDialog();
 
 private:

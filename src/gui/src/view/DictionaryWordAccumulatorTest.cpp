@@ -1,7 +1,5 @@
 #include "DictionaryWordAccumulator.h"
 
-
-
 #include "gtest/gtest.h"
 
 using namespace ::testing;
@@ -39,8 +37,7 @@ TEST_F(DictionaryWordAccumulatorTest,
     ASSERT_EQ(actualAccumulatedDictionaryWord, accumulatedDictionaryWordWithTranslation);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenDictionaryWordWithoutTranslation_shouldAccumulateToQStringWithWordAndDash)
+TEST_F(DictionaryWordAccumulatorTest, givenDictionaryWordWithoutTranslation_shouldAccumulateToQStringWithWordAndDash)
 {
     const auto actualAccumulatedDictionaryWord =
         dictionaryWordAccumulator.accumulateDictionaryWord(dictionaryWordWithoutTranslation);
@@ -50,16 +47,14 @@ TEST_F(DictionaryWordAccumulatorTest,
 
 TEST_F(DictionaryWordAccumulatorTest, givenEmptyString_shouldReturnNone)
 {
-    const auto actualDictionaryWord =
-        dictionaryWordAccumulator.separateDictionaryWord(accumulatedEmptyDictionaryWord);
+    const auto actualDictionaryWord = dictionaryWordAccumulator.separateDictionaryWord(accumulatedEmptyDictionaryWord);
 
     ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
 
 TEST_F(DictionaryWordAccumulatorTest, givenWordWithoutDash_shouldReturnNone)
 {
-    const auto actualDictionaryWord =
-        dictionaryWordAccumulator.separateDictionaryWord(accumulatedWordWithoutDash);
+    const auto actualDictionaryWord = dictionaryWordAccumulator.separateDictionaryWord(accumulatedWordWithoutDash);
 
     ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
@@ -72,8 +67,7 @@ TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedBySpaces_s
     ASSERT_EQ(actualDictionaryWord, std::nullopt);
 }
 
-TEST_F(DictionaryWordAccumulatorTest,
-       givenStringWithTwoWordsSeparetedByCharacterOtherThanDash_shouldReturnNone)
+TEST_F(DictionaryWordAccumulatorTest, givenStringWithTwoWordsSeparetedByCharacterOtherThanDash_shouldReturnNone)
 {
     const auto actualDictionaryWord =
         dictionaryWordAccumulator.separateDictionaryWord(accumulatedTwoWordsSeparatedWithColon);

@@ -16,11 +16,14 @@ using FormattedDictionaryWords = QList<FormattedDictionaryWord>;
 inline QStringList getAccumulatedFormattedDictionaryWords(const FormattedDictionaryWords& dictionaryWords)
 {
     QStringList accumulatedDictionaryWords;
+
     for (const auto& dictionaryWord : dictionaryWords)
     {
         auto accumulatedDictionaryWord = dictionaryWord.englishWord + " - " + dictionaryWord.translation;
+
         accumulatedDictionaryWords.push_back(accumulatedDictionaryWord);
     }
+
     return accumulatedDictionaryWords;
 }
 

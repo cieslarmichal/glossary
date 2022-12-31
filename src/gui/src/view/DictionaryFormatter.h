@@ -1,6 +1,7 @@
 #pragma once
 
-#include "Dictionaries.h"
+#include "dictionary/Dictionary.h"
+#include "dictionary/DictionaryWord.h"
 #include "FormattedDictionary.h"
 
 namespace glossary::gui::view
@@ -8,9 +9,9 @@ namespace glossary::gui::view
 class DictionaryFormatter
 {
 public:
-    FormattedDictionaries getFormattedDictionaries(const Dictionaries&) const;
-    FormattedDictionary getFormattedDictionary(const Dictionary&) const;
+    FormattedDictionaries getFormattedDictionaries(const std::vector<dictionary::Dictionary>&) const;
+    FormattedDictionary getFormattedDictionary(const dictionary::Dictionary&) const;
     QString getFormattedDictionaryName(const std::string&) const;
-    FormattedDictionaryWords getFormattedDictionaryWords(const std::vector<DictionaryWord>&) const;
+    FormattedDictionaryWords getFormattedDictionaryWords(const std::vector<dictionary::DictionaryWord>&) const;
 };
 }
