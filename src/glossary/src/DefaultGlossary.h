@@ -25,6 +25,8 @@
 #include "statistics/queries/GetWordsStatisticsQuery.h"
 #include "translation/queries/GetSupportedLanguagesQuery.h"
 #include "translation/queries/GetTranslationQuery.h"
+#include "TranslationConcurrentUpdater.h"
+#include "WordDescriptionConcurrentUpdater.h"
 
 namespace glossary
 {
@@ -45,7 +47,8 @@ public:
         std::shared_ptr<dictionary::GetWordDescriptionQuery>, std::unique_ptr<statistics::AddCorrectAnswerCommand>,
         std::unique_ptr<statistics::AddIncorrectAnswerCommand>, std::unique_ptr<statistics::AddWordStatisticsCommand>,
         std::unique_ptr<statistics::ResetWordsStatisticsCommand>, std::unique_ptr<statistics::GetWordsStatisticsQuery>,
-        std::shared_ptr<translation::GetTranslationQuery>, std::unique_ptr<translation::GetSupportedLanguagesQuery>);
+        std::shared_ptr<translation::GetTranslationQuery>, std::unique_ptr<translation::GetSupportedLanguagesQuery>,
+        std::unique_ptr<TranslationConcurrentUpdater>, std::unique_ptr<WordDescriptionConcurrentUpdater>);
 
     std::optional<std::string> getRandomPolishWord() const override;
     std::optional<std::string> getRandomPolishWord(const std::string&) const override;
@@ -59,7 +62,7 @@ public:
     void addEnglishWordToDictionary(const std::string&, const std::string& translation,
                                     const std::string&) const override;
     void removeEnglishWordFromDictionary(const std::string&, const std::string&) const override;
-    void addDictionaryFromFile(const std::string&, const std::string& pathToFileWithDictionaryWords) const override;
+    void addDictionaryFromFile(const std::string&, const std::string& pathToFileWithDictionaryWords) override;
     void updateDictionaryWordTranslationManually(const std::string&, const std::string&,
                                                  const std::string& newTranslation) const override;
     void updateDictionaryWordTranslationAutomatically(const std::string&, const std::string&) const override;
@@ -73,7 +76,8 @@ public:
     void resetStatistics() const override;
 
 private:
-    void synchronizeEnglishWords();
+    void synchronizeDictionaries();
+    void synchronizeDictionary(const std::string& dictionaryName);
 
     std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounter;
     std::unique_ptr<dictionary::AddWordToDictionaryCommand> addWordToDictionaryCommand;
@@ -97,5 +101,7 @@ private:
     std::unique_ptr<statistics::GetWordsStatisticsQuery> getWordsStatisticsQuery;
     std::shared_ptr<translation::GetTranslationQuery> getTranslationQuery;
     std::unique_ptr<translation::GetSupportedLanguagesQuery> getSupportedLanguagesQuery;
+    std::unique_ptr<TranslationConcurrentUpdater> translationConcurrentUpdater;
+    std::unique_ptr<WordDescriptionConcurrentUpdater> wordDescriptionConcurrentUpdater;
 };
 }

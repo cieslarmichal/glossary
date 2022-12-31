@@ -27,7 +27,7 @@ public:
     virtual void addEnglishWordToDictionary(const std::string&, const std::string& translation,
                                             const std::string&) const = 0;
     virtual void removeEnglishWordFromDictionary(const std::string&, const std::string&) const = 0;
-    virtual void addDictionaryFromFile(const std::string&, const std::string& pathToFileWithDictionaryWords) const = 0;
+    virtual void addDictionaryFromFile(const std::string&, const std::string& pathToFileWithDictionaryWords) = 0;
     virtual void updateDictionaryWordTranslationManually(const std::string&, const std::string&,
                                                          const std::string& newTranslation) const = 0;
     virtual void updateDictionaryWordTranslationAutomatically(const std::string&, const std::string&) const = 0;

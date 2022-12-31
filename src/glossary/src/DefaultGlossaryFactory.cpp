@@ -51,7 +51,8 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     auto getDictionaryQuery = dictionaryFactory->createGetDictionaryQuery();
     auto getRandomWordFromDictionariesQuery = dictionaryFactory->createGetRandomWordFromDictionariesQuery();
     auto getRandomWordFromDictionaryQuery = dictionaryFactory->createGetRandomWordFromDictionaryQuery();
-    auto getWordDescriptionQuery = dictionaryFactory->createGetWordDescriptionQuery();
+    std::shared_ptr<dictionary::GetWordDescriptionQuery> getWordDescriptionQuery =
+        dictionaryFactory->createGetWordDescriptionQuery();
 
     auto addCorrectAnswerCommand = statisticsFactory->createAddCorrectAnswerCommand();
     auto addIncorrectAnswerCommand = statisticsFactory->createAddIncorrectAnswerCommand();
@@ -59,15 +60,13 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     auto resetWordsStatisticsCommand = statisticsFactory->createResetWordsStatisticsCommand();
     auto getWordsStatisticsQuery = statisticsFactory->createGetWordsStatisticsQuery();
 
-    auto getTranslationQuery = translationFactory->createGetTranslationQuery();
+    std::shared_ptr<translation::GetTranslationQuery> getTranslationQuery =
+        translationFactory->createGetTranslationQuery();
     auto getSupportedLanguagesQuery = translationFactory->createGetSupportedLanguagesQuery();
 
-    //    auto dictionaryTranslationUpdater = createDictionaryTranslationUpdater(dictionaryService, translationService);
-    //
-    //    auto wordDescriptionUpdater = createWordDescriptionUpdater(wordDescriptionService, wordDescriptionRepository);
-    //    auto translationUpdater = createTranslationUpdater(translationService, translationRepository);
-    //    std::vector<std::shared_ptr<dictionary::DictionaryObserver>> observers{wordDescriptionUpdater,
-    //    translationUpdater};
+    auto translationUpdater = std::make_unique<TranslationConcurrentUpdater>(getTranslationQuery);
+
+    auto wordDescriptionUpdater = std::make_unique<WordDescriptionConcurrentUpdater>(getWordDescriptionQuery);
 
     return std::make_unique<DefaultGlossary>(
         dictionaryStatisticsCounter, addWordToDictionaryCommand, createDictionaryCommand, removeDictionaryCommand,
@@ -76,6 +75,6 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
         getDictionaryEnglishWordsQuery, getDictionaryQuery, getRandomWordFromDictionariesQuery,
         getRandomWordFromDictionaryQuery, getWordDescriptionQuery, addCorrectAnswerCommand, addIncorrectAnswerCommand,
         addWordStatisticsCommand, resetWordsStatisticsCommand, getWordsStatisticsQuery, getTranslationQuery,
-        getSupportedLanguagesQuery);
+        getSupportedLanguagesQuery, translationUpdater, wordDescriptionUpdater);
 }
 }

@@ -34,7 +34,9 @@ DefaultGlossary::DefaultGlossary(
     std::unique_ptr<statistics::ResetWordsStatisticsCommand> resetWordsStatisticsCommandInit,
     std::unique_ptr<statistics::GetWordsStatisticsQuery> getWordsStatisticsQueryInit,
     std::shared_ptr<translation::GetTranslationQuery> getTranslationQueryInit,
-    std::unique_ptr<translation::GetSupportedLanguagesQuery> getSupportedLanguagesQueryInit)
+    std::unique_ptr<translation::GetSupportedLanguagesQuery> getSupportedLanguagesQueryInit,
+    std::unique_ptr<TranslationConcurrentUpdater> translationConcurrentUpdaterInit,
+    std::unique_ptr<WordDescriptionConcurrentUpdater> wordDescriptionConcurrentUpdaterInit)
     : dictionaryStatisticsCounter{std::move(counterInit)},
       addWordToDictionaryCommand{std::move(addWordToDictionaryCommandInit)},
       createDictionaryCommand{std::move(createDictionaryCommandInit)},
@@ -56,8 +58,11 @@ DefaultGlossary::DefaultGlossary(
       resetWordsStatisticsCommand{std::move(resetWordsStatisticsCommandInit)},
       getWordsStatisticsQuery{std::move(getWordsStatisticsQueryInit)},
       getTranslationQuery{std::move(getTranslationQueryInit)},
-      getSupportedLanguagesQuery{std::move(getSupportedLanguagesQueryInit)}
+      getSupportedLanguagesQuery{std::move(getSupportedLanguagesQueryInit)},
+      translationConcurrentUpdater{std::move(translationConcurrentUpdaterInit)},
+      wordDescriptionConcurrentUpdater{std::move(wordDescriptionConcurrentUpdaterInit)}
 {
+    synchronizeDictionaries();
 }
 
 std::optional<std::string> DefaultGlossary::getRandomPolishWord() const
@@ -177,9 +182,11 @@ void DefaultGlossary::removeEnglishWordFromDictionary(const std::string& english
 }
 
 void DefaultGlossary::addDictionaryFromFile(const std::string& dictionaryName,
-                                            const std::string& pathToFileWithDictionaryWords) const
+                                            const std::string& pathToFileWithDictionaryWords)
 {
     createDictionaryFromCsvFileCommand->createDictionaryFromCsvFile(dictionaryName, pathToFileWithDictionaryWords);
+
+    synchronizeDictionary(dictionaryName);
 }
 
 void DefaultGlossary::updateDictionaryWordTranslationManually(const std::string& dictionaryName,
@@ -294,21 +301,22 @@ void DefaultGlossary::resetStatistics() const
     resetWordsStatisticsCommand->resetWordsStatistics();
 }
 
-void DefaultGlossary::synchronizeEnglishWords()
+void DefaultGlossary::synchronizeDictionaries()
 {
-    auto dictionaries = getDictionariesQuery->getDictionaries();
+    auto englishWords = getDictionariesEnglishWordsQuery->getDictionariesEnglishWords();
 
-    std::vector<std::string> englishWords;
+    translationConcurrentUpdater->update(englishWords);
 
-    for(const auto& dictionary : dictionaries)
-    {
-        for (const auto & dictionaryWord: dictionary.words)
-        {
-            englishWords.push_back(dictionaryWord.englishWord);
-        }
-    }
+    wordDescriptionConcurrentUpdater->update(englishWords);
+}
 
+void DefaultGlossary::synchronizeDictionary(const std::string& dictionaryName)
+{
+    auto englishWords = getDictionaryEnglishWordsQuery->getDictionaryEnglishWords(dictionaryName);
 
+    translationConcurrentUpdater->update(englishWords);
+
+    wordDescriptionConcurrentUpdater->update(englishWords);
 }
 
 }
