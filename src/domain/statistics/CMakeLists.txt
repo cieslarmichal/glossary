@@ -8,6 +8,8 @@ set(SOURCES
         src/commands/AddIncorrectAnswerCommandImpl.cpp
         src/commands/ResetWordsStatisticsCommandImpl.cpp
         src/queries/GetWordsStatisticsQueryImpl.cpp
+        src/factories/StatisticsFactory.cpp
+        src/factories/StatisticsFactoryImpl.cpp
         )
 
 set(UT_SOURCES

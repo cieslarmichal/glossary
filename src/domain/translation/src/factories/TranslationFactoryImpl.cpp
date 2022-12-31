@@ -6,7 +6,6 @@
 #include "../repositories/DefaultTranslationRepository.h"
 #include "../repositories/TranslationsPersistentStorage.h"
 #include "../serializers/TranslationsJsonSerializer.h"
-#include "factories/TranslationFactory.h"
 
 namespace glossary::translation
 {
