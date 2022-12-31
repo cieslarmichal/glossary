@@ -4,8 +4,8 @@
 
 namespace glossary::translation
 {
-std::unique_ptr<TranslationFactory> TranslationFactory::createTranslationFactory()
+std::unique_ptr<DictionaryFactory> DictionaryFactory::createTranslationFactory()
 {
-    return std::make_unique<TranslationFactoryImpl>();
+    return std::make_unique<DictionaryFactoryImpl>();
 }
 }

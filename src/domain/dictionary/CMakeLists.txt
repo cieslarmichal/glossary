@@ -23,6 +23,8 @@ set(SOURCES
         src/commands/AddWordToDictionaryCommandImpl.cpp
         src/commands/RemoveWordFromDictionaryCommandImpl.cpp
         src/commands/UpdateWordTranslationInDictionaryCommandImpl.cpp
+        src/factories/DictionaryFactory.cpp
+        src/factories/DictionaryFactoryImpl.cpp
         )
 
 set(UT_SOURCES

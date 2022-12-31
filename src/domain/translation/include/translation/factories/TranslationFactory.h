@@ -7,14 +7,14 @@
 
 namespace glossary::translation
 {
-class TranslationFactory
+class DictionaryFactory
 {
 public:
-    virtual ~TranslationFactory() = default;
+    virtual ~DictionaryFactory() = default;
 
     virtual std::unique_ptr<GetTranslationQuery> createGetTranslationQuery() const = 0;
     virtual std::unique_ptr<GetSupportedLanguagesQuery> createGetSupportedLanguagesQuery() const = 0;
 
-    static std::unique_ptr<TranslationFactory> createTranslationFactory();
+    static std::unique_ptr<DictionaryFactory> createTranslationFactory();
 };
 }

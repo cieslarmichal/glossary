@@ -1,5 +1,6 @@
 set(SOURCES
         src/RandomNumberMersenneTwisterGenerator.cpp
+        src/RandomNumberGeneratorFactory.cpp
         )
 
 add_library(random ${SOURCES})

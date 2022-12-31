@@ -9,9 +9,9 @@
 
 namespace glossary::translation
 {
-TranslationFactoryImpl::TranslationFactoryImpl(const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess,
-                                               const std::shared_ptr<common::httpClient::HttpClient>& httpClient,
-                                               const TranslationConfig& config)
+DictionaryFactoryImpl::DictionaryFactoryImpl(const std::shared_ptr<common::fileSystem::FileAccess>& fileAccess,
+                                             const std::shared_ptr<common::httpClient::HttpClient>& httpClient,
+                                             const TranslationConfig& config)
     : googleTranslateClient{std::make_shared<GoogleTranslateClientImpl>(
           httpClient, GoogleTranslateClientConfig{config.googleTranslateBaseUrl, config.googleTranslateApiKey})},
       translationRepository{std::make_shared<DefaultTranslationRepository>(
@@ -19,12 +19,12 @@ TranslationFactoryImpl::TranslationFactoryImpl(const std::shared_ptr<common::fil
 {
 }
 
-std::unique_ptr<GetSupportedLanguagesQuery> TranslationFactoryImpl::createGetSupportedLanguagesQuery() const
+std::unique_ptr<GetSupportedLanguagesQuery> DictionaryFactoryImpl::createGetSupportedLanguagesQuery() const
 {
     return std::make_unique<GetSupportedLanguagesQueryImpl>();
 }
 
-std::unique_ptr<GetTranslationQuery> TranslationFactoryImpl::createGetTranslationQuery() const
+std::unique_ptr<GetTranslationQuery> DictionaryFactoryImpl::createGetTranslationQuery() const
 {
     return std::make_unique<GetTranslationQueryImpl>(googleTranslateClient, translationRepository);
 }
