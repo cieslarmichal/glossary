@@ -2,7 +2,7 @@
 
 #include <vector>
 
-#include "Dictionary.h"
+#include "../Dictionary.h"
 
 namespace glossary::dictionary
 {

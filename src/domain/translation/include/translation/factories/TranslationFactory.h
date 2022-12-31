@@ -2,11 +2,11 @@
 
 #include <memory>
 
+#include "../queries/GetSupportedLanguagesQuery.h"
+#include "../queries/GetTranslationQuery.h"
+#include "../TranslationConfig.h"
 #include "fileSystem/FileAccess.h"
 #include "httpClient/HttpClient.h"
-#include "queries/GetSupportedLanguagesQuery.h"
-#include "queries/GetTranslationQuery.h"
-#include "TranslationConfig.h"
 
 namespace glossary::translation
 {

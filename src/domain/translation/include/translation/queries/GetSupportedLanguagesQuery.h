@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "Language.h"
+#include "../Language.h"
 
 namespace glossary::translation
 {

@@ -2,12 +2,12 @@
 
 #include <memory>
 
-#include "commands/AddCorrectAnswerCommand.h"
-#include "commands/AddIncorrectAnswerCommand.h"
-#include "commands/AddWordStatisticsCommand.h"
-#include "commands/ResetWordsStatisticsCommand.h"
+#include "../commands/AddCorrectAnswerCommand.h"
+#include "../commands/AddIncorrectAnswerCommand.h"
+#include "../commands/AddWordStatisticsCommand.h"
+#include "../commands/ResetWordsStatisticsCommand.h"
+#include "../queries/GetWordsStatisticsQuery.h"
 #include "fileSystem/FileAccess.h"
-#include "queries/GetWordsStatisticsQuery.h"
 
 namespace glossary::statistics
 {

@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "WordStatistics.h"
+#include "../WordStatistics.h"
 
 namespace glossary::statistics
 {

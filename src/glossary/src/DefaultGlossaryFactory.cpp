@@ -69,12 +69,16 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     auto wordDescriptionUpdater = std::make_unique<WordDescriptionConcurrentUpdater>(getWordDescriptionQuery);
 
     return std::make_unique<DefaultGlossary>(
-        dictionaryStatisticsCounter, addWordToDictionaryCommand, createDictionaryCommand, removeDictionaryCommand,
-        createDictionaryFromCsvFileCommand, removeWordFromDictionaryCommand, updateWordTranslationInDictionaryCommand,
-        getDictionariesEnglishWordsQuery, getDictionariesNamesQuery, getDictionariesQuery,
-        getDictionaryEnglishWordsQuery, getDictionaryQuery, getRandomWordFromDictionariesQuery,
-        getRandomWordFromDictionaryQuery, getWordDescriptionQuery, addCorrectAnswerCommand, addIncorrectAnswerCommand,
-        addWordStatisticsCommand, resetWordsStatisticsCommand, getWordsStatisticsQuery, getTranslationQuery,
-        getSupportedLanguagesQuery, translationUpdater, wordDescriptionUpdater);
+        std::move(dictionaryStatisticsCounter), std::move(addWordToDictionaryCommand),
+        std::move(createDictionaryCommand), std::move(removeDictionaryCommand),
+        std::move(createDictionaryFromCsvFileCommand), std::move(removeWordFromDictionaryCommand),
+        std::move(updateWordTranslationInDictionaryCommand), std::move(getDictionariesEnglishWordsQuery),
+        std::move(getDictionariesNamesQuery), std::move(getDictionariesQuery),
+        std::move(getDictionaryEnglishWordsQuery), std::move(getDictionaryQuery),
+        std::move(getRandomWordFromDictionariesQuery), std::move(getRandomWordFromDictionaryQuery),
+        getWordDescriptionQuery, std::move(addCorrectAnswerCommand), std::move(addIncorrectAnswerCommand),
+        std::move(addWordStatisticsCommand), std::move(resetWordsStatisticsCommand), std::move(getWordsStatisticsQuery),
+        getTranslationQuery, std::move(getSupportedLanguagesQuery), std::move(translationUpdater),
+        std::move(wordDescriptionUpdater));
 }
 }

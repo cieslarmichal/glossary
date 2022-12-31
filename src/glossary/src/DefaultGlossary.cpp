@@ -71,13 +71,13 @@ std::optional<std::string> DefaultGlossary::getRandomPolishWord() const
     {
         const auto dictionaryWord = getRandomWordFromDictionariesQuery->getRandomWord();
 
-        if (not dictionaryWord->translation)
+        if (not dictionaryWord.translation)
         {
             return getTranslationQuery->getTranslation(
-                {dictionaryWord->englishWord, translation::Language::English, translation::Language::Polish});
+                {dictionaryWord.englishWord, translation::Language::English, translation::Language::Polish});
         }
 
-        return dictionaryWord->translation;
+        return dictionaryWord.translation;
     }
     catch (const std::runtime_error& error)
     {
@@ -93,13 +93,13 @@ std::optional<std::string> DefaultGlossary::getRandomPolishWord(const std::strin
     {
         auto dictionaryWord = getRandomWordFromDictionaryQuery->getRandomWord(dictionaryName);
 
-        if (not dictionaryWord->translation)
+        if (not dictionaryWord.translation)
         {
             return getTranslationQuery->getTranslation(
-                {dictionaryWord->englishWord, translation::Language::English, translation::Language::Polish});
+                {dictionaryWord.englishWord, translation::Language::English, translation::Language::Polish});
         }
 
-        return dictionaryWord->translation;
+        return dictionaryWord.translation;
     }
     catch (const std::runtime_error& error)
     {
@@ -218,7 +218,7 @@ void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::strin
         {
             if (dictionaryWord.translation && dictionaryWord.translation->empty())
             {
-                updateDictionaryWordTranslation(dictionaryWord.englishWord, dictionaryName);
+                updateDictionaryWordTranslationAutomatically(dictionaryName, dictionaryWord.englishWord);
             }
         }
     }
@@ -231,7 +231,16 @@ dictionary::WordDescription DefaultGlossary::getEnglishWordDescription(const std
 
 std::vector<std::string> DefaultGlossary::getSupportedTranslatorLanguages() const
 {
-    return getSupportedLanguagesQuery->getSupportedLanguages();
+    const auto languages = getSupportedLanguagesQuery->getSupportedLanguages();
+
+    std::vector<std::string> languagesAsStrings;
+
+    for (const auto& language : languages)
+    {
+        languagesAsStrings.push_back(toString(language));
+    }
+
+    return languagesAsStrings;
 }
 
 std::optional<std::string> DefaultGlossary::translate(const std::string& textToTranslate,

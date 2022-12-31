@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "WordDescription.h"
+#include "../WordDescription.h"
 
 namespace glossary::dictionary
 {

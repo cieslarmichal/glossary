@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "DictionaryWord.h"
+#include "../DictionaryWord.h"
 
 namespace glossary::dictionary
 {

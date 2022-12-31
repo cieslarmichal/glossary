@@ -3,7 +3,7 @@
 #include <optional>
 #include <string>
 
-#include "Dictionary.h"
+#include "../Dictionary.h"
 
 namespace glossary::dictionary
 {

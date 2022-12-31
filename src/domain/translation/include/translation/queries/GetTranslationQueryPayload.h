@@ -4,7 +4,7 @@
 #include <optional>
 #include <string>
 
-#include "Language.h"
+#include "../Language.h"
 #include "collection/StlOperators.h"
 
 namespace glossary::translation
@@ -22,8 +22,7 @@ inline bool operator==(const GetTranslationQueryPayload& lhs, const GetTranslati
             lhs.targetLanguage == rhs.targetLanguage);
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const GetTranslationQueryPayload& getTranslationQueryPayload)
+inline std::ostream& operator<<(std::ostream& os, const GetTranslationQueryPayload& getTranslationQueryPayload)
 {
     return os << "{text:" << getTranslationQueryPayload.text
               << ",sourceLanguage:" << getTranslationQueryPayload.sourceLanguage
