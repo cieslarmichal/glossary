@@ -294,4 +294,21 @@ void DefaultGlossary::resetStatistics() const
     resetWordsStatisticsCommand->resetWordsStatistics();
 }
 
+void DefaultGlossary::synchronizeEnglishWords()
+{
+    auto dictionaries = getDictionariesQuery->getDictionaries();
+
+    std::vector<std::string> englishWords;
+
+    for(const auto& dictionary : dictionaries)
+    {
+        for (const auto & dictionaryWord: dictionary.words)
+        {
+            englishWords.push_back(dictionaryWord.englishWord);
+        }
+    }
+
+
+}
+
 }

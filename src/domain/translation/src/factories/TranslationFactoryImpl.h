@@ -13,11 +13,11 @@
 
 namespace glossary::translation
 {
-class DictionaryFactoryImpl : public DictionaryFactory
+class TranslationFactoryImpl : public TranslationFactory
 {
 public:
-    DictionaryFactoryImpl(const std::shared_ptr<common::fileSystem::FileAccess>&,
-                          const std::shared_ptr<common::httpClient::HttpClient>&, const TranslationConfig&);
+    TranslationFactoryImpl(const std::shared_ptr<common::fileSystem::FileAccess>&,
+                           const std::shared_ptr<common::httpClient::HttpClient>&, const TranslationConfig&);
 
     std::unique_ptr<GetSupportedLanguagesQuery> createGetSupportedLanguagesQuery() const override;
     std::unique_ptr<GetTranslationQuery> createGetTranslationQuery() const override;

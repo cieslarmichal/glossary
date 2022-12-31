@@ -72,6 +72,9 @@ public:
     DictionariesStatistics getDictionariesStatistics() const override;
     void resetStatistics() const override;
 
+private:
+    void synchronizeEnglishWords();
+
     std::unique_ptr<DictionaryStatisticsCounter> dictionaryStatisticsCounter;
     std::unique_ptr<dictionary::AddWordToDictionaryCommand> addWordToDictionaryCommand;
     std::unique_ptr<dictionary::CreateDictionaryCommand> createDictionaryCommand;

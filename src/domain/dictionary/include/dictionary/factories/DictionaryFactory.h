@@ -8,6 +8,9 @@
 #include "commands/RemoveDictionaryCommand.h"
 #include "commands/RemoveWordFromDictionaryCommand.h"
 #include "commands/UpdateWordTranslationInDictionaryCommand.h"
+#include "DictionaryConfig.h"
+#include "fileSystem/FileAccess.h"
+#include "httpClient/HttpClient.h"
 #include "queries/GetDictionariesEnglishWordsQuery.h"
 #include "queries/GetDictionariesNamesQuery.h"
 #include "queries/GetDictionariesQuery.h"
@@ -16,6 +19,7 @@
 #include "queries/GetRandomWordFromDictionariesQuery.h"
 #include "queries/GetRandomWordFromDictionaryQuery.h"
 #include "queries/GetWordDescriptionQuery.h"
+#include "random/RandomNumberGenerator.h"
 
 namespace glossary::dictionary
 {
@@ -40,6 +44,9 @@ public:
     virtual std::unique_ptr<GetRandomWordFromDictionaryQuery> createGetRandomWordFromDictionaryQuery() const = 0;
     virtual std::unique_ptr<GetWordDescriptionQuery> createGetWordDescriptionQuery() const = 0;
 
-    static std::unique_ptr<DictionaryFactory> createDictionaryFactory();
+    static std::unique_ptr<DictionaryFactory>
+    createDictionaryFactory(const std::shared_ptr<common::fileSystem::FileAccess>&,
+                            const std::shared_ptr<common::httpClient::HttpClient>&,
+                            const std::shared_ptr<common::random::RandomNumberGenerator>&, const DictionaryConfig&);
 };
 }

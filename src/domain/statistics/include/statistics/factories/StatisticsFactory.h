@@ -6,6 +6,7 @@
 #include "commands/AddIncorrectAnswerCommand.h"
 #include "commands/AddWordStatisticsCommand.h"
 #include "commands/ResetWordsStatisticsCommand.h"
+#include "fileSystem/FileAccess.h"
 #include "queries/GetWordsStatisticsQuery.h"
 
 namespace glossary::statistics
@@ -21,6 +22,7 @@ public:
     virtual std::unique_ptr<AddWordStatisticsCommand> createAddWordStatisticsCommand() const = 0;
     virtual std::unique_ptr<ResetWordsStatisticsCommand> createResetWordsStatisticsCommand() const = 0;
 
-    static std::unique_ptr<StatisticsFactory> createStatisticsFactory();
+    static std::unique_ptr<StatisticsFactory>
+    createStatisticsFactory(const std::shared_ptr<common::fileSystem::FileAccess>&);
 };
 }
