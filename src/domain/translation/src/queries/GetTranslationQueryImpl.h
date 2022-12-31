@@ -11,12 +11,12 @@ namespace glossary::translation
 class GetTranslationQueryImpl : public GetTranslationQuery
 {
 public:
-    GetTranslationQueryImpl(std::unique_ptr<GoogleTranslateClient>, std::unique_ptr<TranslationRepository>);
+    GetTranslationQueryImpl(std::shared_ptr<GoogleTranslateClient>, std::shared_ptr<TranslationRepository>);
 
     std::optional<std::string> getTranslation(const GetTranslationQueryPayload&) const override;
 
 private:
-    std::unique_ptr<GoogleTranslateClient> googleTranslateClient;
-    std::unique_ptr<TranslationRepository> translationRepository;
+    std::shared_ptr<GoogleTranslateClient> googleTranslateClient;
+    std::shared_ptr<TranslationRepository> translationRepository;
 };
 }

@@ -6,6 +6,8 @@ set(SOURCES
         src/repositories/TranslationsPersistentStorage.cpp
         src/queries/GetSupportedLanguagesQueryImpl.cpp
         src/queries/GetTranslationQueryImpl.cpp
+        src/factories/TranslationFactory.cpp
+        src/factories/TranslationFactoryImpl.cpp
         )
 
 set(UT_SOURCES

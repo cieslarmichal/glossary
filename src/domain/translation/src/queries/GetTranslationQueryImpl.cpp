@@ -2,8 +2,8 @@
 
 namespace glossary::translation
 {
-GetTranslationQueryImpl::GetTranslationQueryImpl(std::unique_ptr<GoogleTranslateClient> googleTranslateClientInit,
-                                                 std::unique_ptr<TranslationRepository> translationRepositoryInit)
+GetTranslationQueryImpl::GetTranslationQueryImpl(std::shared_ptr<GoogleTranslateClient> googleTranslateClientInit,
+                                                 std::shared_ptr<TranslationRepository> translationRepositoryInit)
     : googleTranslateClient{std::move(googleTranslateClientInit)},
       translationRepository{std::move(translationRepositoryInit)}
 {
