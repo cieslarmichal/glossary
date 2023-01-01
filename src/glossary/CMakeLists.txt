@@ -16,8 +16,8 @@ set(UT_SOURCES
 add_library(glossary ${SOURCES})
 add_executable(glossaryUT ${SOURCES} ${UT_SOURCES})
 
-target_include_directories(glossary PUBLIC "include")
-target_include_directories(glossaryUT PUBLIC "include")
+target_include_directories(glossary PUBLIC "include" ${DOTENV_INCLUDE_DIR})
+target_include_directories(glossaryUT PUBLIC "include" ${DOTENV_INCLUDE_DIR})
 
 target_link_libraries(glossary PUBLIC
         ${Boost_LIBRARIES}
@@ -28,7 +28,6 @@ target_link_libraries(glossary PUBLIC
         translation
         fileSystem
         concurrency
-        cpp_dotenv
         )
 target_link_libraries(glossaryUT PUBLIC
         gmock_main
@@ -40,7 +39,6 @@ target_link_libraries(glossaryUT PUBLIC
         translation
         fileSystem
         concurrency
-        cpp_dotenv
         )
 
 target_compile_options(glossary PUBLIC ${FLAGS})

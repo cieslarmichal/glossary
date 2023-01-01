@@ -6,10 +6,10 @@
 #include "DefaultGlossary.h"
 #include "dictionary/DictionaryConfig.h"
 #include "dictionary/factories/DictionaryFactory.h"
-#include "dotenv.h"
 #include "fileSystem/FileAccessFactory.h"
 #include "fileSystem/GetProjectPath.h"
 #include "httpClient/HttpClientFactory.h"
+#include "laserpants/dotenv/dotenv.h"
 #include "random/RandomNumberGeneratorFactory.h"
 #include "statistics/factories/StatisticsFactory.h"
 #include "translation/factories/TranslationFactory.h"
@@ -25,7 +25,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 
     const auto envFilePath = fmt::format("{}{}", rootDirectory, ".env");
 
-    dotenv::env.load_dotenv(envFilePath, true);
+    dotenv::init(envFilePath.c_str());
 
     std::shared_ptr<common::fileSystem::FileAccess> fileAccess =
         common::fileSystem::FileAccessFactory::createFileAccessFactory()->createDefaultFileAccess();
@@ -37,7 +37,7 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
         common::random::RandomNumberGeneratorFactory::createRandomNumberGenerator();
 
     const std::string wordsApiBaseUrl = std::getenv("WORDS_API_BASE_URL");
-    const std::string wordsApiHost= std::getenv("WORDS_API_HOST");
+    const std::string wordsApiHost = std::getenv("WORDS_API_HOST");
     const std::string wordsApiKey = std::getenv("WORDS_API_KEY");
 
     auto dictionaryConfig = dictionary::DictionaryConfig{wordsApiBaseUrl, wordsApiHost, wordsApiKey};

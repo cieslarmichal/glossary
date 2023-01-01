@@ -13,3 +13,6 @@
 [submodule "externals/cpp-dotenv"]
 	path = externals/cpp-dotenv
 	url = https://github.com/adeharo9/cpp-dotenv.git
+[submodule "externals/dotenv-cpp"]
+	path = externals/dotenv-cpp
+	url = https://github.com/laserpants/dotenv-cpp.git
