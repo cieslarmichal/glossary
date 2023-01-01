@@ -14,7 +14,7 @@
   <li>Qt 5.12 (at least)</li>
 </ul>
 
-<h3>2. Get api keys:</h3>
+<h3>2. Get api keys and place them into .env file:</h3>
 <ul>
   <li>Google Translate api key: 
     https://neliosoftware.com/blog/how-to-generate-an-api-key-for-google-translate/
@@ -35,17 +35,13 @@
     cd build-linux
     cmake ..
     make
-    
+
 <h3>4. Run application: </h3>
-    In build-linux directory:
+In build-linux directory:
 
     src/gui/gui
-
 
 <h3>5. Running UTs for linux:</h3>
 
     cd glossary
     ./runUT_linux.sh
-
-
-

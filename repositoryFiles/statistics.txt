@@ -1,1 +1,1 @@
-[]
+[{"correctAnswers":1,"englishWord":"chair","incorrectAnswers":0},{"correctAnswers":1,"englishWord":"lamp","incorrectAnswers":1}]

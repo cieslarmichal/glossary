@@ -8,7 +8,6 @@
 
 namespace
 {
-constexpr auto anyDictionaryName = "any";
 const auto resourceDirectoryPath = common::fileSystem::getProjectPath("glossary") + "src/gui/resources/";
 const auto incorrectAnswerIconPath = resourceDirectoryPath + "incorrectAnswer.png";
 const auto correctAnswerIconPath = resourceDirectoryPath + "correctAnswer.png";
@@ -41,8 +40,6 @@ GuessTab::~GuessTab()
 void GuessTab::setAvailableDictionaryNames(const QList<QString>& dictionaryNames)
 {
     dictionaryNamesToRandomizeWordFrom = dictionaryNames;
-
-    dictionaryNamesToRandomizeWordFrom.push_front(anyDictionaryName);
 
     dictionaryNamesToRandomizeWordFromModel.setStringList(dictionaryNamesToRandomizeWordFrom);
 }
@@ -106,14 +103,7 @@ void GuessTab::on_listWithDictionaryNames_clicked(const QModelIndex& dictionaryN
 {
     QString dictionaryName = dictionaryNameIndex.data(Qt::DisplayRole).toString();
 
-    if (dictionaryName != anyDictionaryName)
-    {
-        selectedDictionaryName = dictionaryName;
-    }
-    else
-    {
-        selectedDictionaryName = std::nullopt;
-    }
+    selectedDictionaryName = dictionaryName;
 }
 
 void GuessTab::on_buttonCheckWordDescription_clicked()

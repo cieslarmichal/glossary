@@ -216,7 +216,7 @@ void DefaultGlossary::updateDictionaryTranslationsAutomatically(const std::strin
     {
         for (const auto& dictionaryWord : dictionary->words)
         {
-            if (dictionaryWord.translation && dictionaryWord.translation->empty())
+            if (!dictionaryWord.translation)
             {
                 updateDictionaryWordTranslationAutomatically(dictionaryName, dictionaryWord.englishWord);
             }

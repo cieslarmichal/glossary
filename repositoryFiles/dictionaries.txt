@@ -1,1 +1,1 @@
-[{"dictionaryName":"dom","dictionaryWords":[{"englishWord":"chair","translation":"krzesło"}]}]
+[{"dictionaryName":"dom","dictionaryWords":[{"englishWord":"chair","translation":"krzesło"},{"englishWord":"table","translation":"tabela"},{"englishWord":"lamp","translation":"lampa"},{"englishWord":"wall","translation":"Ściana"}]}]

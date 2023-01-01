@@ -3,15 +3,15 @@
 #include <ostream>
 #include <vector>
 
-#include "collection/StlOperators.h"
 #include "fmt/core.h"
+
+#include "collection/StlOperators.h"
 
 namespace glossary::translation
 {
 struct GoogleTranslateApiResponseDataTranslation
 {
     std::string translatedText;
-    std::string detectedSourceLanguage;
 };
 
 struct GoogleTranslateApiResponseData
@@ -27,8 +27,7 @@ struct GoogleTranslateApiResponse
 inline bool operator==(const GoogleTranslateApiResponseDataTranslation& lhs,
                        const GoogleTranslateApiResponseDataTranslation& rhs)
 {
-    return (lhs.translatedText == rhs.translatedText &&
-            lhs.detectedSourceLanguage == rhs.detectedSourceLanguage);
+    return lhs.translatedText == rhs.translatedText;
 }
 
 inline bool operator==(const GoogleTranslateApiResponseData& lhs, const GoogleTranslateApiResponseData& rhs)
@@ -42,24 +41,18 @@ inline bool operator==(const GoogleTranslateApiResponse& lhs, const GoogleTransl
 }
 
 inline std::ostream&
-operator<<(std::ostream& os,
-           const GoogleTranslateApiResponseDataTranslation& googleTranslateApiResponseDataTranslation)
+operator<<(std::ostream& os, const GoogleTranslateApiResponseDataTranslation& googleTranslateApiResponseDataTranslation)
 {
-    return os << "{"
-              << fmt::format("translatedText:{}, detectedSourceLanguage: {}",
-                             googleTranslateApiResponseDataTranslation.translatedText,
-                             googleTranslateApiResponseDataTranslation.detectedSourceLanguage)
+    return os << "{" << fmt::format("translatedText:{}", googleTranslateApiResponseDataTranslation.translatedText)
               << "}";
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const GoogleTranslateApiResponseData& googleTranslateApiResponseData)
+inline std::ostream& operator<<(std::ostream& os, const GoogleTranslateApiResponseData& googleTranslateApiResponseData)
 {
     return os << googleTranslateApiResponseData.translations;
 }
 
-inline std::ostream& operator<<(std::ostream& os,
-                                const GoogleTranslateApiResponse& googleTranslateApiResponse)
+inline std::ostream& operator<<(std::ostream& os, const GoogleTranslateApiResponse& googleTranslateApiResponse)
 {
     return os << googleTranslateApiResponse.data;
 }

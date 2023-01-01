@@ -1,5 +1,7 @@
 #include "TranslatorTab.h"
 
+#include <iostream>
+
 #include "fileSystem/GetProjectPath.h"
 #include "ui_TranslatorTab.h"
 
@@ -19,7 +21,7 @@ TranslatorTab::TranslatorTab(QWidget* parent) : QWidget(parent), ui(new Ui::Tran
     ui->boxSourceLanguages->setModel(&availableLanguages);
     ui->boxTargetLanguages->setModel(&availableLanguages);
     ui->buttonSwitchLanguages->setEnabled(false);
-    ui->buttonTranslate->setEnabled(false);
+    ui->buttonTranslate->setEnabled(true);
 }
 
 TranslatorTab::~TranslatorTab()
@@ -30,6 +32,8 @@ TranslatorTab::~TranslatorTab()
 void TranslatorTab::setAvailableLanguages(const QStringList& availableLanguagesInit)
 {
     availableLanguages.setStringList(availableLanguagesInit);
+    selectedSourceLanguage = availableLanguagesInit[0];
+    selectedTargetLanguage = availableLanguagesInit[0];
 }
 
 void TranslatorTab::onTranslationReceived(const QString& translation) const
@@ -45,6 +49,7 @@ void TranslatorTab::onAvailableLanguagesReceived(const QStringList& availableLan
 void TranslatorTab::on_buttonTranslate_clicked() const
 {
     auto insertedText = ui->editTextToTranslate->text();
+
     if (not insertedText.isEmpty() && selectedSourceLanguage && selectedTargetLanguage)
     {
         emit notifyAboutTextTranslateRequest(insertedText, *selectedSourceLanguage, *selectedTargetLanguage);
@@ -67,9 +72,9 @@ void TranslatorTab::on_buttonSwitchLanguages_clicked()
             ui->boxTargetLanguages->setCurrentIndex(targetLanguageIndex);
         }
 
-        auto tempSourcelanguage = *selectedSourceLanguage;
+        auto tempSourceLanguage = *selectedSourceLanguage;
         selectedSourceLanguage = *selectedTargetLanguage;
-        selectedTargetLanguage = tempSourcelanguage;
+        selectedTargetLanguage = tempSourceLanguage;
 
         auto tempTextToTranslate = ui->editTextToTranslate->text();
         ui->editTextToTranslate->setText(ui->editTranslatedText->text());
@@ -80,6 +85,7 @@ void TranslatorTab::on_buttonSwitchLanguages_clicked()
 void TranslatorTab::on_boxSourceLanguages_activated(const QString& sourceLanguage)
 {
     selectedSourceLanguage = sourceLanguage;
+
     if (selectedSourceLanguage && selectedTargetLanguage)
     {
         ui->buttonSwitchLanguages->setEnabled(true);
@@ -90,6 +96,7 @@ void TranslatorTab::on_boxSourceLanguages_activated(const QString& sourceLanguag
 void TranslatorTab::on_boxTargetLanguages_activated(const QString& targetLanguage)
 {
     selectedTargetLanguage = targetLanguage;
+
     if (selectedSourceLanguage && selectedTargetLanguage)
     {
         ui->buttonSwitchLanguages->setEnabled(true);

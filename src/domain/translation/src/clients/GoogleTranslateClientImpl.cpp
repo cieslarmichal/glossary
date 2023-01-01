@@ -20,7 +20,6 @@ constexpr auto translateEndpoint = "/language/translate/v2";
 constexpr auto dataField = "data";
 constexpr auto translationsField = "translations";
 constexpr auto translatedTextField = "translatedText";
-constexpr auto detectedSourceLanguageField = "detectedSourceLanguage";
 }
 
 GoogleTranslateClientImpl::GoogleTranslateClientImpl(
@@ -88,12 +87,10 @@ GoogleTranslateClientImpl::parseGoogleTranslateResponseBody(const std::string& r
     for (const auto& translationJson : translationsJson)
     {
         validateFieldExistence(translationJson, translatedTextField);
-        validateFieldExistence(translationJson, detectedSourceLanguageField);
 
         const auto& translatedText = translationJson[translatedTextField].get<std::string>();
-        const auto& detectedSourceLanguage = translationJson[detectedSourceLanguageField].get<std::string>();
 
-        translations.push_back({translatedText, detectedSourceLanguage});
+        translations.push_back({translatedText});
     }
 
     return {translations};

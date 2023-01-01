@@ -1,1 +1,1 @@
-[]
+{"translations":[{"englishWord":"krzesło","polishWord":"chair"},{"englishWord":"chair","polishWord":"krzesło"},{"englishWord":"pie","polishWord":"ciasto"},{"englishWord":"ciasto","polishWord":"pie"},{"englishWord":"Puchar","polishWord":"cup"},{"englishWord":"cup","polishWord":"puchar"},{"englishWord":"tabela","polishWord":"table"},{"englishWord":"lampa","polishWord":"lamp"},{"englishWord":"lodówka","polishWord":"fridge"},{"englishWord":"lamp","polishWord":"lampa"},{"englishWord":"Ściana","polishWord":"wall"}]}
