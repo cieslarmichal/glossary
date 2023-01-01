@@ -8,3 +8,5 @@ CMakeSettings.json
 out/
 config/cacert.pem
 .vs/
+
+src/build*

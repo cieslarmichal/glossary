@@ -1,7 +1,7 @@
 #pragma once
 
-#include <QMainWindow>
 #include <memory>
+#include <QMainWindow>
 
 #include "CheckWordDescriptionTab.h"
 #include "DictionariesTab.h"
@@ -26,12 +26,6 @@ public:
                       std::shared_ptr<DictionariesTab>, std::shared_ptr<CheckWordDescriptionTab>,
                       std::shared_ptr<TranslatorTab>, std::shared_ptr<StatisticsTab>);
     ~MainView();
-
-public slots:
-    void onSetEnabledGuessTabRequest(bool tabEnabled) const;
-    void onSetEnabledDictionariesTabRequest(bool tabEnabled) const;
-    void onSetEnabledWordDescriptionTabTabRequest(bool tabEnabled) const;
-    void onSetEnabledTranslatorTab(bool tabEnabled) const;
 
 private slots:
     void on_actionExit_triggered();

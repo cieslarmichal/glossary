@@ -40,7 +40,7 @@ public:
         {
             const auto data = queue.front();
             queue.pop();
-            return std::move(data);
+            return data;
         }
         return std::nullopt;
     }

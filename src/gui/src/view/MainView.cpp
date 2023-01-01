@@ -44,39 +44,16 @@ MainView::MainView(QWidget* parent, std::shared_ptr<WelcomeTab> welcomeTabInit,
     ui->translatorTabLayout->addWidget(translatorTab.get());
     ui->statisticsTabLayout->addWidget(statisticsTab.get());
 
-    connect(welcomeTab.get(), &WelcomeTab::notifyAboutSetGuessTabEnabledRequest, this,
-            &MainView::onSetEnabledGuessTabRequest);
-    connect(welcomeTab.get(), &WelcomeTab::notifyAboutSetDictionariesTabEnabledRequest, this,
-            &MainView::onSetEnabledDictionariesTabRequest);
-    connect(welcomeTab.get(), &WelcomeTab::notifyAboutSetWordDescriptionTabEnabledRequest, this,
-            &MainView::onSetEnabledWordDescriptionTabTabRequest);
-    connect(welcomeTab.get(), &WelcomeTab::notifyAboutSetTranslatorTabEnabledRequest, this,
-            &MainView::onSetEnabledTranslatorTab);
+    ui->glossaryModesTabs->setTabEnabled(guessTabIndex, true);
+    ui->glossaryModesTabs->setTabEnabled(dictionariesTabIndex, true);
+    ui->glossaryModesTabs->setTabEnabled(wordDescriptionTabIndex, true);
+    ui->glossaryModesTabs->setTabEnabled(translatorTabIndex, true);
+
 }
 
 MainView::~MainView()
 {
     delete ui;
-}
-
-void MainView::onSetEnabledGuessTabRequest(bool tabEnabled) const
-{
-    ui->glossaryModesTabs->setTabEnabled(guessTabIndex, tabEnabled);
-}
-
-void MainView::onSetEnabledDictionariesTabRequest(bool tabEnabled) const
-{
-    ui->glossaryModesTabs->setTabEnabled(dictionariesTabIndex, tabEnabled);
-}
-
-void MainView::onSetEnabledWordDescriptionTabTabRequest(bool tabEnabled) const
-{
-    ui->glossaryModesTabs->setTabEnabled(wordDescriptionTabIndex, tabEnabled);
-}
-
-void MainView::onSetEnabledTranslatorTab(bool tabEnabled) const
-{
-    ui->glossaryModesTabs->setTabEnabled(translatorTabIndex, tabEnabled);
 }
 
 void MainView::on_actionExit_triggered()

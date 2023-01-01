@@ -18,16 +18,7 @@ public:
     explicit WelcomeTab(QWidget* parent = nullptr);
     ~WelcomeTab();
 
-signals:
-    void notifyAboutSetGuessTabEnabledRequest(bool tabEnabled) const;
-    void notifyAboutSetDictionariesTabEnabledRequest(bool tabEnabled) const;
-    void notifyAboutSetWordDescriptionTabEnabledRequest(bool tabEnabled) const;
-    void notifyAboutSetTranslatorTabEnabledRequest(bool tabEnabled) const;
-
 private:
-    void setWordsApiRelatedTabsEnabled(bool tabsEnabled) const;
-    void setTranslateApiRelatedTabsEnabled(bool tabsEnabled) const;
-
     Ui::WelcomeTab* ui;
 };
 }

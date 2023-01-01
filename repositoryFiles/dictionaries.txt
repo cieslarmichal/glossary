@@ -1,1 +1,1 @@
-[]
+[{"dictionaryName":"dom","dictionaryWords":[{"englishWord":"chair","translation":"krzesło"}]}]
