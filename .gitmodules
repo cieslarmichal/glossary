@@ -10,3 +10,6 @@
 [submodule "externals/cpr"]
 	path = externals/cpr
 	url = https://github.com/libcpr/cpr
+[submodule "externals/cpp-dotenv"]
+	path = externals/cpp-dotenv
+	url = https://github.com/adeharo9/cpp-dotenv.git

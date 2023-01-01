@@ -28,6 +28,7 @@ target_link_libraries(glossary PUBLIC
         translation
         fileSystem
         concurrency
+        cpp_dotenv
         )
 target_link_libraries(glossaryUT PUBLIC
         gmock_main
@@ -39,6 +40,7 @@ target_link_libraries(glossaryUT PUBLIC
         translation
         fileSystem
         concurrency
+        cpp_dotenv
         )
 
 target_compile_options(glossary PUBLIC ${FLAGS})
