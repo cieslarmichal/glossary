@@ -1,10 +1,14 @@
 #include "DefaultGlossaryFactory.h"
 
+#include "fmt/core.h"
+
 #include "DefaultDictionaryStatisticsCounter.h"
 #include "DefaultGlossary.h"
 #include "dictionary/DictionaryConfig.h"
 #include "dictionary/factories/DictionaryFactory.h"
+#include "dotenv.h"
 #include "fileSystem/FileAccessFactory.h"
+#include "fileSystem/GetProjectPath.h"
 #include "httpClient/HttpClientFactory.h"
 #include "random/RandomNumberGeneratorFactory.h"
 #include "statistics/factories/StatisticsFactory.h"
@@ -17,6 +21,12 @@ namespace glossary
 {
 std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
 {
+    const auto rootDirectory = common::fileSystem::getProjectPath("glossary");
+
+    const auto envFilePath = fmt::format("{}{}", rootDirectory, ".env");
+
+    dotenv::env.load_dotenv(envFilePath, true);
+
     std::shared_ptr<common::fileSystem::FileAccess> fileAccess =
         common::fileSystem::FileAccessFactory::createFileAccessFactory()->createDefaultFileAccess();
 
@@ -26,13 +36,22 @@ std::unique_ptr<Glossary> DefaultGlossaryFactory::createGlossary() const
     std::shared_ptr<common::random::RandomNumberGenerator> randomNumberGenerator =
         common::random::RandomNumberGeneratorFactory::createRandomNumberGenerator();
 
-    auto dictionaryConfig = dictionary::DictionaryConfig{"TODO", "", ""};
+    const std::string wordsApiBaseUrl = std::getenv("WORDS_API_BASE_URL");
+    const std::string wordsApiHost= std::getenv("WORDS_API_HOST");
+    const std::string wordsApiKey = std::getenv("WORDS_API_KEY");
+
+    auto dictionaryConfig = dictionary::DictionaryConfig{wordsApiBaseUrl, wordsApiHost, wordsApiKey};
+
     auto dictionaryFactory = dictionary::DictionaryFactory::createDictionaryFactory(
         fileAccess, httpClient, randomNumberGenerator, dictionaryConfig);
 
     auto statisticsFactory = statistics::StatisticsFactory::createStatisticsFactory(fileAccess);
 
-    auto translationConfig = translation::TranslationConfig{"TODO", ""};
+    const std::string googleTranslateBaseUrl = std::getenv("GOOGLE_TRANSLATE_BASE_URL");
+    const std::string googleTranslateApiKey = std::getenv("GOOGLE_TRANSLATE_API_KEY");
+
+    auto translationConfig = translation::TranslationConfig{googleTranslateBaseUrl, googleTranslateApiKey};
+
     auto translationFactory =
         translation::TranslationFactory::createTranslationFactory(fileAccess, httpClient, translationConfig);
 

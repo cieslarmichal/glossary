@@ -8,7 +8,6 @@
 
 #include "exceptions/DirectoryNotFound.h"
 #include "exceptions/FileNotFound.h"
-#include "GetProjectPath.h"
 
 namespace common::fileSystem
 {

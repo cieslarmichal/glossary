@@ -8,7 +8,6 @@
 
 namespace glossary::dictionary
 {
-// TODO: notify dictionary observers about loaded english words
 class CreateDictionaryFromCsvFileCommandImpl : public CreateDictionaryFromCsvFileCommand
 {
 public:
